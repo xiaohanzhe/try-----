@@ -122,9 +122,16 @@ ok(len(multi) > 100,
    'B1 多出边场景数 > 100（实测 %d，确保判据有真实样本）' % len(multi))
 
 # B2 ★ 核心不变量：同一场景内，按 priority 升序取出的门字母必须递增
+#   ★★ 第122轮：**对象级路由没有字母**（ut 的 `when_src` 那 110 条，`when_door`
+#     为 None）—— 它们的分流依据是"哪个对象"，不是字母，塞进字母序比较会直接
+#     在 `sorted()` 上炸（`None < str`）。⇒ 本判据只看**字母级**规则；
+#     对象级的顺序不变量由 `第122轮/_tools/check122.py` 守（按 when_src 升序）。
 bad = []
 for k, v in multi.items():
-    v2 = sorted(v, key=lambda r: r.get('priority'))
+    v_letter = [r for r in v if isinstance(r.get('when_door'), str) and r.get('when_door')]
+    if len(v_letter) < 2:
+        continue
+    v2 = sorted(v_letter, key=lambda r: r.get('priority'))
     letters = [r.get('when_door') for r in v2]
     if letters != sorted(letters):
         bad.append((k, letters))
@@ -139,7 +146,13 @@ def _old_priority_letters():
     order = 0
     out = {}
     for sa in sorted(by_src):
-        exits = sorted(by_src[sa], key=lambda r: (r.get('when_door'), r.get('to')))
+        # ★ 第122轮：对象级规则（无字母）也在这张表里 ⇒ 排序键用 `or ''` 兜底，
+        #   否则 `None < str` 会在这里抛异常（把 B2b 的负控制整个吃掉）。
+        #   而且"旧写法"本来就是在排**字母**——没有字母的规则不参与这次重放。
+        pool = [r for r in by_src[sa]
+                if isinstance(r.get('when_door'), str) and r.get('when_door')]
+        exits = sorted(pool,
+                       key=lambda r: (r.get('when_door') or '', r.get('to') or ''))
         lst = []
         for r in exits:
             lst.append((110 + (order % 240), r.get('when_door')))
@@ -182,9 +195,32 @@ ok(all('priority' in r for r in RL),
    'B5 全部 %d 条规则显式带 priority（不落 _DEFAULT_PRIORITY）' % len(RL))
 
 # B6 每条规则都带 when_door（共同卡口分流的依据）
-ok(all(isinstance(r.get('when_door'), str) and r.get('when_door')
-       for r in RL),
-   'B6 全部规则带 when_door（解决共同卡口）')
+# ★★ 第122轮：分流依据多了第二种 —— `when_src`（**触发它的那个原作对象名**）。
+#   ut 的门叫 `obj_door_ruins13` / `obj_door_s_musfade`，**不带字母**，用
+#   `when_door` 根本表达不了"是这一扇、不是同场景另一扇"（实测同场景最多 3 个门对象）。
+#   本判据的**本意**是"每条规则都要有分流依据"，不是"必须是字母"——
+#   所以改成"二选一，且两者都不许空"；条数也一并钉住，防止有人在别处偷偷
+#   造一批"没有分流依据"的规则来蒙混过关。
+def _has_split(r):
+    u"""这条规则有没有分流依据？（字母 或 对象名，二者至少一个非空）"""
+    if isinstance(r.get('when_door'), str) and r.get('when_door'):
+        return True
+    return bool(isinstance(r.get('when_src'), str) and r.get('when_src'))
+
+
+_no_split = [r for r in RL if not _has_split(r)]
+_lettered_n = sum(1 for r in RL
+                  if isinstance(r.get('when_door'), str) and r.get('when_door'))
+_srced_n = sum(1 for r in RL
+               if isinstance(r.get('when_src'), str) and r.get('when_src'))
+ok(not _no_split and _srced_n == 110,
+   'B6 全部 %d 条规则都带分流依据（字母级 %d + 对象级 when_src %d；'
+   '两样都没有的 %d）' % (len(RL), _lettered_n, _srced_n, len(_no_split)))
+# —— 负控制：把两种依据都剥掉的规则必须被判出（证明上一条不是恒真）
+ok(_has_split({'when_scene': 'a', 'to': 'b'}) is False
+   and _has_split({'when_scene': 'a', 'to': 'b', 'when_door': 'A'}) is True
+   and _has_split({'when_scene': 'a', 'to': 'b', 'when_src': 'obj_x'}) is True,
+   'B6b 正/负控制：`_has_split` 对"无依据 / 有字母 / 有对象名"三种输入各不相同')
 
 # ★★ B7 第89轮新增：desktop 手写门自证（B3/C1 把它排除出去了，必须在这里锁住，
 #    否则"排除"就变成"没人管"）。契约 = 桌面恰好挂满世界门、字母 = A..F + W/X/Y、
@@ -355,9 +391,15 @@ if have_rooms:
     # ★★ 第105轮：**不再**用"排除"处理 OneShot —— 改用"并入重算"（见 _OS_EV 注释）。
     #   `desktop` 仍是排除，因为它压根不是原作房间；而 OneShot 的每一间房都是
     #   原作房间，边也都能从原作 code-201 独立重算出来。
+    # ★★ 第122轮：ut 段（243 条）同样**不参与**这条"原作保真度"判据 ——
+    #   本判据的重算只覆盖 `ch1..ch5`（`rooms_path(i)` 那五张门表），ut 是**另一部作品**、
+    #   另一份反编译产物。把 ut 塞进来会让差值恒为 243（不是漏编，是分母没有 ut 的源）。
+    #   ut 段的独立重算在 `第122轮/_tools/check122.py`（从 `conn115` + `inst_full` 重推
+    #   每条 (场景, 对象) → 目标，并逐条核对 `objects` 里真有那扇门）。
     _ORIGIN_WORKS = ('desktop',)
     prod_edges = set((r.get('when_scene'), r.get('to')) for r in RL
-                     if r.get('when_scene') not in _ORIGIN_WORKS)
+                     if r.get('when_scene') not in _ORIGIN_WORKS
+                     and not str(r.get('when_scene') or '').startswith('ut.'))
     os_edges, _os_err = _oneshot_edges()
     ok(prod_edges == (orig_edges | os_edges),
        'C1 ★产品边集合 == 原作独立重算集合（门位移 %d ∪ OneShot 传送 %d = %d 条；'
@@ -365,6 +407,21 @@ if have_rooms:
        % (len(orig_edges), len(os_edges), len(orig_edges | os_edges),
           len(prod_edges), len(prod_edges ^ (orig_edges | os_edges)),
           ('｜证据读取失败: %s' % _os_err) if _os_err else ''))
+
+    # ★★ C1b 第122轮：被 C1 排除的 ut 段**必须自证**（否则"排除"就成了没人管）。
+    #   三条：① 条数钉死 243；② 两端都必须是 ut 已登记场景（不指向别作品）；
+    #   ③ 按 (when_scene, to) 去重后不缩水（没有两条规则指向同一对）。
+    _ut_routes = [r for r in RL
+                  if str(r.get('when_scene') or '').startswith('ut.')]
+    _utz = jload(os.path.join(SC, '_zone.ut.rooms.json')).get('scenes') or {}
+    _ut_bad_end = [r for r in _ut_routes
+                   if r.get('when_scene') not in _utz or r.get('to') not in _utz]
+    _ut_pairs = set((r.get('when_scene'), r.get('to')) for r in _ut_routes)
+    ok(len(_ut_routes) == 243 and not _ut_bad_end
+       and len(_ut_pairs) == len(_ut_routes),
+       'C1b ★ 被 C1 排除的 ut 段：%d 条 / 两端都在 ut 场景表里（越界 %d）/ '
+       '按 (场景,目标) 去重后仍 %d 条 —— 排除**有账**，归 `check122` 守'
+       % (len(_ut_routes), len(_ut_bad_end), len(_ut_pairs)))
 
     # C2 断链归因：'to 无出边的场景' 里，凡原作**能编出边**的都算真缺口。
     #   ⚠️ 判据必须是"原作侧按同一机制能编出边"，而不是"该房有没有字母门" ——

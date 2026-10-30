@@ -301,6 +301,25 @@ def _match_one(route, context):
             score += 1
         # context 没给 door → 放行但不加分（"没指定就走它"）
 
+    # --- ★★ 第122轮：**对象级**路由（`when_src` = 触发它的那个原作对象名）---
+    #   为什么需要它：ut 的门对象叫 `obj_door_ruins13` / `obj_door_s_musfade` 这种，
+    #   **不带字母** ⇒ `when_door` 那套表达不了"是这一扇门、不是同场景的另一扇"。
+    #   实测同一间 ut 房里最多有 3 个不同的门对象（`probe_doors122` 的粒度统计），
+    #   只按 `when_scene` 会挑错门。
+    #
+    #   ★ 与 `when_door` **故意不同**：`when_door` 缺席时"放行"（没指定就走它）；
+    #     这里缺席时**判不匹配**。理由：一条对象级规则如果被"不知道是哪个对象"的
+    #     语境选中，就等于**凭空指定了一扇门** —— 那正是"走错房间"。
+    #     不放行 ⇒ 最多是这条规则暂时用不上（可观测），而不是静默走错。
+    want_src = route.get('when_src')
+    if isinstance(want_src, str) and want_src:
+        have_src = _get(context, 'src')
+        if not (isinstance(have_src, str) and have_src):
+            return False, 0
+        if want_src != '*' and have_src != want_src:
+            return False, 0
+        score += 1
+
     # --- 多值集合：交集非空即命中 ---
     for key, field in (('when_mood', 'mood'), ('when_event', 'event')):
         want = _as_set(route.get(key))

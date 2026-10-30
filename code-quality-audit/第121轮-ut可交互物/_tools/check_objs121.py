@@ -52,7 +52,13 @@ import item_interact as II       # noqa: E402
 
 FIELDS = {'pos', 'sprite', 'src', 'depth'}
 WANT_KINDS = ('readable', 'sign', 'savepoint', 'pickup', 'fountain', 'interactable')
-BANNED_KINDS = ('door', 'cutscene')
+#: ★★ 第122轮：`door` 也可以出现 —— 但**只许出现在路由表里有目标的那批**
+#:   （门的准入闸，见 `build_objs121.load_routed_doors`）。判据 B2b 守这条双射。
+DOOR_KIND = 'door'
+BANNED_KINDS = ('cutscene',)
+
+#: 本轮（第121轮）那 6 类的实测条数 —— 第122轮加了门之后要能**分账**
+BASE_N, BASE_TOTAL = 136, 422
 
 _n = {'p': 0, 'f': 0}
 _failed = []
@@ -110,11 +116,49 @@ check('A0 场景 358 / 实例表覆盖 338 间房 / 对象表非空 / 原点表�
 withobj = [(sid, sc) for sid, sc in scenes.items() if sc.get('objects')]
 total = sum(len(sc['objects']) for _s, sc in withobj)
 
+
+def _routed_doors():
+    u"""`{(房间名, 门对象名)}` —— 从 `_routes.json` **现读**（第122轮）。
+
+    ★ 为什么判据自己去读路由表、而不是调 `build_objs121.load_routed_doors()`：
+      那是生成器的**决策**；判据若直接复用同一个函数，就变成"自己验自己"。
+      这里按同一份**数据**独立重推一遍（规则只有一句：ut 路由里的 (房间, 对象)）。
+    """
+    try:
+        d = _json(os.path.join(SCENES, '_routes.json'))
+    except Exception:
+        return set()
+    out = set()
+    for r in (d.get('routes') or []):
+        if not isinstance(r, dict):
+            continue
+        if not str(r.get('when_scene') or '').startswith('ut.'):
+            continue
+        rn = (r.get('_original') or {}).get('src_room_name')
+        o = r.get('when_src') or 'obj_doorA'
+        if rn and o:
+            out.add((rn, o))
+    return out
+
+
+ROUTED = _routed_doors()
+
 print()
 print('== A. 规模与形状 ==')
-check('A1 136 个场景有物件、合计 422 条（本轮实测）',
-      len(withobj) == 136 and total == 422,
-      '%d / %d' % (len(withobj), total))
+_ndoor = sum(1 for _s, sc in withobj for e in sc['objects']
+             if (II.classify(e.get('src')) or {}).get('kind') == DOOR_KIND)
+_6n = sum(1 for _s, sc in withobj for e in sc['objects']
+          if (II.classify(e.get('src')) or {}).get('kind') in WANT_KINDS)
+_6s = sum(1 for _s, sc in withobj
+          if any((II.classify(e.get('src')) or {}).get('kind') in WANT_KINDS
+                 for e in sc['objects']))
+check('A1 227 场景 / 970 条（= 第121轮的 %d/%d + 第122轮的门 %d）'
+      % (BASE_N, BASE_TOTAL, _ndoor),
+      len(withobj) == 227 and total == 970 and _ndoor == 548,
+      '%d / %d / door %d' % (len(withobj), total, _ndoor))
+check('A1b ★分账：非 door 的 6 类仍是 %d 场景 / %d 条（加门没有顶替或挤掉别的类）'
+      % (BASE_N, BASE_TOTAL), _6s == BASE_N and _6n == BASE_TOTAL,
+      '%d / %d' % (_6s, _6n))
 
 bad_fields, bad_sprite, bad_pos, bad_depth = [], [], [], []
 for sid, sc in withobj:
@@ -151,29 +195,60 @@ for sid, sc in withobj:
         kinds[rec['kind']] += 1
         if rec['kind'] in BANNED_KINDS:
             banned.append((sid, src, rec['kind']))
-        elif rec['kind'] not in WANT_KINDS:
+        elif rec['kind'] not in WANT_KINDS and rec['kind'] != DOOR_KIND:
             banned.append((sid, src, rec['kind']))
 check('B1 每条 `src` 都在 ut 的 objmap 里', not unknown, repr(unknown[:3]))
-check('B2 每条都命中允许的 6 类；`door` / `cutscene` 一个都不许出现（待路由那轮再做）',
+check('B2 每条都命中 6 类或 `door`；`cutscene` 一个都不许出现（`build_props` 落 else 丢弃）',
       not banned, repr(banned[:3]))
-check('B3 分类分布 == 本轮实测（readable 350 / sign 34 / savepoint 33 / pickup 3 / '
-      'fountain 1 / interactable 1）',
+check('B3 分类分布 == 实测（readable 350 / sign 34 / savepoint 33 / pickup 3 / '
+      'fountain 1 / interactable 1 / door 548）',
       dict(kinds) == {'readable': 350, 'sign': 34, 'savepoint': 33,
-                      'pickup': 3, 'fountain': 1, 'interactable': 1},
+                      'pickup': 3, 'fountain': 1, 'interactable': 1,
+                      'door': 548},
       repr(dict(sorted(kinds.items(), key=lambda kv: -kv[1]))))
+# ★★ B2b 第122轮：门与路由表**双射**（两个方向都要，缺一个方向就等于没守）
+#   ① 写进 objects 的每一扇门，都必须在路由表里有 (房间,对象) ⇒ 不会有点不动的门
+#   ② 路由表里的每一条 ut 规则，都必须在 `objects` 里有对应的门 ⇒ 不会有幽灵规则
+_dead = []
+for sid, sc in withobj:
+    rn = scenes[sid].get('name')
+    for e in sc['objects']:
+        if (II.classify(e.get('src')) or {}).get('kind') != DOOR_KIND:
+            continue
+        if (rn, e['src']) not in ROUTED:
+            _dead.append((sid, e['src']))
+_have = set()
+for sid, sc in withobj:
+    rn = scenes[sid].get('name')
+    for e in sc['objects']:
+        if (II.classify(e.get('src')) or {}).get('kind') == DOOR_KIND:
+            _have.add((rn, e['src']))
+_ghost = sorted(ROUTED - _have)
+check('B2b ★门与路由表**双射**：objects 里的门 %d 组全有目标（点不动的 %d）／'
+      '路由表 %d 组全在场（幽灵规则 %d）'
+      % (len(_have), len(_dead), len(ROUTED), len(_ghost)),
+      not _dead and not _ghost and len(_have) == len(ROUTED) == 243,
+      repr((_dead[:3], _ghost[:3])))
 
 print()
 print('== C. 位置全量复算（本轮最硬的一条）==')
 
 
 def expect(room_name):
-    u"""按第120轮的同一套口径重算该房间该有哪些物件、各自 pos 是多少。"""
+    u"""按第120轮的同一套口径重算该房间该有哪些物件、各自 pos 是多少。
+
+    ★★ 第122轮：门也在里面，但**只算"路由表里有目标"的那批**（与生成器同一个
+      准入规则，独立重推一遍 —— 见 `_routed_doors` 的 docstring）。
+    """
     out = []
     for it in insts.get(room_name, []):
         rec = II.classify(it['obj'])
         if not rec or rec['kind'] in II.NON_INTERACTIVE_KINDS:
             continue
-        if rec['kind'] not in WANT_KINDS:
+        if rec['kind'] == DOOR_KIND:
+            if (room_name, it['obj']) not in ROUTED:
+                continue
+        elif rec['kind'] not in WANT_KINDS:
             continue
         ox, oy = origin.get(objmap.get(it['obj'], {}).get('spr', ''), (0, 0))
         out.append({'pos': [it['x'] - ox, it['y'] - oy], 'sprite': None,
@@ -210,8 +285,8 @@ if withobj:
 
 print()
 print('== D. 防回滚 ==')
-check('D1 有物件的场景数 ≥ 136（防批量清空）', len(withobj) >= 136, str(len(withobj)))
-check('D2 条目总数 ≥ 422（防批量删条目）', total >= 422, str(total))
+check('D1 有物件的场景数 ≥ 227（防批量清空）', len(withobj) >= 227, str(len(withobj)))
+check('D2 条目总数 ≥ 970（防批量删条目）', total >= 970, str(total))
 check('D3 场景总数仍是 358（objects 改动不许连带改场景表结构）',
       len(scenes) == 358, str(len(scenes)))
 

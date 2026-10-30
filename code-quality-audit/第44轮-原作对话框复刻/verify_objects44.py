@@ -146,8 +146,8 @@ ONESHOT_OBJ_TOTAL = 7804
 #     否则会把黄魂整块静默剔掉（A2d 正/负控制就是钉这个）。
 RE_UT_ZONE = re.compile(r'^_zone\.ut\.')
 UT_SCENES = 358
-UT_SCENES_WITH_OBJ = 136
-UT_OBJ_TOTAL = 422
+UT_SCENES_WITH_OBJ = 227
+UT_OBJ_TOTAL = 970
 
 PASS = 0
 FAIL = 0

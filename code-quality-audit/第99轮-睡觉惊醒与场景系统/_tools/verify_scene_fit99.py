@@ -718,11 +718,12 @@ def sec_g():
         with open(_utf, 'r', encoding='utf-8') as fh:
             _ut_ids = set((json.load(fh).get('scenes') or {}))
     _stray_none = sorted(none_sids - _ut_ids)
-    ok(not oth and _n_none == 422 and not _stray_none and bool(_ut_ids),
+    ok(not oth and _n_none == 970 and not _stray_none and bool(_ut_ids),
        'G24c `sprite` 只有三种合法形态：`objs/` / `oneshot_cells/` / **None**'
-       '（ut 那 %d 条可交互物 = 画面已在背景里，不重复绘制）；'
+       '（ut 那 %d 条 = 第121轮的 422 条可交互物 + 第122轮的 548 扇门，'
+       '画面都已在背景里，不重复绘制）；'
        '其他命名空间 %s / None 条数 %d / 落在非 ut 场景的 %s'
-       % (422, oth[:3], _n_none, _stray_none[:3]))
+       % (970, oth[:3], _n_none, _stray_none[:3]))
     _diff = sorted(seen ^ set(_HIDDEN_SRC_SEEN))
     ok(_diff == [],
        'G25 过滤面 **恰好**是那 46 个触发器名（多/少都报红；差异=%s）'

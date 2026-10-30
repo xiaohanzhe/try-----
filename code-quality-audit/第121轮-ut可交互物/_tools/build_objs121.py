@@ -56,9 +56,13 @@ import bake120 as B              # noqa: E402  复用第120轮的载入器（不
 import item_interact as II       # noqa: E402  复用产品的分类器（不写第二份 kind 表）
 
 ZONE = os.path.join(REPO, 'ralsei_pet', 'assets', 'scenes', '_zone.ut.rooms.json')
+ROUTES = os.path.join(os.path.dirname(ZONE), '_routes.json')
 
 #: 本轮写进 objects 的 kind（见 docstring 第 1 条）
 WANT_KINDS = ('readable', 'sign', 'savepoint', 'pickup', 'fountain', 'interactable')
+
+#: ★★★ 第122轮追加：**门**只在"路由表里有目标"时才写（见 `load_routed_doors`）
+WANT_KINDS_DOOR = ('door',)
 
 #: `pos` 塌缩成一行 —— 与 Deltarune 侧 `gen_objects44` 的排版一致
 _RE_POS = re.compile(r'"pos": \[\s*(-?\d+),\s*(-?\d+)\s*\]')
@@ -84,15 +88,54 @@ def _load_all():
     return rooms, objs, B.load_inst('ut')
 
 
-def build_objects(insts_of_room, objs):
-    u"""一间房的实例 → `objects` 列表（只收 WANT_KINDS）。"""
+def load_routed_doors():
+    u"""`{(房间名, 门对象名)}` —— **只有这些门**才写进 `objects`（第122轮）。
+
+    ★★★ 为什么门要单独一个闸（而不是像其它 6 类那样见着就写）：
+      `build_props` 建门必须先查到目标（`route_for_door`），查不到就**不建**
+      （这是第76轮定下的"不造假门"）。所以一扇**没有目标**的门写进 `objects`
+      等于往数据里塞一条"点不动的物件" —— 与第121轮的口径「只写现在真能用的」
+      直接冲突。⇒ 门的准入条件是「`_routes.json` 里有它的目标」。
+
+    ★ 为什么从 `_original.src_room_name` 取房间名而不是解析 `when_scene`：
+      `when_scene` 是 `ut.rooms.<房间名>`，解析它等于**再实现一遍** id 规则；
+      `_original` 里本来就记着原作房间名（第122轮生成器写的），直接用。
+
+    ★ 读不到路由表 ⇒ 返回空集 ⇒ **一扇门都不写**（不是"全写"）。宁可少写，
+      也不写点不动的门。
+    """
+    try:
+        with io.open(ROUTES, encoding='utf-8', newline='') as f:
+            d = json.load(f)
+    except Exception:
+        return set()
+    out = set()
+    for r in (d.get('routes') or []):
+        if not isinstance(r, dict):
+            continue
+        if not str(r.get('when_scene') or '').startswith('ut.'):
+            continue
+        rn = (r.get('_original') or {}).get('src_room_name')
+        o = r.get('when_src') or 'obj_doorA'
+        if rn and o:
+            out.add((rn, o))
+    return out
+
+
+def build_objects(insts_of_room, objs, kinds=WANT_KINDS):
+    u"""一间房的实例 → `objects` 列表（只收 `kinds` 里的类）。
+
+    ★★ 第122轮：新增 `kinds` 形参（默认仍是本轮那 6 类 ⇒ **本文件行为一字不变**）。
+      起因：第122轮要给 ut 补**门**（`door`），而门的 `pos` 公式与本函数里那条
+      必须**是同一个**（`[x-ox, y-oy]`）；另写一份就是"同一判据两份实现"。
+    """
     out = []
     for it in insts_of_room:
         src = it['obj']
         rec = II.classify(src)
         if not rec or rec['kind'] in II.NON_INTERACTIVE_KINDS:
             continue
-        if rec['kind'] not in WANT_KINDS:
+        if rec['kind'] not in kinds:
             continue
         o = objs.get(src) or {}
         out.append({
@@ -131,8 +174,10 @@ def main(argv):
         if r is not None:
             by_name[r['name']] = items
 
-    stat = {'scenes': 0, 'with': 0, 'entries': 0, 'no_inst': 0}
+    stat = {'scenes': 0, 'with': 0, 'entries': 0, 'no_inst': 0,
+            'door_inst': 0, 'door_written': 0}
     per_kind = {}
+    routed_doors = load_routed_doors()          # ★ 第122轮：门的准入闸
     for sid, sc in scenes.items():
         if not isinstance(sc, dict):
             continue
@@ -143,6 +188,14 @@ def main(argv):
             sc['objects'] = []
             continue
         lst = build_objects(items, objs)
+        # ★★ 第122轮：门单独一遍 —— 只留"路由表里有目标"的那些
+        doors_all = build_objects(items, objs, kinds=WANT_KINDS_DOOR)
+        stat['door_inst'] += len(doors_all)
+        doors = [e for e in doors_all
+                 if (sc.get('name'), e['src']) in routed_doors]
+        stat['door_written'] += len(doors)
+        lst = sorted(lst + doors,
+                     key=lambda e: (e['pos'][1], e['pos'][0], e['src']))
         sc['objects'] = lst
         if lst:
             stat['with'] += 1
@@ -154,6 +207,8 @@ def main(argv):
     print('场景 %d；有实例的房间 %d；无实例（20 个附加场景）%d'
           % (stat['scenes'], stat['scenes'] - stat['no_inst'], stat['no_inst']))
     print('写入 objects 的条目 %d，分布在 %d 个场景' % (stat['entries'], stat['with']))
+    print('门：实例 %d，其中**有路由目标**因而写进 objects 的 %d（其余不写，见 load_routed_doors）'
+          % (stat['door_inst'], stat['door_written']))
     print('按 kind：%s' % dict(sorted(per_kind.items(), key=lambda kv: -kv[1])))
     if dry:
         print('[dry-run] 不写盘')

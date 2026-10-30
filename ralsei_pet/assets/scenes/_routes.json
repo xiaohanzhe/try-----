@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "meta": {
-    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。",
+    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。",
     "how_it_works": [
       "1. 控制器把当前语境打包成 context（scene_id / mood / event / keywords）。",
       "2. scene_routing.match() 按 priority 升序挑第一条匹配规则。",
@@ -15519,6 +15519,3917 @@
         "note": "★ 第109轮重做（沿用第89轮形态）。这一条**不是**原作门位移（桌面不是原作房间），是『桌面作为一个场景』的出口。priority=200 高于原作边的 100~110，与桌面门一一对应；同字母的唯一性靠 when_scene 收窄，不靠 priority。★★ 门做法 = 用户口径「当作原作门一样逐门寻路」（禁瞬移），实现走 request_scene_transition。"
       },
       "_order": 4
+    },
+    {
+      "to": "ut.rooms.room_basement1_final",
+      "priority": 4000,
+      "reason": "原作 GML：房间 room_asghouse1 里的 obj_doorXmusicfade 触发 room_goto(room_basement1_final)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_asghouse1",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_asghouse1",
+        "dst_room_name": "room_basement1_final"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_kitchen_final",
+      "priority": 4001,
+      "reason": "原作 GML：房间 room_asghouse2 里的 obj_door_ruins13 触发 room_goto(room_kitchen_final)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_asghouse2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_asghouse2",
+        "dst_room_name": "room_kitchen_final"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_torhouse1",
+      "priority": 4002,
+      "reason": "原作 GML：房间 room_basement1 里的 obj_door_ruins13 触发 room_goto(room_torhouse1)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_basement1",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_basement1",
+        "dst_room_name": "room_torhouse1"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_asghouse1",
+      "priority": 4003,
+      "reason": "原作 GML：房间 room_basement1_final 里的 obj_doorXmusicfade 触发 room_goto(room_asghouse1)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_basement1_final",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_basement1_final",
+        "dst_room_name": "room_asghouse1"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_finalelevator",
+      "priority": 4004,
+      "reason": "原作 GML：房间 room_castle_elevatorout 里的 obj_door_s_musfade 触发 room_goto(room_fire_finalelevator)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_castle_elevatorout",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_castle_elevatorout",
+        "dst_room_name": "room_fire_finalelevator"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_undertale_end",
+      "priority": 4005,
+      "reason": "原作 GML：房间 room_castle_exit 里的 obj_demodoorA 触发 room_goto(room_undertale_end)（取证 gml_Object_obj_demodoorA_Alarm_2）。",
+      "when_scene": "ut.rooms.room_castle_exit",
+      "when_door": null,
+      "when_src": "obj_demodoorA",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_demodoorA_Alarm_2",
+        "src_room_name": "room_castle_exit",
+        "dst_room_name": "room_undertale_end"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_lastruins_corridor",
+      "priority": 4006,
+      "reason": "原作 GML：房间 room_castle_precastle 里的 obj_door_s_musfade 触发 room_goto(room_lastruins_corridor)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_castle_precastle",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_castle_precastle",
+        "dst_room_name": "room_lastruins_corridor"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_castle_finalshoehorn",
+      "priority": 4007,
+      "reason": "原作 GML：房间 room_castle_throneroom 里的 obj_door_ruins13 触发 room_goto(room_castle_finalshoehorn)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_castle_throneroom",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_castle_throneroom",
+        "dst_room_name": "room_castle_finalshoehorn"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_castle_prebarrier",
+      "priority": 4008,
+      "reason": "原作 GML：房间 room_castle_trueexit 里的 obj_door_ruins13 触发 room_goto(room_castle_prebarrier)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_castle_trueexit",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_castle_trueexit",
+        "dst_room_name": "room_castle_prebarrier"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_sanshouse",
+      "priority": 4009,
+      "reason": "原作 GML：房间 room_dogshrine 里的 obj_doorXmusicfade 触发 room_goto(room_tundra_sanshouse)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_dogshrine",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_dogshrine",
+        "dst_room_name": "room_tundra_sanshouse"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_sanshouse",
+      "priority": 4010,
+      "reason": "原作 GML：房间 room_dogshrine_ruined 里的 obj_doorXmusicfade 触发 room_goto(room_tundra_sanshouse)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_dogshrine_ruined",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_dogshrine_ruined",
+        "dst_room_name": "room_tundra_sanshouse"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_walkandbranch",
+      "priority": 4011,
+      "reason": "原作 GML：房间 room_fire10 里的 obj_door_t 触发 room_goto(room_fire_walkandbranch)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire10",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_fire10",
+        "dst_room_name": "room_fire_walkandbranch"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_turn",
+      "priority": 4012,
+      "reason": "原作 GML：房间 room_fire7 里的 obj_door_t 触发 room_goto(room_fire_turn)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire7",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_fire7",
+        "dst_room_name": "room_fire_turn"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire9",
+      "priority": 4013,
+      "reason": "原作 GML：房间 room_fire7 里的 obj_door_u 触发 room_goto(room_fire9)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire7",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_fire7",
+        "dst_room_name": "room_fire9"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire7",
+      "priority": 4014,
+      "reason": "原作 GML：房间 room_fire9 里的 obj_door_u 触发 room_goto(room_fire7)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire9",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_fire9",
+        "dst_room_name": "room_fire7"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_premett",
+      "priority": 4015,
+      "reason": "原作 GML：房间 room_fire_core1 里的 obj_door_u 触发 room_goto(room_fire_core_premett)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core1",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_fire_core1",
+        "dst_room_name": "room_fire_core_premett"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_branch",
+      "priority": 4016,
+      "reason": "原作 GML：房间 room_fire_core_bottomright 里的 obj_door_u 触发 room_goto(room_fire_core_branch)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_bottomright",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_fire_core_bottomright",
+        "dst_room_name": "room_fire_core_branch"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_center",
+      "priority": 4017,
+      "reason": "原作 GML：房间 room_fire_core_branch 里的 obj_door_ruins13 触发 room_goto(room_fire_core_center)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_branch",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_branch",
+        "dst_room_name": "room_fire_core_center"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_bottomright",
+      "priority": 4018,
+      "reason": "原作 GML：房间 room_fire_core_branch 里的 obj_door_u 触发 room_goto(room_fire_core_bottomright)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_branch",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_fire_core_branch",
+        "dst_room_name": "room_fire_core_bottomright"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_right",
+      "priority": 4019,
+      "reason": "原作 GML：房间 room_fire_core_bridge 里的 obj_door_ruins13 触发 room_goto(room_fire_core_right)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_bridge",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_bridge",
+        "dst_room_name": "room_fire_core_right"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_branch",
+      "priority": 4020,
+      "reason": "原作 GML：房间 room_fire_core_center 里的 obj_door_ruins13 触发 room_goto(room_fire_core_branch)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_center",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_center",
+        "dst_room_name": "room_fire_core_branch"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_top",
+      "priority": 4021,
+      "reason": "原作 GML：房间 room_fire_core_center 里的 obj_door_u 触发 room_goto(room_fire_core_top)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_center",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_fire_core_center",
+        "dst_room_name": "room_fire_core_top"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_finalelevator",
+      "priority": 4022,
+      "reason": "原作 GML：房间 room_fire_core_final 里的 obj_door_s_musfade 触发 room_goto(room_fire_finalelevator)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_final",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_fire_core_final",
+        "dst_room_name": "room_fire_finalelevator"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_shootguy_5",
+      "priority": 4023,
+      "reason": "原作 GML：房间 room_fire_core_left 里的 obj_door_ruins13 触发 room_goto(room_fire_shootguy_5)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_left",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_left",
+        "dst_room_name": "room_fire_shootguy_5"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core1",
+      "priority": 4024,
+      "reason": "原作 GML：房间 room_fire_core_premett 里的 obj_door_u 触发 room_goto(room_fire_core1)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_premett",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_fire_core_premett",
+        "dst_room_name": "room_fire_core1"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_bridge",
+      "priority": 4025,
+      "reason": "原作 GML：房间 room_fire_core_right 里的 obj_door_ruins13 触发 room_goto(room_fire_core_bridge)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_right",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_right",
+        "dst_room_name": "room_fire_core_bridge"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_warrior",
+      "priority": 4026,
+      "reason": "原作 GML：房间 room_fire_core_top 里的 obj_door_ruins13 触发 room_goto(room_fire_core_warrior)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_top",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_top",
+        "dst_room_name": "room_fire_core_warrior"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_center",
+      "priority": 4027,
+      "reason": "原作 GML：房间 room_fire_core_top 里的 obj_door_u 触发 room_goto(room_fire_core_center)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_top",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_fire_core_top",
+        "dst_room_name": "room_fire_core_center"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_treasureleft",
+      "priority": 4028,
+      "reason": "原作 GML：房间 room_fire_core_topleft 里的 obj_door_ruins13 触发 room_goto(room_fire_core_treasureleft)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_topleft",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_topleft",
+        "dst_room_name": "room_fire_core_treasureleft"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_treasureright",
+      "priority": 4029,
+      "reason": "原作 GML：房间 room_fire_core_topright 里的 obj_door_ruins13 触发 room_goto(room_fire_core_treasureright)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_topright",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_topright",
+        "dst_room_name": "room_fire_core_treasureright"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_topleft",
+      "priority": 4030,
+      "reason": "原作 GML：房间 room_fire_core_treasureleft 里的 obj_door_ruins13 触发 room_goto(room_fire_core_topleft)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_treasureleft",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_treasureleft",
+        "dst_room_name": "room_fire_core_topleft"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_topright",
+      "priority": 4031,
+      "reason": "原作 GML：房间 room_fire_core_treasureright 里的 obj_door_ruins13 触发 room_goto(room_fire_core_topright)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_treasureright",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_treasureright",
+        "dst_room_name": "room_fire_core_topright"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_top",
+      "priority": 4032,
+      "reason": "原作 GML：房间 room_fire_core_warrior 里的 obj_door_ruins13 触发 room_goto(room_fire_core_top)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_core_warrior",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_core_warrior",
+        "dst_room_name": "room_fire_core_top"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_elevator",
+      "priority": 4033,
+      "reason": "原作 GML：房间 room_fire_elevator_l1 里的 obj_door_s_musfade 触发 room_goto(room_fire_elevator)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_elevator_l1",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_fire_elevator_l1",
+        "dst_room_name": "room_fire_elevator"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_prelab",
+      "priority": 4034,
+      "reason": "原作 GML：房间 room_fire_elevator_l1 里的 obj_door_t 触发 room_goto(room_fire_prelab)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_elevator_l1",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_fire_elevator_l1",
+        "dst_room_name": "room_fire_prelab"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_elevator",
+      "priority": 4035,
+      "reason": "原作 GML：房间 room_fire_elevator_l2 里的 obj_door_s_musfade 触发 room_goto(room_fire_elevator)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_elevator_l2",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_fire_elevator_l2",
+        "dst_room_name": "room_fire_elevator"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_elevator",
+      "priority": 4036,
+      "reason": "原作 GML：房间 room_fire_elevator_l3 里的 obj_door_s_musfade 触发 room_goto(room_fire_elevator)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_elevator_l3",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_fire_elevator_l3",
+        "dst_room_name": "room_fire_elevator"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_elevator",
+      "priority": 4037,
+      "reason": "原作 GML：房间 room_fire_elevator_r1 里的 obj_door_s_musfade 触发 room_goto(room_fire_elevator)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_elevator_r1",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_fire_elevator_r1",
+        "dst_room_name": "room_fire_elevator"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_elevator",
+      "priority": 4038,
+      "reason": "原作 GML：房间 room_fire_elevator_r2 里的 obj_door_s_musfade 触发 room_goto(room_fire_elevator)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_elevator_r2",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_fire_elevator_r2",
+        "dst_room_name": "room_fire_elevator"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_hotelfront_1",
+      "priority": 4039,
+      "reason": "原作 GML：房间 room_fire_elevator_r3 里的 obj_door_ruins13 触发 room_goto(room_fire_hotelfront_1)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_elevator_r3",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_elevator_r3",
+        "dst_room_name": "room_fire_hotelfront_1"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_elevator",
+      "priority": 4040,
+      "reason": "原作 GML：房间 room_fire_elevator_r3 里的 obj_door_s_musfade 触发 room_goto(room_fire_elevator)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_elevator_r3",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_fire_elevator_r3",
+        "dst_room_name": "room_fire_elevator"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_elevator_r3",
+      "priority": 4041,
+      "reason": "原作 GML：房间 room_fire_hotelfront_1 里的 obj_door_ruins13 触发 room_goto(room_fire_elevator_r3)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_hotelfront_1",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_hotelfront_1",
+        "dst_room_name": "room_fire_elevator_r3"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_precore",
+      "priority": 4042,
+      "reason": "原作 GML：房间 room_fire_hotellobby 里的 obj_doorXmusicfade 触发 room_goto(room_fire_precore)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_hotellobby",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_fire_hotellobby",
+        "dst_room_name": "room_fire_precore"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_shop4",
+      "priority": 4043,
+      "reason": "原作 GML：房间 room_fire_hotellobby 里的 obj_door_s_musfade 触发 room_goto(room_shop4)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_hotellobby",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_fire_hotellobby",
+        "dst_room_name": "room_shop4"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_lab1",
+      "priority": 4044,
+      "reason": "原作 GML：房间 room_fire_labelevator 里的 obj_door_s_musfade 触发 room_goto(room_fire_lab1)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_labelevator",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_fire_labelevator",
+        "dst_room_name": "room_fire_lab1"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_hotellobby",
+      "priority": 4045,
+      "reason": "原作 GML：房间 room_fire_precore 里的 obj_doorXmusicfade 触发 room_goto(room_fire_hotellobby)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_precore",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_fire_precore",
+        "dst_room_name": "room_fire_hotellobby"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_elevator_l1",
+      "priority": 4046,
+      "reason": "原作 GML：房间 room_fire_prelab 里的 obj_door_t 触发 room_goto(room_fire_elevator_l1)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_prelab",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_fire_prelab",
+        "dst_room_name": "room_fire_elevator_l1"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_walkandbranch2",
+      "priority": 4047,
+      "reason": "原作 GML：房间 room_fire_preshootguy4 里的 obj_door_t 触发 room_goto(room_fire_walkandbranch2)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_preshootguy4",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_fire_preshootguy4",
+        "dst_room_name": "room_fire_walkandbranch2"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_walkandbranch2",
+      "priority": 4048,
+      "reason": "原作 GML：房间 room_fire_savepoint2 里的 obj_door_ruins13 触发 room_goto(room_fire_walkandbranch2)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_savepoint2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_savepoint2",
+        "dst_room_name": "room_fire_walkandbranch2"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_left",
+      "priority": 4049,
+      "reason": "原作 GML：房间 room_fire_shootguy_5 里的 obj_door_ruins13 触发 room_goto(room_fire_core_left)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_shootguy_5",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_shootguy_5",
+        "dst_room_name": "room_fire_core_left"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire7",
+      "priority": 4050,
+      "reason": "原作 GML：房间 room_fire_turn 里的 obj_door_t 触发 room_goto(room_fire7)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_turn",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_fire_turn",
+        "dst_room_name": "room_fire7"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire10",
+      "priority": 4051,
+      "reason": "原作 GML：房间 room_fire_walkandbranch 里的 obj_door_t 触发 room_goto(room_fire10)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_walkandbranch",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_fire_walkandbranch",
+        "dst_room_name": "room_fire10"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_savepoint2",
+      "priority": 4052,
+      "reason": "原作 GML：房间 room_fire_walkandbranch2 里的 obj_door_ruins13 触发 room_goto(room_fire_savepoint2)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_walkandbranch2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_fire_walkandbranch2",
+        "dst_room_name": "room_fire_savepoint2"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_preshootguy4",
+      "priority": 4053,
+      "reason": "原作 GML：房间 room_fire_walkandbranch2 里的 obj_door_t 触发 room_goto(room_fire_preshootguy4)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fire_walkandbranch2",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_fire_walkandbranch2",
+        "dst_room_name": "room_fire_preshootguy4"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_town",
+      "priority": 4054,
+      "reason": "原作 GML：房间 room_fogroom 里的 obj_doorXmusicfade 触发 room_goto(room_tundra_town)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_fogroom",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_fogroom",
+        "dst_room_name": "room_tundra_town"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_iceexit",
+      "priority": 4055,
+      "reason": "原作 GML：房间 room_icecave1 里的 obj_doorXmusicfade 触发 room_goto(room_tundra_iceexit)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_icecave1",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_icecave1",
+        "dst_room_name": "room_tundra_iceexit"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_torhouse2",
+      "priority": 4056,
+      "reason": "原作 GML：房间 room_kitchen 里的 obj_door_ruins13 触发 room_goto(room_torhouse2)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_kitchen",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_kitchen",
+        "dst_room_name": "room_torhouse2"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_asghouse2",
+      "priority": 4057,
+      "reason": "原作 GML：房间 room_kitchen_final 里的 obj_door_ruins13 触发 room_goto(room_asghouse2)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_kitchen_final",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_kitchen_final",
+        "dst_room_name": "room_asghouse2"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_castle_precastle",
+      "priority": 4058,
+      "reason": "原作 GML：房间 room_lastruins_corridor 里的 obj_door_s_musfade 触发 room_goto(room_castle_precastle)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_lastruins_corridor",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_lastruins_corridor",
+        "dst_room_name": "room_castle_precastle"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_fakehallway",
+      "priority": 4059,
+      "reason": "原作 GML：房间 room_mysteryman 里的 obj_door_s_musfade 触发 room_goto(room_water_fakehallway)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_mysteryman",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_mysteryman",
+        "dst_room_name": "room_water_fakehallway"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins13",
+      "priority": 4060,
+      "reason": "原作 GML：房间 room_ruins12 里的 obj_door_ruins13 触发 room_goto(room_ruins13)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_ruins12",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_ruins12",
+        "dst_room_name": "room_ruins13"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins12",
+      "priority": 4061,
+      "reason": "原作 GML：房间 room_ruins13 里的 obj_door_ruins13 触发 room_goto(room_ruins12)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_ruins13",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_ruins13",
+        "dst_room_name": "room_ruins12"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins15A",
+      "priority": 4062,
+      "reason": "原作 GML：房间 room_ruins15E 里的 obj_door_ruins13 触发 room_goto(room_ruins15A)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_ruins15E",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_ruins15E",
+        "dst_room_name": "room_ruins15A"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins19",
+      "priority": 4063,
+      "reason": "原作 GML：房间 room_ruins16 里的 obj_door_ruins13 触发 room_goto(room_ruins19)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_ruins16",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_ruins16",
+        "dst_room_name": "room_ruins19"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins16",
+      "priority": 4064,
+      "reason": "原作 GML：房间 room_ruins19 里的 obj_door_ruins13 触发 room_goto(room_ruins16)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_ruins19",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_ruins19",
+        "dst_room_name": "room_ruins16"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_undertale",
+      "priority": 4065,
+      "reason": "原作 GML：房间 room_ruinsexit 里的 obj_demodoorA 触发 room_goto(room_undertale)（取证 gml_Object_obj_demodoorA_Alarm_2）。",
+      "when_scene": "ut.rooms.room_ruinsexit",
+      "when_door": null,
+      "when_src": "obj_demodoorA",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_demodoorA_Alarm_2",
+        "src_room_name": "room_ruinsexit",
+        "dst_room_name": "room_undertale"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_kitchen",
+      "priority": 4066,
+      "reason": "原作 GML：房间 room_torhouse2 里的 obj_door_ruins13 触发 room_goto(room_kitchen)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_torhouse2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_torhouse2",
+        "dst_room_name": "room_kitchen"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_hall3",
+      "priority": 4067,
+      "reason": "原作 GML：房间 room_truelab_bedroom 里的 obj_door_t 触发 room_goto(room_truelab_hall3)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_truelab_bedroom",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_truelab_bedroom",
+        "dst_room_name": "room_truelab_hall3"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_hub",
+      "priority": 4068,
+      "reason": "原作 GML：房间 room_truelab_castle_elevator 里的 obj_door_s_musfade 触发 room_goto(room_truelab_hub)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_truelab_castle_elevator",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_truelab_castle_elevator",
+        "dst_room_name": "room_truelab_hub"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_hall3",
+      "priority": 4069,
+      "reason": "原作 GML：房间 room_truelab_fan 里的 obj_door_u 触发 room_goto(room_truelab_hall3)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_truelab_fan",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_truelab_fan",
+        "dst_room_name": "room_truelab_hall3"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_bedroom",
+      "priority": 4070,
+      "reason": "原作 GML：房间 room_truelab_hall3 里的 obj_door_t 触发 room_goto(room_truelab_bedroom)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_truelab_hall3",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_truelab_hall3",
+        "dst_room_name": "room_truelab_bedroom"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_fan",
+      "priority": 4071,
+      "reason": "原作 GML：房间 room_truelab_hall3 里的 obj_door_u 触发 room_goto(room_truelab_fan)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_truelab_hall3",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_truelab_hall3",
+        "dst_room_name": "room_truelab_fan"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_castle_elevator",
+      "priority": 4072,
+      "reason": "原作 GML：房间 room_truelab_hub 里的 obj_door_s_musfade 触发 room_goto(room_truelab_castle_elevator)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_truelab_hub",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_truelab_hub",
+        "dst_room_name": "room_truelab_castle_elevator"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_prebed",
+      "priority": 4073,
+      "reason": "原作 GML：房间 room_truelab_hub 里的 obj_door_t 触发 room_goto(room_truelab_prebed)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_truelab_hub",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_truelab_hub",
+        "dst_room_name": "room_truelab_prebed"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_hub",
+      "priority": 4074,
+      "reason": "原作 GML：房间 room_truelab_prebed 里的 obj_door_t 触发 room_goto(room_truelab_hub)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_truelab_prebed",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_truelab_prebed",
+        "dst_room_name": "room_truelab_hub"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_town",
+      "priority": 4075,
+      "reason": "原作 GML：房间 room_tundra_garage 里的 obj_door_v 触发 room_goto(room_tundra_town)（取证 gml_Object_obj_door_v_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_garage",
+      "when_door": null,
+      "when_src": "obj_door_v",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_v_Alarm_2",
+        "src_room_name": "room_tundra_garage",
+        "dst_room_name": "room_tundra_town"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_town",
+      "priority": 4076,
+      "reason": "原作 GML：房间 room_tundra_grillby 里的 obj_door_w 触发 room_goto(room_tundra_town)（取证 gml_Object_obj_door_w_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_grillby",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "room_tundra_grillby",
+        "dst_room_name": "room_tundra_town"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_poffzone",
+      "priority": 4077,
+      "reason": "原作 GML：房间 room_tundra_iceentrance 里的 obj_door_ruins13 触发 room_goto(room_tundra_poffzone)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_iceentrance",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_tundra_iceentrance",
+        "dst_room_name": "room_tundra_poffzone"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_icecave1",
+      "priority": 4078,
+      "reason": "原作 GML：房间 room_tundra_iceexit 里的 obj_doorXmusicfade 触发 room_goto(room_icecave1)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_iceexit",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_tundra_iceexit",
+        "dst_room_name": "room_icecave1"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_town",
+      "priority": 4079,
+      "reason": "原作 GML：房间 room_tundra_inn 里的 obj_door_t 触发 room_goto(room_tundra_town)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_inn",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_tundra_inn",
+        "dst_room_name": "room_tundra_town"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_town",
+      "priority": 4080,
+      "reason": "原作 GML：房间 room_tundra_library 里的 obj_door_u 触发 room_goto(room_tundra_town)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_library",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_tundra_library",
+        "dst_room_name": "room_tundra_town"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_iceentrance",
+      "priority": 4081,
+      "reason": "原作 GML：房间 room_tundra_poffzone 里的 obj_door_ruins13 触发 room_goto(room_tundra_iceentrance)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_poffzone",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_tundra_poffzone",
+        "dst_room_name": "room_tundra_iceentrance"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_town",
+      "priority": 4082,
+      "reason": "原作 GML：房间 room_tundra_sansbasement 里的 obj_door_s_musfade 触发 room_goto(room_tundra_town)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_sansbasement",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_tundra_sansbasement",
+        "dst_room_name": "room_tundra_town"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_town",
+      "priority": 4083,
+      "reason": "原作 GML：房间 room_tundra_sanshouse 里的 obj_door_s_musfade 触发 room_goto(room_tundra_town)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_sanshouse",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_tundra_sanshouse",
+        "dst_room_name": "room_tundra_town"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_sanshouse",
+      "priority": 4084,
+      "reason": "原作 GML：房间 room_tundra_sansroom 里的 obj_door_t 触发 room_goto(room_tundra_sanshouse)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_sansroom",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_tundra_sansroom",
+        "dst_room_name": "room_tundra_sanshouse"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_sanshouse",
+      "priority": 4085,
+      "reason": "原作 GML：房间 room_tundra_sansroom_dark 里的 obj_door_t 触发 room_goto(room_tundra_sanshouse)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_sansroom_dark",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_tundra_sansroom_dark",
+        "dst_room_name": "room_tundra_sanshouse"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_inn",
+      "priority": 4086,
+      "reason": "原作 GML：房间 room_tundra_town 里的 obj_door_t 触发 room_goto(room_tundra_inn)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_town",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_tundra_town",
+        "dst_room_name": "room_tundra_inn"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_library",
+      "priority": 4087,
+      "reason": "原作 GML：房间 room_tundra_town 里的 obj_door_u 触发 room_goto(room_tundra_library)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_town",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_tundra_town",
+        "dst_room_name": "room_tundra_library"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_grillby",
+      "priority": 4088,
+      "reason": "原作 GML：房间 room_tundra_town 里的 obj_door_w 触发 room_goto(room_tundra_grillby)（取证 gml_Object_obj_door_w_Alarm_2）。",
+      "when_scene": "ut.rooms.room_tundra_town",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "room_tundra_town",
+        "dst_room_name": "room_tundra_grillby"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_bird",
+      "priority": 4089,
+      "reason": "原作 GML：房间 room_water11 里的 obj_door_t 触发 room_goto(room_water_bird)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water11",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_water11",
+        "dst_room_name": "room_water_bird"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water11",
+      "priority": 4090,
+      "reason": "原作 GML：房间 room_water12 里的 obj_door_ruins13 触发 room_goto(room_water11)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water12",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_water12",
+        "dst_room_name": "room_water11"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_bird",
+      "priority": 4091,
+      "reason": "原作 GML：房间 room_water12 里的 obj_door_t 触发 room_goto(room_water_bird)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water12",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_water12",
+        "dst_room_name": "room_water_bird"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_onionsan",
+      "priority": 4092,
+      "reason": "原作 GML：房间 room_water12 里的 obj_door_w 触发 room_goto(room_water_onionsan)（取证 gml_Object_obj_door_w_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water12",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "room_water12",
+        "dst_room_name": "room_water_onionsan"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water12",
+      "priority": 4093,
+      "reason": "原作 GML：房间 room_water13 里的 obj_door_u 触发 room_goto(room_water12)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water13",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_water13",
+        "dst_room_name": "room_water12"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_friendlyhub",
+      "priority": 4094,
+      "reason": "原作 GML：房间 room_water_bird 里的 obj_door_s_musfade 触发 room_goto(room_water_friendlyhub)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_bird",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_water_bird",
+        "dst_room_name": "room_water_friendlyhub"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water11",
+      "priority": 4095,
+      "reason": "原作 GML：房间 room_water_bird 里的 obj_door_t 触发 room_goto(room_water11)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_bird",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_water_bird",
+        "dst_room_name": "room_water11"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_farm",
+      "priority": 4096,
+      "reason": "原作 GML：房间 room_water_blookyard 里的 obj_door_s_musfade 触发 room_goto(room_water_farm)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_blookyard",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_water_blookyard",
+        "dst_room_name": "room_water_farm"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_friendlyhub",
+      "priority": 4097,
+      "reason": "原作 GML：房间 room_water_blookyard 里的 obj_door_w 触发 room_goto(room_water_friendlyhub)（取证 gml_Object_obj_door_w_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_blookyard",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "room_water_blookyard",
+        "dst_room_name": "room_water_friendlyhub"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_savepoint1",
+      "priority": 4098,
+      "reason": "原作 GML：房间 room_water_fakehallway 里的 obj_door_ruins13 触发 room_goto(room_water_savepoint1)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_fakehallway",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_water_fakehallway",
+        "dst_room_name": "room_water_savepoint1"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water11",
+      "priority": 4099,
+      "reason": "原作 GML：房间 room_water_fakehallway 里的 obj_door_u 触发 room_goto(room_water11)（取证 gml_Object_obj_door_u_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_fakehallway",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "room_water_fakehallway",
+        "dst_room_name": "room_water11"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_blookyard",
+      "priority": 4100,
+      "reason": "原作 GML：房间 room_water_farm 里的 obj_door_s_musfade 触发 room_goto(room_water_blookyard)（取证 gml_Object_obj_door_s_musfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_farm",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "room_water_farm",
+        "dst_room_name": "room_water_blookyard"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_friendlyhub",
+      "priority": 4101,
+      "reason": "原作 GML：房间 room_water_farm 里的 obj_door_v 触发 room_goto(room_water_friendlyhub)（取证 gml_Object_obj_door_v_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_farm",
+      "when_door": null,
+      "when_src": "obj_door_v",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_v_Alarm_2",
+        "src_room_name": "room_water_farm",
+        "dst_room_name": "room_water_friendlyhub"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_shop",
+      "priority": 4102,
+      "reason": "原作 GML：房间 room_water_friendlyhub 里的 obj_door_t 触发 room_goto(room_water_shop)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_friendlyhub",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_water_friendlyhub",
+        "dst_room_name": "room_water_shop"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_farm",
+      "priority": 4103,
+      "reason": "原作 GML：房间 room_water_friendlyhub 里的 obj_door_v 触发 room_goto(room_water_farm)（取证 gml_Object_obj_door_v_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_friendlyhub",
+      "when_door": null,
+      "when_src": "obj_door_v",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_v_Alarm_2",
+        "src_room_name": "room_water_friendlyhub",
+        "dst_room_name": "room_water_farm"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_blookyard",
+      "priority": 4104,
+      "reason": "原作 GML：房间 room_water_friendlyhub 里的 obj_door_w 触发 room_goto(room_water_blookyard)（取证 gml_Object_obj_door_w_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_friendlyhub",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "room_water_friendlyhub",
+        "dst_room_name": "room_water_blookyard"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water12",
+      "priority": 4105,
+      "reason": "原作 GML：房间 room_water_onionsan 里的 obj_door_w 触发 room_goto(room_water12)（取证 gml_Object_obj_door_w_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_onionsan",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "room_water_onionsan",
+        "dst_room_name": "room_water12"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_bird",
+      "priority": 4106,
+      "reason": "原作 GML：房间 room_water_prebird 里的 obj_door_ruins13 触发 room_goto(room_water_bird)（取证 gml_Object_obj_door_ruins13_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_prebird",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "room_water_prebird",
+        "dst_room_name": "room_water_bird"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_shop2",
+      "priority": 4107,
+      "reason": "原作 GML：房间 room_water_shop 里的 obj_doorXmusicfade 触发 room_goto(room_shop2)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_shop",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_water_shop",
+        "dst_room_name": "room_shop2"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_friendlyhub",
+      "priority": 4108,
+      "reason": "原作 GML：房间 room_water_shop 里的 obj_door_t 触发 room_goto(room_water_friendlyhub)（取证 gml_Object_obj_door_t_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_shop",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "room_water_shop",
+        "dst_room_name": "room_water_friendlyhub"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_shop5",
+      "priority": 4109,
+      "reason": "原作 GML：房间 room_water_temvillage 里的 obj_doorXmusicfade 触发 room_goto(room_shop5)（取证 gml_Object_obj_doorXmusicfade_Alarm_2）。",
+      "when_scene": "ut.rooms.room_water_temvillage",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "kind": "ut_door_src",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "room_water_temvillage",
+        "dst_room_name": "room_shop5"
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_area1_2",
+      "priority": 4110,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_area1（下标 4）→ room_area1_2（下标 5）。",
+      "when_scene": "ut.rooms.room_area1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_area1",
+        "dst_room_name": "room_area1_2",
+        "src_room_id": 4,
+        "dst_room_id": 5,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_asghouse2",
+      "priority": 4111,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_asghouse1（下标 220）→ room_asghouse2（下标 221）。",
+      "when_scene": "ut.rooms.room_asghouse1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_asghouse1",
+        "dst_room_name": "room_asghouse2",
+        "src_room_id": 220,
+        "dst_room_id": 221,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_asgoreroom",
+      "priority": 4112,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_asghouse3（下标 222）→ room_asgoreroom（下标 223）。",
+      "when_scene": "ut.rooms.room_asghouse3",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_asghouse3",
+        "dst_room_name": "room_asgoreroom",
+        "src_room_id": 222,
+        "dst_room_id": 223,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_basement2",
+      "priority": 4113,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_basement1（下标 38）→ room_basement2（下标 39）。",
+      "when_scene": "ut.rooms.room_basement1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_basement1",
+        "dst_room_name": "room_basement2",
+        "src_room_id": 38,
+        "dst_room_id": 39,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_basement2_final",
+      "priority": 4114,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_basement1_final（下标 226）→ room_basement2_final（下标 227）。",
+      "when_scene": "ut.rooms.room_basement1_final",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_basement1_final",
+        "dst_room_name": "room_basement2_final",
+        "src_room_id": 226,
+        "dst_room_id": 227,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_basement3",
+      "priority": 4115,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_basement2（下标 39）→ room_basement3（下标 40）。",
+      "when_scene": "ut.rooms.room_basement2",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_basement2",
+        "dst_room_name": "room_basement3",
+        "src_room_id": 39,
+        "dst_room_id": 40,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_basement3_final",
+      "priority": 4116,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_basement2_final（下标 227）→ room_basement3_final（下标 228）。",
+      "when_scene": "ut.rooms.room_basement2_final",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_basement2_final",
+        "dst_room_name": "room_basement3_final",
+        "src_room_id": 227,
+        "dst_room_id": 228,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_basement4",
+      "priority": 4117,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_basement3（下标 40）→ room_basement4（下标 41）。",
+      "when_scene": "ut.rooms.room_basement3",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_basement3",
+        "dst_room_name": "room_basement4",
+        "src_room_id": 40,
+        "dst_room_id": 41,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_basement4_final",
+      "priority": 4118,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_basement3_final（下标 228）→ room_basement4_final（下标 229）。",
+      "when_scene": "ut.rooms.room_basement3_final",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_basement3_final",
+        "dst_room_name": "room_basement4_final",
+        "src_room_id": 228,
+        "dst_room_id": 229,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_lastruins_corridor",
+      "priority": 4119,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_basement4_final（下标 229）→ room_lastruins_corridor（下标 230）。",
+      "when_scene": "ut.rooms.room_basement4_final",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_basement4_final",
+        "dst_room_name": "room_lastruins_corridor",
+        "src_room_id": 229,
+        "dst_room_id": 230,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruinsexit",
+      "priority": 4120,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_basement5（下标 42）→ room_ruinsexit（下标 43）。",
+      "when_scene": "ut.rooms.room_basement5",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_basement5",
+        "dst_room_name": "room_ruinsexit",
+        "src_room_id": 42,
+        "dst_room_id": 43,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_castle_coffins2",
+      "priority": 4121,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_castle_coffins1（下标 233）→ room_castle_coffins2（下标 234）。",
+      "when_scene": "ut.rooms.room_castle_coffins1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_castle_coffins1",
+        "dst_room_name": "room_castle_coffins2",
+        "src_room_id": 233,
+        "dst_room_id": 234,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_castle_precastle",
+      "priority": 4122,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_castle_elevatorout（下标 216）→ room_castle_precastle（下标 217）。",
+      "when_scene": "ut.rooms.room_castle_elevatorout",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_castle_elevatorout",
+        "dst_room_name": "room_castle_precastle",
+        "src_room_id": 216,
+        "dst_room_id": 217,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_asghouse1",
+      "priority": 4123,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_castle_front（下标 219）→ room_asghouse1（下标 220）。",
+      "when_scene": "ut.rooms.room_castle_front",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_castle_front",
+        "dst_room_name": "room_asghouse1",
+        "src_room_id": 219,
+        "dst_room_id": 220,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_castle_front",
+      "priority": 4124,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_castle_hook（下标 218）→ room_castle_front（下标 219）。",
+      "when_scene": "ut.rooms.room_castle_hook",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_castle_hook",
+        "dst_room_name": "room_castle_front",
+        "src_room_id": 218,
+        "dst_room_id": 219,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_castle_hook",
+      "priority": 4125,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_castle_precastle（下标 217）→ room_castle_hook（下标 218）。",
+      "when_scene": "ut.rooms.room_castle_precastle",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_castle_precastle",
+        "dst_room_name": "room_castle_hook",
+        "src_room_id": 217,
+        "dst_room_id": 218,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_castle_prebarrier",
+      "priority": 4126,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_castle_throneroom（下标 235）→ room_castle_prebarrier（下标 236）。",
+      "when_scene": "ut.rooms.room_castle_throneroom",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_castle_throneroom",
+        "dst_room_name": "room_castle_prebarrier",
+        "src_room_id": 235,
+        "dst_room_id": 236,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire2",
+      "priority": 4127,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire1（下标 137）→ room_fire2（下标 138）。",
+      "when_scene": "ut.rooms.room_fire1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire1",
+        "dst_room_name": "room_fire2",
+        "src_room_id": 137,
+        "dst_room_id": 138,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_rpuzzle",
+      "priority": 4128,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire10（下标 162）→ room_fire_rpuzzle（下标 163）。",
+      "when_scene": "ut.rooms.room_fire10",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire10",
+        "dst_room_name": "room_fire_rpuzzle",
+        "src_room_id": 162,
+        "dst_room_id": 163,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_prelab",
+      "priority": 4129,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire2（下标 138）→ room_fire_prelab（下标 139）。",
+      "when_scene": "ut.rooms.room_fire2",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire2",
+        "dst_room_name": "room_fire_prelab",
+        "src_room_id": 138,
+        "dst_room_id": 139,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire10_old",
+      "priority": 4130,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire4（下标 296）→ room_fire10_old（下标 297）。",
+      "when_scene": "ut.rooms.room_fire4",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire4",
+        "dst_room_name": "room_fire10_old",
+        "src_room_id": 296,
+        "dst_room_id": 297,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire6",
+      "priority": 4131,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire5（下标 144）→ room_fire6（下标 145）。",
+      "when_scene": "ut.rooms.room_fire5",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire5",
+        "dst_room_name": "room_fire6",
+        "src_room_id": 144,
+        "dst_room_id": 145,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire6A",
+      "priority": 4132,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire6（下标 145）→ room_fire6A（下标 146）。",
+      "when_scene": "ut.rooms.room_fire6",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire6",
+        "dst_room_name": "room_fire6A",
+        "src_room_id": 145,
+        "dst_room_id": 146,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire8",
+      "priority": 4133,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire7（下标 148）→ room_fire8（下标 149）。",
+      "when_scene": "ut.rooms.room_fire7",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire7",
+        "dst_room_name": "room_fire8",
+        "src_room_id": 148,
+        "dst_room_id": 149,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_shootguy_2",
+      "priority": 4134,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire8（下标 149）→ room_fire_shootguy_2（下标 150）。",
+      "when_scene": "ut.rooms.room_fire8",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire8",
+        "dst_room_name": "room_fire_shootguy_2",
+        "src_room_id": 149,
+        "dst_room_id": 150,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_shootguy_1",
+      "priority": 4135,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire9（下标 151）→ room_fire_shootguy_1（下标 152）。",
+      "when_scene": "ut.rooms.room_fire9",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire9",
+        "dst_room_name": "room_fire_shootguy_1",
+        "src_room_id": 151,
+        "dst_room_id": 152,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_shootguy_3",
+      "priority": 4136,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_conveyorlaser（下标 172）→ room_fire_shootguy_3（下标 173）。",
+      "when_scene": "ut.rooms.room_fire_conveyorlaser",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_conveyorlaser",
+        "dst_room_name": "room_fire_shootguy_3",
+        "src_room_id": 172,
+        "dst_room_id": 173,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core2",
+      "priority": 4137,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core1（下标 189）→ room_fire_core2（下标 190）。",
+      "when_scene": "ut.rooms.room_fire_core1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core1",
+        "dst_room_name": "room_fire_core2",
+        "src_room_id": 189,
+        "dst_room_id": 190,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core4",
+      "priority": 4138,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core3（下标 191）→ room_fire_core4（下标 192）。",
+      "when_scene": "ut.rooms.room_fire_core3",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core3",
+        "dst_room_name": "room_fire_core4",
+        "src_room_id": 191,
+        "dst_room_id": 192,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core5",
+      "priority": 4139,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core4（下标 192）→ room_fire_core5（下标 193）。",
+      "when_scene": "ut.rooms.room_fire_core4",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core4",
+        "dst_room_name": "room_fire_core5",
+        "src_room_id": 192,
+        "dst_room_id": 193,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_freebattle",
+      "priority": 4140,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core5（下标 193）→ room_fire_core_freebattle（下标 194）。",
+      "when_scene": "ut.rooms.room_fire_core5",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core5",
+        "dst_room_name": "room_fire_core_freebattle",
+        "src_room_id": 193,
+        "dst_room_id": 194,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_left",
+      "priority": 4141,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core_bottomleft（下标 197）→ room_fire_core_left（下标 198）。",
+      "when_scene": "ut.rooms.room_fire_core_bottomleft",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core_bottomleft",
+        "dst_room_name": "room_fire_core_left",
+        "src_room_id": 197,
+        "dst_room_id": 198,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_bottomleft",
+      "priority": 4142,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core_branch（下标 196）→ room_fire_core_bottomleft（下标 197）。",
+      "when_scene": "ut.rooms.room_fire_core_branch",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core_branch",
+        "dst_room_name": "room_fire_core_bottomleft",
+        "src_room_id": 196,
+        "dst_room_id": 197,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_premett",
+      "priority": 4143,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core_bridge（下标 209）→ room_fire_core_premett（下标 210）。",
+      "when_scene": "ut.rooms.room_fire_core_bridge",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core_bridge",
+        "dst_room_name": "room_fire_core_premett",
+        "src_room_id": 209,
+        "dst_room_id": 210,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_branch",
+      "priority": 4144,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core_laserfun（下标 195）→ room_fire_core_branch（下标 196）。",
+      "when_scene": "ut.rooms.room_fire_core_laserfun",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core_laserfun",
+        "dst_room_name": "room_fire_core_branch",
+        "src_room_id": 195,
+        "dst_room_id": 196,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_topleft",
+      "priority": 4145,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core_left（下标 198）→ room_fire_core_topleft（下标 199）。",
+      "when_scene": "ut.rooms.room_fire_core_left",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core_left",
+        "dst_room_name": "room_fire_core_topleft",
+        "src_room_id": 198,
+        "dst_room_id": 199,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_final",
+      "priority": 4146,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core_metttest（下标 211）→ room_fire_core_final（下标 212）。",
+      "when_scene": "ut.rooms.room_fire_core_metttest",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core_metttest",
+        "dst_room_name": "room_fire_core_final",
+        "src_room_id": 211,
+        "dst_room_id": 212,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_bottomright",
+      "priority": 4147,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core_right（下标 202）→ room_fire_core_bottomright（下标 203）。",
+      "when_scene": "ut.rooms.room_fire_core_right",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core_right",
+        "dst_room_name": "room_fire_core_bottomright",
+        "src_room_id": 202,
+        "dst_room_id": 203,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_topright",
+      "priority": 4148,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core_top（下标 200）→ room_fire_core_topright（下标 201）。",
+      "when_scene": "ut.rooms.room_fire_core_top",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core_top",
+        "dst_room_name": "room_fire_core_topright",
+        "src_room_id": 200,
+        "dst_room_id": 201,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_top",
+      "priority": 4149,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core_topleft（下标 199）→ room_fire_core_top（下标 200）。",
+      "when_scene": "ut.rooms.room_fire_core_topleft",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core_topleft",
+        "dst_room_name": "room_fire_core_top",
+        "src_room_id": 199,
+        "dst_room_id": 200,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_core_right",
+      "priority": 4150,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_core_topright（下标 201）→ room_fire_core_right（下标 202）。",
+      "when_scene": "ut.rooms.room_fire_core_topright",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_core_topright",
+        "dst_room_name": "room_fire_core_right",
+        "src_room_id": 201,
+        "dst_room_id": 202,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_restaurant",
+      "priority": 4151,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_hotellobby（下标 183）→ room_fire_restaurant（下标 184）。",
+      "when_scene": "ut.rooms.room_fire_hotellobby",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_hotellobby",
+        "dst_room_name": "room_fire_restaurant",
+        "src_room_id": 183,
+        "dst_room_id": 184,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_lab2",
+      "priority": 4152,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_lab1（下标 141）→ room_fire_lab2（下标 142）。",
+      "when_scene": "ut.rooms.room_fire_lab1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_lab1",
+        "dst_room_name": "room_fire_lab2",
+        "src_room_id": 141,
+        "dst_room_id": 142,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire7",
+      "priority": 4153,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_lasers1（下标 147）→ room_fire7（下标 148）。",
+      "when_scene": "ut.rooms.room_fire_lasers1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_lasers1",
+        "dst_room_name": "room_fire7",
+        "src_room_id": 147,
+        "dst_room_id": 148,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_boysnightout",
+      "priority": 4154,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_mewmew2（下标 164）→ room_fire_boysnightout（下标 165）。",
+      "when_scene": "ut.rooms.room_fire_mewmew2",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_mewmew2",
+        "dst_room_name": "room_fire_boysnightout",
+        "src_room_id": 164,
+        "dst_room_id": 165,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_hotelfront_1",
+      "priority": 4155,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_multitile（下标 180）→ room_fire_hotelfront_1（下标 181）。",
+      "when_scene": "ut.rooms.room_fire_multitile",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_multitile",
+        "dst_room_name": "room_fire_hotelfront_1",
+        "src_room_id": 180,
+        "dst_room_id": 181,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_shootguy_4",
+      "priority": 4156,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_preshootguy4（下标 174）→ room_fire_shootguy_4（下标 175）。",
+      "when_scene": "ut.rooms.room_fire_preshootguy4",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_preshootguy4",
+        "dst_room_name": "room_fire_shootguy_4",
+        "src_room_id": 174,
+        "dst_room_id": 175,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_mewmew2",
+      "priority": 4157,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_rpuzzle（下标 163）→ room_fire_mewmew2（下标 164）。",
+      "when_scene": "ut.rooms.room_fire_rpuzzle",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_rpuzzle",
+        "dst_room_name": "room_fire_mewmew2",
+        "src_room_id": 163,
+        "dst_room_id": 164,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_fire_conveyorlaser",
+      "priority": 4158,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_fire_walkandbranch2（下标 171）→ room_fire_conveyorlaser（下标 172）。",
+      "when_scene": "ut.rooms.room_fire_walkandbranch2",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_fire_walkandbranch2",
+        "dst_room_name": "room_fire_conveyorlaser",
+        "src_room_id": 171,
+        "dst_room_id": 172,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_sanscorridor",
+      "priority": 4159,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_lastruins_corridor（下标 230）→ room_sanscorridor（下标 231）。",
+      "when_scene": "ut.rooms.room_lastruins_corridor",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_lastruins_corridor",
+        "dst_room_name": "room_sanscorridor",
+        "src_room_id": 230,
+        "dst_room_id": 231,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_mushroom",
+      "priority": 4160,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_meetundyne_old（下标 303）→ room_water_mushroom（下标 304）。",
+      "when_scene": "ut.rooms.room_meetundyne_old",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_meetundyne_old",
+        "dst_room_name": "room_water_mushroom",
+        "src_room_id": 303,
+        "dst_room_id": 304,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_overworld3",
+      "priority": 4161,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_overworld（下标 274）→ room_overworld3（下标 275）。",
+      "when_scene": "ut.rooms.room_overworld",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_overworld",
+        "dst_room_name": "room_overworld3",
+        "src_room_id": 274,
+        "dst_room_id": 275,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins2",
+      "priority": 4162,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins1（下标 6）→ room_ruins2（下标 7）。",
+      "when_scene": "ut.rooms.room_ruins1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins1",
+        "dst_room_name": "room_ruins2",
+        "src_room_id": 6,
+        "dst_room_id": 7,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins11",
+      "priority": 4163,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins10（下标 16）→ room_ruins11（下标 17）。",
+      "when_scene": "ut.rooms.room_ruins10",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins10",
+        "dst_room_name": "room_ruins11",
+        "src_room_id": 16,
+        "dst_room_id": 17,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins12A",
+      "priority": 4164,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins11（下标 17）→ room_ruins12A（下标 18）。",
+      "when_scene": "ut.rooms.room_ruins11",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins11",
+        "dst_room_name": "room_ruins12A",
+        "src_room_id": 17,
+        "dst_room_id": 18,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins12B",
+      "priority": 4165,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins12（下标 19）→ room_ruins12B（下标 20）。",
+      "when_scene": "ut.rooms.room_ruins12",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins12",
+        "dst_room_name": "room_ruins12B",
+        "src_room_id": 19,
+        "dst_room_id": 20,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins12",
+      "priority": 4166,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins12A（下标 18）→ room_ruins12（下标 19）。",
+      "when_scene": "ut.rooms.room_ruins12A",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins12A",
+        "dst_room_name": "room_ruins12",
+        "src_room_id": 18,
+        "dst_room_id": 19,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins14",
+      "priority": 4167,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins13（下标 21）→ room_ruins14（下标 22）。",
+      "when_scene": "ut.rooms.room_ruins13",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins13",
+        "dst_room_name": "room_ruins14",
+        "src_room_id": 21,
+        "dst_room_id": 22,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins15A",
+      "priority": 4168,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins14（下标 22）→ room_ruins15A（下标 23）。",
+      "when_scene": "ut.rooms.room_ruins14",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins14",
+        "dst_room_name": "room_ruins15A",
+        "src_room_id": 22,
+        "dst_room_id": 23,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins15B",
+      "priority": 4169,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins15A（下标 23）→ room_ruins15B（下标 24）。",
+      "when_scene": "ut.rooms.room_ruins15A",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins15A",
+        "dst_room_name": "room_ruins15B",
+        "src_room_id": 23,
+        "dst_room_id": 24,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins15C",
+      "priority": 4170,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins15B（下标 24）→ room_ruins15C（下标 25）。",
+      "when_scene": "ut.rooms.room_ruins15B",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins15B",
+        "dst_room_name": "room_ruins15C",
+        "src_room_id": 24,
+        "dst_room_id": 25,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins15D",
+      "priority": 4171,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins15C（下标 25）→ room_ruins15D（下标 26）。",
+      "when_scene": "ut.rooms.room_ruins15C",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins15C",
+        "dst_room_name": "room_ruins15D",
+        "src_room_id": 25,
+        "dst_room_id": 26,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins17",
+      "priority": 4172,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins16（下标 28）→ room_ruins17（下标 29）。",
+      "when_scene": "ut.rooms.room_ruins16",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins16",
+        "dst_room_name": "room_ruins17",
+        "src_room_id": 28,
+        "dst_room_id": 29,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins18OLD",
+      "priority": 4173,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins17（下标 29）→ room_ruins18OLD（下标 30）。",
+      "when_scene": "ut.rooms.room_ruins17",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins17",
+        "dst_room_name": "room_ruins18OLD",
+        "src_room_id": 29,
+        "dst_room_id": 30,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins3",
+      "priority": 4174,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins2（下标 7）→ room_ruins3（下标 8）。",
+      "when_scene": "ut.rooms.room_ruins2",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins2",
+        "dst_room_name": "room_ruins3",
+        "src_room_id": 7,
+        "dst_room_id": 8,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins4",
+      "priority": 4175,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins3（下标 8）→ room_ruins4（下标 9）。",
+      "when_scene": "ut.rooms.room_ruins3",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins3",
+        "dst_room_name": "room_ruins4",
+        "src_room_id": 8,
+        "dst_room_id": 9,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins5",
+      "priority": 4176,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins4（下标 9）→ room_ruins5（下标 10）。",
+      "when_scene": "ut.rooms.room_ruins4",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins4",
+        "dst_room_name": "room_ruins5",
+        "src_room_id": 9,
+        "dst_room_id": 10,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins6",
+      "priority": 4177,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins5（下标 10）→ room_ruins6（下标 11）。",
+      "when_scene": "ut.rooms.room_ruins5",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins5",
+        "dst_room_name": "room_ruins6",
+        "src_room_id": 10,
+        "dst_room_id": 11,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins7A",
+      "priority": 4178,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins7（下标 12）→ room_ruins7A（下标 13）。",
+      "when_scene": "ut.rooms.room_ruins7",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins7",
+        "dst_room_name": "room_ruins7A",
+        "src_room_id": 12,
+        "dst_room_id": 13,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins9",
+      "priority": 4179,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins8（下标 14）→ room_ruins9（下标 15）。",
+      "when_scene": "ut.rooms.room_ruins8",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins8",
+        "dst_room_name": "room_ruins9",
+        "src_room_id": 14,
+        "dst_room_id": 15,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_ruins10",
+      "priority": 4180,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_ruins9（下标 15）→ room_ruins10（下标 16）。",
+      "when_scene": "ut.rooms.room_ruins9",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_ruins9",
+        "dst_room_name": "room_ruins10",
+        "src_room_id": 15,
+        "dst_room_id": 16,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_castle_finalshoehorn",
+      "priority": 4181,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_sanscorridor（下标 231）→ room_castle_finalshoehorn（下标 232）。",
+      "when_scene": "ut.rooms.room_sanscorridor",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_sanscorridor",
+        "dst_room_name": "room_castle_finalshoehorn",
+        "src_room_id": 231,
+        "dst_room_id": 232,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_torhouse2",
+      "priority": 4182,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_torhouse1（下标 32）→ room_torhouse2（下标 33）。",
+      "when_scene": "ut.rooms.room_torhouse1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_torhouse1",
+        "dst_room_name": "room_torhouse2",
+        "src_room_id": 32,
+        "dst_room_id": 33,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_torielroom",
+      "priority": 4183,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_torhouse3（下标 34）→ room_torielroom（下标 35）。",
+      "when_scene": "ut.rooms.room_torhouse3",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_torhouse3",
+        "dst_room_name": "room_torielroom",
+        "src_room_id": 34,
+        "dst_room_id": 35,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_mirror",
+      "priority": 4184,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_bedroom（下标 251）→ room_truelab_mirror（下标 252）。",
+      "when_scene": "ut.rooms.room_truelab_bedroom",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_bedroom",
+        "dst_room_name": "room_truelab_mirror",
+        "src_room_id": 251,
+        "dst_room_id": 252,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_greenlever",
+      "priority": 4185,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_cooler（下标 258）→ room_truelab_greenlever（下标 259）。",
+      "when_scene": "ut.rooms.room_truelab_cooler",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_cooler",
+        "dst_room_name": "room_truelab_greenlever",
+        "src_room_id": 258,
+        "dst_room_id": 259,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_tv",
+      "priority": 4186,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_determination（下标 256）→ room_truelab_tv（下标 257）。",
+      "when_scene": "ut.rooms.room_truelab_determination",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_determination",
+        "dst_room_name": "room_truelab_tv",
+        "src_room_id": 256,
+        "dst_room_id": 257,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_hall1",
+      "priority": 4187,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_elevator（下标 244）→ room_truelab_hall1（下标 245）。",
+      "when_scene": "ut.rooms.room_truelab_elevator",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_elevator",
+        "dst_room_name": "room_truelab_hall1",
+        "src_room_id": 244,
+        "dst_room_id": 245,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_operatingroom",
+      "priority": 4188,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_hall2（下标 247）→ room_truelab_operatingroom（下标 248）。",
+      "when_scene": "ut.rooms.room_truelab_hall2",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_hall2",
+        "dst_room_name": "room_truelab_operatingroom",
+        "src_room_id": 247,
+        "dst_room_id": 248,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_shower",
+      "priority": 4189,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_hall3（下标 254）→ room_truelab_shower（下标 255）。",
+      "when_scene": "ut.rooms.room_truelab_hall3",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_hall3",
+        "dst_room_name": "room_truelab_shower",
+        "src_room_id": 254,
+        "dst_room_id": 255,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_hall2",
+      "priority": 4190,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_hub（下标 246）→ room_truelab_hall2（下标 247）。",
+      "when_scene": "ut.rooms.room_truelab_hub",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_hub",
+        "dst_room_name": "room_truelab_hall2",
+        "src_room_id": 246,
+        "dst_room_id": 247,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_bluelever",
+      "priority": 4191,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_mirror（下标 252）→ room_truelab_bluelever（下标 253）。",
+      "when_scene": "ut.rooms.room_truelab_mirror",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_mirror",
+        "dst_room_name": "room_truelab_bluelever",
+        "src_room_id": 252,
+        "dst_room_id": 253,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_redlever",
+      "priority": 4192,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_operatingroom（下标 248）→ room_truelab_redlever（下标 249）。",
+      "when_scene": "ut.rooms.room_truelab_operatingroom",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_operatingroom",
+        "dst_room_name": "room_truelab_redlever",
+        "src_room_id": 248,
+        "dst_room_id": 249,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_bedroom",
+      "priority": 4193,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_prebed（下标 250）→ room_truelab_bedroom（下标 251）。",
+      "when_scene": "ut.rooms.room_truelab_prebed",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_prebed",
+        "dst_room_name": "room_truelab_bedroom",
+        "src_room_id": 250,
+        "dst_room_id": 251,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_truelab_power",
+      "priority": 4194,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_truelab_prepower（下标 262）→ room_truelab_power（下标 263）。",
+      "when_scene": "ut.rooms.room_truelab_prepower",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_truelab_prepower",
+        "dst_room_name": "room_truelab_power",
+        "src_room_id": 262,
+        "dst_room_id": 263,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra2",
+      "priority": 4195,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra1（下标 44）→ room_tundra2（下标 45）。",
+      "when_scene": "ut.rooms.room_tundra1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra1",
+        "dst_room_name": "room_tundra2",
+        "src_room_id": 44,
+        "dst_room_id": 45,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra3",
+      "priority": 4196,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra2（下标 45）→ room_tundra3（下标 46）。",
+      "when_scene": "ut.rooms.room_tundra2",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra2",
+        "dst_room_name": "room_tundra3",
+        "src_room_id": 45,
+        "dst_room_id": 46,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra3A",
+      "priority": 4197,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra3（下标 46）→ room_tundra3A（下标 47）。",
+      "when_scene": "ut.rooms.room_tundra3",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra3",
+        "dst_room_name": "room_tundra3A",
+        "src_room_id": 46,
+        "dst_room_id": 47,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra5",
+      "priority": 4198,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra4（下标 48）→ room_tundra5（下标 49）。",
+      "when_scene": "ut.rooms.room_tundra4",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra4",
+        "dst_room_name": "room_tundra5",
+        "src_room_id": 48,
+        "dst_room_id": 49,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra6",
+      "priority": 4199,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra5（下标 49）→ room_tundra6（下标 50）。",
+      "when_scene": "ut.rooms.room_tundra5",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra5",
+        "dst_room_name": "room_tundra6",
+        "src_room_id": 49,
+        "dst_room_id": 50,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra6A",
+      "priority": 4200,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra6（下标 50）→ room_tundra6A（下标 51）。",
+      "when_scene": "ut.rooms.room_tundra6",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra6",
+        "dst_room_name": "room_tundra6A",
+        "src_room_id": 50,
+        "dst_room_id": 51,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra8",
+      "priority": 4201,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra7（下标 52）→ room_tundra8（下标 53）。",
+      "when_scene": "ut.rooms.room_tundra7",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra7",
+        "dst_room_name": "room_tundra8",
+        "src_room_id": 52,
+        "dst_room_id": 53,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra8A",
+      "priority": 4202,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra8（下标 53）→ room_tundra8A（下标 54）。",
+      "when_scene": "ut.rooms.room_tundra8",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra8",
+        "dst_room_name": "room_tundra8A",
+        "src_room_id": 53,
+        "dst_room_id": 54,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_spaghetti",
+      "priority": 4203,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra9（下标 55）→ room_tundra_spaghetti（下标 56）。",
+      "when_scene": "ut.rooms.room_tundra9",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra9",
+        "dst_room_name": "room_tundra_spaghetti",
+        "src_room_id": 55,
+        "dst_room_id": 56,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_iceexit_new",
+      "priority": 4204,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra_iceentrance（下标 63）→ room_tundra_iceexit_new（下标 64）。",
+      "when_scene": "ut.rooms.room_tundra_iceentrance",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra_iceentrance",
+        "dst_room_name": "room_tundra_iceexit_new",
+        "src_room_id": 63,
+        "dst_room_id": 64,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_iceexit",
+      "priority": 4205,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra_iceexit_new（下标 64）→ room_tundra_iceexit（下标 65）。",
+      "when_scene": "ut.rooms.room_tundra_iceexit_new",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra_iceexit_new",
+        "dst_room_name": "room_tundra_iceexit",
+        "src_room_id": 64,
+        "dst_room_id": 65,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_iceentrance",
+      "priority": 4206,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra_icehole（下标 62）→ room_tundra_iceentrance（下标 63）。",
+      "when_scene": "ut.rooms.room_tundra_icehole",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra_icehole",
+        "dst_room_name": "room_tundra_iceentrance",
+        "src_room_id": 62,
+        "dst_room_id": 63,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_dangerbridge",
+      "priority": 4207,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra_poffzone（下标 66）→ room_tundra_dangerbridge（下标 67）。",
+      "when_scene": "ut.rooms.room_tundra_poffzone",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra_poffzone",
+        "dst_room_name": "room_tundra_dangerbridge",
+        "src_room_id": 66,
+        "dst_room_id": 67,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_lesserdog",
+      "priority": 4208,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra_randoblock（下标 60）→ room_tundra_lesserdog（下标 61）。",
+      "when_scene": "ut.rooms.room_tundra_randoblock",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra_randoblock",
+        "dst_room_name": "room_tundra_lesserdog",
+        "src_room_id": 60,
+        "dst_room_id": 61,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_xoxosmall",
+      "priority": 4209,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra_snowpuzz（下标 57）→ room_tundra_xoxosmall（下标 58）。",
+      "when_scene": "ut.rooms.room_tundra_snowpuzz",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra_snowpuzz",
+        "dst_room_name": "room_tundra_xoxosmall",
+        "src_room_id": 57,
+        "dst_room_id": 58,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_snowpuzz",
+      "priority": 4210,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra_spaghetti（下标 56）→ room_tundra_snowpuzz（下标 57）。",
+      "when_scene": "ut.rooms.room_tundra_spaghetti",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra_spaghetti",
+        "dst_room_name": "room_tundra_snowpuzz",
+        "src_room_id": 56,
+        "dst_room_id": 57,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_randoblock",
+      "priority": 4211,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra_xoxopuzz（下标 59）→ room_tundra_randoblock（下标 60）。",
+      "when_scene": "ut.rooms.room_tundra_xoxopuzz",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra_xoxopuzz",
+        "dst_room_name": "room_tundra_randoblock",
+        "src_room_id": 59,
+        "dst_room_id": 60,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_tundra_xoxopuzz",
+      "priority": 4212,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_tundra_xoxosmall（下标 58）→ room_tundra_xoxopuzz（下标 59）。",
+      "when_scene": "ut.rooms.room_tundra_xoxosmall",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_tundra_xoxosmall",
+        "dst_room_name": "room_tundra_xoxopuzz",
+        "src_room_id": 58,
+        "dst_room_id": 59,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_nicecream",
+      "priority": 4213,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water11（下标 95）→ room_water_nicecream（下标 96）。",
+      "when_scene": "ut.rooms.room_water11",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water11",
+        "dst_room_name": "room_water_nicecream",
+        "src_room_id": 95,
+        "dst_room_id": 96,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_shoe",
+      "priority": 4214,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water12（下标 97）→ room_water_shoe（下标 98）。",
+      "when_scene": "ut.rooms.room_water12",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water12",
+        "dst_room_name": "room_water_shoe",
+        "src_room_id": 97,
+        "dst_room_id": 98,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_overworld",
+      "priority": 4215,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water13（下标 273）→ room_overworld（下标 274）。",
+      "when_scene": "ut.rooms.room_water13",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water13",
+        "dst_room_name": "room_overworld",
+        "src_room_id": 273,
+        "dst_room_id": 274,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water16",
+      "priority": 4216,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water15（下标 126）→ room_water16（下标 127）。",
+      "when_scene": "ut.rooms.room_water15",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water15",
+        "dst_room_name": "room_water16",
+        "src_room_id": 126,
+        "dst_room_id": 127,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water19",
+      "priority": 4217,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water18（下标 130）→ room_water19（下标 131）。",
+      "when_scene": "ut.rooms.room_water18",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water18",
+        "dst_room_name": "room_water19",
+        "src_room_id": 130,
+        "dst_room_id": 131,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water20",
+      "priority": 4218,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water19（下标 131）→ room_water20（下标 132）。",
+      "when_scene": "ut.rooms.room_water19",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water19",
+        "dst_room_name": "room_water20",
+        "src_room_id": 131,
+        "dst_room_id": 132,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water21",
+      "priority": 4219,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water20（下标 132）→ room_water21（下标 133）。",
+      "when_scene": "ut.rooms.room_water20",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water20",
+        "dst_room_name": "room_water21",
+        "src_room_id": 132,
+        "dst_room_id": 133,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water3A",
+      "priority": 4220,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water3（下标 84）→ room_water3A（下标 85）。",
+      "when_scene": "ut.rooms.room_water3",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water3",
+        "dst_room_name": "room_water3A",
+        "src_room_id": 84,
+        "dst_room_id": 85,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_bridgepuzz1",
+      "priority": 4221,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water4（下标 86）→ room_water_bridgepuzz1（下标 87）。",
+      "when_scene": "ut.rooms.room_water4",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water4",
+        "dst_room_name": "room_water_bridgepuzz1",
+        "src_room_id": 86,
+        "dst_room_id": 87,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water5A",
+      "priority": 4222,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water5（下标 88）→ room_water5A（下标 89）。",
+      "when_scene": "ut.rooms.room_water5",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water5",
+        "dst_room_name": "room_water5A",
+        "src_room_id": 88,
+        "dst_room_id": 89,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water7",
+      "priority": 4223,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water6（下标 90）→ room_water7（下标 91）。",
+      "when_scene": "ut.rooms.room_water6",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water6",
+        "dst_room_name": "room_water7",
+        "src_room_id": 90,
+        "dst_room_id": 91,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water8",
+      "priority": 4224,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water7（下标 91）→ room_water8（下标 92）。",
+      "when_scene": "ut.rooms.room_water7",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water7",
+        "dst_room_name": "room_water8",
+        "src_room_id": 91,
+        "dst_room_id": 92,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_meetundyne_old",
+      "priority": 4225,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water7_older（下标 302）→ room_meetundyne_old（下标 303）。",
+      "when_scene": "ut.rooms.room_water7_older",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water7_older",
+        "dst_room_name": "room_meetundyne_old",
+        "src_room_id": 302,
+        "dst_room_id": 303,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water9",
+      "priority": 4226,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water8（下标 92）→ room_water9（下标 93）。",
+      "when_scene": "ut.rooms.room_water8",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water8",
+        "dst_room_name": "room_water9",
+        "src_room_id": 92,
+        "dst_room_id": 93,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water5",
+      "priority": 4227,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_bridgepuzz1（下标 87）→ room_water5（下标 88）。",
+      "when_scene": "ut.rooms.room_water_bridgepuzz1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_bridgepuzz1",
+        "dst_room_name": "room_water5",
+        "src_room_id": 87,
+        "dst_room_id": 88,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_monsteralign_test",
+      "priority": 4228,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_mushroom（下标 304）→ room_monsteralign_test（下标 305）。",
+      "when_scene": "ut.rooms.room_water_mushroom",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_mushroom",
+        "dst_room_name": "room_monsteralign_test",
+        "src_room_id": 304,
+        "dst_room_id": 305,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water14",
+      "priority": 4229,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_onionsan（下标 100）→ room_water14（下标 101）。",
+      "when_scene": "ut.rooms.room_water_onionsan",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_onionsan",
+        "dst_room_name": "room_water14",
+        "src_room_id": 100,
+        "dst_room_id": 101,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_dogroom",
+      "priority": 4230,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_piano（下标 102）→ room_water_dogroom（下标 103）。",
+      "when_scene": "ut.rooms.room_water_piano",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_piano",
+        "dst_room_name": "room_water_dogroom",
+        "src_room_id": 102,
+        "dst_room_id": 103,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_undynebridge",
+      "priority": 4231,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_preundyne（下标 110）→ room_water_undynebridge（下标 111）。",
+      "when_scene": "ut.rooms.room_water_preundyne",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_preundyne",
+        "dst_room_name": "room_water_undynebridge",
+        "src_room_id": 110,
+        "dst_room_id": 111,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_waterfall",
+      "priority": 4232,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_prewaterfall（下标 105）→ room_water_waterfall（下标 106）。",
+      "when_scene": "ut.rooms.room_water_prewaterfall",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_prewaterfall",
+        "dst_room_name": "room_water_waterfall",
+        "src_room_id": 105,
+        "dst_room_id": 106,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_prewaterfall",
+      "priority": 4233,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_statue（下标 104）→ room_water_prewaterfall（下标 105）。",
+      "when_scene": "ut.rooms.room_water_statue",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_statue",
+        "dst_room_name": "room_water_prewaterfall",
+        "src_room_id": 104,
+        "dst_room_id": 105,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_trashzone2",
+      "priority": 4234,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_trashsavepoint（下标 114）→ room_water_trashzone2（下标 115）。",
+      "when_scene": "ut.rooms.room_water_trashsavepoint",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_trashsavepoint",
+        "dst_room_name": "room_water_trashzone2",
+        "src_room_id": 114,
+        "dst_room_id": 115,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_trashsavepoint",
+      "priority": 4235,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_trashzone1（下标 113）→ room_water_trashsavepoint（下标 114）。",
+      "when_scene": "ut.rooms.room_water_trashzone1",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_trashzone1",
+        "dst_room_name": "room_water_trashsavepoint",
+        "src_room_id": 113,
+        "dst_room_id": 114,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_undynebridgeend",
+      "priority": 4236,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_undynebridge（下标 111）→ room_water_undynebridgeend（下标 112）。",
+      "when_scene": "ut.rooms.room_water_undynebridge",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_undynebridge",
+        "dst_room_name": "room_water_undynebridgeend",
+        "src_room_id": 111,
+        "dst_room_id": 112,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_undynefinal2",
+      "priority": 4237,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_undynefinal（下标 134）→ room_water_undynefinal2（下标 135）。",
+      "when_scene": "ut.rooms.room_water_undynefinal",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_undynefinal",
+        "dst_room_name": "room_water_undynefinal2",
+        "src_room_id": 134,
+        "dst_room_id": 135,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_undynefinal3",
+      "priority": 4238,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_undynefinal2（下标 135）→ room_water_undynefinal3（下标 136）。",
+      "when_scene": "ut.rooms.room_water_undynefinal2",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_undynefinal2",
+        "dst_room_name": "room_water_undynefinal3",
+        "src_room_id": 135,
+        "dst_room_id": 136,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_waterfall2",
+      "priority": 4239,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_waterfall（下标 106）→ room_water_waterfall2（下标 107）。",
+      "when_scene": "ut.rooms.room_water_waterfall",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_waterfall",
+        "dst_room_name": "room_water_waterfall2",
+        "src_room_id": 106,
+        "dst_room_id": 107,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_waterfall3",
+      "priority": 4240,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_waterfall2（下标 107）→ room_water_waterfall3（下标 108）。",
+      "when_scene": "ut.rooms.room_water_waterfall2",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_waterfall2",
+        "dst_room_name": "room_water_waterfall3",
+        "src_room_id": 107,
+        "dst_room_id": 108,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_waterfall4",
+      "priority": 4241,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_waterfall3（下标 108）→ room_water_waterfall4（下标 109）。",
+      "when_scene": "ut.rooms.room_water_waterfall3",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_waterfall3",
+        "dst_room_name": "room_water_waterfall4",
+        "src_room_id": 108,
+        "dst_room_id": 109,
+        "off": 1
+      },
+      "work": "ut"
+    },
+    {
+      "to": "ut.rooms.room_water_preundyne",
+      "priority": 4242,
+      "reason": "原作 GML：obj_doorA 的代码调用 room_goto_next()；房间 room_water_waterfall4（下标 109）→ room_water_preundyne（下标 110）。",
+      "when_scene": "ut.rooms.room_water_waterfall4",
+      "when_door": "A",
+      "_original": {
+        "kind": "ut_door_next",
+        "via": "obj_doorA",
+        "src_room_name": "room_water_waterfall4",
+        "dst_room_name": "room_water_preundyne",
+        "src_room_id": 109,
+        "dst_room_id": 110,
+        "off": 1
+      },
+      "work": "ut"
     }
   ],
   "_fallback": {

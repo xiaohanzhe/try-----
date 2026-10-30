@@ -161,7 +161,13 @@ _idx = jload(INDEX)
 _raw = json.loads(io.open(ROUTES, encoding='utf-8', newline='').read())
 _RL = _raw.get('routes') or []
 _OS = [r for r in _RL if str((r or {}).get('when_scene') or '').startswith('oneshot')]
-_OLD = [r for r in _RL if not str((r or {}).get('when_scene') or '').startswith('oneshot')]
+#: ★★★ 第122轮：ut 的门（243 条）也进了同一张表 ⇒ 必须跟 desktop 一样**单独抽出来**，
+#:   否则 `_OLD`（"既有段"）从 447 变成 690，D1/D2/D2c 三条会一起报红 ——
+#:   而那不是回归，是**分母混进了第三个物种**（第103/121/122 轮第三次踩）。
+#:   ut 段归 `第122轮/_tools/check122.py` 守（含逐条目标复算），这里只锁"段位与条数"。
+_UT = [r for r in _RL if str((r or {}).get('when_scene') or '').startswith('ut.')]
+_OLD = [r for r in _RL
+        if not str((r or {}).get('when_scene') or '').startswith(('oneshot', 'ut.'))]
 
 #: 登记表：scene_id → original_room_id / 房名 / 区名
 _REG = {}
@@ -337,6 +343,20 @@ ok(all(isinstance(p, int) for p in _prios)
 ok(max(r.get('priority') for r in _OLD) < PRIO_BASE,
    'C5 oneshot 段的 priority 下界(**%d**) 高于既有段最大值(**%d**) —— 段不重叠'
    % (PRIO_BASE, max(r.get('priority') for r in _OLD)))
+# —— ★★ 第122轮：ut 段（4000+）必须整体**高于** oneshot 段，三段不重叠。
+#   负控制：把 ut 段的一条 priority 挪进 oneshot 区间 ⇒ 这条必须报红。
+_ut_prios = [r.get('priority') for r in _UT]
+ok(len(_UT) > 0 and all(isinstance(p, int) for p in _ut_prios)
+   and min(_ut_prios) > max(_prios),
+   'C5b ut 段 priority 起点(**%s**) 高于 oneshot 段最大值(**%s**) —— 三段不重叠'
+   % (min(_ut_prios) if _ut_prios else None, max(_prios)))
+# —— C5c 负控制：把 ut 段一条的 priority 挪进 oneshot 区间 ⇒ C5b 的口径必须报红
+_neg_ut = [dict(r) for r in _UT]
+if _neg_ut:
+    _neg_ut[0] = dict(_neg_ut[0])
+    _neg_ut[0]['priority'] = PRIO_BASE + 1
+    ok(not (min(r['priority'] for r in _neg_ut) > max(_prios)),
+       'C5c 负控制：把一条 ut 规则塞进 oneshot 区间后 C5b 的口径确实判红（有鉴别力）')
 
 _all_prios = [r.get('priority') for r in _RL
               if str((r or {}).get('when_scene') or '') != 'desktop']
@@ -382,6 +402,18 @@ _neg_nd = list(_OLD_NO_DESK) + [{'when_scene': 'ch1.x', 'when_door': 'Z',
                                  'to': 'nope', 'priority': 1}]
 ok(fp(_neg_nd) != _OLD_NO_DESK_FP_105,
    'D2d 负控制：往无 desktop 段里塞一条假规则后指纹变化（有鉴别力）')
+
+# ★★ D2e 第122轮：ut 段**自证**（它被 D1/D2/D2c 排除出去了，必须在这里锁住，
+#   否则"排除"就变成"没人管"）。三条：条数、前缀全为 `ut.`、每条必须有目标。
+_UT_N_122 = 243
+_ut_bad_prefix = [r for r in _UT
+                  if not str(r.get('when_scene') or '').startswith('ut.')]
+_ut_no_to = [r for r in _UT if not (isinstance(r.get('to'), str) and r.get('to'))]
+ok(len(_UT) == _UT_N_122 and not _ut_bad_prefix and not _ut_no_to,
+   'D2e ★ ut 段 %d 条、前缀全为 `ut.`、每条都有 to（异常 %d / %d）'
+   % (len(_UT), len(_ut_bad_prefix), len(_ut_no_to)))
+ok(all(r.get('work') == 'ut' for r in _UT),
+   'D2e2 ut 段每条都带 `work: "ut"` 标记（可被生成器覆盖式重写，不会误伤别人）')
 
 # ===========================================================================
 #  E 只登记不生成的两类

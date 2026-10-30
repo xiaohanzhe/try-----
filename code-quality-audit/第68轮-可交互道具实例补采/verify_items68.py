@@ -290,10 +290,17 @@ def seg_c():
 
     _ut = _ut_hist()
     _ut_gap = {n: _ut[n] for n in gnames if _ut.get(n, 0) > 0}
-    check('C3b', sum(_ut.values()) == 422 and _ut_gap == {'obj_interactable': 1}
+    #   ★★ 第122轮：ut 分片 422 → 970（+548 门）。期望值按"物 / 门"两段分开写，
+    #   谁缩水就红谁那段；门名字里带 door 仅用于**分账拓扑**，不是分类权威
+    #   （门的权威分类在 `check_objs121` / `check122`，那边从 GML 现推，本套件不复制）。
+    _ut_door = sum(v for k, v in _ut.items() if 'door' in k.lower())
+    _ut_prop = sum(_ut.values()) - _ut_door
+    check('C3b', (_ut_prop, _ut_door) == (422, 548) and _ut_gap == {'obj_interactable': 1}
           and not present,
-          'C3b ★★ 跨作品同名分账：被排除的 ut 分片 %d 条，落在缺口名单里的只有 %s'
-          '（Deltarune 侧仍 0 ⇒ 缺口声明成立）' % (sum(_ut.values()), _ut_gap))
+          'C3b ★★ 跨作品同名分账：被排除的 ut 分片 %d 条 = 可交互物 %d（第121轮）'
+          ' + 门 %d（第122轮）；落在缺口名单里的只有 %s'
+          '（Deltarune 侧仍 0 ⇒ 缺口声明成立）'
+          % (sum(_ut.values()), _ut_prop, _ut_door, _ut_gap))
 
 
 # ===========================================================================

@@ -659,6 +659,8 @@ def seg_e():
     #   否则"跳过 `_zone.ut.*`"就成了一条没人守的逃生通道。
     #   要守的语义：ut 侧确实有条数、确实有**撞名**落在缺口名单里，
     #   且**仅此一个名字** —— 将来 ut 再多撞几个名，这里会红一次，届时重新分账。
+    #   ★★ 第122轮：ut 侧又落了 548 扇门（门不算"可交互物"，`obj_interactable` 仍只有 1 条），
+    #   所以条数从 422 涨到 970 —— 期望值按"物 / 门"两段分开写，谁缩水就红谁那段。
     def _ut_src_hist():
         p = os.path.join(SS.scenes_dir(), '_zone.ut.rooms.json')
         if not os.path.isfile(p):
@@ -680,11 +682,18 @@ def seg_e():
 
     _ut = _ut_src_hist()
     _ut_gap = {n: _ut.get(n, 0) for names in gaps.values() for n in names if _ut.get(n, 0)}
-    check('E3b', sum(_ut.values()) == 422 and _ut_gap == {'obj_interactable': 1}
-          and not gap_but_present,
-          'E3b ★★ 跨作品同名分账：被排除的 ut 分片 %d 条，落在缺口名单里的只有 %s'
+    #   ★★ 第122轮：ut 分片由 422 涨到 970（+548 门）。这里**只做记账，不做分类**：
+    #   "名字里带 door" 仅用于把两轮的产出各自锁住（第121轮 422 物 / 第122轮 548 门），
+    #   门对象的**权威分类**在 `check_objs121` 与 `check122` 里（那边从 GML 现推），
+    #   本套件不复制那份逻辑，所以这里不引用任何门名单 —— 换了口径也不会假绿。
+    _ut_door = sum(v for k, v in _ut.items() if 'door' in k.lower())
+    _ut_prop = sum(_ut.values()) - _ut_door
+    check('E3b', (_ut_prop, _ut_door) == (422, 548)
+          and _ut_gap == {'obj_interactable': 1} and not gap_but_present,
+          'E3b ★★ 跨作品同名分账：被排除的 ut 分片 %d 条 = 可交互物 %d（第121轮）'
+          ' + 门 %d（第122轮）；落在缺口名单里的只有 %s'
           '（Deltarune 侧仍 0 条 ⇒ 缺口声明成立；**不是**把声明改小去迎合事实）'
-          % (sum(_ut.values()), _ut_gap))
+          % (sum(_ut.values()), _ut_prop, _ut_door, _ut_gap))
 
     # ---- E4 ★★ 真实场景：ch1 城堡镇 ⇒ 存档点 + 可读物**都**建出可交互物 ----
     #   ★ 第68轮：objects 由 7 → 11（补采落地了 `obj_readable_room1`）⇒ 不能再断言 `== 7`

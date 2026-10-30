@@ -508,7 +508,11 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
             #     · 路由表可用 —— 门的目标只能从表里查，没表就无从知道"通向哪"；
             #     · 查得到目标 —— 查不到 ⇒ 不建（而不是建一扇推不开的门）。
             letter = door_letter_of(src)
-            tgt = route_for_door(routes, sid, letter) if letter else None
+            # ★★ 第122轮：原来这里是 `if letter else None` —— ut 的门**不带字母**
+            #   （`obj_door_ruins13` 这种），于是查表这一步根本不会被调用 ⇒ 1,299 个
+            #   门实例一个都建不出来，而且**连日志都没有**（最后那个分支也要求
+            #   `letter`）。现在两路都查：对象级（`when_src`）优先，其次字母级。
+            tgt = route_for_door(routes, sid, letter, src=src)
             # ★★★ 第111轮 #47：Niko 的家 = 永远进不去的彩蛋（须在普通分支之前判）。
             #   ★ 与普通门同款契约：**前置条件缺一不可，缺了就不建**（不造假门）。
             #     彩蛋门的"前置条件"是 `on_egg` —— 没它就没法执行三连确认，
@@ -525,11 +529,11 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
                                                 present=present, bus=bus))
                 else:
                     _log.info('Niko 的家门 %s 没接 on_egg ⇒ 不建（不造假门）', src)
-            elif letter and tgt:
+            elif tgt:
                 out.append(DoorProp(key, src=src, door_letter=letter,
                                     target_scene=tgt, on_enter=on_enter,
                                     present=present, bus=bus))
-            elif letter:
+            elif letter or src:
                 _log.info('门 %s（字母 %s）在场景 %s 查不到路由 ⇒ 不建（不造假门）',
                           src, letter, sid)
         else:
@@ -729,33 +733,54 @@ def door_letter_of(src):
     return None
 
 
-def route_for_door(routes, scene_id, letter):
-    """在路由表里找「从 `scene_id` 的 `letter` 门出去」→ 目标 scene_id；没有 → `None`。
+def route_for_door(routes, scene_id, letter, src=None):
+    """在路由表里找「从 `scene_id` 的这扇门出去」→ 目标 scene_id；没有 → `None`。
 
     :param routes: `scene_routing.load_routes()` 的结果（`{'routes': [...]}`）或路线列表。
+    :param src: ★★ 第122轮：**门对象名**（`obj_door_ruins13` 这种）。给了就**先**按
+        对象级规则（`when_src`）找，找不到再退回字母规则。
     ★ 同一场景同一门字母**理论上唯一**；若真出现多条，取 `priority` 最小的
       （与 `scene_routing.match` 的裁决口径一致，**不新造**一套优先级）。
+
+    ★★★ 第122轮为什么要多一路 `when_src`
+    ------------------------------------
+    ut 的门**不带字母**（`obj_door_ruins13` / `obj_door_s_musfade` / `obj_door_t` …），
+    `door_letter_of()` 对它们一律返 `None` ⇒ 改之前这里根本不会被调用 ⇒ 门全哑。
+    而那些门的**目标房间写在 GML 里**（`if (room == room_ruins12) room_goto(room_ruins13);`），
+    同一间房里最多能出现 3 个不同的门对象 ⇒ 只能按 (场景, 对象名) 定位。
+
+    ★ 两路的**互斥**很关键：字母那一路必须**跳过带 `when_src` 的条目**。
+      否则一条对象级规则（`when_door` 为空）会匹配任意字母 —— 那等于让
+      "到下一间"的规则去顶替"走 B 门"的规则，静默走错房间。
     """
     if isinstance(routes, dict):
         items = routes.get('routes') or []
     else:
         items = routes or []
-    best = None
-    for r in items:
-        if not isinstance(r, dict):
-            continue
-        if r.get('when_scene') != scene_id:
-            continue
-        wd = r.get('when_door')
-        if wd and wd != letter:
-            continue
-        p = r.get('priority')
-        p = p if isinstance(p, int) else 10 ** 6
-        if best is None or p < best[0]:
-            best = (p, r.get('to'))
-    if best is None:
+
+    def _pick(pred):
+        best = None
+        for r in items:
+            if not isinstance(r, dict) or r.get('when_scene') != scene_id:
+                continue
+            if not pred(r):
+                continue
+            p = r.get('priority')
+            p = p if isinstance(p, int) else 10 ** 6
+            if best is None or p < best[0]:
+                best = (p, r.get('to'))
+        return None if best is None else best[1]
+
+    # ① 对象级（精确）：只认 `when_src == src` 的条目，与 `when_door` 无关
+    if isinstance(src, str) and src:
+        got = _pick(lambda r: r.get('when_src') == src)
+        if got:
+            return got
+    # ② 字母级（原有语义）：**跳过带 when_src 的条目**（它们是对象级，不许被字母复用）
+    if not letter:
         return None
-    return best[1]
+    return _pick(lambda r: not r.get('when_src')
+                 and (not r.get('when_door') or r.get('when_door') == letter))
 
 
 #: ★ 门 / 暗之泉通向哪（保留旧名，避免破坏既有引用）。

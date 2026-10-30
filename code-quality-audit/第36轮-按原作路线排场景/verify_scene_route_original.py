@@ -325,14 +325,54 @@ _ORIGIN = ('desktop',)
 #   注意这是**加严**不是放松：OneShot 分支仍要求 `_original` 是 dict 且带
 #   合法的 src_map/dst_map（且非自环），只是换了一套"自洽"的定义。
 _KIND_ONESHOT = 'oneshot_transfer'
+# ★★★ 第122轮：路由表里出现**第三种**原作机制 —— ut 的门。
+#   ut 的门对象叫 `obj_door_ruins13` / `obj_door_s_musfade` 这种，**不带字母**，
+#   目标写在 GML 的 `if (room == X) room_goto(Y);` 里；另一种是 `obj_doorA` 的
+#   `room_goto_next()`（= 房间序 +1）。它们既没有门字母位移，也不是 OneShot 传送
+#   ⇒ 本判据若只认那两套，这 243 条会整片报红（口径没跟上事实，不是缺陷）。
+#   ★ 这是**加严**：两种 kind 各有自己的自洽条件，不是"放行"。
+#     · `ut_door_src`  → `_original` 必须带反编译函数名 `code`（`gml_Object_*`）
+#                        且两端房间名不同（同房间不算一次出门）；
+#     · `ut_door_next` → `off == 1` 且 `dst_room_id == src_room_id + 1`
+#                        且 `via == 'obj_doorA'`（就是 room_goto_next 的语义）。
+_KIND_UT_SRC = 'ut_door_src'
+_KIND_UT_NEXT = 'ut_door_next'
+_UT_NEXT_VIA = 'obj_doorA'
+
+
+def _ut_self_ok(r):
+    u"""ut 门规则的 `_original` 自洽判定（**纯函数**，供正/负控制复用）。"""
+    o = r.get('_original')
+    if not isinstance(o, dict):
+        return False
+    k = o.get('kind')
+    s, d = o.get('src_room_name'), o.get('dst_room_name')
+    if not (isinstance(s, str) and s and isinstance(d, str) and d and s != d):
+        return False
+    if k == _KIND_UT_SRC:
+        c = o.get('code')
+        return isinstance(c, str) and c.startswith('gml_Object_')
+    if k == _KIND_UT_NEXT:
+        return (o.get('off') == 1 and o.get('via') == _UT_NEXT_VIA
+                and isinstance(o.get('src_room_id'), int)
+                and o.get('dst_room_id') == o.get('src_room_id') + 1)
+    return False
+
+
 _struct_bad = []
 _n_oneshot = 0
+_n_ut = 0
 for _r in (routes.get('routes') or []):
     if _r.get('when_scene') in _ORIGIN:
         continue
     _o = _r.get('_original')
     if not isinstance(_o, dict):
         _struct_bad.append('%s(无_original)' % _r.get('to'))
+        continue
+    if _o.get('kind') in (_KIND_UT_SRC, _KIND_UT_NEXT):
+        _n_ut += 1
+        if not _ut_self_ok(_r):
+            _struct_bad.append('%s(ut %s 不自洽)' % (_r.get('to'), _o.get('kind')))
         continue
     if _o.get('kind') == _KIND_ONESHOT:
         _n_oneshot += 1
@@ -350,9 +390,30 @@ for _r in (routes.get('routes') or []):
         _struct_bad.append('%s(位移=%r≠%d)' % (_r.get('to'), _o.get('room_delta'),
                                               _DOOR_DELTA[_L]))
 check('C3 每条规则的 _original 自洽于**它声明的原作机制**'
-      '（门位移 A+1/B-1/C+2 ｜ OneShot 传送为两端不同的原作 map；排除 desktop 世界门）',
+      '（门位移 A+1/B-1/C+2 ｜ OneShot 传送为两端不同的原作 map ｜ '
+      'ut 门为 room_goto 取证 / room_goto_next ±1；排除 desktop 世界门）',
       not _struct_bad,
       '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
+
+# C3a4 —— ★★ 第122轮：ut 分支**确实存在且被管到**（正控制），以及它有鉴别力（负控制）
+check('C3a4 ★ C3 的 ut 门分支确有样本（%d 条）' % _n_ut, _n_ut == 243,
+      '实测 %d' % _n_ut)
+_neg_a = {'to': 'x', 'when_scene': 'ut.rooms.a',
+          '_original': {'kind': _KIND_UT_NEXT, 'via': _UT_NEXT_VIA,
+                        'src_room_name': 'room_a', 'dst_room_name': 'room_b',
+                        'src_room_id': 7, 'dst_room_id': 9, 'off': 2}}
+_neg_b = {'to': 'x', 'when_scene': 'ut.rooms.a',
+          '_original': {'kind': _KIND_UT_SRC, 'code': 'obj_door_x',
+                        'src_room_name': 'room_a', 'dst_room_name': 'room_b'}}
+_pos = {'to': 'x', 'when_scene': 'ut.rooms.a',
+        '_original': {'kind': _KIND_UT_NEXT, 'via': _UT_NEXT_VIA,
+                      'src_room_name': 'room_a', 'dst_room_name': 'room_b',
+                      'src_room_id': 7, 'dst_room_id': 8, 'off': 1}}
+check('C3a5 正/负控制：`_ut_self_ok` 对"合法 next / off=2 的 next / 无 gml 前缀的 src"'
+      '三种输入各不相同',
+      _ut_self_ok(_pos) is True and _ut_self_ok(_neg_a) is False
+      and _ut_self_ok(_neg_b) is False,
+      repr((_ut_self_ok(_pos), _ut_self_ok(_neg_a), _ut_self_ok(_neg_b))))
 
 # C3a2 —— ★ 第105轮正控制：OneShot 段**确实存在且被 C3 的新分支管到**
 #   （否则"换个更松的判据"可能变成"整段没人管"）。
@@ -382,12 +443,38 @@ check('C3a3 负控制：自环的 oneshot_transfer 会被 C3 的新分支判红�
 #     必须先按 kind 排除再 `sorted()` —— 否则混合 None/str 排序直接
 #     `TypeError` 把整套件打死（本轮实测踩到）。判据意图不变：
 #     凡"门位移机制"的边只能用 A/B/C。
-_LETTERS = sorted(set((r.get('_original') or {}).get('door_letter')
-                      for r in (routes.get('routes') or [])
-                      if r.get('when_scene') not in _ORIGIN
-                      and (r.get('_original') or {}).get('kind') != _KIND_ONESHOT))
+#   ★★ 第122轮：再踩同一个坑的**第二形态** —— ut 的门有 110 条是**对象级**
+#     （`when_src`，门对象不带字母 ⇒ `door_letter` 同样 None）。第105轮的修法
+#     是"按 kind 排除"，这次排除不完（ut 有两种 kind，`ut_door_next` 带字母、
+#     `ut_door_src` 不带）⇒ 改成**按有没有字母筛**：C3b 问的是"带了字母的
+#     那些边用的是哪些字母"，不带字母的边压根不在它的论域里。
+#     ⚠️ 光筛掉会留下**空集恒真**的洞 ⇒ 配 C3b1 非空闸（门字母边必须真有样本）。
+_LETTERS = sorted(set(
+    v for v in ((r.get('_original') or {}).get('door_letter')
+                for r in (routes.get('routes') or [])
+                if r.get('when_scene') not in _ORIGIN
+                and (r.get('_original') or {}).get('kind') != _KIND_ONESHOT)
+    if isinstance(v, str) and v))
 check('C3b 原作门位移段只用 A/B/C 三种已实证字母门（D/E/F/W/X/Y 一律不编原作边）',
       set(_LETTERS) <= set(_DOOR_DELTA), '实际字母=%s' % _LETTERS)
+_LETTER_N = sum(1 for r in (routes.get('routes') or [])
+                if r.get('when_scene') not in _ORIGIN
+                and (r.get('_original') or {}).get('kind') != _KIND_ONESHOT
+                and isinstance((r.get('_original') or {}).get('door_letter'), str)
+                and (r.get('_original') or {}).get('door_letter'))
+check('C3b1 ★ C3b 的非空闸：带门字母的原作边确有样本（不是空集恒真）',
+      _LETTER_N >= 100 and len(_LETTERS) >= 2, '样本=%d 字母=%s' % (_LETTER_N, _LETTERS))
+#   ★ C3b2 负控制：往同一段里塞一条 `door_letter='Z'` 的假边，C3b 必须判红
+#     —— 证明上面的"筛字母"没有把判据筛成恒真。
+_Z_FAKE = {'when_scene': 'ch1.kris_room.kris_s_room',
+           '_original': {'kind': 'door_shift', 'door_letter': 'Z'}}
+_Z_LETTERS = sorted(set(
+    v for v in ((r.get('_original') or {}).get('door_letter')
+                for r in ([(routes.get('routes') or [])[0], _Z_FAKE]))
+    if isinstance(v, str) and v)) if (routes.get('routes') or []) else []
+check('C3b2 负控制：混入 door_letter="Z" 的边会被 C3b 判红（筛字母没筛掉鉴别力）',
+      bool(_Z_LETTERS) and not (set(_Z_LETTERS) <= set(_DOOR_DELTA)),
+      '实际字母=%s' % _Z_LETTERS)
 # ★ C3c 第89轮新增：desktop 世界门的字母集**恰好**是 A~D（正控制），
 #    证明 C3/C3b 的"排除"没有把 desktop 整段漏掉。
 #    ★★★ 第109轮**推翻 9 扇**（用户口径「只有连接各个游戏也就是三角符文，oneshot，
