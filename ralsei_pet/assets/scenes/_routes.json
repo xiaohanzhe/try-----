@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "meta": {
-    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。\n★ 第123轮：ut 段由 243 条增到 525 条（+282）。新增的都是**位移机制**门：`obj_doorB`/`obj_doorBmusicfade` = `room_previous(room)`（−1）、`obj_doorC`/`obj_doorCmusicfade` = `room_next(room_next(room))`（+2）、`obj_doorD`/`obj_doorDmusicfade` = 双 `room_previous`（−2）、`obj_doorAmusicfade`/`obj_papdoor` = +1 —— 全部来自 `Alarm_2` 的反编译原文，与 Deltarune 的「A+1 / B−1 / C+2」同一套约定。条件分支点名的房间（如 `obj_doorA` 的 `castle_prebarrier`，按 `global.flag[7]` 分叉）**不套位移**、如实留空。生成器 `code-quality-audit/第123轮-补齐ut门证据/_tools/gen_routes123.py`。",
+    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。\n★ 第123轮：ut 段由 243 条增到 525 条（+282）。新增的都是**位移机制**门：`obj_doorB`/`obj_doorBmusicfade` = `room_previous(room)`（−1）、`obj_doorC`/`obj_doorCmusicfade` = `room_next(room_next(room))`（+2）、`obj_doorD`/`obj_doorDmusicfade` = 双 `room_previous`（−2）、`obj_doorAmusicfade`/`obj_papdoor` = +1 —— 全部来自 `Alarm_2` 的反编译原文，与 Deltarune 的「A+1 / B−1 / C+2」同一套约定。条件分支点名的房间（如 `obj_doorA` 的 `castle_prebarrier`，按 `global.flag[7]` 分叉）**不套位移**、如实留空。生成器 `code-quality-audit/第123轮-补齐ut门证据/_tools/gen_routes123.py`。★ 第125轮：Deltarune 五章新增 **139** 条（D 门 56 / X 门 83，priority 5000~5138）。此前只有 A(+1)/B(−1)/C(+2)，`obj_doorD` 与 `obj_doorX` 被第44轮以\"证据不足\"拒收。本轮把两种门补齐，并**先独立验证**再写：D 的位移 = −2（第42轮 Alarm 反编译，与第123轮 ut 的 `obj_doorD` 同型），X 走表驱动（读 `Alarm_2` 的 `{房间→目标}`）；两者都要求**目标房含 `obj_marker<同字母>`**（D 71/74、X 94/94 命中）。★ **W 门不收**：`obj_markerw` 仅 60.2%、`obj_markerX` 84.3%，无一套到 100%，\"证据不足不猜\"这条纪律照旧。D 的 3 个例外全落在 backup/test 房，如实不写。生成器 `code-quality-audit/第125轮-D门与X门补齐/_tools/gen_routes125.py`。",
     "how_it_works": [
       "1. 控制器把当前语境打包成 context（scene_id / mood / event / keywords）。",
       "2. scene_routing.match() 按 priority 升序挑第一条匹配规则。",
@@ -25070,6 +25070,2591 @@
         "dst_room_id": 108
       },
       "work": "ut"
+    },
+    {
+      "to": "ch1.home.krishallway",
+      "priority": 5000,
+      "reason": "原作连接：从 克里斯的家·torhouse 的 D 门离开，落到 克里斯的家·krishallway 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.home.torhouse",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_torhouse",
+        "dst_room_name": "room_krishallway",
+        "src_room_id": 5,
+        "dst_room_id": 3,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.hometown.town_krisyard",
+      "priority": 5001,
+      "reason": "原作连接：从 克里斯的家·torhouse 的 X 门离开，落到 家乡·town_krisyard（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.home.torhouse",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_torhouse",
+        "dst_room_name": "room_town_krisyard",
+        "src_room_id": 5,
+        "dst_room_id": 7
+      }
+    },
+    {
+      "to": "ch1.home.torhouse",
+      "priority": 5002,
+      "reason": "原作连接：从 家乡·town_krisyard 的 X 门离开，落到 克里斯的家·torhouse（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.town_krisyard",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_krisyard",
+        "dst_room_name": "room_torhouse",
+        "src_room_id": 7,
+        "dst_room_id": 5
+      }
+    },
+    {
+      "to": "ch1.hometown.town_krisyard",
+      "priority": 5003,
+      "reason": "原作连接：从 家乡·town_north 的 D 门离开，落到 家乡·town_krisyard 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.hometown.town_north",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_north",
+        "dst_room_name": "room_town_krisyard",
+        "src_room_id": 9,
+        "dst_room_id": 7,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.hometown.flowershop_1f",
+      "priority": 5004,
+      "reason": "原作连接：从 家乡·town_north 的 X 门离开，落到 家乡·flowershop_1f（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.town_north",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_north",
+        "dst_room_name": "room_flowershop_1f",
+        "src_room_id": 9,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch1.hometown.town_north",
+      "priority": 5005,
+      "reason": "原作连接：从 家乡·town_mid 的 D 门离开，落到 家乡·town_north 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.hometown.town_mid",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_town_north",
+        "src_room_id": 11,
+        "dst_room_id": 9,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.hometown.diner",
+      "priority": 5006,
+      "reason": "原作连接：从 家乡·town_mid 的 X 门离开，落到 家乡·diner（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.town_mid",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_diner",
+        "src_room_id": 11,
+        "dst_room_id": 22
+      }
+    },
+    {
+      "to": "ch1.hometown.town_mid",
+      "priority": 5007,
+      "reason": "原作连接：从 家乡·town_south 的 D 门离开，落到 家乡·town_mid 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.hometown.town_south",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 13,
+        "dst_room_id": 11,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.hometown.library",
+      "priority": 5008,
+      "reason": "原作连接：从 家乡·town_south 的 X 门离开，落到 家乡·library（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.town_south",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_library",
+        "src_room_id": 13,
+        "dst_room_id": 26
+      }
+    },
+    {
+      "to": "ch1.hometown.schoollobby",
+      "priority": 5009,
+      "reason": "原作连接：从 家乡·town_school 的 X 门离开，落到 家乡·schoollobby（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.town_school",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_school",
+        "dst_room_name": "room_schoollobby",
+        "src_room_id": 14,
+        "dst_room_id": 29
+      }
+    },
+    {
+      "to": "ch1.hometown.town_south",
+      "priority": 5010,
+      "reason": "原作连接：从 家乡·town_church 的 D 门离开，落到 家乡·town_south 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.hometown.town_church",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_church",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 15,
+        "dst_room_id": 13,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.hometown.townhall",
+      "priority": 5011,
+      "reason": "原作连接：从 家乡·town_church 的 X 门离开，落到 家乡·townhall（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.town_church",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_church",
+        "dst_room_name": "room_townhall",
+        "src_room_id": 15,
+        "dst_room_id": 23
+      }
+    },
+    {
+      "to": "ch1.hometown.town_church",
+      "priority": 5012,
+      "reason": "原作连接：从 家乡·town_shelter 的 D 门离开，落到 家乡·town_church 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.hometown.town_shelter",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_shelter",
+        "dst_room_name": "room_town_church",
+        "src_room_id": 17,
+        "dst_room_id": 15,
+        "via": "obj_doorD_musfade",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.hometown.hospital_hallway",
+      "priority": 5013,
+      "reason": "原作连接：从 家乡·hospital_room2 的 D 门离开，落到 家乡·hospital_hallway 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.hometown.hospital_room2",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_hospital_room2",
+        "dst_room_name": "room_hospital_hallway",
+        "src_room_id": 21,
+        "dst_room_id": 19,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.hometown.town_mid",
+      "priority": 5014,
+      "reason": "原作连接：从 家乡·diner 的 X 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.diner",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_diner",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 22,
+        "dst_room_id": 11
+      }
+    },
+    {
+      "to": "ch1.hometown.town_church",
+      "priority": 5015,
+      "reason": "原作连接：从 家乡·townhall 的 X 门离开，落到 家乡·town_church（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.townhall",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_townhall",
+        "dst_room_name": "room_town_church",
+        "src_room_id": 23,
+        "dst_room_id": 15
+      }
+    },
+    {
+      "to": "ch1.hometown.town_north",
+      "priority": 5016,
+      "reason": "原作连接：从 家乡·flowershop_1f 的 X 门离开，落到 家乡·town_north（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.flowershop_1f",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_flowershop_1f",
+        "dst_room_name": "room_town_north",
+        "src_room_id": 24,
+        "dst_room_id": 9
+      }
+    },
+    {
+      "to": "ch1.hometown.town_south",
+      "priority": 5017,
+      "reason": "原作连接：从 家乡·library 的 X 门离开，落到 家乡·town_south（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.library",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_library",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 26,
+        "dst_room_id": 13
+      }
+    },
+    {
+      "to": "ch1.hometown.town_school",
+      "priority": 5018,
+      "reason": "原作连接：从 家乡·schoollobby 的 X 门离开，落到 家乡·town_school（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.hometown.schoollobby",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_schoollobby",
+        "dst_room_name": "room_town_school",
+        "src_room_id": 29,
+        "dst_room_id": 14
+      }
+    },
+    {
+      "to": "ch1.hometown.schoollobby",
+      "priority": 5019,
+      "reason": "原作连接：从 家乡·schooldoor 的 D 门离开，落到 家乡·schoollobby 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.hometown.schooldoor",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_schooldoor",
+        "dst_room_name": "room_schoollobby",
+        "src_room_id": 31,
+        "dst_room_id": 29,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.dark_world.dark3",
+      "priority": 5020,
+      "reason": "原作连接：从 黑暗世界·wobbles 的 D 门离开，落到 黑暗世界·dark3 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.dark_world.dark_wobbles",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_dark_wobbles",
+        "dst_room_name": "room_dark3",
+        "src_room_id": 39,
+        "dst_room_id": 37,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.castle_town.castle_tutorial",
+      "priority": 5021,
+      "reason": "原作连接：从 城堡镇 的 X 门离开，落到 城堡镇·tutorial（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.castle_town.castle_town",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "城堡镇",
+        "dst_room_name": "room_castle_tutorial",
+        "src_room_id": 45,
+        "dst_room_id": 47
+      }
+    },
+    {
+      "to": "ch1.castle_town.castle_town",
+      "priority": 5022,
+      "reason": "原作连接：从 城堡镇·tutorial 的 X 门离开，落到 城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.castle_town.castle_tutorial",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_castle_tutorial",
+        "dst_room_name": "城堡镇",
+        "src_room_id": 47,
+        "dst_room_id": 45
+      }
+    },
+    {
+      "to": "ch1.field.field2",
+      "priority": 5023,
+      "reason": "原作连接：从 希望与梦想之原·topchef 的 D 门离开，落到 希望与梦想之原·field2 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.field.field_topchef",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_field_topchef",
+        "dst_room_name": "room_field2",
+        "src_room_id": 54,
+        "dst_room_id": 52,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.field.field_seams_shop",
+      "priority": 5024,
+      "reason": "原作连接：从 希望与梦想之原·field3 的 D 门离开，落到 希望与梦想之原·原野·西姆的店 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.field.field3",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_field3",
+        "dst_room_name": "原野·西姆的店",
+        "src_room_id": 61,
+        "dst_room_id": 59,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.field.field4",
+      "priority": 5025,
+      "reason": "原作连接：从 希望与梦想之原·checkers4 的 D 门离开，落到 希望与梦想之原·field4 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.field.field_checkers4",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_field_checkers4",
+        "dst_room_name": "room_field4",
+        "src_room_id": 65,
+        "dst_room_id": 63,
+        "via": "obj_doorD_musfade",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.forest.forest_area2",
+      "priority": 5026,
+      "reason": "原作连接：从 猩红森林·puzzle1 的 D 门离开，落到 猩红森林·area2 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.forest.forest_puzzle1",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_forest_puzzle1",
+        "dst_room_name": "room_forest_area2",
+        "src_room_id": 78,
+        "dst_room_id": 76,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.forest.forest_beforeclover",
+      "priority": 5027,
+      "reason": "原作连接：从 猩红森林·area3 的 D 门离开，落到 猩红森林·beforeclover 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.forest.forest_area3",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_forest_area3",
+        "dst_room_name": "room_forest_beforeclover",
+        "src_room_id": 81,
+        "dst_room_id": 79,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.forest.forest_bake_sale",
+      "priority": 5028,
+      "reason": "原作连接：从 猩红森林·area4 的 D 门离开，落到 猩红森林·森林·义卖 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.forest.forest_area4",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_forest_area4",
+        "dst_room_name": "森林·义卖",
+        "src_room_id": 84,
+        "dst_room_id": 82,
+        "via": "obj_doorD_musfade",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.forest.forest_secret1",
+      "priority": 5029,
+      "reason": "原作连接：从 猩红森林·dancers1 的 X 门离开，落到 猩红森林·secret1（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.forest.forest_dancers1",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_forest_dancers1",
+        "dst_room_name": "room_forest_secret1",
+        "src_room_id": 85,
+        "dst_room_id": 86
+      }
+    },
+    {
+      "to": "ch1.forest.forest_dancers1",
+      "priority": 5030,
+      "reason": "原作连接：从 猩红森林·secret1 的 X 门离开，落到 猩红森林·dancers1（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.forest.forest_secret1",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_forest_secret1",
+        "dst_room_name": "room_forest_dancers1",
+        "src_room_id": 86,
+        "dst_room_id": 85
+      }
+    },
+    {
+      "to": "ch1.forest.forest_dancers1",
+      "priority": 5031,
+      "reason": "原作连接：从 猩红森林·thrashmaker 的 D 门离开，落到 猩红森林·dancers1 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.forest.forest_thrashmaker",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_forest_thrashmaker",
+        "dst_room_name": "room_forest_dancers1",
+        "src_room_id": 87,
+        "dst_room_id": 85,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.forest.forest_before_maze",
+      "priority": 5032,
+      "reason": "原作连接：从 猩红森林·maze1 的 X 门离开，落到 猩红森林·森林·迷宫前（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.forest.forest_maze1",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_forest_maze1",
+        "dst_room_name": "森林·迷宫前",
+        "src_room_id": 91,
+        "dst_room_id": 90
+      }
+    },
+    {
+      "to": "ch1.forest.forest_maze_susie",
+      "priority": 5033,
+      "reason": "原作连接：从 猩红森林·maze2 的 X 门离开，落到 猩红森林·maze_susie（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.forest.forest_maze2",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_forest_maze2",
+        "dst_room_name": "room_forest_maze_susie",
+        "src_room_id": 94,
+        "dst_room_id": 93
+      }
+    },
+    {
+      "to": "ch1.forest.forest_maze_susie",
+      "priority": 5034,
+      "reason": "原作连接：从 猩红森林·maze_deadend2 的 D 门离开，落到 猩红森林·maze_susie 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.forest.forest_maze_deadend2",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_forest_maze_deadend2",
+        "dst_room_name": "room_forest_maze_susie",
+        "src_room_id": 95,
+        "dst_room_id": 93,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.forest.forest_before_maze",
+      "priority": 5035,
+      "reason": "原作连接：从 猩红森林·森林·迷宫后 的 X 门离开，落到 猩红森林·森林·迷宫前（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.forest.forest_after_maze",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "森林·迷宫后",
+        "dst_room_name": "森林·迷宫前",
+        "src_room_id": 96,
+        "dst_room_id": 90
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_prisonlancer",
+      "priority": 5036,
+      "reason": "原作连接：从 纸牌城堡·prison_cells 的 X 门离开，落到 纸牌城堡·prisonlancer（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.card_castle.cc_prison_cells",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_cc_prison_cells",
+        "dst_room_name": "room_cc_prisonlancer",
+        "src_room_id": 105,
+        "dst_room_id": 106
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_prison_cells",
+      "priority": 5037,
+      "reason": "原作连接：从 纸牌城堡·prisonlancer 的 X 门离开，落到 纸牌城堡·prison_cells（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.card_castle.cc_prisonlancer",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_cc_prisonlancer",
+        "dst_room_name": "room_cc_prison_cells",
+        "src_room_id": 106,
+        "dst_room_id": 105
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_prisonelevator",
+      "priority": 5038,
+      "reason": "原作连接：从 纸牌城堡·牢房 的 X 门离开，落到 纸牌城堡·prisonelevator（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.card_castle.card_castle_prison",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "纸牌城堡·牢房",
+        "dst_room_name": "room_cc_prisonelevator",
+        "src_room_id": 107,
+        "dst_room_id": 109
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_prisonelevator",
+      "priority": 5039,
+      "reason": "原作连接：从 纸牌城堡·？？？ 的 X 门离开，落到 纸牌城堡·prisonelevator（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.card_castle.card_castle_unknown",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "纸牌城堡·？？？",
+        "dst_room_name": "room_cc_prisonelevator",
+        "src_room_id": 111,
+        "dst_room_id": 109
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_prisonelevator",
+      "priority": 5040,
+      "reason": "原作连接：从 纸牌城堡·一层 的 X 门离开，落到 纸牌城堡·prisonelevator（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch1.card_castle.card_castle_1f",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "纸牌城堡·一层",
+        "dst_room_name": "room_cc_prisonelevator",
+        "src_room_id": 114,
+        "dst_room_id": 109
+      }
+    },
+    {
+      "to": "ch1.card_castle.card_castle_1f",
+      "priority": 5041,
+      "reason": "原作连接：从 纸牌城堡·2f 的 D 门离开，落到 纸牌城堡·一层 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.card_castle.cc_2f",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_cc_2f",
+        "dst_room_name": "纸牌城堡·一层",
+        "src_room_id": 116,
+        "dst_room_id": 114,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_2f",
+      "priority": 5042,
+      "reason": "原作连接：从 纸牌城堡·3f 的 D 门离开，落到 纸牌城堡·2f 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.card_castle.cc_3f",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_cc_3f",
+        "dst_room_name": "room_cc_2f",
+        "src_room_id": 118,
+        "dst_room_id": 116,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_3f",
+      "priority": 5043,
+      "reason": "原作连接：从 纸牌城堡·4f 的 D 门离开，落到 纸牌城堡·3f 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.card_castle.cc_4f",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_cc_4f",
+        "dst_room_name": "room_cc_3f",
+        "src_room_id": 120,
+        "dst_room_id": 118,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_4f",
+      "priority": 5044,
+      "reason": "原作连接：从 纸牌城堡·clover 的 D 门离开，落到 纸牌城堡·4f 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.card_castle.cc_clover",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_cc_clover",
+        "dst_room_name": "room_cc_4f",
+        "src_room_id": 122,
+        "dst_room_id": 120,
+        "via": "obj_doorD_musfade",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch1.card_castle.card_castle_5f",
+      "priority": 5045,
+      "reason": "原作连接：从 纸牌城堡·6f 的 D 门离开，落到 纸牌城堡·五层 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch1.card_castle.cc_6f",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_cc_6f",
+        "dst_room_name": "纸牌城堡·五层",
+        "src_room_id": 125,
+        "dst_room_id": 123,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.home.krishallway",
+      "priority": 5046,
+      "reason": "原作连接：从 克里斯的家·torhouse 的 D 门离开，落到 克里斯的家·krishallway 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.home.torhouse",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_torhouse",
+        "dst_room_name": "room_krishallway",
+        "src_room_id": 21,
+        "dst_room_id": 19,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.hometown.town_krisyard",
+      "priority": 5047,
+      "reason": "原作连接：从 克里斯的家·torhouse 的 X 门离开，落到 家乡·town_krisyard（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.home.torhouse",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_torhouse",
+        "dst_room_name": "room_town_krisyard",
+        "src_room_id": 21,
+        "dst_room_id": 23
+      }
+    },
+    {
+      "to": "ch2.home.torhouse",
+      "priority": 5048,
+      "reason": "原作连接：从 家乡·town_krisyard 的 X 门离开，落到 克里斯的家·torhouse（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.hometown.town_krisyard",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_krisyard",
+        "dst_room_name": "room_torhouse",
+        "src_room_id": 23,
+        "dst_room_id": 21
+      }
+    },
+    {
+      "to": "ch2.hometown.town_krisyard",
+      "priority": 5049,
+      "reason": "原作连接：从 家乡·town_north 的 D 门离开，落到 家乡·town_krisyard 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.hometown.town_north",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_north",
+        "dst_room_name": "room_town_krisyard",
+        "src_room_id": 25,
+        "dst_room_id": 23,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.hometown.flowershop_1f",
+      "priority": 5050,
+      "reason": "原作连接：从 家乡·town_north 的 X 门离开，落到 家乡·flowershop_1f（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.hometown.town_north",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_north",
+        "dst_room_name": "room_flowershop_1f",
+        "src_room_id": 25,
+        "dst_room_id": 40
+      }
+    },
+    {
+      "to": "ch2.hometown.town_north",
+      "priority": 5051,
+      "reason": "原作连接：从 家乡·town_mid 的 D 门离开，落到 家乡·town_north 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.hometown.town_mid",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_town_north",
+        "src_room_id": 27,
+        "dst_room_id": 25,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.hometown.diner",
+      "priority": 5052,
+      "reason": "原作连接：从 家乡·town_mid 的 X 门离开，落到 家乡·diner（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.hometown.town_mid",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_diner",
+        "src_room_id": 27,
+        "dst_room_id": 38
+      }
+    },
+    {
+      "to": "ch2.hometown.town_mid",
+      "priority": 5053,
+      "reason": "原作连接：从 家乡·town_south 的 D 门离开，落到 家乡·town_mid 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.hometown.town_south",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 29,
+        "dst_room_id": 27,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.hometown.library",
+      "priority": 5054,
+      "reason": "原作连接：从 家乡·town_south 的 X 门离开，落到 家乡·library（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.hometown.town_south",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_library",
+        "src_room_id": 29,
+        "dst_room_id": 42
+      }
+    },
+    {
+      "to": "ch2.hometown.town_south",
+      "priority": 5055,
+      "reason": "原作连接：从 家乡·town_church 的 D 门离开，落到 家乡·town_south 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.hometown.town_church",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_church",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 31,
+        "dst_room_id": 29,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.hometown.townhall",
+      "priority": 5056,
+      "reason": "原作连接：从 家乡·town_church 的 X 门离开，落到 家乡·townhall（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.hometown.town_church",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_church",
+        "dst_room_name": "room_townhall",
+        "src_room_id": 31,
+        "dst_room_id": 39
+      }
+    },
+    {
+      "to": "ch2.hometown.town_church",
+      "priority": 5057,
+      "reason": "原作连接：从 家乡·town_shelter 的 D 门离开，落到 家乡·town_church 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.hometown.town_shelter",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_shelter",
+        "dst_room_name": "room_town_church",
+        "src_room_id": 33,
+        "dst_room_id": 31,
+        "via": "obj_doorD_musfade",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.hometown.hospital_hallway",
+      "priority": 5058,
+      "reason": "原作连接：从 家乡·hospital_room2 的 D 门离开，落到 家乡·hospital_hallway 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.hometown.hospital_room2",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_hospital_room2",
+        "dst_room_name": "room_hospital_hallway",
+        "src_room_id": 37,
+        "dst_room_id": 35,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.hometown.town_mid",
+      "priority": 5059,
+      "reason": "原作连接：从 家乡·diner 的 X 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.hometown.diner",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_diner",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 38,
+        "dst_room_id": 27
+      }
+    },
+    {
+      "to": "ch2.hometown.town_church",
+      "priority": 5060,
+      "reason": "原作连接：从 家乡·townhall 的 X 门离开，落到 家乡·town_church（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.hometown.townhall",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_townhall",
+        "dst_room_name": "room_town_church",
+        "src_room_id": 39,
+        "dst_room_id": 31
+      }
+    },
+    {
+      "to": "ch2.hometown.town_north",
+      "priority": 5061,
+      "reason": "原作连接：从 家乡·flowershop_1f 的 X 门离开，落到 家乡·town_north（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.hometown.flowershop_1f",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_flowershop_1f",
+        "dst_room_name": "room_town_north",
+        "src_room_id": 40,
+        "dst_room_id": 25
+      }
+    },
+    {
+      "to": "ch2.hometown.town_south",
+      "priority": 5062,
+      "reason": "原作连接：从 家乡·library 的 X 门离开，落到 家乡·town_south（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.hometown.library",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_library",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 42,
+        "dst_room_id": 29
+      }
+    },
+    {
+      "to": "ch2.hometown.schoollobby",
+      "priority": 5063,
+      "reason": "原作连接：从 家乡·schooldoor 的 D 门离开，落到 家乡·schoollobby 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.hometown.schooldoor",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_schooldoor",
+        "dst_room_name": "room_schoollobby",
+        "src_room_id": 52,
+        "dst_room_id": 50,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.castle_town.castle_tutorial",
+      "priority": 5064,
+      "reason": "原作连接：从 城堡镇 的 X 门离开，落到 城堡镇·tutorial（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.castle_town.castle_town",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "城堡镇",
+        "dst_room_name": "room_castle_tutorial",
+        "src_room_id": 55,
+        "dst_room_id": 56
+      }
+    },
+    {
+      "to": "ch2.my_castle_town.dw_castle_west_cliff",
+      "priority": 5065,
+      "reason": "原作连接：从 城堡镇 的 D 门离开，落到 我的城堡镇·west_cliff 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.castle_town.castle_town_2",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "城堡镇",
+        "dst_room_name": "room_dw_castle_west_cliff",
+        "src_room_id": 61,
+        "dst_room_id": 59,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.castle_town.castle_tutorial",
+      "priority": 5066,
+      "reason": "原作连接：从 城堡镇 的 X 门离开，落到 城堡镇·tutorial（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.castle_town.castle_town_2",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "城堡镇",
+        "dst_room_name": "room_castle_tutorial",
+        "src_room_id": 61,
+        "dst_room_id": 56
+      }
+    },
+    {
+      "to": "ch2.my_castle_town.my_castle_town",
+      "priority": 5067,
+      "reason": "原作连接：从 我的城堡镇·restaurant 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.my_castle_town.dw_castle_restaurant",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_restaurant",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 64,
+        "dst_room_id": 62
+      }
+    },
+    {
+      "to": "ch2.my_castle_town.my_castle_town",
+      "priority": 5068,
+      "reason": "原作连接：从 我的城堡镇·cafe 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.my_castle_town.dw_castle_cafe",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_cafe",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 65,
+        "dst_room_id": 62
+      }
+    },
+    {
+      "to": "ch2.my_castle_town.my_castle_town",
+      "priority": 5069,
+      "reason": "原作连接：从 我的城堡镇·dojo 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch2.my_castle_town.dw_castle_dojo",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_dojo",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 66,
+        "dst_room_id": 62
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_tasque_battle",
+      "priority": 5070,
+      "reason": "原作连接：从 赛博原野·街机 的 D 门离开，落到 赛博原野·tasque_battle 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.cyber_field.cyber_field_arcade",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "赛博原野·街机",
+        "dst_room_name": "room_dw_cyber_tasque_battle",
+        "src_room_id": 83,
+        "dst_room_id": 81,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_maze_virokun",
+      "priority": 5071,
+      "reason": "原作连接：从 赛博原野·battle_maze_2 的 D 门离开，落到 赛博原野·maze_virokun 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_battle_maze_2",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_dw_cyber_battle_maze_2",
+        "dst_room_name": "room_dw_cyber_maze_virokun",
+        "src_room_id": 87,
+        "dst_room_id": 85,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch3.home.krishallway",
+      "priority": 5072,
+      "reason": "原作连接：从 克里斯的家·torhouse 的 D 门离开，落到 克里斯的家·krishallway 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch3.home.torhouse",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_torhouse",
+        "dst_room_name": "room_krishallway",
+        "src_room_id": 18,
+        "dst_room_id": 16,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch3.hometown.town_krisyard",
+      "priority": 5073,
+      "reason": "原作连接：从 克里斯的家·torhouse 的 X 门离开，落到 家乡·town_krisyard（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.home.torhouse",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_torhouse",
+        "dst_room_name": "room_town_krisyard",
+        "src_room_id": 18,
+        "dst_room_id": 20
+      }
+    },
+    {
+      "to": "ch3.home.torhouse",
+      "priority": 5074,
+      "reason": "原作连接：从 家乡·town_krisyard 的 X 门离开，落到 克里斯的家·torhouse（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.hometown.town_krisyard",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_krisyard",
+        "dst_room_name": "room_torhouse",
+        "src_room_id": 20,
+        "dst_room_id": 18
+      }
+    },
+    {
+      "to": "ch3.hometown.town_krisyard",
+      "priority": 5075,
+      "reason": "原作连接：从 家乡·town_north 的 D 门离开，落到 家乡·town_krisyard 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch3.hometown.town_north",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_north",
+        "dst_room_name": "room_town_krisyard",
+        "src_room_id": 22,
+        "dst_room_id": 20,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch3.hometown.flowershop_1f",
+      "priority": 5076,
+      "reason": "原作连接：从 家乡·town_north 的 X 门离开，落到 家乡·flowershop_1f（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.hometown.town_north",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_north",
+        "dst_room_name": "room_flowershop_1f",
+        "src_room_id": 22,
+        "dst_room_id": 37
+      }
+    },
+    {
+      "to": "ch3.hometown.town_north",
+      "priority": 5077,
+      "reason": "原作连接：从 家乡·town_mid 的 D 门离开，落到 家乡·town_north 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch3.hometown.town_mid",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_town_north",
+        "src_room_id": 24,
+        "dst_room_id": 22,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch3.hometown.diner",
+      "priority": 5078,
+      "reason": "原作连接：从 家乡·town_mid 的 X 门离开，落到 家乡·diner（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.hometown.town_mid",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_diner",
+        "src_room_id": 24,
+        "dst_room_id": 35
+      }
+    },
+    {
+      "to": "ch3.hometown.town_mid",
+      "priority": 5079,
+      "reason": "原作连接：从 家乡·town_south 的 D 门离开，落到 家乡·town_mid 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch3.hometown.town_south",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 26,
+        "dst_room_id": 24,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch3.hometown.library",
+      "priority": 5080,
+      "reason": "原作连接：从 家乡·town_south 的 X 门离开，落到 家乡·library（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.hometown.town_south",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_library",
+        "src_room_id": 26,
+        "dst_room_id": 39
+      }
+    },
+    {
+      "to": "ch3.hometown.town_south",
+      "priority": 5081,
+      "reason": "原作连接：从 家乡·town_church 的 D 门离开，落到 家乡·town_south 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch3.hometown.town_church",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_church",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 28,
+        "dst_room_id": 26,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch3.hometown.townhall",
+      "priority": 5082,
+      "reason": "原作连接：从 家乡·town_church 的 X 门离开，落到 家乡·townhall（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.hometown.town_church",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_church",
+        "dst_room_name": "room_townhall",
+        "src_room_id": 28,
+        "dst_room_id": 36
+      }
+    },
+    {
+      "to": "ch3.hometown.town_church",
+      "priority": 5083,
+      "reason": "原作连接：从 家乡·town_shelter 的 D 门离开，落到 家乡·town_church 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch3.hometown.town_shelter",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_shelter",
+        "dst_room_name": "room_town_church",
+        "src_room_id": 30,
+        "dst_room_id": 28,
+        "via": "obj_doorD_musfade",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch3.hometown.hospital_hallway",
+      "priority": 5084,
+      "reason": "原作连接：从 家乡·hospital_room2 的 D 门离开，落到 家乡·hospital_hallway 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch3.hometown.hospital_room2",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_hospital_room2",
+        "dst_room_name": "room_hospital_hallway",
+        "src_room_id": 34,
+        "dst_room_id": 32,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch3.hometown.town_mid",
+      "priority": 5085,
+      "reason": "原作连接：从 家乡·diner 的 X 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.hometown.diner",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_diner",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 35,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch3.hometown.town_church",
+      "priority": 5086,
+      "reason": "原作连接：从 家乡·townhall 的 X 门离开，落到 家乡·town_church（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.hometown.townhall",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_townhall",
+        "dst_room_name": "room_town_church",
+        "src_room_id": 36,
+        "dst_room_id": 28
+      }
+    },
+    {
+      "to": "ch3.hometown.town_north",
+      "priority": 5087,
+      "reason": "原作连接：从 家乡·flowershop_1f 的 X 门离开，落到 家乡·town_north（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.hometown.flowershop_1f",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_flowershop_1f",
+        "dst_room_name": "room_town_north",
+        "src_room_id": 37,
+        "dst_room_id": 22
+      }
+    },
+    {
+      "to": "ch3.hometown.town_south",
+      "priority": 5088,
+      "reason": "原作连接：从 家乡·library 的 X 门离开，落到 家乡·town_south（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.hometown.library",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_library",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 39,
+        "dst_room_id": 26
+      }
+    },
+    {
+      "to": "ch3.hometown.schoollobby",
+      "priority": 5089,
+      "reason": "原作连接：从 家乡·schooldoor 的 D 门离开，落到 家乡·schoollobby 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch3.hometown.schooldoor",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_schooldoor",
+        "dst_room_name": "room_schoollobby",
+        "src_room_id": 49,
+        "dst_room_id": 47,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch3.my_castle_town.dw_castle_town",
+      "priority": 5090,
+      "reason": "原作连接：从 城堡镇·tutorial 的 X 门离开，落到 我的城堡镇·dw_castle_town（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.castle_town.castle_tutorial",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_castle_tutorial",
+        "dst_room_name": "room_dw_castle_town",
+        "src_room_id": 52,
+        "dst_room_id": 56
+      }
+    },
+    {
+      "to": "ch3.my_castle_town.dw_castle_town",
+      "priority": 5091,
+      "reason": "原作连接：从 我的城堡镇·west_cliff 的 X 门离开，落到 我的城堡镇·dw_castle_town（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.my_castle_town.dw_castle_west_cliff",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_west_cliff",
+        "dst_room_name": "room_dw_castle_town",
+        "src_room_id": 54,
+        "dst_room_id": 56
+      }
+    },
+    {
+      "to": "ch3.my_castle_town.dw_castle_town",
+      "priority": 5092,
+      "reason": "原作连接：从 我的城堡镇·area_1 的 X 门离开，落到 我的城堡镇·dw_castle_town（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.my_castle_town.dw_castle_area_1",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_area_1",
+        "dst_room_name": "room_dw_castle_town",
+        "src_room_id": 55,
+        "dst_room_id": 56
+      }
+    },
+    {
+      "to": "ch3.my_castle_town.dw_castle_town",
+      "priority": 5093,
+      "reason": "原作连接：从 我的城堡镇·restaurant 的 X 门离开，落到 我的城堡镇·dw_castle_town（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.my_castle_town.dw_castle_restaurant",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_restaurant",
+        "dst_room_name": "room_dw_castle_town",
+        "src_room_id": 58,
+        "dst_room_id": 56
+      }
+    },
+    {
+      "to": "ch3.my_castle_town.dw_castle_town",
+      "priority": 5094,
+      "reason": "原作连接：从 我的城堡镇·cafe 的 X 门离开，落到 我的城堡镇·dw_castle_town（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.my_castle_town.dw_castle_cafe",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_cafe",
+        "dst_room_name": "room_dw_castle_town",
+        "src_room_id": 59,
+        "dst_room_id": 56
+      }
+    },
+    {
+      "to": "ch3.my_castle_town.dw_castle_town",
+      "priority": 5095,
+      "reason": "原作连接：从 我的城堡镇·dojo 的 X 门离开，落到 我的城堡镇·dw_castle_town（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch3.my_castle_town.dw_castle_dojo",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_dojo",
+        "dst_room_name": "room_dw_castle_town",
+        "src_room_id": 60,
+        "dst_room_id": 56
+      }
+    },
+    {
+      "to": "ch4.home.krishallway",
+      "priority": 5096,
+      "reason": "原作连接：从 克里斯的家·torhouse 的 D 门离开，落到 克里斯的家·krishallway 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch4.home.torhouse",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_torhouse",
+        "dst_room_name": "room_krishallway",
+        "src_room_id": 18,
+        "dst_room_id": 16,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch4.home.torhouse",
+      "priority": 5097,
+      "reason": "原作连接：从 家乡·town_krisyard 的 X 门离开，落到 克里斯的家·torhouse（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.hometown.town_krisyard",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_krisyard",
+        "dst_room_name": "room_torhouse",
+        "src_room_id": 20,
+        "dst_room_id": 18
+      }
+    },
+    {
+      "to": "ch4.hometown.town_krisyard",
+      "priority": 5098,
+      "reason": "原作连接：从 家乡·town_north 的 D 门离开，落到 家乡·town_krisyard 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch4.hometown.town_north",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_north",
+        "dst_room_name": "room_town_krisyard",
+        "src_room_id": 22,
+        "dst_room_id": 20,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch4.hometown.flowershop_1f",
+      "priority": 5099,
+      "reason": "原作连接：从 家乡·town_north 的 X 门离开，落到 家乡·flowershop_1f（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.hometown.town_north",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_north",
+        "dst_room_name": "room_flowershop_1f",
+        "src_room_id": 22,
+        "dst_room_id": 37
+      }
+    },
+    {
+      "to": "ch4.hometown.town_north",
+      "priority": 5100,
+      "reason": "原作连接：从 家乡 的 D 门离开，落到 家乡·town_north 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch4.hometown.hometown",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "家乡",
+        "dst_room_name": "room_town_north",
+        "src_room_id": 24,
+        "dst_room_id": 22,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch4.hometown.diner",
+      "priority": 5101,
+      "reason": "原作连接：从 家乡 的 X 门离开，落到 家乡·diner（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.hometown.hometown",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "家乡",
+        "dst_room_name": "room_diner",
+        "src_room_id": 24,
+        "dst_room_id": 35
+      }
+    },
+    {
+      "to": "ch4.hometown.hometown",
+      "priority": 5102,
+      "reason": "原作连接：从 家乡·town_south 的 D 门离开，落到 家乡 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch4.hometown.town_south",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_south",
+        "dst_room_name": "家乡",
+        "src_room_id": 26,
+        "dst_room_id": 24,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch4.hometown.library",
+      "priority": 5103,
+      "reason": "原作连接：从 家乡·town_south 的 X 门离开，落到 家乡·library（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.hometown.town_south",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_library",
+        "src_room_id": 26,
+        "dst_room_id": 39
+      }
+    },
+    {
+      "to": "ch4.hometown.town_south",
+      "priority": 5104,
+      "reason": "原作连接：从 家乡·town_church 的 D 门离开，落到 家乡·town_south 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch4.hometown.town_church",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_church",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 28,
+        "dst_room_id": 26,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch4.hometown.townhall",
+      "priority": 5105,
+      "reason": "原作连接：从 家乡·town_church 的 X 门离开，落到 家乡·townhall（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.hometown.town_church",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_church",
+        "dst_room_name": "room_townhall",
+        "src_room_id": 28,
+        "dst_room_id": 36
+      }
+    },
+    {
+      "to": "ch4.hometown.town_church",
+      "priority": 5106,
+      "reason": "原作连接：从 家乡·town_shelter 的 D 门离开，落到 家乡·town_church 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch4.hometown.town_shelter",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_shelter",
+        "dst_room_name": "room_town_church",
+        "src_room_id": 30,
+        "dst_room_id": 28,
+        "via": "obj_doorD_musfade",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch4.hometown.hometown",
+      "priority": 5107,
+      "reason": "原作连接：从 家乡·diner 的 X 门离开，落到 家乡（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.hometown.diner",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_diner",
+        "dst_room_name": "家乡",
+        "src_room_id": 35,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch4.hometown.town_church",
+      "priority": 5108,
+      "reason": "原作连接：从 家乡·townhall 的 X 门离开，落到 家乡·town_church（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.hometown.townhall",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_townhall",
+        "dst_room_name": "room_town_church",
+        "src_room_id": 36,
+        "dst_room_id": 28
+      }
+    },
+    {
+      "to": "ch4.hometown.town_north",
+      "priority": 5109,
+      "reason": "原作连接：从 家乡·flowershop_1f 的 X 门离开，落到 家乡·town_north（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.hometown.flowershop_1f",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_flowershop_1f",
+        "dst_room_name": "room_town_north",
+        "src_room_id": 37,
+        "dst_room_id": 22
+      }
+    },
+    {
+      "to": "ch4.hometown.town_south",
+      "priority": 5110,
+      "reason": "原作连接：从 家乡·library 的 X 门离开，落到 家乡·town_south（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.hometown.library",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_library",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 39,
+        "dst_room_id": 26
+      }
+    },
+    {
+      "to": "ch4.hometown.schoollobby",
+      "priority": 5111,
+      "reason": "原作连接：从 家乡·schooldoor 的 D 门离开，落到 家乡·schoollobby 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch4.hometown.schooldoor",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_schooldoor",
+        "dst_room_name": "room_schoollobby",
+        "src_room_id": 58,
+        "dst_room_id": 56,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch4.my_castle_town.my_castle_town",
+      "priority": 5112,
+      "reason": "原作连接：从 城堡镇·tutorial 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.castle_town.castle_tutorial",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_castle_tutorial",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 61,
+        "dst_room_id": 65
+      }
+    },
+    {
+      "to": "ch4.my_castle_town.my_castle_town",
+      "priority": 5113,
+      "reason": "原作连接：从 我的城堡镇·west_cliff 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.my_castle_town.dw_castle_west_cliff",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_west_cliff",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 63,
+        "dst_room_id": 65
+      }
+    },
+    {
+      "to": "ch4.my_castle_town.my_castle_town",
+      "priority": 5114,
+      "reason": "原作连接：从 我的城堡镇·area_1 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.my_castle_town.dw_castle_area_1",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_area_1",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 64,
+        "dst_room_id": 65
+      }
+    },
+    {
+      "to": "ch4.my_castle_town.my_castle_town",
+      "priority": 5115,
+      "reason": "原作连接：从 我的城堡镇·restaurant 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.my_castle_town.dw_castle_restaurant",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_restaurant",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 67,
+        "dst_room_id": 65
+      }
+    },
+    {
+      "to": "ch4.my_castle_town.my_castle_town",
+      "priority": 5116,
+      "reason": "原作连接：从 我的城堡镇·dojo 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch4.my_castle_town.dw_castle_dojo",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_dojo",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 69,
+        "dst_room_id": 65
+      }
+    },
+    {
+      "to": "ch5.home.krishallway",
+      "priority": 5117,
+      "reason": "原作连接：从 克里斯的家·torhouse 的 D 门离开，落到 克里斯的家·krishallway 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch5.home.torhouse",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_torhouse",
+        "dst_room_name": "room_krishallway",
+        "src_room_id": 16,
+        "dst_room_id": 14,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch5.hometown.town_krisyard",
+      "priority": 5118,
+      "reason": "原作连接：从 克里斯的家·torhouse 的 X 门离开，落到 家乡·town_krisyard（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.home.torhouse",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_torhouse",
+        "dst_room_name": "room_town_krisyard",
+        "src_room_id": 16,
+        "dst_room_id": 18
+      }
+    },
+    {
+      "to": "ch5.home.torhouse",
+      "priority": 5119,
+      "reason": "原作连接：从 家乡·town_krisyard 的 X 门离开，落到 克里斯的家·torhouse（**表驱动**：`obj_doorX_musfade` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.hometown.town_krisyard",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_krisyard",
+        "dst_room_name": "room_torhouse",
+        "src_room_id": 18,
+        "dst_room_id": 16
+      }
+    },
+    {
+      "to": "ch5.hometown.town_krisyard",
+      "priority": 5120,
+      "reason": "原作连接：从 家乡·town_north 的 D 门离开，落到 家乡·town_krisyard 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch5.hometown.town_north",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_north",
+        "dst_room_name": "room_town_krisyard",
+        "src_room_id": 20,
+        "dst_room_id": 18,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch5.hometown.flowershop_1f",
+      "priority": 5121,
+      "reason": "原作连接：从 家乡·town_north 的 X 门离开，落到 家乡·flowershop_1f（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.hometown.town_north",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_north",
+        "dst_room_name": "room_flowershop_1f",
+        "src_room_id": 20,
+        "dst_room_id": 35
+      }
+    },
+    {
+      "to": "ch5.hometown.town_north",
+      "priority": 5122,
+      "reason": "原作连接：从 家乡·town_mid 的 D 门离开，落到 家乡·town_north 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch5.hometown.town_mid",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_town_north",
+        "src_room_id": 22,
+        "dst_room_id": 20,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch5.hometown.diner",
+      "priority": 5123,
+      "reason": "原作连接：从 家乡·town_mid 的 X 门离开，落到 家乡·diner（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.hometown.town_mid",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_diner",
+        "src_room_id": 22,
+        "dst_room_id": 33
+      }
+    },
+    {
+      "to": "ch5.hometown.town_mid",
+      "priority": 5124,
+      "reason": "原作连接：从 家乡 的 D 门离开，落到 家乡·town_mid 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch5.hometown.hometown",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "家乡",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 24,
+        "dst_room_id": 22,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch5.hometown.library",
+      "priority": 5125,
+      "reason": "原作连接：从 家乡 的 X 门离开，落到 家乡·library（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.hometown.hometown",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "家乡",
+        "dst_room_name": "room_library",
+        "src_room_id": 24,
+        "dst_room_id": 37
+      }
+    },
+    {
+      "to": "ch5.hometown.hometown",
+      "priority": 5126,
+      "reason": "原作连接：从 家乡·town_church 的 D 门离开，落到 家乡 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch5.hometown.town_church",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_church",
+        "dst_room_name": "家乡",
+        "src_room_id": 26,
+        "dst_room_id": 24,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch5.hometown.townhall",
+      "priority": 5127,
+      "reason": "原作连接：从 家乡·town_church 的 X 门离开，落到 家乡·townhall（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.hometown.town_church",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_town_church",
+        "dst_room_name": "room_townhall",
+        "src_room_id": 26,
+        "dst_room_id": 34
+      }
+    },
+    {
+      "to": "ch5.hometown.town_church",
+      "priority": 5128,
+      "reason": "原作连接：从 家乡·town_shelter 的 D 门离开，落到 家乡·town_church 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch5.hometown.town_shelter",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_town_shelter",
+        "dst_room_name": "room_town_church",
+        "src_room_id": 28,
+        "dst_room_id": 26,
+        "via": "obj_doorD_musfade",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch5.hometown.hospital_hallway",
+      "priority": 5129,
+      "reason": "原作连接：从 家乡·hospital_room2 的 D 门离开，落到 家乡·hospital_hallway 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch5.hometown.hospital_room2",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_hospital_room2",
+        "dst_room_name": "room_hospital_hallway",
+        "src_room_id": 32,
+        "dst_room_id": 30,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch5.hometown.town_mid",
+      "priority": 5130,
+      "reason": "原作连接：从 家乡·diner 的 X 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.hometown.diner",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_diner",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 33,
+        "dst_room_id": 22
+      }
+    },
+    {
+      "to": "ch5.hometown.town_church",
+      "priority": 5131,
+      "reason": "原作连接：从 家乡·townhall 的 X 门离开，落到 家乡·town_church（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.hometown.townhall",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_townhall",
+        "dst_room_name": "room_town_church",
+        "src_room_id": 34,
+        "dst_room_id": 26
+      }
+    },
+    {
+      "to": "ch5.hometown.town_north",
+      "priority": 5132,
+      "reason": "原作连接：从 家乡·flowershop_1f 的 X 门离开，落到 家乡·town_north（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.hometown.flowershop_1f",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_flowershop_1f",
+        "dst_room_name": "room_town_north",
+        "src_room_id": 35,
+        "dst_room_id": 20
+      }
+    },
+    {
+      "to": "ch5.hometown.hometown",
+      "priority": 5133,
+      "reason": "原作连接：从 家乡·library 的 X 门离开，落到 家乡（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.hometown.library",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_library",
+        "dst_room_name": "家乡",
+        "src_room_id": 37,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch5.hometown.schoollobby",
+      "priority": 5134,
+      "reason": "原作连接：从 家乡·schooldoor 的 D 门离开，落到 家乡·schoollobby 的 D 落点（房间数组下标 -2；目标房含 `obj_markerD`）。",
+      "when_scene": "ch5.hometown.schooldoor",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "D",
+        "room_delta": -2,
+        "src_room_name": "room_schooldoor",
+        "dst_room_name": "room_schoollobby",
+        "src_room_id": 47,
+        "dst_room_id": 45,
+        "via": "obj_doorD",
+        "marker": "obj_markerD"
+      }
+    },
+    {
+      "to": "ch5.my_castle_town.my_castle_town",
+      "priority": 5135,
+      "reason": "原作连接：从 城堡镇·tutorial 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.castle_town.castle_tutorial",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_castle_tutorial",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 50,
+        "dst_room_id": 54
+      }
+    },
+    {
+      "to": "ch5.my_castle_town.my_castle_town",
+      "priority": 5136,
+      "reason": "原作连接：从 我的城堡镇·west_cliff 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.my_castle_town.dw_castle_west_cliff",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_west_cliff",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 52,
+        "dst_room_id": 54
+      }
+    },
+    {
+      "to": "ch5.my_castle_town.my_castle_town",
+      "priority": 5137,
+      "reason": "原作连接：从 我的城堡镇·area_1 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.my_castle_town.dw_castle_area_1",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_area_1",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 53,
+        "dst_room_id": 54
+      }
+    },
+    {
+      "to": "ch5.my_castle_town.my_castle_town",
+      "priority": 5138,
+      "reason": "原作连接：从 我的城堡镇·restaurant 的 X 门离开，落到 我的城堡镇（**表驱动**：`obj_doorX` 的 `Alarm_2` 里按源房查 `{房间→目标}`，不是固定位移；目标房含 `obj_markerX`）。",
+      "when_scene": "ch5.my_castle_town.dw_castle_restaurant",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "X",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_castle_restaurant",
+        "dst_room_name": "我的城堡镇",
+        "src_room_id": 56,
+        "dst_room_id": 54
+      }
     }
   ],
   "_fallback": {

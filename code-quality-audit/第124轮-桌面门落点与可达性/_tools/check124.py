@@ -61,7 +61,7 @@ for _p in (PKG, MODULES):
 from modules import scene_system as SS       # noqa: E402
 
 EXPECT_SCENES = 2166
-EXPECT_ROUTES = 1392
+EXPECT_ROUTES = 1531
 
 #: 字母 → (世界, 落点 scene_id)。**唯一真源**，与 `check89._A_DOOR_WORLD` 同口径。
 DOOR_WANT = {
@@ -93,9 +93,15 @@ DENSITY_MIN = {
     'ch1': 105, 'ch2': 127, 'ch3': 23, 'ch4': 22, 'ch5': 20,
     'oneshot': 196, 'ut': 270,
 }
-#: 唯一边数（1392 条路由里有 1 条合法重复：
-#: `room_water12` 的两扇不同门都指向 `room_water11`，见 `verify_routes_order44.C1b`）。
-EXPECT_UNIQUE_EDGES = 1391
+#: 唯一边数（1531 条路由里有 5 条合法重复：同房间**不同门**指向同一目标）。
+#: · 1 条：`room_water12` 的两扇不同门都指向 `room_water11`（第123轮，见
+#:   `verify_routes_order44.C1b`）；
+#: · 4 条：第125轮新补的 X 门与该房间原有的 A/B 门指向同一目标
+#:   （`cc_prison_cells↔cc_prisonlancer`、`forest_dancers1↔forest_secret1`）。
+#: ★ 判据不靠这个数字：`D2` 同时要求"每个重复组内的门标识两两不同"
+#:   —— 同门重复才是冗余，不同门同目标原作里本来就有。
+EXPECT_UNIQUE_EDGES = 1526
+EXPECT_DUP_EDGES = 5
 
 _n = {'p': 0, 'f': 0}
 _failed = []
@@ -258,14 +264,21 @@ check(u'B3 ★★ ut 从 `room_area1` 可达 ≥ %d 间' % REACH_UT_MIN,
 # B4 ★★★ 负控制：**直接复现本轮缺陷** —— 只把 C 门换回 `room_start`，其余不动。
 #   ★ 这是本套件最重要的一条：它证明 B1/B3 抓得住"退回空壳房"这个回退。
 #   ★★ 不落盘篡改：只在内存里换一条边再重算（判据改变被测状态是纪律红线）。
+#   ★★★ 第125轮改判据口径（**不是放宽**）：原来钉的是绝对值"总可达 == 167、
+#     ut == 1"—— 那两个数**只是第124轮当时的时相值**。第125轮给 ch1~ch5 补了
+#     139 条原作边，总可达必然变大 ⇒ 绝对值会假红。改成**结构性等价**：
+#       · `room_start` 侧 ut 可达必须 == 1（它出边 0，只能站着 —— 这是空壳房的**定义**）；
+#       · 两侧总可达之差**恰好等于**丢掉的 UT 房间数（`UT_NEW - 1`）。
+#     这比绝对值更硬：它要求"换回空壳房只损失 UT 那一段，别处一间不差"。
 _OLD_TGT = dict(TGT)
 _OLD_TGT['C'] = 'ut.rooms.room_start'
 OLD_UNION = union_reach(_OLD_TGT)
 OLD_UT = len(closure('ut.rooms.room_start'))
-check(u'B4 ★★★ 负控制：C 门换回 `room_start` ⇒ 总可达 %d、ut %d（缺陷可复现）'
-      % (REACH_TOTAL_OLD, REACH_UT_OLD),
-      len(OLD_UNION) == REACH_TOTAL_OLD and OLD_UT == REACH_UT_OLD
-      and len(OLD_UNION) < len(NEW_UNION),
+check(u'B4 ★★★ 负控制：C 门换回 `room_start` ⇒ ut 只剩 %d 间、总可达恰好少掉 UT 那 %d 间'
+      u'（缺陷可复现，且损失只落在 UT 段）'
+      % (REACH_UT_OLD, UT_NEW - REACH_UT_OLD),
+      OLD_UT == REACH_UT_OLD
+      and len(OLD_UNION) == len(NEW_UNION) - (UT_NEW - REACH_UT_OLD),
       u'old_total=%d new_total=%d old_ut=%d new_ut=%d'
       % (len(OLD_UNION), len(NEW_UNION), OLD_UT, UT_NEW))
 
@@ -342,11 +355,42 @@ check(u'D1 ★★★ 每个作品"有出边的场景数"不低于 %r（只增不
       not _thin, u'%r' % (_thin,))
 
 _uniq = sum(len(v) for v in OUT.values())
-check(u'D2 ★★ 边数守恒：唯一边 %d + 1 条合法重复 == 路由 %d 条'
-      u'（重复 = `room_water12` 两扇门同指 `room_water11`）'
-      % (EXPECT_UNIQUE_EDGES, EXPECT_ROUTES),
-      _uniq == EXPECT_UNIQUE_EDGES and len(RL) - _uniq == 1,
-      u'unique=%d routes=%d diff=%d' % (_uniq, len(RL), len(RL) - _uniq))
+
+
+def _door_id(r):
+    u"""一条路由的"门标识"：字母门用 `when_door`，对象级门（ut）用 `when_src`。"""
+    return str(r.get('when_door') or r.get('when_src') or '')
+
+
+def _same_door_groups(rows):
+    u"""返回"同一对 (场景,目标) 里有**同一扇门**重复"的键（空 = 没有冗余重复）。
+
+    纯谓词：真表与合成坏输入共用一份实现（同一判据不许两份实现）。
+    """
+    by = collections.defaultdict(list)
+    for r in rows:
+        by[(r.get('when_scene'), r.get('to'))].append(r)
+    return sorted(k for k, v in by.items()
+                  if len(v) > 1 and len(set(_door_id(x) for x in v)) < len(v))
+
+
+_same_door = _same_door_groups(RL)
+check(u'D2 ★★ 边数守恒：唯一边 %d + %d 条合法重复 == 路由 %d 条；且每个重复组内的'
+      u'**门标识两两不同**（同房间不同门同目标 = 合法；同门重复 = 冗余）'
+      % (EXPECT_UNIQUE_EDGES, EXPECT_DUP_EDGES, EXPECT_ROUTES),
+      _uniq == EXPECT_UNIQUE_EDGES and len(RL) - _uniq == EXPECT_DUP_EDGES
+      and not _same_door,
+      u'unique=%d routes=%d dup=%d 同门重复=%r'
+      % (_uniq, len(RL), len(RL) - _uniq, _same_door[:3]))
+check(u'D2b 正/负控制：`_same_door_groups` 对真表返回空、对"同门重复"的合成输入报出 1 组'
+      u'（证明 D2 不是"条数对上就绿"）',
+      _same_door_groups([]) == []
+      and _same_door_groups([
+          {'when_scene': 'a', 'to': 'b', 'when_door': 'A'},
+          {'when_scene': 'a', 'to': 'b', 'when_door': 'A'}]) == [('a', 'b')]
+      and _same_door_groups([
+          {'when_scene': 'a', 'to': 'b', 'when_door': 'A'},
+          {'when_scene': 'a', 'to': 'b', 'when_door': 'X'}]) == [])
 
 print(u'    密度账：%r' % ({_k: (_world_out.get(_k, 0), _world_sc[_k])
                             for _k in sorted(_world_sc)},))

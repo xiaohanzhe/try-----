@@ -273,7 +273,16 @@ DRW = r'E:\Download\_tmp\drw'
 CHS = ['chapter1_windows', 'chapter2_windows', 'chapter3_windows',
        'chapter4_windows', 'chapter5_windows']
 TAG = {CHS[i]: 'ch%d' % (i + 1) for i in range(5)}
-DELTA = {'A': 1, 'B': -1, 'C': 2}
+DELTA = {'A': 1, 'B': -1, 'C': 2, 'D': -2}
+#: ★★★ 第125轮：`D` 门进位移表，位移 **−2**。
+#:   第44轮把 D 划进"不编"名单（`DELTA` 只到 C），理由是 docstring 里那句
+#:   "实测 +2 只有 33%，证据不足，不猜" —— 那是**测错了位移**：`obj_doorD` 的
+#:   Alarm 是 `room_goto(room_previous(room_previous(room)))`，是 −2。
+#:   按 −2 重测同一套判据（目标房含 `obj_markerD`）：**71/74 = 95.9%**，与 A/B/C 同档。
+#:   ★ 这一改动让 C1 的"独立重算"自动把 56 条 D 边算进来 —— **判据比数据先到**，
+#:     不是"先写数据再写判据"。
+#: ⚠️ `X` 门**不能**进这张表：它是表驱动（`Alarm_2` 里 `if (room==X) room_goto(查表)`），
+#:   落点由 `{源房→目标}` 查表决定，没有固定位移可推。见 C1c。
 
 #: ★★ 第105轮新增：OneShot 房间连接的**原作事实**蒸馏（仓库内，非临时区）。
 #: 为什么 C1 必须并入它：C1 的意图是「凡**原作房间**之间的边都必须可由原作
@@ -400,16 +409,50 @@ if have_rooms:
     #   ut 段的独立重算在 `第122轮/_tools/check122.py`（从 `conn115` + `inst_full` 重推
     #   每条 (场景, 对象) → 目标，并逐条核对 `objects` 里真有那扇门）。
     _ORIGIN_WORKS = ('desktop',)
+    # ★★★ 第125轮：C1 的论域**从"全部非 ut 边"收窄到"**位移门**段（A/B/C/D）"**。
+    #   为什么必须收窄：本轮给五章补了 83 条 **X 门（表驱动）** 边，它们的落点由
+    #   `Alarm_2` 的 `{源房→目标}` 查表决定，**推不出固定位移** —— 本判据的重算源
+    #   （`房间表_全量.json` 的 doors/markers + `DELTA`）原理上算不出它们，
+    #   硬比会让差值恒为 X 段条数（那不是漏编，是分母没有 X 的源）。
+    #   ★ 这不是放宽：位移段仍是**逐条精确相等**（现在就含 56 条 D 边），
+    #     X 段由 C1c **点名成账**，其独立重推归 `第125轮/_tools/check125.py` 的 B2
+    #     （那一份是**另一套实现**：直接查 `ch*_conn42b.json` 的 `{src: dst}` 表）。
+    _DELTA_LETTERS = tuple(sorted(DELTA))
+    _orig_of = lambda r: (r.get('_original') or {})   # noqa: E731
     prod_edges = set((r.get('when_scene'), r.get('to')) for r in RL
                      if r.get('when_scene') not in _ORIGIN_WORKS
-                     and not str(r.get('when_scene') or '').startswith('ut.'))
+                     and not str(r.get('when_scene') or '').startswith('ut.')
+                     and (_orig_of(r).get('door_letter') in _DELTA_LETTERS
+                          or _orig_of(r).get('kind') == 'oneshot_transfer'))
     os_edges, _os_err = _oneshot_edges()
     ok(prod_edges == (orig_edges | os_edges),
-       'C1 ★产品边集合 == 原作独立重算集合（门位移 %d ∪ OneShot 传送 %d = %d 条；'
-       '产品 %d 条，差值 %d；已排除 desktop 起源）%s'
+       'C1 ★产品**位移门段**边集合 == 原作独立重算集合（门位移 %d ∪ OneShot 传送 %d '
+       '= %d 条；产品 %d 条，差值 %d；已排除 desktop 起源与 ut 段；'
+       '★★ 第125轮起含 D 门 −2）%s'
        % (len(orig_edges), len(os_edges), len(orig_edges | os_edges),
           len(prod_edges), len(prod_edges ^ (orig_edges | os_edges)),
           ('｜证据读取失败: %s' % _os_err) if _os_err else ''))
+
+    # ★★★ C1c 第125轮：**X 门（表驱动）段**必须点名成账，不许含糊在 C1 的差值里。
+    #   两条：条数与段位（83 条、priority 5000+、`kind == 'delta_door_table'`、
+    #   `table` 是反编译名），以及"两端都可从 `by_room` 反查到原作品下标"。
+    #   逐条落点的独立重推在 `check125.B2`（另一套实现，读 `conn42b` 的查表）。
+    _TBL = [r for r in RL
+            if _orig_of(r).get('kind') == 'delta_door_table'
+            and r.get('when_scene') not in _ORIGIN_WORKS
+            and not str(r.get('when_scene') or '').startswith('ut.')]
+    _tbl_bad = [r.get('to') for r in _TBL
+                if r.get('when_door') != 'X'
+                or not str(_orig_of(r).get('table') or '').startswith('gml_Object_')
+                or not isinstance(_orig_of(r).get('src_room_id'), int)
+                or not isinstance(_orig_of(r).get('dst_room_id'), int)
+                or isinstance(r.get('priority'), int) is False
+                or r['priority'] < 5000]
+    ok(len(_TBL) == 83 and not _tbl_bad,
+       'C1c ★★ 表驱动门（X）段 == 83 条、priority 5000+、`kind=delta_door_table`、'
+       '`table` 为反编译名、两端原作品下标齐备（异常 %d: %s）—— '
+       '★它**不在** C1 的论域里，逐条重推归 `check125.B2`'
+       % (len(_tbl_bad), _tbl_bad[:3]))
 
     # ★★ C1b 第122轮：被 C1 排除的 ut 段**必须自证**（否则"排除"就成了没人管）。
     #   三条：① 条数钉死（第122轮 243 → 第123轮 **525**）；② 两端都必须是 ut 已登记

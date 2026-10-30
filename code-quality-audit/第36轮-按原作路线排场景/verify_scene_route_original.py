@@ -19,6 +19,8 @@
      obj_doorC +2，且目标房必须有同字母落点作独立验证）⇒ C 段改锁**机制自洽** +
      **三个已知真值锚点**（krisroom↔krishallway 双向 + torhouse 出边）+ 覆盖面。
      守的东西没变（"路由真的按原作走"），换的是"从哪拿期望值"。
+     ★第125轮再补两种门（同一套判据、同一把尺）：**D 门 −2**（71/74 命中同字母落点）
+     与 **X 门表驱动**（94/94），共 +139 条；**W 门仍拒收**（60.2%/84.3%，到不了 100%）。
   D. **★ 真实缺陷的回归锁**：priority 是第一排序键、压过 score ⇒「任意场景」的
      兜底路线**不许**用小于剧情段的 priority（否则压死全部剧情路线）。
      第36轮用产品函数复现过这个真 bug。第44轮路由表已无通配兜底，
@@ -313,7 +315,14 @@ check('C2 路由条数 > 100（由原作连接生成，不再是 26 条手工链
 #   _original 必须与下标位移表自洽"，故按 `when_scene != 'desktop'` 圈定范围。
 #   desktop 门另有专门锁（verify_routes_order44 B7：恰 9 扇 / 同 priority /
 #   目标场景存在），不是"排除即不管"。
-_DOOR_DELTA = {'A': 1, 'B': -1, 'C': 2}
+# ★★★ 第125轮：`D` 门进表，位移 **−2**。第44轮拒收它的理由是"实测 +2 只有 33%，
+#   证据不足" —— 那个理由**测错了位移**：`obj_doorD` 的 Alarm 是
+#   `room_goto(room_previous(room_previous(room)))`，是 **−2** 不是 +2。
+#   本轮用第44轮对 A/B/C 用过的**同一条独立判据**复核（目标房必须含
+#   `obj_marker<同字母>`）：D 命中 **71/74 = 95.9%**，3 个例外全落在
+#   backup/test 房（`room_dw_city_traffic_3_backup` / `room_test_climb_new` /
+#   `room_hospital_room2`）⇒ 与 A/B/C 同一置信水平，收。
+_DOOR_DELTA = {'A': 1, 'B': -1, 'C': 2, 'D': -2}
 _ORIGIN = ('desktop',)
 # ★★ 第105轮：路由表不再只有"门的下标位移"**一种**原作机制。
 #   OneShot（另一部作品）的房间连接是 **code-201 Transfer Player** 事件，
@@ -348,6 +357,18 @@ _UT_NEXT_VIA = 'obj_doorA'
 #     ③ `alarm` 是反编译名 `gml_Object_*`（有取证来源，不是编的）；
 #     ④ `via` 是门对象名 `obj_*`（说得清是哪扇门）。
 _KIND_UT_SHIFT = 'ut_door_shift'
+# ★★★ 第125轮：第五种机制 —— **表驱动门** `obj_doorX`。
+#   它不按下标位移，而是在 `Alarm_2` 里 `if (room == X) room_goto(<查表的 Y>)`，
+#   表长这样 `{源房间 → 目标房间}`。第44轮以"需读对象代码"为由拒收；本轮读了，
+#   并用 marker 判据独立验证：X 命中 **94/94 = 100%**（W 门只有 60.2%/84.3%，
+#   故 W 仍不收）。自洽条件（五条，全部可独立复核）：
+#     ① `table` 是反编译函数名（`gml_Object_*_Alarm_*`）—— 说得出读的是哪段代码；
+#     ② `marker` == `obj_marker` + `door_letter` —— 落点自证方式必须与字母一致；
+#     ③ 两端房名非空且不同（同房间不算一次出门）；
+#     ④ `src/dst_room_id` 是 int 且不同（表驱动**不保证** dst == src + 常数，
+#        所以这里**不**断言差值是固定值 —— 那正是它与位移门的区别）；
+#     ⑤ `via` 是门对象名 `obj_door*`、且规则的 `when_door` 与 `door_letter` 一致。
+_KIND_TABLE = 'delta_door_table'
 _UT_SHIFT_HOW = {
     'room_next(room)': 1,
     'room_previous(room)': -1,
@@ -385,6 +406,48 @@ def _ut_self_ok(r):
 _struct_bad = []
 _n_oneshot = 0
 _n_ut = 0
+_n_table = 0
+
+
+def _table_self_ok(r):
+    u"""表驱动门规则的 `_original` 自洽判定（**纯函数**，供正/负控制复用）。
+
+    见 `_KIND_TABLE` 的五条。**故意不校验位移**：表驱动本来就不是固定位移。
+    """
+    o = r.get('_original')
+    if not isinstance(o, dict):
+        return False
+    t = o.get('table')
+    if not (isinstance(t, str) and t.startswith('gml_Object_') and '_Alarm_' in t):
+        return False
+    L = o.get('door_letter')
+    if not (isinstance(L, str) and L and o.get('marker') == 'obj_marker' + L):
+        return False
+    if r.get('when_door') != L:
+        return False
+    s, d = o.get('src_room_name'), o.get('dst_room_name')
+    if not (isinstance(s, str) and s and isinstance(d, str) and d and s != d):
+        return False
+    si, di = o.get('src_room_id'), o.get('dst_room_id')
+    if not (isinstance(si, int) and isinstance(di, int) and si != di):
+        return False
+    v = o.get('via')
+    return isinstance(v, str) and v.startswith('obj_door')
+
+def _delta_bad(r):
+    u"""位移门规则的不自洽原因（None = 自洽）。**正/负控制与 C3 共用同一份实现** ——
+    同一判据不许两份实现（否则控制绿了、主判据红了也没人知道）。"""
+    o = r.get('_original')
+    if not isinstance(o, dict):
+        return u'无_original'
+    L = o.get('door_letter')
+    if L not in _DOOR_DELTA:
+        return u'字母=%r' % (L,)
+    if o.get('room_delta') != _DOOR_DELTA[L]:
+        return u'位移=%r≠%d' % (o.get('room_delta'), _DOOR_DELTA[L])
+    return None
+
+
 for _r in (routes.get('routes') or []):
     if _r.get('when_scene') in _ORIGIN:
         continue
@@ -405,17 +468,18 @@ for _r in (routes.get('routes') or []):
         elif _o.get('chapter') != 'oneshot':
             _struct_bad.append('%s(oneshot chapter=%r)' % (_r.get('to'), _o.get('chapter')))
         continue
-    _L = _o.get('door_letter')
-    if _L not in _DOOR_DELTA:
-        _struct_bad.append('%s(字母=%r)' % (_r.get('to'), _L))
+    if _o.get('kind') == _KIND_TABLE:
+        _n_table += 1
+        if not _table_self_ok(_r):
+            _struct_bad.append('%s(X 门表驱动不自洽)' % _r.get('to'))
         continue
-    if _o.get('room_delta') != _DOOR_DELTA[_L]:
-        _struct_bad.append('%s(位移=%r≠%d)' % (_r.get('to'), _o.get('room_delta'),
-                                              _DOOR_DELTA[_L]))
+    _why = _delta_bad(_r)
+    if _why:
+        _struct_bad.append('%s(%s)' % (_r.get('to'), _why))
 check('C3 每条规则的 _original 自洽于**它声明的原作机制**'
-      '（门位移 A+1/B-1/C+2 ｜ OneShot 传送为两端不同的原作 map ｜ '
-      'ut 门为 room_goto 取证 / room_goto_next ±1 / room_next·previous(room) 位移 ±1·±2；'
-      '排除 desktop 世界门）',
+      '（门位移 A+1/B-1/C+2/**D-2** ｜ OneShot 传送为两端不同的原作 map ｜ '
+      'ut 门为 room_goto 取证 / room_goto_next ±1 / room_next·previous(room) 位移 ±1·±2 ｜ '
+      'X 门为 `Alarm_2` 表驱动；排除 desktop 世界门）',
       not _struct_bad,
       '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
 
@@ -483,7 +547,64 @@ elif _o.get('chapter') != 'oneshot':
 check('C3a3 负控制：自环的 oneshot_transfer 会被 C3 的新分支判红（有鉴别力）',
       _neg_bad == ['caught'], 'got=%r' % (_neg_bad,))
 
-# C3b 规则只用了「已实证」的三种字母门 —— 不许悄悄混进 D/E/F/W/X/Y
+# ===== 第125轮：D 门（−2）与 X 门（表驱动）的正控制 / 负控制 =====
+# C3a7 —— ★ 表驱动分支**确有样本**（83 条）且**有鉴别力**（拆五处各判一次）。
+#   负控制的拆法（记忆铁律：负控制必须"拆干净"，一次只拆一处、且拆的那处
+#   必须真的落进被测分支）：
+#     ① `table` 不是反编译函数名 ⇒ 红
+#     ② `marker` 与字母不一致（X 门却写 `obj_markerW`）⇒ 红
+#     ③ 规则的 `when_door` 与 `_original.door_letter` 不一致 ⇒ 红
+#     ④ 两端同名（自环）⇒ 红
+#     ⑤ `via` 不是门对象名 ⇒ 红
+check('C3a7 ★ C3 的 X 门表驱动分支确有样本（%d 条 kind=%s）' % (_n_table, _KIND_TABLE),
+      _n_table > 0, '样本 %d 条' % _n_table)
+
+
+def _tb(**kw):
+    o = {'kind': _KIND_TABLE, 'door_letter': 'X', 'table': 'gml_Object_obj_doorX_Alarm_2',
+         'marker': 'obj_markerX', 'via': 'obj_doorX',
+         'src_room_name': 'room_a', 'dst_room_name': 'room_b',
+         'src_room_id': 5, 'dst_room_id': 7}
+    o.update(kw)
+    return {'to': 'ch1.x.room_b', 'when_scene': 'ch1.x.room_a',
+            'when_door': o['door_letter'], '_original': o}
+
+
+check('C3a8 正/负控制：`_table_self_ok` 对"合法 X 门 / table 非反编译名 / '
+      'marker 与字母不符 / when_door 不符 / 自环 / via 非门对象"六种输入各不相同',
+      _table_self_ok(_tb()) is True
+      and _table_self_ok(_tb(table='obj_doorX')) is False
+      and _table_self_ok(_tb(marker='obj_markerW')) is False
+      and _table_self_ok({'to': 'x', 'when_scene': 'y', 'when_door': 'W',
+                          '_original': _tb()['_original']}) is False
+      and _table_self_ok(_tb(dst_room_name='room_a')) is False
+      and _table_self_ok(_tb(via='doorX')) is False,
+      repr((_table_self_ok(_tb()), _table_self_ok(_tb(table='obj_doorX')),
+            _table_self_ok(_tb(marker='obj_markerW')),
+            _table_self_ok({'to': 'x', 'when_scene': 'y', 'when_door': 'W',
+                            '_original': _tb()['_original']}),
+            _table_self_ok(_tb(dst_room_name='room_a')),
+            _table_self_ok(_tb(via='doorX')))))
+
+# C3a9 —— ★★ D 门：位移真值就是 −2，且**必须与"第44轮那个错判"区分开**。
+#   第44轮的错在于"以为 D 也是 +2"。这里把 +2 当负控制喂进去 ⇒ `_delta_bad` 必须报红，
+#   否则等于这条判据根本没校验位移（只是"字母在表里"就放行）。
+_D_POS = {'to': 'ch1.x.room_a', 'when_scene': 'ch1.x.room_b', 'when_door': 'D',
+          '_original': {'door_letter': 'D', 'room_delta': -2}}
+_D_WRONG = {'to': 'ch1.x.room_a', 'when_scene': 'ch1.x.room_b', 'when_door': 'D',
+            '_original': {'door_letter': 'D', 'room_delta': 2}}
+_D_NOFIT = {'to': 'ch1.x.room_a', 'when_scene': 'ch1.x.room_b', 'when_door': 'W',
+            '_original': {'door_letter': 'W', 'room_delta': 2}}
+check('C3a9 正/负控制：D 门 −2 通过、+2（第44轮的错误先验）判红、W 门（证据不足）判红',
+      _delta_bad(_D_POS) is None and _delta_bad(_D_WRONG) and _delta_bad(_D_NOFIT),
+      repr((_delta_bad(_D_POS), _delta_bad(_D_WRONG), _delta_bad(_D_NOFIT))))
+_D_N = sum(1 for r in (routes.get('routes') or [])
+           if ((r.get('_original') or {}).get('door_letter') == 'D')
+           and r.get('when_scene') not in _ORIGIN)
+check('C3a10 ★ D 门确有样本（%d 条，第125轮新增）' % _D_N, _D_N >= 40,
+      '实测 %d' % _D_N)
+
+# C3b 规则只用了「已实证」的四种字母门 —— 不许悄悄混进 E/F/W/X/Y
 #   ★ 第89轮：同理排除 desktop（它的 D/E/F/W/X 是**世界门**，属第89轮新契约，
 #     不是"混进原作边的杂字母"）；第99轮 desktop 又添了 Y 门（Outertale）。
 #   ★ 第105轮：OneShot 段**没有门字母**（`.get('door_letter')` 会是 None），
@@ -496,17 +617,24 @@ check('C3a3 负控制：自环的 oneshot_transfer 会被 C3 的新分支判红�
 #     `ut_door_src` 不带）⇒ 改成**按有没有字母筛**：C3b 问的是"带了字母的
 #     那些边用的是哪些字母"，不带字母的边压根不在它的论域里。
 #     ⚠️ 光筛掉会留下**空集恒真**的洞 ⇒ 配 C3b1 非空闸（门字母边必须真有样本）。
+#   ★★★ 第125轮：两处更新。
+#     ① **允许集加 D**（−2 已实证，见 `_DOOR_DELTA` 注释）；E/F/W/Y 依旧不许。
+#     ② **`delta_door_table` 也要排除** —— X 门的字母不是"位移字母"，它没有
+#        `room_delta` 可言（落点由 `Alarm_2` 的查表决定），不属于 C3b 的论域。
+#        不排除就会把 'X' 算进来而误报（**判据要跟着机制分类走，不是跟着字母走**）。
+#        X 门自有 C3a7/C3a8 守（五条自洽 + 五处负控制）。
+_NON_LETTER_KINDS = (_KIND_ONESHOT, _KIND_TABLE)
 _LETTERS = sorted(set(
     v for v in ((r.get('_original') or {}).get('door_letter')
                 for r in (routes.get('routes') or [])
                 if r.get('when_scene') not in _ORIGIN
-                and (r.get('_original') or {}).get('kind') != _KIND_ONESHOT)
+                and (r.get('_original') or {}).get('kind') not in _NON_LETTER_KINDS)
     if isinstance(v, str) and v))
-check('C3b 原作门位移段只用 A/B/C 三种已实证字母门（D/E/F/W/X/Y 一律不编原作边）',
+check('C3b 原作**位移门**只用 A/B/C/D 四种已实证字母门（E/F/W/X/Y 一律不编位移边）',
       set(_LETTERS) <= set(_DOOR_DELTA), '实际字母=%s' % _LETTERS)
 _LETTER_N = sum(1 for r in (routes.get('routes') or [])
                 if r.get('when_scene') not in _ORIGIN
-                and (r.get('_original') or {}).get('kind') != _KIND_ONESHOT
+                and (r.get('_original') or {}).get('kind') not in _NON_LETTER_KINDS
                 and isinstance((r.get('_original') or {}).get('door_letter'), str)
                 and (r.get('_original') or {}).get('door_letter'))
 check('C3b1 ★ C3b 的非空闸：带门字母的原作边确有样本（不是空集恒真）',
@@ -566,7 +694,10 @@ check('C4b3 负控制：指定不存在的门 Z 时不命中任何出口规则',
       sr.route_target(_hit_bad_door) in (None, 'desktop'),
       'got=%r' % sr.route_target(_hit_bad_door))
 
-# C4c 第三锚点：torhouse 有 1 条出边（doorD/D 不编边，故只有 doorA 生效）
+# C4c 第三锚点：torhouse 现在有 A / D / X 三条出边
+#   ★ 第125轮前这里只有 doorA（D 门被拒收、X 门没读代码）⇒ 注释写的是"1 条出边"。
+#     现在三条都有：不指定 door 时仍走 priority 最小者（A=110 < D/X=5000+），
+#     所以本条的期望值不变；变的是"它不再是唯一出口"这个事实。
 _hit_c = sr.match(routes, mk_ctx(chapter_id='ch1', scene_id='ch1.home.torhouse'))
 check('C4c 锚点：托丽尔家（doorA）有出边且不是兜底',
       sr.route_target(_hit_c) not in (None, 'desktop'),

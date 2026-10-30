@@ -68,6 +68,12 @@ PRIO_BASE = 3000
 #:   **变更范围仅限 1 条**：`when_scene=="desktop" and when_door=="C"`。
 #:   证据 = `D2c`：把 desktop 段抽掉后余下 **443 条**指纹仍是
 #:   `f4e3d7d00f36d90f…`（第105轮值，**本轮未动**）⇒ 非桌面段一条没变。
+#: ★★★ 第125轮**只改选择器、不改数值**：路由表新增 139 条 `ch1.*`~`ch5.*` 的
+#:   原作边（D 门 −2 / X 门表驱动，priority 5000+）⇒ 原选择器（排除 oneshot/ut 前缀）
+#:   会把这 139 条算进"既有段"，D1 从 447 涨到 586、D2 指纹跟着变（**假红**）。
+#:   ⇒ `_OLD` 改按 **priority 段位**（`< 3000`）取。`OLD_N` / `OLD_FP` /
+#:   `_OLD_NO_DESK_FP_105` **一个数字都没动** —— 既有 447 条逐字节未变，
+#:   这正是本轮"纯追加"的硬证据。新段由 `check125` 独立守（逐条重推 + W 门必须 0 条）。
 OLD_FP = '040a06a50e1eccced25558f0539407a1ad749a7f27dffec7fafc44311aaea090'
 OLD_N = 447
 DESKTOP_N = 4
@@ -173,8 +179,16 @@ _OS = [r for r in _RL if str((r or {}).get('when_scene') or '').startswith('ones
 #:   而那不是回归，是**分母混进了第三个物种**（第103/121/122 轮第三次踩）。
 #:   ut 段归 `第122轮/_tools/check122.py` 守（含逐条目标复算），这里只锁"段位与条数"。
 _UT = [r for r in _RL if str((r or {}).get('when_scene') or '').startswith('ut.')]
+#: ★★★ 第125轮：`_OLD` 的**选择口径从"按前缀排除"换成"按 priority 段位"**。
+#:   原因不是报红想绕，而是"按前缀排除"这条路**必然越走越窄**：第122轮排 ut、
+#:   第125轮又添了 139 条 `ch1.*`~`ch5.*` 的原作边（D 门 −2 / X 门表驱动），
+#:   前缀排除法只能一条一条往上加，加漏一次就把新段混进"既有段"里报假红。
+#:   段位是这张表**本身**就有的分区约定（既有 110~2478 / oneshot 3000+ / ut 4000+
+#:   / 第125轮 5000+），拿它当分母边界是语义正确、且以后新增段不会再破。
+#:   ★ 不是放宽：`OLD_N == 447` 照旧钉死，任何一条既有规则被挪出该段（改 priority
+#:   或改内容）都会让 D1/D2 报红。
 _OLD = [r for r in _RL
-        if not str((r or {}).get('when_scene') or '').startswith(('oneshot', 'ut.'))]
+        if isinstance((r or {}).get('priority'), int) and r['priority'] < 3000]
 
 #: 登记表：scene_id → original_room_id / 房名 / 区名
 _REG = {}
