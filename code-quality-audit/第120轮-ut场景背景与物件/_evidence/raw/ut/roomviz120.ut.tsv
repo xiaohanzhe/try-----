@@ -1,0 +1,415 @@
+ASSET	bg_coretiles_erase_tileset	10323	946	1562
+ASSET	bg_ruinseasynam3_tileset	8721	1134	1026
+ASSET	bg_ruintiles1_tileset	7369	842	722
+ASSET	bg_ruinseasynam2_tileset	3222	602	362
+ASSET	bg_ruinseasynam1_tileset	2107	446	1194
+ASSET	bg_ruinsplaceholder_tileset	498	246	1666
+ASSET	bg_ruinsplaceholder2_tileset	3557	1306	378
+ASSET	bg_torielroom_tileset	860	854	998
+ASSET	bg_icecave_entrance_tileset	177	130	1466
+ASSET	bg_sansbasement_tiles_tileset	756	314	738
+ASSET	bg_icewater_tileset	1595	378	1890
+ASSET	bg_garagetop_tileset	338	210	1402
+ASSET	bg_tundratiles_tileset	39901	1362	18
+ASSET	bg_icecave_tileset	17498	1618	1226
+ASSET	bg_watertiles_supplement_tileset	3634	1342	134
+ASSET	bg_watertiles_2_tileset	25342	378	18
+ASSET	bg_temshopdoor_tileset	267	1450	18
+ASSET	bg_temstatue_tileset	217	1162	18
+ASSET	bg_historyoftem_tileset	203	134	1834
+ASSET	bg_temhole_tileset	163	110	1586
+ASSET	bg_undynerug_tileset	223	954	18
+ASSET	bg_watertiles_tileset	12450	1222	1374
+ASSET	bg_coretiles_wip_tileset	30097	870	18
+ASSET	bg_alphyslabl_new_tileset	678	1750	150
+ASSET	bg_alab_outside_r_tileset	923	830	362
+ASSET	bg_core_distance_foreground_tileset	1842	18	18
+ASSET	bg_m_darktiles_tileset	1567	614	806
+ASSET	bg_mettlamp_tileset	183	118	1306
+ASSET	bg_mettpainting_tileset	188	126	922
+ASSET	bg_brownground_tileset	694	1342	18
+ASSET	bg_firetiles_tileset	34480	378	510
+ASSET	bg_labtiles_tileset	3250	626	1058
+ASSET	bg_alphyslaboutside_tileset	1924	1546	150
+ASSET	bg_hoteldesk_tileset	513	106	566
+ASSET	bg_hoteltile_tileset	3548	794	1310
+ASSET	bg_girdertile_tileset	1098	254	1206
+ASSET	bg_shottile_tileset	518	1770	18
+ASSET	bg_spiderroom_tileset	603	1662	18
+ASSET	bg_hotelbed_tileset	1007	246	922
+ASSET	bg_prebarrier_door_tileset	400	434	458
+ASSET	bg_castle_realdoor_tileset	243	1258	18
+ASSET	bg_ruins_tint_tileset	8465	1606	382
+ASSET	bg_sanscorridor_tileset	3755	534	1830
+ASSET	bg_greyruinsborder_tileset	671	250	462
+ASSET	bg_greyruinsplaceholder_tileset	3476	1222	702
+ASSET	bg_powerbutto_tileset	649	618	1650
+ASSET	bg_truelab_tiles_tileset	5137	566	1398
+ASSET	bg_watersaus_a_tileset	144	58	950
+ASSET	bg_watersaus_b_tileset	144	58	950
+ASSET	bg_iceflower_md_tileset	126	46	602
+ASSET	bg_waterflower_tileset	164	58	1938
+ASSET	bg_singlecactus_tileset	162	58	1766
+ASSET	bg_elevtop_tileset	360	334	1054
+ASSET	bg_elevarmR_tileset	211	406	18
+ASSET	bg_elevarmL_tileset	211	406	18
+ASSET	bg_elevleg_tileset	161	58	1850
+ASSET	bg_elevbelow_tileset	218	830	18
+ASSET	bg_elevunit_tileset	183	118	1670
+ASSET	bg_elevbottom_tileset	351	306	594
+ASSET	bg_mysterypipe_tileset	145	58	1474
+ASSET	bg_pipezone_tiles_tileset	1476	314	1338
+ASSET	bg_conveyor_markers_tileset	450	122	838
+ASSET	bg_fences_tileset	1921	410	1494
+ASSET	bg_operaforeground_tileset	493	526	114
+ASSET	bg_gridfriend_tileset	120	18	1194
+ASSET	bg_tempfiretile_tileset	380	106	70
+ASSET	bg_beachicecream_tileset	186	514	18
+ASSET	bg_mtaudience_tileset	454	786	202
+ASSET	bg_myhouse_tileset	810	246	1910
+ASSET	bg_endtileset_tileset	7122	1006	362
+META	IsGameMaker2	True
+META	Rooms	338
+META	Backgrounds	70
+META	ExportOK	70
+META	ExportFail	0
+ROOM	0	room_start	640	480	4278190080	False
+ROOM	1	room_introstory	320	240	4278190080	False
+ROOM	2	room_introimage	320	240	4278190080	False
+ROOM	3	room_intromenu	320	240	4278190080	False
+ROOM	4	room_area1	680	260	4278190080	False
+ROOM	5	room_area1_2	320	420	4278190080	False
+ROOM	6	room_ruins1	320	480	4278190080	False
+ROOM	7	room_ruins2	320	240	4278190080	False
+ROOM	8	room_ruins3	740	240	4278190080	False
+ROOM	9	room_ruins4	320	240	4278190080	False
+ROOM	10	room_ruins5	1200	240	4278190080	False
+ROOM	11	room_ruins6	2500	240	4278190080	False
+ROOM	12	room_ruins7	320	480	4278190080	False
+ROOM	13	room_ruins7A	320	240	4278190080	False
+ROOM	14	room_ruins8	320	640	4278190080	False
+ROOM	15	room_ruins9	480	240	4278190080	False
+ROOM	16	room_ruins10	580	760	4278190080	False
+ROOM	17	room_ruins11	560	240	4278190080	False
+ROOM	18	room_ruins12A	320	240	4278190080	False
+ROOM	19	room_ruins12	320	240	4278190080	False
+ROOM	20	room_ruins12B	320	240	4278190080	False
+ROOM	21	room_ruins13	640	300	4278190080	False
+ROOM	22	room_ruins14	640	720	4278190080	False
+ROOM	23	room_ruins15A	400	440	4278190080	False
+ROOM	24	room_ruins15B	400	440	4278190080	False
+ROOM	25	room_ruins15C	400	440	4278190080	False
+ROOM	26	room_ruins15D	400	440	4278190080	False
+ROOM	27	room_ruins15E	320	240	4278190080	False
+ROOM	28	room_ruins16	600	400	4278190080	False
+ROOM	29	room_ruins17	320	640	4278190080	False
+ROOM	30	room_ruins18OLD	320	240	4278190080	False
+ROOM	31	room_ruins19	320	540	4278190080	False
+ROOM	32	room_torhouse1	320	240	4278190080	False
+ROOM	33	room_torhouse2	320	240	4278190080	False
+ROOM	34	room_torhouse3	800	240	4278190080	False
+ROOM	35	room_torielroom	320	240	4278190080	False
+ROOM	36	room_asrielroom	320	240	4278190080	False
+ROOM	37	room_kitchen	320	240	4278190080	False
+ROOM	38	room_basement1	500	240	4278190080	False
+ROOM	39	room_basement2	500	240	4278190080	False
+ROOM	40	room_basement3	320	240	4278190080	False
+ROOM	41	room_basement4	320	240	4278190080	False
+ROOM	42	room_basement5	320	1620	4278190080	False
+ROOM	43	room_ruinsexit	320	420	4278190080	False
+ROOM	44	room_tundra1	440	240	4278190080	False
+ROOM	45	room_tundra2	2720	240	4278190080	False
+ROOM	46	room_tundra3	400	240	4278190080	False
+ROOM	47	room_tundra3A	320	240	4278190080	False
+ROOM	48	room_tundra4	560	240	4278190080	False
+ROOM	49	room_tundra5	460	240	4278190080	False
+ROOM	50	room_tundra6	620	240	4278190080	False
+ROOM	51	room_tundra6A	320	240	4278190080	False
+ROOM	52	room_tundra7	320	240	4278190080	False
+ROOM	53	room_tundra8	760	580	4278190080	False
+ROOM	54	room_tundra8A	320	240	4278190080	False
+ROOM	55	room_tundra9	320	240	4278190080	False
+ROOM	56	room_tundra_spaghetti	320	240	4278190080	False
+ROOM	57	room_tundra_snowpuzz	620	580	4278190080	False
+ROOM	58	room_tundra_xoxosmall	500	240	4278190080	False
+ROOM	59	room_tundra_xoxopuzz	820	240	4278190080	False
+ROOM	60	room_tundra_randoblock	320	240	4278190080	False
+ROOM	61	room_tundra_lesserdog	560	240	4278190080	False
+ROOM	62	room_tundra_icehole	320	240	4278190080	False
+ROOM	63	room_tundra_iceentrance	940	240	4278190080	False
+ROOM	64	room_tundra_iceexit_new	600	240	4278190080	False
+ROOM	65	room_tundra_iceexit	600	240	4278190080	False
+ROOM	66	room_tundra_poffzone	560	240	4278190080	False
+ROOM	67	room_tundra_dangerbridge	1040	240	4278190080	False
+ROOM	68	room_tundra_town	2720	240	4278190080	False
+ROOM	69	room_tundra_town2	800	240	4278190080	False
+ROOM	70	room_tundra_dock	320	240	4278190080	False
+ROOM	71	room_tundra_inn	320	240	4278190080	False
+ROOM	72	room_tundra_inn_2f	320	240	4278190080	False
+ROOM	73	room_tundra_grillby	320	240	4278190080	False
+ROOM	74	room_tundra_library	320	240	4278190080	False
+ROOM	75	room_tundra_garage	320	240	4278190080	False
+ROOM	76	room_tundra_sanshouse	320	240	4278190080	False
+ROOM	77	room_tundra_paproom	320	240	4278190080	False
+ROOM	78	room_tundra_sansroom	320	240	4278190080	False
+ROOM	79	room_tundra_sansroom_dark	1000	580	4278190080	False
+ROOM	80	room_tundra_sansbasement	320	240	4278190080	False
+ROOM	81	room_fogroom	900	240	4278190080	False
+ROOM	82	room_water1	640	240	4278190080	False
+ROOM	83	room_water2	320	240	4278190080	False
+ROOM	84	room_water3	580	540	4278190080	False
+ROOM	85	room_water3A	320	240	4278190080	False
+ROOM	86	room_water4	560	400	4278190080	False
+ROOM	87	room_water_bridgepuzz1	520	240	4278190080	False
+ROOM	88	room_water5	500	500	4278190080	False
+ROOM	89	room_water5A	320	240	4278190080	False
+ROOM	90	room_water6	740	380	4278190080	False
+ROOM	91	room_water7	1100	340	4278190080	False
+ROOM	92	room_water8	2100	300	4278190080	False
+ROOM	93	room_water9	860	240	4278190080	False
+ROOM	94	room_water_savepoint1	320	240	4278190080	False
+ROOM	95	room_water11	660	340	4278190080	False
+ROOM	96	room_water_nicecream	320	440	4278190080	False
+ROOM	97	room_water12	1280	820	4278190080	False
+ROOM	98	room_water_shoe	320	240	4278190080	False
+ROOM	99	room_water_bird	320	240	4278190080	False
+ROOM	100	room_water_onionsan	1220	240	4278190080	False
+ROOM	101	room_water14	740	240	4278190080	False
+ROOM	102	room_water_piano	320	240	4278190080	False
+ROOM	103	room_water_dogroom	320	240	4278190080	False
+ROOM	104	room_water_statue	320	240	4278190080	False
+ROOM	105	room_water_prewaterfall	340	240	4278190080	False
+ROOM	106	room_water_waterfall	1640	240	4278190080	False
+ROOM	107	room_water_waterfall2	320	1040	4278190080	False
+ROOM	108	room_water_waterfall3	1400	240	4278190080	False
+ROOM	109	room_water_waterfall4	520	240	4278190080	False
+ROOM	110	room_water_preundyne	720	240	4278190080	False
+ROOM	111	room_water_undynebridge	1940	1240	4278190080	False
+ROOM	112	room_water_undynebridgeend	820	1140	4278190080	False
+ROOM	113	room_water_trashzone1	820	240	4278190080	False
+ROOM	114	room_water_trashsavepoint	320	240	4278190080	False
+ROOM	115	room_water_trashzone2	320	940	4278190080	False
+ROOM	116	room_water_friendlyhub	620	240	4278190080	False
+ROOM	117	room_water_undyneyard	320	240	4278190080	False
+ROOM	118	room_water_undynehouse	320	240	4278190080	False
+ROOM	119	room_water_blookyard	320	240	4278190080	False
+ROOM	120	room_water_blookhouse	320	240	4278190080	False
+ROOM	121	room_water_hapstablook	320	240	4278190080	False
+ROOM	122	room_water_farm	760	240	4278190080	False
+ROOM	123	room_water_prebird	620	240	4278190080	False
+ROOM	124	room_water_shop	320	240	4278190080	False
+ROOM	125	room_water_dock	320	240	4278190080	False
+ROOM	126	room_water15	1020	240	4278190080	False
+ROOM	127	room_water16	620	640	4278190080	False
+ROOM	128	room_water_temvillage	660	300	4278190080	False
+ROOM	129	room_water17	640	540	4278190080	False
+ROOM	130	room_water18	1020	240	4278190080	False
+ROOM	131	room_water19	320	640	4278190080	False
+ROOM	132	room_water20	620	240	4278190080	False
+ROOM	133	room_water21	320	240	4278190080	False
+ROOM	134	room_water_undynefinal	320	740	4278190080	False
+ROOM	135	room_water_undynefinal2	320	480	4278190080	False
+ROOM	136	room_water_undynefinal3	720	240	4278190080	False
+ROOM	137	room_fire1	520	240	4278190080	False
+ROOM	138	room_fire2	320	240	4278190080	False
+ROOM	139	room_fire_prelab	600	240	4278190080	False
+ROOM	140	room_fire_dock	320	240	4278190080	False
+ROOM	141	room_fire_lab1	1100	240	4278190080	False
+ROOM	142	room_fire_lab2	860	240	4278190080	False
+ROOM	143	room_fire3	480	340	4278190080	False
+ROOM	144	room_fire5	320	1640	4278190080	False
+ROOM	145	room_fire6	860	440	4278190080	False
+ROOM	146	room_fire6A	620	240	4278190080	False
+ROOM	147	room_fire_lasers1	1160	240	4278190080	False
+ROOM	148	room_fire7	520	560	4278190080	False
+ROOM	149	room_fire8	360	240	4278190080	False
+ROOM	150	room_fire_shootguy_2	320	240	4278190080	False
+ROOM	151	room_fire9	320	240	4278190080	False
+ROOM	152	room_fire_shootguy_1	320	240	4278190080	False
+ROOM	153	room_fire_turn	800	240	4278190080	False
+ROOM	154	room_fire_cookingshow	640	480	4278190080	False
+ROOM	155	room_fire_savepoint1	720	240	4278190080	False
+ROOM	156	room_fire_elevator_r1	320	240	4278190080	False
+ROOM	157	room_fire_elevator_r2	320	240	4278190080	False
+ROOM	158	room_fire_hotdog	320	240	4278190080	False
+ROOM	159	room_fire_walkandbranch	820	240	4278190080	False
+ROOM	160	room_fire_sorry	320	240	4278190080	False
+ROOM	161	room_fire_apron	520	240	4278190080	False
+ROOM	162	room_fire10	840	240	4278190080	False
+ROOM	163	room_fire_rpuzzle	620	540	4278190080	False
+ROOM	164	room_fire_mewmew2	520	240	4278190080	False
+ROOM	165	room_fire_boysnightout	620	440	4278190080	False
+ROOM	166	room_fire_newsreport	980	660	4278190080	False
+ROOM	167	room_fire_coreview2	720	240	4278190080	False
+ROOM	168	room_fire_elevator_l2	320	240	4278190080	False
+ROOM	169	room_fire_elevator_l3	320	240	4278190080	False
+ROOM	170	room_fire_spidershop	480	240	4278190080	False
+ROOM	171	room_fire_walkandbranch2	900	660	4278190080	False
+ROOM	172	room_fire_conveyorlaser	1000	440	4278190080	False
+ROOM	173	room_fire_shootguy_3	320	240	4278190080	False
+ROOM	174	room_fire_preshootguy4	320	320	4278190080	False
+ROOM	175	room_fire_shootguy_4	320	240	4278190080	False
+ROOM	176	room_fire_savepoint2	500	240	4278190080	False
+ROOM	177	room_fire_spider	1020	240	4278190080	False
+ROOM	178	room_fire_pacing	320	240	4278190080	False
+ROOM	179	room_fire_operatest	320	380	4278190080	False
+ROOM	180	room_fire_multitile	1360	240	4278190080	False
+ROOM	181	room_fire_hotelfront_1	520	240	4278190080	False
+ROOM	182	room_fire_hotelfront_2	480	400	4278190080	False
+ROOM	183	room_fire_hotellobby	520	600	4278190080	False
+ROOM	184	room_fire_restaurant	1020	320	4278190080	False
+ROOM	185	room_fire_hoteldoors	820	240	4278190080	False
+ROOM	186	room_fire_hotelbed	320	240	4278190080	False
+ROOM	187	room_fire_elevator_r3	320	240	4278190080	False
+ROOM	188	room_fire_precore	320	560	4278190080	False
+ROOM	189	room_fire_core1	320	300	4278190080	False
+ROOM	190	room_fire_core2	320	340	4278190080	False
+ROOM	191	room_fire_core3	320	420	4278190080	False
+ROOM	192	room_fire_core4	680	240	4278190080	False
+ROOM	193	room_fire_core5	320	240	4278190080	False
+ROOM	194	room_fire_core_freebattle	320	240	4278190080	False
+ROOM	195	room_fire_core_laserfun	1200	240	4278190080	False
+ROOM	196	room_fire_core_branch	320	240	4278190080	False
+ROOM	197	room_fire_core_bottomleft	320	240	4278190080	False
+ROOM	198	room_fire_core_left	320	240	4278190080	False
+ROOM	199	room_fire_core_topleft	320	240	4278190080	False
+ROOM	200	room_fire_core_top	320	240	4278190080	False
+ROOM	201	room_fire_core_topright	320	240	4278190080	False
+ROOM	202	room_fire_core_right	320	240	4278190080	False
+ROOM	203	room_fire_core_bottomright	320	240	4278190080	False
+ROOM	204	room_fire_core_center	320	240	4278190080	False
+ROOM	205	room_fire_shootguy_5	320	240	4278190080	False
+ROOM	206	room_fire_core_treasureleft	320	240	4278190080	False
+ROOM	207	room_fire_core_treasureright	320	240	4278190080	False
+ROOM	208	room_fire_core_warrior	780	240	4278190080	False
+ROOM	209	room_fire_core_bridge	620	240	4278190080	False
+ROOM	210	room_fire_core_premett	320	240	4278190080	False
+ROOM	211	room_fire_core_metttest	320	1000	4278190080	False
+ROOM	212	room_fire_core_final	1220	240	4278190080	False
+ROOM	213	room_fire_elevator	320	240	4278190080	False
+ROOM	214	room_fire_elevator_l1	320	240	4278190080	False
+ROOM	215	room_fire_finalelevator	320	240	4278190080	False
+ROOM	216	room_castle_elevatorout	520	240	4278190080	False
+ROOM	217	room_castle_precastle	1300	240	4278190080	False
+ROOM	218	room_castle_hook	320	940	4278190080	False
+ROOM	219	room_castle_front	320	540	4278190080	False
+ROOM	220	room_asghouse1	320	240	4278190080	False
+ROOM	221	room_asghouse2	320	240	4278190080	False
+ROOM	222	room_asghouse3	800	240	4278190080	False
+ROOM	223	room_asgoreroom	320	240	4278190080	False
+ROOM	224	room_asrielroom_final	320	240	4278190080	False
+ROOM	225	room_kitchen_final	320	240	4278190080	False
+ROOM	226	room_basement1_final	500	240	4278190080	False
+ROOM	227	room_basement2_final	500	240	4278190080	False
+ROOM	228	room_basement3_final	320	240	4278190080	False
+ROOM	229	room_basement4_final	320	240	4278190080	False
+ROOM	230	room_lastruins_corridor	2120	240	4278190080	False
+ROOM	231	room_sanscorridor	1400	240	4278190080	False
+ROOM	232	room_castle_finalshoehorn	820	540	4278190080	False
+ROOM	233	room_castle_coffins1	320	540	4278190080	False
+ROOM	234	room_castle_coffins2	520	240	4278190080	False
+ROOM	235	room_castle_throneroom	320	600	4278190080	False
+ROOM	236	room_castle_prebarrier	680	260	4278190080	False
+ROOM	237	room_castle_barrier	320	240	4278190080	False
+ROOM	238	room_castle_exit	320	420	4278190080	False
+ROOM	239	room_undertale_end	320	240	4278190080	False
+ROOM	240	room_castle_trueexit	320	420	4278190080	False
+ROOM	241	room_outsideworld	320	240	4278190080	False
+ROOM	242	room_fire_labelevator	320	240	4278190080	False
+ROOM	243	room_truelab_elevatorinside	320	240	4278190080	False
+ROOM	244	room_truelab_elevator	320	240	4278190080	False
+ROOM	245	room_truelab_hall1	840	240	4278190080	False
+ROOM	246	room_truelab_hub	500	620	4278190080	False
+ROOM	247	room_truelab_hall2	420	240	4278190080	False
+ROOM	248	room_truelab_operatingroom	580	240	4278190080	False
+ROOM	249	room_truelab_redlever	320	240	4278190080	False
+ROOM	250	room_truelab_prebed	600	240	4278190080	False
+ROOM	251	room_truelab_bedroom	540	540	4278190080	False
+ROOM	252	room_truelab_mirror	1000	240	4278190080	False
+ROOM	253	room_truelab_bluelever	320	240	4278190080	False
+ROOM	254	room_truelab_hall3	1160	240	4278190080	False
+ROOM	255	room_truelab_shower	320	240	4278190080	False
+ROOM	256	room_truelab_determination	460	240	4278190080	False
+ROOM	257	room_truelab_tv	320	240	4278190080	False
+ROOM	258	room_truelab_cooler	720	240	4278190080	False
+ROOM	259	room_truelab_greenlever	320	240	4278190080	False
+ROOM	260	room_truelab_fan	580	240	4278190080	False
+ROOM	261	room_truelab_castle_elevator	320	240	4278190080	False
+ROOM	262	room_truelab_prepower	580	240	4278190080	False
+ROOM	263	room_truelab_power	320	420	4278190080	False
+ROOM	264	room_gaster	320	240	4278190080	False
+ROOM	265	room_icecave1	320	580	4278190080	False
+ROOM	266	room_ice_dog	320	240	4278190080	False
+ROOM	267	room2	640	480	4278190080	False
+ROOM	268	room_water_fakehallway	320	240	4278190080	False
+ROOM	269	room_mysteryman	320	240	4278190080	False
+ROOM	270	room_soundtest	640	480	4278190080	False
+ROOM	271	TESTROOM	640	480	4278190080	False
+ROOM	272	room_water_redacted	320	240	4278190080	False
+ROOM	273	room_water13	320	640	4278190080	False
+ROOM	274	room_overworld	1280	640	4278190080	False
+ROOM	275	room_overworld3	640	480	4278190080	False
+ROOM	276	bullettest	640	480	4278190080	False
+ROOM	277	room_water16A	320	240	4278190080	False
+ROOM	278	room_end_castroll	640	480	4278190080	False
+ROOM	279	room_end_highway	640	240	4278190080	False
+ROOM	280	room_end_beach	320	240	4278190080	False
+ROOM	281	room_end_metta	320	240	4278190080	False
+ROOM	282	room_end_school	320	480	4278190080	False
+ROOM	283	room_end_mtebott	640	480	4278190080	False
+ROOM	284	room_creditsdodger	640	480	4278190080	False
+ROOM	285	room_end_myroom	320	240	4278190080	False
+ROOM	286	room_end_theend	640	480	4278190080	False
+ROOM	287	room_spritecheck	640	480	4278190080	False
+ROOM	288	room_settings	320	240	4278190080	False
+ROOM	289	room_controltest	320	240	4278190080	False
+ROOM	290	room_f_start	320	240	4278190080	False
+ROOM	291	room_f_intro	320	240	4278190080	False
+ROOM	292	room_f_menu	320	240	4278190080	False
+ROOM	293	room_f_room	320	520	4278190080	False
+ROOM	294	room_floweyx	640	480	4278190080	False
+ROOM	295	room_f_phrase	640	480	4278190080	False
+ROOM	296	room_fire4	1420	540	4278190080	False
+ROOM	297	room_fire10_old	1320	240	4278190080	False
+ROOM	298	room_fire10A_old	1220	240	4278190080	False
+ROOM	299	room_tundra_placeholder	320	800	4278190080	False
+ROOM	300	room_ruins12B_old	320	240	4278190080	False
+ROOM	301	room_tundra_rollsnow	320	240	4278190080	False
+ROOM	302	room_water7_older	800	340	4278190080	False
+ROOM	303	room_meetundyne_old	560	240	4278190080	False
+ROOM	304	room_water_mushroom	320	240	4278190080	False
+ROOM	305	room_monsteralign_test	640	480	4278190080	False
+ROOM	306	room_battle	640	480	4278190080	False
+ROOM	307	room_floweybattle	640	480	4278190080	False
+ROOM	308	room_fastbattle	640	480	4278190080	False
+ROOM	309	room_storybattle	640	480	4278190080	False
+ROOM	310	room_gameover	640	480	4278190080	False
+ROOM	311	room_shop1	320	240	4278190080	False
+ROOM	312	room_shop2	320	240	4278190080	False
+ROOM	313	room_shop3	320	240	4278190080	False
+ROOM	314	room_shop4	320	240	4278190080	False
+ROOM	315	room_shop5	320	240	4278190080	False
+ROOM	316	room_riverman_transition	660	240	4278190080	False
+ROOM	317	room_papdate	640	480	4278190080	False
+ROOM	318	room_adate	640	480	4278190080	False
+ROOM	319	room_flowey_endchoice	640	480	4278190080	False
+ROOM	320	room_flowey_regret	320	240	4278190080	False
+ROOM	321	room_empty	320	240	4278190080	False
+ROOM	322	room_emptywhite	640	480	4278190080	False
+ROOM	323	room_emptyblack	640	480	4278190080	False
+ROOM	324	room_nothingness	320	240	4278190080	False
+ROOM	325	room_undertale	320	240	4278190080	False
+ROOM	326	room_of_dog	320	240	4278190080	False
+ROOM	327	room_quizholder	640	480	4278190080	False
+ROOM	328	room_friendtest	640	480	4278190080	False
+ROOM	329	room_bringitinguys	640	480	4278190080	False
+ROOM	330	room_asrielappears	640	480	4278190080	False
+ROOM	331	room_goodbyeasriel	320	240	4278190080	False
+ROOM	332	room_asrielmemory	640	480	4278190080	False
+ROOM	333	room_asrieltest	640	480	4278190080	False
+ROOM	334	room_afinaltest	640	480	4278190080	False
+ROOM	335	room_dogshrine	320	240	4278190080	False
+ROOM	336	room_dogshrine_ruined	320	240	4278190080	False
+ROOM	337	room_dogshrine_mewmew	320	240	4278190080	False
+META	RoomsDumped	338
+META	TileRows	0

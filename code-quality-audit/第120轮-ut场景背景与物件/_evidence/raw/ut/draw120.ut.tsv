@@ -1,0 +1,2891 @@
+kind	obj	field	value
+D	obj_time	-	-	0
+D	obj_screen	-	-	0
+D	objLayerChecker	-	-	0
+D	obj_mobilecontroller	-	-	0
+D	obj_unfader	-	-	0
+D	obj_introimage	-	-	0
+D	obj_titleimage	gml_Object_obj_titleimage_Draw_0	0	34
+DL	obj_titleimage	call.i draw_sprite(argc=4)	
+DL	obj_titleimage	call.i draw_set_color(argc=1)	
+DL	obj_titleimage	call.i scr_setfont(argc=1)	
+DL	obj_titleimage	call.i scr_gettext(argc=1)	
+DL	obj_titleimage	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_titleimage	call.i scr_gettext(argc=1)	
+DL	obj_titleimage	call.i string_hash_to_newline(argc=1)	
+DL	obj_titleimage	call.i draw_text(argc=3)	
+DL	obj_titleimage	call.i gamepad_button_check_any(argc=1)	
+DL	obj_titleimage	call.i keyboard_check_pressed(argc=1)	
+DL	obj_titleimage	call.i control_check_pressed(argc=1)	
+DL	obj_titleimage	call.i device_get_tilt_z(argc=0)	
+DL	obj_titleimage	call.i abs(argc=1)	
+DL	obj_titleimage	call.i snd_play(argc=1)	
+DL	obj_titleimage	call.i keyboard_check_pressed(argc=1)	
+DL	obj_titleimage	call.i snd_play(argc=1)	
+DL	obj_titleimage	call.i keyboard_check_pressed(argc=1)	
+DL	obj_titleimage	call.i keyboard_check_pressed(argc=1)	
+DL	obj_titleimage	call.i keyboard_check_pressed(argc=1)	
+DL	obj_titleimage	call.i control_check_pressed(argc=1)	
+DL	obj_titleimage	pop.v.i self.drawpw	
+DL	obj_titleimage	push.v self.drawpw	
+DL	obj_titleimage	call.i draw_set_color(argc=1)	
+DL	obj_titleimage	call.i scr_setfont(argc=1)	
+DL	obj_titleimage	call.i scr_gettext(argc=1)	
+DL	obj_titleimage	call.i string_hash_to_newline(argc=1)	
+DL	obj_titleimage	call.i draw_text(argc=3)	
+DL	obj_titleimage	call.i scr_gettext(argc=1)	
+DL	obj_titleimage	call.i string_hash_to_newline(argc=1)	
+DL	obj_titleimage	call.i draw_text(argc=3)	
+DL	obj_titleimage	call.i scr_gettext(argc=1)	
+DL	obj_titleimage	call.i string_hash_to_newline(argc=1)	
+DL	obj_titleimage	call.i draw_text(argc=3)	
+DL	obj_titleimage	call.i scr_gettext(argc=1)	
+DL	obj_titleimage	call.i string_hash_to_newline(argc=1)	
+DL	obj_titleimage	call.i draw_text(argc=3)	
+D	obj_intromenu	gml_Object_obj_intromenu_Draw_0	0	32
+DL	obj_intromenu	call.i draw_background(argc=3)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i scr_getsprite(argc=1)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i draw_sprite(argc=4)	
+DL	obj_intromenu	call.i script_execute(argc=1)	
+DL	obj_intromenu	call.i draw_set_color(argc=1)	
+DL	obj_intromenu	call.i scr_setfont(argc=1)	
+DL	obj_intromenu	call.i scr_drawtext_centered(argc=3)	
+DL	obj_intromenu	call.i scr_drawtext_centered(argc=3)	
+DL	obj_intromenu	call.i scr_drawtext_centered(argc=3)	
+DL	obj_intromenu	call.i scr_drawtext_centered(argc=3)	
+D	obj_overworldcontroller	gml_Object_obj_overworldcontroller_Draw_0	0	236
+DL	obj_overworldcontroller	call.i __view_get(argc=2)	
+DL	obj_overworldcontroller	call.i __view_get(argc=2)	
+DL	obj_overworldcontroller	call.i draw_set_color(argc=1)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i draw_set_color(argc=1)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_overworldcontroller	call.i draw_set_color(argc=1)	
+DL	obj_overworldcontroller	call.i scr_setfont(argc=1)	
+DL	obj_overworldcontroller	call.i string_hash_to_newline(argc=1)	
+DL	obj_overworldcontroller	call.i string_width(argc=1)	
+DL	obj_overworldcontroller	call.i string_hash_to_newline(argc=1)	
+DL	obj_overworldcontroller	call.i draw_text(argc=3)	
+DL	obj_overworldcontroller	call.i string(argc=1)	
+DL	obj_overworldcontroller	call.i string_hash_to_newline(argc=1)	
+DL	obj_overworldcontroller	call.i draw_text(argc=3)	
+DL	obj_overworldcontroller	call.i string_hash_to_newline(argc=1)	
+DL	obj_overworldcontroller	call.i draw_text(argc=3)	
+DL	obj_overworldcontroller	call.i string(argc=1)	
+DL	obj_overworldcontroller	call.i string(argc=1)	
+DL	obj_overworldcontroller	call.i string_hash_to_newline(argc=1)	
+DL	obj_overworldcontroller	call.i draw_text(argc=3)	
+DL	obj_overworldcontroller	call.i string_hash_to_newline(argc=1)	
+DL	obj_overworldcontroller	call.i draw_text(argc=3)	
+DL	obj_overworldcontroller	call.i string(argc=1)	
+DL	obj_overworldcontroller	call.i string_hash_to_newline(argc=1)	
+DL	obj_overworldcontroller	call.i draw_text(argc=3)	
+DL	obj_overworldcontroller	call.i scr_setfont(argc=1)	
+DL	obj_overworldcontroller	call.i draw_set_font(argc=1)	
+DL	obj_overworldcontroller	call.i string_hash_to_newline(argc=1)	
+DL	obj_overworldcontroller	call.i draw_text_transformed(argc=6)	
+D	obj_solidlong	-	-	0
+D	obj_solidsmall	-	-	0
+D	obj_sdr	-	-	0
+D	obj_sdl	-	-	0
+D	obj_readable_flowers1	-	-	0
+D	obj_markerB	-	-	0
+D	obj_doorA	-	-	0
+D	obj_torinteractable7	-	-	0
+D	obj_mainchara	gml_Object_obj_mainchara_Draw_0	0	5
+DL	obj_mainchara	call.i draw_sprite_ext(argc=9)	
+DL	obj_mainchara	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_mainchara	call.i snd_play(argc=1)	
+DL	obj_mainchara	call.i draw_sprite(argc=4)	
+DL	obj_mainchara	call.i draw_sprite_ext(argc=9)	
+D	obj_solidtall	-	-	0
+D	obj_sur	-	-	0
+D	obj_sul	-	-	0
+D	obj_doorB	-	-	0
+D	obj_markerA	-	-	0
+D	obj_floweytrigger	-	-	0
+D	obj_floweytalker1	-	-	0
+D	obj_npc_marker	-	-	0
+D	obj_doorAmusicfade	-	-	0
+D	obj_ruinsmusic	-	-	0
+D	obj_doorBmusicfade	-	-	0
+D	obj_toroverworld2	-	-	0
+D	obj_savepoint	-	-	0
+D	obj_toribuster	-	-	0
+D	obj_solidtall_2	-	-	0
+D	obj_torieltrigger1	-	-	0
+D	obj_toroverworld3	-	-	0
+D	obj_readable_room1	-	-	0
+D	obj_trophy_awarder	-	-	0
+D	obj_floorswitch1	-	-	0
+D	obj_wallswitchcut1	-	-	0
+D	obj_ruinsdoor1	-	-	0
+D	obj_readable_sign1	-	-	0
+D	obj_toroverworld4	-	-	0
+D	obj_plotwall1	-	-	0
+D	obj_torieltrigger2	-	-	0
+D	obj_torinteractable1	-	-	0
+D	obj_plotswitch1	-	-	0
+D	obj_torinteractable2	-	-	0
+D	obj_plotswitch2	-	-	0
+D	obj_readable_switch1	-	-	0
+D	obj_switchadvice2	-	-	0
+D	obj_switchadvice1	-	-	0
+D	obj_spikes_room	-	-	0
+D	obj_fakewateropenr	-	-	0
+D	obj_fakewateropenl	-	-	0
+D	obj_fakewaterl	-	-	0
+D	obj_fakewaterr	-	-	0
+D	obj_fakewatershadowl	-	-	0
+D	obj_fakewatershadowr	-	-	0
+D	obj_torieltrigger3	-	-	0
+D	obj_torinteractable4	-	-	0
+D	obj_dummy1	-	-	0
+D	obj_encountertrigger1	-	-	0
+D	obj_toroverworld5	-	-	0
+D	obj_plotwall2	-	-	0
+D	obj_spiketile1	-	-	0
+D	obj_spiketile2	-	-	0
+D	obj_fakewateropenm	-	-	0
+D	obj_fakewaterm	-	-	0
+D	obj_fakewatershadowm	-	-	0
+D	obj_torinteractable6	-	-	0
+D	obj_toroverworld7	-	-	0
+D	obj_torieltrigger4	-	-	0
+D	obj_pillar_1	-	-	0
+D	obj_doorC	-	-	0
+D	obj_markerD	-	-	0
+D	obj_encounter_ruins1	-	-	0
+D	obj_torielcall1	-	-	0
+D	obj_smallfrog	-	-	0
+D	obj_candydish1	-	-	0
+D	obj_solidwide	-	-	0
+D	obj_holeup	-	-	0
+D	obj_holedown2	-	-	0
+D	obj_markerC	-	-	0
+D	obj_doorD	-	-	0
+D	obj_pushrock3	-	-	0
+D	obj_plotwall4	-	-	0
+D	obj_torielcall3	-	-	0
+D	obj_torielcall2	-	-	0
+D	obj_torielcall4	-	-	0
+D	obj_encounter_ruins2	-	-	0
+D	obj_readable_plaque_1	-	-	0
+D	obj_readable_plaque_2	-	-	0
+D	obj_rock_activator	-	-	0
+D	obj_holedown	-	-	0
+D	obj_pushrock1	-	-	0
+D	obj_pushrock2	-	-	0
+D	obj_goofyrock	-	-	0
+D	obj_plotwall5	-	-	0
+D	obj_encounterer_ruins3	-	-	0
+D	obj_cheesetable1	-	-	0
+D	obj_mousehole	-	-	0
+D	obj_markerX	-	-	0
+D	obj_door_ruins13	-	-	0
+D	obj_napstablook1	-	-	0
+D	obj_bigweb	-	-	0
+D	obj_sign_room	-	-	0
+D	obj_smallweb	-	-	0
+D	obj_encounterer_ruins5	-	-	0
+D	obj_torielcall5	-	-	0
+D	obj_readable_sign2	-	-	0
+D	obj_smallfrog_xadvice	-	-	0
+D	obj_holeup2	-	-	0
+D	obj_napstablook2	-	-	0
+D	obj_vegetoid_overworld	-	-	0
+D	obj_ribbon_pickup	-	-	0
+D	obj_plotswitch3	-	-	0
+D	obj_encounterer_ruins6	-	-	0
+D	obj_plotwall6	-	-	0
+D	obj_holedown3	-	-	0
+D	obj_redswitch_1	-	-	0
+D	obj_blueswitch_1	-	-	0
+D	obj_greenswitch_1	-	-	0
+D	obj_encounterer_ruins4	-	-	0
+D	obj_plotwall_room	-	-	0
+D	obj_switchhelptrigger	-	-	0
+D	obj_knife_pickup	-	-	0
+D	obj_torieltrigger5	-	-	0
+D	obj_nastytree	-	-	0
+D	obj_nastrytree_bottom	-	-	0
+D	obj_housemusic	-	-	0
+D	obj_torieltrigger6	-	-	0
+D	obj_solidrailing	-	-	0
+D	obj_solidrailing2	-	-	0
+D	obj_solidrailing3	-	-	0
+D	obj_staircollission	-	-	0
+D	obj_stairstep	-	-	0
+D	obj_torgen_house1	-	-	0
+D	obj_readable_room2	-	-	0
+D	obj_kitchentable	-	-	0
+D	obj_lchair	-	-	0
+D	obj_rchair	-	-	0
+D	obj_uchair	-	-	0
+D	obj_hearthflame	-	-	0
+D	obj_chairiel	-	-	0
+D	obj_torieltrigger7	gml_Object_obj_torieltrigger7_Draw_0	0	7
+DL	obj_torieltrigger7	call.i draw_set_color(argc=1)	
+DL	obj_torieltrigger7	call.i scr_setfont(argc=1)	
+DL	obj_torieltrigger7	call.i instance_exists(argc=1)	
+DL	obj_torieltrigger7	call.i string_hash_to_newline(argc=1)	
+DL	obj_torieltrigger7	call.i draw_text(argc=3)	
+DL	obj_torieltrigger7	call.i string_hash_to_newline(argc=1)	
+DL	obj_torieltrigger7	call.i draw_text(argc=3)	
+D	obj_readable_room3	-	-	0
+D	obj_asriellamp	-	-	0
+D	obj_readable_room4	-	-	0
+D	obj_mirrorreflection	gml_Object_obj_mirrorreflection_Draw_0	0	2
+DL	obj_mirrorreflection	call.i instance_exists(argc=1)	
+DL	obj_mirrorreflection	call.i draw_sprite_ext(argc=9)	
+D	obj_sockdrawer	-	-	0
+D	obj_cactus	-	-	0
+D	obj_smallchair	-	-	0
+D	obj_pie_pickup	-	-	0
+D	obj_asrielbed	-	-	0
+D	obj_bigpie	-	-	0
+D	obj_basementmusic	-	-	0
+D	obj_torieltrigger8	-	-	0
+D	obj_torieltrigger9	-	-	0
+D	obj_downstairs	-	-	0
+D	obj_torieltrigger10	-	-	0
+D	obj_torieltrigger11	-	-	0
+D	obj_torieltrigger12	-	-	0
+D	obj_finaldoor	-	-	0
+D	obj_floweytrigger2	-	-	0
+D	obj_demodoorA	-	-	0
+D	obj_markers	-	-	0
+D	obj_tundramusic	-	-	0
+D	obj_ruins_reentrance	-	-	0
+D	obj_darksanstrigger	-	-	0
+D	obj_convenientlamp	-	-	0
+D	obj_fakesanstrigger	-	-	0
+D	obj_tundramusicspecial1	-	-	0
+D	obj_tundragatebar	-	-	0
+D	obj_sanscheckpoint	-	-	0
+D	obj_creeptree1	-	-	0
+D	obj_creeptree_stickbreak	-	-	0
+D	obj_solidlongleft	-	-	0
+D	obj_stick	-	-	0
+D	obj_sansbox	-	-	0
+D	obj_encounterer_tundra1	-	-	0
+D	obj_ladiesfishingrod	-	-	0
+D	obj_waterdivot_test	-	-	0
+D	obj_papyrus1	-	-	0
+D	obj_papcheckpoint	-	-	0
+D	obj_snowdrakenpc	-	-	0
+D	obj_otherphonecall	-	-	0
+D	obj_dogehouse	-	-	0
+D	obj_dogehouseback	-	-	0
+D	obj_dogtreat	-	-	0
+D	obj_dogetrigger1	gml_Object_obj_dogetrigger1_Draw_0	1	1
+DL	obj_dogetrigger1	call.i draw_self_custom(argc=4)	
+D	obj_dogringbell	gml_Object_obj_dogringbell_Draw_0	1	1
+DL	obj_dogringbell	call.i draw_self_custom(argc=4)	
+D	obj_iceevent	-	-	0
+D	obj_sans_room	-	-	0
+D	obj_nicesnowman	-	-	0
+D	obj_papyrus2	-	-	0
+D	obj_shockblock	-	-	0
+D	obj_snowdecahedron	-	-	0
+D	obj_rollsnowgen	-	-	0
+D	obj_golfedge	-	-	0
+D	obj_iceeventx4	-	-	0
+D	obj_nicecreamguy	-	-	0
+D	obj_singletree	-	-	0
+D	obj_chilldrakenpc	-	-	0
+D	obj_golfhole	-	-	0
+D	obj_papyrus3	-	-	0
+D	obj_crossword	gml_Object_obj_crossword_Draw_0	0	5
+DL	obj_crossword	call.i draw_me(argc=0)	
+DL	obj_crossword	call.i scr_getsprite(argc=1)	
+DL	obj_crossword	call.i draw_sprite(argc=4)	
+DL	obj_crossword	call.i control_check_pressed(argc=1)	
+DL	obj_crossword	call.i control_check_pressed(argc=1)	
+D	obj_spaghetti	-	-	0
+D	obj_microwave	-	-	0
+D	obj_spagnot	-	-	0
+D	obj_forcedright	-	-	0
+D	obj_encounterer_jerry	-	-	0
+D	obj_icecap_npcg	-	-	0
+D	obj_snowfloor	gml_Object_obj_snowfloor_Draw_0	0	7
+DL	obj_snowfloor	call.i draw_set_color(argc=1)	
+DL	obj_snowfloor	push.v [array]self.dodraw	
+DL	obj_snowfloor	call.i draw_circle(argc=4)	
+DL	obj_snowfloor	call.i collision_circle(argc=6)	
+DL	obj_snowfloor	call.i random(argc=1)	
+DL	obj_snowfloor	call.i floor(argc=1)	
+DL	obj_snowfloor	call.i random(argc=1)	
+DL	obj_snowfloor	call.i random(argc=1)	
+D	obj_papyrus6	-	-	0
+D	obj_xoxo	-	-	0
+D	obj_xoxocontroller1	-	-	0
+D	obj_papyrus5	-	-	0
+D	obj_solidthin	-	-	0
+D	obj_readable_room5	-	-	0
+D	obj_papyrus4	-	-	0
+D	obj_switch	-	-	0
+D	obj_specialtile	gml_Object_obj_specialtile_Draw_0	0	2
+DL	obj_specialtile	call.i draw_set_color(argc=1)	
+DL	obj_specialtile	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_dogpillarparent	-	-	0
+D	obj_dogneckparent	-	-	0
+D	obj_dogneck2	-	-	0
+D	obj_dogpillar2	-	-	0
+D	obj_dogpillar3	-	-	0
+D	obj_dogneck3	-	-	0
+D	obj_dogpillar4	-	-	0
+D	obj_dogneck4	-	-	0
+D	obj_dogpillar5	-	-	0
+D	obj_dogneck5	-	-	0
+D	obj_dogroom_npc	-	-	0
+D	obj_sanssnowman	-	-	0
+D	obj_papyrussnowman	-	-	0
+D	obj_falltransition	-	-	0
+D	obj_icecap_npcb	-	-	0
+D	obj_superdrophole	-	-	0
+D	obj_specialdrophole	-	-	0
+D	obj_doublesans	-	-	0
+D	obj_encoutnerer_gyftrot	-	-	0
+D	obj_gyftrotnpc	-	-	0
+D	obj_icecavewall	gml_Object_obj_icecavewall_Draw_0	0	12
+DL	obj_icecavewall	call.i draw_sprite(argc=4)	
+DL	obj_icecavewall	call.i cos(argc=1)	
+DL	obj_icecavewall	call.i sin(argc=1)	
+DL	obj_icecavewall	call.i sin(argc=1)	
+DL	obj_icecavewall	call.i abs(argc=1)	
+DL	obj_icecavewall	call.i draw_sprite_ext(argc=9)	
+DL	obj_icecavewall	call.i draw_sprite(argc=4)	
+DL	obj_icecavewall	call.i cos(argc=1)	
+DL	obj_icecavewall	call.i sin(argc=1)	
+DL	obj_icecavewall	call.i sin(argc=1)	
+DL	obj_icecavewall	call.i abs(argc=1)	
+DL	obj_icecavewall	call.i draw_sprite_ext(argc=9)	
+D	obj_doorXmusicfade	-	-	0
+D	obj_tinybghouse	-	-	0
+D	obj_pofftrigger	-	-	0
+D	obj_smalldoghouse	-	-	0
+D	obj_snowpoff	-	-	0
+D	obj_backgrounder_tundra	-	-	0
+D	obj_icecap_npcr	-	-	0
+D	obj_dogpoff	-	-	0
+D	obj_papyrus7	-	-	0
+D	obj_solidexwide	-	-	0
+D	obj_townnpc_bunlady	-	-	0
+D	obj_townnpc_bunboy	-	-	0
+D	obj_townnpc_bear1	-	-	0
+D	obj_townnpc_beartree	-	-	0
+D	obj_townnpc_reddemon	-	-	0
+D	obj_townnpc_unfunny	-	-	0
+D	obj_townnpc_monsterkid1	-	-	0
+D	obj_door_w	-	-	0
+D	obj_markerw	-	-	0
+D	obj_townmusic	-	-	0
+D	obj_markerv	-	-	0
+D	obj_door_u	-	-	0
+D	obj_markeru	-	-	0
+D	obj_paphouse	-	-	0
+D	obj_papmailbox	-	-	0
+D	obj_sansmailbox	-	-	0
+D	obj_xmastree	-	-	0
+D	obj_paphouse_entrance	-	-	0
+D	obj_papyrus_houseoutside	-	-	0
+D	obj_door_t	-	-	0
+D	obj_markert	-	-	0
+D	obj_undyne_lettercall	-	-	0
+D	obj_markerr	-	-	0
+D	obj_teleigloo	-	-	0
+D	obj_grillbynpc_womandog	-	-	0
+D	obj_grillbynpc_mandog	-	-	0
+D	obj_grillbynpc_doggo	-	-	0
+D	obj_snowdinlogo	-	-	0
+D	obj_icecube_room	-	-	0
+D	obj_papshed	-	-	0
+D	obj_solidextall_2	-	-	0
+D	obj_bigdog	-	-	0
+D	obj_librarysign	-	-	0
+D	obj_iceflower	-	-	0
+D	obj_knock_room	-	-	0
+D	obj_townnpc_slimedad	-	-	0
+D	obj_townnpc_slimeson	-	-	0
+D	obj_townnpc_slimedaughter	-	-	0
+D	obj_townnpc_icewolf	-	-	0
+D	obj_silo1	-	-	0
+D	obj_throwwolf	-	-	0
+D	obj_iceconveyorbelt	gml_Object_obj_iceconveyorbelt_Draw_0	0	3
+DL	obj_iceconveyorbelt	call.i draw_sprite(argc=4)	
+DL	obj_iceconveyorbelt	call.i draw_sprite(argc=4)	
+DL	obj_iceconveyorbelt	call.i draw_sprite(argc=4)	
+D	obj_ambientwater	-	-	0
+D	obj_wrongnumbersong	-	-	0
+D	obj_dogboat_thing	gml_Object_obj_dogboat_thing_Draw_0	0	6
+DL	obj_dogboat_thing	call.i draw_sprite(argc=4)	
+DL	obj_dogboat_thing	call.i draw_sprite(argc=4)	
+DL	obj_dogboat_thing	call.i instance_exists(argc=1)	
+DL	obj_dogboat_thing	call.i tile_layer_shift(argc=3)	
+DL	obj_dogboat_thing	call.i tile_layer_shift(argc=3)	
+DL	obj_dogboat_thing	call.i __view_set(argc=3)	
+D	obj_townnpc_innlady	-	-	0
+D	obj_snoozer	-	-	0
+D	obj_innevent1	gml_Object_obj_innevent1_Draw_0	0	4
+DL	obj_innevent1	call.i draw_set_color(argc=1)	
+DL	obj_innevent1	call.i draw_set_alpha(argc=1)	
+DL	obj_innevent1	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_innevent1	call.i draw_set_alpha(argc=1)	
+D	obj_grillbynpc_lesserdog	-	-	0
+D	obj_townnpc_weirdfish	-	-	0
+D	obj_townnpc_hatescity	-	-	0
+D	obj_grillbynpc_grillby	-	-	0
+D	obj_grillbynpc_hot2	-	-	0
+D	obj_sansmusic	-	-	0
+D	obj_grillbynpc_sansdate	-	-	0
+D	obj_booth	-	-	0
+D	obj_pokertable	-	-	0
+D	obj_bottomtable	-	-	0
+D	obj_lessdogtable	-	-	0
+D	obj_grillbynpc_foodmonster	-	-	0
+D	obj_grillbynpc_hotandbothered	-	-	0
+D	obj_readable_modernbook	-	-	0
+D	obj_librarynpc_lizard2	-	-	0
+D	obj_librarynpc_lizard1	-	-	0
+D	obj_librarynpc_wordsearch	-	-	0
+D	obj_librarynpc_jumbler	-	-	0
+D	obj_libcounter	-	-	0
+D	obj_cutetable	-	-	0
+D	obj_dogfood	-	-	0
+D	obj_doggiebed	-	-	0
+D	obj_chewtoy	-	-	0
+D	obj_door_v	-	-	0
+D	obj_solidline	-	-	0
+D	obj_npc_room	-	-	0
+D	obj_paptv	-	-	0
+D	obj_papcouch	-	-	0
+D	obj_booktable	gml_Object_obj_booktable_Draw_0	0	2
+DL	obj_booktable	call.i draw_sprite(argc=4)	
+DL	obj_booktable	call.i draw_sprite(argc=4)	
+D	obj_papyrus_guide	-	-	0
+D	obj_papdoor	-	-	0
+D	obj_door_s_musfade	-	-	0
+D	obj_paptable	gml_Object_obj_paptable_Draw_0	0	2
+DL	obj_paptable	call.i draw_sprite(argc=4)	
+DL	obj_paptable	call.i draw_sprite(argc=4)	
+D	obj_sansdoor	gml_Object_obj_sansdoor_Draw_0	0	5
+DL	obj_sansdoor	call.i draw_sprite_ext(argc=9)	
+DL	obj_sansdoor	call.i draw_sprite_ext(argc=9)	
+DL	obj_sansdoor	call.i caster_play(argc=3)	
+DL	obj_sansdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_sansdoor	call.i draw_sprite_part(argc=8)	
+D	obj_kitchenchecker	gml_Object_obj_kitchenchecker_Draw_0	0	2
+DL	obj_kitchenchecker	call.i draw_sprite_ext(argc=9)	
+DL	obj_kitchenchecker	call.i draw_sprite_ext(argc=9)	
+D	obj_paptrash	-	-	0
+D	obj_papfridge	-	-	0
+D	obj_papsink	-	-	0
+D	obj_papstove	gml_Object_obj_papstove_Draw_0	0	2
+DL	obj_papstove	call.i draw_sprite(argc=4)	
+DL	obj_papstove	call.i draw_sprite(argc=4)	
+D	obj_carbed	-	-	0
+D	obj_papbookshelf	-	-	0
+D	obj_papcomputer	-	-	0
+D	obj_actiontable	-	-	0
+D	obj_bonebox	-	-	0
+D	obj_papyrus_hisroom	-	-	0
+D	obj_treadmill_event	-	-	0
+D	obj_trashnado	-	-	0
+D	obj_darkroom_event	-	-	0
+D	obj_papyrus8	-	-	0
+D	obj_fogmaker	gml_Object_obj_fogmaker_Draw_0	0	1
+DL	obj_fogmaker	call.i draw_sprite_part_ext(argc=12)	
+D	obj_foreground_waterfall	gml_Object_obj_foreground_waterfall_Draw_0	0	8
+DL	obj_foreground_waterfall	call.i draw_sprite_ext(argc=9)	
+DL	obj_foreground_waterfall	call.i __view_get(argc=2)	
+DL	obj_foreground_waterfall	call.i __view_get(argc=2)	
+DL	obj_foreground_waterfall	call.i __view_get(argc=2)	
+DL	obj_foreground_waterfall	call.i __view_get(argc=2)	
+DL	obj_foreground_waterfall	call.i __view_get(argc=2)	
+DL	obj_foreground_waterfall	call.i __view_get(argc=2)	
+DL	obj_foreground_waterfall	call.i __view_get(argc=2)	
+D	obj_icecube_water1	-	-	0
+D	obj_echoflower	-	-	0
+D	obj_sentrystation_bg	-	-	0
+D	obj_sans_sentry2	-	-	0
+D	obj_waterfall_waterfall	gml_Object_obj_waterfall_waterfall_Draw_0	0	11
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+DL	obj_waterfall_waterfall	call.i draw_sprite(argc=4)	
+D	obj_waterripple	gml_Object_obj_waterripple_Draw_0	1	3
+DL	obj_waterripple	call.i instance_exists(argc=1)	
+DL	obj_waterripple	call.i draw_self_custom(argc=4)	
+DL	obj_waterripple	call.i snd_play(argc=1)	
+D	obj_waterpushrockgen	-	-	0
+D	obj_fakefalls	gml_Object_obj_fakefalls_Draw_0	0	4
+DL	obj_fakefalls	call.i draw_sprite(argc=4)	
+DL	obj_fakefalls	call.i draw_sprite(argc=4)	
+DL	obj_fakefalls	call.i draw_sprite(argc=4)	
+DL	obj_fakefalls	call.i draw_sprite(argc=4)	
+D	obj_fakefalls_bg	-	-	0
+D	obj_glowshroom	-	-	0
+D	obj_undyne1	gml_Object_obj_undyne1_Draw_0	0	0
+D	obj_starker	-	-	0
+D	obj_tallgrass	-	-	0
+D	obj_grasssounder	-	-	0
+D	obj_watermusic	-	-	0
+D	obj_waterstop	-	-	0
+D	obj_waterspot	-	-	0
+D	obj_waterboardpuzzle1	gml_Object_obj_waterboardpuzzle1_Draw_0	0	0
+D	obj_waterboard	-	-	0
+D	obj_phonecall_room	-	-	0
+D	obj_encounterer_water1	-	-	0
+D	obj_bellblossom	-	-	0
+D	obj_dockanim	-	-	0
+D	obj_telescope	-	-	0
+D	obj_cosmetic_glowstar	-	-	0
+D	obj_fakedoor	-	-	0
+D	obj_woshuanpc	-	-	0
+D	obj_mkid_goner	-	-	0
+D	obj_boardride_a	-	-	0
+D	obj_purpledude	-	-	0
+D	obj_undyneencounter1	-	-	0
+D	obj_undyneencounter2	-	-	0
+D	obj_quietwatermusic	-	-	0
+D	obj_glowparticlegen_1	-	-	0
+D	obj_doorCmusicfade	-	-	0
+D	obj_doorDmusicfade	-	-	0
+D	obj_brightwaterfall	gml_Object_obj_brightwaterfall_Draw_0	0	11
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+DL	obj_brightwaterfall	call.i draw_sprite(argc=4)	
+D	obj_carrybird	-	-	0
+D	obj_onionsan_event	-	-	0
+D	obj_shyrentrigger	-	-	0
+D	obj_ambientrain	-	-	0
+D	obj_shyrensisternpc	-	-	0
+D	obj_shyrenmovenpc	gml_Object_obj_shyrenmovenpc_Draw_0	0	1
+DL	obj_shyrenmovenpc	call.i draw_sprite(argc=4)	
+D	obj_piano	gml_Object_obj_piano_Draw_0	0	8
+DL	obj_piano	call.i draw_sprite(argc=4)	
+DL	obj_piano	call.i scr_getsprite(argc=1)	
+DL	obj_piano	call.i draw_sprite(argc=4)	
+DL	obj_piano	call.i draw_sprite(argc=4)	
+DL	obj_piano	call.i draw_sprite(argc=4)	
+DL	obj_piano	call.i draw_sprite(argc=4)	
+DL	obj_piano	call.i draw_sprite(argc=4)	
+DL	obj_piano	call.i draw_sprite(argc=4)	
+D	obj_rarependant	-	-	0
+D	obj_musicstatue	-	-	0
+D	obj_pianosolution	-	-	0
+D	obj_umbrellabox	-	-	0
+D	obj_monsterkidtrigger3	-	-	0
+D	obj_monsterkidtrigger4	-	-	0
+D	obj_rainer	-	-	0
+D	obj_puddle	gml_Object_obj_puddle_Draw_0	0	10
+DL	obj_puddle	call.i instance_exists(argc=1)	
+DL	obj_puddle	call.i draw_set_color(argc=1)	
+DL	obj_puddle	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_puddle	call.i instance_exists(argc=1)	
+DL	obj_puddle	call.i draw_custom_ext(argc=11)	
+DL	obj_puddle	call.i draw_custom_ext(argc=11)	
+DL	obj_puddle	call.i draw_custom_ext(argc=11)	
+DL	obj_puddle	call.i draw_custom_ext(argc=11)	
+DL	obj_puddle	call.i draw_sprite(argc=4)	
+DL	obj_puddle	call.i keyboard_check_pressed(argc=1)	
+D	obj_monsterkidtrigger5	-	-	0
+D	obj_mkid_shadow	-	-	0
+D	obj_backgrounder_castle	gml_Object_obj_backgrounder_castle_Draw_0	0	2
+DL	obj_backgrounder_castle	call.i draw_set_color(argc=1)	
+DL	obj_backgrounder_castle	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_monsterkidtrigger6	gml_Object_obj_monsterkidtrigger6_Draw_0	0	6
+DL	obj_monsterkidtrigger6	call.i draw_set_color(argc=1)	
+DL	obj_monsterkidtrigger6	call.i scr_setfont(argc=1)	
+DL	obj_monsterkidtrigger6	call.i string_hash_to_newline(argc=1)	
+DL	obj_monsterkidtrigger6	call.i draw_text(argc=3)	
+DL	obj_monsterkidtrigger6	call.i string_hash_to_newline(argc=1)	
+DL	obj_monsterkidtrigger6	call.i draw_text(argc=3)	
+D	obj_aaronnpc	-	-	0
+D	obj_backgrounder_dock	-	-	0
+D	obj_watercave_fader	-	-	0
+D	obj_undyneencounter3	-	-	0
+D	obj_nospear	-	-	0
+D	obj_speartilegen	-	-	0
+D	obj_undyneencounter4	-	-	0
+D	obj_wakeupchara	-	-	0
+D	obj_indryspot	-	-	0
+D	obj_inwaterspot	-	-	0
+D	obj_garbagepile	-	-	0
+D	obj_dummytrigger	-	-	0
+D	obj_assortedtrash	-	-	0
+D	obj_garbagecooler	-	-	0
+D	obj_damndummy	gml_Object_obj_damndummy_Draw_0	0	5
+DL	obj_damndummy	call.i draw_sprite(argc=4)	
+DL	obj_damndummy	call.i sin(argc=1)	
+DL	obj_damndummy	call.i draw_sprite_stretched(argc=6)	
+DL	obj_damndummy	call.i draw_sprite_stretched(argc=6)	
+DL	obj_damndummy	call.i draw_sprite_ext(argc=9)	
+D	obj_napstablookfriendtrigger	-	-	0
+D	obj_trigger_room	-	-	0
+D	obj_clamgirl	-	-	0
+D	obj_undynedate_outside	-	-	0
+D	obj_undynedate_afterward	-	-	0
+D	obj_undynedate_inside	-	-	0
+D	obj_bonedrawer_check	-	-	0
+D	obj_undynewindow	-	-	0
+D	obj_bonedrawer	gml_Object_obj_bonedrawer_Draw_0	0	1
+DL	obj_bonedrawer	call.i draw_sprite_part(argc=8)	
+DL	obj_bonedrawer	push.v self.drawerdown	
+DL	obj_bonedrawer	pop.v.i self.drawerdown	
+DL	obj_bonedrawer	push.v self.drawerdown	
+DL	obj_bonedrawer	pop.v.i self.drawerdown	
+D	obj_blookhouses	-	-	0
+D	obj_napstablook_actor	gml_Object_obj_napstablook_actor_Draw_0	0	3
+DL	obj_napstablook_actor	call.i draw_sprite_ext(argc=9)	
+DL	obj_napstablook_actor	call.i script_execute(argc=2)	
+DL	obj_napstablook_actor	call.i scr_depth(argc=0)	
+D	obj_napstablookdate	-	-	0
+D	obj_napstablookdate_music	-	-	0
+D	obj_napstablook_cd	-	-	0
+D	obj_napstafridge	-	-	0
+D	obj_blookdiary	-	-	0
+D	obj_napstablook_farm1	-	-	0
+D	obj_snail3	-	-	0
+D	obj_snailguy	-	-	0
+D	obj_napstablook_farm2	-	-	0
+D	obj_longsnail	-	-	0
+D	obj_encounterer_water2	-	-	0
+D	obj_cosmeticecho	-	-	0
+D	obj_glowfly1	gml_Object_obj_glowfly1_Draw_0	0	4
+DL	obj_glowfly1	call.i draw_sprite(argc=4)	
+DL	obj_glowfly1	call.i draw_sprite_ext(argc=9)	
+DL	obj_glowfly1	call.i choose(argc=2)	
+DL	obj_glowfly1	call.i snd_play(argc=1)	
+D	obj_glowshroompuzzle	-	-	0
+D	obj_temnpc	-	-	0
+D	obj_hivestem	-	-	0
+D	obj_temvillagemusic	-	-	0
+D	obj_judgeshroom	-	-	0
+D	obj_darknesspuzzle	gml_Object_obj_darknesspuzzle_Draw_0	0	5
+DL	obj_darknesspuzzle	call.i instance_exists(argc=1)	
+DL	obj_darknesspuzzle	call.i draw_sprite_ext(argc=9)	
+DL	obj_darknesspuzzle	call.i draw_set_alpha(argc=1)	
+DL	obj_darknesspuzzle	call.i draw_set_color(argc=1)	
+DL	obj_darknesspuzzle	call.i draw_set_alpha(argc=1)	
+D	obj_glowstone	gml_Object_obj_glowstone_Draw_0	0	14
+DL	obj_glowstone	call.i instance_exists(argc=1)	
+DL	obj_glowstone	call.i draw_set_circle_precision(argc=1)	
+DL	obj_glowstone	call.i sin(argc=1)	
+DL	obj_glowstone	call.i draw_set_color(argc=1)	
+DL	obj_glowstone	call.i draw_set_alpha(argc=1)	
+DL	obj_glowstone	call.i draw_circle(argc=4)	
+DL	obj_glowstone	call.i draw_set_alpha(argc=1)	
+DL	obj_glowstone	call.i draw_circle(argc=4)	
+DL	obj_glowstone	call.i draw_set_alpha(argc=1)	
+DL	obj_glowstone	call.i draw_circle(argc=4)	
+DL	obj_glowstone	call.i draw_set_alpha(argc=1)	
+DL	obj_glowstone	call.i draw_circle(argc=4)	
+DL	obj_glowstone	call.i draw_sprite_ext(argc=9)	
+DL	obj_glowstone	call.i draw_set_alpha(argc=1)	
+D	obj_darknesslantern	-	-	0
+D	obj_undyne_blockwrecker	-	-	0
+D	obj_darkness_undyne	gml_Object_obj_darkness_undyne_Draw_0	0	7
+DL	obj_darkness_undyne	call.i instance_exists(argc=1)	
+DL	obj_darkness_undyne	call.i draw_sprite_ext(argc=9)	
+DL	obj_darkness_undyne	call.i draw_set_alpha(argc=1)	
+DL	obj_darkness_undyne	call.i draw_set_color(argc=1)	
+DL	obj_darkness_undyne	call.i draw_set_alpha(argc=1)	
+DL	obj_darkness_undyne	call.i caster_set_volume(argc=2)	
+DL	obj_darkness_undyne	call.i instance_destroy(argc=0)	
+D	obj_undyne_echoflower	-	-	0
+D	obj_water_doomreminder	-	-	0
+D	obj_pollener	gml_Object_obj_pollener_Draw_0	0	10
+DL	obj_pollener	call.i draw_set_circle_precision(argc=1)	
+DL	obj_pollener	call.i draw_set_color(argc=1)	
+DL	obj_pollener	call.i random(argc=1)	
+DL	obj_pollener	call.i random(argc=1)	
+DL	obj_pollener	call.i random(argc=1)	
+DL	obj_pollener	call.i random(argc=1)	
+DL	obj_pollener	call.i random(argc=1)	
+DL	obj_pollener	call.i draw_set_alpha(argc=1)	
+DL	obj_pollener	call.i draw_circle(argc=4)	
+DL	obj_pollener	call.i draw_set_alpha(argc=1)	
+D	obj_monsterkidtrigger7	-	-	0
+D	obj_monsterkidtrigger8	-	-	0
+D	obj_puzzlehater	-	-	0
+D	obj_puzzlehaterbox	-	-	0
+D	obj_undynetrigger_boss	gml_Object_obj_undynetrigger_boss_Draw_0	0	7
+DL	obj_undynetrigger_boss	call.i __view_set(argc=3)	
+DL	obj_undynetrigger_boss	push.v self.fakedrawer	
+DL	obj_undynetrigger_boss	call.i instance_exists(argc=1)	
+DL	obj_undynetrigger_boss	call.i __view_set(argc=3)	
+DL	obj_undynetrigger_boss	call.i draw_set_color(argc=1)	
+DL	obj_undynetrigger_boss	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_undynetrigger_boss	call.i draw_set_color(argc=1)	
+DL	obj_undynetrigger_boss	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_undynetrigger_boss2	-	-	0
+D	obj_undynecoolmusic	-	-	0
+D	obj_magicglass	-	-	0
+D	obj_undynea_chaser	-	-	0
+D	obj_icegen_undynef2	-	-	0
+D	obj_hotlandsign	gml_Object_obj_hotlandsign_Draw_0	0	14
+DL	obj_hotlandsign	call.i draw_set_color(argc=1)	
+DL	obj_hotlandsign	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_hotlandsign	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_hotlandsign	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_hotlandsign	call.i draw_sprite(argc=4)	
+DL	obj_hotlandsign	call.i draw_set_color(argc=1)	
+DL	obj_hotlandsign	call.i draw_set_color(argc=1)	
+DL	obj_hotlandsign	call.i draw_roundrect(argc=5)	
+DL	obj_hotlandsign	call.i draw_set_color(argc=1)	
+DL	obj_hotlandsign	call.i draw_set_color(argc=1)	
+DL	obj_hotlandsign	call.i draw_roundrect(argc=5)	
+DL	obj_hotlandsign	call.i draw_set_color(argc=1)	
+DL	obj_hotlandsign	call.i draw_set_color(argc=1)	
+DL	obj_hotlandsign	call.i draw_roundrect(argc=5)	
+D	obj_sans_sleep	-	-	0
+D	obj_lavaoogmusic	-	-	0
+D	obj_autowater	-	-	0
+D	obj_hotlandparalava	gml_Object_obj_hotlandparalava_Draw_0	0	5
+DL	obj_hotlandparalava	call.i draw_sprite_ext(argc=9)	
+DL	obj_hotlandparalava	call.i draw_sprite_ext(argc=9)	
+DL	obj_hotlandparalava	call.i draw_sprite(argc=4)	
+DL	obj_hotlandparalava	call.i draw_sprite(argc=4)	
+DL	obj_hotlandparalava	call.i draw_sprite(argc=4)	
+D	obj_hotlandrock_bg	gml_Object_obj_hotlandrock_bg_Draw_0	0	7
+DL	obj_hotlandrock_bg	call.i draw_set_color(argc=1)	
+DL	obj_hotlandrock_bg	call.i sin(argc=1)	
+DL	obj_hotlandrock_bg	call.i draw_set_alpha(argc=1)	
+DL	obj_hotlandrock_bg	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_hotlandrock_bg	call.i draw_set_alpha(argc=1)	
+DL	obj_hotlandrock_bg	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_hotlandrock_bg	call.i draw_set_alpha(argc=1)	
+D	obj_undynetrigger_dry	-	-	0
+D	obj_watercooler	gml_Object_obj_watercooler_Draw_0	0	6
+DL	obj_watercooler	call.i draw_sprite(argc=4)	
+DL	obj_watercooler	call.i draw_sprite_part(argc=8)	
+DL	obj_watercooler	call.i draw_point_color(argc=3)	
+DL	obj_watercooler	call.i random(argc=1)	
+DL	obj_watercooler	call.i sin(argc=1)	
+DL	obj_watercooler	call.i random(argc=1)	
+D	obj_clamguy	-	-	0
+D	obj_royal_rabbitbounce	gml_Object_obj_royal_rabbitbounce_Draw_0	0	4
+DL	obj_royal_rabbitbounce	call.i cos(argc=1)	
+DL	obj_royal_rabbitbounce	call.i sin(argc=1)	
+DL	obj_royal_rabbitbounce	call.i sin(argc=1)	
+DL	obj_royal_rabbitbounce	call.i draw_sprite_ext(argc=9)	
+D	obj_alabdoor_l	gml_Object_obj_alabdoor_l_Draw_0	0	16
+DL	obj_alabdoor_l	call.i instance_exists(argc=1)	
+DL	obj_alabdoor_l	call.i distance_to_object(argc=1)	
+DL	obj_alabdoor_l	call.i caster_play(argc=3)	
+DL	obj_alabdoor_l	call.i distance_to_object(argc=1)	
+DL	obj_alabdoor_l	call.i caster_play(argc=3)	
+DL	obj_alabdoor_l	call.i draw_sprite_part(argc=8)	
+DL	obj_alabdoor_l	call.i draw_sprite_part(argc=8)	
+DL	obj_alabdoor_l	call.i draw_sprite(argc=4)	
+DL	obj_alabdoor_l	call.i instance_exists(argc=1)	
+DL	obj_alabdoor_l	call.i distance_to_object(argc=1)	
+DL	obj_alabdoor_l	call.i caster_play(argc=3)	
+DL	obj_alabdoor_l	call.i distance_to_object(argc=1)	
+DL	obj_alabdoor_l	call.i caster_play(argc=3)	
+DL	obj_alabdoor_l	call.i draw_sprite_part(argc=8)	
+DL	obj_alabdoor_l	call.i draw_sprite_part(argc=8)	
+DL	obj_alabdoor_l	call.i draw_sprite(argc=4)	
+D	obj_labmusic	-	-	0
+D	obj_alphystrigger1	-	-	0
+D	obj_alphystrigger2	-	-	0
+D	obj_killerlab_event	-	-	0
+D	obj_labcamera	gml_Object_obj_labcamera_Draw_0	0	7
+DL	obj_labcamera	push.v self.drawnlab	
+DL	obj_labcamera	call.i draw_sprite(argc=4)	
+DL	obj_labcamera	call.i draw_set_color(argc=1)	
+DL	obj_labcamera	call.i draw_set_alpha(argc=1)	
+DL	obj_labcamera	call.i draw_set_alpha(argc=1)	
+DL	obj_labcamera	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_labcamera	call.i draw_set_alpha(argc=1)	
+DL	obj_labcamera	call.i draw_sprite(argc=4)	
+D	obj_labdarkness	gml_Object_obj_labdarkness_Draw_0	0	2
+DL	obj_labdarkness	call.i draw_sprite_ext(argc=9)	
+DL	obj_labdarkness	call.i draw_set_alpha(argc=1)	
+D	obj_undynetrash	-	-	0
+D	obj_alphysconveyor	-	-	0
+D	obj_mettwallhole	-	-	0
+D	obj_dogfoodbag	-	-	0
+D	obj_slidingdoor	gml_Object_obj_slidingdoor_Draw_0	0	9
+DL	obj_slidingdoor	call.i draw_sprite(argc=4)	
+DL	obj_slidingdoor	call.i draw_sprite(argc=4)	
+DL	obj_slidingdoor	call.i instance_exists(argc=1)	
+DL	obj_slidingdoor	call.i distance_to_object(argc=1)	
+DL	obj_slidingdoor	call.i distance_to_object(argc=1)	
+DL	obj_slidingdoor	call.i snd_play(argc=1)	
+DL	obj_slidingdoor	call.i snd_play(argc=1)	
+DL	obj_slidingdoor	call.i snd_play(argc=1)	
+DL	obj_slidingdoor	call.i snd_play(argc=1)	
+D	obj_readable_room_editor	-	-	0
+D	obj_sideconveyorl	-	-	0
+D	obj_notify_room	-	-	0
+D	obj_redpipev	gml_Object_obj_redpipev_Draw_0	0	6
+DL	obj_redpipev	call.i floor(argc=1)	
+DL	obj_redpipev	call.i draw_sprite(argc=4)	
+DL	obj_redpipev	call.i floor(argc=1)	
+DL	obj_redpipev	call.i draw_sprite(argc=4)	
+DL	obj_redpipev	call.i floor(argc=1)	
+DL	obj_redpipev	call.i draw_sprite(argc=4)	
+D	obj_hotland_rededge	gml_Object_obj_hotland_rededge_Draw_0	0	6
+DL	obj_hotland_rededge	call.i sin(argc=1)	
+DL	obj_hotland_rededge	call.i abs(argc=1)	
+DL	obj_hotland_rededge	call.i draw_sprite_ext(argc=9)	
+DL	obj_hotland_rededge	call.i sin(argc=1)	
+DL	obj_hotland_rededge	call.i abs(argc=1)	
+DL	obj_hotland_rededge	call.i draw_sprite_ext(argc=9)	
+D	obj_lavamusic	-	-	0
+D	obj_vulkinnpc	-	-	0
+D	obj_encount_fire1	-	-	0
+D	obj_piper_bluejet	gml_Object_obj_piper_bluejet_Draw_0	0	4
+DL	obj_piper_bluejet	call.i draw_sprite(argc=4)	
+DL	obj_piper_bluejet	call.i draw_sprite(argc=4)	
+DL	obj_piper_bluejet	call.i sin(argc=1)	
+DL	obj_piper_bluejet	call.i draw_sprite_ext(argc=9)	
+D	obj_magicglass_personal	-	-	0
+D	obj_conveyoru	-	-	0
+D	obj_conveyord	-	-	0
+D	obj_conveyorr	-	-	0
+D	obj_conveyorl	-	-	0
+D	obj_bounceright	-	-	0
+D	obj_bounceleft	-	-	0
+D	obj_bouncedown	-	-	0
+D	obj_bounceup	-	-	0
+D	obj_true_antiwaver	gml_Object_obj_true_antiwaver_Draw_0	0	5
+DL	obj_true_antiwaver	call.i sin(argc=1)	
+DL	obj_true_antiwaver	call.i draw_set_alpha(argc=1)	
+DL	obj_true_antiwaver	call.i draw_set_color(argc=1)	
+DL	obj_true_antiwaver	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_true_antiwaver	call.i draw_set_alpha(argc=1)	
+D	obj_true_lavawaver	gml_Object_obj_true_lavawaver_Draw_0	0	10
+DL	obj_true_lavawaver	call.i scr_true_lavawaver(argc=2)	
+DL	obj_true_lavawaver	call.i sin(argc=1)	
+DL	obj_true_lavawaver	call.i draw_set_alpha(argc=1)	
+DL	obj_true_lavawaver	call.i draw_set_color(argc=1)	
+DL	obj_true_lavawaver	call.i __view_get(argc=2)	
+DL	obj_true_lavawaver	call.i __view_get(argc=2)	
+DL	obj_true_lavawaver	call.i __view_get(argc=2)	
+DL	obj_true_lavawaver	call.i __view_get(argc=2)	
+DL	obj_true_lavawaver	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_true_lavawaver	call.i draw_set_alpha(argc=1)	
+D	obj_pyropenpc	-	-	0
+D	obj_orangelaser_o	-	-	0
+D	obj_bluelaser_o	gml_Object_obj_bluelaser_o_Draw_0	0	12
+DL	obj_bluelaser_o	call.i draw_sprite(argc=4)	
+DL	obj_bluelaser_o	call.i sin(argc=1)	
+DL	obj_bluelaser_o	call.i abs(argc=1)	
+DL	obj_bluelaser_o	call.i draw_set_alpha(argc=1)	
+DL	obj_bluelaser_o	call.i draw_set_alpha(argc=1)	
+DL	obj_bluelaser_o	call.i draw_set_color(argc=1)	
+DL	obj_bluelaser_o	call.i draw_set_color(argc=1)	
+DL	obj_bluelaser_o	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_bluelaser_o	call.i collision_rectangle(argc=7)	
+DL	obj_bluelaser_o	call.i event_user(argc=1)	
+DL	obj_bluelaser_o	call.i draw_set_alpha(argc=1)	
+DL	obj_bluelaser_o	call.i instance_exists(argc=1)	
+D	obj_laserswitch1	-	-	0
+D	obj_chipdoor_trigger	-	-	0
+D	obj_chipdoor_l	-	-	0
+D	obj_chipdoor_r	-	-	0
+D	obj_cogsmall	gml_Object_obj_cogsmall_Draw_0	0	11
+DL	obj_cogsmall	call.i draw_set_circle_precision(argc=1)	
+DL	obj_cogsmall	call.i draw_set_circle_precision(argc=1)	
+DL	obj_cogsmall	call.i draw_set_color(argc=1)	
+DL	obj_cogsmall	call.i lengthdir_y(argc=2)	
+DL	obj_cogsmall	call.i lengthdir_x(argc=2)	
+DL	obj_cogsmall	call.i draw_circle(argc=4)	
+DL	obj_cogsmall	call.i lengthdir_y(argc=2)	
+DL	obj_cogsmall	call.i lengthdir_x(argc=2)	
+DL	obj_cogsmall	call.i draw_circle(argc=4)	
+DL	obj_cogsmall	call.i draw_sprite_ext(argc=9)	
+DL	obj_cogsmall	call.i draw_sprite_ext(argc=9)	
+D	obj_lighttower	gml_Object_obj_lighttower_Draw_0	0	3
+DL	obj_lighttower	call.i draw_sprite(argc=4)	
+DL	obj_lighttower	call.i draw_sprite(argc=4)	
+DL	obj_lighttower	call.i draw_sprite(argc=4)	
+D	obj_shootguy	gml_Object_obj_shootguy_Draw_0	0	12
+DL	obj_shootguy	call.i draw_sprite(argc=4)	
+DL	obj_shootguy	call.i draw_sprite(argc=4)	
+DL	obj_shootguy	call.i draw_set_color(argc=1)	
+DL	obj_shootguy	call.i draw_set_color(argc=1)	
+DL	obj_shootguy	call.i draw_rectangle(argc=5)	
+DL	obj_shootguy	call.i draw_sprite(argc=4)	
+DL	obj_shootguy	call.i draw_sprite(argc=4)	
+DL	obj_shootguy	call.i draw_sprite(argc=4)	
+DL	obj_shootguy	call.i draw_set_color(argc=1)	
+DL	obj_shootguy	call.i draw_set_alpha(argc=1)	
+DL	obj_shootguy	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_shootguy	call.i draw_set_alpha(argc=1)	
+D	obj_targetguy	gml_Object_obj_targetguy_Draw_0	0	5
+DL	obj_targetguy	call.i draw_sprite(argc=4)	
+DL	obj_targetguy	call.i draw_sprite_ext(argc=9)	
+DL	obj_targetguy	call.i draw_sprite_ext(argc=9)	
+DL	obj_targetguy	call.i snd_play(argc=1)	
+DL	obj_targetguy	call.i instance_destroy(argc=0)	
+D	obj_whitebox_o	-	-	0
+D	obj_disembodiedfoxhead	gml_Object_obj_disembodiedfoxhead_Draw_0	0	7
+DL	obj_disembodiedfoxhead	call.i instance_exists(argc=1)	
+DL	obj_disembodiedfoxhead	call.i sin(argc=1)	
+DL	obj_disembodiedfoxhead	call.i sin(argc=1)	
+DL	obj_disembodiedfoxhead	call.i draw_set_color(argc=1)	
+DL	obj_disembodiedfoxhead	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_disembodiedfoxhead	call.i sin(argc=1)	
+DL	obj_disembodiedfoxhead	call.i draw_sprite(argc=4)	
+D	obj_killerboysnightout_event	-	-	0
+D	obj_bottomglower	gml_Object_obj_bottomglower_Draw_0	0	9
+DL	obj_bottomglower	call.i sin(argc=1)	
+DL	obj_bottomglower	call.i abs(argc=1)	
+DL	obj_bottomglower	call.i draw_set_color(argc=1)	
+DL	obj_bottomglower	call.i draw_set_alpha(argc=1)	
+DL	obj_bottomglower	call.i round(argc=1)	
+DL	obj_bottomglower	call.i __view_get(argc=2)	
+DL	obj_bottomglower	call.i __view_get(argc=2)	
+DL	obj_bottomglower	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_bottomglower	call.i draw_set_alpha(argc=1)	
+D	obj_countermiddle	-	-	0
+D	obj_cookshowevent	gml_Object_obj_cookshowevent_Draw_0	0	2
+DL	obj_cookshowevent	call.i draw_set_color(argc=1)	
+DL	obj_cookshowevent	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_mettcounter	-	-	0
+D	obj_counterscroller	gml_Object_obj_counterscroller_Draw_0	0	4
+DL	obj_counterscroller	call.i draw_sprite(argc=4)	
+DL	obj_counterscroller	call.i draw_sprite(argc=4)	
+DL	obj_counterscroller	call.i random(argc=1)	
+DL	obj_counterscroller	call.i random(argc=1)	
+D	obj_coreambiencemusic	-	-	0
+D	obj_backgrounder_core	gml_Object_obj_backgrounder_core_Draw_0	0	3
+DL	obj_backgrounder_core	call.i draw_set_color(argc=1)	
+DL	obj_backgrounder_core	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_backgrounder_core	call.i scr_waver_height_bg(argc=2)	
+D	obj_gaster_follower_a	-	-	0
+D	obj_elevatorgem	gml_Object_obj_elevatorgem_Draw_0	0	1
+DL	obj_elevatorgem	call.i draw_sprite(argc=4)	
+D	obj_elev_floorsign	gml_Object_obj_elev_floorsign_Draw_0	0	2
+DL	obj_elev_floorsign	call.i draw_sprite(argc=4)	
+DL	obj_elev_floorsign	call.i draw_sprite(argc=4)	
+D	obj_elevatordoor	gml_Object_obj_elevatordoor_Draw_0	0	4
+DL	obj_elevatordoor	call.i draw_sprite(argc=4)	
+DL	obj_elevatordoor	call.i draw_sprite_part(argc=8)	
+DL	obj_elevatordoor	call.i draw_sprite_part(argc=8)	
+DL	obj_elevatordoor	call.i draw_sprite(argc=4)	
+D	obj_heatsflamesman	-	-	0
+D	obj_hotdoggen	-	-	0
+D	obj_tsunderplanenpc	-	-	0
+D	obj_hotland_rededge_x	gml_Object_obj_hotland_rededge_x_Draw_0	0	8
+DL	obj_hotland_rededge_x	call.i sin(argc=1)	
+DL	obj_hotland_rededge_x	call.i abs(argc=1)	
+DL	obj_hotland_rededge_x	call.i cos(argc=1)	
+DL	obj_hotland_rededge_x	call.i draw_sprite_ext(argc=9)	
+DL	obj_hotland_rededge_x	call.i sin(argc=1)	
+DL	obj_hotland_rededge_x	call.i abs(argc=1)	
+DL	obj_hotland_rededge_x	call.i cos(argc=1)	
+DL	obj_hotland_rededge_x	call.i draw_sprite_ext(argc=9)	
+D	obj_artclass_sign	-	-	0
+D	obj_waveguy	-	-	0
+D	obj_triswitchevent	-	-	0
+D	obj_triswitch	-	-	0
+D	obj_rblock	-	-	0
+D	obj_rtile	-	-	0
+D	obj_boysnightout	-	-	0
+D	obj_piper_steam	gml_Object_obj_piper_steam_Draw_0	0	3
+DL	obj_piper_steam	call.i draw_sprite(argc=4)	
+DL	obj_piper_steam	call.i draw_sprite(argc=4)	
+DL	obj_piper_steam	call.i instance_create(argc=3)	
+D	obj_bouncetilecontoller	-	-	0
+D	obj_mettnewsevent	gml_Object_obj_mettnewsevent_Draw_0	0	2
+DL	obj_mettnewsevent	call.i draw_set_color(argc=1)	
+DL	obj_mettnewsevent	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_gaster_follower_c	-	-	0
+D	obj_gaster_follower_b	-	-	0
+D	obj_hotland_bottomedge	gml_Object_obj_hotland_bottomedge_Draw_0	0	7
+DL	obj_hotland_bottomedge	call.i draw_sprite(argc=4)	
+DL	obj_hotland_bottomedge	call.i draw_sprite(argc=4)	
+DL	obj_hotland_bottomedge	call.i draw_sprite(argc=4)	
+DL	obj_hotland_bottomedge	call.i draw_set_color(argc=1)	
+DL	obj_hotland_bottomedge	call.i draw_sprite_ext(argc=9)	
+DL	obj_hotland_bottomedge	call.i draw_sprite(argc=4)	
+DL	obj_hotland_bottomedge	call.i draw_sprite(argc=4)	
+D	obj_spidertable	-	-	0
+D	obj_spidergirl_shop	-	-	0
+D	obj_spiderstrand	gml_Object_obj_spiderstrand_Draw_0	0	7
+DL	obj_spiderstrand	call.i draw_set_alpha(argc=1)	
+DL	obj_spiderstrand	call.i sin(argc=1)	
+DL	obj_spiderstrand	call.i cos(argc=1)	
+DL	obj_spiderstrand	call.i make_color_rgb(argc=3)	
+DL	obj_spiderstrand	call.i make_color_rgb(argc=3)	
+DL	obj_spiderstrand	call.i draw_line_color(argc=6)	
+DL	obj_spiderstrand	call.i draw_set_alpha(argc=1)	
+D	obj_diamondkid	-	-	0
+D	obj_slowdownwalk	gml_Object_obj_slowdownwalk_Draw_0	0	1
+DL	obj_slowdownwalk	call.i draw_sprite(argc=4)	
+D	obj_slowdownwalk_x	gml_Object_obj_slowdownwalk_x_Draw_0	0	3
+DL	obj_slowdownwalk_x	call.i draw_sprite(argc=4)	
+DL	obj_slowdownwalk_x	call.i draw_sprite(argc=4)	
+DL	obj_slowdownwalk_x	call.i draw_sprite(argc=4)	
+D	obj_spidertalkevent	-	-	0
+D	obj_muffetnpc2	-	-	0
+D	obj_highspider	gml_Object_obj_highspider_Draw_0	0	8
+DL	obj_highspider	call.i draw_sprite(argc=4)	
+DL	obj_highspider	call.i draw_set_color(argc=1)	
+DL	obj_highspider	call.i draw_line(argc=4)	
+DL	obj_highspider	call.i draw_set_color(argc=1)	
+DL	obj_highspider	call.i draw_line(argc=4)	
+DL	obj_highspider	call.i draw_set_color(argc=1)	
+DL	obj_highspider	call.i draw_line(argc=4)	
+DL	obj_highspider	call.i instance_destroy(argc=0)	
+D	obj_playmovement	gml_Object_obj_playmovement_Draw_0	0	2
+DL	obj_playmovement	push.v self.drawtext	
+DL	obj_playmovement	call.i instance_create(argc=3)	
+DL	obj_playmovement	pop.v.i self.drawtext	
+DL	obj_playmovement	push.v self.drawtext2	
+DL	obj_playmovement	call.i instance_create(argc=3)	
+DL	obj_playmovement	pop.v.i self.drawtext2	
+D	obj_multitileevent	gml_Object_obj_multitileevent_Draw_0	0	0
+D	obj_insidiousconveyor	gml_Object_obj_insidiousconveyor_Draw_0	0	1
+DL	obj_insidiousconveyor	call.i draw_sprite(argc=4)	
+D	obj_tilegreen	-	-	0
+D	obj_tilepink	-	-	0
+D	obj_tilered	-	-	0
+D	obj_tileyellow	-	-	0
+D	obj_tileorange	-	-	0
+D	obj_tileblue	-	-	0
+D	obj_tileblueactsyellow	-	-	0
+D	obj_tilepurple	-	-	0
+D	obj_sans_prefinaldate	-	-	0
+D	obj_hotelmusic	-	-	0
+D	obj_shamblingmass	-	-	0
+D	obj_saddragon	-	-	0
+D	obj_businessmanticore	-	-	0
+D	obj_mttfountain	gml_Object_obj_mttfountain_Draw_0	0	8
+DL	obj_mttfountain	call.i cos(argc=1)	
+DL	obj_mttfountain	call.i sin(argc=1)	
+DL	obj_mttfountain	call.i floor(argc=1)	
+DL	obj_mttfountain	call.i draw_sprite(argc=4)	
+DL	obj_mttfountain	call.i sin(argc=1)	
+DL	obj_mttfountain	call.i cos(argc=1)	
+DL	obj_mttfountain	call.i floor(argc=1)	
+DL	obj_mttfountain	call.i draw_sprite(argc=4)	
+D	obj_hotelreceptionist	-	-	0
+D	obj_ficus	-	-	0
+D	obj_coresign	-	-	0
+D	obj_sansdate3	-	-	0
+D	obj_snowdrakedad	-	-	0
+D	obj_restaurant_darker	gml_Object_obj_restaurant_darker_Draw_0	0	4
+DL	obj_restaurant_darker	call.i draw_set_color(argc=1)	
+DL	obj_restaurant_darker	call.i draw_set_alpha(argc=1)	
+DL	obj_restaurant_darker	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_restaurant_darker	call.i draw_set_alpha(argc=1)	
+D	obj_slimejanitor	-	-	0
+D	obj_bedlump	gml_Object_obj_bedlump_Draw_0	0	1
+DL	obj_bedlump	call.i draw_sprite_part(argc=8)	
+D	obj_precore_event	-	-	0
+D	obj_pitsound	gml_Object_obj_pitsound_Draw_0	0	1
+DL	obj_pitsound	call.i draw_sprite(argc=4)	
+D	obj_coremusic	-	-	0
+D	obj_coredoor_anim	-	-	0
+D	obj_core_lightstrip	gml_Object_obj_core_lightstrip_Draw_0	0	3
+DL	obj_core_lightstrip	call.i instance_exists(argc=1)	
+DL	obj_core_lightstrip	call.i draw_sprite(argc=4)	
+DL	obj_core_lightstrip	call.i draw_sprite(argc=4)	
+D	obj_core_lightstrip_m	gml_Object_obj_core_lightstrip_m_Draw_0	0	2
+DL	obj_core_lightstrip_m	call.i instance_exists(argc=1)	
+DL	obj_core_lightstrip_m	call.i draw_sprite(argc=4)	
+D	obj_darksausagenpc	-	-	0
+D	obj_core_enemyevent	-	-	0
+D	obj_darktotem_anim	-	-	0
+D	obj_bigcoredoor_anim	-	-	0
+D	obj_core_laserswitch	-	-	0
+D	obj_core_enemyevent2	-	-	0
+D	obj_powerlaser_event	gml_Object_obj_powerlaser_event_Draw_0	0	4
+DL	obj_powerlaser_event	push.v self.drawblack	
+DL	obj_powerlaser_event	call.i draw_set_alpha(argc=1)	
+DL	obj_powerlaser_event	call.i draw_set_color(argc=1)	
+DL	obj_powerlaser_event	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_powerlaser_event	call.i draw_set_alpha(argc=1)	
+D	obj_core_lightline_m	-	-	0
+D	obj_core_glowbg	gml_Object_obj_core_glowbg_Draw_0	0	4
+DL	obj_core_glowbg	call.i merge_color(argc=3)	
+DL	obj_core_glowbg	call.i sin(argc=1)	
+DL	obj_core_glowbg	call.i abs(argc=1)	
+DL	obj_core_glowbg	call.i draw_sprite_ext(argc=9)	
+D	obj_lazyencounterer_core	-	-	0
+D	obj_icetosteam	gml_Object_obj_icetosteam_Draw_0	0	7
+DL	obj_icetosteam	call.i draw_sprite_ext(argc=9)	
+DL	obj_icetosteam	call.i draw_sprite_ext(argc=9)	
+DL	obj_icetosteam	call.i snd_play(argc=1)	
+DL	obj_icetosteam	call.i random(argc=1)	
+DL	obj_icetosteam	call.i instance_create(argc=3)	
+DL	obj_icetosteam	call.i random(argc=1)	
+DL	obj_icetosteam	call.i floor(argc=1)	
+D	obj_core_glowtotem	-	-	0
+D	obj_core_bridgeleg	-	-	0
+D	obj_encount_core1	-	-	0
+D	obj_theend_forcefield	-	-	0
+D	obj_warrior_event	-	-	0
+D	obj_switch_room	-	-	0
+D	obj_core_lightline_r	-	-	0
+D	obj_core_lightline_l	-	-	0
+D	obj_mettboss_event	gml_Object_obj_mettboss_event_Draw_0	0	4
+DL	obj_mettboss_event	push.v self.drawblack	
+DL	obj_mettboss_event	call.i snd_play(argc=1)	
+DL	obj_mettboss_event	call.i draw_set_color(argc=1)	
+DL	obj_mettboss_event	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_mettboss_event	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_alphysfollow_event	-	-	0
+D	obj_elevatorpanel	gml_Object_obj_elevatorpanel_Draw_0	0	111
+DL	obj_elevatorpanel	call.i draw_sprite(argc=4)	
+DL	obj_elevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_elevatorpanel	call.i instance_create(argc=3)	
+DL	obj_elevatorpanel	call.i instance_exists(argc=1)	
+DL	obj_elevatorpanel	call.i draw_set_color(argc=1)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_elevatorpanel	call.i draw_set_color(argc=1)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_elevatorpanel	call.i draw_set_color(argc=1)	
+DL	obj_elevatorpanel	call.i scr_setfont(argc=1)	
+DL	obj_elevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_elevatorpanel	call.i string_hash_to_newline(argc=1)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i draw_text(argc=3)	
+DL	obj_elevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_elevatorpanel	call.i string_hash_to_newline(argc=1)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i draw_text(argc=3)	
+DL	obj_elevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_elevatorpanel	call.i string_hash_to_newline(argc=1)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i draw_text(argc=3)	
+DL	obj_elevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_elevatorpanel	call.i string_hash_to_newline(argc=1)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i __view_get(argc=2)	
+DL	obj_elevatorpanel	call.i draw_text(argc=3)	
+DL	obj_elevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_elevatorpanel	call.i string_hash_to_newline(argc=1)	
+D	obj_finalelevatorpanel	gml_Object_obj_finalelevatorpanel_Draw_0	0	116
+DL	obj_finalelevatorpanel	call.i draw_sprite(argc=4)	
+DL	obj_finalelevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_finalelevatorpanel	call.i instance_create(argc=3)	
+DL	obj_finalelevatorpanel	call.i instance_exists(argc=1)	
+DL	obj_finalelevatorpanel	call.i draw_set_color(argc=1)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_finalelevatorpanel	call.i draw_set_color(argc=1)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_finalelevatorpanel	call.i draw_set_color(argc=1)	
+DL	obj_finalelevatorpanel	call.i scr_setfont(argc=1)	
+DL	obj_finalelevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_finalelevatorpanel	call.i string_hash_to_newline(argc=1)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i draw_text(argc=3)	
+DL	obj_finalelevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_finalelevatorpanel	call.i string_hash_to_newline(argc=1)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i draw_text(argc=3)	
+DL	obj_finalelevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_finalelevatorpanel	call.i string_hash_to_newline(argc=1)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i draw_text(argc=3)	
+DL	obj_finalelevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_finalelevatorpanel	call.i string_hash_to_newline(argc=1)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i __view_get(argc=2)	
+DL	obj_finalelevatorpanel	call.i draw_text(argc=3)	
+DL	obj_finalelevatorpanel	call.i scr_gettext(argc=1)	
+DL	obj_finalelevatorpanel	call.i string_hash_to_newline(argc=1)	
+D	obj_endcastlemusic	-	-	0
+D	obj_backgrounder_lastruins	-	-	0
+D	obj_castle_part1music	-	-	0
+D	obj_lock_and_key	-	-	0
+D	obj_earlystorybattle	-	-	0
+D	obj_lchair_grey	-	-	0
+D	obj_rchair_grey	-	-	0
+D	obj_uchair_grey	-	-	0
+D	obj_diningtable_grey	-	-	0
+D	obj_latchkey	-	-	0
+D	obj_story_engager	-	-	0
+D	obj_castle_part2music	-	-	0
+D	obj_lastsans_trigger	-	-	0
+D	obj_backgrounder_pillar	gml_Object_obj_backgrounder_pillar_Draw_0	0	2
+DL	obj_backgrounder_pillar	call.i draw_sprite(argc=4)	
+DL	obj_backgrounder_pillar	call.i draw_sprite(argc=4)	
+D	obj_coffin	-	-	0
+D	obj_asgorethrone	-	-	0
+D	obj_torielthrone	-	-	0
+D	obj_birbnoise	-	-	0
+D	obj_asgoremeet_event	-	-	0
+D	obj_garden_overlayshadow	gml_Object_obj_garden_overlayshadow_Draw_0	0	1
+DL	obj_garden_overlayshadow	call.i draw_sprite_ext(argc=9)	
+D	obj_friendc_event	gml_Object_obj_friendc_event_Draw_0	0	54
+DL	obj_friendc_event	call.i SCR_TEXTTYPE(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i instance_create(argc=3)	
+DL	obj_friendc_event	call.i scr_marker(argc=3)	
+DL	obj_friendc_event	call.i instance_exists(argc=1)	
+DL	obj_friendc_event	call.i instance_exists(argc=1)	
+DL	obj_friendc_event	call.i instance_exists(argc=1)	
+DL	obj_friendc_event	call.i caster_loop(argc=3)	
+DL	obj_friendc_event	call.i instance_destroy(argc=0)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_alface(argc=2)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_undface(argc=2)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_sansface(argc=2)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_papface(argc=2)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_sansface(argc=2)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_papface(argc=2)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_asgface(argc=2)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_torface(argc=2)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+DL	obj_friendc_event	call.i scr_gettext(argc=1)	
+D	obj_asgore_prebarrier_event	-	-	0
+D	obj_toriel_friendc	-	-	0
+D	obj_sans_friendc	-	-	0
+D	obj_asgore_friendc	-	-	0
+D	obj_undyne_friendc	-	-	0
+D	obj_alphys_friendc	-	-	0
+D	obj_papyrus_friendc	-	-	0
+D	obj_barrierevent	-	-	0
+D	obj_finalbarrier	gml_Object_obj_finalbarrier_Draw_0	0	3
+DL	obj_finalbarrier	call.i script_execute(argc=1)	
+DL	obj_finalbarrier	call.i draw_set_color(argc=1)	
+DL	obj_finalbarrier	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_credits_short	gml_Object_obj_credits_short_Draw_0	0	233
+DL	obj_credits_short	call.i draw_set_color(argc=1)	
+DL	obj_credits_short	call.i scr_setfont(argc=1)	
+DL	obj_credits_short	call.i draw_sprite_ext(argc=9)	
+DL	obj_credits_short	call.i draw_set_font(argc=1)	
+DL	obj_credits_short	call.i scr_gettext(argc=1)	
+DL	obj_credits_short	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_credits_short	call.i scr_setfont(argc=1)	
+DL	obj_credits_short	call.i draw_set_color(argc=1)	
+DL	obj_credits_short	call.i scr_gettext(argc=1)	
+DL	obj_credits_short	call.i string_hash_to_newline(argc=1)	
+DL	obj_credits_short	call.i draw_text(argc=3)	
+DL	obj_credits_short	call.i draw_set_color(argc=1)	
+DL	obj_credits_short	call.i draw_set_font(argc=1)	
+DL	obj_credits_short	call.i scr_gettext(argc=1)	
+DL	obj_credits_short	call.i string_hash_to_newline(argc=1)	
+DL	obj_credits_short	call.i draw_text_transformed(argc=6)	
+DL	obj_credits_short	call.i scr_setfont(argc=1)	
+DL	obj_credits_short	call.i draw_set_color(argc=1)	
+DL	obj_credits_short	call.i scr_gettext(argc=1)	
+DL	obj_credits_short	call.i string_hash_to_newline(argc=1)	
+DL	obj_credits_short	call.i draw_text(argc=3)	
+DL	obj_credits_short	call.i draw_set_color(argc=1)	
+DL	obj_credits_short	call.i scr_gettext(argc=1)	
+DL	obj_credits_short	call.i scr_credits_short_draw_name(argc=3)	
+DL	obj_credits_short	call.i draw_set_color(argc=1)	
+DL	obj_credits_short	call.i scr_gettext(argc=1)	
+DL	obj_credits_short	call.i string_hash_to_newline(argc=1)	
+DL	obj_credits_short	call.i draw_text(argc=3)	
+DL	obj_credits_short	call.i draw_set_color(argc=1)	
+DL	obj_credits_short	call.i scr_gettext(argc=1)	
+DL	obj_credits_short	call.i scr_credits_short_draw_name(argc=3)	
+DL	obj_credits_short	call.i draw_set_color(argc=1)	
+DL	obj_credits_short	call.i scr_gettext(argc=1)	
+DL	obj_credits_short	call.i string_hash_to_newline(argc=1)	
+DL	obj_credits_short	call.i draw_text(argc=3)	
+DL	obj_credits_short	call.i draw_set_color(argc=1)	
+DL	obj_credits_short	call.i scr_gettext(argc=1)	
+DL	obj_credits_short	call.i scr_credits_short_draw_name(argc=3)	
+DL	obj_credits_short	call.i draw_set_color(argc=1)	
+DL	obj_credits_short	call.i scr_gettext(argc=1)	
+D	obj_underground_exit	-	-	0
+D	obj_outsideworld_event	gml_Object_obj_outsideworld_event_Draw_0	0	69
+DL	obj_outsideworld_event	call.i caster_loop(argc=3)	
+DL	obj_outsideworld_event	call.i draw_set_alpha(argc=1)	
+DL	obj_outsideworld_event	call.i draw_set_color(argc=1)	
+DL	obj_outsideworld_event	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_outsideworld_event	call.i draw_set_alpha(argc=1)	
+DL	obj_outsideworld_event	call.i instance_create(argc=3)	
+DL	obj_outsideworld_event	call.i instance_exists(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i instance_create(argc=3)	
+DL	obj_outsideworld_event	call.i instance_exists(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i instance_create(argc=3)	
+DL	obj_outsideworld_event	call.i instance_exists(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i instance_create(argc=3)	
+DL	obj_outsideworld_event	call.i instance_exists(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i instance_create(argc=3)	
+DL	obj_outsideworld_event	call.i instance_exists(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i scr_torface(argc=2)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i scr_asgface(argc=2)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i instance_create(argc=3)	
+DL	obj_outsideworld_event	call.i instance_exists(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i instance_create(argc=3)	
+DL	obj_outsideworld_event	call.i instance_exists(argc=1)	
+DL	obj_outsideworld_event	call.i instance_create(argc=3)	
+DL	obj_outsideworld_event	call.i instance_exists(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+DL	obj_outsideworld_event	call.i scr_gettext(argc=1)	
+D	obj_labelevator_open	gml_Object_obj_labelevator_open_Draw_0	0	9
+DL	obj_labelevator_open	call.i draw_set_color(argc=1)	
+DL	obj_labelevator_open	call.i draw_set_alpha(argc=1)	
+DL	obj_labelevator_open	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_labelevator_open	call.i draw_set_alpha(argc=1)	
+DL	obj_labelevator_open	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_labelevator_open	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_labelevator_open	call.i draw_set_alpha(argc=1)	
+DL	obj_labelevator_open	call.i snd_play(argc=1)	
+DL	obj_labelevator_open	call.i snd_play(argc=1)	
+D	obj_labdoor	gml_Object_obj_labdoor_Draw_0	0	33
+DL	obj_labdoor	call.i draw_set_color(argc=1)	
+DL	obj_labdoor	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_labdoor	call.i instance_exists(argc=1)	
+DL	obj_labdoor	call.i instance_destroy(argc=0)	
+DL	obj_labdoor	call.i instance_destroy(argc=0)	
+DL	obj_labdoor	call.i instance_exists(argc=1)	
+DL	obj_labdoor	call.i instance_create(argc=3)	
+DL	obj_labdoor	call.i instance_create(argc=3)	
+DL	obj_labdoor	call.i snd_play(argc=1)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i floor(argc=1)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i floor(argc=1)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i floor(argc=1)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i floor(argc=1)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i floor(argc=1)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i floor(argc=1)	
+DL	obj_labdoor	call.i draw_sprite_part(argc=8)	
+DL	obj_labdoor	call.i draw_sprite(argc=4)	
+DL	obj_labdoor	call.i instance_exists(argc=1)	
+DL	obj_labdoor	call.i point_distance(argc=4)	
+DL	obj_labdoor	call.i caster_play(argc=3)	
+DL	obj_labdoor	call.i point_distance(argc=4)	
+DL	obj_labdoor	call.i caster_play(argc=3)	
+D	obj_truelabmusic	-	-	0
+D	obj_wallmonitor	-	-	0
+D	obj_darkplant	-	-	0
+D	obj_torn_note	-	-	0
+D	obj_operatingtable	-	-	0
+D	obj_darksink	gml_Object_obj_darksink_Draw_0	0	18
+DL	obj_darksink	call.i draw_sprite(argc=4)	
+DL	obj_darksink	call.i instance_exists(argc=1)	
+DL	obj_darksink	call.i caster_stop(argc=1)	
+DL	obj_darksink	call.i caster_pause(argc=1)	
+DL	obj_darksink	call.i caster_load(argc=1)	
+DL	obj_darksink	call.i caster_play(argc=3)	
+DL	obj_darksink	call.i caster_free(argc=1)	
+DL	obj_darksink	call.i instance_create(argc=3)	
+DL	obj_darksink	call.i caster_resume(argc=1)	
+DL	obj_darksink	call.i event_user(argc=1)	
+DL	obj_darksink	call.i floor(argc=1)	
+DL	obj_darksink	call.i draw_sprite(argc=4)	
+DL	obj_darksink	call.i floor(argc=1)	
+DL	obj_darksink	call.i draw_sprite(argc=4)	
+DL	obj_darksink	call.i floor(argc=1)	
+DL	obj_darksink	call.i draw_sprite(argc=4)	
+DL	obj_darksink	call.i floor(argc=1)	
+DL	obj_darksink	call.i draw_sprite_ext(argc=9)	
+D	obj_labfog	gml_Object_obj_labfog_Draw_0	0	15
+DL	obj_labfog	call.i __view_get(argc=2)	
+DL	obj_labfog	call.i __view_get(argc=2)	
+DL	obj_labfog	call.i __view_get(argc=2)	
+DL	obj_labfog	call.i __view_get(argc=2)	
+DL	obj_labfog	call.i draw_sprite_ext(argc=9)	
+DL	obj_labfog	call.i draw_sprite_ext(argc=9)	
+DL	obj_labfog	call.i draw_sprite_ext(argc=9)	
+DL	obj_labfog	call.i draw_sprite_ext(argc=9)	
+DL	obj_labfog	call.i draw_sprite_ext(argc=9)	
+DL	obj_labfog	call.i draw_sprite_ext(argc=9)	
+DL	obj_labfog	call.i draw_sprite_ext(argc=9)	
+DL	obj_labfog	call.i draw_sprite_ext(argc=9)	
+DL	obj_labfog	call.i draw_sprite_ext(argc=9)	
+DL	obj_labfog	call.i instance_exists(argc=1)	
+DL	obj_labfog	call.i draw_sprite_ext(argc=9)	
+D	obj_colorlever	gml_Object_obj_colorlever_Draw_0	0	13
+DL	obj_colorlever	call.i draw_sprite(argc=4)	
+DL	obj_colorlever	call.i draw_sprite(argc=4)	
+DL	obj_colorlever	call.i floor(argc=1)	
+DL	obj_colorlever	call.i draw_sprite(argc=4)	
+DL	obj_colorlever	call.i draw_sprite(argc=4)	
+DL	obj_colorlever	call.i floor(argc=1)	
+DL	obj_colorlever	call.i draw_sprite(argc=4)	
+DL	obj_colorlever	call.i draw_sprite(argc=4)	
+DL	obj_colorlever	call.i floor(argc=1)	
+DL	obj_colorlever	call.i draw_sprite(argc=4)	
+DL	obj_colorlever	call.i draw_sprite(argc=4)	
+DL	obj_colorlever	call.i floor(argc=1)	
+DL	obj_colorlever	call.i draw_sprite(argc=4)	
+D	obj_bed_key	gml_Object_obj_bed_key_Draw_0	0	3
+DL	obj_bed_key	call.i draw_sprite(argc=4)	
+DL	obj_bed_key	call.i draw_sprite_ext(argc=9)	
+DL	obj_bed_key	call.i draw_sprite_part(argc=8)	
+D	obj_bed_watcher	gml_Object_obj_bed_watcher_Draw_0	0	19
+DL	obj_bed_watcher	call.i draw_sprite(argc=4)	
+DL	obj_bed_watcher	call.i keyboard_check_pressed(argc=1)	
+DL	obj_bed_watcher	call.i control_check_pressed(argc=1)	
+DL	obj_bed_watcher	call.i control_check_pressed(argc=1)	
+DL	obj_bed_watcher	call.i caster_get_volume(argc=1)	
+DL	obj_bed_watcher	call.i caster_set_volume(argc=2)	
+DL	obj_bed_watcher	call.i caster_pause(argc=1)	
+DL	obj_bed_watcher	call.i floor(argc=1)	
+DL	obj_bed_watcher	call.i floor(argc=1)	
+DL	obj_bed_watcher	call.i sin(argc=1)	
+DL	obj_bed_watcher	call.i sin(argc=1)	
+DL	obj_bed_watcher	call.i caster_resume(argc=1)	
+DL	obj_bed_watcher	call.i caster_set_volume(argc=2)	
+DL	obj_bed_watcher	call.i scr_depth(argc=0)	
+DL	obj_bed_watcher	call.i draw_sprite_ext(argc=9)	
+DL	obj_bed_watcher	call.i draw_sprite_ext(argc=9)	
+DL	obj_bed_watcher	call.i draw_sprite_part(argc=8)	
+DL	obj_bed_watcher	call.i draw_sprite_ext(argc=9)	
+DL	obj_bed_watcher	call.i draw_sprite_part_ext(argc=12)	
+D	obj_bed_dark	-	-	0
+D	obj_amalgam_exc	-	-	0
+D	obj_mirror_overlay	-	-	0
+D	obj_showercurtain	gml_Object_obj_showercurtain_Draw_0	0	16
+DL	obj_showercurtain	call.i floor(argc=1)	
+DL	obj_showercurtain	call.i draw_sprite(argc=4)	
+DL	obj_showercurtain	call.i caster_set_pitch(argc=2)	
+DL	obj_showercurtain	push.v self.drawkey	
+DL	obj_showercurtain	call.i draw_sprite_ext(argc=9)	
+DL	obj_showercurtain	call.i caster_free(argc=1)	
+DL	obj_showercurtain	call.i snd_play(argc=1)	
+DL	obj_showercurtain	pop.v.i self.drawkey	
+DL	obj_showercurtain	pop.v.i self.drawkey	
+DL	obj_showercurtain	call.i scr_gettext(argc=1)	
+DL	obj_showercurtain	call.i scr_gettext(argc=1)	
+DL	obj_showercurtain	call.i instance_create(argc=3)	
+DL	obj_showercurtain	call.i instance_exists(argc=1)	
+DL	obj_showercurtain	call.i scr_gettext(argc=1)	
+DL	obj_showercurtain	call.i instance_create(argc=3)	
+DL	obj_showercurtain	call.i instance_exists(argc=1)	
+DL	obj_showercurtain	call.i draw_sprite_ext(argc=9)	
+DL	obj_showercurtain	call.i draw_sprite_ext(argc=9)	
+DL	obj_showercurtain	call.i draw_sprite(argc=4)	
+D	obj_amalgam_save	-	-	0
+D	obj_labtv_event	gml_Object_obj_labtv_event_Draw_0	0	162
+DL	obj_labtv_event	call.i scr_gettext(argc=1)	
+DL	obj_labtv_event	call.i scr_gettext(argc=1)	
+DL	obj_labtv_event	call.i scr_gettext(argc=1)	
+DL	obj_labtv_event	call.i scr_gettext(argc=1)	
+DL	obj_labtv_event	call.i instance_create(argc=3)	
+DL	obj_labtv_event	call.i instance_exists(argc=1)	
+DL	obj_labtv_event	call.i draw_set_color(argc=1)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_labtv_event	call.i draw_set_color(argc=1)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_labtv_event	call.i draw_set_color(argc=1)	
+DL	obj_labtv_event	call.i scr_setfont(argc=1)	
+DL	obj_labtv_event	call.i scr_gettext(argc=1)	
+DL	obj_labtv_event	call.i string_hash_to_newline(argc=1)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i draw_text(argc=3)	
+DL	obj_labtv_event	call.i scr_gettext(argc=1)	
+DL	obj_labtv_event	call.i string_hash_to_newline(argc=1)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i draw_text(argc=3)	
+DL	obj_labtv_event	call.i scr_gettext(argc=1)	
+DL	obj_labtv_event	call.i string_hash_to_newline(argc=1)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i draw_text(argc=3)	
+DL	obj_labtv_event	call.i scr_gettext(argc=1)	
+DL	obj_labtv_event	call.i string_hash_to_newline(argc=1)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i __view_get(argc=2)	
+DL	obj_labtv_event	call.i draw_text(argc=3)	
+D	obj_amalgam_fridge	gml_Object_obj_amalgam_fridge_Draw_0	0	13
+DL	obj_amalgam_fridge	call.i draw_sprite_ext(argc=9)	
+DL	obj_amalgam_fridge	call.i floor(argc=1)	
+DL	obj_amalgam_fridge	call.i draw_sprite_ext(argc=9)	
+DL	obj_amalgam_fridge	call.i caster_pause(argc=1)	
+DL	obj_amalgam_fridge	call.i caster_load(argc=1)	
+DL	obj_amalgam_fridge	call.i caster_play(argc=3)	
+DL	obj_amalgam_fridge	call.i caster_play(argc=3)	
+DL	obj_amalgam_fridge	call.i caster_free(argc=1)	
+DL	obj_amalgam_fridge	call.i instance_create(argc=3)	
+DL	obj_amalgam_fridge	call.i caster_resume(argc=1)	
+DL	obj_amalgam_fridge	call.i scr_tempsave(argc=0)	
+DL	obj_amalgam_fridge	call.i instance_exists(argc=1)	
+DL	obj_amalgam_fridge	call.i instance_destroy(argc=0)	
+D	obj_labfan	-	-	0
+D	obj_darkfridge	-	-	0
+D	obj_amalgam_dogevent	gml_Object_obj_amalgam_dogevent_Draw_0	0	13
+DL	obj_amalgam_dogevent	call.i snd_play(argc=1)	
+DL	obj_amalgam_dogevent	call.i caster_loop(argc=3)	
+DL	obj_amalgam_dogevent	call.i caster_load(argc=1)	
+DL	obj_amalgam_dogevent	call.i caster_play(argc=3)	
+DL	obj_amalgam_dogevent	pop.v.i self.drawball	
+DL	obj_amalgam_dogevent	call.i caster_play(argc=3)	
+DL	obj_amalgam_dogevent	call.i caster_load(argc=1)	
+DL	obj_amalgam_dogevent	call.i caster_free(argc=1)	
+DL	obj_amalgam_dogevent	call.i caster_free(argc=1)	
+DL	obj_amalgam_dogevent	call.i instance_create(argc=3)	
+DL	obj_amalgam_dogevent	call.i scr_tempsave(argc=0)	
+DL	obj_amalgam_dogevent	call.i instance_destroy(argc=0)	
+DL	obj_amalgam_dogevent	push.v self.drawball	
+DL	obj_amalgam_dogevent	call.i floor(argc=1)	
+DL	obj_amalgam_dogevent	call.i draw_sprite_ext(argc=9)	
+D	obj_labelevator_b	gml_Object_obj_labelevator_b_Draw_0	0	22
+DL	obj_labelevator_b	call.i caster_free(argc=1)	
+DL	obj_labelevator_b	call.i snd_play(argc=1)	
+DL	obj_labelevator_b	call.i scr_gettext(argc=1)	
+DL	obj_labelevator_b	call.i scr_gettext(argc=1)	
+DL	obj_labelevator_b	call.i instance_create(argc=3)	
+DL	obj_labelevator_b	call.i instance_exists(argc=1)	
+DL	obj_labelevator_b	call.i scr_gettext(argc=1)	
+DL	obj_labelevator_b	call.i scr_gettext(argc=1)	
+DL	obj_labelevator_b	call.i scr_gettext(argc=1)	
+DL	obj_labelevator_b	call.i scr_gettext(argc=1)	
+DL	obj_labelevator_b	call.i scr_gettext(argc=1)	
+DL	obj_labelevator_b	call.i scr_gettext(argc=1)	
+DL	obj_labelevator_b	call.i instance_create(argc=3)	
+DL	obj_labelevator_b	call.i instance_exists(argc=1)	
+DL	obj_labelevator_b	call.i snd_play(argc=1)	
+DL	obj_labelevator_b	call.i snd_play(argc=1)	
+DL	obj_labelevator_b	call.i instance_create(argc=3)	
+DL	obj_labelevator_b	call.i draw_set_color(argc=1)	
+DL	obj_labelevator_b	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_labelevator_b	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_labelevator_b	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_labelevator_b	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_lab_powerswitch	-	-	0
+D	obj_gaster_room	gml_Object_obj_gaster_room_Draw_0	0	2
+DL	obj_gaster_room	call.i instance_exists(argc=1)	
+DL	obj_gaster_room	call.i ossafe_game_end(argc=0)	
+D	obj_mysterymusic	-	-	0
+D	obj_encounterer_glyde	-	-	0
+D	obj_icecave_fader	-	-	0
+D	obj_mysterydoor	-	-	0
+D	obj_iceroom_dog	-	-	0
+D	obj_iceroom_fakedog	-	-	0
+D	object59	-	-	0
+D	obj_greydoor	-	-	0
+D	obj_mysteryman	-	-	0
+D	obj_soundtest	gml_Object_obj_soundtest_Draw_0	0	51
+DL	obj_soundtest	call.i draw_set_color(argc=1)	
+DL	obj_soundtest	call.i scr_setfont(argc=1)	
+DL	obj_soundtest	call.i scr_gettext(argc=1)	
+DL	obj_soundtest	call.i scr_drawtext_icons_multiline(argc=4)	
+DL	obj_soundtest	call.i control_check_pressed(argc=1)	
+DL	obj_soundtest	call.i audio_play_sound(argc=3)	
+DL	obj_soundtest	call.i draw_set_color(argc=1)	
+DL	obj_soundtest	call.i scr_gettext(argc=1)	
+DL	obj_soundtest	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_soundtest	call.i audio_is_playing(argc=1)	
+DL	obj_soundtest	call.i draw_set_color(argc=1)	
+DL	obj_soundtest	call.i control_check_pressed(argc=1)	
+DL	obj_soundtest	call.i audio_stop_all(argc=0)	
+DL	obj_soundtest	call.i audio_play_sound(argc=3)	
+DL	obj_soundtest	call.i scr_gettext(argc=1)	
+DL	obj_soundtest	call.i scr_drawtext_centered(argc=3)	
+DL	obj_soundtest	call.i audio_is_playing(argc=1)	
+DL	obj_soundtest	call.i draw_set_color(argc=1)	
+DL	obj_soundtest	call.i control_check_pressed(argc=1)	
+DL	obj_soundtest	call.i audio_stop_all(argc=0)	
+DL	obj_soundtest	call.i audio_play_sound(argc=3)	
+DL	obj_soundtest	call.i scr_gettext(argc=1)	
+DL	obj_soundtest	call.i scr_drawtext_centered(argc=3)	
+DL	obj_soundtest	call.i audio_is_playing(argc=1)	
+DL	obj_soundtest	call.i draw_set_color(argc=1)	
+DL	obj_soundtest	call.i control_check_pressed(argc=1)	
+DL	obj_soundtest	call.i audio_stop_all(argc=0)	
+DL	obj_soundtest	call.i audio_play_sound(argc=3)	
+DL	obj_soundtest	call.i scr_gettext(argc=1)	
+DL	obj_soundtest	call.i scr_drawtext_centered(argc=3)	
+DL	obj_soundtest	call.i audio_is_playing(argc=1)	
+DL	obj_soundtest	call.i draw_set_color(argc=1)	
+DL	obj_soundtest	call.i control_check_pressed(argc=1)	
+DL	obj_soundtest	call.i audio_stop_all(argc=0)	
+DL	obj_soundtest	call.i audio_play_sound(argc=3)	
+DL	obj_soundtest	call.i scr_gettext(argc=1)	
+DL	obj_soundtest	call.i scr_drawtext_centered(argc=3)	
+DL	obj_soundtest	call.i keyboard_check_pressed(argc=1)	
+DL	obj_soundtest	call.i keyboard_check_pressed(argc=1)	
+DL	obj_soundtest	call.i draw_set_color(argc=1)	
+D	OBJ_BLCON	-	-	0
+D	OBJ_WRITERCREATOR	-	-	0
+D	obj_redacted_a	-	-	0
+D	obj_runaway	gml_Object_obj_runaway_Draw_0	0	0
+D	obj_fader	-	-	0
+D	obj_musicchecker	-	-	0
+D	obj_wanderparent	-	-	0
+D	obj_battlecontroller	gml_Object_obj_battlecontroller_Draw_0	0	26
+DL	obj_battlecontroller	call.i draw_set_color(argc=1)	
+DL	obj_battlecontroller	call.i instance_exists(argc=1)	
+DL	obj_battlecontroller	call.i draw_set_color(argc=1)	
+DL	obj_battlecontroller	push.v self.drawrect	
+DL	obj_battlecontroller	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_battlecontroller	call.i __background_get_colour(argc=0)	
+DL	obj_battlecontroller	push.v self.drawbinfo	
+DL	obj_battlecontroller	call.i script_execute(argc=1)	
+DL	obj_battlecontroller	call.i strlen(argc=1)	
+DL	obj_battlecontroller	call.i string_char_at(argc=2)	
+DL	obj_battlecontroller	call.i ord(argc=1)	
+DL	obj_battlecontroller	call.i strlen(argc=1)	
+DL	obj_battlecontroller	call.i instance_exists(argc=1)	
+DL	obj_battlecontroller	call.i draw_set_color(argc=1)	
+DL	obj_battlecontroller	call.i draw_rectangle(argc=5)	
+DL	obj_battlecontroller	call.i draw_set_color(argc=1)	
+DL	obj_battlecontroller	call.i draw_rectangle(argc=5)	
+DL	obj_battlecontroller	call.i scr_setfont(argc=1)	
+DL	obj_battlecontroller	call.i draw_set_color(argc=1)	
+DL	obj_battlecontroller	call.i scr_gettext(argc=1)	
+DL	obj_battlecontroller	call.i string_hash_to_newline(argc=1)	
+DL	obj_battlecontroller	call.i draw_text(argc=3)	
+DL	obj_battlecontroller	call.i floor(argc=1)	
+DL	obj_battlecontroller	call.i min(argc=2)	
+DL	obj_battlecontroller	call.i round(argc=1)	
+DL	obj_battlecontroller	call.i draw_sprite(argc=4)	
+DL	obj_battlecontroller	call.i draw_sprite(argc=4)	
+DL	obj_battlecontroller	call.i draw_sprite_ext(argc=9)	
+D	obj_bulletgenthatched	-	-	0
+D	obj_lasergen1	-	-	0
+D	obj_heart	-	-	0
+D	obj_castroll	gml_Object_obj_castroll_Draw_0	0	388
+DL	obj_castroll	call.i draw_set_color(argc=1)	
+DL	obj_castroll	call.i scr_setfont(argc=1)	
+DL	obj_castroll	call.i draw_sprite_ext(argc=9)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i __view_get(argc=2)	
+DL	obj_castroll	call.i __view_set(argc=3)	
+DL	obj_castroll	call.i scr_setfont(argc=1)	
+DL	obj_castroll	call.i draw_set_color(argc=1)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i draw_set_color(argc=1)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i draw_set_color(argc=1)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i draw_set_color(argc=1)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i draw_set_color(argc=1)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i draw_set_color(argc=1)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i draw_set_color(argc=1)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i draw_set_color(argc=1)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+DL	obj_castroll	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_castroll	call.i draw_set_color(argc=1)	
+DL	obj_castroll	call.i scr_gettext(argc=1)	
+D	obj_endcaranim	gml_Object_obj_endcaranim_Draw_0	0	8
+DL	obj_endcaranim	call.i draw_sprite(argc=4)	
+DL	obj_endcaranim	call.i floor(argc=1)	
+DL	obj_endcaranim	call.i draw_sprite(argc=4)	
+DL	obj_endcaranim	call.i floor(argc=1)	
+DL	obj_endcaranim	call.i draw_sprite_part(argc=8)	
+DL	obj_endcaranim	call.i floor(argc=1)	
+DL	obj_endcaranim	call.i draw_sprite(argc=4)	
+DL	obj_endcaranim	call.i draw_sprite(argc=4)	
+D	obj_endbeachanim	gml_Object_obj_endbeachanim_Draw_0	0	9
+DL	obj_endbeachanim	call.i draw_sprite(argc=4)	
+DL	obj_endbeachanim	call.i floor(argc=1)	
+DL	obj_endbeachanim	call.i floor(argc=1)	
+DL	obj_endbeachanim	call.i floor(argc=1)	
+DL	obj_endbeachanim	call.i draw_sprite(argc=4)	
+DL	obj_endbeachanim	call.i floor(argc=1)	
+DL	obj_endbeachanim	call.i floor(argc=1)	
+DL	obj_endbeachanim	call.i draw_sprite(argc=4)	
+DL	obj_endbeachanim	call.i draw_sprite(argc=4)	
+D	obj_endmettevent	gml_Object_obj_endmettevent_Draw_0	0	18
+DL	obj_endmettevent	call.i sin(argc=1)	
+DL	obj_endmettevent	call.i cos(argc=1)	
+DL	obj_endmettevent	call.i draw_set_alpha(argc=1)	
+DL	obj_endmettevent	call.i draw_set_color(argc=1)	
+DL	obj_endmettevent	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_endmettevent	call.i draw_set_alpha(argc=1)	
+DL	obj_endmettevent	call.i draw_set_alpha(argc=1)	
+DL	obj_endmettevent	call.i draw_set_color(argc=1)	
+DL	obj_endmettevent	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_endmettevent	call.i draw_set_alpha(argc=1)	
+DL	obj_endmettevent	call.i draw_sprite(argc=4)	
+DL	obj_endmettevent	call.i draw_sprite_ext(argc=9)	
+DL	obj_endmettevent	call.i draw_sprite_ext(argc=9)	
+DL	obj_endmettevent	call.i sin(argc=1)	
+DL	obj_endmettevent	call.i draw_sprite_ext(argc=9)	
+DL	obj_endmettevent	call.i draw_sprite_ext(argc=9)	
+DL	obj_endmettevent	call.i floor(argc=1)	
+DL	obj_endmettevent	call.i draw_sprite(argc=4)	
+D	obj_endschoolanim	-	-	0
+D	obj_ebottfadein	gml_Object_obj_ebottfadein_Draw_0	0	10
+DL	obj_ebottfadein	call.i draw_set_alpha(argc=1)	
+DL	obj_ebottfadein	call.i draw_sprite_ext(argc=9)	
+DL	obj_ebottfadein	call.i scr_setfont(argc=1)	
+DL	obj_ebottfadein	call.i draw_set_color(argc=1)	
+DL	obj_ebottfadein	call.i scr_gettext(argc=1)	
+DL	obj_ebottfadein	call.i string_hash_to_newline(argc=1)	
+DL	obj_ebottfadein	call.i draw_text_transformed(argc=6)	
+DL	obj_ebottfadein	call.i event_user(argc=1)	
+DL	obj_ebottfadein	call.i event_user(argc=1)	
+DL	obj_ebottfadein	call.i event_user(argc=1)	
+D	obj_creditsloader	gml_Object_obj_creditsloader_Draw_0	0	51
+DL	obj_creditsloader	call.i instance_destroy(argc=0)	
+DL	obj_creditsloader	call.i scr_marker(argc=3)	
+DL	obj_creditsloader	call.i scr_gettext(argc=1)	
+DL	obj_creditsloader	call.i scr_gettext(argc=1)	
+DL	obj_creditsloader	call.i scr_blcon_ofs(argc=5)	
+DL	obj_creditsloader	call.i instance_exists(argc=1)	
+DL	obj_creditsloader	call.i instance_exists(argc=1)	
+DL	obj_creditsloader	call.i instance_create(argc=3)	
+DL	obj_creditsloader	call.i snd_play(argc=1)	
+DL	obj_creditsloader	pop.v.i self.drawbar	
+DL	obj_creditsloader	call.i scr_gettext(argc=1)	
+DL	obj_creditsloader	call.i scr_gettext(argc=1)	
+DL	obj_creditsloader	call.i scr_blcon_x(argc=2)	
+DL	obj_creditsloader	call.i instance_exists(argc=1)	
+DL	obj_creditsloader	call.i caster_stop(argc=1)	
+DL	obj_creditsloader	call.i instance_create(argc=3)	
+DL	obj_creditsloader	call.i snd_play(argc=1)	
+DL	obj_creditsloader	call.i caster_load(argc=1)	
+DL	obj_creditsloader	call.i caster_play(argc=3)	
+DL	obj_creditsloader	call.i instance_create(argc=3)	
+DL	obj_creditsloader	call.i instance_exists(argc=1)	
+DL	obj_creditsloader	push.v self.drawbar	
+DL	obj_creditsloader	call.i scr_setfont(argc=1)	
+DL	obj_creditsloader	call.i draw_set_color(argc=1)	
+DL	obj_creditsloader	call.i draw_set_alpha(argc=1)	
+DL	obj_creditsloader	call.i scr_gettext(argc=1)	
+DL	obj_creditsloader	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_creditsloader	call.i draw_set_alpha(argc=1)	
+DL	obj_creditsloader	call.i draw_sprite(argc=4)	
+DL	obj_creditsloader	call.i draw_sprite_ext(argc=9)	
+DL	obj_creditsloader	call.i instance_exists(argc=1)	
+DL	obj_creditsloader	pop.v.i self.drawbar	
+DL	obj_creditsloader	call.i scr_setfont(argc=1)	
+DL	obj_creditsloader	call.i draw_set_color(argc=1)	
+DL	obj_creditsloader	call.i scr_gettext(argc=1)	
+DL	obj_creditsloader	call.i scr_drawtext_centered_scaled(argc=5)	
+DL	obj_creditsloader	call.i draw_set_font(argc=1)	
+DL	obj_creditsloader	call.i scr_drawtext_centered(argc=3)	
+DL	obj_creditsloader	call.i scr_setfont(argc=1)	
+DL	obj_creditsloader	call.i ossafe_ini_open(argc=1)	
+D	obj_endmyroom	gml_Object_obj_endmyroom_Draw_0	0	5
+DL	obj_endmyroom	call.i draw_sprite(argc=4)	
+DL	obj_endmyroom	call.i draw_set_color(argc=1)	
+DL	obj_endmyroom	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_endmyroom	call.i draw_set_color(argc=1)	
+DL	obj_endmyroom	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_the_end_really	gml_Object_obj_the_end_really_Draw_0	0	16
+DL	obj_the_end_really	call.i draw_sprite_ext(argc=9)	
+DL	obj_the_end_really	call.i caster_play(argc=3)	
+DL	obj_the_end_really	call.i draw_sprite_ext(argc=9)	
+DL	obj_the_end_really	call.i draw_sprite_ext(argc=9)	
+DL	obj_the_end_really	call.i draw_set_color(argc=1)	
+DL	obj_the_end_really	call.i scr_setfont(argc=1)	
+DL	obj_the_end_really	call.i draw_set_color(argc=1)	
+DL	obj_the_end_really	call.i scr_gettext(argc=1)	
+DL	obj_the_end_really	call.i string_hash_to_newline(argc=1)	
+DL	obj_the_end_really	call.i draw_text_transformed(argc=6)	
+DL	obj_the_end_really	call.i scr_gettext(argc=1)	
+DL	obj_the_end_really	call.i string_hash_to_newline(argc=1)	
+DL	obj_the_end_really	call.i draw_text_transformed(argc=6)	
+DL	obj_the_end_really	call.i caster_loop(argc=3)	
+DL	obj_the_end_really	call.i caster_loop(argc=3)	
+DL	obj_the_end_really	call.i instance_create(argc=3)	
+D	obj_spritecheck	gml_Object_obj_spritecheck_Draw_0	0	8
+DL	obj_spritecheck	call.i sprite_exists(argc=1)	
+DL	obj_spritecheck	call.i floor(argc=1)	
+DL	obj_spritecheck	call.i draw_sprite_ext(argc=9)	
+DL	obj_spritecheck	call.i scr_setfont(argc=1)	
+DL	obj_spritecheck	call.i draw_set_color(argc=1)	
+DL	obj_spritecheck	call.i string_hash_to_newline(argc=1)	
+DL	obj_spritecheck	call.i draw_text(argc=3)	
+DL	obj_spritecheck	call.i draw_sprite(argc=4)	
+D	obj_settingsmenu	gml_Object_obj_settingsmenu_Draw_0	0	173
+DL	obj_settingsmenu	call.i caster_load(argc=1)	
+DL	obj_settingsmenu	call.i caster_load(argc=1)	
+DL	obj_settingsmenu	call.i caster_load(argc=1)	
+DL	obj_settingsmenu	call.i caster_load(argc=1)	
+DL	obj_settingsmenu	call.i instance_create(argc=3)	
+DL	obj_settingsmenu	call.i draw_sprite_ext(argc=9)	
+DL	obj_settingsmenu	call.i draw_set_color(argc=1)	
+DL	obj_settingsmenu	call.i scr_gettext(argc=1)	
+DL	obj_settingsmenu	call.i string_hash_to_newline(argc=1)	
+DL	obj_settingsmenu	call.i cos(argc=1)	
+DL	obj_settingsmenu	call.i sin(argc=1)	
+DL	obj_settingsmenu	call.i draw_text_transformed(argc=6)	
+DL	obj_settingsmenu	call.i instance_create(argc=3)	
+DL	obj_settingsmenu	call.i merge_color(argc=3)	
+DL	obj_settingsmenu	call.i choose(argc=1)	
+DL	obj_settingsmenu	call.i floor(argc=1)	
+DL	obj_settingsmenu	call.i draw_sprite_ext(argc=9)	
+DL	obj_settingsmenu	call.i draw_set_color(argc=1)	
+DL	obj_settingsmenu	call.i scr_gettext(argc=1)	
+DL	obj_settingsmenu	call.i string_hash_to_newline(argc=1)	
+DL	obj_settingsmenu	call.i cos(argc=1)	
+DL	obj_settingsmenu	call.i sin(argc=1)	
+DL	obj_settingsmenu	call.i draw_text_transformed(argc=6)	
+DL	obj_settingsmenu	call.i sin(argc=1)	
+DL	obj_settingsmenu	call.i abs(argc=1)	
+DL	obj_settingsmenu	call.i sin(argc=1)	
+DL	obj_settingsmenu	call.i sin(argc=1)	
+DL	obj_settingsmenu	call.i floor(argc=1)	
+DL	obj_settingsmenu	call.i draw_sprite_ext(argc=9)	
+DL	obj_settingsmenu	call.i draw_set_color(argc=1)	
+DL	obj_settingsmenu	call.i sin(argc=1)	
+DL	obj_settingsmenu	call.i sin(argc=1)	
+DL	obj_settingsmenu	call.i cos(argc=1)	
+DL	obj_settingsmenu	call.i draw_circle(argc=4)	
+DL	obj_settingsmenu	call.i draw_set_color(argc=1)	
+DL	obj_settingsmenu	call.i scr_gettext(argc=1)	
+DL	obj_settingsmenu	call.i string_hash_to_newline(argc=1)	
+DL	obj_settingsmenu	call.i cos(argc=1)	
+DL	obj_settingsmenu	call.i sin(argc=1)	
+DL	obj_settingsmenu	call.i draw_text_transformed(argc=6)	
+D	obj_controltest	gml_Object_obj_controltest_Draw_0	0	28
+DL	obj_controltest	call.i control_check(argc=1)	
+DL	obj_controltest	call.i control_check_pressed(argc=1)	
+DL	obj_controltest	call.i caster_play(argc=3)	
+DL	obj_controltest	call.i control_check(argc=1)	
+DL	obj_controltest	call.i control_check_pressed(argc=1)	
+DL	obj_controltest	call.i caster_play(argc=3)	
+DL	obj_controltest	call.i control_check(argc=1)	
+DL	obj_controltest	call.i control_check_pressed(argc=1)	
+DL	obj_controltest	call.i caster_play(argc=3)	
+DL	obj_controltest	call.i keyboard_check_pressed(argc=1)	
+DL	obj_controltest	call.i caster_play(argc=3)	
+DL	obj_controltest	call.i keyboard_check_pressed(argc=1)	
+DL	obj_controltest	call.i caster_play(argc=3)	
+DL	obj_controltest	call.i draw_sprite_ext(argc=9)	
+DL	obj_controltest	call.i draw_sprite_ext(argc=9)	
+DL	obj_controltest	call.i draw_sprite_ext(argc=9)	
+DL	obj_controltest	call.i draw_sprite(argc=4)	
+DL	obj_controltest	call.i draw_set_color(argc=1)	
+DL	obj_controltest	call.i draw_circle(argc=4)	
+DL	obj_controltest	call.i draw_circle(argc=4)	
+DL	obj_controltest	call.i draw_circle(argc=4)	
+DL	obj_controltest	call.i draw_set_color(argc=1)	
+DL	obj_controltest	call.i draw_circle(argc=4)	
+DL	obj_controltest	call.i draw_circle(argc=4)	
+DL	obj_controltest	call.i draw_circle(argc=4)	
+DL	obj_controltest	call.i draw_set_color(argc=1)	
+DL	obj_controltest	call.i draw_rectangle(argc=5)	
+DL	obj_controltest	call.i room_goto(argc=1)	
+D	obj_f_gamestart	-	-	0
+D	obj_gameintro_fake	-	-	0
+D	obj_interactable	-	-	0
+D	obj_gamemenu_fake	gml_Object_obj_gamemenu_fake_Draw_0	0	33
+DL	obj_gamemenu_fake	call.i draw_set_color(argc=1)	
+DL	obj_gamemenu_fake	call.i scr_setfont(argc=1)	
+DL	obj_gamemenu_fake	call.i scr_gettext(argc=1)	
+DL	obj_gamemenu_fake	call.i scr_gettext(argc=1)	
+DL	obj_gamemenu_fake	call.i scr_gettext(argc=1)	
+DL	obj_gamemenu_fake	call.i substr(argc=3)	
+DL	obj_gamemenu_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_gamemenu_fake	call.i string_width(argc=1)	
+DL	obj_gamemenu_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_gamemenu_fake	call.i string_width(argc=1)	
+DL	obj_gamemenu_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_gamemenu_fake	call.i string_width(argc=1)	
+DL	obj_gamemenu_fake	call.i round(argc=1)	
+DL	obj_gamemenu_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_gamemenu_fake	call.i draw_text(argc=3)	
+DL	obj_gamemenu_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_gamemenu_fake	call.i draw_text(argc=3)	
+DL	obj_gamemenu_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_gamemenu_fake	call.i draw_text(argc=3)	
+DL	obj_gamemenu_fake	call.i scr_drawtext_centered(argc=3)	
+DL	obj_gamemenu_fake	call.i scr_gettext(argc=1)	
+DL	obj_gamemenu_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_gamemenu_fake	call.i string_width(argc=1)	
+DL	obj_gamemenu_fake	call.i draw_set_color(argc=1)	
+DL	obj_gamemenu_fake	call.i draw_set_color(argc=1)	
+DL	obj_gamemenu_fake	call.i scr_gettext(argc=1)	
+DL	obj_gamemenu_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_gamemenu_fake	call.i draw_text(argc=3)	
+DL	obj_gamemenu_fake	call.i draw_set_color(argc=1)	
+DL	obj_gamemenu_fake	call.i draw_set_color(argc=1)	
+DL	obj_gamemenu_fake	call.i scr_gettext(argc=1)	
+DL	obj_gamemenu_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_gamemenu_fake	call.i draw_text(argc=3)	
+D	obj_mainchara_fake	-	-	0
+D	obj_savepoint_fake	gml_Object_obj_savepoint_fake_Draw_0	0	138
+DL	obj_savepoint_fake	call.i draw_sprite(argc=4)	
+DL	obj_savepoint_fake	call.i audio_play_sound(argc=3)	
+DL	obj_savepoint_fake	pop.v.i self.drawthis	
+DL	obj_savepoint_fake	call.i __view_get(argc=2)	
+DL	obj_savepoint_fake	call.i __view_get(argc=2)	
+DL	obj_savepoint_fake	call.i __view_get(argc=2)	
+DL	obj_savepoint_fake	call.i __view_get(argc=2)	
+DL	obj_savepoint_fake	push.v self.drawthis	
+DL	obj_savepoint_fake	call.i ossafe_ini_open(argc=1)	
+DL	obj_savepoint_fake	call.i ini_read_string(argc=3)	
+DL	obj_savepoint_fake	call.i ini_read_real(argc=3)	
+DL	obj_savepoint_fake	call.i ini_read_real(argc=3)	
+DL	obj_savepoint_fake	call.i ini_read_real(argc=3)	
+DL	obj_savepoint_fake	call.i ini_read_real(argc=3)	
+DL	obj_savepoint_fake	call.i ossafe_ini_close(argc=0)	
+DL	obj_savepoint_fake	call.i scr_setfont(argc=1)	
+DL	obj_savepoint_fake	call.i draw_set_color(argc=1)	
+DL	obj_savepoint_fake	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_savepoint_fake	call.i draw_set_color(argc=1)	
+DL	obj_savepoint_fake	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_savepoint_fake	call.i draw_set_color(argc=1)	
+DL	obj_savepoint_fake	call.i floor(argc=1)	
+DL	obj_savepoint_fake	call.i round(argc=1)	
+DL	obj_savepoint_fake	call.i string(argc=1)	
+DL	obj_savepoint_fake	call.i scr_roomname(argc=1)	
+DL	obj_savepoint_fake	call.i string(argc=1)	
+DL	obj_savepoint_fake	call.i scr_gettext(argc=2)	
+DL	obj_savepoint_fake	call.i string(argc=1)	
+DL	obj_savepoint_fake	call.i string(argc=1)	
+DL	obj_savepoint_fake	call.i scr_gettext(argc=3)	
+DL	obj_savepoint_fake	call.i substr(argc=3)	
+DL	obj_savepoint_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_savepoint_fake	call.i string_width(argc=1)	
+DL	obj_savepoint_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_savepoint_fake	call.i string_width(argc=1)	
+DL	obj_savepoint_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_savepoint_fake	call.i string_width(argc=1)	
+DL	obj_savepoint_fake	call.i round(argc=1)	
+DL	obj_savepoint_fake	call.i string_hash_to_newline(argc=1)	
+DL	obj_savepoint_fake	call.i draw_text(argc=3)	
+D	obj_flowey_master	gml_Object_obj_flowey_master_Draw_0	0	220
+DL	obj_flowey_master	call.i draw_set_color(argc=1)	
+DL	obj_flowey_master	call.i scr_setfont(argc=1)	
+DL	obj_flowey_master	call.i draw_set_color(argc=1)	
+DL	obj_flowey_master	call.i draw_set_alpha(argc=1)	
+DL	obj_flowey_master	call.i scr_gettext(argc=2)	
+DL	obj_flowey_master	call.i string_hash_to_newline(argc=1)	
+DL	obj_flowey_master	call.i draw_text_transformed(argc=6)	
+DL	obj_flowey_master	call.i scr_gettext(argc=2)	
+DL	obj_flowey_master	call.i string_hash_to_newline(argc=1)	
+DL	obj_flowey_master	call.i draw_text_transformed(argc=6)	
+DL	obj_flowey_master	call.i scr_gettext(argc=2)	
+DL	obj_flowey_master	call.i string_hash_to_newline(argc=1)	
+DL	obj_flowey_master	call.i draw_text_transformed(argc=6)	
+DL	obj_flowey_master	call.i draw_set_alpha(argc=1)	
+DL	obj_flowey_master	call.i scr_gettext(argc=2)	
+DL	obj_flowey_master	call.i string_hash_to_newline(argc=1)	
+DL	obj_flowey_master	call.i draw_text_transformed(argc=6)	
+DL	obj_flowey_master	call.i scr_gettext(argc=2)	
+DL	obj_flowey_master	call.i string_hash_to_newline(argc=1)	
+DL	obj_flowey_master	call.i draw_text_transformed(argc=6)	
+DL	obj_flowey_master	call.i scr_gettext(argc=1)	
+DL	obj_flowey_master	call.i string_hash_to_newline(argc=1)	
+DL	obj_flowey_master	call.i draw_text_transformed(argc=6)	
+DL	obj_flowey_master	call.i scr_gettext(argc=2)	
+DL	obj_flowey_master	call.i string_hash_to_newline(argc=1)	
+DL	obj_flowey_master	call.i draw_text_transformed(argc=6)	
+DL	obj_flowey_master	call.i scr_gettext(argc=2)	
+DL	obj_flowey_master	call.i string_hash_to_newline(argc=1)	
+DL	obj_flowey_master	call.i draw_text_transformed(argc=6)	
+DL	obj_flowey_master	call.i draw_set_alpha(argc=1)	
+DL	obj_flowey_master	call.i draw_set_alpha(argc=1)	
+DL	obj_flowey_master	call.i draw_set_color(argc=1)	
+DL	obj_flowey_master	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_flowey_master	call.i draw_set_alpha(argc=1)	
+DL	obj_flowey_master	call.i caster_set_pitch(argc=2)	
+DL	obj_flowey_master	call.i caster_set_volume(argc=2)	
+DL	obj_flowey_master	call.i caster_stop(argc=1)	
+DL	obj_flowey_master	push.v self.drawhp	
+DL	obj_flowey_master	call.i draw_set_color(argc=1)	
+DL	obj_flowey_master	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_randomfacer	gml_Object_obj_randomfacer_Draw_0	0	14
+DL	obj_randomfacer	call.i random(argc=1)	
+DL	obj_randomfacer	call.i random(argc=1)	
+DL	obj_randomfacer	call.i random(argc=1)	
+DL	obj_randomfacer	call.i random(argc=1)	
+DL	obj_randomfacer	call.i draw_sprite_ext(argc=9)	
+DL	obj_randomfacer	call.i keyboard_check(argc=1)	
+DL	obj_randomfacer	call.i random(argc=1)	
+DL	obj_randomfacer	call.i random(argc=1)	
+DL	obj_randomfacer	call.i random(argc=1)	
+DL	obj_randomfacer	call.i random(argc=1)	
+DL	obj_randomfacer	call.i random(argc=1)	
+DL	obj_randomfacer	call.i draw_sprite_ext(argc=9)	
+DL	obj_randomfacer	call.i random(argc=1)	
+DL	obj_randomfacer	call.i round(argc=1)	
+D	obj_flowey_bgdraw	gml_Object_obj_flowey_bgdraw_Draw_0	0	5
+DL	obj_flowey_bgdraw	call.i sin(argc=1)	
+DL	obj_flowey_bgdraw	call.i __background_set(argc=3)	
+DL	obj_flowey_bgdraw	call.i __background_get(argc=2)	
+DL	obj_flowey_bgdraw	call.i sin(argc=1)	
+DL	obj_flowey_bgdraw	call.i __background_set(argc=3)	
+D	obj_sidestalk	gml_Object_obj_sidestalk_Draw_0	0	4
+DL	obj_sidestalk	call.i cos(argc=1)	
+DL	obj_sidestalk	call.i sin(argc=1)	
+DL	obj_sidestalk	call.i cos(argc=1)	
+DL	obj_sidestalk	call.i draw_sprite_ext(argc=9)	
+D	obj_vines_flowey	gml_Object_obj_vines_flowey_Draw_0	0	9
+DL	obj_vines_flowey	call.i sin(argc=1)	
+DL	obj_vines_flowey	call.i cos(argc=1)	
+DL	obj_vines_flowey	call.i sin(argc=1)	
+DL	obj_vines_flowey	call.i sin(argc=1)	
+DL	obj_vines_flowey	call.i sin(argc=1)	
+DL	obj_vines_flowey	call.i cos(argc=1)	
+DL	obj_vines_flowey	call.i draw_sprite_ext(argc=9)	
+DL	obj_vines_flowey	call.i draw_sprite_ext(argc=9)	
+DL	obj_vines_flowey	call.i draw_sprite_ext(argc=9)	
+D	obj_floweyarm	gml_Object_obj_floweyarm_Draw_0	0	12
+DL	obj_floweyarm	call.i cos(argc=1)	
+DL	obj_floweyarm	call.i sin(argc=1)	
+DL	obj_floweyarm	call.i cos(argc=1)	
+DL	obj_floweyarm	call.i draw_sprite_ext(argc=9)	
+DL	obj_floweyarm	call.i cos(argc=1)	
+DL	obj_floweyarm	call.i sin(argc=1)	
+DL	obj_floweyarm	call.i cos(argc=1)	
+DL	obj_floweyarm	call.i draw_sprite_ext(argc=9)	
+DL	obj_floweyarm	call.i draw_sprite_ext(argc=9)	
+DL	obj_floweyarm	call.i draw_sprite_ext(argc=9)	
+DL	obj_floweyarm	call.i draw_sprite_ext(argc=9)	
+DL	obj_floweyarm	call.i instance_create(argc=3)	
+D	obj_vsflowey_heart	gml_Object_obj_vsflowey_heart_Draw_0	0	1
+DL	obj_vsflowey_heart	call.i draw_sprite(argc=4)	
+D	obj_bgpipe	gml_Object_obj_bgpipe_Draw_0	0	13
+DL	obj_bgpipe	call.i sin(argc=1)	
+DL	obj_bgpipe	call.i cos(argc=1)	
+DL	obj_bgpipe	call.i sin(argc=1)	
+DL	obj_bgpipe	call.i sin(argc=1)	
+DL	obj_bgpipe	call.i cos(argc=1)	
+DL	obj_bgpipe	call.i sin(argc=1)	
+DL	obj_bgpipe	call.i sin(argc=1)	
+DL	obj_bgpipe	call.i cos(argc=1)	
+DL	obj_bgpipe	call.i sin(argc=1)	
+DL	obj_bgpipe	call.i merge_color(argc=3)	
+DL	obj_bgpipe	call.i draw_sprite_ext(argc=9)	
+DL	obj_bgpipe	call.i draw_sprite_ext(argc=9)	
+DL	obj_bgpipe	call.i draw_sprite_ext(argc=9)	
+D	obj_f_frasier	-	-	0
+D	obj_conveyorpuzzle1	-	-	0
+D	obj_conveyorsnapper	-	-	0
+D	obj_iceeventup	-	-	0
+D	obj_iceeventright	-	-	0
+D	obj_candydish2	-	-	0
+D	obj_rollgrow	gml_Object_obj_rollgrow_Draw_0	0	1
+DL	obj_rollgrow	call.i draw_sprite_ext(argc=9)	
+D	obj_torchpuzzle	-	-	0
+D	obj_groundtorch	-	-	0
+D	obj_fearundynenpc1	-	-	0
+D	obj_fearundynenpc2	-	-	0
+D	obj_monster_extrabody	gml_Object_obj_monster_extrabody_Draw_0	0	43
+DL	obj_monster_extrabody	call.i sin(argc=1)	
+DL	obj_monster_extrabody	call.i floor(argc=1)	
+DL	obj_monster_extrabody	call.i draw_sprite(argc=4)	
+DL	obj_monster_extrabody	call.i sin(argc=1)	
+DL	obj_monster_extrabody	call.i sin(argc=1)	
+DL	obj_monster_extrabody	call.i floor(argc=1)	
+DL	obj_monster_extrabody	call.i draw_sprite_ext(argc=9)	
+DL	obj_monster_extrabody	call.i floor(argc=1)	
+DL	obj_monster_extrabody	call.i draw_sprite_ext(argc=9)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i draw_sprite_ext(argc=9)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i draw_sprite(argc=4)	
+DL	obj_monster_extrabody	call.i draw_sprite(argc=4)	
+DL	obj_monster_extrabody	call.i draw_sprite(argc=4)	
+DL	obj_monster_extrabody	call.i draw_sprite(argc=4)	
+DL	obj_monster_extrabody	call.i floor(argc=1)	
+DL	obj_monster_extrabody	call.i draw_sprite(argc=4)	
+DL	obj_monster_extrabody	call.i floor(argc=1)	
+DL	obj_monster_extrabody	call.i draw_sprite(argc=4)	
+DL	obj_monster_extrabody	call.i floor(argc=1)	
+DL	obj_monster_extrabody	call.i draw_sprite(argc=4)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i floor(argc=1)	
+DL	obj_monster_extrabody	call.i draw_sprite_ext(argc=9)	
+DL	obj_monster_extrabody	call.i floor(argc=1)	
+DL	obj_monster_extrabody	call.i draw_sprite(argc=4)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i event_user(argc=1)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+DL	obj_monster_extrabody	call.i __view_get(argc=2)	
+D	obj_battlefader	-	-	0
+D	obj_uborder	-	-	0
+D	obj_lborder	-	-	0
+D	obj_dborder	-	-	0
+D	obj_rborder	-	-	0
+D	obj_hpname	-	-	0
+D	obj_fightbt	-	-	0
+D	obj_talkbt	-	-	0
+D	obj_itembt	-	-	0
+D	obj_sparebt	-	-	0
+D	obj_battlebg	-	-	0
+D	obj_floweydraw	gml_Object_obj_floweydraw_Draw_0	0	18
+DL	obj_floweydraw	call.i instance_exists(argc=1)	
+DL	obj_floweydraw	call.i draw_set_color(argc=1)	
+DL	obj_floweydraw	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_floweydraw	call.i draw_sprite(argc=4)	
+DL	obj_floweydraw	call.i draw_set_color(argc=1)	
+DL	obj_floweydraw	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_floweydraw	call.i draw_set_color(argc=1)	
+DL	obj_floweydraw	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_floweydraw	call.i draw_set_color(argc=1)	
+DL	obj_floweydraw	call.i scr_setfont(argc=1)	
+DL	obj_floweydraw	call.i string(argc=1)	
+DL	obj_floweydraw	call.i string(argc=1)	
+DL	obj_floweydraw	call.i string(argc=1)	
+DL	obj_floweydraw	call.i string_hash_to_newline(argc=1)	
+DL	obj_floweydraw	call.i draw_text(argc=3)	
+DL	obj_floweydraw	call.i string(argc=1)	
+DL	obj_floweydraw	call.i string_hash_to_newline(argc=1)	
+DL	obj_floweydraw	call.i draw_text(argc=3)	
+D	obj_floweybattle1	-	-	0
+D	obj_fakeheart	-	-	0
+D	obj_quickgen	-	-	0
+D	obj_storybattle_gen	gml_Object_obj_storybattle_gen_Draw_0	0	11
+DL	obj_storybattle_gen	call.i scr_textskip(argc=0)	
+DL	obj_storybattle_gen	call.i random(argc=1)	
+DL	obj_storybattle_gen	call.i random(argc=1)	
+DL	obj_storybattle_gen	call.i random(argc=1)	
+DL	obj_storybattle_gen	call.i random(argc=1)	
+DL	obj_storybattle_gen	call.i draw_sprite_ext(argc=9)	
+DL	obj_storybattle_gen	call.i random(argc=1)	
+DL	obj_storybattle_gen	call.i random(argc=1)	
+DL	obj_storybattle_gen	call.i random(argc=1)	
+DL	obj_storybattle_gen	call.i random(argc=1)	
+DL	obj_storybattle_gen	call.i draw_sprite_ext(argc=9)	
+D	obj_gameover	-	-	0
+D	obj_shopmouth1	gml_Object_obj_shopmouth1_Draw_0	0	2
+DL	obj_shopmouth1	call.i draw_sprite(argc=4)	
+DL	obj_shopmouth1	call.i draw_sprite(argc=4)	
+D	obj_shop1	gml_Object_obj_shop1_Draw_0	0	149
+DL	obj_shop1	call.i sin(argc=1)	
+DL	obj_shop1	call.i floor(argc=1)	
+DL	obj_shop1	call.i draw_sprite(argc=4)	
+DL	obj_shop1	call.i draw_sprite_ext(argc=9)	
+DL	obj_shop1	call.i draw_sprite(argc=4)	
+DL	obj_shop1	call.i string(argc=1)	
+DL	obj_shop1	call.i string(argc=1)	
+DL	obj_shop1	call.i string(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=3)	
+DL	obj_shop1	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop1	call.i scr_shop_draw_window(argc=1)	
+DL	obj_shop1	call.i draw_set_color(argc=1)	
+DL	obj_shop1	call.i instance_exists(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i instance_create(argc=3)	
+DL	obj_shop1	call.i control_check_pressed(argc=1)	
+DL	obj_shop1	call.i string_length(argc=1)	
+DL	obj_shop1	call.i control_clear(argc=1)	
+DL	obj_shop1	call.i scr_shop_draw_topmenu(argc=1)	
+DL	obj_shop1	call.i control_check_pressed(argc=1)	
+DL	obj_shop1	call.i control_clear(argc=1)	
+DL	obj_shop1	call.i string(argc=1)	
+DL	obj_shop1	call.i string(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=3)	
+DL	obj_shop1	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop1	call.i draw_text(argc=3)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop1	call.i draw_text(argc=3)	
+DL	obj_shop1	call.i instance_exists(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i scr_gettext(argc=1)	
+DL	obj_shop1	call.i instance_create(argc=3)	
+D	obj_shop2	gml_Object_obj_shop2_Draw_0	0	217
+DL	obj_shop2	call.i string(argc=1)	
+DL	obj_shop2	call.i string(argc=1)	
+DL	obj_shop2	call.i string(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=3)	
+DL	obj_shop2	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop2	call.i scr_shop_draw_window(argc=1)	
+DL	obj_shop2	call.i draw_set_color(argc=1)	
+DL	obj_shop2	call.i instance_exists(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i instance_create(argc=3)	
+DL	obj_shop2	call.i control_check_pressed(argc=1)	
+DL	obj_shop2	call.i string_length(argc=1)	
+DL	obj_shop2	call.i control_clear(argc=1)	
+DL	obj_shop2	call.i scr_shop_draw_topmenu(argc=1)	
+DL	obj_shop2	call.i control_check_pressed(argc=1)	
+DL	obj_shop2	call.i control_clear(argc=1)	
+DL	obj_shop2	call.i string(argc=1)	
+DL	obj_shop2	call.i string(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=3)	
+DL	obj_shop2	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop2	call.i draw_text(argc=3)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop2	call.i draw_text(argc=3)	
+DL	obj_shop2	call.i instance_exists(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i scr_gettext(argc=1)	
+DL	obj_shop2	call.i instance_create(argc=3)	
+D	obj_brattysign	-	-	0
+D	obj_shop3	gml_Object_obj_shop3_Draw_0	0	649
+DL	obj_shop3	call.i string(argc=1)	
+DL	obj_shop3	call.i string(argc=1)	
+DL	obj_shop3	call.i scr_gettext(argc=1)	
+DL	obj_shop3	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop3	call.i string(argc=1)	
+DL	obj_shop3	call.i scr_gettext(argc=3)	
+DL	obj_shop3	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop3	call.i scr_shop_draw_window(argc=1)	
+DL	obj_shop3	call.i draw_set_color(argc=1)	
+DL	obj_shop3	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_shop3	call.i draw_set_color(argc=1)	
+DL	obj_shop3	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_shop3	call.i draw_set_color(argc=1)	
+DL	obj_shop3	call.i instance_exists(argc=1)	
+DL	obj_shop3	call.i scr_gettext(argc=1)	
+DL	obj_shop3	call.i scr_gettext(argc=1)	
+DL	obj_shop3	call.i scr_gettext(argc=1)	
+DL	obj_shop3	call.i instance_create(argc=3)	
+DL	obj_shop3	call.i scr_gettext(argc=1)	
+DL	obj_shop3	call.i scr_gettext(argc=1)	
+DL	obj_shop3	call.i instance_create(argc=3)	
+DL	obj_shop3	call.i control_check_pressed(argc=1)	
+DL	obj_shop3	call.i string_length(argc=1)	
+DL	obj_shop3	call.i control_clear(argc=1)	
+DL	obj_shop3	call.i scr_shop_draw_topmenu(argc=1)	
+DL	obj_shop3	call.i control_check_pressed(argc=1)	
+DL	obj_shop3	call.i control_clear(argc=1)	
+DL	obj_shop3	call.i draw_set_color(argc=1)	
+DL	obj_shop3	call.i scr_gettext(argc=1)	
+DL	obj_shop3	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop3	call.i draw_text(argc=3)	
+DL	obj_shop3	call.i draw_set_color(argc=1)	
+DL	obj_shop3	call.i string(argc=1)	
+DL	obj_shop3	call.i string(argc=1)	
+DL	obj_shop3	call.i string(argc=1)	
+DL	obj_shop3	call.i scr_gettext(argc=1)	
+DL	obj_shop3	call.i scr_gettext(argc=3)	
+DL	obj_shop3	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop3	call.i draw_text(argc=3)	
+DL	obj_shop3	call.i scr_gettext(argc=1)	
+D	obj_shopkeeper_catty	gml_Object_obj_shopkeeper_catty_Draw_0	0	48
+DL	obj_shopkeeper_catty	call.i instance_exists(argc=1)	
+DL	obj_shopkeeper_catty	call.i floor(argc=1)	
+DL	obj_shopkeeper_catty	call.i floor(argc=1)	
+DL	obj_shopkeeper_catty	call.i draw_sprite(argc=4)	
+DL	obj_shopkeeper_catty	call.i floor(argc=1)	
+DL	obj_shopkeeper_catty	call.i floor(argc=1)	
+DL	obj_shopkeeper_catty	call.i draw_sprite(argc=4)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i sin(argc=1)	
+DL	obj_shopkeeper_catty	call.i cos(argc=1)	
+DL	obj_shopkeeper_catty	call.i sin(argc=1)	
+DL	obj_shopkeeper_catty	call.i sin(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i sin(argc=1)	
+DL	obj_shopkeeper_catty	call.i sin(argc=1)	
+DL	obj_shopkeeper_catty	call.i cos(argc=1)	
+DL	obj_shopkeeper_catty	call.i sin(argc=1)	
+DL	obj_shopkeeper_catty	call.i cos(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i sin(argc=1)	
+DL	obj_shopkeeper_catty	call.i cos(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+DL	obj_shopkeeper_catty	call.i abs(argc=1)	
+D	obj_shopkeeper_bratty	gml_Object_obj_shopkeeper_bratty_Draw_0	0	45
+DL	obj_shopkeeper_bratty	call.i instance_exists(argc=1)	
+DL	obj_shopkeeper_bratty	call.i floor(argc=1)	
+DL	obj_shopkeeper_bratty	call.i floor(argc=1)	
+DL	obj_shopkeeper_bratty	call.i draw_sprite(argc=4)	
+DL	obj_shopkeeper_bratty	call.i floor(argc=1)	
+DL	obj_shopkeeper_bratty	call.i floor(argc=1)	
+DL	obj_shopkeeper_bratty	call.i draw_sprite(argc=4)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i cos(argc=1)	
+DL	obj_shopkeeper_bratty	call.i sin(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i sin(argc=1)	
+DL	obj_shopkeeper_bratty	call.i cos(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+DL	obj_shopkeeper_bratty	call.i sin(argc=1)	
+DL	obj_shopkeeper_bratty	call.i cos(argc=1)	
+DL	obj_shopkeeper_bratty	call.i draw_sprite(argc=4)	
+DL	obj_shopkeeper_bratty	call.i draw_sprite(argc=4)	
+DL	obj_shopkeeper_bratty	call.i abs(argc=1)	
+D	obj_shop4	gml_Object_obj_shop4_Draw_0	0	294
+DL	obj_shop4	call.i scr_gettext(argc=1)	
+DL	obj_shop4	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop4	call.i string(argc=1)	
+DL	obj_shop4	call.i scr_gettext(argc=1)	
+DL	obj_shop4	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop4	call.i scr_shop_draw_window(argc=1)	
+DL	obj_shop4	call.i draw_set_color(argc=1)	
+DL	obj_shop4	call.i instance_exists(argc=1)	
+DL	obj_shop4	call.i scr_gettext(argc=1)	
+DL	obj_shop4	call.i scr_gettext(argc=1)	
+DL	obj_shop4	call.i scr_gettext(argc=1)	
+DL	obj_shop4	call.i scr_gettext(argc=1)	
+DL	obj_shop4	call.i scr_gettext(argc=1)	
+DL	obj_shop4	call.i instance_create(argc=3)	
+DL	obj_shop4	call.i control_check_pressed(argc=1)	
+DL	obj_shop4	call.i string_length(argc=1)	
+DL	obj_shop4	call.i control_clear(argc=1)	
+DL	obj_shop4	call.i scr_shop_draw_topmenu(argc=1)	
+DL	obj_shop4	call.i control_check_pressed(argc=1)	
+DL	obj_shop4	call.i control_clear(argc=1)	
+DL	obj_shop4	call.i string(argc=1)	
+DL	obj_shop4	call.i string(argc=1)	
+DL	obj_shop4	call.i string(argc=1)	
+DL	obj_shop4	call.i scr_gettext(argc=1)	
+DL	obj_shop4	call.i scr_gettext(argc=3)	
+DL	obj_shop4	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop4	call.i draw_text(argc=3)	
+DL	obj_shop4	call.i scr_gettext(argc=3)	
+DL	obj_shop4	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop4	call.i draw_text(argc=3)	
+DL	obj_shop4	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop4	call.i string_width(argc=1)	
+DL	obj_shop4	call.i scr_gettext(argc=1)	
+DL	obj_shop4	call.i scr_shop_divider_pos(argc=0)	
+DL	obj_shop4	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop4	call.i string_width(argc=1)	
+DL	obj_shop4	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop4	call.i draw_text_transformed(argc=6)	
+DL	obj_shop4	call.i draw_set_color(argc=1)	
+DL	obj_shop4	call.i scr_gettext(argc=1)	
+D	obj_shop5	gml_Object_obj_shop5_Draw_0	0	253
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_shop_draw_infobox(argc=2)	
+DL	obj_shop5	call.i scr_shop_draw_window(argc=1)	
+DL	obj_shop5	call.i draw_set_color(argc=1)	
+DL	obj_shop5	call.i instance_exists(argc=1)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i instance_create(argc=3)	
+DL	obj_shop5	call.i control_check_pressed(argc=1)	
+DL	obj_shop5	call.i string_length(argc=1)	
+DL	obj_shop5	call.i control_clear(argc=1)	
+DL	obj_shop5	call.i scr_shop_draw_topmenu(argc=1)	
+DL	obj_shop5	call.i control_check_pressed(argc=1)	
+DL	obj_shop5	call.i control_clear(argc=1)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_gettext(argc=3)	
+DL	obj_shop5	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop5	call.i draw_text(argc=3)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_gettext(argc=3)	
+DL	obj_shop5	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop5	call.i draw_text(argc=3)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_gettext(argc=3)	
+DL	obj_shop5	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop5	call.i draw_text(argc=3)	
+DL	obj_shop5	call.i scr_gettext(argc=1)	
+DL	obj_shop5	call.i scr_gettext(argc=3)	
+DL	obj_shop5	call.i string_hash_to_newline(argc=1)	
+DL	obj_shop5	call.i draw_text(argc=3)	
+D	obj_papdate	gml_Object_obj_papdate_Draw_0	0	13
+DL	obj_papdate	call.i draw_sprite_ext(argc=9)	
+DL	obj_papdate	call.i draw_sprite_ext(argc=9)	
+DL	obj_papdate	call.i draw_sprite_ext(argc=9)	
+DL	obj_papdate	call.i instance_exists(argc=1)	
+DL	obj_papdate	call.i draw_set_color(argc=1)	
+DL	obj_papdate	call.i draw_sprite_ext(argc=9)	
+DL	obj_papdate	call.i draw_sprite_ext(argc=9)	
+DL	obj_papdate	call.i draw_sprite(argc=4)	
+DL	obj_papdate	call.i draw_sprite(argc=4)	
+DL	obj_papdate	call.i keyboard_check_pressed(argc=1)	
+DL	obj_papdate	call.i keyboard_check_pressed(argc=1)	
+DL	obj_papdate	call.i snd_play(argc=1)	
+DL	obj_papdate	call.i control_check_pressed(argc=1)	
+D	obj_adate	gml_Object_obj_adate_Draw_0	0	16
+DL	obj_adate	call.i instance_exists(argc=1)	
+DL	obj_adate	call.i draw_set_color(argc=1)	
+DL	obj_adate	call.i draw_sprite(argc=4)	
+DL	obj_adate	call.i draw_sprite(argc=4)	
+DL	obj_adate	call.i keyboard_check_pressed(argc=1)	
+DL	obj_adate	call.i keyboard_check_pressed(argc=1)	
+DL	obj_adate	call.i snd_play(argc=1)	
+DL	obj_adate	call.i control_check_pressed(argc=1)	
+DL	obj_adate	call.i draw_set_color(argc=1)	
+DL	obj_adate	call.i draw_set_alpha(argc=1)	
+DL	obj_adate	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_adate	call.i draw_set_alpha(argc=1)	
+DL	obj_adate	call.i draw_set_color(argc=1)	
+DL	obj_adate	call.i draw_set_alpha(argc=1)	
+DL	obj_adate	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_adate	call.i draw_set_alpha(argc=1)	
+D	obj_adate_body	gml_Object_obj_adate_body_Draw_0	0	7
+DL	obj_adate_body	call.i random(argc=1)	
+DL	obj_adate_body	call.i random(argc=1)	
+DL	obj_adate_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_adate_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_adate_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_adate_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_adate_body	call.i draw_sprite_ext(argc=9)	
+D	obj_flowey_wilt	-	-	0
+D	obj_endflowey_regret	gml_Object_obj_endflowey_regret_Draw_0	0	4
+DL	obj_endflowey_regret	call.i draw_sprite_ext(argc=9)	
+DL	obj_endflowey_regret	call.i draw_sprite_ext(argc=9)	
+DL	obj_endflowey_regret	call.i draw_sprite_ext(argc=9)	
+DL	obj_endflowey_regret	call.i draw_sprite_ext(argc=9)	
+D	obj_white_ender	-	-	0
+D	obj_black_ender	gml_Object_obj_black_ender_Draw_0	0	3
+DL	obj_black_ender	call.i draw_set_color(argc=1)	
+DL	obj_black_ender	call.i draw_set_alpha(argc=1)	
+DL	obj_black_ender	call.i ossafe_fill_rectangle(argc=4)	
+D	obj_nothingness_event	-	-	0
+D	obj_undertaletitle	gml_Object_obj_undertaletitle_Draw_0	0	6
+DL	obj_undertaletitle	call.i draw_sprite_ext(argc=9)	
+DL	obj_undertaletitle	call.i draw_set_color(argc=1)	
+DL	obj_undertaletitle	call.i draw_set_font(argc=1)	
+DL	obj_undertaletitle	call.i scr_gettext(argc=1)	
+DL	obj_undertaletitle	call.i string_hash_to_newline(argc=1)	
+DL	obj_undertaletitle	call.i draw_text_transformed(argc=6)	
+D	obj_roomofdog	-	-	0
+D	obj_questionasker	gml_Object_obj_questionasker_Draw_0	0	135
+DL	obj_questionasker	call.i random(argc=1)	
+DL	obj_questionasker	call.i random(argc=1)	
+DL	obj_questionasker	call.i round(argc=1)	
+DL	obj_questionasker	call.i draw_sprite_ext(argc=9)	
+DL	obj_questionasker	call.i instance_exists(argc=1)	
+DL	obj_questionasker	call.i instance_create(argc=3)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_blcon(argc=3)	
+DL	obj_questionasker	call.i instance_exists(argc=1)	
+DL	obj_questionasker	call.i instance_exists(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_blcon(argc=3)	
+DL	obj_questionasker	call.i instance_exists(argc=1)	
+DL	obj_questionasker	call.i event_user(argc=1)	
+DL	obj_questionasker	call.i instance_exists(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+DL	obj_questionasker	call.i scr_gettext(argc=1)	
+D	obj_mettatonb_body	gml_Object_obj_mettatonb_body_Draw_0	0	6
+DL	obj_mettatonb_body	call.i sin(argc=1)	
+DL	obj_mettatonb_body	call.i random(argc=1)	
+DL	obj_mettatonb_body	call.i random(argc=1)	
+DL	obj_mettatonb_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_mettatonb_body	call.i sin(argc=1)	
+DL	obj_mettatonb_body	call.i draw_sprite_ext(argc=9)	
+D	obj_friendscene	gml_Object_obj_friendscene_Draw_0	0	39
+DL	obj_friendscene	call.i draw_set_alpha(argc=1)	
+DL	obj_friendscene	call.i draw_set_color(argc=1)	
+DL	obj_friendscene	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_friendscene	call.i draw_set_alpha(argc=1)	
+DL	obj_friendscene	call.i caster_load(argc=1)	
+DL	obj_friendscene	call.i instance_create(argc=3)	
+DL	obj_friendscene	call.i instance_destroy(argc=0)	
+DL	obj_friendscene	call.i instance_create(argc=3)	
+DL	obj_friendscene	call.i instance_destroy(argc=0)	
+DL	obj_friendscene	call.i instance_create(argc=3)	
+DL	obj_friendscene	call.i instance_destroy(argc=0)	
+DL	obj_friendscene	call.i instance_create(argc=3)	
+DL	obj_friendscene	call.i instance_destroy(argc=0)	
+DL	obj_friendscene	call.i instance_create(argc=3)	
+DL	obj_friendscene	call.i instance_destroy(argc=0)	
+DL	obj_friendscene	call.i instance_create(argc=3)	
+DL	obj_friendscene	call.i instance_destroy(argc=0)	
+DL	obj_friendscene	call.i draw_set_alpha(argc=1)	
+DL	obj_friendscene	call.i draw_set_color(argc=1)	
+DL	obj_friendscene	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_friendscene	call.i draw_set_alpha(argc=1)	
+DL	obj_friendscene	call.i draw_set_color(argc=1)	
+DL	obj_friendscene	call.i draw_rectangle(argc=5)	
+DL	obj_friendscene	call.i draw_set_color(argc=1)	
+DL	obj_friendscene	call.i draw_set_alpha(argc=1)	
+DL	obj_friendscene	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_friendscene	call.i draw_set_alpha(argc=1)	
+DL	obj_friendscene	call.i random(argc=1)	
+DL	obj_friendscene	call.i random(argc=1)	
+DL	obj_friendscene	call.i __view_set(argc=3)	
+DL	obj_friendscene	call.i random(argc=1)	
+DL	obj_friendscene	call.i random(argc=1)	
+DL	obj_friendscene	call.i __view_set(argc=3)	
+DL	obj_friendscene	call.i draw_set_alpha(argc=1)	
+DL	obj_friendscene	call.i draw_set_color(argc=1)	
+DL	obj_friendscene	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_friendscene	call.i draw_set_alpha(argc=1)	
+DL	obj_friendscene	call.i sin(argc=1)	
+DL	obj_friendscene	call.i draw_sprite_ext(argc=9)	
+D	obj_bringitinguys	gml_Object_obj_bringitinguys_Draw_0	0	40
+DL	obj_bringitinguys	call.i draw_sprite(argc=4)	
+DL	obj_bringitinguys	call.i scr_setfont(argc=1)	
+DL	obj_bringitinguys	call.i draw_set_color(argc=1)	
+DL	obj_bringitinguys	call.i scr_gettext(argc=1)	
+DL	obj_bringitinguys	call.i string_hash_to_newline(argc=1)	
+DL	obj_bringitinguys	call.i draw_text(argc=3)	
+DL	obj_bringitinguys	call.i draw_sprite(argc=4)	
+DL	obj_bringitinguys	call.i scr_setfont(argc=1)	
+DL	obj_bringitinguys	call.i draw_set_color(argc=1)	
+DL	obj_bringitinguys	call.i scr_gettext(argc=1)	
+DL	obj_bringitinguys	call.i string_hash_to_newline(argc=1)	
+DL	obj_bringitinguys	call.i draw_text(argc=3)	
+DL	obj_bringitinguys	call.i draw_sprite(argc=4)	
+DL	obj_bringitinguys	call.i scr_setfont(argc=1)	
+DL	obj_bringitinguys	call.i draw_set_color(argc=1)	
+DL	obj_bringitinguys	call.i scr_gettext(argc=1)	
+DL	obj_bringitinguys	call.i string_hash_to_newline(argc=1)	
+DL	obj_bringitinguys	call.i draw_text(argc=3)	
+DL	obj_bringitinguys	call.i draw_sprite(argc=4)	
+DL	obj_bringitinguys	call.i scr_setfont(argc=1)	
+DL	obj_bringitinguys	call.i draw_set_color(argc=1)	
+DL	obj_bringitinguys	call.i scr_gettext(argc=1)	
+DL	obj_bringitinguys	call.i string_hash_to_newline(argc=1)	
+DL	obj_bringitinguys	call.i draw_text(argc=3)	
+DL	obj_bringitinguys	call.i draw_sprite(argc=4)	
+DL	obj_bringitinguys	call.i scr_setfont(argc=1)	
+DL	obj_bringitinguys	call.i draw_set_color(argc=1)	
+DL	obj_bringitinguys	call.i scr_gettext(argc=1)	
+DL	obj_bringitinguys	call.i string_hash_to_newline(argc=1)	
+DL	obj_bringitinguys	call.i draw_text(argc=3)	
+DL	obj_bringitinguys	call.i draw_sprite(argc=4)	
+DL	obj_bringitinguys	call.i scr_setfont(argc=1)	
+DL	obj_bringitinguys	call.i draw_set_color(argc=1)	
+DL	obj_bringitinguys	call.i scr_gettext(argc=1)	
+DL	obj_bringitinguys	call.i string_hash_to_newline(argc=1)	
+DL	obj_bringitinguys	call.i draw_text(argc=3)	
+DL	obj_bringitinguys	call.i random(argc=1)	
+DL	obj_bringitinguys	call.i random(argc=1)	
+DL	obj_bringitinguys	call.i random(argc=1)	
+DL	obj_bringitinguys	call.i random(argc=1)	
+D	obj_asrielappear	gml_Object_obj_asrielappear_Draw_0	0	5
+DL	obj_asrielappear	call.i draw_sprite_ext(argc=9)	
+DL	obj_asrielappear	call.i draw_set_alpha(argc=1)	
+DL	obj_asrielappear	call.i draw_set_color(argc=1)	
+DL	obj_asrielappear	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_asrielappear	call.i draw_set_alpha(argc=1)	
+D	obj_asriel_overworldanim	gml_Object_obj_asriel_overworldanim_Draw_0	0	10
+DL	obj_asriel_overworldanim	call.i floor(argc=1)	
+DL	obj_asriel_overworldanim	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_overworldanim	call.i __view_set(argc=3)	
+DL	obj_asriel_overworldanim	call.i __view_set(argc=3)	
+DL	obj_asriel_overworldanim	call.i draw_set_alpha(argc=1)	
+DL	obj_asriel_overworldanim	call.i draw_set_color(argc=1)	
+DL	obj_asriel_overworldanim	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_asriel_overworldanim	call.i draw_set_alpha(argc=1)	
+DL	obj_asriel_overworldanim	call.i instance_create(argc=3)	
+DL	obj_asriel_overworldanim	call.i instance_destroy(argc=0)	
+D	obj_asrielpanels	gml_Object_obj_asrielpanels_Draw_0	0	12
+DL	obj_asrielpanels	call.i draw_sprite_ext(argc=9)	
+DL	obj_asrielpanels	call.i draw_set_alpha(argc=1)	
+DL	obj_asrielpanels	call.i draw_set_color(argc=1)	
+DL	obj_asrielpanels	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_asrielpanels	call.i draw_set_alpha(argc=1)	
+DL	obj_asrielpanels	call.i draw_set_alpha(argc=1)	
+DL	obj_asrielpanels	call.i draw_set_color(argc=1)	
+DL	obj_asrielpanels	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_asrielpanels	call.i draw_set_alpha(argc=1)	
+DL	obj_asrielpanels	call.i caster_is_playing(argc=1)	
+DL	obj_asrielpanels	call.i caster_is_playing(argc=1)	
+DL	obj_asrielpanels	call.i caster_loop(argc=3)	
+D	obj_asriel_body	gml_Object_obj_asriel_body_Draw_0	0	79
+DL	obj_asriel_body	call.i sin(argc=1)	
+DL	obj_asriel_body	call.i cos(argc=1)	
+DL	obj_asriel_body	call.i sin(argc=1)	
+DL	obj_asriel_body	call.i sin(argc=1)	
+DL	obj_asriel_body	call.i cos(argc=1)	
+DL	obj_asriel_body	call.i draw_set_color(argc=1)	
+DL	obj_asriel_body	call.i draw_set_alpha(argc=1)	
+DL	obj_asriel_body	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_asriel_body	call.i draw_set_alpha(argc=1)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i floor(argc=1)	
+DL	obj_asriel_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_asriel_body	call.i abs(argc=1)	
+DL	obj_asriel_body	call.i abs(argc=1)	
+DL	obj_asriel_body	call.i abs(argc=1)	
+DL	obj_asriel_body	call.i abs(argc=1)	
+DL	obj_asriel_body	call.i abs(argc=1)	
+DL	obj_asriel_body	call.i abs(argc=1)	
+DL	obj_asriel_body	call.i abs(argc=1)	
+DL	obj_asriel_body	call.i abs(argc=1)	
+DL	obj_asriel_body	call.i keyboard_check_pressed(argc=1)	
+DL	obj_asriel_body	call.i keyboard_check_pressed(argc=1)	
+DL	obj_asriel_body	call.i keyboard_check_pressed(argc=1)	
+DL	obj_asriel_body	call.i keyboard_check_pressed(argc=1)	
+DL	obj_asriel_body	call.i keyboard_check_pressed(argc=1)	
+D	obj_heart_another	-	-	0
+D	obj_roundedge	gml_Object_obj_roundedge_Draw_0	0	14
+DL	obj_roundedge	call.i __view_get(argc=2)	
+DL	obj_roundedge	call.i __view_get(argc=2)	
+DL	obj_roundedge	call.i __view_get(argc=2)	
+DL	obj_roundedge	call.i make_color_hsv(argc=3)	
+DL	obj_roundedge	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_roundedge	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_roundedge	call.i draw_set_alpha(argc=1)	
+DL	obj_roundedge	call.i draw_set_color(argc=1)	
+DL	obj_roundedge	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_roundedge	call.i draw_set_alpha(argc=1)	
+DL	obj_roundedge	call.i draw_set_color(argc=1)	
+DL	obj_roundedge	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_roundedge	call.i scr_gettext(argc=1)	
+DL	obj_roundedge	call.i draw_set_alpha(argc=1)	
+D	obj_afinal_body	gml_Object_obj_afinal_body_Draw_0	0	73
+DL	obj_afinal_body	call.i sin(argc=1)	
+DL	obj_afinal_body	call.i sin(argc=1)	
+DL	obj_afinal_body	call.i draw_set_color(argc=1)	
+DL	obj_afinal_body	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_afinal_body	call.i make_color_hsv(argc=3)	
+DL	obj_afinal_body	call.i draw_set_color(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_afinal_body	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_afinal_body	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_afinal_body	call.i draw_set_color(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_afinal_body	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_afinal_body	call.i draw_sprite_part_ext(argc=12)	
+DL	obj_afinal_body	call.i floor(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_afinal_body	call.i floor(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_afinal_body	call.i floor(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_afinal_body	call.i floor(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_afinal_body	call.i floor(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_afinal_body	call.i floor(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_afinal_body	call.i random(argc=1)	
+DL	obj_afinal_body	call.i random(argc=1)	
+DL	obj_afinal_body	call.i random(argc=1)	
+DL	obj_afinal_body	call.i random(argc=1)	
+DL	obj_afinal_body	call.i draw_set_alpha(argc=1)	
+DL	obj_afinal_body	call.i draw_set_color(argc=1)	
+DL	obj_afinal_body	call.i ossafe_fill_rectangle(argc=4)	
+DL	obj_afinal_body	call.i draw_set_alpha(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_afinal_body	call.i floor(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_afinal_body	call.i floor(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_ext(argc=9)	
+DL	obj_afinal_body	call.i floor(argc=1)	
+DL	obj_afinal_body	call.i draw_sprite_ext(argc=9)	
+D	obj_dogshrine	-	-	0
+D	obj_dogshrine2	gml_Object_obj_dogshrine2_Draw_0	0	0
+D	obj_mewmew_npc	-	-	0
+META	Placed	784
+META	NoDraw	620
+META	DrawSelf	3
+META	Custom	161
+META	Fail	0

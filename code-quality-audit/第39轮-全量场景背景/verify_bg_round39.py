@@ -346,15 +346,71 @@ check('D4 bg 路径统一走 bg/ 子目录', not _d4, '越界 %d %s' % (len(_d4)
 # ===========================================================================
 APPROX_HOWS = ('area_table', 'chapter_tiles', 'chapter_fallback')
 
+# ★★ 第120轮新增一档：`room.bake120.ut`
+#   ut 的 game.droid 是 GMS2 结构，房间内容在 `room.Layers` 里（背景层 + 6.9 万块
+#   legacy tile + 1.4 万实例）。第120轮按 depth 顺序把它们逐像素烘成房间图，
+#   **像素全部来自原作、零编造** ⇒ 归"真背景"。
+#   ★ 但它**不能**塞进 `C.REAL_HOWS`：B1/B3 那批判据是"据第37轮溯源表**重算**该是什么
+#     how 再比对"，塞进去会让 ut 场景被拿去和 Deltarune 的溯源表比 ⇒ 恒红。
+#   所以单列一档，E1 白名单显式带上它，并**另配 E5/E6 两条**守住它的实质
+#   （有图 + 文件在盘 + 是 PNG），不是"加个名字就放行"。
+BAKED_HOWS = ('room.bake120.ut',)
+
 _e1 = [(e[0], e[4].get('bg_source')) for e in ZONES
-       if e[4].get('bg_source') not in ('none',) + C.REAL_HOWS]
-check('E1 926 个"新增场景"里不许出现近似档（area_table/chapter_tiles/…）',
+       if e[4].get('bg_source') not in ('none',) + C.REAL_HOWS + BAKED_HOWS]
+check('E1 %d 个"新增场景"里不许出现近似档（area_table/chapter_tiles/…；'
+      '烘图档 room.bake120.* 除外）' % len(ZONES),
       not _e1, '越界 %d %s' % (len(_e1), _e1[:3]))
+
+# ★ E1b 正/负控制：白名单**不是**什么都收 —— 近似档与瞎编值都必须被挡在外面。
+#   （没有这条，E1 退化成"我列什么就过什么"，等于没守。）
+_e1_probe = ['area_table', 'chapter_tiles', 'chapter_fallback', 'room.bake999.xx', '']
+check('E1b 负控制：E1 的白名单挡得住近似档与瞎编值（不是"列什么就过什么"）',
+      all(h not in ('none',) + C.REAL_HOWS + BAKED_HOWS for h in _e1_probe)
+      and 'room.bake120.ut' in BAKED_HOWS
+      and 'tmx.composite' in C.REAL_HOWS)
 
 _e2 = [(e[0], e[4].get('bg_source')) for e in ZONES
        if e[4].get('bg_source') in C.REAL_HOWS and e[4].get('bg') is None]
 check('E2 新增场景里的真背景必须真的配了图（不许只标注不落图）',
       not _e2, '空标 %d %s' % (len(_e2), _e2[:3]))
+
+# E5 ★ 烘图档的实质守点：标了 `room.bake120.*` 就必须有图、图在盘、且真是 PNG。
+#   （E1 只放行"来源名字合法"；名字对但文件空的坑必须另有判据 —— 第120轮
+#    `check_bg120 A3/D2` 从 ut 分片侧守，这里从全仓 ENTRIES 侧再守一次，
+#   两边分母不同，能抓到"分片被改而全集没变"这类偏移。）
+
+
+def _bg_file_ok(bg):
+    u"""bg 路径 → 真有一张合法 PNG（空值/缺文件/非 PNG 都算 False）。"""
+    if not bg:
+        return False
+    p = os.path.join(SCENES, str(bg).replace('/', os.sep))
+    if not os.path.isfile(p):
+        return False
+    try:
+        with open(p, 'rb') as fh:
+            return fh.read(8) == b'\x89PNG\r\n\x1a\n'
+    except Exception:
+        return False
+
+
+_baked = [e for e in ENTRIES if e[4].get('bg_source') in BAKED_HOWS]
+_e5_bad = [e[0] for e in _baked if not _bg_file_ok(e[4].get('bg'))]
+check('E5 烘图档（room.bake120.*）%d 个场景：都有 bg、文件在盘、且是合法 PNG'
+      % len(_baked),
+      bool(_baked) and not _e5_bad,
+      '不合格 %d %s' % (len(_e5_bad), _e5_bad[:3]))
+
+# E6 ★ 正/负控制成对：同一判据，好的一定为真、三种坏的一定为假。
+#   （没有这条，E5 可能因为 `_baked` 恰好都合格而"看起来在守"，
+#    却对"空 bg""坏路径""不是 PNG"这几种输入毫无鉴别力。）
+_good_bg = _baked[0][4].get('bg') if _baked else None
+check('E6 正/负控制：`_bg_file_ok` 对真图・空值・坏路径・非 PNG 四种输入各不相同',
+      _good_bg is not None and _bg_file_ok(_good_bg) is True
+      and _bg_file_ok(None) is False
+      and _bg_file_ok('bg/__no_such_120__.png') is False
+      and _bg_file_ok('_zone.ut.rooms.json') is False)
 
 # 87 锚点的 bg_source 必须与第 37 轮**实际产出**的 how 逐条一致（近似档没被扩散/改写）
 # （`_r37` 已在文件开头载入，B/E 两段共用同一份，避免两处各读一次导致口径分叉）

@@ -330,11 +330,53 @@ check('F1 ★★ 迁入场景的字段集 == 既有分片场景字段集（防"�
 check('F2 ★★ 每个迁入场景都显式声明 bg 键（E1a 判据的守点）',
       all('bg' in s for s in _z.values()),
       '缺 %d' % sum(1 for s in _z.values() if 'bg' not in s))
-check('F3 ★ 迁入场景的 bg 全为 None 且 bg_source == "none"（没素材就如实留空）',
-      all(s.get('bg') is None and s.get('bg_source') == 'none'
-          for s in _z.values()),
-      '异常 %d' % sum(1 for s in _z.values()
-                    if not (s.get('bg') is None and s.get('bg_source') == 'none')))
+# ★★ F3 第120轮改写。原判据：迁入场景的 `bg` 全为 None 且 `bg_source == "none"`。
+#   守点是「**没素材就如实留空**，不许编一个假路径」。第120轮 ut 338 间房
+#   从原作 `game.droid` 的 `room.Layers` 逐像素烘出了真图 ⇒ 原判据报红。
+#   报的是**真事实**，所以不是放宽，而是**拆成两路**、两路各自更严：
+#     · `bg_source == "none"`        ⇒ bg 必须为 None（空标签）
+#     · `bg_source == room.bake120.ut` ⇒ bg 非空 + 文件在盘 + 真是 PNG（不许空标）
+#     · 任何第三种取值                ⇒ 直接报红（白名单，不许自造来源）
+#   另外钉住两路的分账 20 / 338，防"悄悄把 20 个也贴上图"。
+_F3_BAKED = 'room.bake120.ut'
+_F3_OK_SRC = ('none', _F3_BAKED)
+
+
+def _f3_png_ok(bg):
+    u"""bg 路径 → 真有一张合法 PNG。"""
+    if not bg:
+        return False
+    p = os.path.join(SCENES, str(bg).replace('/', os.sep))
+    if not os.path.isfile(p):
+        return False
+    try:
+        with open(p, 'rb') as fh:
+            return fh.read(8) == b'\x89PNG\r\n\x1a\n'
+    except Exception:
+        return False
+
+
+_f3_none = [sid for sid, s in _z.items() if s.get('bg_source') == 'none']
+_f3_baked = [sid for sid, s in _z.items() if s.get('bg_source') == _F3_BAKED]
+_f3_weird = [(sid, s.get('bg_source')) for sid, s in _z.items()
+             if s.get('bg_source') not in _F3_OK_SRC]
+_f3_blank = [sid for sid in _f3_none if _z[sid].get('bg') is not None]
+_f3_unfill = [sid for sid in _f3_baked if not _f3_png_ok(_z[sid].get('bg'))]
+check('F3 ★ 迁入场景的 bg 两路都不许撒谎：`none` 的必须留空、`room.bake120.ut` 的'
+      '必须有真图，且来源只许这两种（留空 %d / 烘图 %d）'
+      % (len(_f3_none), len(_f3_baked)),
+      not _f3_weird and not _f3_blank and not _f3_unfill
+      and (len(_f3_none), len(_f3_baked)) == (20, 338),
+      '未知来源 %r；none 却带图 %r；标了烘图却没有图 %r；分账 %d/%d'
+      % (_f3_weird[:3], _f3_blank[:3], _f3_unfill[:3],
+         len(_f3_none), len(_f3_baked)))
+# F3b 正/负控制成对：`_f3_png_ok` 四种输入各不相同（否则 F3 的第二路等于没守）
+_f3_good = _z[_f3_baked[0]].get('bg') if _f3_baked else None
+check('F3b 正/负控制：`_f3_png_ok` 对真图・空值・坏路径・非 PNG 各不相同',
+      _f3_good is not None and _f3_png_ok(_f3_good) is True
+      and _f3_png_ok(None) is False
+      and _f3_png_ok('bg/__no_such_120__.png') is False
+      and _f3_png_ok('_zone.ut.rooms.json') is False)
 _n_before = PASS + FAIL
 _noop_ok = _probe_ledger()              # ★ 不打 stdout：见该函数注释（否则会污染套件 FAIL 计数）
 check('F4 记账口不是 no-op（造失败真进账，且探针自身零痕迹：不打失败标记、不动计数）',

@@ -293,13 +293,30 @@ def main():
     #   只对总数会让"别处悄悄掉了 1、OneShot 又补了 1"这类漂移蒙混过关。
     _BG_STOCK = 235      # 第39~100轮口径：Deltarune 侧已采素材（157 真背景 + 78 近似锚点）
     _BG_ONESHOT = 263    # 第101轮：OneShot 263 间房 tmx 逐像素合成
-    _bg_pin = _BG_STOCK + _BG_ONESHOT
-    _oneshot_bg = n_bg_by_ch.get('oneshot', 0)
-    check('B8 背景覆盖率如实钉住 == %d（= 既有 %d + OneShot %d；分母 = 当前产品场景数 %d）'
-          % (_bg_pin, _BG_STOCK, _BG_ONESHOT, n_scenes),
-          n_bg == _bg_pin and _oneshot_bg == _BG_ONESHOT
-          and n_bg - _oneshot_bg == _BG_STOCK,
-          '实得 %d，分章 %s' % (n_bg, dict(sorted(n_bg_by_ch.items()))))
+    # ★★ 第120轮：ut 338 间房补上烘图（`room.bake120.ut`，从 game.droid 的
+    #   `room.Layers` 逐像素烘出）。★ 是 **338 不是 358** —— ut 分片里有 20 个
+    #   场景名在 UT 自己的 game.droid 里 0 命中（它们是 outertale 独有的房间，
+    #   第77轮从跨作品大图迁入时混进 ut 章），本轮如实留空，见报告 §120.6。
+    _BG_UT = 338
+    # ★ 第39~100轮只钉"总数"；第101轮起加"逐章交代构成"。第120轮**再收紧一步**：
+    #   不再用 `总数 - oneshot == stock` 这种两段相减（它允许"ch1 掉 1、ch5 补 1"
+    #   互相抵掉），改成**逐章钉死 + 禁止出现未登记的章**。
+    _BG_BY_CH = {
+        'ch1': 40, 'ch2': 58, 'ch3': 38, 'ch4': 53, 'ch5': 46,   # 合计 235
+        'oneshot': _BG_ONESHOT,
+        'ut': _BG_UT,
+    }
+    _bg_pin = sum(_BG_BY_CH.values())
+    _bg_diff = dict((ch, (n_bg_by_ch.get(ch, 0), want))
+                    for ch, want in _BG_BY_CH.items()
+                    if n_bg_by_ch.get(ch, 0) != want)
+    _bg_extra = sorted(set(n_bg_by_ch) - set(_BG_BY_CH))
+    check('B8 背景覆盖率逐章钉住（合计 %d = Deltarune %d + OneShot %d + ut %d；'
+          '分母 = 当前产品场景数 %d）'
+          % (_bg_pin, _BG_STOCK, _BG_ONESHOT, _BG_UT, n_scenes),
+          n_bg == _bg_pin and not _bg_diff and not _bg_extra,
+          '实得 %d；不一致 %r；未登记的章 %r'
+          % (n_bg, _bg_diff, _bg_extra))
 
     # =======================================================================
     print()
