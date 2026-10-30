@@ -569,11 +569,21 @@ def seg_d():
 #  E 可交互物（分类如实 + 锁必须能释放）
 # ===========================================================================
 
-def _product_src_hist():
+def _product_src_hist(skip_ut=True):
     """遍历场景**产物**，数每个 `src` 出现次数 —— E3 的事实源。
 
     ★ 为什么拿产物当事实源：`PROP_CLASSES` 里的 `in_data` 是**声明**，
       产物才是**事实**。两侧对账才能同时堵住"没做却说做了"与"做了却说没做"。
+
+    ★★★ 第121轮：默认**跳过 `_zone.ut.*`**。原因不是"眼不见为净"，而是
+      `II.data_gaps()` 描述的是**第68轮对 Deltarune 五章的普查**
+      （每条 gap 的文案都写着 `ch1~5` / `objmap43` / `obj_board_*`），
+      而 ut 是**另一部作品**、另一份 objmap —— 同名对象只是**撞名**。
+      实测（第121轮）：ut 侧 `obj_interactable` 有 **1** 个实例，
+      于是 `gap_but_present` 从 0 变 1；而 Deltarune 侧它仍是 0 条
+      （gap 文案说的 "objmap43 里 `spr=` 为空 ⇒ 进不了 objects" 依然成立）。
+      把跨作品同名算成"缺口被修了"就是**假红**；反过来直接把 gap 删掉
+      更是**把声明改小以迎合事实**。⇒ 两侧分开算，并由 E3b 显式记账。
     """
     hist = {}
     sd = SS.scenes_dir()
@@ -581,6 +591,8 @@ def _product_src_hist():
         return hist
     for f in sorted(os.listdir(sd)):
         if not f.endswith('.json'):
+            continue
+        if skip_ut and f.startswith('_zone.ut.'):
             continue
         try:
             with io.open(os.path.join(sd, f), 'r', encoding='utf-8') as fh:
@@ -641,6 +653,38 @@ def seg_e():
           % (len(gaps), ','.join(sorted(gaps)), len(true_but_empty), len(gap_but_present)))
     for _n in (true_but_empty + gap_but_present)[:5]:
         print('      [SUSPECT] %s' % _n)
+
+    # ---- E3b ★★ 跨作品同名**分账**（第121轮）----
+    #   上面那条 E3 只对 Deltarune 产物对账；这里把被排除的 ut 侧**显式记账**，
+    #   否则"跳过 `_zone.ut.*`"就成了一条没人守的逃生通道。
+    #   要守的语义：ut 侧确实有条数、确实有**撞名**落在缺口名单里，
+    #   且**仅此一个名字** —— 将来 ut 再多撞几个名，这里会红一次，届时重新分账。
+    def _ut_src_hist():
+        p = os.path.join(SS.scenes_dir(), '_zone.ut.rooms.json')
+        if not os.path.isfile(p):
+            return {}
+        try:
+            with io.open(p, 'r', encoding='utf-8') as fh:
+                d = json.load(fh)
+        except Exception:
+            return {}
+        h = {}
+        for _sid, raw in ((d.get('scenes') or {}) if isinstance(d, dict) else {}).items():
+            if not isinstance(raw, dict):
+                continue
+            for o in (raw.get('objects') or []):
+                s = (o or {}).get('src')
+                if s:
+                    h[s] = h.get(s, 0) + 1
+        return h
+
+    _ut = _ut_src_hist()
+    _ut_gap = {n: _ut.get(n, 0) for names in gaps.values() for n in names if _ut.get(n, 0)}
+    check('E3b', sum(_ut.values()) == 422 and _ut_gap == {'obj_interactable': 1}
+          and not gap_but_present,
+          'E3b ★★ 跨作品同名分账：被排除的 ut 分片 %d 条，落在缺口名单里的只有 %s'
+          '（Deltarune 侧仍 0 条 ⇒ 缺口声明成立；**不是**把声明改小去迎合事实）'
+          % (sum(_ut.values()), _ut_gap))
 
     # ---- E4 ★★ 真实场景：ch1 城堡镇 ⇒ 存档点 + 可读物**都**建出可交互物 ----
     #   ★ 第68轮：objects 由 7 → 11（补采落地了 `obj_readable_room1`）⇒ 不能再断言 `== 7`

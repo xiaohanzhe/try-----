@@ -96,11 +96,20 @@ def _insts_of(path):
     return out
 
 
-def _src_hist():
-    """产物里每个 `src` 的出现次数（扫分片 + 独立文件）。"""
+def _src_hist(skip_ut=True):
+    """产物里每个 `src` 的出现次数（扫分片 + 独立文件）。
+
+    ★★★ 第121轮：默认**跳过 `_zone.ut.*`**。`II.data_gaps()` 的口径是
+      **第68轮对 Deltarune 五章的普查**，ut 是另一部作品、另一份 objmap；
+      同名对象只是**撞名**（实测 ut 侧 `obj_interactable` 有 1 个实例，
+      Deltarune 侧仍 0 条）。跨作品同名算成"缺口被修了"是**假红**，
+      而删掉 gap 声明去迎合事实则是**改小口径**。⇒ 分开算，由 C3b 显式记账。
+    """
     hist = collections.Counter()
     for f in sorted(os.listdir(SCENES)):
         if not f.endswith('.json'):
+            continue
+        if skip_ut and f.startswith('_zone.ut.'):
             continue
         try:
             d = load(os.path.join(SCENES, f))
@@ -261,6 +270,30 @@ def seg_c():
           % (len(gnames), len(present)))
     for n in present[:5]:
         print('      [SUSPECT] %s' % n)
+
+    # ★★ C3b：把被排除的 ut 侧**显式记账**（否则"跳过 `_zone.ut.*`"就是逃生通道）
+    def _ut_hist():
+        p = os.path.join(SCENES, '_zone.ut.rooms.json')
+        if not os.path.isfile(p):
+            return {}
+        try:
+            d = load(p)
+        except Exception:
+            return {}
+        h = collections.Counter()
+        for _sid, raw in ((d.get('scenes') or {}) if isinstance(d, dict) else {}).items():
+            for o in ((raw or {}).get('objects') or []):
+                s = (o or {}).get('src')
+                if s:
+                    h[s] += 1
+        return h
+
+    _ut = _ut_hist()
+    _ut_gap = {n: _ut[n] for n in gnames if _ut.get(n, 0) > 0}
+    check('C3b', sum(_ut.values()) == 422 and _ut_gap == {'obj_interactable': 1}
+          and not present,
+          'C3b ★★ 跨作品同名分账：被排除的 ut 分片 %d 条，落在缺口名单里的只有 %s'
+          '（Deltarune 侧仍 0 ⇒ 缺口声明成立）' % (sum(_ut.values()), _ut_gap))
 
 
 # ===========================================================================

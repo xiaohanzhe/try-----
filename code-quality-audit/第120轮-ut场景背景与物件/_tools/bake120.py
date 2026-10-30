@@ -240,7 +240,7 @@ def _inside(canvas, img, x, y):
 
 
 def bake_room(room, layers, bgs, lsps, tiles, tex, insts, objs, room_dir,
-              draw_kind=None, hidden_objs=None):
+              draw_kind=None, hidden_objs=None, ignore_vis=False):
     W, H = room['w'], room['h']
     base = rgba_of(room['bgcolor']) if room['drawbg'] else (0, 0, 0, 255)
     canvas = Image.new('RGBA', (W, H), base)
@@ -262,7 +262,11 @@ def bake_room(room, layers, bgs, lsps, tiles, tex, insts, objs, room_dir,
         seq += 1
     for i in insts:
         o = objs.get(i['obj'])
-        if not o or not o['vis'] or not o['spr']:
+        # ★ 第121轮：`ignore_vis=True` 时**不按资产 `vis` 过滤**（默认 False，默认行为一字不变）。
+        #   为什么需要它：GM 的 `visible` 只约束**自动绘制**（无 Draw 事件时）；
+        #   自定义 Draw 事件照跑。所以「资产 vis=False」不等于「屏幕上没有」。
+        #   这是用来做对照实验的开关，不是产品口径 —— 正式烘图仍走 vis 门。
+        if not o or (not o['vis'] and not ignore_vis) or not o['spr']:
             continue
         # ★ 自绘对象不画（画了就一定是假的：它们的 Draw 里有条件/战斗专用逻辑）
         if draw_kind.get(i['obj']) == 'custom':
@@ -369,6 +373,9 @@ def main(argv):
     ap.add_argument('--out', default=None)
     ap.add_argument('--limit', type=int, default=0)
     ap.add_argument('--rooms', default='', help='逗号分隔的房间名，只烘这些')
+    # ★ 第121轮对照实验用：默认关，默认行为一字不变
+    ap.add_argument('--include-invisible', action='store_true',
+                    help='不按资产 vis 过滤对象（对照实验用，不是产品口径）')
     a = ap.parse_args(argv)
 
     d = os.path.join(WORK, a.game, '_out')
@@ -413,7 +420,8 @@ def main(argv):
         canvas, stat = bake_room(room, layers.get(ri, []), lbg.get(ri, []),
                                  lsp.get(ri, []), tiles.get(ri, []), tex,
                                  insts.get(ri, []), objs, outdir,
-                                 draw_kind, hidden_objs)
+                                 draw_kind, hidden_objs,
+                                 ignore_vis=a.include_invisible)
         fn = os.path.join(outdir, '%s_%s.png' % (a.game, room['name']))
         canvas.save(fn)
         n = stat['tile'] + stat['ob'] + stat['bg'] + stat['sp'] + stat['fill']

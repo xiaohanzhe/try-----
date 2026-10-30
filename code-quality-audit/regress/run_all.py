@@ -3221,6 +3221,31 @@ SUITES = [
                 '★ 零 Qt、零外部盘（只读仓库资产 + 本轮蒸馏进 `_evidence` 的 TSV）。',
     },
     {
+        'id': 'check_objs121',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第121轮-ut可交互物', '_tools',
+                               'check_objs121.py'),
+        'desc': '第121轮：**ut 场景的 objects（可交互物）** —— 第120轮把画面烘成了背景，'
+                '但 `objects` 仍是 `[]` ⇒ `item_interact.build_props()` 遍历不到东西 '
+                '⇒ 走进 ut 房间**什么都点不了**（可读物/存档点/告示牌全哑）。'
+                '本轮写进 422 条（136 个场景）：readable 350 / sign 34 / savepoint 33 / '
+                'pickup 3 / fountain 1 / interactable 1。'
+                '★ 三条口径：① 只写**现在真能用**的 6 类 —— `door`(1,299 个实例) 不写'
+                '（建门要 `routes`，ut 侧还没有 ⇒ 写了就是推不开的门，留待路由那轮），'
+                '`cutscene`(375) 不写（`build_props` 落 else 丢弃）；'
+                '② `sprite` **一律 None**：ut 画面已在背景里，再画即重复；且 '
+                '`_obj_visible.json` 的 `hidden` 是**全局扁平**名单，ut 的 `obj_savepoint` '
+                '与 Deltarune 的**同名**（实测唯一冲突）⇒ 并进全局名单会跨作品污染。'
+                '`scene_canvas._paint_obj` 的 `if name` 不成立 ⇒ 不落笔（已核行）；'
+                '③ `pos = [x-ox, y-oy]`（左上角语义，与 `bake120` 画实例的式子**同一个**）。'
+                'A 规模/形状（字段恰好 4 个 · sprite None · pos 两个 int）· '
+                'B 来源与分类（src 都在 objmap 里 · 只许 6 类 · 分布 == 实测）· '
+                '★★C **位置全量复算**：用仓库里的 `inst_full.tsv` + `objmap_ut.txt` + '
+                '`SPR` 原点段重算 pos，358 个场景**逐条相等**（配 1 像素负控制 + 正控制）· '
+                'D 防回滚 · E 自检（AST 数恒真 / 无 BOM）。'
+                '★ 零 Qt、零外部盘（只读仓库资产 + 第115/120轮蒸馏进仓库的 TSV）。',
+    },
+    {
         'id': 'check113p',
         'script': os.path.join(ROOT, 'code-quality-audit',
                                '第113轮-全体角色AI训练', '_tools', 'check113p.py'),

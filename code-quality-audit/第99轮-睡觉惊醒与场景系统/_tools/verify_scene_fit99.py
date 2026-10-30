@@ -473,7 +473,7 @@ _MUST_STILL_DRAW = ('obj_savepoint',)
 
 def _scan_src_hidden(scenes):
     """遍历全部场景，返回 `(带 src 实例总数, 被过滤数, 被过滤的 distinct src,
-    loaded, 按命名空间拆分的 {(前缀): [总数, 被过滤数]})`。
+    loaded, 按命名空间拆分的 {(前缀): [总数, 被过滤数]}, 出现 sprite=None 的 scene id 集合)`。
 
     ⚠️ **一次加载、多次复用**：`load_scene(entry=)` 每次都重读区域分片
        （分片可达数百 KB），2166 个场景若反复加载会把套件的墙钟拖到分钟级
@@ -495,6 +495,7 @@ def _scan_src_hidden(scenes):
     seen = set()
     loaded = {}
     ns = {}
+    none_sids = set()
     for sid, ent in scenes.items():
         sc = SS.load_scene(sid, entry=ent)
         if sc is None:
@@ -509,15 +510,25 @@ def _scan_src_hidden(scenes):
                 continue
             tot += 1
             spr = o.get('sprite')
-            key = (spr.split('/', 1)[0] + '/') if isinstance(spr, str) and '/' in spr \
-                else '(无前缀)'
+            # ★★ 第121轮：`sprite is None` 单独记一本账（`(sprite=None)`）。
+            #   ut 的 422 条可交互物就是这种形态 —— 画面已在第120轮烘进背景图，
+            #   不再重复绘制（详见 `第121轮/_tools/build_objs121.py`）。
+            #   不能把它并进 `(无前缀)`：那会把"真·没写前缀的坏素材"和
+            #   "合法地没有贴图"混成一个桶，G24c 就失去鉴别力了。
+            if spr is None:
+                key = '(sprite=None)'
+                none_sids.add(sid)
+            elif isinstance(spr, str) and '/' in spr:
+                key = spr.split('/', 1)[0] + '/'
+            else:
+                key = '(无前缀)'
             slot = ns.setdefault(key, [0, 0])
             slot[0] += 1
             if not SS.is_drawable_object(o, hidden):
                 hid += 1
                 slot[1] += 1
                 seen.add(src)
-    return tot, hid, seen, loaded, ns
+    return tot, hid, seen, loaded, ns, none_sids
 
 
 def sec_g():
@@ -671,14 +682,17 @@ def sec_g():
        'G21d 桌面的门逐条过 `is_drawable_object` 都为真')
 
     # ---- G 全量过滤面普查（机器统计，不看单例）----
-    tot, hid, seen, loaded, ns = _scan_src_hidden(scenes)
+    tot, hid, seen, loaded, ns, none_sids = _scan_src_hidden(scenes)
     d_tot, d_hid = ns.get('objs/', [0, 0])            # Deltarune（46 个触发器名的种群）
     o_tot, o_hid = ns.get('oneshot_cells/', [0, 0])   # OneShot（第103轮接线，全可见）
+    # ★★ 第121轮：合法的命名空间多了一种 —— `(sprite=None)`（ut 的可交互物）。
+    _ALLOWED_NS = ('objs/', 'oneshot_cells/', '(sprite=None)')
     oth = sorted((k, v) for k, v in ns.items()
-                 if k not in ('objs/', 'oneshot_cells/') and v[0])
-    print('  过滤面：带 src 实例 %d（objs/ %d ｜ oneshot_cells/ %d ｜ 其他 %d）'
-          ' ｜ 被过滤 %d (%.1f%%) ｜ distinct src %d'
-          % (tot, d_tot, o_tot, sum(v[0] for _k, v in oth),
+                 if k not in _ALLOWED_NS and v[0])
+    _n_none = (ns.get('(sprite=None)') or [0, 0])[0]
+    print('  过滤面：带 src 实例 %d（objs/ %d ｜ oneshot_cells/ %d ｜ sprite=None %d'
+          ' ｜ 其他 %d） ｜ 被过滤 %d (%.1f%%) ｜ distinct src %d'
+          % (tot, d_tot, o_tot, _n_none, sum(v[0] for _k, v in oth),
              hid, 100.0 * hid / max(1, tot), len(seen)))
     ok(d_tot >= 3000 and o_tot >= 7800,
        'G23 带 src 的实例规模：`objs/`(Deltarune) %d >= 3000、'
@@ -692,9 +706,23 @@ def sec_g():
     ok(o_hid == 0,
        'G24b ★★ OneShot 命名空间被过滤 **0** 条（`oneshot_cells/` 的 %d 条全是'
        '真道具/NPC，一个都不该落进 901 个原作触发器名单；误杀 %d）' % (o_tot, o_hid))
-    ok(not oth,
-       'G24c `sprite` 前缀**只有** `objs/` 与 `oneshot_cells/` 两种'
-       '（出现第三种 ⇒ 有素材被放到没人守的命名空间里：%s）' % (oth[:3],))
+    #   ★★★ 第121轮为什么**不能**把 `(无前缀)` 一起放行：
+    #     那是个真会出问题的桶（素材名漏了目录前缀 ⇒ 运行时找不到文件）。
+    #     所以把"合法地没有贴图"单独立桶 `(sprite=None)`，钉死条数、并且
+    #     要求它**只出现在 ut 场景里** —— 两条一起才有鉴别力：
+    #       · 有名字却没前缀 ⇒ 落进 `(无前缀)` ⇒ 报红；
+    #       · Deltarune/OneShot 场景里冒出 sprite=None ⇒ 落在非 ut 场景 ⇒ 报红。
+    _ut_ids = set()
+    _utf = os.path.join(SCENES, '_zone.ut.rooms.json')
+    if os.path.isfile(_utf):
+        with open(_utf, 'r', encoding='utf-8') as fh:
+            _ut_ids = set((json.load(fh).get('scenes') or {}))
+    _stray_none = sorted(none_sids - _ut_ids)
+    ok(not oth and _n_none == 422 and not _stray_none and bool(_ut_ids),
+       'G24c `sprite` 只有三种合法形态：`objs/` / `oneshot_cells/` / **None**'
+       '（ut 那 %d 条可交互物 = 画面已在背景里，不重复绘制）；'
+       '其他命名空间 %s / None 条数 %d / 落在非 ut 场景的 %s'
+       % (422, oth[:3], _n_none, _stray_none[:3]))
     _diff = sorted(seen ^ set(_HIDDEN_SRC_SEEN))
     ok(_diff == [],
        'G25 过滤面 **恰好**是那 46 个触发器名（多/少都报红；差异=%s）'
@@ -716,6 +744,14 @@ def sec_g():
         hd = getattr(sc, 'hidden_objects', None)
         for o in getattr(sc, 'objects', None) or []:
             if not isinstance(o, dict) or SS.is_drawable_object(o, hd):
+                continue
+            # ★★ 第121轮：**只数"有贴图却被隐形名单拦下"的物件**。
+            #   ut 那 422 条 `sprite=None` 里有 126 条 `obj_readable_room1`
+            #   也判"不画"，但那是**因为压根没贴图**，不是被 901 名单过滤 ——
+            #   混进本计数会把 obj_readable_room1 从 921 抬到 1047，
+            #   看起来像"过滤面变了"，实际是分母换了物种（与 G24 同一个坑）。
+            #   ⇒ 语义钉在"过滤面"上：本判据量的就是隐形名单的杀伤面。
+            if not isinstance(o.get('sprite'), str):
                 continue
             cnt[o.get('src')] = cnt.get(o.get('src'), 0) + 1
     for nm, want in (('obj_readable_room1', 921), ('obj_markerA', 227),

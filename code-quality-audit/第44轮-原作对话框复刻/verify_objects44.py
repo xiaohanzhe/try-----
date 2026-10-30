@@ -132,6 +132,23 @@ RE_ZONE = re.compile(r'^_zone\.(ch\d+)\.')
 RE_ONESHOT_ZONE = re.compile(r'^_zone\.oneshot\.')
 ONESHOT_OBJ_TOTAL = 7804
 
+# ★★★ 第121轮：ut 的 `objects` 也不再是空表（**422 条 / 136 场景**），但它的
+#   `sprite` 一律是 **None** —— ut 的画面已由第120轮烘进背景图，再画一遍就是
+#   重复绘制（详见 `第121轮/_tools/build_objs121.py` 的 docstring 第 2 条）。
+#   那正好撞上本锁的两条口径：
+#     · A4「sprite 指向 `objs/` 下真实文件」—— 没有 sprite 的条目无处可指；
+#     · C2/C3「对着第68轮 **Deltarune** 普查守恒」—— 混进 ut 会把守恒撑破
+#       （实测 616→752 场景、3201→3623 条），而那不是回归，是**分母换了物种**。
+#   ⇒ 与 OneShot 同样处理：**剔除出种群**，但剔除必须**有账**（A2c 自证）。
+#   ★ ut 的物件归 `第121轮/_tools/check_objs121.py` 守（含**位置全量复算**：
+#     用实例表 + 原点表重算 `pos` 再逐条比对，比本锁的守恒更硬）。
+#   ★ 正则末尾那个 `.` 是**必须**的：`_zone.ut.` 不能吃掉 `_zone.uty.`（黄魂），
+#     否则会把黄魂整块静默剔掉（A2d 正/负控制就是钉这个）。
+RE_UT_ZONE = re.compile(r'^_zone\.ut\.')
+UT_SCENES = 358
+UT_SCENES_WITH_OBJ = 136
+UT_OBJ_TOTAL = 422
+
 PASS = 0
 FAIL = 0
 
@@ -160,8 +177,11 @@ def main():
                             if f.startswith('_zone.') and f.endswith('.json'))
     # ★★★ 第103轮：把 OneShot 分片**剔除**（见 `RE_ONESHOT_ZONE` 注释），
     #   本锁只对 Deltarune 命名空间负责。
-    zone_files = [f for f in all_zone_files if not RE_ONESHOT_ZONE.match(f)]
+    # ★★★ 第121轮：ut 分片同样剔除（见 `RE_UT_ZONE` 注释），理由同上一条。
+    zone_files = [f for f in all_zone_files
+                  if not RE_ONESHOT_ZONE.match(f) and not RE_UT_ZONE.match(f)]
     oneshot_zone_files = [f for f in all_zone_files if RE_ONESHOT_ZONE.match(f)]
+    ut_zone_files = [f for f in all_zone_files if RE_UT_ZONE.match(f)]
     # ★ 第77轮改：原来是 `== 61`（Deltarune 分片数）。UT/黄魂 第77轮迁入后
     #   多了 `_zone.ut.rooms.json` / `_zone.uty.rooms.json` ⇒ 63。
     #   判据**本意**是"分片载体真在盘上"，故改成下界（加作品不误报，
@@ -180,6 +200,36 @@ def main():
        'A2b ★★ 被本锁**刻意排除**的 OneShot 分片：%d 个、物件合计 %d == %d'
        '（第103轮接线；归 `check103` 守）—— 排除是**有账**的，不是掩护'
        % (len(oneshot_zone_files), os_zone_objs, ONESHOT_OBJ_TOTAL))
+
+    # ★★★ A2c：第121轮被剔除的 ut 分片**也必须自证** —— 同样不许"写错的过滤
+    #   条件把整块数据藏起来而这里全绿"。
+    ut_scenes = ut_with = ut_objs = 0
+    ut_bad_spr = []
+    for zf in ut_zone_files:
+        zd = load(os.path.join(SCENES, zf))
+        for sid, raw in ((zd.get('scenes') if isinstance(zd, dict) else {}) or {}).items():
+            if not isinstance(raw, dict):
+                continue
+            ut_scenes += 1
+            lst = raw.get('objects')
+            if isinstance(lst, list) and lst:
+                ut_with += 1
+            for o in (lst if isinstance(lst, list) else []):
+                ut_objs += 1
+                if (o or {}).get('sprite') is not None:
+                    ut_bad_spr.append((sid, (o or {}).get('sprite')))
+    ok(len(ut_zone_files) == 1 and ut_scenes == UT_SCENES
+       and ut_with == UT_SCENES_WITH_OBJ and ut_objs == UT_OBJ_TOTAL
+       and not ut_bad_spr,
+       'A2c ★★ 被本锁**刻意排除**的 ut 分片：%d 个 / 场景 %d == %d / 有物件 %d == %d'
+       ' / 条目 %d == %d / sprite 非 None 的 %d（须 0）—— 排除**有账**，'
+       '归 `check_objs121` 守'
+       % (len(ut_zone_files), ut_scenes, UT_SCENES, ut_with, UT_SCENES_WITH_OBJ,
+          ut_objs, UT_OBJ_TOTAL, len(ut_bad_spr)))
+    ok(bool(RE_UT_ZONE.match('_zone.ut.rooms.json'))
+       and not RE_UT_ZONE.match('_zone.uty.rooms.json'),
+       'A2d 正/负控制：`RE_UT_ZONE` 认 `_zone.ut.rooms.json`、**不认**'
+       ' `_zone.uty.rooms.json`（否则会连黄魂一起静默剔除）')
 
     # 收集全部场景 objects
     all_objs = []          # [(sprite, pos, src, 来源标签)]
