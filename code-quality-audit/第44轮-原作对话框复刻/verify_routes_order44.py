@@ -442,6 +442,9 @@ if have_rooms:
     #   第一版就误用了后者：`schooldoor` 的房间有 C 门，但 C 门的目标房
     #   `room_school_unusedroom` **未登记为场景** ⇒ 生成器本就编不出边，
     #   属"覆盖策略如实报告"，不是漏编。判据不完整 = 报假问题。
+    # ☑ 第124轮：断链 60 → **59**。桌面 C 门落点由 `ut.rooms.room_start` 改为
+    #   `ut.rooms.room_area1` —— 前者是空壳房（出边 0，所以以前落在 `dead` 里），
+    #   后者有 1 条出边（进 `froms`）⇒ 断链少 1 个。**这是修好了一条真死胡同，不是漏编**。
     tos = set(r.get('to') for r in RL)
     froms = set(r.get('when_scene') for r in RL)
     dead = sorted(tos - froms)

@@ -61,7 +61,14 @@ PRIO_BASE = 3000
 #:   指纹随之变化。**变更范围仅限 `when_scene == "desktop"` 的 5 条**：
 #:   其余 447 条与第105轮逐字节相同（见 D2c 新增的分域校验：把 desktop 段
 #:   单独抽掉后，余下各域指纹仍等于第105轮值）。
-OLD_FP = '820d98f834cc4ef7a2656e388d280aad6fa9bdff7bf229bc923a1137a42607d1'
+#: ★★★ 第124轮**有意更新**（同样是 D 段设计的用法，不是掩盖报红）：
+#:   桌面 **C 门（UT）落点** `ut.rooms.room_start` → `ut.rooms.room_area1`。
+#:   `room_start` 是原作下标 0 的**空壳/标题房**（出边 0）⇒ 从桌面进 ut 只能站着，
+#:   整个 UT 一间接不到（实测可达 1 间）；`room_area1` 才是"人类坠落的地方"（出边 1 ⇒ 可达 33 间）。
+#:   **变更范围仅限 1 条**：`when_scene=="desktop" and when_door=="C"`。
+#:   证据 = `D2c`：把 desktop 段抽掉后余下 **443 条**指纹仍是
+#:   `f4e3d7d00f36d90f…`（第105轮值，**本轮未动**）⇒ 非桌面段一条没变。
+OLD_FP = '040a06a50e1eccced25558f0539407a1ad749a7f27dffec7fafc44311aaea090'
 OLD_N = 447
 DESKTOP_N = 4
 

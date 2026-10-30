@@ -15493,9 +15493,9 @@
       "_order": 2
     },
     {
-      "to": "ut.rooms.room_start",
+      "to": "ut.rooms.room_area1",
       "priority": 200,
-      "reason": "桌面传送门（正左）：从桌面的任意门进入「Undertale」—— 原作 room 0，人类坠落的地方。",
+      "reason": "桌面传送门（正左）：从桌面的任意门进入「Undertale」—— 落点是**人类坠落的那个房间** `room_area1`，不是 room 0。★★ 第124轮修：原先写 `room_start`（原作下标 0），但那是**空壳/标题房**（实例只有 `obj_time` / `obj_layerchecker`，一个门都没有）⇒ 走进去只能站着，整个 ut 从桌面**一间接不到**（实测可达 1 间）。证据：`第115轮/_tools/graph115.py` 的入口定义「入口＝`room_area1` 非 `room_start`」＋`第71轮/_tools/check71.py` D4「为什么不是 room_start」＋实测 `room_start` 出边 0、`room_area1` 出边 1。",
       "when_scene": "desktop",
       "when_door": "C",
       "_original": {

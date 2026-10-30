@@ -50,6 +50,11 @@ u"""第89轮回归锁：**桌面 ↔ 作品场景连通**（用户硬门槛「�
     ⇒ F 段拆 F1a（总数）/ F1b（**恰好 1 扇彩蛋门 + 其余普通门**）；
     ⇒ 探针 `build_props` **必须镜像产品调用点**（传 `on_egg` 只观测桩），否则只能看到 3 扇（夹具不保真）；
     ⇒ `_push` 从**按下标**改为**按门字母**（彩蛋门 `target_scene=None` ⇒ 旧下标假设失效）。
+  * **第124轮**：桌面 C 门（UT）落点 `ut.rooms.room_start` → **`ut.rooms.room_area1`**。
+    `room_start` 是原作下标 0 的**空壳/标题房**（无门、无物、出边 0）⇒ 从桌面进 ut
+    **一间接不到**（实测可达 1 间）；`room_area1`（原作下标 **4**）可达 33 间。
+    ⇒ `_A_DOOR_WORLD['C']` 与 `B4b` 的描述改 `room_area1`；
+    ⇒ **`B4c` 的 `_room_want['C']` 由 0 改正为 4**（0 是标题屏，从来不是"坠落处"）。
 
 ★ 判据纪律：`print('[PASS] %s')` 字面量；判据名里不自带标记；正/负控制成对；
   **断行为不断赋值**；★★ **判据本身也是被测物**（第62~70 轮反复栽在判据侧）
@@ -143,7 +148,19 @@ def _load(path):
 _A_DOOR_WORLD = {
     'A': ('oneshot', 'oneshot.mainline.INIT'),   # 正上：Niko 第一次出现的房子下方的车厢（原作 room 1）
     'B': ('oneshot', 'oneshot.mainline.Start'),  # 正下：Niko 的家（★ 彩蛋门，永远进不去）
-    'C': ('ut', 'ut.rooms.room_start'),          # 正左：人类坠落的地方（原作 room 0）
+    # ★★★ 第124轮修：C 门落点 `room_start` → **`room_area1`**。
+    #   `room_start` 是原作**下标 0 的空壳/标题房**（实例只有 `obj_time` / `obj_layerchecker`，
+    #   一个门都没有 ⇒ 出边 0）⇒ 从桌面进 ut 只能站着，**整个 UT 一间接不到**（实测可达 1 间）。
+    #   真正的"人类坠落的地方"是 `room_area1`（出边 1 ⇒ ut 可达 33 间）。
+    #   证据：`第115轮/_tools/graph115.py`「入口＝`room_area1` 非 `room_start`」·
+    #        `第71轮/_tools/check71.py` D4「为什么不是 room_start」·
+    #        `第120轮/check_bg120.py` 的 `BLANK` 集合含 `room_start`。
+    #   ★★★ 第124轮重要更正：`room_area1` 的原作下标是 **4**（不是 0！）。
+    #     实测 `ut_rooms.json`：0=room_start · 1=room_introstory · 2=room_introimage ·
+    #     3=room_intromenu · **4=room_area1**（680×260，开局那片草地）。
+    #     也就是说 **0~3 全是开场/标题屏**，`room_start` 从来不是"坠落处"。
+    #     ⇒ 下面 `B4c` 的 `_room_want['C']` 必须从 0 改成 **4**。
+    'C': ('ut', 'ut.rooms.room_area1'),          # 正左：人类坠落的地方（原作 room 4）
     'D': ('ch1', 'ch1.hometown.town_mid'),       # 正右：光世界小镇中心（原作 room 11）
 }
 _LETTERS_WANT = set(_A_DOOR_WORLD.keys())
@@ -438,15 +455,21 @@ for _x in _desktop_routes:
     _got_map[_x.get('when_door')] = _x.get('to')
 _tgt_bad = {L: (_got_map.get(L), _tgt_map[L]) for L in _tgt_map if _got_map.get(L) != _tgt_map[L]}
 check('B4b ★★★ 4 条桌面路由的字母 ↔ 目标**逐条等于口径**'
-      '（A→oneshot.mainline.INIT · B→oneshot.mainline.Start · C→ut.rooms.room_start · D→ch1.hometown.town_mid）',
+      '（A→oneshot.mainline.INIT · B→oneshot.mainline.Start · C→ut.rooms.room_area1 · D→ch1.hometown.town_mid）',
       not _tgt_bad, star=True)
 if _tgt_bad:
     print('        不符: %r' % (_tgt_bad,))
 
 # B4c ★★ "三个世界各自的起点"这一层也对齐（第109轮新口径的证据锚：
-#   OneShot 门进的是**车厢** room 1 · UT 门进的是**坠落处** room 0 ·
+#   OneShot 门进的是**车厢** room 1 · UT 门进的是**坠落处** room 4 ·
 #   三角符文门进的是**光世界小镇中心** room 11）
-_room_want = {'A': 1, 'B': 2, 'C': 0, 'D': 11}
+#   ★★★ 第124轮更正：`_room_want['C']` 原为 **0**，那是**错的** ——
+#     `ut_rooms.json` 实测 0=room_start / 1=room_introstory / 2=room_introimage /
+#     3=room_intromenu（**0~3 全是开场与标题屏**）· **4=room_area1**（680×260，真正第一间）。
+#     ⇒ 改成 4。**这条判据此前一直绿，是因为它和 B4b 共享同一个错误假设**
+#     （B4b 把落点写成 `room_start`，B4c 就把期望下标写成 0）——
+#     **两条判据互证 ≠ 独立验证**，这是本项目第 124 轮最值得记的一条教训。
+_room_want = {'A': 1, 'B': 2, 'C': 4, 'D': 11}
 _room_bad = []
 _SID2ROOM = {}
 for _sid, _sv in (_INDEX.get('scenes') or {}).items():
@@ -457,7 +480,7 @@ for _L, _want in _room_want.items():
     _got = _SID2ROOM.get(_sid)
     if _got != _want:
         _room_bad.append('%s %s room=%r 期望=%r' % (_L, _sid, _got, _want))
-check('B4c ★★ 三个世界的落点房间号 = 原作真值（OneShot 车厢=1 · UT 坠落处=0 · 小镇中心=11）',
+check('B4c ★★ 三个世界的落点房间号 = 原作真值（OneShot 车厢=1 · UT 坠落处=4 · 小镇中心=11）',
       not _room_bad, star=True)
 if _room_bad:
     print('        %r' % (_room_bad,))
