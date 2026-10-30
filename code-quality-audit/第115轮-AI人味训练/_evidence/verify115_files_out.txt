@@ -1,0 +1,35 @@
+第115轮 · 改动文件静态复检
+  PERSONA = c:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\assets\ralsei_persona.md
+  MAIN    = c:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\src\main.py
+
+=== P1~P4 · 人设文件 ===
+  字符数 = 4446 ／ 字节数 = 12344
+  [PASS] P1 全部 11 个分节标题都在   << 缺=[]
+  [PASS] P2 禁 markdown（无 * / ` / 行首 #>-）
+  [PASS] P3 无 BOM（不以 EF BB BF 开头）
+  [PASS] P3b 无 U+FFFD（替换字符）
+  [PASS] P4 EOL 与改动前一致（LF：CRLF 计数 = 0）   << CRLF=0
+  [PASS] P4b 收尾是换行
+
+=== P5 · 新增内容逐字锚点回验（防"以为改了其实没落盘"）===
+  [PASS] P5 在盘: 我是《Deltarune》里的一个角色，是被人写出来
+  [PASS] P5 在盘: 我知道自己是从游戏里来的，可我的日子一样是真的
+  [PASS] P5 在盘: 先把他的事接住
+  [PASS] P5 在盘: "我带你过去"这种话，要落在一个具体的地方上
+  [PASS] P5 在盘: 我要是没想起这个名字，就该说"名字我真记不清了"
+
+=== P6~P8 · main.py ===
+  [PASS] P6 main.py 可编译（ast.parse，不产 .pyc）
+  [PASS] P6b main.py 无 BOM
+  [PASS] P7 兜底锚仍在: 不用叫他
+  [PASS] P7 兜底锚仍在: 仅此而已
+  [PASS] P7 兜底锚仍在: 平级
+  [PASS] P8 兜底已同步新口径
+
+=== P9 · ★ 判据自身的负控制（喂坏样本，必须报红）===
+  [PASS] P9a 判据能报红：删掉分节标题 → 缺项非空
+  [PASS] P9b 判据能报红：塞入 ** 加粗 → has_md 为真
+  [PASS] P9c 正控制：干净文本上 has_md 为假（否则 P2 恒红）
+  [PASS] P9d 判据能报红：抹掉新锚点 → 锚点不在
+
+=== 汇总：21 判据 / 0 FAIL ===

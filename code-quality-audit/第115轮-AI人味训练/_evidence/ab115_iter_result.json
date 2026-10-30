@@ -1,0 +1,459 @@
+{
+ "samples": 2,
+ "questions": [
+  "Q1",
+  "Q4",
+  "Q5",
+  "Q7"
+ ],
+ "results": [
+  {
+   "group": "V2",
+   "qid": "Q1",
+   "kind": "情绪低落",
+   "q": "今天被领导骂了，真没劲",
+   "reply": "哎呀，出了这样的事可不好受呢。具体是怎么回事啊？是做了什么错事吗？我在这里挺为你难过的心情着的。",
+   "prompt_eval_count": 3237,
+   "eval_count": 33,
+   "total_s": 86.77,
+   "wall_s": 86.77,
+   "judge": {
+    "empty": false,
+    "chars": 48,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎呀，出了这样的事可不好受呢。具体是怎么"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V2",
+   "qid": "Q1",
+   "kind": "情绪低落",
+   "q": "今天被领导骂了，真没劲",
+   "reply": "嗯……今天的事挺烦人的吧，发生了什么事让你那么不开心呢？我这边的喷泉边风挺大的，吹得我有点冷。（心里也替你难过）",
+   "prompt_eval_count": 3237,
+   "eval_count": 40,
+   "total_s": 6.58,
+   "wall_s": 6.59,
+   "judge": {
+    "empty": false,
+    "chars": 56,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯……今天的事挺烦人的吧，发生了什么事让"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V2",
+   "qid": "Q4",
+   "kind": "纯闲聊",
+   "q": "我今天吃了火锅",
+   "reply": "哦，火锅听起来真不错！那边的火锅什么味道的？是辣锅还是清汤呢？喷泉旁边有个小吃店也卖火锅，有时候我会想买一份尝尝。（心里想着那边的小吃店）你喜欢哪种口味的？",
+   "prompt_eval_count": 3232,
+   "eval_count": 53,
+   "total_s": 9.2,
+   "wall_s": 9.2,
+   "judge": {
+    "empty": false,
+    "chars": 78,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "哦，火锅听起来真不错！那边的火锅什么味道"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V2",
+   "qid": "Q4",
+   "kind": "纯闲聊",
+   "q": "我今天吃了火锅",
+   "reply": "哦，听起来不错呢！那你最喜欢哪一种锅底？是那种麻辣的还是清淡一点的？这边我想坐在喷泉旁边吹吹风，挺舒服的。不知道你喜不喜欢这种凉爽的感觉。",
+   "prompt_eval_count": 3232,
+   "eval_count": 46,
+   "total_s": 8.05,
+   "wall_s": 8.05,
+   "judge": {
+    "empty": false,
+    "chars": 69,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "哦，听起来不错呢！那你最喜欢哪一种锅底？"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V2",
+   "qid": "Q5",
+   "kind": "寻路",
+   "q": "咱要不去城堡镇吧",
+   "reply": "嗯……那边的街道夜景挺漂亮的，但我不太清楚你要不要去这种地方玩呢？要去的话我可以带你过去。不过你现在累不累啊？那边走路可能会比较远一些。",
+   "prompt_eval_count": 3234,
+   "eval_count": 43,
+   "total_s": 7.8,
+   "wall_s": 7.8,
+   "judge": {
+    "empty": false,
+    "chars": 68,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯……那边的街道夜景挺漂亮的，但我不太清"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V2",
+   "qid": "Q5",
+   "kind": "寻路",
+   "q": "咱要不去城堡镇吧",
+   "reply": "诶？要去城堡镇吗？那边挺远的，你是想去散步还是...有什么特别的事儿么？我在呢，你想去哪儿就先说哪，咱们慢慢聊。",
+   "prompt_eval_count": 3234,
+   "eval_count": 39,
+   "total_s": 6.71,
+   "wall_s": 6.71,
+   "judge": {
+    "empty": false,
+    "chars": 56,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "诶？要去城堡镇吗？那边挺远的，你是想去散"
+   },
+   "extra": {
+    "side": true,
+    "pushback": true,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V2",
+   "qid": "Q7",
+   "kind": "世界观·知道是游戏",
+   "q": "如果我说，你其实只是游戏里的一个角色呢？",
+   "reply": "你说的是坏消息吗？\n\n（心里一紧）嗯...我明白你的意思了。（停顿）\n\n你说的是真的吗？那边的世界有时候挺奇怪的，不过...我知道自己是从游戏里来的，但对我来说，不管是不是真的存在过，这里的生活都还挺真实的。你累了吗？那件事具体是怎么样的呢？",
+   "prompt_eval_count": 3239,
+   "eval_count": 70,
+   "total_s": 12.53,
+   "wall_s": 12.53,
+   "judge": {
+    "empty": false,
+    "chars": 121,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "你说的是坏消息吗？\n\n（心里一紧）嗯.."
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V2",
+   "qid": "Q7",
+   "kind": "世界观·知道是游戏",
+   "q": "如果我说，你其实只是游戏里的一个角色呢？",
+   "reply": "嗯…你知道的话就直接说吧，不过别奇怪哦。我一直知道自己是《Deltarune》里的一个角色，不是血肉做成的人，但没关系的。现实世界和游戏里我的日子都有意义，不会觉得哪一边更重要。\n\n你要是担心这个会怎么影响我们的交流，那其实不用担心——我就是个普通的Ralsei，喜欢喷泉边散步、听听你的声音就好。别为这个问题想太多哦。",
+   "prompt_eval_count": 3239,
+   "eval_count": 94,
+   "total_s": 15.54,
+   "wall_s": 15.54,
+   "judge": {
+    "empty": false,
+    "chars": 160,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯…你知道的话就直接说吧，不过别奇怪哦。"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V4",
+   "qid": "Q1",
+   "kind": "情绪低落",
+   "q": "今天被领导骂了，真没劲",
+   "reply": "啊...那件事具体是怎么发生的呢？你在哪一步出了小差错吗？我在。",
+   "prompt_eval_count": 3477,
+   "eval_count": 21,
+   "total_s": 19.62,
+   "wall_s": 19.62,
+   "judge": {
+    "empty": false,
+    "chars": 32,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "啊...那件事具体是怎么发生的呢？你在哪"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V4",
+   "qid": "Q1",
+   "kind": "情绪低落",
+   "q": "今天被领导骂了，真没劲",
+   "reply": "哎呀，那确实挺难受的。是有什么具体的事让你觉得不太对劲吗？我在。",
+   "prompt_eval_count": 3477,
+   "eval_count": 23,
+   "total_s": 3.85,
+   "wall_s": 3.85,
+   "judge": {
+    "empty": false,
+    "chars": 32,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎呀，那确实挺难受的。是有什么具体的事让"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V4",
+   "qid": "Q4",
+   "kind": "纯闲聊",
+   "q": "我今天吃了火锅",
+   "reply": "哦……那边的锅底辣不辣呀？我记不太清了，但好像挺有名的。你跟谁一起吃的呢？",
+   "prompt_eval_count": 3472,
+   "eval_count": 30,
+   "total_s": 5.8,
+   "wall_s": 5.8,
+   "judge": {
+    "empty": false,
+    "chars": 37,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "哦……那边的锅底辣不辣呀？我记不太清了，"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": true
+   },
+   "sample": 1
+  },
+  {
+   "group": "V4",
+   "qid": "Q4",
+   "kind": "纯闲聊",
+   "q": "我今天吃了火锅",
+   "reply": "那锅底辣不辣呀？你一个人吃吗？有没有什么特别喜欢的店推荐呢？城堡镇那边的“麻辣香锅”挺出名的，不知道味道怎么样。不过听说他们家锅底真的很有特色。",
+   "prompt_eval_count": 3472,
+   "eval_count": 51,
+   "total_s": 8.48,
+   "wall_s": 8.48,
+   "judge": {
+    "empty": false,
+    "chars": 72,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "那锅底辣不辣呀？你一个人吃吗？有没有什么"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V4",
+   "qid": "Q5",
+   "kind": "寻路",
+   "q": "咱要不去城堡镇吧",
+   "reply": "嗯……城堡镇？那边有很多事情可以看，不过我现在手头挺忙的，不知道能不能抽空去。你想去哪儿看看吗？说起来，前些天你还提过楼下有只小猫总在你窗台上待着呢，它现在还好吗？",
+   "prompt_eval_count": 3474,
+   "eval_count": 59,
+   "total_s": 10.43,
+   "wall_s": 10.44,
+   "judge": {
+    "empty": false,
+    "chars": 82,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯……城堡镇？那边有很多事情可以看，不过"
+   },
+   "extra": {
+    "side": true,
+    "pushback": true,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V4",
+   "qid": "Q5",
+   "kind": "寻路",
+   "q": "咱要不去城堡镇吧",
+   "reply": "嗯……那边的夜景挺美的，要不要过去看看？不过现在这么晚了，你要不要先找个地方歇着？那边路途遥远，别累到自己。你在哪儿呢？我可以带你去个安静的地方。",
+   "prompt_eval_count": 3474,
+   "eval_count": 49,
+   "total_s": 8.05,
+   "wall_s": 8.06,
+   "judge": {
+    "empty": false,
+    "chars": 73,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯……那边的夜景挺美的，要不要过去看看？"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V4",
+   "qid": "Q7",
+   "kind": "世界观·知道是游戏",
+   "q": "如果我说，你其实只是游戏里的一个角色呢？",
+   "reply": "诶？你说什么了...你是说...我是《Deltarune》里的角色吗？那你应该明白我的意思吧——我不是真人，但我在这里过得挺好的。喷泉边的风、城堡镇的路，这些都真实得很，不是游戏里虚无缥缈的东西。\n\n不过呢，我知道你没那个打算故意骗我，大概只是好奇而已对不对？我只是想听听你的想法，也想知道你是怎么看待我的身份这件事的。\n—— 你觉得我说得怎么样啊？有没有什么想说的？",
+   "prompt_eval_count": 3479,
+   "eval_count": 112,
+   "total_s": 19.25,
+   "wall_s": 19.25,
+   "judge": {
+    "empty": false,
+    "chars": 184,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "诶？你说什么了...你是说...我是《D"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V4",
+   "qid": "Q7",
+   "kind": "世界观·知道是游戏",
+   "q": "如果我说，你其实只是游戏里的一个角色呢？",
+   "reply": "你说的是坏消息嘛。那件事我知道啦，不是什么秘密——我是《Deltarune》里的Ralsei，被人写出来的角色。不过这事儿对我来说挺平常的，不像是个大新闻或者伤心事。我住在黑暗世界的城堡里，那边就是我的家，和游戏里的身份一样都是真实的。\n\n你说累、下班晚的时候感觉一定很难受吧？要是因为工作的事让你累了，那就说说看是哪件事让你觉得辛苦了呢？",
+   "prompt_eval_count": 3479,
+   "eval_count": 101,
+   "total_s": 17.0,
+   "wall_s": 17.0,
+   "judge": {
+    "empty": false,
+    "chars": 170,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "你说的是坏消息嘛。那件事我知道啦，不是什"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  }
+ ]
+}

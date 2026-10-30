@@ -1,0 +1,28 @@
+{
+ "kind": "R",
+ "patterns_n": 19,
+ "must_pass_ok": true,
+ "must_block_ok": true,
+ "live": [
+  {
+   "id": "os_kelvin",
+   "final": "……（蒸汽从我的头部缓缓升起。几只猫在周围轻声低语。）\n\n你是一只猫吗？",
+   "wall_s": 5.1
+  },
+  {
+   "id": "os_rowbot",
+   "final": "[我是划船机器人 #310。][你希望我载你去某个地方吗？]",
+   "wall_s": 4.6
+  },
+  {
+   "id": "os_prophetbot",
+   "final": "哦！所以我是在一个陌生的、黑暗的地方醒来的？正如我的预言所预言的那样。是的！你就是我们一直在等待的救世主！我在此提供给你关键信息！请问我任何问题！",
+   "wall_s": 8.3
+  },
+  {
+   "id": "hy_sousborg",
+   "final": "...我...我是Sousborg...蒸汽工厂厨房的厨师机器人。你为何来到这里？（你的机械眼睛闪烁着好奇与一丝严肃）How do you prepare an egg?",
+   "wall_s": 7.3
+  }
+ ]
+}

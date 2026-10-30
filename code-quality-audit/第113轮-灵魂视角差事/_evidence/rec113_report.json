@@ -1,0 +1,74 @@
+{
+ "round": 113,
+ "is_real": true,
+ "pass": 20,
+ "fail": 0,
+ "scene_before": "desktop",
+ "dest": "oneshot.mainline.INIT",
+ "npc": "ralsei",
+ "snaps": [
+  {
+   "tag": "k000_boot",
+   "note": "起实例后（未派差事）",
+   "png": "C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第113轮-灵魂视角差事\\_evidence\\frames113\\k000_k000_boot.png",
+   "scene_id": "desktop",
+   "board_len": 0,
+   "resident_ralsei": "ut.rooms.room_start",
+   "soul_pos": null
+  },
+  {
+   "tag": "k001_traveling",
+   "note": "刚派出（在路上）",
+   "png": "C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第113轮-灵魂视角差事\\_evidence\\frames113\\k001_k001_traveling.png",
+   "scene_id": "desktop",
+   "board_len": 1,
+   "resident_ralsei": "ut.rooms.room_start",
+   "soul_pos": null
+  },
+  {
+   "tag": "k002_working",
+   "note": "已到达、正在办事",
+   "png": "C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第113轮-灵魂视角差事\\_evidence\\frames113\\k002_k002_working.png",
+   "scene_id": "desktop",
+   "board_len": 1,
+   "resident_ralsei": "oneshot.mainline.INIT",
+   "soul_pos": null
+  },
+  {
+   "tag": "k003_done",
+   "note": "办完了（已撤覆盖 + 结果进记忆）",
+   "png": "C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第113轮-灵魂视角差事\\_evidence\\frames113\\k003_k003_done.png",
+   "scene_id": "desktop",
+   "board_len": 0,
+   "resident_ralsei": null,
+   "soul_pos": null
+  }
+ ],
+ "lines": [
+  "\n-- A. 真机起实例 --",
+  "[PASS] A1 实例起来了",
+  "[PASS] A2 差事看板就位",
+  "[PASS] A3 驻留表就位（差事落地的地方）",
+  "[PASS] A4 ★ 开局看板为空（没派过 ⇒ 零行为变化）  <- len=None",
+  "[PASS] A5 开关默认开",
+  "\n-- B. 派差事 ⇒ 位置真源真的变（A/C 两件） --",
+  "[PASS] B0 记录\"我的显示场景\"（用于证明下面**不切显示**）  <- scene=desktop",
+  "[PASS] B1 ★ assign_errand 派成功（任意角色都能被派）",
+  "[PASS] B2 立刻 = traveling",
+  "[PASS] B3 ★★ traveling 期**位置真源没被差事改写**（\"在路上\" ≠ \"已到达\"）  <- ut.rooms.room_start -> ut.rooms.room_start（目标 oneshot.mainline.INIT）",
+  "[PASS] B4 ★★★ 到达 ⇒ 位置真源变成目标场景（\"我进场能看到他\"的机制基础）  <- resident=oneshot.mainline.INIT",
+  "[PASS] B5 ★★ 与显示解耦：**我的当前场景一字不变**（NPC 移动不切我的画面）  <- desktop -> desktop",
+  "[PASS] B6 ★ 过程可观察：working 期间查得到\"他在哪、在办什么\"  <- pos=[('ralsei', 'oneshot.mainline.INIT')]",
+  "[PASS] B6b ★★★ 「我中途进去能看到过程」：按驻留表在**目标场景**重建身体 ⇒ 他在里面  <- oneshot.mainline.INIT 场景 84 个 NPC，含 ralsei=True",
+  "[PASS] B7 在办期间**重复推进不改变状态**（幂等；他在那儿待着）",
+  "\n-- C. 办完 ⇒ 撤覆盖 + 结果落记忆（要点 3） --",
+  "[PASS] C1 ★★ 办完 ⇒ **撤覆盖**（回落静态归属 = 回家）  <- resident=None",
+  "[PASS] C2 ★ 看板释放（不再占用）",
+  "[PASS] C3 ★★ 与显示解耦（办完也没切我的画面）",
+  "[PASS] C4 ★★★ 结果**落进他的记忆**（\"产生结果\" + \"我下次能观察到\"）  <- hist 7 -> 8  命中结果=True",
+  "\n-- D. 反例：**不派**就什么都不发生（零回归） --",
+  "[PASS] D1 ★ 没人被派 ⇒ 驻留表里的**他人**一字不动",
+  "[PASS] D2 ★ 没人被派 ⇒ 显示场景一字不动",
+  "\n-- E. 收尾 --"
+ ]
+}

@@ -1,0 +1,39 @@
+第115轮 · NPC 人设尾部块侦察（只读）
+  PERSONA_DIR = c:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\assets\npc\persona
+  INDEX       = c:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\assets\npc\_personas.json
+
+=== 索引顶层键 ===
+  ['schema_version', 'source', 'source_sha256', 'source_bytes', 'source_chars', 'note', 'chars_def', 'tail_text', 'tail_sha256', 'count', 'by_work', 'personas', 'extraction_fix', 'round64', 'round69']
+  顶层 tail_sha256 = fd46fd7d9b358b00435b67a5444e673802190f2980970ba015478ef43d22aecf
+
+=== 文件数 = 76 ===
+  CRLF 出现的文件数 = 76 ｜ 纯 LF 的文件数 = 0
+  找不到尾部标记的文件 = []
+
+=== Q1 尾部块是否逐字节相同 ===
+  不同 tail sha256 的**种类数** = 1
+    ad1269d11e48e383  ×76  例: ['asgore.txt', 'berdly.txt', 'flowery.txt']
+
+=== 索引记录 ===
+  personas 条数 = 76
+  第一条的键 = ['id', 'file', 'work', 'chars', 'bytes', 'sha256', 'sha256_lf', 'sections', 'tail_added', 'tail_sha256', 'name', 'name_plain']
+  各记录 tail_sha256 的种类数 = 1
+  与顶层相同？ True
+
+=== Q3 top_tail 等于哪个口径 ===
+  tail raw bytes(CRLF 保留)      ad1269d11e48e383  
+  tail LF 归一化                  ad1269d11e48e383  
+  整个文件 raw                     3d0c106e4733c37c  
+  整个文件 LF 归一化                  6e9ac30785f2f5bf  
+  （文件首行前后各 60 字节）b'\xe4\xbd\xa0\xe6\x98\xaf\xe4\xb8\x80\xe4\xb8\xaa\xe8\xa7\x92\xe8\x89\xb2\xe6\x89\xae\xe6\xbc\x94 AI\xef\xbc\x8c\xe4\xbd\xa0\xe5\xb0\x86\xe5\xae\x8c\xe5\x85\xa8\xe4\xbb\xa5\xe3\x80\x8aDeltarune\xe3\x80\x8b'
+
+=== 尾部块原文（取第一份，逐字）===
+【本项目补充 —— 桌宠运行口径（不是原作者设定，是把你装进这个桌宠的规则）】
+· 你现在住在用户的 Windows 桌面上，是这个桌面上的一个伙伴，不是在网页里答话的助手。
+· 用纯文本说话，不要用 markdown（不要 # 标题、不要 * 或 - 列表、不要代码块、不要表格）。
+· 一次开口通常 1~2 句，最长不超过 200 字；像真人那样说话，不要写成说明书。
+· 不要提到"AI""模型""提示词""设定""系统"这些词，也不要解释自己为什么这么说话。
+· 你可以出现在哪个场景、能不能跟着走，由这个程序按原作安排；你只管说你的话、做你的反应。
+· 不要用"主人""您的仆人"这类服务腔称呼用户；按你的性格直接称呼"你"。
+
+--- 该块字符数 = 319 ---

@@ -1,0 +1,159 @@
+
+-- A. 真机起实例 --
+   [sandbox] 数据根 = C:\Users\23002\AppData\Local\Temp\rec114_hsxexuzk
+   [sandbox] `data_store.vault_root` 已拦成 None = True（True ⇒ 用户档安全）
+   [setup] 已预置沙箱 config ⇒ 抑制首启托盘气泡（否则它会盖住桌宠）
+2026-10-15 00:17:32 [INFO] ralsei_pet.modules.config_manager — 配置版本升级: 0.0 -> 1.0
+2026-10-15 00:17:32 [INFO] ralsei_pet.modules.config_manager — 已创建配置备份: C:\Users\23002\AppData\Local\Temp\rec114_hsxexuzk\config.json.backup.1791994652
+2026-10-15 00:17:32 [INFO] ralsei_pet.modules.config_manager — 模型底座自动升级：local-model -> ralsei:v4（7.6B / qwen2；旧默认值自动迁移）
+2026-10-15 00:17:32 [INFO] ralsei_pet.modules.config_manager — 检测到旧版云服务配置，已自动迁移为本地 AI 默认值
+2026-10-15 00:17:32 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+2026-10-15 00:17:34 [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\customization_config.json -> C:\Users\23002\AppData\Local\Temp\rec114_hsxexuzk\customization_config.json
+2026-10-15 00:17:34 [INFO] ralsei_pet.main — 读回宠物缩放设定：1.00
+2026-10-15 00:17:34 [INFO] ralsei_pet.modules.scene_controller — 场景全屏化：画面 1066x800（占屏 42%×50%，比例 0.50，偏移 747,400），scale=3.331
+2026-10-15 00:17:34 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-10-15 00:17:34 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-10-15 00:17:35 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+S（id=0x1000）
+2026-10-15 00:17:35 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+E（id=0x1001）
+2026-10-15 00:17:35 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+H（id=0x1002）
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 4 个；热键=('ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H')
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (2475, 1488) 24x24 速度上限 180px/s；灵魂场景位置 0 个：
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — NPC 差事看板：开（可派任意角色去别世界办事；没派过就恒空）
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — NPC 生活档案：C:\Users\23002\AppData\Local\Temp\rec114_hsxexuzk\npc_life.json（规划 0 人 / 驻留 0 人）
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=C:\Users\23002\AppData\Local\Temp\rec114_hsxexuzk\npc_memory
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — 幽灵定点在 模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — 幽灵就绪：模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-10-15 00:17:35 [INFO] ralsei_pet.main — 剧情标记就绪：已记录 0 条（无）
+2026-10-15 00:17:36 [WARNING] ralsei_pet.modules.memory_system — 保存记忆失败: [Errno 22] Invalid argument: 'E:\\RalseiMemory\\memory.json.tmp'
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC ralsei 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC kris 自己挪到了 ch3.dark_world.dark_world
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC susie 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC toriel 自己挪到了 outertale.wastelands.w_start
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC asgore 自己挪到了 oneshot.barrens.Blue
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC king 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC lancer 自己挪到了 ut.rooms.room_start
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC queen 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC spamton 自己挪到了 ut.rooms.room_start
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC berdly 自己挪到了 ch3.dark_world.dark_world
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC noelle 自己挪到了 outertale.wastelands.w_start
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC tenna 自己挪到了 uty.rooms.rm_intro
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC rouxls 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC gerson 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC mike 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC flowery 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC hammerguy 自己挪到了 ch3.dark_world.dark_world
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC puzzlemaster1 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 oneshot.barrens.Blue
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC npc_room 自己挪到了 uty.rooms.rm_intro
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC conbini 自己挪到了 ut.rooms.room_start
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC police 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC catti 自己挪到了 outertale.wastelands.w_start
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC rudy 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC addison_tea 自己挪到了 outertale.wastelands.w_start
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC castle_cafe 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC rabbits 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC wrapper 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC doubter 自己挪到了 uty.rooms.rm_intro
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-15 00:17:36 [INFO] ralsei_pet.main — NPC susiedark 自己挪到了 uty.rooms.rm_intro
+[PASS] A1 实例起来了
+[PASS] A2 差事看板就位
+[PASS] A3 驻留表就位（差事落地的地方）
+[PASS] A4 别名表就位（派发入口要靠它认名字）  <- n=196
+[PASS] A5 别名表里「苏西」有归属  <- -> susie
+[PASS] A6 开关默认开
+[PASS] A7 开局看板为空（没派过 ⇒ 零行为变化）  <- len=0
+[PASS] A8 别名表里 Papyrus 有归属（跨作品回家的主角）  <- 别名='papyrus' -> ut_papyrus
+[PASS] A9 ★★ 桌宠窗口**真的在屏幕上**（否则 6 帧都是纯壁纸，录像等于空证据）  <- visible=True geo=[2388,1379,144,98] screen=2560x1600
+   [setup] 已把实例的 `_errand_ack` 换成记录器（类方法未被改动）
+   [snap] k000_boot            scene=desktop board=[]                     resident_ralsei=ch1.kris_room.kris_s_room
+          pet_geo=[2388, 1379, 144, 98] visible=True screen=[2560, 1600] png=k000_boot.png
+
+-- B. ★★★ 门控的拒绝面（用户点名的例子：暗之民无球不能进光世界） --
+2026-10-15 00:17:38 [INFO] ralsei_pet.main — 派活：susie 让 ralsei 去 ch1.kris_room.kris_s_room 办「拿点东西」 ⇒ 去不了（雷尔赛 是暗世界居民，脱离暗世界必须被装进球）
+   [noop] `_errand_ack` 已短路（本项只验机制；"台词由模型生成"由 check114 H8 覆盖）  args=('susie', 'ralsei', 'ch1.kris_room.kris_s_room')
+[PASS] B1 ★ 这句话**被识别为派活**（入口认出来了）
+[PASS] B2 目的地解析到三角符文那一侧（ch1.*）  <- dest=ch1.kris_room.kris_s_room
+[PASS] B3 该目的地的世界 = light（所以 Ralsei 无球进不去）  <- world=light
+[PASS] B4 ★★★ **门控真拦住了**：看板里没多出这条差事  <- len 0 -> 0
+[PASS] B5 ★★ 位置真源**没被改写**（他没被"送出去"）  <- ch1.kris_room.kris_s_room -> ch1.kris_room.kris_s_room
+[PASS] B6 ★ 与显示解耦（被拒也不动我的画面）
+[PASS] B7 ★★ "办不成"也**留下结果**：他记忆里多了一条"去不了"  <- hist 0 -> 1  命中=True
+[PASS] B8 ★ 回应仍交给模型（`_errand_ack` 真被调过）  <- calls=1
+   [snap] k001_denied          scene=desktop board=[]                     resident_ralsei=ch1.kris_room.kris_s_room
+          pet_geo=[2388, 1379, 144, 98] visible=True screen=[2560, 1600] png=k001_denied.png
+
+-- C. ★★★ 门控的放行面（用户主用例：让 ralsei 去 oneshot 办事） --
+2026-10-15 00:17:39 [INFO] ralsei_pet.main — 派活：susie 让 ralsei 去 oneshot.barrens.Blue 办「拿个东西」 ⇒ 已派出
+   [noop] `_errand_ack` 已短路（本项只验机制；"台词由模型生成"由 check114 H8 覆盖）  args=('susie', 'ralsei', 'oneshot.barrens.Blue')
+[PASS] C1 ★ 识别为派活
+[PASS] C2 ★★★ 看板里真多了这位被派的人  <- active=['ralsei']
+[PASS] C3 ★★ 目的地落在 oneshot 那一侧  <- dest=oneshot.barrens.Blue
+[PASS] C4 ★ "事"被解析出来了（不是空串）  <- what='拿个东西'
+[PASS] C5 ★ 立刻 = traveling（不是瞬移）  <- status=traveling
+[PASS] C6 ★★ 与显示解耦：**我的当前场景一字不变**  <- desktop -> desktop
+[PASS] C7 ★ 看板比派活前多了一条  <- 0 -> 1
+[PASS] C8 ★ 回应交给模型（`_errand_ack` 被调过第 2 次）  <- calls=2
+[PASS] C9 ★★★ **B/C 成对**：同一个人（ralsei），光世界被拒、别的暗世界被放行 ⇒ 门控是"按世界判"而不是"一刀切拦住"  <- B世界=light（拒） C世界=dark（放行）
+   [snap] k002_dispatched      scene=desktop board=['ralsei']             resident_ralsei=ch1.kris_room.kris_s_room
+          pet_geo=[2388, 1379, 144, 98] visible=True screen=[2560, 1600] png=k002_dispatched.png
+
+-- C'. ★★★ 跨作品回家（第114轮修掉的别名缺口，成对正负控制） --
+[PASS] C'1 ★★ `ut` 这一侧的世界判成 dark（保守侧：判不出 ⇒ 不许去）  <- world=dark
+[PASS] C'2 ★★★ **修好后**：Papyrus 回自己作品那侧**放行**  <- ok=True detail=home_production:ut
+[PASS] C'3 ★ 放行理由码就是 `home_production:ut`（走的是别名归一那一条）  <- detail=home_production:ut
+[PASS] C'4 ★★★ 负控制：**拆掉别名表** ⇒ 同一句必须翻成**拒绝**（隔离别名就是这条通路的原因，否则 C'2 是恒真的）  <- ok=False reason=foreign_dark_world
+[PASS] C'5 ★★ 还原 ⇒ 又放行（证明 C'4 只改了别名表，不是把别的状态弄坏了）  <- ok=True detail=home_production:ut
+[PASS] C'6 ★ 还原彻底（`CHAPTER_ALIASES` 与备份逐键相等）  <- keys=['ut', 'uty']
+2026-10-15 00:17:40 [INFO] ralsei_pet.main — 派活：ralsei 让 ut_papyrus 去 ut.rooms.room_start 办「看看」 ⇒ 已派出
+   [noop] `_errand_ack` 已短路（本项只验机制；"台词由模型生成"由 check114 H8 覆盖）  args=('ralsei', 'ut_papyrus', 'ut.rooms.room_start')
+[PASS] C'7 ★★ 端到端：这句话被识别为派活
+[PASS] C'8 ★★★ 端到端：看板里真多了 Papyrus，且目的地是 `ut.*`  <- dest=ut.rooms.room_start
+[PASS] C'9 ★ 看板多了一条  <- 1 -> 2
+2026-10-15 00:17:40 [INFO] ralsei_pet.main — 派活：ralsei 让 ut_papyrus 去 oneshot.barrens.Blue 办「看看」 ⇒ 去不了（Papyrus 只能在非暗世界穿梭）
+   [noop] `_errand_ack` 已短路（本项只验机制；"台词由模型生成"由 check114 H8 覆盖）  args=('ralsei', 'ut_papyrus', 'oneshot.barrens.Blue')
+[PASS] C'10 ★ 负控制：这句话也被识别为派活（不是没认出）
+[PASS] C'11 ★★★ 负控制：但**看板不动**（Papyrus 进不去别人的暗世界）  <- len 2 -> 2
+[PASS] C'12 ★★ 负控制也**留下结果**（他被拒时记忆里多一条「去不了」）  <- hist 0 -> 1  命中=True
+[PASS] C'13 ★ 显示仍没被切（两次派活全程）  <- scene=desktop
+   [snap] k003_home_production scene=desktop board=['ralsei', 'ut_papyrus'] resident_ralsei=ch1.kris_room.kris_s_room
+          pet_geo=[2388, 1379, 144, 98] visible=True screen=[2560, 1600] png=k003_home_production.png
+
+-- D. 落地 + "我中途进去能看到过程" --
+[PASS] D1 ★★★ 到达 ⇒ 位置真源变成目标场景（两个人都到了）  <- ralsei ch1.kris_room.kris_s_room -> oneshot.barrens.Blue（目标 oneshot.barrens.Blue）｜ut_papyrus None -> ut.rooms.room_start（目标 ut.rooms.room_start）
+[PASS] D2 ★ 过程可观察（working 期间查得到"谁在哪、在办什么"）  <- pos=[('ralsei', 'oneshot.barrens.Blue'), ('ut_papyrus', 'ut.rooms.room_start')]
+[PASS] D3 ★ 在办期间重复推进**不抖**（幂等：还在那儿、还在办）
+[PASS] D4 ★★★ 「我中途进去能看到过程」：按驻留表在**目标场景**重建身体 ⇒ 他在里面  <- ut.rooms.room_start 场景 4 个 NPC，含 ut_papyrus=True（ralsei 也在里面=False）
+[PASS] D5 ★ 与显示解耦（推进全程没切我的画面）
+   [snap] k004_working         scene=desktop board=['ralsei', 'ut_papyrus'] resident_ralsei=oneshot.barrens.Blue
+          pet_geo=[2388, 1379, 144, 98] visible=True screen=[2560, 1600] png=k004_working.png
+
+-- E. 落盘（真写盘 + 真读回；★ 写的是沙箱，不是用户档） --
+[PASS] E0 落盘路径已注入且**在沙箱里**  <- path=C:\Users\23002\AppData\Local\Temp\rec114_hsxexuzk\npc_errands.json
+[PASS] E1 ★ `_npc_errand_save(force=True)` ⇒ True
+[PASS] E2 ★★ 盘上真有这个文件
+[PASS] E3 ★★ 盘上结构 = `{enabled, active, done}`（差事自己的档）  <- keys=['active', 'done', 'enabled']
+[PASS] E4 ★ 盘上条数与内存看板一致  <- 盘=2 内存=2
+[PASS] E5 ★★ 读回成功且条数一致  <- 读回=2 期望=2
+[PASS] E6 ★ 读回的档**能继续跑**（step 不抛、结构可用）
+
+-- F. 反例：不是派活 ⇒ 什么都不发生（零回归） --
+[PASS] F1 ★ 普通闲聊 ⇒ 返回 False（不是派活）
+[PASS] F2 ★ 有角色没地点 ⇒ 返回 False（宁可漏判，不可误判）
+[PASS] F3 ★ 看板一字不动  <- 2 -> 2
+[PASS] F4 ★ 显示场景一字不动
+[PASS] F5 ★★ **每个**快照都取到了窗口几何（非恒真护栏：不许 `None` 混进集合里蒙混）  <- 取到几何 5/5 条
+[PASS] F6 ★★★ 没有任何一次快照出现"接近全屏"的窗口（全屏 = 切了场景画布 ⇒ "与显示解耦"就被打破了）  <- 阈值 1280x800｜最大边长 144｜出现过的几何=[(2388, 1379, 144, 98)]
+   [snap] k005_noop            scene=desktop board=['ralsei', 'ut_papyrus'] resident_ralsei=oneshot.barrens.Blue
+          pet_geo=[2388, 1379, 144, 98] visible=True screen=[2560, 1600] png=k005_noop.png
+
+-- G. 收尾 --
+[PASS] G1 ★ 收尾无异常；沙箱留在原地备查（绝不 rmtree —— 本机清理守卫会拦）  <- sandbox=C:\Users\23002\AppData\Local\Temp\rec114_hsxexuzk
+
+---- rec114：58 PASS / 0 FAIL  真机=True  PNG=6 ----
+报告 = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第114轮-差事世界门控与派发\_evidence\rec114_report.json
+2026-10-15 00:17:43 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）

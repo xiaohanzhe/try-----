@@ -1,0 +1,52 @@
+=== 0. 绕代理自证 ===
+  HTTP_PROXY(env) = 'http://127.0.0.1:54715'
+  已用 ProxyHandler({}) 显式绕代理
+
+=== 1. /api/tags ===
+  ralsei:v4                                4683087049 bytes  modified=2026-09-22T22:05:49
+  qwen2.5:7b-instruct-q4_K_M               4683087332 bytes  modified=2026-09-22T21:16:06
+  ralsei:v3                                2497293505 bytes  modified=2026-09-19T10:32:15
+  qwen3:4b-instruct-2507-q4_K_M            2497293803 bytes  modified=2026-09-19T10:25:55
+
+=== 2. /api/show  ralsei:v4 ===
+  details.parent_model         = 'qwen2.5:7b-instruct-q4_K_M'
+  details.family               = 'qwen2'
+  details.format               = 'gguf'
+  details.parameter_size       = '7.6B'
+  details.quantization_level   = 'Q4_K_M'
+  model_info.qwen2.context_length             = 32768
+  parameters          = 'repeat_penalty                 1.15\ntemperature                    0.85\ntop_p                          0.92\nnum_ctx                        8192\nnum_predict                    256'
+  system 长度          = 68 字符
+  system 前 300 字      = You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+
+=== 2. /api/show  ralsei:v3 ===
+  details.parent_model         = 'qwen3:4b-instruct-2507-q4_K_M'
+  details.family               = 'qwen3'
+  details.format               = 'gguf'
+  details.parameter_size       = '4.0B'
+  details.quantization_level   = 'Q4_K_M'
+  model_info.qwen3.context_length             = 262144
+  parameters          = 'repeat_penalty                 1.15\nstop                           "<|im_start|>"\nstop                           "<|im_end|>"\ntemperature                    0.85\ntop_k                          20\ntop_p                          0.92\nnum_ctx                        8192\nnum_predict                    256'
+  system 长度          = 0 字符
+
+=== 2. /api/show  qwen2.5:7b-instruct-q4_K_M ===
+  details.parent_model         = ''
+  details.family               = 'qwen2'
+  details.format               = 'gguf'
+  details.parameter_size       = '7.6B'
+  details.quantization_level   = 'Q4_K_M'
+  model_info.qwen2.context_length             = 32768
+  parameters          = None
+  ⇒ ★ None = Modelfile 里没有任何 PARAMETER 覆盖 ⇒ 采样参数与 num_ctx 全走服务端默认
+  system 长度          = 68 字符
+  system 前 300 字      = You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+
+=== 2. /api/show  qwen3:4b-instruct-2507-q4_K_M ===
+  details.parent_model         = ''
+  details.family               = 'qwen3'
+  details.format               = 'gguf'
+  details.parameter_size       = '4.0B'
+  details.quantization_level   = 'Q4_K_M'
+  model_info.qwen3.context_length             = 262144
+  parameters          = 'repeat_penalty                 1\nstop                           "<|im_start|>"\nstop                           "<|im_end|>"\ntemperature                    0.7\ntop_k                          20\ntop_p                          0.8'
+  system 长度          = 0 字符

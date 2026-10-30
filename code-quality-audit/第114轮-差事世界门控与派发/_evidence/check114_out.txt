@@ -1,0 +1,96 @@
+=== A. 目的地 → 世界（真调产品 staticmethod，真数据）===
+[PASS] A0 ★★ 判据持有的 `npc_errand` / `npc_system` 与产品**是同一份模块对象**（本套件第一版因 `import npc_system` 又加载了一份 ⇒ 负控制假红）
+[PASS] A1 desktop ⇒ light（`_worlds.json` 的 overrides 命中）
+[PASS] A2 ch1.hometown.town_mid ⇒ light（rooms 表里有登记）
+[PASS] A3 ch1.card_castle.card_castle_1f ⇒ dark
+[PASS] A4 ★★ oneshot（迁入章 unknown）⇒ 归 dark（用户主用例「派 ralsei 去 oneshot」靠这条）
+[PASS] A5 ★★ ut（迁入章 unknown）⇒ 归 dark
+[PASS] A6 判不出 ⇒ dark（不猜；但**不**放行到"当光世界"那一侧）
+[PASS] A7 None / 空串 ⇒ dark（不抛）
+[PASS] A8 ★★ 对照：`scene_system.world_of_scene` 对同一批输入**行为不同**（迁入章 ⇒ None、desktop ⇒ light）—— 证明 A 段不是它的复制品
+[PASS] A9 缓存层 `_npc_errand_world` 两次同值且缓存真被写进实例
+=== B. 差事门控（真调产品方法 + 真注册表 96 人）===
+    注册表载入 96 人
+[PASS] B1 ★★ 用户主用例：ralsei 去 oneshot ⇒ 放行（他能自由在别的暗世界走）
+[PASS] B2 ★★★ 用户点名的例子：ralsei **无球**进光世界 ⇒ 拒
+[PASS] B3 ★★ B2 的成对正控制：同一调用只加 `carried` ⇒ 放行（证明 B2 测的是球）
+[PASS] B4 光世界对普通人自由：kris ⇒ 放行
+[PASS] B5 ★★ ut_toriel 回自己作品（`ut.*`）⇒ 放行（第114轮修的跨作品章名别名；改之前这里必红）
+[PASS] B6 ★ ut_toriel 进 Deltarune 暗世界 ⇒ 拒（`non_dark` 口径未被别名带跑）
+[PASS] B7 os_niko(all) 进 Deltarune 暗世界 ⇒ 放行（用户口径核心一句，防回退）
+[PASS] B8 桌面白名单之外 ⇒ 拒（只有主角团 + Lancer）
+[PASS] B9 白名单之内上桌面 ⇒ 放行
+[PASS] B10 ★ ralsei 上桌面（他的家）⇒ 放行（桌面闸必须先于光世界判，否则他回不了家）
+[PASS] B11 注册表查不到 ⇒ 拒（不猜、不放行）
+[PASS] B12 ★负控制：空注册表 ⇒ B1 反转成拒（证明 B 段真的走了注册表）
+[PASS] B13 ★负控制：清空 `CHAPTER_ALIASES` ⇒ B5 反转成拒（证明 B5 不是恒真判据）
+[PASS] B14 负控制复原：别名表还回去 ⇒ B5 又放行（**拆干净了**）
+=== C. main 接线（AST；行号只比较、不回显）===
+[PASS] C0 找到 `_npc_errand_tick`
+[PASS] C1 ★ `_npc_errand_tick` 真调 `_npc_errand_gate`（每拍重判）
+[PASS] C2 ★ `_npc_errand_tick` 真调 `abort`（**作废**，不是"这一拍先跳过"）
+[PASS] C3 ★ `_npc_errand_tick` 真调 `_npc_errand_note`（"办不成"也落进记忆）
+[PASS] C4 ★ `_npc_errand_tick` 真调 `_npc_errand_save`（差事自己的档）
+[PASS] C5 ★★ 门控调用**排在 `roam.put` 之前**（先判能不能去、再压位置）
+[PASS] C5b ★负控制：C5 真能抓到"先压位置、后判门控"
+[PASS] C6 ★ `assign_errand` 里也调门控（派发**当场**就说"去不了"）
+[PASS] C7 ★ `init_npc_systems` 真读回差事档（`_npc_errand_load`）
+[PASS] C8 ★ 读回排在"建空看板 `ErrandBoard(`"**之后**（反了会被空板覆盖 = 静默丢档）
+[PASS] C8b ★★ 读回时**开关继承当前**（`_er.enabled = RalseiPet.NPC_ERRAND_ENABLED and RalseiPet.NPC_AUTONOMOUS_MOVE` ⇒ 关闸不会被"档里上次是开的"复活）
+[PASS] C8c ★负控制：**同一条判据**在 `_npc_errand_tick` 上必须为假（否则 C8b 恒真："换个函数也过"就说明它没在守东西）
+[PASS] C9 ★ `_npc_errand_note` 真落记忆（`remember` + `save`）
+[PASS] C10 ★ `_npc_errand_note` **不**碰显示（不出现 switch/travel_to/画布名）
+[PASS] C11 ★ main 里有方法 `_npc_errand_file`
+[PASS] C11 ★ main 里有方法 `_npc_errand_load`
+[PASS] C11 ★ main 里有方法 `_npc_errand_save`
+[PASS] C12 ★ `_npc_errand_save` 复用 `npc_plan_store.save`（原子写，不另造轮子）
+[PASS] C13 ★ `_npc_errand_file` 走 `data_store.app_file`（路径注入纪律）
+=== D. 机制层 abort（半途作废）===
+[PASS] D1 前置：step 之后已到 `working`
+[PASS] D2 ★ `abort` 返回被撤掉的 Errand，且 `status` 是**作废前**的值
+[PASS] D3 ★ abort 后在办清空、`working_positions()` 不含他
+[PASS] D4 ★★ abort **不进 `done`、不留结果**（"办不成"不许被写成"办成了"）
+[PASS] D5 ★ abort 之后再 `step` 也不会冒出一条 finished
+[PASS] D6 abort 未在办的人 ⇒ `None`（幂等，不抛）
+[PASS] D7 ★负控制：不 abort、正常走完 ⇒ 进 `done` 且有 result（证明 D4 非恒真）
+=== E. 落盘（真写 + 真读；含一条"注释里那句是真的吗"的交叉验证）===
+[PASS] E1 ★ 用 `npc_plan_store.save` 写 `ErrandBoard` ⇒ True 且文件真落盘
+[PASS] E2 ★ 盘上结构 = `{enabled, active, done}`（`ErrandBoard.to_dict` 的形状）
+[PASS] E3 ★★ 盘上**没有** `schema_version` 键 —— 证明与 `Book` 是两本、没混用
+[PASS] E4 ★ 读回往返保真（人数 / 目的地 / 起始时刻）
+[PASS] E5 ★ 坏档：缺时间字段那条被丢、合规那条留下（**不半成品还原**）
+[PASS] E6 ★★ 交叉验证：`npc_plan_store.load` 读这份差事档 ⇒ **判版本不符 → 空书**（`main` 里那句注释是**真的**，所以读必须自己走 json + from_dict）
+[PASS] E7 ★负控制：同一对 save/load 对**真 Book** 能读回 1 条规划⇒ E6 是"类型不匹配"，不是"save/load 坏了"
+=== G. 派发入口（真跑 `_errand_parse_intent` + 真别名表）===
+[PASS] G0 前置：别名表里「苏西」有归属（值取自产品同一条构造）
+[PASS] G1 ★★ 「让苏西去 oneshot 帮我拿个东西」⇒ (苏西→的那个人, oneshot.*, 拿个东西)
+[PASS] G2 短名 `ut` 也能解析（**词边界**匹配，不会吃到 but/put）
+[PASS] G3 桌面也能解析 ⇒ `desktop`
+[PASS] G4 只有角色、没有地点 ⇒ `None`（宁可漏判，不可误判）
+[PASS] G5 只有地点、没有角色 ⇒ `None`
+[PASS] G6 ★ 普通闲聊 ⇒ `None`（这是"零行为变化"的关键）
+[PASS] G7 ★ 不派"正在跟你说话的那位"自己（人类不会派自己出门）
+[PASS] G8 ★负控制：清空角色别名表 ⇒ G1 反转成 `None`（证明 G1 真走别名表）
+[PASS] G9 ★负控制：`but` 里的 `ut` **不**算地名 ⇒ `None`（词边界真在起作用）
+=== H. 派发入口接线（AST）===
+[PASS] H1 ★ main 有 `handle_errand_command`（对话入口）
+[PASS] H2 ★★ `handle_errand_command` 走**同一条门控**（`_npc_errand_gate`）
+[PASS] H3 ★★ `handle_errand_command` 真调 `assign_errand`（层5 唯一入口）
+[PASS] H4 ★ `handle_errand_command` 调 `_errand_ack`（回应交给模型）
+[PASS] H5 ★ `handle_errand_command` 调 `_errand_parse_intent`（识别）
+[PASS] H6 ★★ `_errand_ack` 带 `remember=False`（协议**不进任何人的记忆**）
+[PASS] H7 ★ `_errand_ack` 用 `npc_persona_of` 分流（Ralsei 与 NPC 两套 system）
+[PASS] H8 ★ `_errand_ack` 调 `chat_with_ai`（台词由模型生成，不是拼字符串）
+[PASS] H9 ★ `_errand_ack` **不**出现任何写死的对用户台词（无 add_dialogue/纯字面量输出）
+[PASS] H10 ★ `_errand_show_reply` 用 `add_dialogue(asker_id, …)`（谁答的显示成谁说的）
+[PASS] H11 ★★ `dialogue_ui` 真去取并调用 `handle_errand_command`（AST：getattr 字面量）
+[PASS] H12 ★ 派活入口排在用户回显 `add_dialogue` **之后**（话要显示出来）
+[PASS] H13 ★★★ 被拒分支**真落一次记忆**（结构：`_npc_errand_note` 在 `if` 体、`assign_errand` 在 `else/elif` 体 ⇒ 两条路互斥、副作用各归各位）
+[PASS] H14 ★负控制：**同一条结构判据**在 `_errand_ack` 上必须为假（否则 H13 是恒真判据，"换个函数也过"就说明它没在守东西）
+=== F. 判据自身体检 ===
+[PASS] F1 判据条数经 check() 记账（防"写了没调 check"）
+[PASS] F2 判据名里没有自带的计数标记字样（防污染 run_all 的 PASS 计数）
+[PASS] F3 判据名无重复（否则"少写一条"看不出来）
+
+======================================================================
+check114  结论：84 PASS / 0 FAIL

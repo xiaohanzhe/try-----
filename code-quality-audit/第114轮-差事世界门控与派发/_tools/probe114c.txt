@@ -1,0 +1,116 @@
+=== _registry.json 顶层键: ['counts', 'model_policy', 'npcs', 'round70', 'schema_version', 'source', 'tiers']
+npcs 类型 = list  n=96
+
+--- 字段名（第一条的键）---
+  ['chapters', 'escape_via_bubble', 'home_world', 'id', 'model', 'name', 'name_cn', 'needs_setting', 'notes', 'objects', 'persona', 'roam_scope', 'tier']
+
+--- chapters 取值分布 ---
+  ["oneshot"]                              21
+  ["undertale_yellow"]                     15
+  ["undertale"]                            14
+  ["outertale"]                            11
+  ["ch2"]                                  8
+  ["ch5"]                                  6
+  ["ch1", "ch2", "ch3", "ch4", "ch5"]      4
+  ["ch1", "ch2", "ch3"]                    3
+  ["ch1"]                                  3
+  ["ch3", "ch4"]                           2
+  ["ch4"]                                  2
+  ["ch1", "ch2", "ch3", "ch4"]             1
+  ["ch2", "ch4"]                           1
+  ["ch2", "ch5"]                           1
+  ["ch2", "ch4", "ch5"]                    1
+  ["ch3"]                                  1
+  ["ch4", "ch5"]                           1
+  ["ch1", "ch2"]                           1
+
+--- roam_scope 取值分布 ---
+  non_dark             60
+  home                 35
+  all                  1
+
+--- home_world 取值分布 ---
+  foreign              61
+  dark                 30
+  light                5
+
+--- 重点角色明细 ---
+  ralsei                 chapters=["ch1", "ch2", "ch3", "ch4", "ch5"] scope=home       home=dark   esc=True
+  kris                   chapters=["ch1", "ch2", "ch3", "ch4", "ch5"] scope=home       home=light  esc=False
+  susie                  chapters=["ch1", "ch2", "ch3", "ch4", "ch5"] scope=home       home=light  esc=False
+  lancer                 chapters=["ch1", "ch2", "ch3", "ch4"] scope=home       home=dark   esc=False
+  os_niko                chapters=["oneshot"]              scope=all        home=foreign esc=False
+  os_the_world_machine   chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_the_author          chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_prophetbot          chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_silver              chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_rowbot              chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_prototype           chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_calamus             chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_alula               chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_maize               chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_magpie              chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_shepherd            chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_cedric              chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_lamplighter         chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_watcher             chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_ling                chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_mason               chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_kelvin              chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_kip                 chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_george              chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  os_rue                 chapters=["oneshot"]              scope=non_dark   home=foreign esc=False
+  ut_toriel              chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_sans                chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_papyrus             chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_undyne              chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_alphys              chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_mettaton            chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_muffet              chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_napstablook         chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_monster_kid         chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_asgore              chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_flowey              chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_frisk               chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_chara               chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  ut_gaster              chapters=["undertale"]            scope=non_dark   home=foreign esc=False
+  hy_ace                 chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_axis                chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_bowll               chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_ceroba_ketsukane    chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_chujin_ketsukane    chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_clover              chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_dalv                chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_ed                  chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_flowey              chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_guardener           chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_martlet             chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_mooch               chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_moray               chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_sousborg            chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+  hy_starlo              chapters=["undertale_yellow"]     scope=non_dark   home=foreign esc=False
+
+--- 前缀分布（id 前 3 字符）---
+  {'ral': 1, 'kri': 1, 'sus': 2, 'tor': 1, 'asg': 1, 'kin': 1, 'lan': 1, 'que': 1, 'spa': 1, 'ber': 1, 'noe': 1, 'ten': 1, 'rou': 1, 'ger': 1, 'mik': 1, 'kni': 1, 'flo': 1, 'ham': 1, 'puz': 2, 'sig': 1, 'npc': 1, 'con': 1, 'pol': 1, 'cat': 1, 'rud': 1, 'dum': 1, 'add': 1, 'cas': 1, 'rab': 1, 'wra': 1, 'dou': 1, 'zap': 1, 'man': 1, 'os_': 21, 'ut_': 14, 'hy_': 15, 'ot_': 11}
+
+=== _routes.json 里 when_scene == "desktop" 的路线 ===
+  命中 4 条
+  door=A   to=oneshot.mainline.INIT            priority=200
+        reason=桌面传送门（正上）：从桌面的任意门进入「OneShot」—— 原作 room 1，Niko 第一次出现的房子下方的那个车厢。
+  door=B   to=oneshot.mainline.Start           priority=200
+        reason=桌面传送门（正下）：通往「Niko 的家」。★ 彩蛋门 —— 原作没有 Niko 家的素材，进门须走三连确认且**永远进不去**（见详版 §109.2）。
+  door=C   to=ut.rooms.room_start              priority=200
+        reason=桌面传送门（正左）：从桌面的任意门进入「Undertale」—— 原作 room 0，人类坠落的地方。
+  door=D   to=ch1.hometown.town_mid            priority=200
+        reason=桌面传送门（正右）：从桌面的任意门进入「三角符文（Deltarune）」—— 原作 room 11，光世界小镇中心。
+  _fallback = {"to": "desktop", "reason": "没有匹配到任何规则时的落脚点：回桌面"}
+  meta.coverage_policy = "只覆盖 obj_doorA / obj_doorB / obj_doorC。obj_doorAny / W / X / D / E / F / solid 不编边 —— 它们要么无字母、要么表驱动双向（需读对象代码）、要么样本不足以定位移。未覆盖场景由 _fallback 兜底，**不伪造连通性**。"
+  meta.oneshot_note = "★ 第105轮：OneShot 房间连接 = 原作 **code 201（Transfer Player）**事件指令，不是 Deltarune 的门位移。口径：只取 page0 且该页无条件的传送 → 749 条候选 → 去自环 19 → 跨房 730 条按 (src_map, dst_map) 去重成 420 条唯一边；另有 77 条带条件/非 0 页的**剧情传送只登记不生成**（没有存档/开关状态可依）。本段的 `_original.kind` 一律 = 'oneshot_transfer'，priority 走独立段 3000+ 并追加在声明序末尾（保 `verify_routes_order44.B3` 的\"原作生成段无回绕\"）。事实蒸馏在 code-quality-audit/第105轮-OneShot房间连接/_evidence/oneshot_transfers.json。"
+
+=== scene_chapter() 对迁入章 scene_id 的输出 ===
+  'desktop'                      -> 'desktop'
+  'oneshot.mainline.INIT'        -> 'oneshot'
+  'ut.rooms.room_start'          -> 'ut'
+  'ch1.hometown.town_mid'        -> 'ch1'
+  'outertale.rooms.x'            -> 'outertale'
+  None                           -> None

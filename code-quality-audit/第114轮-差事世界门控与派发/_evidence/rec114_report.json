@@ -1,0 +1,213 @@
+{
+ "round": 114,
+ "is_real": true,
+ "pass": 58,
+ "fail": 0,
+ "scene": "desktop",
+ "susie": "susie",
+ "papyrus_alias": "papyrus",
+ "deny_dest": "ch1.kris_room.kris_s_room",
+ "sandbox": "C:\\Users\\23002\\AppData\\Local\\Temp\\rec114_bk262jak",
+ "vault_patched": true,
+ "snaps": [
+  {
+   "tag": "k000_boot",
+   "note": "起实例后（未派差事）",
+   "png": "C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第114轮-差事世界门控与派发\\_evidence\\frames114\\k000_boot.png",
+   "scene_id": "desktop",
+   "board_len": 0,
+   "board_active": [],
+   "resident_ralsei": "ch4.kris_room.kris_s_room",
+   "pet_geo": [
+    2425,
+    1415,
+    43,
+    85
+   ],
+   "pet_visible": true,
+   "screen": [
+    2560,
+    1600
+   ]
+  },
+  {
+   "tag": "k001_denied",
+   "note": "Ralsei 无球被派去光世界 ⇒ 被拒（看板仍空）",
+   "png": "C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第114轮-差事世界门控与派发\\_evidence\\frames114\\k001_denied.png",
+   "scene_id": "desktop",
+   "board_len": 0,
+   "board_active": [],
+   "resident_ralsei": "ch4.kris_room.kris_s_room",
+   "pet_geo": [
+    2425,
+    1415,
+    43,
+    85
+   ],
+   "pet_visible": true,
+   "screen": [
+    2560,
+    1600
+   ]
+  },
+  {
+   "tag": "k002_dispatched",
+   "note": "Ralsei 被派去 oneshot（traveling）",
+   "png": "C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第114轮-差事世界门控与派发\\_evidence\\frames114\\k002_dispatched.png",
+   "scene_id": "desktop",
+   "board_len": 1,
+   "board_active": [
+    "ralsei"
+   ],
+   "resident_ralsei": "ch4.kris_room.kris_s_room",
+   "pet_geo": [
+    2425,
+    1415,
+    43,
+    85
+   ],
+   "pet_visible": true,
+   "screen": [
+    2560,
+    1600
+   ]
+  },
+  {
+   "tag": "k003_home_production",
+   "note": "Papyrus 被派回 ut（跨作品回家）",
+   "png": "C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第114轮-差事世界门控与派发\\_evidence\\frames114\\k003_home_production.png",
+   "scene_id": "desktop",
+   "board_len": 2,
+   "board_active": [
+    "ralsei",
+    "ut_papyrus"
+   ],
+   "resident_ralsei": "ch4.kris_room.kris_s_room",
+   "pet_geo": [
+    2425,
+    1415,
+    43,
+    85
+   ],
+   "pet_visible": true,
+   "screen": [
+    2560,
+    1600
+   ]
+  },
+  {
+   "tag": "k004_working",
+   "note": "两个人都到了、正在办事（位置真源 = 各自目标场景）",
+   "png": "C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第114轮-差事世界门控与派发\\_evidence\\frames114\\k004_working.png",
+   "scene_id": "desktop",
+   "board_len": 2,
+   "board_active": [
+    "ralsei",
+    "ut_papyrus"
+   ],
+   "resident_ralsei": "oneshot.barrens.Blue",
+   "pet_geo": [
+    2425,
+    1415,
+    43,
+    85
+   ],
+   "pet_visible": true,
+   "screen": [
+    2560,
+    1600
+   ]
+  },
+  {
+   "tag": "k005_noop",
+   "note": "反例：闲聊与半句话都不触发派活",
+   "png": "C:\\Users\\23002\\WorkBuddy\\Worktrees\\try - 副本\\main-a7556e9c\\code-quality-audit\\第114轮-差事世界门控与派发\\_evidence\\frames114\\k005_noop.png",
+   "scene_id": "desktop",
+   "board_len": 2,
+   "board_active": [
+    "ralsei",
+    "ut_papyrus"
+   ],
+   "resident_ralsei": "oneshot.barrens.Blue",
+   "pet_geo": [
+    2425,
+    1415,
+    43,
+    85
+   ],
+   "pet_visible": true,
+   "screen": [
+    2560,
+    1600
+   ]
+  }
+ ],
+ "lines": [
+  "\n-- A. 真机起实例 --",
+  "[PASS] A1 实例起来了",
+  "[PASS] A2 差事看板就位",
+  "[PASS] A3 驻留表就位（差事落地的地方）",
+  "[PASS] A4 别名表就位（派发入口要靠它认名字）  <- n=196",
+  "[PASS] A5 别名表里「苏西」有归属  <- -> susie",
+  "[PASS] A6 开关默认开",
+  "[PASS] A7 开局看板为空（没派过 ⇒ 零行为变化）  <- len=0",
+  "[PASS] A8 别名表里 Papyrus 有归属（跨作品回家的主角）  <- 别名='papyrus' -> ut_papyrus",
+  "[PASS] A9 ★★ 桌宠窗口**真的在屏幕上**（否则 6 帧都是纯壁纸，录像等于空证据）  <- visible=True geo=[2425,1415,43,85] screen=2560x1600",
+  "\n-- B. ★★★ 门控的拒绝面（用户点名的例子：暗之民无球不能进光世界） --",
+  "[PASS] B1 ★ 这句话**被识别为派活**（入口认出来了）",
+  "[PASS] B2 目的地解析到三角符文那一侧（ch1.*）  <- dest=ch1.kris_room.kris_s_room",
+  "[PASS] B3 该目的地的世界 = light（所以 Ralsei 无球进不去）  <- world=light",
+  "[PASS] B4 ★★★ **门控真拦住了**：看板里没多出这条差事  <- len 0 -> 0",
+  "[PASS] B5 ★★ 位置真源**没被改写**（他没被\"送出去\"）  <- ch4.kris_room.kris_s_room -> ch4.kris_room.kris_s_room",
+  "[PASS] B6 ★ 与显示解耦（被拒也不动我的画面）",
+  "[PASS] B7 ★★ \"办不成\"也**留下结果**：他记忆里多了一条\"去不了\"  <- hist 0 -> 1  命中=True",
+  "[PASS] B8 ★ 回应仍交给模型（`_errand_ack` 真被调过）  <- calls=1",
+  "\n-- C. ★★★ 门控的放行面（用户主用例：让 ralsei 去 oneshot 办事） --",
+  "[PASS] C1 ★ 识别为派活",
+  "[PASS] C2 ★★★ 看板里真多了这位被派的人  <- active=['ralsei']",
+  "[PASS] C3 ★★ 目的地落在 oneshot 那一侧  <- dest=oneshot.barrens.Blue",
+  "[PASS] C4 ★ \"事\"被解析出来了（不是空串）  <- what='拿个东西'",
+  "[PASS] C5 ★ 立刻 = traveling（不是瞬移）  <- status=traveling",
+  "[PASS] C6 ★★ 与显示解耦：**我的当前场景一字不变**  <- desktop -> desktop",
+  "[PASS] C7 ★ 看板比派活前多了一条  <- 0 -> 1",
+  "[PASS] C8 ★ 回应交给模型（`_errand_ack` 被调过第 2 次）  <- calls=2",
+  "[PASS] C9 ★★★ **B/C 成对**：同一个人（ralsei），光世界被拒、别的暗世界被放行 ⇒ 门控是\"按世界判\"而不是\"一刀切拦住\"  <- B世界=light（拒） C世界=dark（放行）",
+  "\n-- C'. ★★★ 跨作品回家（第114轮修掉的别名缺口，成对正负控制） --",
+  "[PASS] C'1 ★★ `ut` 这一侧的世界判成 dark（保守侧：判不出 ⇒ 不许去）  <- world=dark",
+  "[PASS] C'2 ★★★ **修好后**：Papyrus 回自己作品那侧**放行**  <- ok=True detail=home_production:ut",
+  "[PASS] C'3 ★ 放行理由码就是 `home_production:ut`（走的是别名归一那一条）  <- detail=home_production:ut",
+  "[PASS] C'4 ★★★ 负控制：**拆掉别名表** ⇒ 同一句必须翻成**拒绝**（隔离别名就是这条通路的原因，否则 C'2 是恒真的）  <- ok=False reason=foreign_dark_world",
+  "[PASS] C'5 ★★ 还原 ⇒ 又放行（证明 C'4 只改了别名表，不是把别的状态弄坏了）  <- ok=True detail=home_production:ut",
+  "[PASS] C'6 ★ 还原彻底（`CHAPTER_ALIASES` 与备份逐键相等）  <- keys=['ut', 'uty']",
+  "[PASS] C'7 ★★ 端到端：这句话被识别为派活",
+  "[PASS] C'8 ★★★ 端到端：看板里真多了 Papyrus，且目的地是 `ut.*`  <- dest=ut.rooms.room_start",
+  "[PASS] C'9 ★ 看板多了一条  <- 1 -> 2",
+  "[PASS] C'10 ★ 负控制：这句话也被识别为派活（不是没认出）",
+  "[PASS] C'11 ★★★ 负控制：但**看板不动**（Papyrus 进不去别人的暗世界）  <- len 2 -> 2",
+  "[PASS] C'12 ★★ 负控制也**留下结果**（他被拒时记忆里多一条「去不了」）  <- hist 0 -> 1  命中=True",
+  "[PASS] C'13 ★ 显示仍没被切（两次派活全程）  <- scene=desktop",
+  "\n-- D. 落地 + \"我中途进去能看到过程\" --",
+  "[PASS] D1 ★★★ 到达 ⇒ 位置真源变成目标场景（两个人都到了）  <- ralsei ch4.kris_room.kris_s_room -> oneshot.barrens.Blue（目标 oneshot.barrens.Blue）｜ut_papyrus None -> ut.rooms.room_start（目标 ut.rooms.room_start）",
+  "[PASS] D2 ★ 过程可观察（working 期间查得到\"谁在哪、在办什么\"）  <- pos=[('ralsei', 'oneshot.barrens.Blue'), ('ut_papyrus', 'ut.rooms.room_start')]",
+  "[PASS] D3 ★ 在办期间重复推进**不抖**（幂等：还在那儿、还在办）",
+  "[PASS] D4 ★★★ 「我中途进去能看到过程」：按驻留表在**目标场景**重建身体 ⇒ 他在里面  <- ut.rooms.room_start 场景 2 个 NPC，含 ut_papyrus=True（ralsei 也在里面=False）",
+  "[PASS] D5 ★ 与显示解耦（推进全程没切我的画面）",
+  "\n-- E. 落盘（真写盘 + 真读回；★ 写的是沙箱，不是用户档） --",
+  "[PASS] E0 落盘路径已注入且**在沙箱里**  <- path=C:\\Users\\23002\\AppData\\Local\\Temp\\rec114_bk262jak\\npc_errands.json",
+  "[PASS] E1 ★ `_npc_errand_save(force=True)` ⇒ True",
+  "[PASS] E2 ★★ 盘上真有这个文件",
+  "[PASS] E3 ★★ 盘上结构 = `{enabled, active, done}`（差事自己的档）  <- keys=['active', 'done', 'enabled']",
+  "[PASS] E4 ★ 盘上条数与内存看板一致  <- 盘=2 内存=2",
+  "[PASS] E5 ★★ 读回成功且条数一致  <- 读回=2 期望=2",
+  "[PASS] E6 ★ 读回的档**能继续跑**（step 不抛、结构可用）",
+  "\n-- F. 反例：不是派活 ⇒ 什么都不发生（零回归） --",
+  "[PASS] F1 ★ 普通闲聊 ⇒ 返回 False（不是派活）",
+  "[PASS] F2 ★ 有角色没地点 ⇒ 返回 False（宁可漏判，不可误判）",
+  "[PASS] F3 ★ 看板一字不动  <- 2 -> 2",
+  "[PASS] F4 ★ 显示场景一字不动",
+  "[PASS] F5 ★★ **每个**快照都取到了窗口几何（非恒真护栏：不许 `None` 混进集合里蒙混）  <- 取到几何 5/5 条",
+  "[PASS] F6 ★★★ 没有任何一次快照出现\"接近全屏\"的窗口（全屏 = 切了场景画布 ⇒ \"与显示解耦\"就被打破了）  <- 阈值 1280x800｜最大边长 85｜出现过的几何=[(2425, 1415, 43, 85)]",
+  "\n-- G. 收尾 --",
+  "[PASS] G1 ★ 收尾无异常；沙箱留在原地备查（绝不 rmtree —— 本机清理守卫会拦）  <- sandbox=C:\\Users\\23002\\AppData\\Local\\Temp\\rec114_bk262jak"
+ ]
+}

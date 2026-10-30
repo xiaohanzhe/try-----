@@ -1,0 +1,85 @@
+live116_sandbox  rc=0 frames=19 keypng=3 差异=0
+PASS=6 FAIL=0
+--- 子进程输出 ---
+[diag96] MODE=full EXITHOW=sys SANDBOX=True FAITHFUL=True PREWARM=True SECS=12
+[diag96] python=3.11.0 (main, Oct 24 2022, 18:26:48) [MSC v.1933 64 bit (AMD64)]
+[diag96] OUT=E:\Download\_tmp\rec96diag
+[diag96] 沙箱 = C:\Users\23002\AppData\Local\Temp\diag96_data__ck1c0oa（vault/staging/desktop 三子目录）
+[diag96] cv2 4.12.0 build-GUI=['GUI:                           WIN32UI']
+[diag96] cv2 in sys.modules (after main import) = True
+Building prefix dict from the default dictionary ...
+2026-10-17 16:08:05 [INFO] ralsei_pet.text_segmenter — 已启用 jieba 分词（用户词表: 无）
+Dumping model to file cache C:\Users\23002\AppData\Local\Temp\diag96_data__ck1c0oa\vault\cache\jieba.cache
+Loading model cost 0.720 seconds.
+Prefix dict has been built successfully.
+[diag96] jieba 预建完成 +1.5s
+[diag96] data_store: {'vault_dir': None, 'vault_online': False, 'staging_dir': 'C:\\Users\\23002\\AppData\\Local\\Temp\\diag96_data__ck1c0oa\\staging', 'active_dir': 'C:\\Users\\23002\\AppData\\Local\\Temp\\diag96_data__ck1c0oa\\staging', 'active_kind': 'staging', 'staging_has_data': False}
+[diag96] memory_store.default_memory_dir() = 'C:\\Users\\23002\\AppData\\Local\\Temp\\diag96_data__ck1c0oa\\vault'  is_device=True
+2026-10-17 16:08:06 [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\config.json -> C:\Users\23002\AppData\Local\Temp\diag96_data__ck1c0oa\staging\config.json
+2026-10-17 16:08:06 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+2026-10-17 16:08:09 [INFO] ralsei_pet.modules.memory_system — 新位置无记忆，已从旧版 memory.json 继承: C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\modules\..\memory.json
+2026-10-17 16:08:09 [INFO] ralsei_pet.data_store — 已把历史数据收编进最终存储: C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\ralsei_pet\customization_config.json -> C:\Users\23002\AppData\Local\Temp\diag96_data__ck1c0oa\staging\customization_config.json
+2026-10-17 16:08:09 [INFO] ralsei_pet.main — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+2026-10-17 16:08:09 [INFO] ralsei_pet.main — 读回宠物缩放设定：1.00
+2026-10-17 16:08:09 [INFO] ralsei_pet.modules.scene_controller — 场景全屏化：画面 1066x800（占屏 42%×50%，比例 0.50，偏移 747,400），scale=3.331
+2026-10-17 16:08:10 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-10-17 16:08:10 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-10-17 16:08:10 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+S（id=0x1000）
+2026-10-17 16:08:10 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+E（id=0x1001）
+2026-10-17 16:08:10 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+H（id=0x1002）
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 4 个；热键=('ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H')
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — 灵魂就绪：灵魂 (2475, 1488) 24x24 速度上限 180px/s；灵魂场景位置 0 个：
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — NPC 差事看板：开（可派任意角色去别世界办事；没派过就恒空）
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — NPC 生活档案：C:\Users\23002\AppData\Local\Temp\diag96_data__ck1c0oa\staging\npc_life.json（规划 0 人 / 驻留 0 人）
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=C:\Users\23002\AppData\Local\Temp\diag96_data__ck1c0oa\staging\npc_memory
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — 幽灵定点在 模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — 幽灵就绪：模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=0s 决心=0.000 档位=dim
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-10-17 16:08:10 [INFO] ralsei_pet.main — 剧情标记就绪：已记录 0 条（无）
+[diag96] shown pid=19644 title='Ralsei Pet'
+[diag96] VideoWriter 已开 2560x1600
+[diag96] STEP-0 enter app.exec_()
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC ralsei 自己挪到了 oneshot.barrens.Blue
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC kris 自己挪到了 ut.rooms.room_start
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC susie 自己挪到了 outertale.wastelands.w_start
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC toriel 自己挪到了 ch3.dark_world.dark_world
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC asgore 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC king 自己挪到了 ch3.dark_world.dark_world
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC lancer 自己挪到了 ch3.dark_world.dark_world
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC queen 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC spamton 自己挪到了 outertale.wastelands.w_start
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC berdly 自己挪到了 ch3.dark_world.dark_world
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC noelle 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC tenna 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC rouxls 自己挪到了 oneshot.barrens.Blue
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC gerson 自己挪到了 ch3.dark_world.dark_world
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC mike 自己挪到了 ut.rooms.room_start
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC flowery 自己挪到了 uty.rooms.rm_intro
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC hammerguy 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC puzzlemaster1 自己挪到了 ch3.dark_world.dark_world
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC puzzlemaster2 自己挪到了 ch3.dark_world.dark_world
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC sign 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC mansion_room 自己挪到了 ch3.dark_world.dark_world
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC conbini 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC police 自己挪到了 ch5.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC catti 自己挪到了 ch3.dark_world.dark_world
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC dumpster 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC addison_tea 自己挪到了 outertale.wastelands.w_start
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC castle_cafe 自己挪到了 ch4.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC rabbits 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC wrapper 自己挪到了 uty.rooms.rm_intro
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC doubter 自己挪到了 ch2.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 ch1.kris_room.kris_s_room
+2026-10-17 16:08:12 [INFO] ralsei_pet.main — NPC susiedark 自己挪到了 ch3.dark_world.dark_world
+[diag96] life=12s reached, quitting
+[diag96] STEP-1 exec returned rc=0  frames=19 keypng=3
+[diag96] STEP-2 timers stopped
+[diag96] STEP-3 VideoWriter released
+[diag96] STEP-3b files closed
+[diag96] STEP-4 VideoCapture decoded n=19
+[diag96] STEP-5 meta written
+[diag96] STEP-6 about to exit (sys) rc=0
+2026-10-17 16:08:23 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）

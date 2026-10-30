@@ -1,0 +1,32 @@
+# cmp116_doors —— 四扇门贴图原件 / 桌面变体 数字对照
+# 纯黑口径：alpha >= 250 且 max(R,G,B) <= 26
+# 全透明口径：alpha <= 8
+
+== 门A ==
+  原件 spr_darkdoor_0.png         44x56  纯黑=0.1875  全透明=0.0000
+  ⇒ 用户第112轮逐字「oneshot 和 niko 的家不变」 ⇒ 按口径**不产变体**
+
+== 门B ==
+  原件 niko_door_portal.png       192x128  纯黑=0.1779  全透明=0.5000
+  ⇒ 用户第112轮逐字「oneshot 和 niko 的家不变」 ⇒ 按口径**不产变体**
+
+== 门C ==
+  原件 ut_castle_realdoor_0.png   44x99  纯黑=0.7635  全透明=0.0000
+  变体 desk_door_ut.png           44x99  纯黑=0.0000  全透明=0.7635
+  ① 尺寸不变: OK
+  ② 纯黑比降为 0: OK（0.7635 -> 0.0000）
+  ③ 全透明比上升: OK（0.0000 -> 0.7635）
+
+== 门D ==
+  原件 spr_giantdarkdoor_0.png    180x155  纯黑=0.8261  全透明=0.0000
+  变体 desk_door_deltarune.png    180x155  纯黑=0.0000  全透明=0.8261
+  ① 尺寸不变: OK
+  ② 纯黑比降为 0: OK（0.8261 -> 0.0000）
+  ③ 全透明比上升: OK（0.0000 -> 0.8261）
+
+== objs/desk_door_*.png 清单 ==
+  实到 ['desk_door_deltarune.png', 'desk_door_ut.png']
+  应为 ['desk_door_deltarune.png', 'desk_door_ut.png']
+  OK
+
+合计不合规项 = 0

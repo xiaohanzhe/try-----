@@ -1,0 +1,19 @@
+=== 1. 启动前状态 ===
+  exe exists          = True
+  11434 before start  = closed
+
+=== 2. 拉起 ollama serve（detached）===
+  pid                 = 7260
+  log                 = E:\Download\_tmp\ollama_serve_115.log
+
+=== 3. 等待端口就绪（最多 60s）===
+  端口 OPEN           = True（耗时 0s）
+  子进程 poll()       = None（None=仍在跑）
+
+=== 4. 启动日志尾部 ===
+  | time=2026-10-15T02:04:23.990+08:00 level=INFO source=routes.go:2005 msg="server config" env="map[CUDA_VISIBLE_DEVICES: GGML_VK_VISIBLE_DEVICES: GPU_DEVICE_ORDINAL: HIP_VISIBLE_DEVICES: HSA_OVERRIDE_GFX_VERSION: HTTPS_PROXY:http://127.0.0.1:54715 HTTP_PROXY:http://127.0.0.1:54715 LLAMA_ARG_FIT: LLAMA_ARG_FIT_TARGET: NO_PROXY: OLLAMA_CONTEXT_LENGTH:0 OLLAMA_CREATE_REMOTE:false OLLAMA_DEBUG:INFO OLLAMA_DEBUG_LOG_REQUESTS:false OLLAMA_EDITOR: OLLAMA_FLASH_ATTENTION:false OLLAMA_GO_TEMPLATE:true OLLAMA_GPU_OVERHEAD:0 OLLAMA_HOST:http://127.0.0.1:11434 OLLAMA_IGPU_ENABLE: OLLAMA_KEEP_ALIVE:5m0s OLLAMA_KV_CACHE_TYPE: OLLAMA_LLM_LIBRARY: OLLAMA_LOAD_TIMEOUT:5m0s OLLAMA_MAX_LOADED_MODELS:0 OLLAMA_MAX_QUEUE:512 OLLAMA_MAX_TRANSFER_STREAMS:4 OLLAMA_MODELS:C:\\Users\\23002\\.ollama\\models OLLAMA_NOHISTORY:false OLLAMA_NOPRUNE:false OLLAMA_NO_CLOUD:false OLLAMA_NUM_PARALLEL:1 OLLAMA_ORIGINS:[http://localhost https://localhost http://localhost:* https://localhost:* http://127.0.0.1 https://127.0.0.1 http://127.0.0.1:* https://127.0.0.1:* http://0.0.0.0 https://0.0.0.0 http://0.0.0.0:* https://0.0.0.0:* app://* file://* tauri://* vscode-webview://* vscode-file://*] OLLAMA_REMOTES:[ollama.com] OLLAMA_SCHED_SPREAD:false OLLAMA_VULKAN:true ROCR_VISIBLE_DEVICES:]"
+  | time=2026-10-15T02:04:24.022+08:00 level=INFO source=routes.go:2007 msg="Ollama cloud disabled: false"
+  | time=2026-10-15T02:04:24.030+08:00 level=INFO source=images.go:922 msg="total blobs: 14"
+  | time=2026-10-15T02:04:24.033+08:00 level=INFO source=images.go:930 msg="total unused blobs removed: 0"
+  | time=2026-10-15T02:04:24.036+08:00 level=INFO source=routes.go:2065 msg="Listening on 127.0.0.1:11434 (version 0.34.4)"
+  | time=2026-10-15T02:04:24.040+08:00 level=INFO source=runner.go:60 msg="discovering available GPUs..."

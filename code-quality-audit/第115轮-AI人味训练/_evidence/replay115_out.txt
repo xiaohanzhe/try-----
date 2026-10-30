@@ -1,0 +1,81 @@
+第115轮后续 · 逐项重放录像
+  ROOT = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c
+  解释器 = C:\Python311\python.exe
+  ★ 真机：QT_QPA_PLATFORM 将由各脚本自己决定（rec*.py 里 `setdefault("offscreen")`）
+  ★ 沙箱：各 rec*.py 自带 `RALSEI_DATA_DIR`→mkdtemp + `vault_root=None`（不碰用户角色记忆）
+
+--- rec96        rc=3221225477 PASS=0    FAIL=0   PNG新增=297 总=715   631.1s
+      | 2026-10-16 03:48:31 [INFO] ralsei_pet.main — NPC mansion_room 自己挪到了 ut.rooms.room_start
+      | 2026-10-16 03:48:31 [INFO] ralsei_pet.main — NPC conbini 自己挪到了 uty.rooms.rm_intro
+      | 2026-10-16 03:48:31 [INFO] ralsei_pet.main — NPC catti 自己挪到了 ch4.kris_room.kris_s_room
+      | [rec96] life=600s reached, quitting
+      | [rec96] exit rc=0 frames=1116 keypng=297
+      | 2026-10-16 03:49:18 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
+--- rec105       rc=0   PASS=0    FAIL=0   PNG新增=45  总=168   102.2s
+      | 2026-10-16 03:50:32 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 outertale.wastelands.w_start
+      | 2026-10-16 03:51:02 [INFO] ralsei_pet.main — NPC hammerguy 自己挪到了 uty.rooms.rm_intro
+      | 2026-10-16 03:51:02 [INFO] ralsei_pet.main — NPC sign 自己挪到了 ch5.kris_room.kris_s_room
+      | [rec105] life=90s reached, quitting
+      | [rec105] exit rc=0 frames=321 keypng=45
+      | 2026-10-16 03:51:06 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
+--- rec106       rc=0   PASS=0    FAIL=0   PNG新增=75  总=283   121.9s
+      | 2026-10-16 03:52:44 [INFO] ralsei_pet.main — NPC dumpster 自己挪到了 ch5.kris_room.kris_s_room
+      | 2026-10-16 03:52:44 [INFO] ralsei_pet.main — NPC zapper 自己挪到了 oneshot.barrens.Blue
+      | 2026-10-16 03:52:44 [INFO] ralsei_pet.main — NPC susiedark 自己挪到了 ch1.kris_room.kris_s_room
+      | [rec106] life=110s reached, quitting
+      | [rec106] exit rc=0 frames=384 keypng=75
+      | 2026-10-16 03:53:08 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
+--- rec107       rc=1   PASS=12   FAIL=1   PNG新增=0   总=0       7.6s
+      | [PASS] S7b 帧目录在盘  <- C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第107轮-全屏化与全局缩放\_evidence\frames107
+      | ========================================================================
+      | 第107轮录屏自检：PASS=12 FAIL=1
+      | ========================================================================
+      | 证据已落盘：C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第107轮-全屏化与全局缩放\_evidence\rec107_meta.txt
+      | 2026-10-16 03:53:16 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
+--- rec109       rc=0   PASS=11   FAIL=0   PNG新增=0   总=7      14.7s
+      | [PASS] T8b 帧目录在盘  <- C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第109轮-场景过渡动画\_evidence\frames109
+      | ========================================================================
+      | 第109轮录屏自检：PASS=11 FAIL=0
+      | ========================================================================
+      | 证据已落盘：C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第109轮-场景过渡动画\_evidence\rec109_meta.txt
+      | 2026-10-16 03:53:31 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
+--- rec110       rc=1   PASS=10   FAIL=1   PNG新增=0   总=3      11.8s
+      |         PNG = 3 张 · 快照 3 条
+      | [PASS] G7 ★★ 人眼复核用的抓帧已落盘（真机应有 >0 张；离屏为 0 属预期）  <- png=3 qpa=windows
+      | ========================================================================
+      | 第110轮：PASS=10 FAIL=1
+      | ========================================================================
+      | 2026-10-16 03:53:42 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
+--- rec111       rc=0   PASS=15   FAIL=0   PNG新增=0   总=5      16.9s
+      |         PNG = 4 张 · 快照 4 条
+      | [PASS] G6 ★★ 人眼复核用的抓帧已落盘（真机应有 >0 张；离屏为 0 属预期）  <- png=4 qpa=windows
+      | ========================================================================
+      | 第111轮：PASS=15 FAIL=0
+      | ========================================================================
+      | 2026-10-16 03:53:59 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
+--- rec112       rc=1   PASS=11   FAIL=1   PNG新增=0   总=66      9.6s
+      |         [size] PET_SCALE=1.00  渲染倍率(_cached_scale_factor)=2.0870
+      |         [size] 精灵原始高≈41px ⇒ 屏上高≈86px
+      | [PASS] C1 尺寸取证已产出（不断言对错，等用户看实机定夺）
+      |         [snap] final scene=desktop pet_scale=1.0 cached=2.0869565217391304 screen=(2560, 1600) png=True
+      | ==== rec112: PASS=11 FAIL=1  real_machine=True  PNG=3 ====
+      | 2026-10-16 03:54:09 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
+--- rec113       rc=0   PASS=20   FAIL=0   PNG新增=0   总=4      10.3s
+      | [PASS] D1 ★ 没人被派 ⇒ 驻留表里的**他人**一字不动
+      | [PASS] D2 ★ 没人被派 ⇒ 显示场景一字不动
+      | -- E. 收尾 --
+      | ---- rec113：20 PASS / 0 FAIL  真机=True  PNG=4 ----
+      | 报告 = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第113轮-灵魂视角差事\_evidence\rec113_report.json
+      | 2026-10-16 03:54:19 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
+--- rec114       rc=0   PASS=58   FAIL=0   PNG新增=0   总=8      14.5s
+      |           pet_geo=[2425, 1415, 43, 85] visible=True screen=[2560, 1600] png=k005_noop.png
+      | -- G. 收尾 --
+      | [PASS] G1 ★ 收尾无异常；沙箱留在原地备查（绝不 rmtree —— 本机清理守卫会拦）  <- sandbox=C:\Users\23002\AppData\Local\Temp\rec114_bk262jak
+      | ---- rec114：58 PASS / 0 FAIL  真机=True  PNG=6 ----
+      | 报告 = C:\Users\23002\WorkBuddy\Worktrees\try - 副本\main-a7556e9c\code-quality-audit\第114轮-差事世界门控与派发\_evidence\rec114_report.json
+      | 2026-10-16 03:54:34 [INFO] ralsei_pet.modules.sprite_loader — [anim-miss] 本轮运行未出现未命中的动画名（已加载 497 组）
+
+==========================================================================
+合计：脚本 10 ｜ PASS=137 ｜ FAIL=3 ｜ PNG 新增=417
+有问题的项：['rec96', 'rec107', 'rec110', 'rec112']
+★ 结论：★ 见上面有问题的项

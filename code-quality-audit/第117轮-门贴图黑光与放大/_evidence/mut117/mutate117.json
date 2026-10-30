@@ -1,0 +1,72 @@
+[
+  {
+    "tag": "M1  A1   门 A 贴图回退成旧暗门 spr_darkdoor_0",
+    "status": "CAUGHT",
+    "hit": "[FAIL] A1 ★★★ 门 A（`desk_door_oneshot`）的 sprite == `objs/desk_door_oneshot_black.png`"
+  },
+  {
+    "tag": "M2  A4   变体整张换成原件（号称黑光，其实没变暗）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] A4 ★★★ 黑光确实**更暗**：中位亮度 47.2 < 原件 47.2（用户「颜色变成黑光」）"
+  },
+  {
+    "tag": "M3  A3   变体 alpha 全置 255（形状被改）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] A3 ★★★ 黑光变体的 **alpha 与原件逐像素一致**（形状/透明区零漂移）"
+  },
+  {
+    "tag": "M4  A4b  变体涂成单一色（糊成一块，第116轮用户报过的形态）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] A4b ★★★ 黑光**不是一块黑**：可见亮度档数 1 ≥ max(6, 原件 20 × 0.6) = 12"
+  },
+  {
+    "tag": "M5  B1   门 B 也被换成黑光变体（\"niko 的加\"没保住原色）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] B1 ★★★ 门 B（`desk_door_niko_home`）的 sprite == `objs/niko_door_portal.png`（用户「niko 的加还是用他那道」）"
+  },
+  {
+    "tag": "M6  C1   门 C（UT）被换掉",
+    "status": "CAUGHT",
+    "hit": "[FAIL] C1 ★★★ 门 C（`desk_door_ut`）的 sprite == `objs/desk_door_ut.png`"
+  },
+  {
+    "tag": "M7  D1   DOOR_FIT_CAP 回退成 1.2（\"大一点\"失效）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] D1 ★★★ `DOOR_FIT_CAP` 字面量 == 1.6（AST 取值；用户「大一点都」）"
+  },
+  {
+    "tag": "M8  D3   cap 改成 3.0（放大过头，越过\"按原作\"区间）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] D3 ★★★ 统一倍率 k == 1.8968 ∈ (1.00, 1.03)（原件像素已基本\"按原作\"）"
+  },
+  {
+    "tag": "M9  D6   EDGE_MARGIN 0 -> 24（门被顶离屏幕边框）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] D6 ★★★ 放大后四扇门仍**逐边贴屏幕物理边**（A上/B下/C左/D右）"
+  },
+  {
+    "tag": "M10 D7   统一倍率退回\"逆门算\"（按 A 门定尺 ⇒ 四门不再同一把尺）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] D7 ★★★ 四门共用**同一把尺**：逐门 w/h **精确等于** round(原尺寸 × k=1.011613)（逐门倍率分叉 0.572 ⇒ 判据非恒等）"
+  },
+  {
+    "tag": "M11 E3   把一扇门 enabled 改回 true（房间层又画一遍）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] E3 ★★ 4 门仍全 `enabled: false`（房间层剔除，只屏幕层画）"
+  },
+  {
+    "tag": "M12 F7   main 摘掉桌面分支的登记调用（门 B 又被对话框盖住）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] F7 ★★★ main 定义 `_register_door_avoid` 且**两处**调用（桌面登记 / 非桌面清空）"
+  },
+  {
+    "tag": "M13 F3   避让计算恒不抬（形同虚设）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] F3 ★★★ 行为级：登记门 B ⇒ 对话框**上抬到门上方**（底边 <= 门顶 - gap）"
+  },
+  {
+    "tag": "M14 F2   AVOID_GAP 改成 0（框与门贴死）",
+    "status": "CAUGHT",
+    "hit": "[FAIL] F2 ★★ `AVOID_GAP` 是正数（门与对话框不许贴死）"
+  }
+]

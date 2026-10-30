@@ -1,0 +1,131 @@
+{
+  "canvas": [
+    2560,
+    1528
+  ],
+  "results": [
+    {
+      "letter": "A",
+      "face": "up",
+      "want_scene_prefix": "oneshot",
+      "door_rect": [
+        1183,
+        0,
+        194,
+        129
+      ],
+      "pet_center": [
+        1280,
+        64
+      ],
+      "actor_room": [
+        310.875,
+        235.6020942408377
+      ],
+      "facing": "up",
+      "n_props": 4,
+      "picked_key": "desktop#0",
+      "picked_kind": "DoorProp",
+      "picked_desc": "门(obj_doorA)",
+      "choice_opts": null,
+      "choice_prompt": null,
+      "choice_default": null,
+      "interact_ok": true,
+      "scene_before": "desktop",
+      "scene_after": "oneshot.mainline.INIT"
+    },
+    {
+      "letter": "B",
+      "face": "down",
+      "want_scene_prefix": null,
+      "door_rect": [
+        1183,
+        1399,
+        194,
+        129
+      ],
+      "pet_center": [
+        1280,
+        1463
+      ],
+      "actor_room": [
+        310.88309999999996,
+        235.6067120418848
+      ],
+      "facing": "down",
+      "n_props": 4,
+      "picked_key": "desktop#1",
+      "picked_kind": "NikoHomeDoorProp",
+      "picked_desc": "门(obj_doorB)",
+      "choice_opts": [
+        "我确定",
+        "我再考虑考虑"
+      ],
+      "choice_prompt": "（门纹丝不动。）",
+      "choice_default": 1,
+      "interact_ok": true,
+      "scene_before": "desktop",
+      "scene_after": "desktop"
+    },
+    {
+      "letter": "C",
+      "face": "left",
+      "want_scene_prefix": "ut",
+      "door_rect": [
+        0,
+        714,
+        45,
+        100
+      ],
+      "pet_center": [
+        22,
+        764
+      ],
+      "actor_room": [
+        310.88309999999996,
+        235.6067120418848
+      ],
+      "facing": "left",
+      "n_props": 4,
+      "picked_key": "desktop#2",
+      "picked_kind": "DoorProp",
+      "picked_desc": "门(obj_doorC)",
+      "choice_opts": null,
+      "choice_prompt": null,
+      "choice_default": null,
+      "interact_ok": true,
+      "scene_before": "desktop",
+      "scene_after": "ut.rooms.room_start"
+    },
+    {
+      "letter": "D",
+      "face": "right",
+      "want_scene_prefix": "ch1",
+      "door_rect": [
+        2378,
+        685,
+        182,
+        157
+      ],
+      "pet_center": [
+        2469,
+        763
+      ],
+      "actor_room": [
+        310.88309999999996,
+        235.6067120418848
+      ],
+      "facing": "right",
+      "n_props": 4,
+      "picked_key": "desktop#3",
+      "picked_kind": "DoorProp",
+      "picked_desc": "门(obj_doorD)",
+      "choice_opts": null,
+      "choice_prompt": null,
+      "choice_default": null,
+      "interact_ok": true,
+      "scene_before": "desktop",
+      "scene_after": "ch1.hometown.town_mid"
+    }
+  ]
+}

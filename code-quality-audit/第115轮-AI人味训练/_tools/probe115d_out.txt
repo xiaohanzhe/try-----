@@ -1,0 +1,31 @@
+=== 1. 端口连通性（正控制 + 待测）===
+   [正控制] 127.0.0.1:54715 (HTTP_PROXY) -> OPEN
+   [正控制] localhost:54715            -> OPEN
+   [待测]   127.0.0.1:11434        -> ConnectionRefusedError ([WinError 10061] 由于目标计算机积极拒绝，无法连接。)
+   [待测]   ::1:11434              -> gaierror ([Errno 11001] getaddrinfo failed)
+   [待测]   localhost:11434        -> ConnectionRefusedError ([WinError 10061] 由于目标计算机积极拒绝，无法连接。)
+
+=== 2. 进程表里有没有 ollama ===
+   tasklist(ollama*) rc=0
+      ��Ϣ: û�����е�����ƥ��ָ����׼��
+   进程总数 ~458；含 ollama 的行 0 条
+
+=== 3. server.log 尾部（看有没有 shutdown / 重启）===
+   大小 = 2823 字节
+      | time=2026-10-15T01:57:20.048+08:00 level=INFO source=routes.go:2005 msg="server config" env="map[CUDA_VISIBLE_DEVICES: GGML_VK_VISIBLE_DEVICES: GPU_DEVICE_ORDINAL: HIP_VISIBLE_DEVICES: HSA_OVERRIDE_GF
+      | time=2026-10-15T01:57:20.068+08:00 level=INFO source=routes.go:2007 msg="Ollama cloud disabled: false"
+      | time=2026-10-15T01:57:20.096+08:00 level=INFO source=images.go:922 msg="total blobs: 14"
+      | time=2026-10-15T01:57:20.100+08:00 level=INFO source=images.go:930 msg="total unused blobs removed: 0"
+      | time=2026-10-15T01:57:20.103+08:00 level=INFO source=routes.go:2065 msg="Listening on 127.0.0.1:11434 (version 0.34.4)"
+      | time=2026-10-15T01:57:20.117+08:00 level=INFO source=runner.go:60 msg="discovering available GPUs..."
+      | time=2026-10-15T01:57:21.791+08:00 level=INFO source=model_recommendations.go:177 msg="model recommendations cache sleep scheduled" wait=3h13m53.224777321s consecutive_failures=0
+      | time=2026-10-15T01:57:24.959+08:00 level=INFO source=runner.go:405 msg="dropping integrated GPU; to enable, set OLLAMA_IGPU_ENABLE=1" id=0 library=Vulkan compute=0.0 name=Vulkan0 description="Intel(R)
+      | time=2026-10-15T01:57:24.959+08:00 level=INFO source=types.go:50 msg="inference compute" id=cpu library=cpu compute="" name=cpu description=cpu libdirs=ollama driver="" pci_id="" type="" total="31.6 G
+      | time=2026-10-15T01:57:24.960+08:00 level=INFO source=routes.go:2115 msg="vram-based default context" total_vram="0 B" default_num_ctx=4096
+      | [GIN] 2026/10/15 - 01:57:24 | 200 |            0s |       127.0.0.1 | HEAD     "/"
+      | [GIN] 2026/10/15 - 01:57:24 | 200 |            0s |       127.0.0.1 | GET      "/api/version"
+      | [GIN] 2026/10/15 - 01:57:24 | 200 |     30.2364ms |       127.0.0.1 | GET      "/api/tags"
+
+=== 4. ollama 客户端版本（不走网络）===
+   exe = C:\Users\23002\AppData\Local\Programs\Ollama\ollama.exe  exists=True
+   rc=0 out='Warning: could not connect to a running Ollama instance\nWarning: client version is 0.34.4' err=''

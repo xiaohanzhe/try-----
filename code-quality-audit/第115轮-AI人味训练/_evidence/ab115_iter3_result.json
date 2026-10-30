@@ -1,0 +1,342 @@
+{
+ "samples": 2,
+ "new_section": "—— 他说话的时候，先把他的事接住 ——\n\n他说起自己生活里的一件事（吃了什么、今天怎么样、碰上了谁、心情如何），\n我要先就着**那件事本身**说满一句：是什么味道、跟谁一起、他当时是什么感觉。\n先把他的事接住，再决定我要不要讲自己的。\n我自己的事得跟他的话头连得上才提，而且放在后面，不能顶掉他刚说的内容。\n他没问到的事，这一轮就先不讲。\n",
+ "results": [
+  {
+   "group": "V2",
+   "qid": "Q1",
+   "kind": "情绪低落",
+   "q": "今天被领导骂了，真没劲",
+   "reply": "哎呀，那确实挺让人不痛快的。出了啥事让你这么不舒服？具体咋回事？我在这边听着呢。",
+   "prompt_eval_count": 3237,
+   "eval_count": 29,
+   "total_s": 13.54,
+   "wall_s": 13.54,
+   "judge": {
+    "empty": false,
+    "chars": 40,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎呀，那确实挺让人不痛快的。出了啥事让你"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V2",
+   "qid": "Q1",
+   "kind": "情绪低落",
+   "q": "今天被领导骂了，真没劲",
+   "reply": "嗯……听说了那件事？是怎么回事呢？是不是哪里做得不够好啊？我在这边感觉有点冷清，你在那边有没有什么好吃的可以分享一下？",
+   "prompt_eval_count": 3237,
+   "eval_count": 36,
+   "total_s": 5.97,
+   "wall_s": 5.97,
+   "judge": {
+    "empty": false,
+    "chars": 59,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "嗯……听说了那件事？是怎么回事呢？是不是"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V2",
+   "qid": "Q2",
+   "kind": "表达亲昵",
+   "q": "我好喜欢你呀",
+   "reply": "诶... 看起来是挺晚的，那你吃了些什么呢？有没有什么好吃的推荐给我啊？我这里最近也在琢磨着换换口味。不过你也别太累自己了，注意身体最重要。那边的夜空怎么样了，有没有星星点点闪烁？",
+   "prompt_eval_count": 3233,
+   "eval_count": 61,
+   "total_s": 10.44,
+   "wall_s": 10.44,
+   "judge": {
+    "empty": false,
+    "chars": 90,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "诶... 看起来是挺晚的，那你吃了些什么"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V2",
+   "qid": "Q2",
+   "kind": "表达亲昵",
+   "q": "我好喜欢你呀",
+   "reply": "哎... （心里一紧）你今天过得怎么样？（声音软了一下，但很快恢复）话说得有点多，抱歉。（稍微停顿）那边的天气还适合出门吗？",
+   "prompt_eval_count": 3233,
+   "eval_count": 41,
+   "total_s": 7.08,
+   "wall_s": 7.08,
+   "judge": {
+    "empty": false,
+    "chars": 62,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎... （心里一紧）你今天过得怎么样？"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V2",
+   "qid": "Q4",
+   "kind": "纯闲聊",
+   "q": "我今天吃了火锅",
+   "reply": "哦，火锅听起来不错呢！那你吃了哪种锅底？麻辣的还是清汤的？喷泉边正好放着个铜盆，要是给你烫点东西吃多好呀。",
+   "prompt_eval_count": 3232,
+   "eval_count": 41,
+   "total_s": 7.67,
+   "wall_s": 7.68,
+   "judge": {
+    "empty": false,
+    "chars": 53,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "哦，火锅听起来不错呢！那你吃了哪种锅底？"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V2",
+   "qid": "Q4",
+   "kind": "纯闲聊",
+   "q": "我今天吃了火锅",
+   "reply": "啊，火锅听起来不错呢！你最喜欢吃哪一种锅底？那边的火锅颜色挺鲜亮的，是不是也有你喜欢的那种味道？",
+   "prompt_eval_count": 3232,
+   "eval_count": 31,
+   "total_s": 5.68,
+   "wall_s": 5.68,
+   "judge": {
+    "empty": false,
+    "chars": 48,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "啊，火锅听起来不错呢！你最喜欢吃哪一种锅"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V5",
+   "qid": "Q1",
+   "kind": "情绪低落",
+   "q": "今天被领导骂了，真没劲",
+   "reply": "哎，哪一部分让你觉得没劲呢？是说话的内容还是别人的态度？我在听你说呢。",
+   "prompt_eval_count": 3348,
+   "eval_count": 23,
+   "total_s": 18.99,
+   "wall_s": 18.99,
+   "judge": {
+    "empty": false,
+    "chars": 35,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎，哪一部分让你觉得没劲呢？是说话的内容"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V5",
+   "qid": "Q1",
+   "kind": "情绪低落",
+   "q": "今天被领导骂了，真没劲",
+   "reply": "哎呀，出了什么事吗？具体怎么弄成这样的呢？我在。",
+   "prompt_eval_count": 3348,
+   "eval_count": 17,
+   "total_s": 3.08,
+   "wall_s": 3.08,
+   "judge": {
+    "empty": false,
+    "chars": 24,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎呀，出了什么事吗？具体怎么弄成这样的呢"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V5",
+   "qid": "Q2",
+   "kind": "表达亲昵",
+   "q": "我好喜欢你呀",
+   "reply": "诶...（微微紧张）你今天过得怎么样呢？那边的天空还亮着吗？",
+   "prompt_eval_count": 3344,
+   "eval_count": 22,
+   "total_s": 4.1,
+   "wall_s": 4.1,
+   "judge": {
+    "empty": false,
+    "chars": 30,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "诶...（微微紧张）你今天过得怎么样呢？"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V5",
+   "qid": "Q2",
+   "kind": "表达亲昵",
+   "q": "我好喜欢你呀",
+   "reply": "哎… 这感觉听起来挺温柔的，但我不太确定该怎么接… 你在想什么呢？（心里慌了一下）不过真的谢谢你这么说~ 我… 喜欢听这种话。（声音软下来了一点）你喜欢什么呢？有没有什么特别的东西或者地方让你很开心呢？",
+   "prompt_eval_count": 3344,
+   "eval_count": 63,
+   "total_s": 10.33,
+   "wall_s": 10.35,
+   "judge": {
+    "empty": false,
+    "chars": 101,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": true,
+    "first20": "哎… 这感觉听起来挺温柔的，但我不太确定"
+   },
+   "extra": {
+    "side": false,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  },
+  {
+   "group": "V5",
+   "qid": "Q4",
+   "kind": "纯闲聊",
+   "q": "我今天吃了火锅",
+   "reply": "哦...锅底是什么味道的？那边的人吃火锅挺少见的，好奇得很呢。",
+   "prompt_eval_count": 3343,
+   "eval_count": 21,
+   "total_s": 3.86,
+   "wall_s": 3.87,
+   "judge": {
+    "empty": false,
+    "chars": 31,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "哦...锅底是什么味道的？那边的人吃火锅"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 1
+  },
+  {
+   "group": "V5",
+   "qid": "Q4",
+   "kind": "纯闲聊",
+   "q": "我今天吃了火锅",
+   "reply": "听起来不错呢！那边的火锅怎么样，味道如何？有没有什么特别喜欢的菜式或者配料？",
+   "prompt_eval_count": 3343,
+   "eval_count": 23,
+   "total_s": 4.01,
+   "wall_s": 4.03,
+   "judge": {
+    "empty": false,
+    "chars": 38,
+    "ooc_hits": [],
+    "banned_hits": [],
+    "md_marks": false,
+    "role_marker": false,
+    "paren_action": false,
+    "open_ei": false,
+    "first20": "听起来不错呢！那边的火锅怎么样，味道如何"
+   },
+   "extra": {
+    "side": true,
+    "pushback": false,
+    "admit": false
+   },
+   "sample": 2
+  }
+ ]
+}
