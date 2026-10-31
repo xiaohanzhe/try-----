@@ -61,7 +61,9 @@ for _p in (PKG, MODULES):
 from modules import scene_system as SS       # noqa: E402
 
 EXPECT_SCENES = 2166
-EXPECT_ROUTES = 1531
+#: ★ 第126轮：1,531 → **1,740**（outertale 补了 209 条门路由，priority 6000~6208）。
+#:   桌面 4 门的落点与可达账**不受影响**（outertale 没有桌面门），B 段仍是 215。
+EXPECT_ROUTES = 1740
 
 #: 字母 → (世界, 落点 scene_id)。**唯一真源**，与 `check89._A_DOOR_WORLD` 同口径。
 DOOR_WANT = {
@@ -100,7 +102,9 @@ DENSITY_MIN = {
 #:   （`cc_prison_cells↔cc_prisonlancer`、`forest_dancers1↔forest_secret1`）。
 #: ★ 判据不靠这个数字：`D2` 同时要求"每个重复组内的门标识两两不同"
 #:   —— 同门重复才是冗余，不同门同目标原作里本来就有。
-EXPECT_UNIQUE_EDGES = 1526
+#: ★ 第126轮：1,526 → **1,735**（outertale 那 209 条全是新产品唯一边；
+#:   重复组仍是 5 组 —— 新段一条重复都没有，见 check126.C3）。
+EXPECT_UNIQUE_EDGES = 1735
 EXPECT_DUP_EDGES = 5
 
 _n = {'p': 0, 'f': 0}

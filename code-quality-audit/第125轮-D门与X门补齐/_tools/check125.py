@@ -66,6 +66,12 @@ from modules import scene_system as SS       # noqa: E402
 
 #: 本轮新段的 priority 起点（既有 110~2478 / oneshot 3000+ / ut 4000+ / 本轮 5000+）
 PRIO_BASE = 5000
+#: ★★★ 第126轮：段位改成**闭区间**（原来只判 `>= 5000`）。
+#:   第126轮把 outertale 的 209 条写进 6000~6208 ⇒ `>= 5000` 会把它们一起吞进来，
+#:   于是 A1/A2/A3/A4/B2 一起报红（**报的是实事实**：选择口径太宽，不是产品错）。
+#:   ⚠️ 这里刻意**不**改成"按 when_scene 前缀筛 ch1~ch5" —— 那会让 A2
+#:   「只落 ch1~ch5」变成恒真判据（自己筛自己）。段位是**事实边界**，留着不动。
+PRIO_HI = 5138
 EXPECT_ADD = 139
 EXPECT_D = 56
 EXPECT_X = 83
@@ -137,10 +143,11 @@ RL = RAW.get('routes') or []
 IDX = SS.load_index(SCENES)
 SC = IDX.get('scenes') or {}
 
-NEW = [r for r in RL if isinstance(r.get('priority'), int) and r['priority'] >= PRIO_BASE]
+NEW = [r for r in RL
+       if isinstance(r.get('priority'), int) and PRIO_BASE <= r['priority'] <= PRIO_HI]
 OLD_KEYS = set((r.get('when_scene'), str(r.get('when_door') or ''))
                for r in RL if not (isinstance(r.get('priority'), int)
-                                   and r['priority'] >= PRIO_BASE))
+                                   and PRIO_BASE <= r['priority'] <= PRIO_HI))
 
 #: 章内 原作房间下标 → scene_id（★ 第124轮的坑：**不能用 `name` 映射**）
 REV = collections.defaultdict(dict)

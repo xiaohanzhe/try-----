@@ -119,7 +119,10 @@ def seg_a():
     got = rg.get('n_edges')
     per_ch = {ch: len(rec) for ch, rec in (rg.get('edges_by_chapter') or {}).items()}
     expect_ch = {'ch1': 238, 'ch2': 323, 'ch3': 79, 'ch4': 72, 'ch5': 70,
-                 'oneshot': 420}
+                 'oneshot': 420,
+                 # ★ 第126轮：outertale 补 209 条门边（guard 93 / shift 116）——
+                 #   此前 outertale **0 条**，`plan_route_to` 在那个作品里拿不到边。
+                 'outertale': 209}
     FIVE_CH = ('ch1', 'ch2', 'ch3', 'ch4', 'ch5')
     five_total = sum(v for k, v in per_ch.items() if k in FIVE_CH)
     check('A3', rg.get('ok') and per_ch == expect_ch,

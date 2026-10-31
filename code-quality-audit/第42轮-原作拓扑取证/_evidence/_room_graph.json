@@ -15,7 +15,8 @@
    "obj_markerA..X": "落点：从对应 door 进入本房间时玩家的落点坐标"
   },
   "caveat": "边只覆盖「门对象驱动」的换房间。过场对象（obj_carcutscene / obj_krisroom / obj_insidEclosetcutscene / DEVICE_CONTACT 等）的 room_goto 属剧情转场，未计入连接图。",
-  "oneshot_note": "★ 第105轮：本图新增 `oneshot` 章（420 条边），来源 = 原作 OneShot 的 code-201（Transfer Player）事件指令（page0 且无条件；自环 19 条与 带条件的剧情传送 77 条**只登记不生成**）。`kind=oneshot_transfer` 与 Deltarune 的 `delta`/`table` 并列；`door` 是该边的代表性**事件名**归一化 slug（OneShot 没有门对象）。依据：code-quality-audit/第105轮-OneShot房间连接/_evidence/oneshot_transfers.json。⚠️ ch1~ch5 一个字段都没动（生成器内含指纹自证）。"
+  "oneshot_note": "★ 第105轮：本图新增 `oneshot` 章（420 条边），来源 = 原作 OneShot 的 code-201（Transfer Player）事件指令（page0 且无条件；自环 19 条与 带条件的剧情传送 77 条**只登记不生成**）。`kind=oneshot_transfer` 与 Deltarune 的 `delta`/`table` 并列；`door` 是该边的代表性**事件名**归一化 slug（OneShot 没有门对象）。依据：code-quality-audit/第105轮-OneShot房间连接/_evidence/oneshot_transfers.json。⚠️ ch1~ch5 一个字段都没动（生成器内含指纹自证）。",
+  "outertale_note": "★ 第126轮：本图新增 `outertale` 章（209 条边，guard 93 / shift 116）。`kind=ot_door_guard` / `ot_door_shift`，`door` = 触发它的原作门对象名。⚠️ ch1~ch5 与 oneshot 一个字段都没动（生成器内含指纹自证）。"
  },
  "chapters": {
   "ch1": {
@@ -9667,6 +9668,1684 @@
      "dst_name": "IGNORE",
      "door": "ev001",
      "kind": "oneshot_transfer"
+    }
+   ]
+  },
+  "outertale": {
+   "folder": "outertale",
+   "n_edges": 209,
+   "edges": [
+    {
+     "src": 6,
+     "src_name": "room_ruins1",
+     "dst": 7,
+     "dst_name": "room_ruins2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 7,
+     "src_name": "room_ruins2",
+     "dst": 8,
+     "dst_name": "room_ruins3",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 8,
+     "src_name": "room_ruins3",
+     "dst": 9,
+     "dst_name": "room_ruins4",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 9,
+     "src_name": "room_ruins4",
+     "dst": 10,
+     "dst_name": "room_ruins5",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 10,
+     "src_name": "room_ruins5",
+     "dst": 11,
+     "dst_name": "room_ruins6",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 12,
+     "src_name": "room_ruins7",
+     "dst": 13,
+     "dst_name": "room_ruins7A",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 14,
+     "src_name": "room_ruins8",
+     "dst": 15,
+     "dst_name": "room_ruins9",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 15,
+     "src_name": "room_ruins9",
+     "dst": 16,
+     "dst_name": "room_ruins10",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 16,
+     "src_name": "room_ruins10",
+     "dst": 17,
+     "dst_name": "room_ruins11",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 17,
+     "src_name": "room_ruins11",
+     "dst": 18,
+     "dst_name": "room_ruins12A",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 18,
+     "src_name": "room_ruins12A",
+     "dst": 19,
+     "dst_name": "room_ruins12",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 19,
+     "src_name": "room_ruins12",
+     "dst": 20,
+     "dst_name": "room_ruins12B",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 19,
+     "src_name": "room_ruins12",
+     "dst": 21,
+     "dst_name": "room_ruins13",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 21,
+     "src_name": "room_ruins13",
+     "dst": 22,
+     "dst_name": "room_ruins14",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 21,
+     "src_name": "room_ruins13",
+     "dst": 19,
+     "dst_name": "room_ruins12",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 22,
+     "src_name": "room_ruins14",
+     "dst": 23,
+     "dst_name": "room_ruins15A",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 23,
+     "src_name": "room_ruins15A",
+     "dst": 24,
+     "dst_name": "room_ruins15B",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 24,
+     "src_name": "room_ruins15B",
+     "dst": 25,
+     "dst_name": "room_ruins15C",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 25,
+     "src_name": "room_ruins15C",
+     "dst": 26,
+     "dst_name": "room_ruins15D",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 27,
+     "src_name": "room_ruins15E",
+     "dst": 23,
+     "dst_name": "room_ruins15A",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 28,
+     "src_name": "room_ruins16",
+     "dst": 29,
+     "dst_name": "room_ruins17",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 28,
+     "src_name": "room_ruins16",
+     "dst": 31,
+     "dst_name": "room_ruins19",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 29,
+     "src_name": "room_ruins17",
+     "dst": 30,
+     "dst_name": "room_ruins18OLD",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 31,
+     "src_name": "room_ruins19",
+     "dst": 28,
+     "dst_name": "room_ruins16",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 32,
+     "src_name": "room_torhouse1",
+     "dst": 33,
+     "dst_name": "room_torhouse2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 33,
+     "src_name": "room_torhouse2",
+     "dst": 37,
+     "dst_name": "room_kitchen",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 34,
+     "src_name": "room_torhouse3",
+     "dst": 35,
+     "dst_name": "room_torielroom",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 37,
+     "src_name": "room_kitchen",
+     "dst": 33,
+     "dst_name": "room_torhouse2",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 38,
+     "src_name": "room_basement1",
+     "dst": 39,
+     "dst_name": "room_basement2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 38,
+     "src_name": "room_basement1",
+     "dst": 32,
+     "dst_name": "room_torhouse1",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 39,
+     "src_name": "room_basement2",
+     "dst": 40,
+     "dst_name": "room_basement3",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 40,
+     "src_name": "room_basement3",
+     "dst": 41,
+     "dst_name": "room_basement4",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 42,
+     "src_name": "room_basement5",
+     "dst": 43,
+     "dst_name": "room_ruinsexit",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 44,
+     "src_name": "room_tundra1",
+     "dst": 45,
+     "dst_name": "room_tundra2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 45,
+     "src_name": "room_tundra2",
+     "dst": 46,
+     "dst_name": "room_tundra3",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 46,
+     "src_name": "room_tundra3",
+     "dst": 47,
+     "dst_name": "room_tundra3A",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 48,
+     "src_name": "room_tundra4",
+     "dst": 49,
+     "dst_name": "room_tundra5",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 49,
+     "src_name": "room_tundra5",
+     "dst": 50,
+     "dst_name": "room_tundra6",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 50,
+     "src_name": "room_tundra6",
+     "dst": 51,
+     "dst_name": "room_tundra6A",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 52,
+     "src_name": "room_tundra7",
+     "dst": 53,
+     "dst_name": "room_tundra8",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 53,
+     "src_name": "room_tundra8",
+     "dst": 54,
+     "dst_name": "room_tundra8A",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 55,
+     "src_name": "room_tundra9",
+     "dst": 56,
+     "dst_name": "room_tundra_spaghetti",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 56,
+     "src_name": "room_tundra_spaghetti",
+     "dst": 57,
+     "dst_name": "room_tundra_snowpuzz",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 57,
+     "src_name": "room_tundra_snowpuzz",
+     "dst": 58,
+     "dst_name": "room_tundra_xoxosmall",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 58,
+     "src_name": "room_tundra_xoxosmall",
+     "dst": 59,
+     "dst_name": "room_tundra_xoxopuzz",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 59,
+     "src_name": "room_tundra_xoxopuzz",
+     "dst": 60,
+     "dst_name": "room_tundra_randoblock",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 60,
+     "src_name": "room_tundra_randoblock",
+     "dst": 61,
+     "dst_name": "room_tundra_lesserdog",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 62,
+     "src_name": "room_tundra_icehole",
+     "dst": 63,
+     "dst_name": "room_tundra_iceentrance",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 63,
+     "src_name": "room_tundra_iceentrance",
+     "dst": 64,
+     "dst_name": "room_tundra_iceexit_new",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 63,
+     "src_name": "room_tundra_iceentrance",
+     "dst": 66,
+     "dst_name": "room_tundra_poffzone",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 64,
+     "src_name": "room_tundra_iceexit_new",
+     "dst": 65,
+     "dst_name": "room_tundra_iceexit",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 66,
+     "src_name": "room_tundra_poffzone",
+     "dst": 67,
+     "dst_name": "room_tundra_dangerbridge",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 66,
+     "src_name": "room_tundra_poffzone",
+     "dst": 63,
+     "dst_name": "room_tundra_iceentrance",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 68,
+     "src_name": "room_tundra_town",
+     "dst": 69,
+     "dst_name": "room_tundra_town2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 68,
+     "src_name": "room_tundra_town",
+     "dst": 71,
+     "dst_name": "room_tundra_inn",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 68,
+     "src_name": "room_tundra_town",
+     "dst": 74,
+     "dst_name": "room_tundra_library",
+     "door": "obj_door_u",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 68,
+     "src_name": "room_tundra_town",
+     "dst": 73,
+     "dst_name": "room_tundra_grillby",
+     "door": "obj_door_w",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 71,
+     "src_name": "room_tundra_inn",
+     "dst": 68,
+     "dst_name": "room_tundra_town",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 73,
+     "src_name": "room_tundra_grillby",
+     "dst": 68,
+     "dst_name": "room_tundra_town",
+     "door": "obj_door_w",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 74,
+     "src_name": "room_tundra_library",
+     "dst": 68,
+     "dst_name": "room_tundra_town",
+     "door": "obj_door_u",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 75,
+     "src_name": "room_tundra_garage",
+     "dst": 68,
+     "dst_name": "room_tundra_town",
+     "door": "obj_door_v",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 76,
+     "src_name": "room_tundra_sanshouse",
+     "dst": 68,
+     "dst_name": "room_tundra_town",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 78,
+     "src_name": "room_tundra_sansroom",
+     "dst": 76,
+     "dst_name": "room_tundra_sanshouse",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 79,
+     "src_name": "room_tundra_sansroom_dark",
+     "dst": 76,
+     "dst_name": "room_tundra_sanshouse",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 80,
+     "src_name": "room_tundra_sansbasement",
+     "dst": 68,
+     "dst_name": "room_tundra_town",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 81,
+     "src_name": "room_fogroom",
+     "dst": 68,
+     "dst_name": "room_tundra_town",
+     "door": "obj_doorXmusicfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 84,
+     "src_name": "room_water3",
+     "dst": 85,
+     "dst_name": "room_water3A",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 86,
+     "src_name": "room_water4",
+     "dst": 87,
+     "dst_name": "room_water_bridgepuzz1",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 87,
+     "src_name": "room_water_bridgepuzz1",
+     "dst": 88,
+     "dst_name": "room_water5",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 88,
+     "src_name": "room_water5",
+     "dst": 89,
+     "dst_name": "room_water5A",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 90,
+     "src_name": "room_water6",
+     "dst": 91,
+     "dst_name": "room_water7",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 91,
+     "src_name": "room_water7",
+     "dst": 92,
+     "dst_name": "room_water8",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 92,
+     "src_name": "room_water8",
+     "dst": 93,
+     "dst_name": "room_water9",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 95,
+     "src_name": "room_water11",
+     "dst": 96,
+     "dst_name": "room_water_nicecream",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 95,
+     "src_name": "room_water11",
+     "dst": 99,
+     "dst_name": "room_water_bird",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 97,
+     "src_name": "room_water12",
+     "dst": 98,
+     "dst_name": "room_water_shoe",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 97,
+     "src_name": "room_water12",
+     "dst": 95,
+     "dst_name": "room_water11",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 97,
+     "src_name": "room_water12",
+     "dst": 123,
+     "dst_name": "room_water_prebird",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 97,
+     "src_name": "room_water12",
+     "dst": 100,
+     "dst_name": "room_water_onionsan",
+     "door": "obj_door_w",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 99,
+     "src_name": "room_water_bird",
+     "dst": 116,
+     "dst_name": "room_water_friendlyhub",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 99,
+     "src_name": "room_water_bird",
+     "dst": 95,
+     "dst_name": "room_water11",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 100,
+     "src_name": "room_water_onionsan",
+     "dst": 101,
+     "dst_name": "room_water14",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 100,
+     "src_name": "room_water_onionsan",
+     "dst": 97,
+     "dst_name": "room_water12",
+     "door": "obj_door_w",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 101,
+     "src_name": "room_water14",
+     "dst": 104,
+     "dst_name": "room_water_statue",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 102,
+     "src_name": "room_water_piano",
+     "dst": 103,
+     "dst_name": "room_water_dogroom",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 104,
+     "src_name": "room_water_statue",
+     "dst": 105,
+     "dst_name": "room_water_prewaterfall",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 104,
+     "src_name": "room_water_statue",
+     "dst": 101,
+     "dst_name": "room_water14",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 105,
+     "src_name": "room_water_prewaterfall",
+     "dst": 106,
+     "dst_name": "room_water_waterfall",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 106,
+     "src_name": "room_water_waterfall",
+     "dst": 107,
+     "dst_name": "room_water_waterfall2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 107,
+     "src_name": "room_water_waterfall2",
+     "dst": 108,
+     "dst_name": "room_water_waterfall3",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 108,
+     "src_name": "room_water_waterfall3",
+     "dst": 109,
+     "dst_name": "room_water_waterfall4",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 109,
+     "src_name": "room_water_waterfall4",
+     "dst": 110,
+     "dst_name": "room_water_preundyne",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 110,
+     "src_name": "room_water_preundyne",
+     "dst": 111,
+     "dst_name": "room_water_undynebridge",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 111,
+     "src_name": "room_water_undynebridge",
+     "dst": 112,
+     "dst_name": "room_water_undynebridgeend",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 113,
+     "src_name": "room_water_trashzone1",
+     "dst": 114,
+     "dst_name": "room_water_trashsavepoint",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 114,
+     "src_name": "room_water_trashsavepoint",
+     "dst": 115,
+     "dst_name": "room_water_trashzone2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 116,
+     "src_name": "room_water_friendlyhub",
+     "dst": 99,
+     "dst_name": "room_water_bird",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 116,
+     "src_name": "room_water_friendlyhub",
+     "dst": 124,
+     "dst_name": "room_water_shop",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 116,
+     "src_name": "room_water_friendlyhub",
+     "dst": 122,
+     "dst_name": "room_water_farm",
+     "door": "obj_door_v",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 116,
+     "src_name": "room_water_friendlyhub",
+     "dst": 119,
+     "dst_name": "room_water_blookyard",
+     "door": "obj_door_w",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 119,
+     "src_name": "room_water_blookyard",
+     "dst": 122,
+     "dst_name": "room_water_farm",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 119,
+     "src_name": "room_water_blookyard",
+     "dst": 116,
+     "dst_name": "room_water_friendlyhub",
+     "door": "obj_door_w",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 122,
+     "src_name": "room_water_farm",
+     "dst": 119,
+     "dst_name": "room_water_blookyard",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 122,
+     "src_name": "room_water_farm",
+     "dst": 116,
+     "dst_name": "room_water_friendlyhub",
+     "door": "obj_door_v",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 123,
+     "src_name": "room_water_prebird",
+     "dst": 97,
+     "dst_name": "room_water12",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 124,
+     "src_name": "room_water_shop",
+     "dst": 116,
+     "dst_name": "room_water_friendlyhub",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 126,
+     "src_name": "room_water15",
+     "dst": 127,
+     "dst_name": "room_water16",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 130,
+     "src_name": "room_water18",
+     "dst": 131,
+     "dst_name": "room_water19",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 131,
+     "src_name": "room_water19",
+     "dst": 132,
+     "dst_name": "room_water20",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 132,
+     "src_name": "room_water20",
+     "dst": 133,
+     "dst_name": "room_water21",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 134,
+     "src_name": "room_water_undynefinal",
+     "dst": 135,
+     "dst_name": "room_water_undynefinal2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 135,
+     "src_name": "room_water_undynefinal2",
+     "dst": 136,
+     "dst_name": "room_water_undynefinal3",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 137,
+     "src_name": "room_fire1",
+     "dst": 138,
+     "dst_name": "room_fire2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 138,
+     "src_name": "room_fire2",
+     "dst": 139,
+     "dst_name": "room_fire_prelab",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 139,
+     "src_name": "room_fire_prelab",
+     "dst": 214,
+     "dst_name": "room_fire_elevator_l1",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 141,
+     "src_name": "room_fire_lab1",
+     "dst": 142,
+     "dst_name": "room_fire_lab2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 144,
+     "src_name": "room_fire5",
+     "dst": 145,
+     "dst_name": "room_fire6",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 145,
+     "src_name": "room_fire6",
+     "dst": 146,
+     "dst_name": "room_fire6A",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 147,
+     "src_name": "room_fire_lasers1",
+     "dst": 148,
+     "dst_name": "room_fire7",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 148,
+     "src_name": "room_fire7",
+     "dst": 149,
+     "dst_name": "room_fire8",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 148,
+     "src_name": "room_fire7",
+     "dst": 153,
+     "dst_name": "room_fire_turn",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 148,
+     "src_name": "room_fire7",
+     "dst": 151,
+     "dst_name": "room_fire9",
+     "door": "obj_door_u",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 149,
+     "src_name": "room_fire8",
+     "dst": 150,
+     "dst_name": "room_fire_shootguy_2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 151,
+     "src_name": "room_fire9",
+     "dst": 152,
+     "dst_name": "room_fire_shootguy_1",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 151,
+     "src_name": "room_fire9",
+     "dst": 148,
+     "dst_name": "room_fire7",
+     "door": "obj_door_u",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 153,
+     "src_name": "room_fire_turn",
+     "dst": 148,
+     "dst_name": "room_fire7",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 156,
+     "src_name": "room_fire_elevator_r1",
+     "dst": 213,
+     "dst_name": "room_fire_elevator",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 157,
+     "src_name": "room_fire_elevator_r2",
+     "dst": 213,
+     "dst_name": "room_fire_elevator",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 159,
+     "src_name": "room_fire_walkandbranch",
+     "dst": 162,
+     "dst_name": "room_fire10",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 162,
+     "src_name": "room_fire10",
+     "dst": 163,
+     "dst_name": "room_fire_rpuzzle",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 162,
+     "src_name": "room_fire10",
+     "dst": 159,
+     "dst_name": "room_fire_walkandbranch",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 163,
+     "src_name": "room_fire_rpuzzle",
+     "dst": 164,
+     "dst_name": "room_fire_mewmew2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 164,
+     "src_name": "room_fire_mewmew2",
+     "dst": 165,
+     "dst_name": "room_fire_boysnightout",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 168,
+     "src_name": "room_fire_elevator_l2",
+     "dst": 213,
+     "dst_name": "room_fire_elevator",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 169,
+     "src_name": "room_fire_elevator_l3",
+     "dst": 213,
+     "dst_name": "room_fire_elevator",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 171,
+     "src_name": "room_fire_walkandbranch2",
+     "dst": 172,
+     "dst_name": "room_fire_conveyorlaser",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 171,
+     "src_name": "room_fire_walkandbranch2",
+     "dst": 176,
+     "dst_name": "room_fire_savepoint2",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 171,
+     "src_name": "room_fire_walkandbranch2",
+     "dst": 174,
+     "dst_name": "room_fire_preshootguy4",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 172,
+     "src_name": "room_fire_conveyorlaser",
+     "dst": 173,
+     "dst_name": "room_fire_shootguy_3",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 174,
+     "src_name": "room_fire_preshootguy4",
+     "dst": 175,
+     "dst_name": "room_fire_shootguy_4",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 174,
+     "src_name": "room_fire_preshootguy4",
+     "dst": 171,
+     "dst_name": "room_fire_walkandbranch2",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 176,
+     "src_name": "room_fire_savepoint2",
+     "dst": 171,
+     "dst_name": "room_fire_walkandbranch2",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 180,
+     "src_name": "room_fire_multitile",
+     "dst": 181,
+     "dst_name": "room_fire_hotelfront_1",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 181,
+     "src_name": "room_fire_hotelfront_1",
+     "dst": 187,
+     "dst_name": "room_fire_elevator_r3",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 183,
+     "src_name": "room_fire_hotellobby",
+     "dst": 184,
+     "dst_name": "room_fire_restaurant",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 183,
+     "src_name": "room_fire_hotellobby",
+     "dst": 188,
+     "dst_name": "room_fire_precore",
+     "door": "obj_doorXmusicfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 187,
+     "src_name": "room_fire_elevator_r3",
+     "dst": 181,
+     "dst_name": "room_fire_hotelfront_1",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 187,
+     "src_name": "room_fire_elevator_r3",
+     "dst": 213,
+     "dst_name": "room_fire_elevator",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 188,
+     "src_name": "room_fire_precore",
+     "dst": 183,
+     "dst_name": "room_fire_hotellobby",
+     "door": "obj_doorXmusicfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 189,
+     "src_name": "room_fire_core1",
+     "dst": 190,
+     "dst_name": "room_fire_core2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 189,
+     "src_name": "room_fire_core1",
+     "dst": 210,
+     "dst_name": "room_fire_core_premett",
+     "door": "obj_door_u",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 191,
+     "src_name": "room_fire_core3",
+     "dst": 192,
+     "dst_name": "room_fire_core4",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 192,
+     "src_name": "room_fire_core4",
+     "dst": 193,
+     "dst_name": "room_fire_core5",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 193,
+     "src_name": "room_fire_core5",
+     "dst": 194,
+     "dst_name": "room_fire_core_freebattle",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 195,
+     "src_name": "room_fire_core_laserfun",
+     "dst": 196,
+     "dst_name": "room_fire_core_branch",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 196,
+     "src_name": "room_fire_core_branch",
+     "dst": 197,
+     "dst_name": "room_fire_core_bottomleft",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 196,
+     "src_name": "room_fire_core_branch",
+     "dst": 204,
+     "dst_name": "room_fire_core_center",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 196,
+     "src_name": "room_fire_core_branch",
+     "dst": 203,
+     "dst_name": "room_fire_core_bottomright",
+     "door": "obj_door_u",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 197,
+     "src_name": "room_fire_core_bottomleft",
+     "dst": 198,
+     "dst_name": "room_fire_core_left",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 198,
+     "src_name": "room_fire_core_left",
+     "dst": 199,
+     "dst_name": "room_fire_core_topleft",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 198,
+     "src_name": "room_fire_core_left",
+     "dst": 205,
+     "dst_name": "room_fire_shootguy_5",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 199,
+     "src_name": "room_fire_core_topleft",
+     "dst": 200,
+     "dst_name": "room_fire_core_top",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 199,
+     "src_name": "room_fire_core_topleft",
+     "dst": 206,
+     "dst_name": "room_fire_core_treasureleft",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 200,
+     "src_name": "room_fire_core_top",
+     "dst": 201,
+     "dst_name": "room_fire_core_topright",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 200,
+     "src_name": "room_fire_core_top",
+     "dst": 208,
+     "dst_name": "room_fire_core_warrior",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 200,
+     "src_name": "room_fire_core_top",
+     "dst": 204,
+     "dst_name": "room_fire_core_center",
+     "door": "obj_door_u",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 201,
+     "src_name": "room_fire_core_topright",
+     "dst": 202,
+     "dst_name": "room_fire_core_right",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 201,
+     "src_name": "room_fire_core_topright",
+     "dst": 207,
+     "dst_name": "room_fire_core_treasureright",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 202,
+     "src_name": "room_fire_core_right",
+     "dst": 203,
+     "dst_name": "room_fire_core_bottomright",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 202,
+     "src_name": "room_fire_core_right",
+     "dst": 209,
+     "dst_name": "room_fire_core_bridge",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 203,
+     "src_name": "room_fire_core_bottomright",
+     "dst": 196,
+     "dst_name": "room_fire_core_branch",
+     "door": "obj_door_u",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 204,
+     "src_name": "room_fire_core_center",
+     "dst": 196,
+     "dst_name": "room_fire_core_branch",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 204,
+     "src_name": "room_fire_core_center",
+     "dst": 200,
+     "dst_name": "room_fire_core_top",
+     "door": "obj_door_u",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 205,
+     "src_name": "room_fire_shootguy_5",
+     "dst": 198,
+     "dst_name": "room_fire_core_left",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 206,
+     "src_name": "room_fire_core_treasureleft",
+     "dst": 199,
+     "dst_name": "room_fire_core_topleft",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 207,
+     "src_name": "room_fire_core_treasureright",
+     "dst": 201,
+     "dst_name": "room_fire_core_topright",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 208,
+     "src_name": "room_fire_core_warrior",
+     "dst": 200,
+     "dst_name": "room_fire_core_top",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 209,
+     "src_name": "room_fire_core_bridge",
+     "dst": 210,
+     "dst_name": "room_fire_core_premett",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 209,
+     "src_name": "room_fire_core_bridge",
+     "dst": 202,
+     "dst_name": "room_fire_core_right",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 210,
+     "src_name": "room_fire_core_premett",
+     "dst": 189,
+     "dst_name": "room_fire_core1",
+     "door": "obj_door_u",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 211,
+     "src_name": "room_fire_core_metttest",
+     "dst": 212,
+     "dst_name": "room_fire_core_final",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 212,
+     "src_name": "room_fire_core_final",
+     "dst": 215,
+     "dst_name": "room_fire_finalelevator",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 214,
+     "src_name": "room_fire_elevator_l1",
+     "dst": 213,
+     "dst_name": "room_fire_elevator",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 214,
+     "src_name": "room_fire_elevator_l1",
+     "dst": 139,
+     "dst_name": "room_fire_prelab",
+     "door": "obj_door_t",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 216,
+     "src_name": "room_castle_elevatorout",
+     "dst": 217,
+     "dst_name": "room_castle_precastle",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 216,
+     "src_name": "room_castle_elevatorout",
+     "dst": 215,
+     "dst_name": "room_fire_finalelevator",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 217,
+     "src_name": "room_castle_precastle",
+     "dst": 218,
+     "dst_name": "room_castle_hook",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 217,
+     "src_name": "room_castle_precastle",
+     "dst": 230,
+     "dst_name": "room_lastruins_corridor",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 218,
+     "src_name": "room_castle_hook",
+     "dst": 219,
+     "dst_name": "room_castle_front",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 219,
+     "src_name": "room_castle_front",
+     "dst": 220,
+     "dst_name": "room_asghouse1",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 220,
+     "src_name": "room_asghouse1",
+     "dst": 221,
+     "dst_name": "room_asghouse2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 220,
+     "src_name": "room_asghouse1",
+     "dst": 226,
+     "dst_name": "room_basement1_final",
+     "door": "obj_doorXmusicfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 221,
+     "src_name": "room_asghouse2",
+     "dst": 225,
+     "dst_name": "room_kitchen_final",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 222,
+     "src_name": "room_asghouse3",
+     "dst": 223,
+     "dst_name": "room_asgoreroom",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 225,
+     "src_name": "room_kitchen_final",
+     "dst": 221,
+     "dst_name": "room_asghouse2",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 226,
+     "src_name": "room_basement1_final",
+     "dst": 227,
+     "dst_name": "room_basement2_final",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 226,
+     "src_name": "room_basement1_final",
+     "dst": 220,
+     "dst_name": "room_asghouse1",
+     "door": "obj_doorXmusicfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 227,
+     "src_name": "room_basement2_final",
+     "dst": 228,
+     "dst_name": "room_basement3_final",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 228,
+     "src_name": "room_basement3_final",
+     "dst": 229,
+     "dst_name": "room_basement4_final",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 229,
+     "src_name": "room_basement4_final",
+     "dst": 230,
+     "dst_name": "room_lastruins_corridor",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 230,
+     "src_name": "room_lastruins_corridor",
+     "dst": 231,
+     "dst_name": "room_sanscorridor",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 231,
+     "src_name": "room_sanscorridor",
+     "dst": 232,
+     "dst_name": "room_castle_finalshoehorn",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 232,
+     "src_name": "room_castle_finalshoehorn",
+     "dst": 235,
+     "dst_name": "room_castle_throneroom",
+     "door": "obj_doorXmusicfade",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 233,
+     "src_name": "room_castle_coffins1",
+     "dst": 234,
+     "dst_name": "room_castle_coffins2",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 235,
+     "src_name": "room_castle_throneroom",
+     "dst": 236,
+     "dst_name": "room_castle_prebarrier",
+     "door": "obj_doorA",
+     "kind": "ot_door_shift"
+    },
+    {
+     "src": 235,
+     "src_name": "room_castle_throneroom",
+     "dst": 232,
+     "dst_name": "room_castle_finalshoehorn",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 238,
+     "src_name": "room_castle_exit",
+     "dst": 239,
+     "dst_name": "room_undertale_end",
+     "door": "obj_demodoorA",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 240,
+     "src_name": "room_castle_trueexit",
+     "dst": 236,
+     "dst_name": "room_castle_prebarrier",
+     "door": "obj_door_ruins13",
+     "kind": "ot_door_guard"
+    },
+    {
+     "src": 242,
+     "src_name": "room_fire_labelevator",
+     "dst": 141,
+     "dst_name": "room_fire_lab1",
+     "door": "obj_door_s_musfade",
+     "kind": "ot_door_guard"
     }
    ]
   }

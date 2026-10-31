@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "meta": {
-    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。\n★ 第123轮：ut 段由 243 条增到 525 条（+282）。新增的都是**位移机制**门：`obj_doorB`/`obj_doorBmusicfade` = `room_previous(room)`（−1）、`obj_doorC`/`obj_doorCmusicfade` = `room_next(room_next(room))`（+2）、`obj_doorD`/`obj_doorDmusicfade` = 双 `room_previous`（−2）、`obj_doorAmusicfade`/`obj_papdoor` = +1 —— 全部来自 `Alarm_2` 的反编译原文，与 Deltarune 的「A+1 / B−1 / C+2」同一套约定。条件分支点名的房间（如 `obj_doorA` 的 `castle_prebarrier`，按 `global.flag[7]` 分叉）**不套位移**、如实留空。生成器 `code-quality-audit/第123轮-补齐ut门证据/_tools/gen_routes123.py`。★ 第125轮：Deltarune 五章新增 **139** 条（D 门 56 / X 门 83，priority 5000~5138）。此前只有 A(+1)/B(−1)/C(+2)，`obj_doorD` 与 `obj_doorX` 被第44轮以\"证据不足\"拒收。本轮把两种门补齐，并**先独立验证**再写：D 的位移 = −2（第42轮 Alarm 反编译，与第123轮 ut 的 `obj_doorD` 同型），X 走表驱动（读 `Alarm_2` 的 `{房间→目标}`）；两者都要求**目标房含 `obj_marker<同字母>`**（D 71/74、X 94/94 命中）。★ **W 门不收**：`obj_markerw` 仅 60.2%、`obj_markerX` 84.3%，无一套到 100%，\"证据不足不猜\"这条纪律照旧。D 的 3 个例外全落在 backup/test 房，如实不写。生成器 `code-quality-audit/第125轮-D门与X门补齐/_tools/gen_routes125.py`。",
+    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。\n★ 第123轮：ut 段由 243 条增到 525 条（+282）。新增的都是**位移机制**门：`obj_doorB`/`obj_doorBmusicfade` = `room_previous(room)`（−1）、`obj_doorC`/`obj_doorCmusicfade` = `room_next(room_next(room))`（+2）、`obj_doorD`/`obj_doorDmusicfade` = 双 `room_previous`（−2）、`obj_doorAmusicfade`/`obj_papdoor` = +1 —— 全部来自 `Alarm_2` 的反编译原文，与 Deltarune 的「A+1 / B−1 / C+2」同一套约定。条件分支点名的房间（如 `obj_doorA` 的 `castle_prebarrier`，按 `global.flag[7]` 分叉）**不套位移**、如实留空。生成器 `code-quality-audit/第123轮-补齐ut门证据/_tools/gen_routes123.py`。★ 第125轮：Deltarune 五章新增 **139** 条（D 门 56 / X 门 83，priority 5000~5138）。此前只有 A(+1)/B(−1)/C(+2)，`obj_doorD` 与 `obj_doorX` 被第44轮以\"证据不足\"拒收。本轮把两种门补齐，并**先独立验证**再写：D 的位移 = −2（第42轮 Alarm 反编译，与第123轮 ut 的 `obj_doorD` 同型），X 走表驱动（读 `Alarm_2` 的 `{房间→目标}`）；两者都要求**目标房含 `obj_marker<同字母>`**（D 71/74、X 94/94 命中）。★ **W 门不收**：`obj_markerw` 仅 60.2%、`obj_markerX` 84.3%，无一套到 100%，\"证据不足不猜\"这条纪律照旧。D 的 3 个例外全落在 backup/test 房，如实不写。生成器 `code-quality-audit/第125轮-D门与X门补齐/_tools/gen_routes125.py`。★ 第126轮：outertale 新增 **209** 条门路由（`ot_door_guard` 93 / `ot_door_shift` 116，priority 6000~6208）。此前 outertale **0 条**（\"看得到、走不通\"）。来源＝第115轮 `conn_ut.json` 的原始 op（301 条 goto）+ `inst_full.tsv` 的实例分布；`guard` = `if (room == N) room_goto(M)`，且**该门对象真摆在 N 这间房**（实例互证）；`shift` = `room_goto_next()`，按实例房 r → r+1（第123轮 ut 同型）。**不写**：无条件 `room_goto(M)`（src 未知，28 条）、守卫与实例打架（24 条）、两端未登记（54 条）、同(场景,对象)按坐标分叉的多目标（1 组）、`obj_mainchara`（走到屏幕边缘换房，另一层机制）。同时把同一组边写进 `_room_graph.json` 的 `chapters.outertale`（逐门寻路读那张图）。生成器 `code-quality-audit/第126轮-门型收口/_tools/gen_routes126.py`。",
     "how_it_works": [
       "1. 控制器把当前语境打包成 context（scene_id / mood / event / keywords）。",
       "2. scene_routing.match() 按 priority 升序挑第一条匹配规则。",
@@ -27654,6 +27654,3884 @@
         "dst_room_name": "我的城堡镇",
         "src_room_id": 56,
         "dst_room_id": 54
+      }
+    },
+    {
+      "to": "outertale.special._credits4",
+      "priority": 6000,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 特殊·_credits3（下标 6）+1 = 特殊·_credits4（下标 7）。",
+      "when_scene": "outertale.special._credits3",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "_credits3",
+        "dst_room_name": "_credits4",
+        "src_room_id": 6,
+        "dst_room_id": 7
+      }
+    },
+    {
+      "to": "outertale.special._frontier1",
+      "priority": 6001,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 特殊·_credits4（下标 7）+1 = 特殊·_frontier1（下标 8）。",
+      "when_scene": "outertale.special._credits4",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "_credits4",
+        "dst_room_name": "_frontier1",
+        "src_room_id": 7,
+        "dst_room_id": 8
+      }
+    },
+    {
+      "to": "outertale.special._frontier2",
+      "priority": 6002,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 特殊·_frontier1（下标 8）+1 = 特殊·_frontier2（下标 9）。",
+      "when_scene": "outertale.special._frontier1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "_frontier1",
+        "dst_room_name": "_frontier2",
+        "src_room_id": 8,
+        "dst_room_id": 9
+      }
+    },
+    {
+      "to": "outertale.special._frontier3",
+      "priority": 6003,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 特殊·_frontier2（下标 9）+1 = 特殊·_frontier3（下标 10）。",
+      "when_scene": "outertale.special._frontier2",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "_frontier2",
+        "dst_room_name": "_frontier3",
+        "src_room_id": 9,
+        "dst_room_id": 10
+      }
+    },
+    {
+      "to": "outertale.special._frontier4",
+      "priority": 6004,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 特殊·_frontier3（下标 10）+1 = 特殊·_frontier4（下标 11）。",
+      "when_scene": "outertale.special._frontier3",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "_frontier3",
+        "dst_room_name": "_frontier4",
+        "src_room_id": 10,
+        "dst_room_id": 11
+      }
+    },
+    {
+      "to": "outertale.special._frontier6",
+      "priority": 6005,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 特殊·_frontier5（下标 12）+1 = 特殊·_frontier6（下标 13）。",
+      "when_scene": "outertale.special._frontier5",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "_frontier5",
+        "dst_room_name": "_frontier6",
+        "src_room_id": 12,
+        "dst_room_id": 13
+      }
+    },
+    {
+      "to": "outertale.special._frontier8",
+      "priority": 6006,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 特殊·_frontier7（下标 14）+1 = 特殊·_frontier8（下标 15）。",
+      "when_scene": "outertale.special._frontier7",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "_frontier7",
+        "dst_room_name": "_frontier8",
+        "src_room_id": 14,
+        "dst_room_id": 15
+      }
+    },
+    {
+      "to": "outertale.special._frontier9",
+      "priority": 6007,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 特殊·_frontier8（下标 15）+1 = 特殊·_frontier9（下标 16）。",
+      "when_scene": "outertale.special._frontier8",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "_frontier8",
+        "dst_room_name": "_frontier9",
+        "src_room_id": 15,
+        "dst_room_id": 16
+      }
+    },
+    {
+      "to": "outertale.special._frontier10",
+      "priority": 6008,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 特殊·_frontier9（下标 16）+1 = 特殊·_frontier10（下标 17）。",
+      "when_scene": "outertale.special._frontier9",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "_frontier9",
+        "dst_room_name": "_frontier10",
+        "src_room_id": 16,
+        "dst_room_id": 17
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_start",
+      "priority": 6009,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 特殊·_frontier10（下标 17）+1 = Wastelands·w_start（下标 18）。",
+      "when_scene": "outertale.special._frontier10",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "_frontier10",
+        "dst_room_name": "w_start",
+        "src_room_id": 17,
+        "dst_room_id": 18
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_twinkly",
+      "priority": 6010,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_start（下标 18）+1 = Wastelands·w_twinkly（下标 19）。",
+      "when_scene": "outertale.wastelands.w_start",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_start",
+        "dst_room_name": "w_twinkly",
+        "src_room_id": 18,
+        "dst_room_id": 19
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_entrance",
+      "priority": 6011,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_twinkly（下标 19）+1 = Wastelands·w_entrance（下标 20）。",
+      "when_scene": "outertale.wastelands.w_twinkly",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_twinkly",
+        "dst_room_name": "w_entrance",
+        "src_room_id": 19,
+        "dst_room_id": 20
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_lobby",
+      "priority": 6012,
+      "reason": "原作 GML：房间 Wastelands·w_twinkly 里的 obj_door_ruins13 触发 `room_goto(Wastelands·w_lobby)`（取证 `conn_ut.json` 的 `if (room == 19)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.wastelands.w_twinkly",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "w_twinkly",
+        "dst_room_name": "w_lobby",
+        "src_room_id": 19,
+        "dst_room_id": 21
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_tutorial",
+      "priority": 6013,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_lobby（下标 21）+1 = Wastelands·w_tutorial（下标 22）。",
+      "when_scene": "outertale.wastelands.w_lobby",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_lobby",
+        "dst_room_name": "w_tutorial",
+        "src_room_id": 21,
+        "dst_room_id": 22
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_twinkly",
+      "priority": 6014,
+      "reason": "原作 GML：房间 Wastelands·w_lobby 里的 obj_door_ruins13 触发 `room_goto(Wastelands·w_twinkly)`（取证 `conn_ut.json` 的 `if (room == 21)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.wastelands.w_lobby",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "w_lobby",
+        "dst_room_name": "w_twinkly",
+        "src_room_id": 21,
+        "dst_room_id": 19
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_dummy",
+      "priority": 6015,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_tutorial（下标 22）+1 = Wastelands·w_dummy（下标 23）。",
+      "when_scene": "outertale.wastelands.w_tutorial",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_tutorial",
+        "dst_room_name": "w_dummy",
+        "src_room_id": 22,
+        "dst_room_id": 23
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_coffin",
+      "priority": 6016,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_dummy（下标 23）+1 = Wastelands·w_coffin（下标 24）。",
+      "when_scene": "outertale.wastelands.w_dummy",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_dummy",
+        "dst_room_name": "w_coffin",
+        "src_room_id": 23,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_danger",
+      "priority": 6017,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_coffin（下标 24）+1 = Wastelands·w_danger（下标 25）。",
+      "when_scene": "outertale.wastelands.w_coffin",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_coffin",
+        "dst_room_name": "w_danger",
+        "src_room_id": 24,
+        "dst_room_id": 25
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_zigzag",
+      "priority": 6018,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_danger（下标 25）+1 = Wastelands·w_zigzag（下标 26）。",
+      "when_scene": "outertale.wastelands.w_danger",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_danger",
+        "dst_room_name": "w_zigzag",
+        "src_room_id": 25,
+        "dst_room_id": 26
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_dummy",
+      "priority": 6019,
+      "reason": "原作 GML：房间 Wastelands·w_froggit 里的 obj_door_ruins13 触发 `room_goto(Wastelands·w_dummy)`（取证 `conn_ut.json` 的 `if (room == 27)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.wastelands.w_froggit",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "w_froggit",
+        "dst_room_name": "w_dummy",
+        "src_room_id": 27,
+        "dst_room_id": 23
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_puzzle1",
+      "priority": 6020,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_candy（下标 28）+1 = Wastelands·w_puzzle1（下标 29）。",
+      "when_scene": "outertale.wastelands.w_candy",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_candy",
+        "dst_room_name": "w_puzzle1",
+        "src_room_id": 28,
+        "dst_room_id": 29
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_puzzle3",
+      "priority": 6021,
+      "reason": "原作 GML：房间 Wastelands·w_candy 里的 obj_door_ruins13 触发 `room_goto(Wastelands·w_puzzle3)`（取证 `conn_ut.json` 的 `if (room == 28)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.wastelands.w_candy",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "w_candy",
+        "dst_room_name": "w_puzzle3",
+        "src_room_id": 28,
+        "dst_room_id": 31
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_puzzle2",
+      "priority": 6022,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_puzzle1（下标 29）+1 = Wastelands·w_puzzle2（下标 30）。",
+      "when_scene": "outertale.wastelands.w_puzzle1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_puzzle1",
+        "dst_room_name": "w_puzzle2",
+        "src_room_id": 29,
+        "dst_room_id": 30
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_candy",
+      "priority": 6023,
+      "reason": "原作 GML：房间 Wastelands·w_puzzle3 里的 obj_door_ruins13 触发 `room_goto(Wastelands·w_candy)`（取证 `conn_ut.json` 的 `if (room == 31)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.wastelands.w_puzzle3",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "w_puzzle3",
+        "dst_room_name": "w_candy",
+        "src_room_id": 31,
+        "dst_room_id": 28
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_mouse",
+      "priority": 6024,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_puzzle4（下标 32）+1 = Wastelands·w_mouse（下标 33）。",
+      "when_scene": "outertale.wastelands.w_puzzle4",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_puzzle4",
+        "dst_room_name": "w_mouse",
+        "src_room_id": 32,
+        "dst_room_id": 33
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_junction",
+      "priority": 6025,
+      "reason": "原作 GML：房间 Wastelands·w_mouse 里的 obj_door_ruins13 触发 `room_goto(Wastelands·w_junction)`（取证 `conn_ut.json` 的 `if (room == 33)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.wastelands.w_mouse",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "w_mouse",
+        "dst_room_name": "w_junction",
+        "src_room_id": 33,
+        "dst_room_id": 37
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_party",
+      "priority": 6026,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_blooky（下标 34）+1 = Wastelands·w_party（下标 35）。",
+      "when_scene": "outertale.wastelands.w_blooky",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_blooky",
+        "dst_room_name": "w_party",
+        "src_room_id": 34,
+        "dst_room_id": 35
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_mouse",
+      "priority": 6027,
+      "reason": "原作 GML：房间 Wastelands·w_junction 里的 obj_door_ruins13 触发 `room_goto(Wastelands·w_mouse)`（取证 `conn_ut.json` 的 `if (room == 37)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.wastelands.w_junction",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "w_junction",
+        "dst_room_name": "w_mouse",
+        "src_room_id": 37,
+        "dst_room_id": 33
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_wonder",
+      "priority": 6028,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_annex（下标 38）+1 = Wastelands·w_wonder（下标 39）。",
+      "when_scene": "outertale.wastelands.w_annex",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_annex",
+        "dst_room_name": "w_wonder",
+        "src_room_id": 38,
+        "dst_room_id": 39
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_puzzle4",
+      "priority": 6029,
+      "reason": "原作 GML：房间 Wastelands·w_annex 里的 obj_door_ruins13 触发 `room_goto(Wastelands·w_puzzle4)`（取证 `conn_ut.json` 的 `if (room == 38)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.wastelands.w_annex",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "w_annex",
+        "dst_room_name": "w_puzzle4",
+        "src_room_id": 38,
+        "dst_room_id": 32
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_courtyard",
+      "priority": 6030,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_wonder（下标 39）+1 = Wastelands·w_courtyard（下标 40）。",
+      "when_scene": "outertale.wastelands.w_wonder",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_wonder",
+        "dst_room_name": "w_courtyard",
+        "src_room_id": 39,
+        "dst_room_id": 40
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_toriel_front",
+      "priority": 6031,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_courtyard（下标 40）+1 = Wastelands·w_toriel_front（下标 41）。",
+      "when_scene": "outertale.wastelands.w_courtyard",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_courtyard",
+        "dst_room_name": "w_toriel_front",
+        "src_room_id": 40,
+        "dst_room_id": 41
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_toriel_kitchen",
+      "priority": 6032,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_toriel_living（下标 42）+1 = Wastelands·w_toriel_kitchen（下标 43）。",
+      "when_scene": "outertale.wastelands.w_toriel_living",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_toriel_living",
+        "dst_room_name": "w_toriel_kitchen",
+        "src_room_id": 42,
+        "dst_room_id": 43
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_toriel_asriel",
+      "priority": 6033,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_toriel_hallway（下标 44）+1 = Wastelands·w_toriel_asriel（下标 45）。",
+      "when_scene": "outertale.wastelands.w_toriel_hallway",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_toriel_hallway",
+        "dst_room_name": "w_toriel_asriel",
+        "src_room_id": 44,
+        "dst_room_id": 45
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_toriel_toriel",
+      "priority": 6034,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_toriel_asriel（下标 45）+1 = Wastelands·w_toriel_toriel（下标 46）。",
+      "when_scene": "outertale.wastelands.w_toriel_asriel",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_toriel_asriel",
+        "dst_room_name": "w_toriel_toriel",
+        "src_room_id": 45,
+        "dst_room_id": 46
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_alley1",
+      "priority": 6035,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_toriel_toriel（下标 46）+1 = Wastelands·w_alley1（下标 47）。",
+      "when_scene": "outertale.wastelands.w_toriel_toriel",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_toriel_toriel",
+        "dst_room_name": "w_alley1",
+        "src_room_id": 46,
+        "dst_room_id": 47
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_alley3",
+      "priority": 6036,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_alley2（下标 48）+1 = Wastelands·w_alley3（下标 49）。",
+      "when_scene": "outertale.wastelands.w_alley2",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_alley2",
+        "dst_room_name": "w_alley3",
+        "src_room_id": 48,
+        "dst_room_id": 49
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_alley4",
+      "priority": 6037,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_alley3（下标 49）+1 = Wastelands·w_alley4（下标 50）。",
+      "when_scene": "outertale.wastelands.w_alley3",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_alley3",
+        "dst_room_name": "w_alley4",
+        "src_room_id": 49,
+        "dst_room_id": 50
+      }
+    },
+    {
+      "to": "outertale.wastelands.w_bridge",
+      "priority": 6038,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_alley4（下标 50）+1 = Wastelands·w_bridge（下标 51）。",
+      "when_scene": "outertale.wastelands.w_alley4",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_alley4",
+        "dst_room_name": "w_bridge",
+        "src_room_id": 50,
+        "dst_room_id": 51
+      }
+    },
+    {
+      "to": "outertale.starton.s_start",
+      "priority": 6039,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Wastelands·w_exit（下标 52）+1 = Starton·s_start（下标 53）。",
+      "when_scene": "outertale.wastelands.w_exit",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "w_exit",
+        "dst_room_name": "s_start",
+        "src_room_id": 52,
+        "dst_room_id": 53
+      }
+    },
+    {
+      "to": "outertale.starton.s_sans",
+      "priority": 6040,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_start（下标 53）+1 = Starton·s_sans（下标 54）。",
+      "when_scene": "outertale.starton.s_start",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_start",
+        "dst_room_name": "s_sans",
+        "src_room_id": 53,
+        "dst_room_id": 54
+      }
+    },
+    {
+      "to": "outertale.starton.s_human",
+      "priority": 6041,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_crossroads（下标 55）+1 = Starton·s_human（下标 56）。",
+      "when_scene": "outertale.starton.s_crossroads",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_crossroads",
+        "dst_room_name": "s_human",
+        "src_room_id": 55,
+        "dst_room_id": 56
+      }
+    },
+    {
+      "to": "outertale.starton.s_papyrus",
+      "priority": 6042,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_human（下标 56）+1 = Starton·s_papyrus（下标 57）。",
+      "when_scene": "outertale.starton.s_human",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_human",
+        "dst_room_name": "s_papyrus",
+        "src_room_id": 56,
+        "dst_room_id": 57
+      }
+    },
+    {
+      "to": "outertale.starton.s_doggo",
+      "priority": 6043,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_papyrus（下标 57）+1 = Starton·s_doggo（下标 58）。",
+      "when_scene": "outertale.starton.s_papyrus",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_papyrus",
+        "dst_room_name": "s_doggo",
+        "src_room_id": 57,
+        "dst_room_id": 58
+      }
+    },
+    {
+      "to": "outertale.starton.s_robot",
+      "priority": 6044,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_doggo（下标 58）+1 = Starton·s_robot（下标 59）。",
+      "when_scene": "outertale.starton.s_doggo",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_doggo",
+        "dst_room_name": "s_robot",
+        "src_room_id": 58,
+        "dst_room_id": 59
+      }
+    },
+    {
+      "to": "outertale.starton.s_maze",
+      "priority": 6045,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_robot（下标 59）+1 = Starton·s_maze（下标 60）。",
+      "when_scene": "outertale.starton.s_robot",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_robot",
+        "dst_room_name": "s_maze",
+        "src_room_id": 59,
+        "dst_room_id": 60
+      }
+    },
+    {
+      "to": "outertale.starton.s_dogs",
+      "priority": 6046,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_maze（下标 60）+1 = Starton·s_dogs（下标 61）。",
+      "when_scene": "outertale.starton.s_maze",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_maze",
+        "dst_room_name": "s_dogs",
+        "src_room_id": 60,
+        "dst_room_id": 61
+      }
+    },
+    {
+      "to": "outertale.starton.s_spaghetti",
+      "priority": 6047,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_lesser（下标 62）+1 = Starton·s_spaghetti（下标 63）。",
+      "when_scene": "outertale.starton.s_lesser",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_lesser",
+        "dst_room_name": "s_spaghetti",
+        "src_room_id": 62,
+        "dst_room_id": 63
+      }
+    },
+    {
+      "to": "outertale.starton.s_bros",
+      "priority": 6048,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_spaghetti（下标 63）+1 = Starton·s_bros（下标 64）。",
+      "when_scene": "outertale.starton.s_spaghetti",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_spaghetti",
+        "dst_room_name": "s_bros",
+        "src_room_id": 63,
+        "dst_room_id": 64
+      }
+    },
+    {
+      "to": "outertale.starton.s_puzzle2",
+      "priority": 6049,
+      "reason": "原作 GML：房间 Starton·s_spaghetti 里的 obj_door_ruins13 触发 `room_goto(Starton·s_puzzle2)`（取证 `conn_ut.json` 的 `if (room == 63)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_spaghetti",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "s_spaghetti",
+        "dst_room_name": "s_puzzle2",
+        "src_room_id": 63,
+        "dst_room_id": 66
+      }
+    },
+    {
+      "to": "outertale.starton.s_puzzle1",
+      "priority": 6050,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_bros（下标 64）+1 = Starton·s_puzzle1（下标 65）。",
+      "when_scene": "outertale.starton.s_bros",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_bros",
+        "dst_room_name": "s_puzzle1",
+        "src_room_id": 64,
+        "dst_room_id": 65
+      }
+    },
+    {
+      "to": "outertale.starton.s_jenga",
+      "priority": 6051,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_puzzle2（下标 66）+1 = Starton·s_jenga（下标 67）。",
+      "when_scene": "outertale.starton.s_puzzle2",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_puzzle2",
+        "dst_room_name": "s_jenga",
+        "src_room_id": 66,
+        "dst_room_id": 67
+      }
+    },
+    {
+      "to": "outertale.starton.s_spaghetti",
+      "priority": 6052,
+      "reason": "原作 GML：房间 Starton·s_puzzle2 里的 obj_door_ruins13 触发 `room_goto(Starton·s_spaghetti)`（取证 `conn_ut.json` 的 `if (room == 66)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_puzzle2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "s_puzzle2",
+        "dst_room_name": "s_spaghetti",
+        "src_room_id": 66,
+        "dst_room_id": 63
+      }
+    },
+    {
+      "to": "outertale.starton.s_puzzle3",
+      "priority": 6053,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_pacing（下标 68）+1 = Starton·s_puzzle3（下标 69）。",
+      "when_scene": "outertale.starton.s_pacing",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_pacing",
+        "dst_room_name": "s_puzzle3",
+        "src_room_id": 68,
+        "dst_room_id": 69
+      }
+    },
+    {
+      "to": "outertale.starton.s_math",
+      "priority": 6054,
+      "reason": "原作 GML：房间 Starton·s_pacing 里的 obj_door_t 触发 `room_goto(Starton·s_math)`（取证 `conn_ut.json` 的 `if (room == 68)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_pacing",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "s_pacing",
+        "dst_room_name": "s_math",
+        "src_room_id": 68,
+        "dst_room_id": 71
+      }
+    },
+    {
+      "to": "outertale.starton.s_town1",
+      "priority": 6055,
+      "reason": "原作 GML：房间 Starton·s_pacing 里的 obj_door_u 触发 `room_goto(Starton·s_town1)`（取证 `conn_ut.json` 的 `if (room == 68)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_pacing",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_u",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "s_pacing",
+        "dst_room_name": "s_town1",
+        "src_room_id": 68,
+        "dst_room_id": 74
+      }
+    },
+    {
+      "to": "outertale.starton.s_bridge",
+      "priority": 6056,
+      "reason": "原作 GML：房间 Starton·s_pacing 里的 obj_door_w 触发 `room_goto(Starton·s_bridge)`（取证 `conn_ut.json` 的 `if (room == 68)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_pacing",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_w",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "s_pacing",
+        "dst_room_name": "s_bridge",
+        "src_room_id": 68,
+        "dst_room_id": 73
+      }
+    },
+    {
+      "to": "outertale.starton.s_pacing",
+      "priority": 6057,
+      "reason": "原作 GML：房间 Starton·s_math 里的 obj_door_t 触发 `room_goto(Starton·s_pacing)`（取证 `conn_ut.json` 的 `if (room == 71)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_math",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "s_math",
+        "dst_room_name": "s_pacing",
+        "src_room_id": 71,
+        "dst_room_id": 68
+      }
+    },
+    {
+      "to": "outertale.starton.s_pacing",
+      "priority": 6058,
+      "reason": "原作 GML：房间 Starton·s_bridge 里的 obj_door_w 触发 `room_goto(Starton·s_pacing)`（取证 `conn_ut.json` 的 `if (room == 73)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_bridge",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_w",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "s_bridge",
+        "dst_room_name": "s_pacing",
+        "src_room_id": 73,
+        "dst_room_id": 68
+      }
+    },
+    {
+      "to": "outertale.starton.s_pacing",
+      "priority": 6059,
+      "reason": "原作 GML：房间 Starton·s_town1 里的 obj_door_u 触发 `room_goto(Starton·s_pacing)`（取证 `conn_ut.json` 的 `if (room == 74)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_town1",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_u",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "s_town1",
+        "dst_room_name": "s_pacing",
+        "src_room_id": 74,
+        "dst_room_id": 68
+      }
+    },
+    {
+      "to": "outertale.starton.s_pacing",
+      "priority": 6060,
+      "reason": "原作 GML：房间 Starton·s_innterior 里的 obj_door_v 触发 `room_goto(Starton·s_pacing)`（取证 `conn_ut.json` 的 `if (room == 75)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_innterior",
+      "when_door": null,
+      "when_src": "obj_door_v",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_v",
+        "code": "gml_Object_obj_door_v_Alarm_2",
+        "src_room_name": "s_innterior",
+        "dst_room_name": "s_pacing",
+        "src_room_id": 75,
+        "dst_room_id": 68
+      }
+    },
+    {
+      "to": "outertale.starton.s_pacing",
+      "priority": 6061,
+      "reason": "原作 GML：房间 Starton·s_beddinng 里的 obj_door_s_musfade 触发 `room_goto(Starton·s_pacing)`（取证 `conn_ut.json` 的 `if (room == 76)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_beddinng",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "s_beddinng",
+        "dst_room_name": "s_pacing",
+        "src_room_id": 76,
+        "dst_room_id": 68
+      }
+    },
+    {
+      "to": "outertale.starton.s_beddinng",
+      "priority": 6062,
+      "reason": "原作 GML：房间 Starton·s_backrooms 里的 obj_door_t 触发 `room_goto(Starton·s_beddinng)`（取证 `conn_ut.json` 的 `if (room == 78)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_backrooms",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "s_backrooms",
+        "dst_room_name": "s_beddinng",
+        "src_room_id": 78,
+        "dst_room_id": 76
+      }
+    },
+    {
+      "to": "outertale.starton.s_beddinng",
+      "priority": 6063,
+      "reason": "原作 GML：房间 Starton·s_taxi 里的 obj_door_t 触发 `room_goto(Starton·s_beddinng)`（取证 `conn_ut.json` 的 `if (room == 79)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_taxi",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "s_taxi",
+        "dst_room_name": "s_beddinng",
+        "src_room_id": 79,
+        "dst_room_id": 76
+      }
+    },
+    {
+      "to": "outertale.starton.s_pacing",
+      "priority": 6064,
+      "reason": "原作 GML：房间 Starton·s_town2 里的 obj_door_s_musfade 触发 `room_goto(Starton·s_pacing)`（取证 `conn_ut.json` 的 `if (room == 80)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_town2",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "s_town2",
+        "dst_room_name": "s_pacing",
+        "src_room_id": 80,
+        "dst_room_id": 68
+      }
+    },
+    {
+      "to": "outertale.starton.s_pacing",
+      "priority": 6065,
+      "reason": "原作 GML：房间 Starton·s_librarby 里的 obj_doorXmusicfade 触发 `room_goto(Starton·s_pacing)`（取证 `conn_ut.json` 的 `if (room == 81)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.starton.s_librarby",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_doorXmusicfade",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "s_librarby",
+        "dst_room_name": "s_pacing",
+        "src_room_id": 81,
+        "dst_room_id": 68
+      }
+    },
+    {
+      "to": "outertale.starton.s_sanscloset",
+      "priority": 6066,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_sansroom（下标 84）+1 = Starton·s_sanscloset（下标 85）。",
+      "when_scene": "outertale.starton.s_sansroom",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_sansroom",
+        "dst_room_name": "s_sanscloset",
+        "src_room_id": 84,
+        "dst_room_id": 85
+      }
+    },
+    {
+      "to": "outertale.starton.s_battle",
+      "priority": 6067,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_capture（下标 86）+1 = Starton·s_battle（下标 87）。",
+      "when_scene": "outertale.starton.s_capture",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_capture",
+        "dst_room_name": "s_battle",
+        "src_room_id": 86,
+        "dst_room_id": 87
+      }
+    },
+    {
+      "to": "outertale.starton.s_exit",
+      "priority": 6068,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_battle（下标 87）+1 = Starton·s_exit（下标 88）。",
+      "when_scene": "outertale.starton.s_battle",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_battle",
+        "dst_room_name": "s_exit",
+        "src_room_id": 87,
+        "dst_room_id": 88
+      }
+    },
+    {
+      "to": "outertale.foundry.f_start",
+      "priority": 6069,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Starton·s_exit（下标 88）+1 = Foundry·f_start（下标 89）。",
+      "when_scene": "outertale.starton.s_exit",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "s_exit",
+        "dst_room_name": "f_start",
+        "src_room_id": 88,
+        "dst_room_id": 89
+      }
+    },
+    {
+      "to": "outertale.foundry.f_corridor",
+      "priority": 6070,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_sans（下标 90）+1 = Foundry·f_corridor（下标 91）。",
+      "when_scene": "outertale.foundry.f_sans",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_sans",
+        "dst_room_name": "f_corridor",
+        "src_room_id": 90,
+        "dst_room_id": 91
+      }
+    },
+    {
+      "to": "outertale.foundry.f_doge",
+      "priority": 6071,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_corridor（下标 91）+1 = Foundry·f_doge（下标 92）。",
+      "when_scene": "outertale.foundry.f_corridor",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_corridor",
+        "dst_room_name": "f_doge",
+        "src_room_id": 91,
+        "dst_room_id": 92
+      }
+    },
+    {
+      "to": "outertale.foundry.f_puzzle1",
+      "priority": 6072,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_doge（下标 92）+1 = Foundry·f_puzzle1（下标 93）。",
+      "when_scene": "outertale.foundry.f_doge",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_doge",
+        "dst_room_name": "f_puzzle1",
+        "src_room_id": 92,
+        "dst_room_id": 93
+      }
+    },
+    {
+      "to": "outertale.foundry.f_puzzle2",
+      "priority": 6073,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_bird（下标 95）+1 = Foundry·f_puzzle2（下标 96）。",
+      "when_scene": "outertale.foundry.f_bird",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_bird",
+        "dst_room_name": "f_puzzle2",
+        "src_room_id": 95,
+        "dst_room_id": 96
+      }
+    },
+    {
+      "to": "outertale.foundry.f_chase",
+      "priority": 6074,
+      "reason": "原作 GML：房间 Foundry·f_bird 里的 obj_door_t 触发 `room_goto(Foundry·f_chase)`（取证 `conn_ut.json` 的 `if (room == 95)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_bird",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "f_bird",
+        "dst_room_name": "f_chase",
+        "src_room_id": 95,
+        "dst_room_id": 99
+      }
+    },
+    {
+      "to": "outertale.foundry.f_prechase",
+      "priority": 6075,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_story1（下标 97）+1 = Foundry·f_prechase（下标 98）。",
+      "when_scene": "outertale.foundry.f_story1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_story1",
+        "dst_room_name": "f_prechase",
+        "src_room_id": 97,
+        "dst_room_id": 98
+      }
+    },
+    {
+      "to": "outertale.foundry.f_bird",
+      "priority": 6076,
+      "reason": "原作 GML：房间 Foundry·f_story1 里的 obj_door_ruins13 触发 `room_goto(Foundry·f_bird)`（取证 `conn_ut.json` 的 `if (room == 97)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_story1",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "f_story1",
+        "dst_room_name": "f_bird",
+        "src_room_id": 97,
+        "dst_room_id": 95
+      }
+    },
+    {
+      "to": "outertale.foundry.f_kitchen",
+      "priority": 6077,
+      "reason": "原作 GML：房间 Foundry·f_story1 里的 obj_door_t 触发 `room_goto(Foundry·f_kitchen)`（取证 `conn_ut.json` 的 `if (room == 97)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_story1",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "f_story1",
+        "dst_room_name": "f_kitchen",
+        "src_room_id": 97,
+        "dst_room_id": 123
+      }
+    },
+    {
+      "to": "outertale.foundry.f_entrance",
+      "priority": 6078,
+      "reason": "原作 GML：房间 Foundry·f_story1 里的 obj_door_w 触发 `room_goto(Foundry·f_entrance)`（取证 `conn_ut.json` 的 `if (room == 97)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_story1",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_w",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "f_story1",
+        "dst_room_name": "f_entrance",
+        "src_room_id": 97,
+        "dst_room_id": 100
+      }
+    },
+    {
+      "to": "outertale.foundry.f_plank",
+      "priority": 6079,
+      "reason": "原作 GML：房间 Foundry·f_chase 里的 obj_door_s_musfade 触发 `room_goto(Foundry·f_plank)`（取证 `conn_ut.json` 的 `if (room == 99)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_chase",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "f_chase",
+        "dst_room_name": "f_plank",
+        "src_room_id": 99,
+        "dst_room_id": 116
+      }
+    },
+    {
+      "to": "outertale.foundry.f_bird",
+      "priority": 6080,
+      "reason": "原作 GML：房间 Foundry·f_chase 里的 obj_door_t 触发 `room_goto(Foundry·f_bird)`（取证 `conn_ut.json` 的 `if (room == 99)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_chase",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "f_chase",
+        "dst_room_name": "f_bird",
+        "src_room_id": 99,
+        "dst_room_id": 95
+      }
+    },
+    {
+      "to": "outertale.foundry.f_lobby",
+      "priority": 6081,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_entrance（下标 100）+1 = Foundry·f_lobby（下标 101）。",
+      "when_scene": "outertale.foundry.f_entrance",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_entrance",
+        "dst_room_name": "f_lobby",
+        "src_room_id": 100,
+        "dst_room_id": 101
+      }
+    },
+    {
+      "to": "outertale.foundry.f_story1",
+      "priority": 6082,
+      "reason": "原作 GML：房间 Foundry·f_entrance 里的 obj_door_w 触发 `room_goto(Foundry·f_story1)`（取证 `conn_ut.json` 的 `if (room == 100)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_entrance",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_w",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "f_entrance",
+        "dst_room_name": "f_story1",
+        "src_room_id": 100,
+        "dst_room_id": 97
+      }
+    },
+    {
+      "to": "outertale.foundry.f_stand",
+      "priority": 6083,
+      "reason": "原作 GML：房间 Foundry·f_lobby 里的 obj_door_s_musfade 触发 `room_goto(Foundry·f_stand)`（取证 `conn_ut.json` 的 `if (room == 101)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_lobby",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "f_lobby",
+        "dst_room_name": "f_stand",
+        "src_room_id": 101,
+        "dst_room_id": 104
+      }
+    },
+    {
+      "to": "outertale.foundry.f_telescope",
+      "priority": 6084,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_error（下标 102）+1 = Foundry·f_telescope（下标 103）。",
+      "when_scene": "outertale.foundry.f_error",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_error",
+        "dst_room_name": "f_telescope",
+        "src_room_id": 102,
+        "dst_room_id": 103
+      }
+    },
+    {
+      "to": "outertale.foundry.f_abyss",
+      "priority": 6085,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_stand（下标 104）+1 = Foundry·f_abyss（下标 105）。",
+      "when_scene": "outertale.foundry.f_stand",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_stand",
+        "dst_room_name": "f_abyss",
+        "src_room_id": 104,
+        "dst_room_id": 105
+      }
+    },
+    {
+      "to": "outertale.foundry.f_lobby",
+      "priority": 6086,
+      "reason": "原作 GML：房间 Foundry·f_stand 里的 obj_door_s_musfade 触发 `room_goto(Foundry·f_lobby)`（取证 `conn_ut.json` 的 `if (room == 104)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_stand",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "f_stand",
+        "dst_room_name": "f_lobby",
+        "src_room_id": 104,
+        "dst_room_id": 101
+      }
+    },
+    {
+      "to": "outertale.foundry.f_muffet",
+      "priority": 6087,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_abyss（下标 105）+1 = Foundry·f_muffet（下标 106）。",
+      "when_scene": "outertale.foundry.f_abyss",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_abyss",
+        "dst_room_name": "f_muffet",
+        "src_room_id": 105,
+        "dst_room_id": 106
+      }
+    },
+    {
+      "to": "outertale.foundry.f_shyren",
+      "priority": 6088,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_muffet（下标 106）+1 = Foundry·f_shyren（下标 107）。",
+      "when_scene": "outertale.foundry.f_muffet",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_muffet",
+        "dst_room_name": "f_shyren",
+        "src_room_id": 106,
+        "dst_room_id": 107
+      }
+    },
+    {
+      "to": "outertale.foundry.f_statue",
+      "priority": 6089,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_shyren（下标 107）+1 = Foundry·f_statue（下标 108）。",
+      "when_scene": "outertale.foundry.f_shyren",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_shyren",
+        "dst_room_name": "f_statue",
+        "src_room_id": 107,
+        "dst_room_id": 108
+      }
+    },
+    {
+      "to": "outertale.foundry.f_piano",
+      "priority": 6090,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_statue（下标 108）+1 = Foundry·f_piano（下标 109）。",
+      "when_scene": "outertale.foundry.f_statue",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_statue",
+        "dst_room_name": "f_piano",
+        "src_room_id": 108,
+        "dst_room_id": 109
+      }
+    },
+    {
+      "to": "outertale.foundry.f_artifact",
+      "priority": 6091,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_piano（下标 109）+1 = Foundry·f_artifact（下标 110）。",
+      "when_scene": "outertale.foundry.f_piano",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_piano",
+        "dst_room_name": "f_artifact",
+        "src_room_id": 109,
+        "dst_room_id": 110
+      }
+    },
+    {
+      "to": "outertale.foundry.f_truth",
+      "priority": 6092,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_artifact（下标 110）+1 = Foundry·f_truth（下标 111）。",
+      "when_scene": "outertale.foundry.f_artifact",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_artifact",
+        "dst_room_name": "f_truth",
+        "src_room_id": 110,
+        "dst_room_id": 111
+      }
+    },
+    {
+      "to": "outertale.foundry.f_path",
+      "priority": 6093,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_truth（下标 111）+1 = Foundry·f_path（下标 112）。",
+      "when_scene": "outertale.foundry.f_truth",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_truth",
+        "dst_room_name": "f_path",
+        "src_room_id": 111,
+        "dst_room_id": 112
+      }
+    },
+    {
+      "to": "outertale.foundry.f_prespear",
+      "priority": 6094,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_view（下标 113）+1 = Foundry·f_prespear（下标 114）。",
+      "when_scene": "outertale.foundry.f_view",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_view",
+        "dst_room_name": "f_prespear",
+        "src_room_id": 113,
+        "dst_room_id": 114
+      }
+    },
+    {
+      "to": "outertale.foundry.f_spear",
+      "priority": 6095,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_prespear（下标 114）+1 = Foundry·f_spear（下标 115）。",
+      "when_scene": "outertale.foundry.f_prespear",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_prespear",
+        "dst_room_name": "f_spear",
+        "src_room_id": 114,
+        "dst_room_id": 115
+      }
+    },
+    {
+      "to": "outertale.foundry.f_chase",
+      "priority": 6096,
+      "reason": "原作 GML：房间 Foundry·f_plank 里的 obj_door_s_musfade 触发 `room_goto(Foundry·f_chase)`（取证 `conn_ut.json` 的 `if (room == 116)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_plank",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "f_plank",
+        "dst_room_name": "f_chase",
+        "src_room_id": 116,
+        "dst_room_id": 99
+      }
+    },
+    {
+      "to": "outertale.foundry.f_blooky",
+      "priority": 6097,
+      "reason": "原作 GML：房间 Foundry·f_plank 里的 obj_door_t 触发 `room_goto(Foundry·f_blooky)`（取证 `conn_ut.json` 的 `if (room == 116)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_plank",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "f_plank",
+        "dst_room_name": "f_blooky",
+        "src_room_id": 116,
+        "dst_room_id": 124
+      }
+    },
+    {
+      "to": "outertale.foundry.f_undyne",
+      "priority": 6098,
+      "reason": "原作 GML：房间 Foundry·f_plank 里的 obj_door_v 触发 `room_goto(Foundry·f_undyne)`（取证 `conn_ut.json` 的 `if (room == 116)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_plank",
+      "when_door": null,
+      "when_src": "obj_door_v",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_v",
+        "code": "gml_Object_obj_door_v_Alarm_2",
+        "src_room_name": "f_plank",
+        "dst_room_name": "f_undyne",
+        "src_room_id": 116,
+        "dst_room_id": 122
+      }
+    },
+    {
+      "to": "outertale.foundry.f_dummy",
+      "priority": 6099,
+      "reason": "原作 GML：房间 Foundry·f_plank 里的 obj_door_w 触发 `room_goto(Foundry·f_dummy)`（取证 `conn_ut.json` 的 `if (room == 116)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_plank",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_w",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "f_plank",
+        "dst_room_name": "f_dummy",
+        "src_room_id": 116,
+        "dst_room_id": 119
+      }
+    },
+    {
+      "to": "outertale.foundry.f_undyne",
+      "priority": 6100,
+      "reason": "原作 GML：房间 Foundry·f_dummy 里的 obj_door_s_musfade 触发 `room_goto(Foundry·f_undyne)`（取证 `conn_ut.json` 的 `if (room == 119)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_dummy",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "f_dummy",
+        "dst_room_name": "f_undyne",
+        "src_room_id": 119,
+        "dst_room_id": 122
+      }
+    },
+    {
+      "to": "outertale.foundry.f_plank",
+      "priority": 6101,
+      "reason": "原作 GML：房间 Foundry·f_dummy 里的 obj_door_w 触发 `room_goto(Foundry·f_plank)`（取证 `conn_ut.json` 的 `if (room == 119)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_dummy",
+      "when_door": null,
+      "when_src": "obj_door_w",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_w",
+        "code": "gml_Object_obj_door_w_Alarm_2",
+        "src_room_name": "f_dummy",
+        "dst_room_name": "f_plank",
+        "src_room_id": 119,
+        "dst_room_id": 116
+      }
+    },
+    {
+      "to": "outertale.foundry.f_dummy",
+      "priority": 6102,
+      "reason": "原作 GML：房间 Foundry·f_undyne 里的 obj_door_s_musfade 触发 `room_goto(Foundry·f_dummy)`（取证 `conn_ut.json` 的 `if (room == 122)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_undyne",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "f_undyne",
+        "dst_room_name": "f_dummy",
+        "src_room_id": 122,
+        "dst_room_id": 119
+      }
+    },
+    {
+      "to": "outertale.foundry.f_plank",
+      "priority": 6103,
+      "reason": "原作 GML：房间 Foundry·f_undyne 里的 obj_door_v 触发 `room_goto(Foundry·f_plank)`（取证 `conn_ut.json` 的 `if (room == 122)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_undyne",
+      "when_door": null,
+      "when_src": "obj_door_v",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_v",
+        "code": "gml_Object_obj_door_v_Alarm_2",
+        "src_room_name": "f_undyne",
+        "dst_room_name": "f_plank",
+        "src_room_id": 122,
+        "dst_room_id": 116
+      }
+    },
+    {
+      "to": "outertale.foundry.f_story1",
+      "priority": 6104,
+      "reason": "原作 GML：房间 Foundry·f_kitchen 里的 obj_door_t 触发 `room_goto(Foundry·f_story1)`（取证 `conn_ut.json` 的 `if (room == 123)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_kitchen",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "f_kitchen",
+        "dst_room_name": "f_story1",
+        "src_room_id": 123,
+        "dst_room_id": 97
+      }
+    },
+    {
+      "to": "outertale.foundry.f_plank",
+      "priority": 6105,
+      "reason": "原作 GML：房间 Foundry·f_blooky 里的 obj_door_t 触发 `room_goto(Foundry·f_plank)`（取证 `conn_ut.json` 的 `if (room == 124)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.foundry.f_blooky",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "f_blooky",
+        "dst_room_name": "f_plank",
+        "src_room_id": 124,
+        "dst_room_id": 116
+      }
+    },
+    {
+      "to": "outertale.foundry.f_hapstablook",
+      "priority": 6106,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_napstablook（下标 126）+1 = Foundry·f_hapstablook（下标 127）。",
+      "when_scene": "outertale.foundry.f_napstablook",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_napstablook",
+        "dst_room_name": "f_hapstablook",
+        "src_room_id": 126,
+        "dst_room_id": 127
+      }
+    },
+    {
+      "to": "outertale.foundry.f_corner",
+      "priority": 6107,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_taxi（下标 130）+1 = Foundry·f_corner（下标 131）。",
+      "when_scene": "outertale.foundry.f_taxi",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_taxi",
+        "dst_room_name": "f_corner",
+        "src_room_id": 130,
+        "dst_room_id": 131
+      }
+    },
+    {
+      "to": "outertale.foundry.f_story2",
+      "priority": 6108,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_corner（下标 131）+1 = Foundry·f_story2（下标 132）。",
+      "when_scene": "outertale.foundry.f_corner",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_corner",
+        "dst_room_name": "f_story2",
+        "src_room_id": 131,
+        "dst_room_id": 132
+      }
+    },
+    {
+      "to": "outertale.foundry.f_pacing",
+      "priority": 6109,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_story2（下标 132）+1 = Foundry·f_pacing（下标 133）。",
+      "when_scene": "outertale.foundry.f_story2",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_story2",
+        "dst_room_name": "f_pacing",
+        "src_room_id": 132,
+        "dst_room_id": 133
+      }
+    },
+    {
+      "to": "outertale.foundry.f_exit",
+      "priority": 6110,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_battle（下标 134）+1 = Foundry·f_exit（下标 135）。",
+      "when_scene": "outertale.foundry.f_battle",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_battle",
+        "dst_room_name": "f_exit",
+        "src_room_id": 134,
+        "dst_room_id": 135
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_start",
+      "priority": 6111,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Foundry·f_exit（下标 135）+1 = Aerialis·a_start（下标 136）。",
+      "when_scene": "outertale.foundry.f_exit",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "f_exit",
+        "dst_room_name": "a_start",
+        "src_room_id": 135,
+        "dst_room_id": 136
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_lab_main",
+      "priority": 6112,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_lab_entry（下标 137）+1 = Aerialis·a_lab_main（下标 138）。",
+      "when_scene": "outertale.aerialis.a_lab_entry",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_lab_entry",
+        "dst_room_name": "a_lab_main",
+        "src_room_id": 137,
+        "dst_room_id": 138
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_lab_upstairs",
+      "priority": 6113,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_lab_main（下标 138）+1 = Aerialis·a_lab_upstairs（下标 139）。",
+      "when_scene": "outertale.aerialis.a_lab_main",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_lab_main",
+        "dst_room_name": "a_lab_upstairs",
+        "src_room_id": 138,
+        "dst_room_id": 139
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_asgore",
+      "priority": 6114,
+      "reason": "原作 GML：房间 Aerialis·a_lab_upstairs 里的 obj_door_t 触发 `room_goto(Citadel·c_asgore_asgore)`（取证 `conn_ut.json` 的 `if (room == 139)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.aerialis.a_lab_upstairs",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "a_lab_upstairs",
+        "dst_room_name": "c_asgore_asgore",
+        "src_room_id": 139,
+        "dst_room_id": 214
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_path1",
+      "priority": 6115,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_lab_virt（下标 141）+1 = Aerialis·a_path1（下标 142）。",
+      "when_scene": "outertale.aerialis.a_lab_virt",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_lab_virt",
+        "dst_room_name": "a_path1",
+        "src_room_id": 141,
+        "dst_room_id": 142
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_rg1",
+      "priority": 6116,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_path3（下标 144）+1 = Aerialis·a_rg1（下标 145）。",
+      "when_scene": "outertale.aerialis.a_path3",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_path3",
+        "dst_room_name": "a_rg1",
+        "src_room_id": 144,
+        "dst_room_id": 145
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_path4",
+      "priority": 6117,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_rg1（下标 145）+1 = Aerialis·a_path4（下标 146）。",
+      "when_scene": "outertale.aerialis.a_rg1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_rg1",
+        "dst_room_name": "a_path4",
+        "src_room_id": 145,
+        "dst_room_id": 146
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_puzzle1",
+      "priority": 6118,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_barricade1（下标 147）+1 = Aerialis·a_puzzle1（下标 148）。",
+      "when_scene": "outertale.aerialis.a_barricade1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_barricade1",
+        "dst_room_name": "a_puzzle1",
+        "src_room_id": 147,
+        "dst_room_id": 148
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_mettaton1",
+      "priority": 6119,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_puzzle1（下标 148）+1 = Aerialis·a_mettaton1（下标 149）。",
+      "when_scene": "outertale.aerialis.a_puzzle1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_puzzle1",
+        "dst_room_name": "a_mettaton1",
+        "src_room_id": 148,
+        "dst_room_id": 149
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_sans",
+      "priority": 6120,
+      "reason": "原作 GML：房间 Aerialis·a_puzzle1 里的 obj_door_t 触发 `room_goto(Aerialis·a_sans)`（取证 `conn_ut.json` 的 `if (room == 148)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.aerialis.a_puzzle1",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "a_puzzle1",
+        "dst_room_name": "a_sans",
+        "src_room_id": 148,
+        "dst_room_id": 153
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_lift",
+      "priority": 6121,
+      "reason": "原作 GML：房间 Aerialis·a_puzzle1 里的 obj_door_u 触发 `room_goto(Aerialis·a_lift)`（取证 `conn_ut.json` 的 `if (room == 148)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.aerialis.a_puzzle1",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_u",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "a_puzzle1",
+        "dst_room_name": "a_lift",
+        "src_room_id": 148,
+        "dst_room_id": 151
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_elevator1",
+      "priority": 6122,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_mettaton1（下标 149）+1 = Aerialis·a_elevator1（下标 150）。",
+      "when_scene": "outertale.aerialis.a_mettaton1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_mettaton1",
+        "dst_room_name": "a_elevator1",
+        "src_room_id": 149,
+        "dst_room_id": 150
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_elevator2",
+      "priority": 6123,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_lift（下标 151）+1 = Aerialis·a_elevator2（下标 152）。",
+      "when_scene": "outertale.aerialis.a_lift",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_lift",
+        "dst_room_name": "a_elevator2",
+        "src_room_id": 151,
+        "dst_room_id": 152
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_puzzle1",
+      "priority": 6124,
+      "reason": "原作 GML：房间 Aerialis·a_lift 里的 obj_door_u 触发 `room_goto(Aerialis·a_puzzle1)`（取证 `conn_ut.json` 的 `if (room == 151)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.aerialis.a_lift",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_u",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "a_lift",
+        "dst_room_name": "a_puzzle1",
+        "src_room_id": 151,
+        "dst_room_id": 148
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_puzzle1",
+      "priority": 6125,
+      "reason": "原作 GML：房间 Aerialis·a_sans 里的 obj_door_t 触发 `room_goto(Aerialis·a_puzzle1)`（取证 `conn_ut.json` 的 `if (room == 153)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.aerialis.a_sans",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "a_sans",
+        "dst_room_name": "a_puzzle1",
+        "src_room_id": 153,
+        "dst_room_id": 148
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_asriel",
+      "priority": 6126,
+      "reason": "原作 GML：房间 Aerialis·a_puzzle2 里的 obj_door_s_musfade 触发 `room_goto(Citadel·c_asgore_asriel)`（取证 `conn_ut.json` 的 `if (room == 156)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.aerialis.a_puzzle2",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "a_puzzle2",
+        "dst_room_name": "c_asgore_asriel",
+        "src_room_id": 156,
+        "dst_room_id": 213
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_asriel",
+      "priority": 6127,
+      "reason": "原作 GML：房间 Aerialis·a_mettaton2 里的 obj_door_s_musfade 触发 `room_goto(Citadel·c_asgore_asriel)`（取证 `conn_ut.json` 的 `if (room == 157)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.aerialis.a_mettaton2",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "a_mettaton2",
+        "dst_room_name": "c_asgore_asriel",
+        "src_room_id": 157,
+        "dst_room_id": 213
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_offshoot2",
+      "priority": 6128,
+      "reason": "原作 GML：房间 Aerialis·a_barricade2 里的 obj_door_t 触发 `room_goto(Aerialis·a_offshoot2)`（取证 `conn_ut.json` 的 `if (room == 159)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.aerialis.a_barricade2",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "a_barricade2",
+        "dst_room_name": "a_offshoot2",
+        "src_room_id": 159,
+        "dst_room_id": 162
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_elevator3",
+      "priority": 6129,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_offshoot2（下标 162）+1 = Aerialis·a_elevator3（下标 163）。",
+      "when_scene": "outertale.aerialis.a_offshoot2",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_offshoot2",
+        "dst_room_name": "a_elevator3",
+        "src_room_id": 162,
+        "dst_room_id": 163
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_barricade2",
+      "priority": 6130,
+      "reason": "原作 GML：房间 Aerialis·a_offshoot2 里的 obj_door_t 触发 `room_goto(Aerialis·a_barricade2)`（取证 `conn_ut.json` 的 `if (room == 162)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.aerialis.a_offshoot2",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "a_offshoot2",
+        "dst_room_name": "a_barricade2",
+        "src_room_id": 162,
+        "dst_room_id": 159
+      }
+    },
+    {
+      "to": "outertale.core.a_elevator4",
+      "priority": 6131,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Aerialis·a_elevator3（下标 163）+1 = Core·a_elevator4（下标 164）。",
+      "when_scene": "outertale.aerialis.a_elevator3",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_elevator3",
+        "dst_room_name": "a_elevator4",
+        "src_room_id": 163,
+        "dst_room_id": 164
+      }
+    },
+    {
+      "to": "outertale.core.a_auditorium",
+      "priority": 6132,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Core·a_elevator4（下标 164）+1 = Core·a_auditorium（下标 165）。",
+      "when_scene": "outertale.core.a_elevator4",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_elevator4",
+        "dst_room_name": "a_auditorium",
+        "src_room_id": 164,
+        "dst_room_id": 165
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_asriel",
+      "priority": 6133,
+      "reason": "原作 GML：房间 Core·a_dining 里的 obj_door_s_musfade 触发 `room_goto(Citadel·c_asgore_asriel)`（取证 `conn_ut.json` 的 `if (room == 168)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_dining",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "a_dining",
+        "dst_room_name": "c_asgore_asriel",
+        "src_room_id": 168,
+        "dst_room_id": 213
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_asriel",
+      "priority": 6134,
+      "reason": "原作 GML：房间 Core·a_hub2 里的 obj_door_s_musfade 触发 `room_goto(Citadel·c_asgore_asriel)`（取证 `conn_ut.json` 的 `if (room == 169)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_hub2",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "a_hub2",
+        "dst_room_name": "c_asgore_asriel",
+        "src_room_id": 169,
+        "dst_room_id": 213
+      }
+    },
+    {
+      "to": "outertale.core.a_plaza",
+      "priority": 6135,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Core·a_hub3（下标 171）+1 = Core·a_plaza（下标 172）。",
+      "when_scene": "outertale.core.a_hub3",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_hub3",
+        "dst_room_name": "a_plaza",
+        "src_room_id": 171,
+        "dst_room_id": 172
+      }
+    },
+    {
+      "to": "outertale.core.a_sleeping2",
+      "priority": 6136,
+      "reason": "原作 GML：房间 Core·a_hub3 里的 obj_door_ruins13 触发 `room_goto(Core·a_sleeping2)`（取证 `conn_ut.json` 的 `if (room == 171)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_hub3",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "a_hub3",
+        "dst_room_name": "a_sleeping2",
+        "src_room_id": 171,
+        "dst_room_id": 176
+      }
+    },
+    {
+      "to": "outertale.core.a_hub4",
+      "priority": 6137,
+      "reason": "原作 GML：房间 Core·a_hub3 里的 obj_door_t 触发 `room_goto(Core·a_hub4)`（取证 `conn_ut.json` 的 `if (room == 171)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_hub3",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "a_hub3",
+        "dst_room_name": "a_hub4",
+        "src_room_id": 171,
+        "dst_room_id": 174
+      }
+    },
+    {
+      "to": "outertale.core.a_elevator5",
+      "priority": 6138,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Core·a_plaza（下标 172）+1 = Core·a_elevator5（下标 173）。",
+      "when_scene": "outertale.core.a_plaza",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_plaza",
+        "dst_room_name": "a_elevator5",
+        "src_room_id": 172,
+        "dst_room_id": 173
+      }
+    },
+    {
+      "to": "outertale.core.a_sleeping1",
+      "priority": 6139,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Core·a_hub4（下标 174）+1 = Core·a_sleeping1（下标 175）。",
+      "when_scene": "outertale.core.a_hub4",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_hub4",
+        "dst_room_name": "a_sleeping1",
+        "src_room_id": 174,
+        "dst_room_id": 175
+      }
+    },
+    {
+      "to": "outertale.core.a_hub3",
+      "priority": 6140,
+      "reason": "原作 GML：房间 Core·a_hub4 里的 obj_door_t 触发 `room_goto(Core·a_hub3)`（取证 `conn_ut.json` 的 `if (room == 174)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_hub4",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "a_hub4",
+        "dst_room_name": "a_hub3",
+        "src_room_id": 174,
+        "dst_room_id": 171
+      }
+    },
+    {
+      "to": "outertale.core.a_hub3",
+      "priority": 6141,
+      "reason": "原作 GML：房间 Core·a_sleeping2 里的 obj_door_ruins13 触发 `room_goto(Core·a_hub3)`（取证 `conn_ut.json` 的 `if (room == 176)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_sleeping2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "a_sleeping2",
+        "dst_room_name": "a_hub3",
+        "src_room_id": 176,
+        "dst_room_id": 171
+      }
+    },
+    {
+      "to": "outertale.core.a_core_entry2",
+      "priority": 6142,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Core·a_core_entry1（下标 180）+1 = Core·a_core_entry2（下标 181）。",
+      "when_scene": "outertale.core.a_core_entry1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_core_entry1",
+        "dst_room_name": "a_core_entry2",
+        "src_room_id": 180,
+        "dst_room_id": 181
+      }
+    },
+    {
+      "to": "outertale.core.a_core_right2",
+      "priority": 6143,
+      "reason": "原作 GML：房间 Core·a_core_entry2 里的 obj_door_ruins13 触发 `room_goto(Core·a_core_right2)`（取证 `conn_ut.json` 的 `if (room == 181)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_core_entry2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "a_core_entry2",
+        "dst_room_name": "a_core_right2",
+        "src_room_id": 181,
+        "dst_room_id": 187
+      }
+    },
+    {
+      "to": "outertale.core.a_core_left2",
+      "priority": 6144,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Core·a_core_left1（下标 183）+1 = Core·a_core_left2（下标 184）。",
+      "when_scene": "outertale.core.a_core_left1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_core_left1",
+        "dst_room_name": "a_core_left2",
+        "src_room_id": 183,
+        "dst_room_id": 184
+      }
+    },
+    {
+      "to": "outertale.core.a_core_right3",
+      "priority": 6145,
+      "reason": "原作 GML：房间 Core·a_core_left1 里的 obj_doorXmusicfade 触发 `room_goto(Core·a_core_right3)`（取证 `conn_ut.json` 的 `if (room == 183)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_core_left1",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_doorXmusicfade",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "a_core_left1",
+        "dst_room_name": "a_core_right3",
+        "src_room_id": 183,
+        "dst_room_id": 188
+      }
+    },
+    {
+      "to": "outertale.core.a_core_entry2",
+      "priority": 6146,
+      "reason": "原作 GML：房间 Core·a_core_right2 里的 obj_door_ruins13 触发 `room_goto(Core·a_core_entry2)`（取证 `conn_ut.json` 的 `if (room == 187)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_core_right2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "a_core_right2",
+        "dst_room_name": "a_core_entry2",
+        "src_room_id": 187,
+        "dst_room_id": 181
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_asriel",
+      "priority": 6147,
+      "reason": "原作 GML：房间 Core·a_core_right2 里的 obj_door_s_musfade 触发 `room_goto(Citadel·c_asgore_asriel)`（取证 `conn_ut.json` 的 `if (room == 187)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_core_right2",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "a_core_right2",
+        "dst_room_name": "c_asgore_asriel",
+        "src_room_id": 187,
+        "dst_room_id": 213
+      }
+    },
+    {
+      "to": "outertale.core.a_core_left1",
+      "priority": 6148,
+      "reason": "原作 GML：房间 Core·a_core_right3 里的 obj_doorXmusicfade 触发 `room_goto(Core·a_core_left1)`（取证 `conn_ut.json` 的 `if (room == 188)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_core_right3",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_doorXmusicfade",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "a_core_right3",
+        "dst_room_name": "a_core_left1",
+        "src_room_id": 188,
+        "dst_room_id": 183
+      }
+    },
+    {
+      "to": "outertale.core.a_core_checkpoint",
+      "priority": 6149,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Core·a_core_bridge（下标 189）+1 = Core·a_core_checkpoint（下标 190）。",
+      "when_scene": "outertale.core.a_core_bridge",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_core_bridge",
+        "dst_room_name": "a_core_checkpoint",
+        "src_room_id": 189,
+        "dst_room_id": 190
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_living",
+      "priority": 6150,
+      "reason": "原作 GML：房间 Core·a_core_bridge 里的 obj_door_u 触发 `room_goto(Citadel·c_asgore_living)`（取证 `conn_ut.json` 的 `if (room == 189)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.core.a_core_bridge",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_u",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "a_core_bridge",
+        "dst_room_name": "c_asgore_living",
+        "src_room_id": 189,
+        "dst_room_id": 210
+      }
+    },
+    {
+      "to": "outertale.core.a_core_battle",
+      "priority": 6151,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Core·a_core_suspense（下标 191）+1 = Core·a_core_battle（下标 192）。",
+      "when_scene": "outertale.core.a_core_suspense",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_core_suspense",
+        "dst_room_name": "a_core_battle",
+        "src_room_id": 191,
+        "dst_room_id": 192
+      }
+    },
+    {
+      "to": "outertale.core.a_core_exit1",
+      "priority": 6152,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Core·a_core_battle（下标 192）+1 = Core·a_core_exit1（下标 193）。",
+      "when_scene": "outertale.core.a_core_battle",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_core_battle",
+        "dst_room_name": "a_core_exit1",
+        "src_room_id": 192,
+        "dst_room_id": 193
+      }
+    },
+    {
+      "to": "outertale.core.a_core_exit2",
+      "priority": 6153,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Core·a_core_exit1（下标 193）+1 = Core·a_core_exit2（下标 194）。",
+      "when_scene": "outertale.core.a_core_exit1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "a_core_exit1",
+        "dst_room_name": "a_core_exit2",
+        "src_room_id": 193,
+        "dst_room_id": 194
+      }
+    },
+    {
+      "to": "outertale.citadel.c_road1",
+      "priority": 6154,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_start（下标 195）+1 = Citadel·c_road1（下标 196）。",
+      "when_scene": "outertale.citadel.c_start",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_start",
+        "dst_room_name": "c_road1",
+        "src_room_id": 195,
+        "dst_room_id": 196
+      }
+    },
+    {
+      "to": "outertale.citadel.c_elevator1",
+      "priority": 6155,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_road1（下标 196）+1 = Citadel·c_elevator1（下标 197）。",
+      "when_scene": "outertale.citadel.c_road1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_road1",
+        "dst_room_name": "c_elevator1",
+        "src_room_id": 196,
+        "dst_room_id": 197
+      }
+    },
+    {
+      "to": "outertale.citadel.c_road2",
+      "priority": 6156,
+      "reason": "原作 GML：房间 Citadel·c_road1 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_road2)`（取证 `conn_ut.json` 的 `if (room == 196)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_road1",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_road1",
+        "dst_room_name": "c_road2",
+        "src_room_id": 196,
+        "dst_room_id": 204
+      }
+    },
+    {
+      "to": "outertale.citadel.c_courtroom",
+      "priority": 6157,
+      "reason": "原作 GML：房间 Citadel·c_road1 里的 obj_door_u 触发 `room_goto(Citadel·c_courtroom)`（取证 `conn_ut.json` 的 `if (room == 196)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_road1",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_u",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "c_road1",
+        "dst_room_name": "c_courtroom",
+        "src_room_id": 196,
+        "dst_room_id": 203
+      }
+    },
+    {
+      "to": "outertale.citadel.c_pacing",
+      "priority": 6158,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_elevator1（下标 197）+1 = Citadel·c_pacing（下标 198）。",
+      "when_scene": "outertale.citadel.c_elevator1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_elevator1",
+        "dst_room_name": "c_pacing",
+        "src_room_id": 197,
+        "dst_room_id": 198
+      }
+    },
+    {
+      "to": "outertale.citadel.c_courtyard",
+      "priority": 6159,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_pacing（下标 198）+1 = Citadel·c_courtyard（下标 199）。",
+      "when_scene": "outertale.citadel.c_pacing",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_pacing",
+        "dst_room_name": "c_courtyard",
+        "src_room_id": 198,
+        "dst_room_id": 199
+      }
+    },
+    {
+      "to": "outertale.citadel.c_throneroom",
+      "priority": 6160,
+      "reason": "原作 GML：房间 Citadel·c_pacing 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_throneroom)`（取证 `conn_ut.json` 的 `if (room == 198)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_pacing",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_pacing",
+        "dst_room_name": "c_throneroom",
+        "src_room_id": 198,
+        "dst_room_id": 205
+      }
+    },
+    {
+      "to": "outertale.citadel.c_alley",
+      "priority": 6161,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_courtyard（下标 199）+1 = Citadel·c_alley（下标 200）。",
+      "when_scene": "outertale.citadel.c_courtyard",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_courtyard",
+        "dst_room_name": "c_alley",
+        "src_room_id": 199,
+        "dst_room_id": 200
+      }
+    },
+    {
+      "to": "outertale.citadel.c_bastion",
+      "priority": 6162,
+      "reason": "原作 GML：房间 Citadel·c_courtyard 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_bastion)`（取证 `conn_ut.json` 的 `if (room == 199)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_courtyard",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_courtyard",
+        "dst_room_name": "c_bastion",
+        "src_room_id": 199,
+        "dst_room_id": 206
+      }
+    },
+    {
+      "to": "outertale.citadel.c_story",
+      "priority": 6163,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_alley（下标 200）+1 = Citadel·c_story（下标 201）。",
+      "when_scene": "outertale.citadel.c_alley",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_alley",
+        "dst_room_name": "c_story",
+        "src_room_id": 200,
+        "dst_room_id": 201
+      }
+    },
+    {
+      "to": "outertale.citadel.c_exit",
+      "priority": 6164,
+      "reason": "原作 GML：房间 Citadel·c_alley 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_exit)`（取证 `conn_ut.json` 的 `if (room == 200)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_alley",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_alley",
+        "dst_room_name": "c_exit",
+        "src_room_id": 200,
+        "dst_room_id": 208
+      }
+    },
+    {
+      "to": "outertale.citadel.c_road2",
+      "priority": 6165,
+      "reason": "原作 GML：房间 Citadel·c_alley 里的 obj_door_u 触发 `room_goto(Citadel·c_road2)`（取证 `conn_ut.json` 的 `if (room == 200)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_alley",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_u",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "c_alley",
+        "dst_room_name": "c_road2",
+        "src_room_id": 200,
+        "dst_room_id": 204
+      }
+    },
+    {
+      "to": "outertale.citadel.c_elevator2",
+      "priority": 6166,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_story（下标 201）+1 = Citadel·c_elevator2（下标 202）。",
+      "when_scene": "outertale.citadel.c_story",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_story",
+        "dst_room_name": "c_elevator2",
+        "src_room_id": 201,
+        "dst_room_id": 202
+      }
+    },
+    {
+      "to": "outertale.citadel.c_road3",
+      "priority": 6167,
+      "reason": "原作 GML：房间 Citadel·c_story 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_road3)`（取证 `conn_ut.json` 的 `if (room == 201)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_story",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_story",
+        "dst_room_name": "c_road3",
+        "src_room_id": 201,
+        "dst_room_id": 207
+      }
+    },
+    {
+      "to": "outertale.citadel.c_courtroom",
+      "priority": 6168,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_elevator2（下标 202）+1 = Citadel·c_courtroom（下标 203）。",
+      "when_scene": "outertale.citadel.c_elevator2",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_elevator2",
+        "dst_room_name": "c_courtroom",
+        "src_room_id": 202,
+        "dst_room_id": 203
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_front",
+      "priority": 6169,
+      "reason": "原作 GML：房间 Citadel·c_elevator2 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_asgore_front)`（取证 `conn_ut.json` 的 `if (room == 202)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_elevator2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_elevator2",
+        "dst_room_name": "c_asgore_front",
+        "src_room_id": 202,
+        "dst_room_id": 209
+      }
+    },
+    {
+      "to": "outertale.citadel.c_road1",
+      "priority": 6170,
+      "reason": "原作 GML：房间 Citadel·c_courtroom 里的 obj_door_u 触发 `room_goto(Citadel·c_road1)`（取证 `conn_ut.json` 的 `if (room == 203)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_courtroom",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_u",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "c_courtroom",
+        "dst_room_name": "c_road1",
+        "src_room_id": 203,
+        "dst_room_id": 196
+      }
+    },
+    {
+      "to": "outertale.citadel.c_road1",
+      "priority": 6171,
+      "reason": "原作 GML：房间 Citadel·c_road2 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_road1)`（取证 `conn_ut.json` 的 `if (room == 204)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_road2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_road2",
+        "dst_room_name": "c_road1",
+        "src_room_id": 204,
+        "dst_room_id": 196
+      }
+    },
+    {
+      "to": "outertale.citadel.c_alley",
+      "priority": 6172,
+      "reason": "原作 GML：房间 Citadel·c_road2 里的 obj_door_u 触发 `room_goto(Citadel·c_alley)`（取证 `conn_ut.json` 的 `if (room == 204)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_road2",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_u",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "c_road2",
+        "dst_room_name": "c_alley",
+        "src_room_id": 204,
+        "dst_room_id": 200
+      }
+    },
+    {
+      "to": "outertale.citadel.c_pacing",
+      "priority": 6173,
+      "reason": "原作 GML：房间 Citadel·c_throneroom 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_pacing)`（取证 `conn_ut.json` 的 `if (room == 205)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_throneroom",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_throneroom",
+        "dst_room_name": "c_pacing",
+        "src_room_id": 205,
+        "dst_room_id": 198
+      }
+    },
+    {
+      "to": "outertale.citadel.c_courtyard",
+      "priority": 6174,
+      "reason": "原作 GML：房间 Citadel·c_bastion 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_courtyard)`（取证 `conn_ut.json` 的 `if (room == 206)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_bastion",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_bastion",
+        "dst_room_name": "c_courtyard",
+        "src_room_id": 206,
+        "dst_room_id": 199
+      }
+    },
+    {
+      "to": "outertale.citadel.c_story",
+      "priority": 6175,
+      "reason": "原作 GML：房间 Citadel·c_road3 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_story)`（取证 `conn_ut.json` 的 `if (room == 207)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_road3",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_road3",
+        "dst_room_name": "c_story",
+        "src_room_id": 207,
+        "dst_room_id": 201
+      }
+    },
+    {
+      "to": "outertale.citadel.c_alley",
+      "priority": 6176,
+      "reason": "原作 GML：房间 Citadel·c_exit 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_alley)`（取证 `conn_ut.json` 的 `if (room == 208)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_exit",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_exit",
+        "dst_room_name": "c_alley",
+        "src_room_id": 208,
+        "dst_room_id": 200
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_living",
+      "priority": 6177,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_asgore_front（下标 209）+1 = Citadel·c_asgore_living（下标 210）。",
+      "when_scene": "outertale.citadel.c_asgore_front",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_asgore_front",
+        "dst_room_name": "c_asgore_living",
+        "src_room_id": 209,
+        "dst_room_id": 210
+      }
+    },
+    {
+      "to": "outertale.citadel.c_elevator2",
+      "priority": 6178,
+      "reason": "原作 GML：房间 Citadel·c_asgore_front 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_elevator2)`（取证 `conn_ut.json` 的 `if (room == 209)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_asgore_front",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_asgore_front",
+        "dst_room_name": "c_elevator2",
+        "src_room_id": 209,
+        "dst_room_id": 202
+      }
+    },
+    {
+      "to": "outertale.core.a_core_bridge",
+      "priority": 6179,
+      "reason": "原作 GML：房间 Citadel·c_asgore_living 里的 obj_door_u 触发 `room_goto(Core·a_core_bridge)`（取证 `conn_ut.json` 的 `if (room == 210)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_asgore_living",
+      "when_door": null,
+      "when_src": "obj_door_u",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_u",
+        "code": "gml_Object_obj_door_u_Alarm_2",
+        "src_room_name": "c_asgore_living",
+        "dst_room_name": "a_core_bridge",
+        "src_room_id": 210,
+        "dst_room_id": 189
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_hallway",
+      "priority": 6180,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_asgore_kitchen（下标 211）+1 = Citadel·c_asgore_hallway（下标 212）。",
+      "when_scene": "outertale.citadel.c_asgore_kitchen",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_asgore_kitchen",
+        "dst_room_name": "c_asgore_hallway",
+        "src_room_id": 211,
+        "dst_room_id": 212
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_start",
+      "priority": 6181,
+      "reason": "原作 GML：房间 Citadel·c_asgore_hallway 里的 obj_door_s_musfade 触发 `room_goto(Citadel·c_archive_start)`（取证 `conn_ut.json` 的 `if (room == 212)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_asgore_hallway",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "c_asgore_hallway",
+        "dst_room_name": "c_archive_start",
+        "src_room_id": 212,
+        "dst_room_id": 215
+      }
+    },
+    {
+      "to": "outertale.citadel.c_asgore_asriel",
+      "priority": 6182,
+      "reason": "原作 GML：房间 Citadel·c_asgore_asgore 里的 obj_door_s_musfade 触发 `room_goto(Citadel·c_asgore_asriel)`（取证 `conn_ut.json` 的 `if (room == 214)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_asgore_asgore",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "c_asgore_asgore",
+        "dst_room_name": "c_asgore_asriel",
+        "src_room_id": 214,
+        "dst_room_id": 213
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_lab_upstairs",
+      "priority": 6183,
+      "reason": "原作 GML：房间 Citadel·c_asgore_asgore 里的 obj_door_t 触发 `room_goto(Aerialis·a_lab_upstairs)`（取证 `conn_ut.json` 的 `if (room == 214)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_asgore_asgore",
+      "when_door": null,
+      "when_src": "obj_door_t",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_t",
+        "code": "gml_Object_obj_door_t_Alarm_2",
+        "src_room_name": "c_asgore_asgore",
+        "dst_room_name": "a_lab_upstairs",
+        "src_room_id": 214,
+        "dst_room_id": 139
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_wastelands1",
+      "priority": 6184,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_path1（下标 216）+1 = Citadel·c_archive_wastelands1（下标 217）。",
+      "when_scene": "outertale.citadel.c_archive_path1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_path1",
+        "dst_room_name": "c_archive_wastelands1",
+        "src_room_id": 216,
+        "dst_room_id": 217
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_start",
+      "priority": 6185,
+      "reason": "原作 GML：房间 Citadel·c_archive_path1 里的 obj_door_s_musfade 触发 `room_goto(Citadel·c_archive_start)`（取证 `conn_ut.json` 的 `if (room == 216)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_path1",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "c_archive_path1",
+        "dst_room_name": "c_archive_start",
+        "src_room_id": 216,
+        "dst_room_id": 215
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_wastelands2",
+      "priority": 6186,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_wastelands1（下标 217）+1 = Citadel·c_archive_wastelands2（下标 218）。",
+      "when_scene": "outertale.citadel.c_archive_wastelands1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_wastelands1",
+        "dst_room_name": "c_archive_wastelands2",
+        "src_room_id": 217,
+        "dst_room_id": 218
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_foundryA4",
+      "priority": 6187,
+      "reason": "原作 GML：房间 Citadel·c_archive_wastelands1 里的 obj_door_s_musfade 触发 `room_goto(Citadel·c_archive_foundryA4)`（取证 `conn_ut.json` 的 `if (room == 217)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_wastelands1",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "c_archive_wastelands1",
+        "dst_room_name": "c_archive_foundryA4",
+        "src_room_id": 217,
+        "dst_room_id": 230
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_wastelands3",
+      "priority": 6188,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_wastelands2（下标 218）+1 = Citadel·c_archive_wastelands3（下标 219）。",
+      "when_scene": "outertale.citadel.c_archive_wastelands2",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_wastelands2",
+        "dst_room_name": "c_archive_wastelands3",
+        "src_room_id": 218,
+        "dst_room_id": 219
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_wastelands4",
+      "priority": 6189,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_wastelands3（下标 219）+1 = Citadel·c_archive_wastelands4（下标 220）。",
+      "when_scene": "outertale.citadel.c_archive_wastelands3",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_wastelands3",
+        "dst_room_name": "c_archive_wastelands4",
+        "src_room_id": 219,
+        "dst_room_id": 220
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_path2",
+      "priority": 6190,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_wastelands4（下标 220）+1 = Citadel·c_archive_path2（下标 221）。",
+      "when_scene": "outertale.citadel.c_archive_wastelands4",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_wastelands4",
+        "dst_room_name": "c_archive_path2",
+        "src_room_id": 220,
+        "dst_room_id": 221
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_path3",
+      "priority": 6191,
+      "reason": "原作 GML：房间 Citadel·c_archive_wastelands4 里的 obj_doorXmusicfade 触发 `room_goto(Citadel·c_archive_path3)`（取证 `conn_ut.json` 的 `if (room == 220)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_wastelands4",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_doorXmusicfade",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "c_archive_wastelands4",
+        "dst_room_name": "c_archive_path3",
+        "src_room_id": 220,
+        "dst_room_id": 226
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_starton4",
+      "priority": 6192,
+      "reason": "原作 GML：房间 Citadel·c_archive_path2 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_archive_starton4)`（取证 `conn_ut.json` 的 `if (room == 221)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_path2",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_archive_path2",
+        "dst_room_name": "c_archive_starton4",
+        "src_room_id": 221,
+        "dst_room_id": 225
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_starton2",
+      "priority": 6193,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_starton1（下标 222）+1 = Citadel·c_archive_starton2（下标 223）。",
+      "when_scene": "outertale.citadel.c_archive_starton1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_starton1",
+        "dst_room_name": "c_archive_starton2",
+        "src_room_id": 222,
+        "dst_room_id": 223
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_path2",
+      "priority": 6194,
+      "reason": "原作 GML：房间 Citadel·c_archive_starton4 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_archive_path2)`（取证 `conn_ut.json` 的 `if (room == 225)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_starton4",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_archive_starton4",
+        "dst_room_name": "c_archive_path2",
+        "src_room_id": 225,
+        "dst_room_id": 221
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_foundryA1",
+      "priority": 6195,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_path3（下标 226）+1 = Citadel·c_archive_foundryA1（下标 227）。",
+      "when_scene": "outertale.citadel.c_archive_path3",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_path3",
+        "dst_room_name": "c_archive_foundryA1",
+        "src_room_id": 226,
+        "dst_room_id": 227
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_wastelands4",
+      "priority": 6196,
+      "reason": "原作 GML：房间 Citadel·c_archive_path3 里的 obj_doorXmusicfade 触发 `room_goto(Citadel·c_archive_wastelands4)`（取证 `conn_ut.json` 的 `if (room == 226)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_path3",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_doorXmusicfade",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "c_archive_path3",
+        "dst_room_name": "c_archive_wastelands4",
+        "src_room_id": 226,
+        "dst_room_id": 220
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_foundryA2",
+      "priority": 6197,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_foundryA1（下标 227）+1 = Citadel·c_archive_foundryA2（下标 228）。",
+      "when_scene": "outertale.citadel.c_archive_foundryA1",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_foundryA1",
+        "dst_room_name": "c_archive_foundryA2",
+        "src_room_id": 227,
+        "dst_room_id": 228
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_foundryA3",
+      "priority": 6198,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_foundryA2（下标 228）+1 = Citadel·c_archive_foundryA3（下标 229）。",
+      "when_scene": "outertale.citadel.c_archive_foundryA2",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_foundryA2",
+        "dst_room_name": "c_archive_foundryA3",
+        "src_room_id": 228,
+        "dst_room_id": 229
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_foundryA4",
+      "priority": 6199,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_foundryA3（下标 229）+1 = Citadel·c_archive_foundryA4（下标 230）。",
+      "when_scene": "outertale.citadel.c_archive_foundryA3",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_foundryA3",
+        "dst_room_name": "c_archive_foundryA4",
+        "src_room_id": 229,
+        "dst_room_id": 230
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_path4",
+      "priority": 6200,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_foundryA4（下标 230）+1 = Citadel·c_archive_path4（下标 231）。",
+      "when_scene": "outertale.citadel.c_archive_foundryA4",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_foundryA4",
+        "dst_room_name": "c_archive_path4",
+        "src_room_id": 230,
+        "dst_room_id": 231
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_foundryB1",
+      "priority": 6201,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_path4（下标 231）+1 = Citadel·c_archive_foundryB1（下标 232）。",
+      "when_scene": "outertale.citadel.c_archive_path4",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_path4",
+        "dst_room_name": "c_archive_foundryB1",
+        "src_room_id": 231,
+        "dst_room_id": 232
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_foundryB4",
+      "priority": 6202,
+      "reason": "原作 GML：房间 Citadel·c_archive_foundryB1 里的 obj_doorXmusicfade 触发 `room_goto(Citadel·c_archive_foundryB4)`（取证 `conn_ut.json` 的 `if (room == 232)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_foundryB1",
+      "when_door": null,
+      "when_src": "obj_doorXmusicfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_doorXmusicfade",
+        "code": "gml_Object_obj_doorXmusicfade_Alarm_2",
+        "src_room_name": "c_archive_foundryB1",
+        "dst_room_name": "c_archive_foundryB4",
+        "src_room_id": 232,
+        "dst_room_id": 235
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_foundryB3",
+      "priority": 6203,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_foundryB2（下标 233）+1 = Citadel·c_archive_foundryB3（下标 234）。",
+      "when_scene": "outertale.citadel.c_archive_foundryB2",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_foundryB2",
+        "dst_room_name": "c_archive_foundryB3",
+        "src_room_id": 233,
+        "dst_room_id": 234
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_path5",
+      "priority": 6204,
+      "reason": "原作 GML：obj_doorA 的 `Alarm_2` 调 `room_goto_next()` ⇒ 房间 Citadel·c_archive_foundryB4（下标 235）+1 = Citadel·c_archive_path5（下标 236）。",
+      "when_scene": "outertale.citadel.c_archive_foundryB4",
+      "when_door": null,
+      "when_src": "obj_doorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_shift",
+        "via": "obj_doorA",
+        "code": "gml_Object_obj_doorA_Alarm_2",
+        "room_delta": 1,
+        "src_room_name": "c_archive_foundryB4",
+        "dst_room_name": "c_archive_path5",
+        "src_room_id": 235,
+        "dst_room_id": 236
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_foundryB1",
+      "priority": 6205,
+      "reason": "原作 GML：房间 Citadel·c_archive_foundryB4 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_archive_foundryB1)`（取证 `conn_ut.json` 的 `if (room == 235)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_foundryB4",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_archive_foundryB4",
+        "dst_room_name": "c_archive_foundryB1",
+        "src_room_id": 235,
+        "dst_room_id": 232
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_aerialis3",
+      "priority": 6206,
+      "reason": "原作 GML：房间 Citadel·c_archive_aerialis2 里的 obj_demodoorA 触发 `room_goto(Citadel·c_archive_aerialis3)`（取证 `conn_ut.json` 的 `if (room == 238)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_aerialis2",
+      "when_door": null,
+      "when_src": "obj_demodoorA",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_demodoorA",
+        "code": "gml_Object_obj_demodoorA_Alarm_2",
+        "src_room_name": "c_archive_aerialis2",
+        "dst_room_name": "c_archive_aerialis3",
+        "src_room_id": 238,
+        "dst_room_id": 239
+      }
+    },
+    {
+      "to": "outertale.citadel.c_archive_path5",
+      "priority": 6207,
+      "reason": "原作 GML：房间 Citadel·c_archive_aerialis4 里的 obj_door_ruins13 触发 `room_goto(Citadel·c_archive_path5)`（取证 `conn_ut.json` 的 `if (room == 240)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_aerialis4",
+      "when_door": null,
+      "when_src": "obj_door_ruins13",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_ruins13",
+        "code": "gml_Object_obj_door_ruins13_Alarm_2",
+        "src_room_name": "c_archive_aerialis4",
+        "dst_room_name": "c_archive_path5",
+        "src_room_id": 240,
+        "dst_room_id": 236
+      }
+    },
+    {
+      "to": "outertale.aerialis.a_lab_virt",
+      "priority": 6208,
+      "reason": "原作 GML：房间 Citadel·c_archive_surface 里的 obj_door_s_musfade 触发 `room_goto(Aerialis·a_lab_virt)`（取证 `conn_ut.json` 的 `if (room == 242)` 常量对；该门对象**确实摆在这间房**的实例表里）。",
+      "when_scene": "outertale.citadel.c_archive_surface",
+      "when_door": null,
+      "when_src": "obj_door_s_musfade",
+      "_original": {
+        "chapter": "outertale",
+        "kind": "ot_door_guard",
+        "via": "obj_door_s_musfade",
+        "code": "gml_Object_obj_door_s_musfade_Alarm_2",
+        "src_room_name": "c_archive_surface",
+        "dst_room_name": "a_lab_virt",
+        "src_room_id": 242,
+        "dst_room_id": 141
       }
     }
   ],

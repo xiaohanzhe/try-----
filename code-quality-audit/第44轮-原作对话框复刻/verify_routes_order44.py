@@ -213,12 +213,15 @@ _lettered_n = sum(1 for r in RL
                   if isinstance(r.get('when_door'), str) and r.get('when_door'))
 _srced_n = sum(1 for r in RL
                if isinstance(r.get('when_src'), str) and r.get('when_src'))
-ok(not _no_split and _srced_n == 209,
+ok(not _no_split and _srced_n == 418,
    'B6 全部 %d 条规则都带分流依据（字母级 %d + 对象级 when_src %d；'
    '两样都没有的 %d）' % (len(RL), _lettered_n, _srced_n, len(_no_split)))
 # ★ 第123轮：对象级 from **110 → 209**（第122轮的 110 条 + 第123轮新补的 99 条
 #   对象级位移门 —— `obj_doorAmusicfade` / `obj_doorDmusicfade` 这类不带字母的门）。
 #   字母级同期 1000 → 1183（122 的 133 + 123 的 183）。
+# ★ 第126轮：对象级 **209 → 418**（outertale 补的 209 条门路由 —— 它的门对象同样
+#   不带字母：`obj_door_t` / `obj_door_ruins13` / `obj_door_s_musfade` …
+#   `when_src` 正是"哪一扇门"的唯一写法，所以这条判据的本意一字未变）。
 # —— 负控制：把两种依据都剥掉的规则必须被判出（证明上一条不是恒真）
 ok(_has_split({'when_scene': 'a', 'to': 'b'}) is False
    and _has_split({'when_scene': 'a', 'to': 'b', 'when_door': 'A'}) is True

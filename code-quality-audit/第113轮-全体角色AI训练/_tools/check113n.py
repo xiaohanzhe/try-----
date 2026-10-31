@@ -269,11 +269,17 @@ check('B7 调试/演出区被剔掉（`shaun_puzzle`（ch2.system）⇒ 空）',
       '%r' % (near('ch2.system.shaun_puzzle'),))
 
 # ★ 无图章节：章节 id 不在图里 ⇒ `[]`，且**不抛**
-_no_graph = ['ut.rooms.room_town', 'uty.rooms.rm_steamworks_29',
-             'outertale.starton.s_beddinng', 'desktop']
-check('B8 无连接图的章（ut / uty / outertale / desktop）⇒ `[]`，不抛',
+# ★★ 第126轮：`outertale` **从这份名单里移出去了** —— 它现在**有图了**
+#   （`chapters.outertale` 209 条边）。留着它就成了"判据在描述过去的时相"，
+#   而下面的 B8b 正是那个新事实的正控制（有图 ⇒ 必须真有邻居）。
+_no_graph = ['ut.rooms.room_town', 'uty.rooms.rm_steamworks_29', 'desktop']
+check('B8 无连接图的章（ut / uty / desktop）⇒ `[]`，不抛',
       all(near(s) == [] for s in _no_graph),
       '%r' % ([(s, near(s)) for s in _no_graph if near(s)],))
+check('B8b ★★ 第126轮正控制：有图的章（outertale）必须**真有**邻居'
+      '（此前它是"无图章"，B8 把它和 ut 当同一类 —— 加了图就该翻面）',
+      len(near('outertale.starton.s_beddinng')) >= 1,
+      '%r' % (near('outertale.starton.s_beddinng'),))
 
 check('B9 空 sid / None ⇒ `[]`（不产"附近有某个地方"这种废话）',
       near('') == [] and near(None) == [], '%r' % (near(''),))

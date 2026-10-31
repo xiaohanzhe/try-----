@@ -369,6 +369,21 @@ _KIND_UT_SHIFT = 'ut_door_shift'
 #        所以这里**不**断言差值是固定值 —— 那正是它与位移门的区别）；
 #     ⑤ `via` 是门对象名 `obj_door*`、且规则的 `when_door` 与 `door_letter` 一致。
 _KIND_TABLE = 'delta_door_table'
+# ★★★ 第126轮：第六、七种机制 —— **outertale 的门**（两小类）。
+#   outertale 的门对象**不带字母**（`obj_door_t` / `obj_door_ruins13` /
+#   `obj_door_s_musfade` …），目标写在 GML 里的两种写法，所以分两种 kind：
+#     `ot_door_guard`  `if (room == N) room_goto(M)` ⇒ (N→M)，src 由守卫给定
+#     `ot_door_shift`  `room_goto_next()` ⇒ 每个实例房 r → r+1
+#   自洽条件（五条）：
+#     ① `chapter` == 'outertale'（不许拿别的作品的房间下标冒充）；
+#     ② `via` 是门对象名（`obj_door*` / `obj_demodoor*`）；
+#     ③ `code` 是反编译名 `gml_Object_*`（有取证来源，不是编的）；
+#     ④ 两端房名非空且不同、`src/dst_room_id` 是 int 且不同；
+#     ⑤ **只有 shift 断言位移**：`room_delta == 1` 且 `dst == src + 1`。
+#        guard 的落点由守卫常量决定，**不保证**任何差值（拿差值去套会误报）。
+_KIND_OT_GUARD = 'ot_door_guard'
+_KIND_OT_SHIFT = 'ot_door_shift'
+_OT_KINDS = (_KIND_OT_GUARD, _KIND_OT_SHIFT)
 _UT_SHIFT_HOW = {
     'room_next(room)': 1,
     'room_previous(room)': -1,
@@ -407,6 +422,7 @@ _struct_bad = []
 _n_oneshot = 0
 _n_ut = 0
 _n_table = 0
+_n_ot = 0
 
 
 def _table_self_ok(r):
@@ -433,6 +449,36 @@ def _table_self_ok(r):
         return False
     v = o.get('via')
     return isinstance(v, str) and v.startswith('obj_door')
+
+def _ot_self_ok(r):
+    u"""outertale 门规则的 `_original` 自洽判定（**纯函数**，供正/负控制复用）。
+
+    五条见 `_KIND_OT_GUARD` 上方的注释。★ 只有 `shift` 断言位移 ——
+    `guard` 的落点是守卫常量，拿差值去套必然误报。
+    """
+    o = r.get('_original')
+    if not isinstance(o, dict):
+        return False
+    if o.get('kind') not in _OT_KINDS:
+        return False
+    if o.get('chapter') != 'outertale':
+        return False
+    v = o.get('via')
+    if not (isinstance(v, str) and (v.startswith('obj_door') or v.startswith('obj_demodoor'))):
+        return False
+    c = o.get('code')
+    if not (isinstance(c, str) and c.startswith('gml_Object_')):
+        return False
+    s, d = o.get('src_room_name'), o.get('dst_room_name')
+    if not (isinstance(s, str) and s and isinstance(d, str) and d and s != d):
+        return False
+    si, di = o.get('src_room_id'), o.get('dst_room_id')
+    if not (isinstance(si, int) and isinstance(di, int) and si != di):
+        return False
+    if o.get('kind') == _KIND_OT_SHIFT:
+        return o.get('room_delta') == 1 and di == si + 1
+    return True
+
 
 def _delta_bad(r):
     u"""位移门规则的不自洽原因（None = 自洽）。**正/负控制与 C3 共用同一份实现** ——
@@ -473,15 +519,50 @@ for _r in (routes.get('routes') or []):
         if not _table_self_ok(_r):
             _struct_bad.append('%s(X 门表驱动不自洽)' % _r.get('to'))
         continue
+    if _o.get('kind') in _OT_KINDS:
+        _n_ot += 1
+        if not _ot_self_ok(_r):
+            _struct_bad.append('%s(outertale %s 不自洽)' % (_r.get('to'), _o.get('kind')))
+        continue
     _why = _delta_bad(_r)
     if _why:
         _struct_bad.append('%s(%s)' % (_r.get('to'), _why))
 check('C3 每条规则的 _original 自洽于**它声明的原作机制**'
       '（门位移 A+1/B-1/C+2/**D-2** ｜ OneShot 传送为两端不同的原作 map ｜ '
       'ut 门为 room_goto 取证 / room_goto_next ±1 / room_next·previous(room) 位移 ±1·±2 ｜ '
-      'X 门为 `Alarm_2` 表驱动；排除 desktop 世界门）',
+      'X 门为 `Alarm_2` 表驱动 ｜ outertale 门为 guard 常量对 / `room_goto_next` +1；'
+      '排除 desktop 世界门）',
       not _struct_bad,
       '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
+
+# C3a11 —— ★★★ 第126轮：outertale 分支**确实存在且被管到**（正控制）
+_n_ot_g = sum(1 for r in (routes.get('routes') or [])
+              if (r.get('_original') or {}).get('kind') == _KIND_OT_GUARD)
+_n_ot_s = sum(1 for r in (routes.get('routes') or [])
+              if (r.get('_original') or {}).get('kind') == _KIND_OT_SHIFT)
+check('C3a11 ★ C3 的 outertale 分支确有样本（%d 条 = guard %d / shift %d）'
+      % (_n_ot, _n_ot_g, _n_ot_s),
+      _n_ot == 209 and _n_ot_g == 93 and _n_ot_s == 116,
+      '实测 %d / %d / %d' % (_n_ot, _n_ot_g, _n_ot_s))
+
+
+def _ot(**kw):
+    o = {'kind': _KIND_OT_SHIFT, 'chapter': 'outertale', 'via': 'obj_doorA',
+         'code': 'gml_Object_obj_doorA_Alarm_2', 'room_delta': 1,
+         'src_room_name': 'room_ruins1', 'dst_room_name': 'room_ruins2',
+         'src_room_id': 6, 'dst_room_id': 7}
+    o.update(kw)
+    return {'to': 'outertale.wastelands.w_lobby', 'when_scene': 'outertale.wastelands.w_twinkly',
+            '_original': o}
+
+
+check('C3a12 正/负控制：`_ot_self_ok` 对"合法 shift / 位移写成 +2 / 章节冒充 ut"'
+      '三种输入各不相同',
+      _ot_self_ok(_ot()) is True
+      and _ot_self_ok(_ot(room_delta=2, dst_room_id=8)) is False
+      and _ot_self_ok(_ot(chapter='ut')) is False,
+      repr((_ot_self_ok(_ot()), _ot_self_ok(_ot(room_delta=2, dst_room_id=8)),
+            _ot_self_ok(_ot(chapter='ut')))))
 
 # C3a4 —— ★★ 第122轮：ut 分支**确实存在且被管到**（正控制），以及它有鉴别力（负控制）
 #   ★ 第123轮：243 → **525**（多了 282 条 `ut_door_shift`）。
@@ -623,7 +704,8 @@ check('C3a10 ★ D 门确有样本（%d 条，第125轮新增）' % _D_N, _D_N >
 #        `room_delta` 可言（落点由 `Alarm_2` 的查表决定），不属于 C3b 的论域。
 #        不排除就会把 'X' 算进来而误报（**判据要跟着机制分类走，不是跟着字母走**）。
 #        X 门自有 C3a7/C3a8 守（五条自洽 + 五处负控制）。
-_NON_LETTER_KINDS = (_KIND_ONESHOT, _KIND_TABLE)
+#      ★ 第126轮：outertale 的两种 kind 也**不带字母**（`door_letter` 为 None）⇒ 一并排除。
+_NON_LETTER_KINDS = (_KIND_ONESHOT, _KIND_TABLE, _KIND_OT_GUARD, _KIND_OT_SHIFT)
 _LETTERS = sorted(set(
     v for v in ((r.get('_original') or {}).get('door_letter')
                 for r in (routes.get('routes') or [])
