@@ -231,7 +231,11 @@ _n_char, _n_item = S.summarize(_tbl)
 check('C7 覆盖率下界：**至少 40 人**有偏好条目（下界只增不减；补素材只会更多）',
       _n_char >= 40, '实际 %d 人' % _n_char)
 check('C8 条目数 ≥ 人数（每人平均至少一条）', _n_item >= _n_char,
-      '实际 %d 条 / %d 人' % (_n_item, _n_char))
+      # ★ 第127轮：**达标时不回显条数**。原来无条件打「实际 189 条 / 72 人」，
+      #   而 189 是随时相变的实得数字 —— 第127轮把 4 条误判成 ambiguous 的偏好
+      #   修好后变成 193，这条判据本身还是 PASS，却让 G2 报 DIFF（"判据回显
+      #   随时相变的绝对值"，记忆 §4 的同型问题）。改成**只在失败时**回显。
+      '' if _n_item >= _n_char else '实际 %d 条 / %d 人' % (_n_item, _n_char))
 
 _bw = S.weights_of(_tbl, 'berdly')
 check('C9 写死样本：`berdly` 的偏好里真有 `noelle`，且权重 > 1.0'

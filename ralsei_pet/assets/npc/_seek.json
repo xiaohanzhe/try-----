@@ -88,20 +88,8 @@
   "ut_chara": [
    "人类"
   ],
-  "ut_flowey": [
-   "Asgore（ambiguous）"
-  ],
-  "ut_frisk": [
-   "Asgore（ambiguous）"
-  ],
   "ut_sans": [
    "Grillby"
-  ],
-  "ut_toriel": [
-   "Asgore（ambiguous）"
-  ],
-  "ut_undyne": [
-   "Asgore（ambiguous）"
   ]
  },
  "seek": {
@@ -1376,6 +1364,13 @@
     "neg": 0,
     "why": "Alphys, 你怎么可以说这样的话"
    },
+   "ut_asgore": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "如果我和 Asgore 彻底闹翻了，我大概不会选择低头吧"
+   },
    "ut_chara": {
     "w": 1.06,
     "mention": 1,
@@ -1405,6 +1400,13 @@
     "pos": 0,
     "neg": 0,
     "why": "遇到 Undyne 时紧张"
+   },
+   "ut_asgore": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "面对 Asgore 战斗时害怕"
    }
   },
   "ut_gaster": {
@@ -1534,6 +1536,13 @@
     "neg": 0,
     "why": "有时候Sans会打电话来分享他的笑话，我们总是在门这边和那边互相开着玩笑"
    },
+   "ut_asgore": {
+    "w": 1.24,
+    "mention": 4,
+    "pos": 0,
+    "neg": 0,
+    "why": "比如Asgore站在那里时的那种气氛，总会让我变得严肃起来"
+   },
    "ot_asriel_twinkly": {
     "w": 1.12,
     "mention": 2,
@@ -1563,6 +1572,13 @@
     "pos": 0,
     "neg": 0,
     "why": "还有Alphys那个笨蛋看的一些奇怪动画……每次跟她提起来她就会变得又紧张又羞涩"
+   },
+   "ut_asgore": {
+    "w": 1.06,
+    "mention": 1,
+    "pos": 0,
+    "neg": 0,
+    "why": "吃完饭就继续训练，直到Asgore叫我去瀑布抓人类为止"
    },
    "ut_sans": {
     "w": 1.06,

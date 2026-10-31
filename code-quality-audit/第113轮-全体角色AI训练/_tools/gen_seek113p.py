@@ -129,6 +129,26 @@ def _strip_note(nm):
     return core
 
 
+def _alias_startswith(nm, by_name, ids):
+    u"""登记名**以该名字开头**的候选（`Chujin` → `Chujin Ketsukane`）。
+
+    ★ 只在名字够长（≥5 字）时启用 —— 短名字（`Kan`、`Al`）前缀匹配几乎必然误伤。
+    ★ 抽成函数是第127轮的事：原来这段内联在 `pick_id` 的「精确零命中」分支里，
+      而真正需要它的第二种情形（精确档**有多条**但同作品那条登记名带后缀）用不到
+      ⇒ `ut_toriel` 提 `Asgore` 被误判 ambiguous（详见 `pick_id` 注释里的现场）。
+    """
+    if len(str(nm)) < 5:
+        return []
+    low = str(nm).lower()
+    out = []
+    for nm2, lst in by_name.items():
+        if str(nm2).lower() == low:
+            continue
+        if str(nm2).lower().startswith(low):
+            out.extend(lst)
+    return _dedup([c for c in out if c in ids])
+
+
 def pick_id(nm, src_id, by_name, by_lower, by_cn, ids):
     """名字 → npc_id，**按作品前缀消歧**。→ `(id 或 None, 原因)`。
 
@@ -146,16 +166,8 @@ def pick_id(nm, src_id, by_name, by_lower, by_cn, ids):
     cand = [c for c in cand if c in ids]
     if not cand:
         # ★ 第三档：**登记名以该名字开头**（`Chujin` → `hy_chujin_ketsukane`，
-        #   登记名是 `Chujin Ketsukane`）。只在名字够长（≥5 字）时启用 ——
-        #   短名字（`Kan`、`Al`）前缀匹配几乎必然误伤。
-        if len(str(nm)) >= 5:
-            low = str(nm).lower()
-            for nm2, lst in by_name.items():
-                if str(nm2).lower() == low:
-                    continue
-                if str(nm2).lower().startswith(low):
-                    cand.extend(lst)
-            cand = _dedup([c for c in cand if c in ids])
+        #   登记名是 `Chujin Ketsukane`）。
+        cand = _alias_startswith(nm, by_name, ids)
     if not cand:
         # ★ 第113轮r：剥掉尾部括号注释再试一次（`Silver（总工程师）`）。
         #   每次递归都严格变短 ⇒ 不会无限递归。
@@ -179,6 +191,21 @@ def pick_id(nm, src_id, by_name, by_lower, by_cn, ids):
     same = [c for c in cand if split_prefix(c)[0] == p]
     if len(same) == 1:
         return same[0], 'ok'
+    # ★★★ 第127轮：精确档**有多条命中、但同作品那条登记名带后缀** ⇒ 再兜一次别名档。
+    #   现场（实测，不是推的）：`ut_toriel` 的 relations 里写着 `Asgore`，
+    #   精确档只拿到 `asgore`(Deltarune) 与 `ot_asgore`(outertale) 两条，
+    #   UT 那条登记名是 **`Asgore Dreemurr`**（落在别名档里、原来只在"精确零命中"
+    #   时才启用）⇒ 同作品候选为空 ⇒ 判 ambiguous 丢掉。
+    #   `_seek.json` 因此少记了 4 个 UT 角色「想去找 Asgore」的权重
+    #   （ut_toriel / ut_undyne / ut_frisk / ut_flowey），而 `Asgore（ambiguous）`
+    #   被当成"证据不足"，一直没人发现它其实解得出。
+    # ★ 为什么只收**同作品**那一条：跨作品同名（`Sans` 在 ut_/ot_ 各一条、
+    #   源无前缀）**仍然丢弃** —— 猜错等于把 A 的偏好挂到 B 头上（第113轮p 原始教训）。
+    if not same and p:
+        alias = [c for c in _alias_startswith(nm, by_name, ids)
+                 if split_prefix(c)[0] == p]
+        if len(alias) == 1:
+            return alias[0], 'ok'
     if not same and not p:
         return None, 'ambiguous'
     return None, 'ambiguous'

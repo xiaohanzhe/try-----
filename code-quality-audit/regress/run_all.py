@@ -3394,6 +3394,35 @@ SUITES = [
                 '★ 零 Qt、零网络、零外部盘（只读仓库内证据与资产）。',
     },
     {
+        'id': 'check127',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第127轮-训练偏好解析', '_tools', 'check127.py'),
+        'desc': '第127轮：NPC「他想去找谁」的**名字消歧**不许再漏（用户口径'
+                '「训练这类的也要抓一下」）。'
+                '★ 训练线接线逐环实测**没有断的**（96 角色覆盖齐：77 AI + 18 内置台词 + '
+                '`knight` 沉默；`patches` 59 条进 system prompt；`_seek.json` 72 人进决策）——'
+                '真缺口在**数据被白白丢掉的那一段**：`unresolved_names` 里 4 条 '
+                '`Asgore（ambiguous）` 其实解得开。'
+                '★ 根因（`gen_seek113p.pick_id`）：「登记名以该名字开头」第三档被写在 '
+                '`if not cand:` 里 ⇒ 只有精确档**零命中**才启用；而 UT 那个 Asgore 的登记名是 '
+                '**`Asgore Dreemurr`**，精确档只拿到 Deltarune/outertale 两条，'
+                '同作品候选为空 ⇒ 被判 ambiguous 丢弃。'
+                '⇒ 修法：同作品候选为空时再兜一次别名档、**且只收同作品那一条**；'
+                '跨作品同名（`Sans` 在 ut_/ot_ 各一条、源无前缀）仍丢弃 —— '
+                '猜错等于把 A 的偏好挂到 B 头上（第113轮p 原始教训）。'
+                '★ 影响面先量化再动手：`raw30` 全部 **477** 个 (名字, 源) 对上跑新旧两版，'
+                '差异 **8 条、全部是 `ut_*` → `ut_asgore`、零倒退、零自指**。'
+                '结果：`_seek.json` 条目 189 → **193**，既有 189 条逐字段一字未改，'
+                '`formula` 未动。'
+                'A 现场（8 个 ut_* 源真跑 `pick_id`）· B 拒猜纪律（跨作品/名册外/非人条目；'
+                '★B1 首跑报红，**红的是我的断言**：无前缀源提 `Asgore` 本来就该落 `asgore`，'
+                '真正该守的是"不许被别名兜底带到 ot_/ut_"）· C 数据面（4 条真在、'
+                '`why` 原句真的提到 Asgore、自指零、仍被拒的 `Sans`/`Undyne` 还在）· '
+                '★★D 破坏性负控制（把别名兜底拆掉重算 ⇒ 4 条必须消失；`ot_toriel` 换一部'
+                '作品也成立，排除硬编码 ut；别名档**只有一份实现**）· E 自检（AST 恒真 + 无 BOM）。'
+                '★ 零 Qt、零网络、零外部盘。',
+    },
+    {
         'id': 'check113p',
         'script': os.path.join(ROOT, 'code-quality-audit',
                                '第113轮-全体角色AI训练', '_tools', 'check113p.py'),
