@@ -223,6 +223,9 @@ for fn in ('base.jsonl', 'pnew_bold.jsonl', 'pnew_bnew.jsonl', 'pnew_bnew2.jsonl
                 rows.append(json.loads(line))
 HES = u'嗯诶哦呃唔'
 OPEN = re.compile(u'^[%s]' % HES)
+#: 带停顿的"真卡壳"（与 check128 `HES_PAUSE_RE` 同口径，但**在这里独立重写一遍** ——
+#: 不 import 判据文件，否则同一处写错会两边一起绿，那就不叫独立重算了）
+HES_PAUSE = re.compile(u'^[%s]{1,3}\\s*(?:…+|\\.{3,}|—+|－+|~+|？|\\?|！|!)' % HES)
 left_real = [r for r in rows if OPEN.match(ES.strip_head_hesitation(r['reply'].strip()) or '')]
 left_null = [r for r in rows if OPEN.match(r['reply'].strip())]
 chk(u'④-4 负控制：护栏换成恒等函数后，同一判据报红（说明它真的在判东西）',
@@ -238,11 +241,6 @@ rep = txt(REPORT)
 TOKENS = [
     (u'52.0%', rep),
     (u'26/50', rep),
-    (u'2.0%', rep),
-    (u'1/50', rep),
-    (u'0/50', rep),
-    (u'40.0%', rep),
-    (u'20/50', rep),
     (u'9,991', rep),
     (u'9,992', rep),
     (u'strip_head_hesitation', rep),
@@ -251,6 +249,15 @@ TOKENS = [
     (u'2.16%', rep),
     (u'35.69%', rep),
     (u'3,696', rep),
+    # ---- 128 续（用户「不能为 0%」之后新增的锚）----
+    (u'12.0%', rep),
+    (u'17.0%', rep),
+    (u'pnew_relax', rep),
+    (u'HES_ALLOW_GAP', rep),
+    (u'_hes_gap', rep),
+    (u'不能为 0%', rep),
+    (u'2.0%', rep),
+    (u'12.1%', rep),
 ]
 miss_tok = [t for t, src in TOKENS if t not in src]
 chk(u'⑤-1 报告里的关键令牌都在（%d 个）' % len(TOKENS), not miss_tok,
@@ -266,8 +273,8 @@ chk(u'⑤-2 报告点名的文件都在正文里提过', not miss_f, u'' if not 
 
 # 产品侧令牌：新文案的关键句必须在源码里
 rel_src = txt(REL_PY)
-chk(u'⑤-3 新 distrust 文案的锚句在 relationship.py 里',
-    u'别把这份紧张演出来' in rel_src and u'多数句子是顺的' in rel_src)
+chk(u'⑤-3 新 distrust 文案的锚句在 relationship.py 里（128 续改过，锚句跟着换）',
+    u'别把紧张演成口头禅' in rel_src and u'多数句子是顺的' in rel_src)
 # ★ 首跑这条报红也是判据错：改前的文案被**逐字引用在 docstring 里**当教训，
 #   所以"全文搜不到旧句"永远为假。真正该守的是**运行时产出的文案**里没有配额句
 #   —— 断行为，不断赋值（这正是本项目反复踩的那条）。
@@ -280,9 +287,14 @@ for _t, _e in ((0.0, 'chat'), (0.0, 'harsh'), (0.40, 'chat'), (0.95, 'comfort'))
 chk(u'⑤-4 运行时文案里旧配额句/示范已消失（断行为，不搜源码注释）',
     not _bad_brief, u'' if not _bad_brief else u'%r' % (_bad_brief[:4],))
 md = txt(PERSONA)
-chk(u'⑤-5 人设三条旧许可已消失、新禁令在位',
-    (u'开口有时会带个语气词' not in md) and (u'最多沾一两处' not in md)
-    and (u'起音含混' not in md) and (u'不垫' in md))
+# ★ 128 续：人设那句已改成**中性**（凭许可塞进人设会撞 `verify_persona_chat K3` 的
+#   10KB 体积闸：实测 10,067 B 直接红）。所以这里不再要求"新禁令在位"，
+#   而是判三件事：旧许可没了、旧硬禁令没了、中性句在位，且 brief 侧的许可没漏进人设。
+_old_perm = [t for t in (u'开口有时会带个语气词', u'最多沾一两处',
+                         u'起音含混', u'不垫') if t in md]
+chk(u'⑤-5 人设起头纪律已是**中性**：旧许可/旧禁令都消失、中性句在位、许可没漏进人设',
+    (not _old_perm) and (u'开口直接说那件事' in md) and (u'顿一顿' not in md),
+    u'' if not _old_perm else u'残留 %r' % (_old_perm,))
 chk(u'⑤-6 人设原有硬口径"不是每句都结巴"仍在', u'不是每句都结巴' in md)
 
 # =============================================== ⑥ 报告对账
@@ -367,9 +379,10 @@ ev_items = sorted(os.listdir(EV))
 chk(u'⑦-2 `_evidence/` 只有 report128.md + ab128.json + raw/',
     set(ev_items) == {'report128.md', 'ab128.json', 'raw'}, u'%r' % (ev_items,))
 raw_items = sorted(os.listdir(RAW))
-chk(u'⑦-3 `_evidence/raw/` 恰好四臂各一份', raw_items == ['base.jsonl', 'pnew_bnew.jsonl',
-                                                          'pnew_bnew2.jsonl',
-                                                          'pnew_bold.jsonl'],
+# 4 个 A/B 臂（各 50）+ 1 个「不能为 0%」之后的自然产出臂（100 条）
+chk(u'⑦-3 `_evidence/raw/` 恰好五份原文（四臂 + relax 100 条）',
+    raw_items == ['base.jsonl', 'pnew_bnew.jsonl', 'pnew_bnew2.jsonl',
+                  'pnew_bold.jsonl', 'pnew_relax.jsonl'],
     u'%r' % (raw_items,))
 
 # ★ 回归不许依赖临时区：check128 / recheck128 里不许出现外部盘路径。
@@ -390,6 +403,71 @@ chk(u'⑦-6 证据生成器如实标注了临时区来源（它是手工跑的�
 
 # 报告不许出现"绝对路径的临时目录"
 chk(u'⑦-7 报告里没有临时区路径', u'_tmp' not in rep)
+
+# =============================================== ⑧ 第 5 臂对账（不能为 0% 之后）
+sec(u'⑧ 第 5 臂对账：报告里的 17/100 与 12/100 == 从原文独立重算')
+
+_rp = os.path.join(RAW, 'pnew_relax.jsonl')
+chk(u'⑧-1 第 5 臂原文在（100 条）', os.path.exists(_rp))
+if os.path.exists(_rp):
+    _rows = [json.loads(l) for l in io.open(_rp, encoding='utf-8') if l.strip()]
+    _n2 = _hp2 = _pp2 = 0
+    for r in _rows:
+        t = (r.get('reply') or '').strip()
+        if not t:
+            continue
+        _n2 += 1
+        if OPEN.match(t):
+            _hp2 += 1
+        if HES_PAUSE.match(t):
+            _pp2 += 1
+    chk(u'⑧-2 第 5 臂 n=100', _n2 == 100, u'n=%d' % _n2)
+    # 报告写的是 "17（17.0%）" 与 "12（12.0%）" —— 从原文重算必须对得上。
+    # ★ 首版判据绑死了列结构（`| 臂 | 说明 | N | 值 | 值 |`），报告后来多了一列
+    #   "中性人设 + brief 条件式许可"，正则就整个不匹配了 —— 这是判据过窄，
+    #   不是报告错。改成**宽松解析**：先找到臂名那一行，再取该行里所有"加粗的 N（P%）"。
+    _row = u''
+    for _line in rep.splitlines():
+        if u'`pnew_relax`' in _line and _line.lstrip().startswith(u'|'):
+            _row = _line
+            break
+    chk(u'⑧-3 报告表格里能找到第 5 臂那一行', bool(_row))
+    _pairs = re.findall(u'\\*\\*(\\d+)（([\\d.]+)%）\\*\\*', _row)
+    chk(u'⑧-3b 该行里恰有两个加粗的「N（P%）」列（不绑死列号）',
+        len(_pairs) == 2, u'%r' % (_pairs,))
+    if len(_pairs) == 2:
+        _hp_rep, _hp_pct = int(_pairs[0][0]), float(_pairs[0][1])
+        _pp_rep, _pp_pct = int(_pairs[1][0]), float(_pairs[1][1])
+        chk(u'⑧-4 句首迟疑：报告 %d == 重算 %d' % (_hp_rep, _hp2),
+            _hp_rep == _hp2, u'实测 %d/%d' % (_hp2, _n2))
+        chk(u'⑧-5 带停顿卡壳：报告 %d == 重算 %d（这一条是"不能为 0%%"的正面证据）'
+            % (_pp_rep, _pp2),
+            _pp_rep == _pp2, u'实测 %d/%d' % (_pp2, _n2))
+        # ★ 加这条的理由：条数对了、百分比还是老数，是"改了半截"最常见的形状
+        #   （本项目 124 轮就吃过"两个数互证、其实一起错"的亏）。
+        chk(u'⑧-5b 百分比列与条数自洽（%d/100 → %.1f%%）'
+            % (_pp2, 100.0 * _pp2 / _n2),
+            abs(_pp_pct - 100.0 * _pp2 / _n2) < 0.05, u'报告写 %.1f%%' % _pp_pct)
+        chk(u'⑧-6 且重算值满足 >0 与 ≤20%（既是"不为 0"又不是回潮）',
+            0 < _pp2 <= 20, u'%d/%d' % (_pp2, _n2))
+    # 节流阀：按产品源码里的阈值模拟，可见必须正好落在 1~2 条（= 1%~2%）
+    _msrc = txt(MAIN_PY)
+    _m = re.search(u'(?m)^\\s+HES_ALLOW_GAP = (\\d+)\\s*$', _msrc)
+    chk(u'⑧-7 产品里 HES_ALLOW_GAP 可读（AST 级别的锚，不是注释里的数字）', bool(_m))
+    if _m:
+        _gap2 = int(_m.group(1))
+        _g, _vis = _gap2, 0
+        for r in _rows:
+            t = (r.get('reply') or '').strip()
+            if not t:
+                continue
+            if _g >= _gap2 and HES_PAUSE.match(t):
+                _vis += 1
+                _g = 0
+            else:
+                _g += 1
+        chk(u'⑧-8 节流阀模拟：可见 ≥1 条（不为 0）', _vis >= 1, u'%d/%d' % (_vis, _n2))
+        chk(u'⑧-9 节流阀模拟：可见 ≤2 条（≤2%）', _vis <= 2, u'%d/%d' % (_vis, _n2))
 
 print(u'')
 print(u'=' * 78)

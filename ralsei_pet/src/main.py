@@ -663,6 +663,9 @@ from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
                                   first_sentence, strip_action_parentheticals,
                                   strip_head_hesitation,
+                                  head_hesitation_hit,
+                                  head_hesitation_pause_hit,
+                                  set_head_hesitation_allowance,
                                   looks_out_of_character, looks_like_assistant_speak)
 # ★★ 宠物手势判定（第75轮 B3）：**唯一真源**。
 # 改造前 `mousePressEvent` / `mouseMoveEvent` / `mouseReleaseEvent` /
@@ -12091,6 +12094,10 @@ class RalseiPet(QMainWindow):
                     _rec = [c for _r, c in _hist if _r == 'assistant']
                 except Exception:
                     _rec = []
+                # ★★ 128 续：自主开口/事件台词也走**同一个**闸门 —— 否则它会顺手用上
+                #   上一条对话留下的那个值（可能是 True），变成"没用额度就放行"。
+                set_head_hesitation_allowance(
+                    getattr(self, '_hes_gap', 0) >= getattr(self, 'HES_ALLOW_GAP', 50))
                 text = self._clean_ai_reply(reply_text, recent=_rec) or ""
             except Exception as e:
                 _log.debug("main 防御性异常（已忽略）: %s", e)
@@ -14347,6 +14354,12 @@ class RalseiPet(QMainWindow):
                     return cli.chat(user_msg, system_prompt=sys_prompt,
                                     history=_hist_for_api, **ask_opts)
 
+                # ★★ 128 续：本回合**要不要放行那一句结巴** —— 必须在发请求**之前**定一次。
+                #   为什么不能等到收尾护栏再定：流式层（`dialogue_ui._sanitize_stream`
+                #   → `_sanitize_partial_reply`）在请求过程中就把字打到屏幕上了，
+                #   两处若各算一次，会出现"流式削了、收尾又留下来"或反之 ⇒ 字缩回去/凭空多出来。
+                _hes_allow = set_head_hesitation_allowance(
+                    getattr(self, '_hes_gap', 0) >= getattr(self, 'HES_ALLOW_GAP', 50))
                 reply = _ask(system, opts)
                 # 输出护栏：小模型（3B）会自问自答续写、把同一句话反复念，
                 # 清洗后才交给 UI（见 _clean_ai_reply）
@@ -14857,6 +14870,22 @@ class RalseiPet(QMainWindow):
     # （判据见 verify_persona_chat 的 M2：阈值须落在物理上限的 50%~75%）。
     AI_REPLY_MAX_CHARS = 220
 
+    #: ★★ 128 续：「句首结巴」的**节流闸**（用户口径「不能为 0%」）。
+    #:   含义 = 距上次放行已经过了多少条回复。主程序在每条回复的收尾护栏里结算：
+    #:     · 本条被放行、且真留下了一条带停顿的卡壳 → 归零（额度用掉）
+    #:     · 其余一切情况（被拦下 / 压根没结巴 / 只有 `哦，` 这类应答词） → +1
+    #:   ★ 为什么"没结巴"也要 +1：额度按**条**回补才是 1/50 = 2%；
+    #:     若只在"有结巴"时才 +1，回补周期会变成 1/(50×6) ≈ 0.3%
+    #:     （本轮实测踩到过，见 audit 第 128 轮 report §10.3）。
+    #:   ★ 为什么应答词不消耗：它不算结巴（`head_hesitation_pause_hit` 判带停顿），
+    #:     若让它吃掉额度，真正该放行的那一声会永远轮不到（模拟 0/100）。
+    #:   放行条件 = `>= HES_ALLOW_GAP`，即**最多每 50 条放行 1 条 ≈ 2%**。
+    #:   ★ 初始值直接给足额度：用户是"补一句不能为 0%"，第一条就该能听见，
+    #:     不该让他先安静 50 条才见到那一声。
+    _hes_gap = 50
+    #: 放行间隔（条）。50 ⇔ 2%，正是用户给的"100 句里 2 句"。
+    HES_ALLOW_GAP = 50
+
     @classmethod
     def _md_strip_re(cls):
         """markdown 强调/列表标记的正则（**流式显示与收尾护栏共用同一份定义**）。
@@ -15020,14 +15049,35 @@ class RalseiPet(QMainWindow):
             #     ★ 与 `_sanitize_partial_reply` **共用同一个函数**：流式期间屏幕上
             #       不会先把「嗯……」打出来、收尾再擦掉（前缀安全见该函数注释）。
             _before_head = t
+            # ★★ 128 续：先记下"这一声到底出没出现"（与 strip 用**同一个正则**），
+            #   再走 strip —— 放行与否由本回合的节流闸决定（见 `set_head_hesitation_allowance`）。
+            #   ★ 额度只被**带停顿的卡壳**消耗：「哦，走得挺多的呢！」那种应答不算结巴，
+            #     否则它会把额度白吃掉，真正该放行的那一声永远轮不到（本轮实测踩到）。
+            _hes_hit = head_hesitation_hit(t)
+            _hes_pause = head_hesitation_pause_hit(t)
             t = strip_head_hesitation(t)
             # ★ 削完可能只剩标点（`诶？？` → `？`）⇒ 必须**重跑一次**实义字符闸，
             #   否则一个孤零零的问号会被当成台词显示出来（第128轮踩到）。
             if not t or not re.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
                 # 整条只有口气（单回一个「嗯」）→ 判无效，走既有的换说法重采样
+                # （放行时也一样：一个「嗯」没有信息量，用户不会把它当人味）
                 return None
             if t != _before_head:
                 _log.debug("[本地AI] 削掉句首迟疑起头：%r → %r", _before_head[:8], t[:8])
+            # ★★ 128 续：结算节流闸 —— **每条回复**都 +1（回补按"条"算，才是 1/50 = 2%）；
+            #   放行并真留下一条**带停顿的卡壳** ⇒ 归零（额度用掉）。
+            #   ★ 只有 `_hes_pause` 才算卡壳：`哦，走得挺多的呢！` 那种应答不算结巴，
+            #     不该消耗额度，否则它会把下一次机会挤掉（本轮实测踩到：额度按"结巴次数"
+            #     回补时会变成 1/300，可见率掉到 0.3%）。
+            #   ★ 重采样会再走一次这里，可能多记一条 —— 方向是**更少**结巴，安全。
+            if _hes_pause and t == _before_head:
+                self._hes_gap = 0
+                _log.debug("[本地AI] 放行句首迟疑（人味额度）：%r", t[:10])
+            else:
+                self._hes_gap = getattr(self, '_hes_gap', 0) + 1
+                if _hes_hit and not _hes_pause:
+                    # 应答词起头（`哦，走得挺多的呢！`）：不算结巴，削掉也不伤语气
+                    _log.debug("[本地AI] 句首应答词（不算结巴，不占额度）：%r", t[:10])
             # 0c) 设定里明令不说的两类话（2026-09-19 补：与事件链路**共用同一份判据**）
             #     ① 出戏："作为AI"/"我的设定"/"我只是个程序"/“提示词” 这类自我指涉；
             #     ② 客服腔与空话安慰："有什么可以帮你的吗"/"我理解你的感受"/"我相信你"/

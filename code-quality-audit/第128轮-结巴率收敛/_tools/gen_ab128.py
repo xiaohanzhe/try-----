@@ -39,19 +39,37 @@ def _w_jsonl(path, rows):
 def main():
     if not os.path.isdir(RAW):
         os.makedirs(RAW)
-    # base：sample_c.json 是 {"rows":[{user,reply,...}]}
-    j = json.loads(io.open(os.path.join(TMP, 'sample_c.json'), encoding='utf-8').read())
-    base_rows = [{'user': r['user'], 'reply': r['reply']} for r in j['rows'] if r.get('reply')]
-    _w_jsonl(os.path.join(RAW, 'base.jsonl'), base_rows)
-    for arm in ('pnew_bold', 'pnew_bnew', 'pnew_bnew2'):
+    # ★ 幂等：临时区是"用后即删"的，但 `_evidence/raw/` 是要进仓库的。
+    #   所以**哪个臂的临时件还在就重建哪个**，不在就沿用仓库里已有的那份 ——
+    #   否则补一个臂（比如 128 续的 `pnew_relax`）会把前四臂全弄崩。
+    def _keep(arm, src):
+        if not os.path.exists(src):
+            print('  [skip] %s：临时件不在，沿用 raw/ 里已有的那份' % arm)
+            return False
+        return True
+
+    base_p = os.path.join(TMP, 'sample_c.json')
+    if _keep('base', base_p):
+        # base：sample_c.json 是 {"rows":[{user,reply,...}]}
+        j = json.loads(io.open(base_p, encoding='utf-8').read())
+        base_rows = [{'user': r['user'], 'reply': r['reply']}
+                     for r in j['rows'] if r.get('reply')]
+        _w_jsonl(os.path.join(RAW, 'base.jsonl'), base_rows)
+    for arm in ('pnew_bold', 'pnew_bnew', 'pnew_bnew2', 'pnew_relax'):
+        src = os.path.join(TMP, 'arm_%s.jsonl' % arm)
+        if not _keep(arm, src):
+            continue
         rows = []
-        for line in io.open(os.path.join(TMP, 'arm_%s.jsonl' % arm), encoding='utf-8'):
+        for line in io.open(src, encoding='utf-8'):
             line = line.strip()
             if not line:
                 continue
             o = json.loads(line)
             rows.append({'user': o['user'], 'reply': o['reply']})
         _w_jsonl(os.path.join(RAW, '%s.jsonl' % arm), rows)
+    # inputs 一律从**仓库里的 base**取（它是同一批 50 条的唯一真源）
+    base_rows = [json.loads(l) for l in
+                 io.open(os.path.join(RAW, 'base.jsonl'), encoding='utf-8') if l.strip()]
     inputs = [r['user'] for r in base_rows]
     meta = {
         'round': 128,
@@ -67,6 +85,11 @@ def main():
             'pnew_bnew': {'persona': 'new(quoted)', 'brief': 'new'},
             'pnew_bnew2': {'persona': 'new(final, 无引号)', 'brief': 'new',
                            'note': u'最终发布版；报告数字以本臂为准'},
+            'pnew_relax': {'persona': 'new(final + 条件式许可)', 'brief': 'new',
+                           'n': 100,
+                           'note': u'128 续：用户「不能为 0%」⇒ 把许可从"硬禁令"改回'
+                                   u'"条件式"，本臂 100 条（同 50 条输入跑两轮），'
+                                   u'量模型**自然产出**的句首卡壳率（不过护栏）'},
         },
         'metric': {
             'head_pure': u'句首纯迟疑词（嗯诶哦呃唔），修前的主指标',

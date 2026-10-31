@@ -164,6 +164,27 @@ def _pct(a, b):
     return 100.0 * a / max(1, b)
 
 
+def _main_int_const(name):
+    """从 main.py 的 AST 里取一个**类级整数常量**（取不到返 None）。
+
+    为什么要走 AST 而不是正则扫文本：`HES_ALLOW_GAP` 这个名字会出现在注释与
+    docstring 里（我们自己在上面写了一堆解释），纯文本扫会抓到注释里的数字
+    （项目里"禁纯文本扫 API"已栽过六次）。
+    """
+    try:
+        tree = ast.parse(_read(MAIN_PY))
+    except SyntaxError:
+        return None
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign):
+            for t in node.targets:
+                if isinstance(t, ast.Name) and t.id == name:
+                    v = node.value
+                    if isinstance(v, ast.Constant) and isinstance(v.value, int):
+                        return v.value
+    return None
+
+
 #: ★ 改前原文快照（第128轮修改**之前**的两段文案）—— 只作负控制夹具，不是第二份真相。
 _OLD_DISTRUST = (
     u'【你现在的状态】你现在心里**很紧**。对方一开口你就有点慌，怕自己说错话。'
@@ -241,8 +262,22 @@ def b_persona():
     check(u'B1 旧的"开口有时会带个语气词"许可已删', u'开口有时会带个语气词' not in md)
     check(u'B2 旧的"一条回复里最多沾一两处"配额已删', u'最多沾一两处' not in md)
     check(u'B3 旧的"起音含混"示范已删', u'起音含混' not in md)
-    check(u'B4 新禁令在位（开口直接说那件事 / 不垫起头词）',
-          (u'不垫' in md) and (u'起头词' in md))
+    check(u'B4 主线仍是"开口直接说那件事"（不是把起头许可又放开了）',
+          (u'开口直接说那件事' in md) and (u'不垫' not in md))
+    # ★ 128 续：用户口径「不能为 0%」⇒ 许可**必须存在**，但只能是**条件式**的。
+    #   ★ 它**不放在人设里**：人设有体积闸（`verify_persona_chat K3` < 10KB），
+    #     而且"此刻是什么状态"本来就该由 `nervous_brief` 说（人设是恒定性格）。
+    #   ⇒ 判据落在**运行时真正注入的那段文案**上（`R.nervous_brief(0.0,'chat')`），
+    #     不是落在磁盘上的某个文件里 —— 断行为，不断赋值。
+    _brief = R.nervous_brief(0.0, 'chat')
+    check(u'B4b 运行时 brief 里有条件式许可（触发条件 + "顿一顿"）',
+          (u'被问住' in _brief) and (u'顿一顿' in _brief), u'%.60r' % _brief)
+    check(u'B4c 且带封顶（"多数句子是顺的"），不是无条件放开',
+          u'多数句子是顺的' in _brief)
+    check(u'B4d 许可里没有次数/配额数字（复用 A 段同一判据，不另立一套）',
+          _bad_tokens(_brief) == [], u'命中 %r' % (_bad_tokens(_brief)[:4],))
+    check(u'B4e 人设里那句起头纪律是**中性**的（既不硬禁也不放开，交给 brief 判状态）',
+          (u'开口直接说那件事' in md) and (u'不垫' not in md) and (u'顿一顿' not in md))
     check(u'B5 原有硬口径"不是每句都结巴"仍在（没被顺手删掉）',
           u'不是每句都结巴' in md)
     check(u'B6 persona 体积仍 ≥ 9000 字节（没被砍瘦）', len(raw) >= 9000,
@@ -325,6 +360,50 @@ def c_evidence():
     check(u'C8c 基线里"带停顿"占句首迟疑的绝大多数（口径可信：基线 26/26）',
           b['head_pause'] >= b['head_pure'] - 1,
           u'%d/%d' % (b['head_pause'], b['head_pure']))
+
+    # ---------------- C9/C10：用户「不能为 0%」之后的第二段 ----------------
+    # ★ 为什么另开一段而不是改 C5：C5 守的是"护栏**有能力**把它压到 ≤2%"（默认全削），
+    #   这一段守的是"**放行之后**还剩多少"。两件事，两个方向，不能合成一条。
+    rl = os.path.join(RAW, 'pnew_relax.jsonl')
+    if not os.path.exists(rl):
+        check(u'C9 第 5 臂（改回条件式许可后）原文在', False)
+        return
+    relax = stats(_read_jsonl(rl))
+    check(u'C9a 第 5 臂 n=100（2% 需要 100 条分辨率；50 条只能分辨 2%/4%）',
+          relax['n'] == 100, u'n=%d' % relax['n'])
+    check(u'C9b 改回条件式许可后，模型**真的又开始结巴了**（带停顿 ≥1 条：不能为 0%）',
+          relax['head_pause'] >= 1,
+          u'%d/%d = %.1f%%' % (relax['head_pause'], relax['n'],
+                               _pct(relax['head_pause'], relax['n'])))
+    # ★ 上限**按意图定，不按实测凑**：意图是"模型仍会结巴，但不是每两句一次"。
+    #   基线是 52%（26/50），这里取 ≤20%（≈五句一次）—— 既明显脱离基线，
+    #   又给"7B 对许可句的服从性差"留了余量（本轮已实测它会把"偶尔"读成"常常"）。
+    #   用户**听到**的比例由 C10 的节流闸保证 ≤2%，这一条只管"提示词别又崩回去"。
+    check(u'C9c 但没有回潮（带停顿 ≤ 20%，基线是 52%）',
+          relax['head_pause'] <= 20, u'%d/%d' % (relax['head_pause'], relax['n']))
+    # C10：节流闸的**数学**。闸门规则只有一条，可以逐条模拟（不改产品状态）。
+    # ★ 阈值**从产品源码 AST 取**，不在这里再写一遍 50 —— 否则改了产品、判据还按老数算，
+    #   就是"判据互证"那种假绿（124 轮 B4b/B4c 的教训）。
+    _gap = _main_int_const('HES_ALLOW_GAP')
+    check(u'C10 产品里 HES_ALLOW_GAP 存在且是正整数（闸门阈值可读）',
+          isinstance(_gap, int) and _gap > 0, u'%r' % (_gap,))
+    _vis = 0
+    _g = _gap
+    for r in _read_jsonl(rl):
+        _t = (r.get('reply') or '').strip()
+        if not _t:
+            continue
+        _is_pause = bool(HES_PAUSE_RE.match(_t))
+        # 放行条件只看额度；**放行后留下的必须真是卡壳**才算"用掉额度"
+        if _g >= _gap and _is_pause:
+            _vis += 1
+            _g = 0
+        else:
+            _g += 1            # ★ 回补按"条"算（1/50 = 2%）；按"结巴次数"算会变成 1/300
+    check(u'C10a 节流闸把可见率压在上限内（≤ 2%：100 条最多 2 条）',
+          _vis <= 2, u'模拟放行 %d/%d（阈值 %r）' % (_vis, relax['n'], _gap))
+    check(u'C10b 且没有把它又压回 0（下限 = 模型自然产出，不做假卡壳）',
+          _vis >= 1, u'模拟放行 %d/%d' % (_vis, relax['n']))
 
 
 # ================================================================ D 负控制
@@ -429,6 +508,43 @@ def e_guard():
                     defs.append(os.path.relpath(p, PET))
     check(u'E7 strip_head_hesitation 只定义一次（无第二份真相）', defs == [os.path.join('modules', 'event_speech.py')],
           u'%r' % (defs,))
+
+    # ---------------- E5b~E9：128 续加的「节流阀」----------------
+    # ★ 用户口径「不能为 0%」⇒ 护栏必须**能放行**。但放行不能破坏"流式不抖字"，
+    #   所以放行模式也要单独穷举一次前缀安全（不是拿削除模式的结论顶过去）。
+    _keep = [u'嗯……你说猫啊', u'诶？你买了个新杯子啊？是什么样的', u'哦，走得挺多的呢！',
+             u'诶、诶？！你说', u'嗯嗯，好', u'唔…外面的风挺大的', u'嗯', u'唔……']
+    ES.set_head_hesitation_allowance(True)
+    try:
+        _bad_keep = []
+        for c in _keep + [r['reply'].strip() for r in rows if r['reply'].strip()]:
+            full = ES.strip_head_hesitation(c)
+            for i in range(1, len(c) + 1):
+                if not full.startswith(ES.strip_head_hesitation(c[:i])):
+                    _bad_keep.append((c[:12], i))
+                    break
+        check(u'E5b 放行模式下**仍然**前缀安全（穷举 200 条原文 + 8 条夹具）',
+              not _bad_keep, u'' if not _bad_keep else u'%r' % (_bad_keep[:3],))
+        # 放行 = 原样返回（那一簇必须真留在屏幕上，否则"放行"是假的）
+        _hit_keep = [c for c in _keep if ES.head_hesitation_hit(c) and c not in (u'嗯', u'唔……')]
+        _fake = [(c, ES.strip_head_hesitation(c)) for c in _hit_keep
+                 if ES.strip_head_hesitation(c) != c]
+        check(u'E5c 放行时原样返回那一簇（不是"放行了个寂寞"）',
+              not _fake, u'' if not _fake else u'%r' % (_fake[:3],))
+        # 但"整条只有一口气"放行也要判空（一个「嗯」不是人味）
+        check(u'E5d 放行也不放行"整条只有一口气"（`嗯`/`唔……` 仍返回空串）',
+              ES.strip_head_hesitation(u'嗯') == '' and ES.strip_head_hesitation(u'唔……') == '')
+    finally:
+        ES.set_head_hesitation_allowance(False)
+
+    # E6c 闸门接线：必须在**发请求之前**定，且收尾要结算（否则额度永远不消耗）
+    check(u'E6c 发请求前设好本回合的闸门（`set_head_hesitation_allowance` 在 `_ask` 之前）',
+          msrc.find(u'set_head_hesitation_allowance(') < msrc.find(u'reply = _ask(system, opts)'))
+    check(u'E6d 收尾层结算额度（`self._hes_gap` 真的被改写）',
+          u'self._hes_gap = 0' in msrc and u'self._hes_gap = getattr(self' in msrc)
+    # E8 默认关闭：没设过就一律削（安全网不许因为加了个开关而失效）
+    check(u'E8 闸门默认关闭（默认 False ⇒ 行为与 128 轮一字不差）',
+          ES.head_hesitation_allowance() is False)
 
 
 # ================================================================ F 自检

@@ -486,6 +486,49 @@ _HEAD_HES_RE = re.compile(
 #: 削完可能露出一个孤零零的标点（`诶、诶？！` → `！`），一并清掉
 _LEAD_PUNCT = u'！!？?，,、。；;：: \t'
 
+#: ★★ 128 续（用户口径「不能为 0%」）：本回合**是否放行**句首那一簇。
+#:   为什么是模块级开关而不是函数参数：流式层（`_sanitize_partial_reply`，staticmethod）
+#:   与收尾层（`_clean_ai_reply`）相隔 90 行、签名各一个；参数化要动 4 处调用点，
+#:   而两处**必须看到同一个决定**（否则"流式留着、收尾削掉"＝字缩回去）。
+#:   **默认 False ＝ 削**，与 128 轮行为一字不差 ⇒ 没设过的调用方（含全部探针）不变。
+_HES_ALLOW = {'on': False}
+
+
+def set_head_hesitation_allowance(allow):
+    """每回合开始前由主程序设定一次；返回生效值（便于日志）。"""
+    _HES_ALLOW['on'] = bool(allow)
+    return _HES_ALLOW['on']
+
+
+def head_hesitation_allowance():
+    return bool(_HES_ALLOW['on'])
+
+
+def head_hesitation_hit(text):
+    """本条回复是否以迟疑词起头（**与 `strip_head_hesitation` 同一份正则**）。
+
+    单独暴露是因为主程序要拿它做"这一声到底有没有出现"的结算，
+    不许在 main.py 里另写一份 `text[0] in '嗯诶哦呃唔'` —— 那是第二份真相。
+    """
+    if not isinstance(text, str) or not text:
+        return False
+    return bool(_HEAD_HES_RE.match(text))
+
+
+#: 句首迟疑词**后面紧跟停顿标记**（省略号/破折号/问号/叹号）才算"卡壳"。
+#: 「哦，走得挺多的呢！」里的「哦，」是"哦！原来如此"的应答，**不算结巴** ——
+#: 它出现在 12% 的回复里也不会让用户觉得"他在结巴"，所以**不许用它消耗人味额度**
+#: （128 续踩到：节流阀的额度被这种应答吃掉，真正该放行的那一声反而永远轮不到）。
+_HEAD_HES_PAUSE_RE = re.compile(
+    u'^[%s]{1,3}\\s*(?:…+|\\.{3,}|—+|－+|~+|？|\\?|！|!)' % _HEAD_HES)
+
+
+def head_hesitation_pause_hit(text):
+    """本条回复是否以**带停顿的卡壳**起头（真结巴，节气、`check128 C8b` 同一口径）。"""
+    if not isinstance(text, str) or not text:
+        return False
+    return bool(_HEAD_HES_PAUSE_RE.match(text))
+
 
 def strip_head_hesitation(text):
     """去掉句首的**迟疑起头**（`嗯……` / `诶？` / `哦...`），返回剩下的台词。
@@ -497,11 +540,19 @@ def strip_head_hesitation(text):
       再把 `nervous_brief` 那段"会突然停住/最多一处"改掉才降到 4%
       （提示词不是保证，7B 尤其不是），所以最终态必须在护栏里定死。
 
+    ★★ 128 续：定死 ≠ 削光。用户又补一句「**不能为 0%**」—— 一句也不结巴的 Ralsei
+      不是"干净"，是"不像人"。所以这里加了**节流阀**（`_HES_ALLOW`）：
+      主程序每回合按"距上次放行过了多少条"决定放行一次，上限约 1/50 = 2%，
+      下限跟着模型自然产出走（模型不吐，就真的没有 —— 不做假卡壳）。
+      放行时**原样返回**（不削），被拦时照旧削。
+
     ★ 为什么**只削句首**：句中的「后来……后来」是真卡断，削了会改变语义；
       句首这一簇纯粹是"清嗓子"，削掉不损失任何信息。
     ★ 为什么削完可能是空串：单回一个「嗯」的信息量本来就低，返回空串让调用方
       走既有的"判退 → 换说法重采样"路径，比留一个纯语气词更符合人设。
+      （这一步与放行无关：**整条只有一口气时，放不放行都返回空串**。）
     ★ 前缀安全（流式显示要用）：判定只依赖**开头那几个字**，与后文无关 ——
+      削时返回的是原文**后缀**，放行时返回的是**原文本身**，两者都是前缀稳定的，
       所以 `_sanitize_partial_reply` 里调它不会出现"字冒出去又缩回来"。
 
     反例（本函数**不动**它们，见 `check128` E3）：
@@ -519,6 +570,9 @@ def strip_head_hesitation(text):
     if not re.search(u'[0-9A-Za-z\\u4e00-\\u9fff]', t):
         # `诶！！` / `唔……` 这类削完只剩标点 → 空串，由调用方判退重采样
         return ''
+    if _HES_ALLOW['on']:
+        # 本回合放行：把那一簇**原样**留着（用户要的人味就在这一声上）
+        return text
     return t
 
 
