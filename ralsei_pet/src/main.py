@@ -662,6 +662,7 @@ from modules import npc_plan_store as npc_plan_store_mod
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
                                   first_sentence, strip_action_parentheticals,
+                                  strip_head_hesitation,
                                   looks_out_of_character, looks_like_assistant_speak)
 # ★★ 宠物手势判定（第75轮 B3）：**唯一真源**。
 # 改造前 `mousePressEvent` / `mouseMoveEvent` / `mouseReleaseEvent` /
@@ -14927,6 +14928,10 @@ class RalseiPet(QMainWindow):
             t = RalseiPet._md_strip_re().sub('', text).strip()
             # 去掉模型爱加的包裹引号/书名号（与 _clean_ai_reply 保持同步）
             t = t.strip('"\'“”「」『』《》').strip()
+            # 句首迟疑起头（第128轮）：与 `_clean_ai_reply` 的 0d **同一个函数**。
+            # ★ 前缀安全吗？安全 —— 它只按"开头那几个字"决定削不削，与后文无关，
+            #   所以任何前缀削完都是完整文本削完后的前缀（不会出现缩字）。
+            t = strip_head_hesitation(t)
             m = RalseiPet._role_marker_re().search(t)
             if m:
                 t = t[:m.start()].strip()
@@ -14958,6 +14963,11 @@ class RalseiPet(QMainWindow):
              → 判无效。判据与事件链路的 `_OOC_PATTERNS` / `_BANNED_PATTERNS`
              **共用同一份**，不另立一套。放在 0b 之后：先剥干净格式再匹配，免得
              `**有什么可以帮你的吗**` 这种漏网。
+         0d) **句首迟疑起头**（2026-10-31 第128轮加）：`嗯……` / `诶？` / `哦...`
+             → 削掉那一段（判据与实测量纲见 `strip_head_hesitation`）。
+             实测依据：用户 vault 真实档位（distrust）下真机 50 条，
+             **52% 的回复开口先垫一个迟疑词**，而"重复字"型结巴是 0 条 ——
+             用户说的"结巴"就是这口气。削成空串 → 与其它判退走同一条重采样路径。
           1) **自问自答续写**：回复里冒出「主人：」「你：」「Assistant:」等对话标记
              → 截断到标记之前（实测 temperature 0.9 时 4 题里 2 题这么跑飞）
           2) **车轱辘话**：与**自己最近说过的某句**高度重合 → 判无效返回 None，
@@ -15004,6 +15014,20 @@ class RalseiPet(QMainWindow):
             # 只有标点、没有任何实义字符（如单回一个「。」）→ 视为无效
             if not re.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
                 return None
+            # 0d) **句首迟疑起头**（第128轮）：`嗯……` / `诶？` / `哦...` → 削掉
+            #     ⚠️ 位置在 0c 之前：这一簇只是"清嗓子"，先削掉再判出戏/客服腔，
+            #        免得「嗯……作为AI」这种因为前缀挡住正则而漏网（正则都是 ^ 起锚）。
+            #     ★ 与 `_sanitize_partial_reply` **共用同一个函数**：流式期间屏幕上
+            #       不会先把「嗯……」打出来、收尾再擦掉（前缀安全见该函数注释）。
+            _before_head = t
+            t = strip_head_hesitation(t)
+            # ★ 削完可能只剩标点（`诶？？` → `？`）⇒ 必须**重跑一次**实义字符闸，
+            #   否则一个孤零零的问号会被当成台词显示出来（第128轮踩到）。
+            if not t or not re.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
+                # 整条只有口气（单回一个「嗯」）→ 判无效，走既有的换说法重采样
+                return None
+            if t != _before_head:
+                _log.debug("[本地AI] 削掉句首迟疑起头：%r → %r", _before_head[:8], t[:8])
             # 0c) 设定里明令不说的两类话（2026-09-19 补：与事件链路**共用同一份判据**）
             #     ① 出戏："作为AI"/"我的设定"/"我只是个程序"/“提示词” 这类自我指涉；
             #     ② 客服腔与空话安慰："有什么可以帮你的吗"/"我理解你的感受"/"我相信你"/

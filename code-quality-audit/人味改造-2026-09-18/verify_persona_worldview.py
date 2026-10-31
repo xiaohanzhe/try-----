@@ -223,11 +223,12 @@ try:
         sys.path.append(PET)
     from modules.event_speech import (
         strip_action_parentheticals as _STRIP_ACTION,
+        strip_head_hesitation as _STRIP_HES,
         looks_out_of_character as _OOC,
         looks_like_assistant_speak as _ASST)
 except Exception as _e:                                  # pragma: no cover
-    _STRIP_ACTION = _OOC = _ASST = None
-    sys.stderr.write('[warn] event_speech 判据导入失败，0a/0c 步降级：%r\n' % (_e,))
+    _STRIP_ACTION = _OOC = _ASST = _STRIP_HES = None
+    sys.stderr.write('[warn] event_speech 判据导入失败，0a/0c/0d 步降级：%r\n' % (_e,))
 
 _ROLE_RE = _load_role_marker_re()
 _MD_RE = _load_md_strip_re()
@@ -240,6 +241,8 @@ def _apply_gates(text, cap, recent=None):
     与产品（`src/main.py::_clean_ai_reply`）**逐步对应**（顺序即优先级）：
       0a) 删句中括号动作旁白（判据 import 自 modules.event_speech）→ 删净则判退
       0b) 剥 markdown 强调/列表标记 + 去包裹引号（判据从 main.py 源码抽取）
+      0d) 句首迟疑起头 `嗯……`／`诶？` → 削掉（判据 import 自 modules.event_speech，
+          第128轮加；它自己的行为由 `第128轮/_tools/check128.py` 的 E 段单独守）
       0c) 出戏 / 客服腔（判据同 modules.event_speech）→ 判退 ［本步与内容有关，
           探针也要过，否则"模型真吐了客服腔"会被探针洗掉，报出一个假 PASS］
       1)  自问自答续写 → 截到标记之前；截完为空 → 判退
@@ -280,6 +283,11 @@ def _apply_gates(text, cap, recent=None):
     import re as _re_local
     if not _re_local.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
         return None, len(text), False
+    # 0d) 句首迟疑起头（第128轮，与产品 0d 同步、同一个函数）
+    if _STRIP_HES is not None:
+        t = _STRIP_HES(t)
+        if not t or not _re_local.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
+            return None, len(text), False
     # 0c) 出戏 / 客服腔 → 判退（与产品同源；探针不替产品"洗掉"这类输出）
     if _OOC is not None and _OOC(t):
         return None, len(text), False

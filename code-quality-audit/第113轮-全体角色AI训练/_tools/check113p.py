@@ -465,7 +465,12 @@ for _p in (MAIN, INTENT, SEEK):
 _mixed_main = _eol[0][1] != _eol[0][2]
 _mixed_mods = any(c != 0 for _n, c, _l in _eol[1:])
 check('G3 行尾不混：`main.py` 全 CRLF、`npc_intent.py`/`npc_seek.py` 全 LF',
-      not _mixed_main and not _mixed_mods, repr(_eol))
+      not _mixed_main and not _mixed_mods,
+      # ★ 第128轮：原来无条件回显 `repr(_eol)`（含 CRLF/LF **计数**）——
+      #   那是**随时相变的绝对值**：main.py 加 24 行就变一次，判据本身还是 PASS，
+      #   却让 G2 报 DIFF（第127轮 check113p.C8 同款，已第二次踩）。
+      #   改成**只在失败时**回显。
+      '' if (not _mixed_main and not _mixed_mods) else repr(_eol))
 
 # 恒真判据复查：本文件里不许出现 `check(<desc>, True)` / `check(<desc>, 1)`
 _self_src = _read(os.path.abspath(__file__))
@@ -527,8 +532,10 @@ _H_CALLS = _bonds_call_attrs(ast.parse(_read(MAIN)))
 _H_BAD = [(a, ln) for a, ln in _H_CALLS if a not in _NL_API]
 check('H1 ★★★ main.py 里 `bonds.<方法>()` 调的每个方法都真实存在于 `npc_life.Bonds`',
       len(_H_CALLS) >= 1 and not _H_BAD,
-      '调用点=%s 不存在=%s Bonds 公开 API=%s'
-      % ([(a, ln) for a, ln in _H_CALLS], _H_BAD or '无', sorted(_NL_API)))
+      # ★ 第128轮：不再回显**行号**（`(attr, lineno)` 里的 lineno 随 main.py 长大而变，
+      #   是"随时相变的绝对值"，会让 G2 报 DIFF）。只回声方法名。
+      '调用=%s 不存在=%s' % (sorted(set(a for a, _ln in _H_CALLS)),
+                              sorted(set(a for a, _ln in _H_BAD)) or '无'))
 
 # ---- H1n 破坏性负控制：把 `bonds.get(` 改回 `bonds.familiarity(` ⇒ H1 必须报红
 _H_src = _read(MAIN)
@@ -537,7 +544,9 @@ assert _H_mut != _H_src, '负控制没命中：源码里找不到 `bonds.get(` �
 _MUT_CALLS = _bonds_call_attrs(ast.parse(_H_mut))
 _MUT_BAD = [(a, ln) for a, ln in _MUT_CALLS if a not in _NL_API]
 check('H1n ★★ 负控制：把 `bonds.get(` 变异回 `bonds.familiarity(` ⇒ H1 必须判红',
-      bool(_MUT_BAD), '变异后不存在的方法=%s' % (_MUT_BAD or '无(判据没牙!)'))
+      bool(_MUT_BAD),
+      # ★ 第128轮：同样去掉行号（理由见 H1）
+      '变异后不存在的方法=%s' % (sorted(set(a for a, _ln in _MUT_BAD)) or '无(判据没牙!)'))
 
 # ---- H2 A/B 成对：没播种 ⇒ 0.0（`fam <= 0` 分支可进）；播种 ⇒ > 0（能过闸）
 _b_stranger = NL.Bonds()

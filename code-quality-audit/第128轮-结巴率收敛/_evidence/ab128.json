@@ -1,0 +1,92 @@
+{
+ "round": 128,
+ "model": "ralsei:v4",
+ "params": {
+  "temperature": 0.85,
+  "max_tokens": 256,
+  "stream": false,
+  "endpoint": "http://127.0.0.1:11434/v1/chat/completions"
+ },
+ "trust": 0.156301,
+ "stage": "distrust",
+ "system": "assets/ralsei_persona.md 全文 + relationship.nervous_brief(trust, \"chat\")",
+ "arms": {
+  "base": {
+   "persona": "old",
+   "brief": "old"
+  },
+  "pnew_bold": {
+   "persona": "new",
+   "brief": "old"
+  },
+  "pnew_bnew": {
+   "persona": "new(quoted)",
+   "brief": "new"
+  },
+  "pnew_bnew2": {
+   "persona": "new(final, 无引号)",
+   "brief": "new",
+   "note": "最终发布版；报告数字以本臂为准"
+  }
+ },
+ "metric": {
+  "head_pure": "句首纯迟疑词（嗯诶哦呃唔），修前的主指标",
+  "head_excl": "句首感叹词（哎呀/哎/啊/唉）—— 属正常语气，只登记不判红",
+  "head_visible": "经 event_speech.strip_head_hesitation 之后仍有句首迟疑的比例（用户可见）"
+ },
+ "guard": "modules/event_speech.strip_head_hesitation",
+ "target": 0.02,
+ "inputs": [
+  "今天好累啊",
+  "外面下雨了",
+  "你平时喜欢做什么",
+  "我刚吃完饭",
+  "推荐一部电影吧",
+  "你觉得猫可爱吗",
+  "我今天走了两万步",
+  "有点睡不着",
+  "你那里天气怎么样",
+  "我想学做饭",
+  "你听过这首歌吗",
+  "周末打算干嘛",
+  "我买了个新杯子",
+  "最近工作好多",
+  "你喜欢什么颜色",
+  "今天地铁好挤",
+  "你会画画吗",
+  "我想养只猫",
+  "我们聊点什么吧",
+  "你吃饭了吗",
+  "我房间有点乱",
+  "你怕黑吗",
+  "我昨天做了个梦",
+  "你会弹钢琴吗",
+  "今天太阳很好",
+  "我在等公交",
+  "你喜欢看书吗",
+  "我手机快没电了",
+  "你觉得雪好看吗",
+  "我想去旅行",
+  "你今天过得怎么样",
+  "我在喝咖啡",
+  "你会唱歌吗",
+  "我养了盆花",
+  "外面风好大",
+  "你喜欢什么季节",
+  "我在整理房间",
+  "你困吗",
+  "我想吃火锅",
+  "你今天开心吗",
+  "我在看窗外",
+  "你喜不喜欢小狗",
+  "我刚洗完澡",
+  "你觉得星星好看吗",
+  "我在听音乐",
+  "你会写字吗",
+  "我想早点睡",
+  "你安静的时候在想什么",
+  "我有点无聊",
+  "陪我待一会儿"
+ ],
+ "note": "同一批 50 条输入、同一模型同一参数；只换 persona/brief 两个变量"
+}

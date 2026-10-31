@@ -521,7 +521,10 @@ CASES = [
      lambda g: g == '被骂了……我先陪着你。'),
     ('C6 整条都是续写 → None', '主人：你怎么不说话\n你：我在想事情。', lambda g: g is None),
     ('C7 与 persona 示范逐字相同 + recent 为空 → **必须放行**（防回退）',
-     D, lambda g: g == D),
+     # ★ 第128轮：句首「诶、诶？！」被 0d 削掉（那是"结巴起头"，不是台词），
+     #   所以期望值随之变成削过头的原文。**其余一字不变** —— 这条守的是
+     #   "照抄示范 + 空 recent ⇒ 不许判退"，与削头无关。
+     D, lambda g: g == '你突然说这个干嘛啦……我、我其实也挺喜欢主人的就是了。'),
     ('C8 与 persona 示范高度雷同 + recent 为空 → **必须放行**（防回退）',
      MIRROR, lambda g: g == MIRROR),
     ('C9 与 persona 示范逐字相同 + recent 已含它 → None',
@@ -554,11 +557,14 @@ ok('C17 超长截断：真实长度 ≤ 上限且以句末标点收尾',
 _PAREN_IN = '诶、诶？晚安啊……你也是呀。（轻轻敲了下键盘）睡吧，梦里有星星的。'
 _PAREN_OUT = stub._clean_ai_reply(_PAREN_IN)
 ok('C18 括号动作旁白只删那一段（不是整句作废）',
-   _PAREN_OUT == '诶、诶？晚安啊……你也是呀。睡吧，梦里有星星的。',
+   # ★ 第128轮：句首「诶、诶？」被 0d 削掉（该条同时命中两道闸，
+   #   本判据只关心"括号那一段被单独删掉、其余保留"）
+   _PAREN_OUT == '晚安啊……你也是呀。睡吧，梦里有星星的。',
    'got=%r' % (_PAREN_OUT,))
 ok('C18b 星号版的动作旁白同样删掉（实测真出现过 `*轻轻敲了敲键盘*`）',
    stub._clean_ai_reply('诶……不说话也行啊。我在呢。*轻轻敲了敲键盘* 要不要先喝点水？')
-   == '诶……不说话也行啊。我在呢。要不要先喝点水？',
+   # ★ 第128轮：句首「诶……」同上被削
+   == '不说话也行啊。我在呢。要不要先喝点水？',
    repr(stub._clean_ai_reply('诶……不说话也行啊。我在呢。*轻轻敲了敲键盘* 要不要先喝点水？')))
 ok('C18c 整句只有一个括号动作 → 判无效（走重采样，与其它判退同路）',
    stub._clean_ai_reply('（歪着头）') is None, repr(stub._clean_ai_reply('（歪着头）')))
@@ -617,6 +623,9 @@ class FakeSig:
 
 
 FRESH = '诶？！你、你别突然说这个啦……我耳朵都要热起来了。'
+#: ★ 第128轮：`FRESH` 句首的「诶？！」被 0d 削掉后才交给 UI —— 期望值按削后写死
+#: （不调产品函数算期望，否则这条判据就变成"自己跟自己比"）。
+FRESH_CLEAN = '你、你别突然说这个啦……我耳朵都要热起来了。'
 s3 = make_stub(api_config={'options': {'temperature': 0.85, 'max_tokens': 256}})
 s3.api_enabled = True
 s3.api_client = FakeCli([D, FRESH])
@@ -644,7 +653,7 @@ ok('D3 重采样带「换一个说法」提示',
    and '不要沿用你想到的第一句' in s3.api_client.seen[1]['tail'],
    [c['tail'] for c in s3.api_client.seen])
 ok('D4 最终交给 UI 的是重采样结果，不是被丢弃的那句',
-   s3._api_result.vals == [FRESH], s3._api_result.vals)
+   s3._api_result.vals == [FRESH_CLEAN], s3._api_result.vals)
 
 s4 = make_stub(api_config={'options': {'temperature': 0.85, 'max_tokens': 256}})
 s4.api_enabled = True
