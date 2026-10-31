@@ -14886,6 +14886,18 @@ class RalseiPet(QMainWindow):
     #: 放行间隔（条）。50 ⇔ 2%，正是用户给的"100 句里 2 句"。
     HES_ALLOW_GAP = 50
 
+    #: ★★ 129：车轱辘话"相似度"那条判据的**最小长度门槛**（归一化后的字数）。
+    #:   为什么要有它：8~10 字的短句只要换一个词，difflib ratio 就 ≥ 0.82 ——
+    #:   「我想和你一起走」vs「我想和你一起看」= **0.857**、「你笑起来真好看」vs
+    #:   「你看起来真好看」= 0.857。而这类短句正是 Ralsei 最常见的台词，
+    #:   判成复读 ⇒ 整句作废 ⇒ 白重采样（用户体感是"卡顿"或"回落到罐头"）。
+    #:   第129轮实测：12 对"语义不同、字面相近"的短句里，旧判据**误伤 8 对**。
+    #:   改成"12 字以下只认**去标点后逐字相同**"后，误伤 0/12，而"长句改两三字"
+    #:   仍 6/6 全拦（那批 ratio 0.84~0.98、最长公共块 9~24 字）。
+    #:   12 这个数和"最长公共块 ≥ 12"共用同一个数 —— 理由同一个：12 字以下
+    #:   中文短句的字面重合度不足以证明"在重复自己"。
+    REPEAT_MIN_CHARS = 12
+
     @classmethod
     def _md_strip_re(cls):
         """markdown 强调/列表标记的正则（**流式显示与收尾护栏共用同一份定义**）。
@@ -15127,11 +15139,19 @@ class RalseiPet(QMainWindow):
         真正让人觉得"没活人味"的是**同一句反复出现**——这正是 recent 能覆盖的：
         第二次再想抄，它就落在 recent 里了，于是被拦下重采样。
 
-        判据用**两条互补**（第十八轮实测定的经验值）：
-          1) 整体相似度 difflib ≥ 0.82 —— 抓"只改两三个字"的整句复用；
+        判据（129 修订，三条互补；顺序即优先级）：
+          ⓪ 归一化后**逐字相同** —— 抓"整句原样再说一遍"（含只差标点）。
+             零误伤，所以**短句也认**（下限 2 字）：连说两次「我在呢」确实是复读。
+          1) 整体相似度 difflib ≥ 0.82（且长度差 ≤ 6）—— 抓"只改两三个字"的整句复用；
+             ★ **只在 ≥ REPEAT_MIN_CHARS 字的句子上生效**。理由见该常量的注释：
+               8~10 字的短句换个词 ratio 就 0.857，会把正常台词判成复读（实测误伤 8/12）。
           2) 最长公共匹配块 ≥ 12 字 —— 抓"整体相似度不到 0.82，但有一大段原样搬来"
              （实测 3B 会：开头换两个字、后半段照抄，整体 ratio 只有 0.74）。
+        模糊判据（1/2）要求双方 ≥ 6 字：再短就没有分辨力（「我在呢」vs「我不在」也像）。
         归一化先去掉标点/空白，避免仅因标点差异漏判。
+
+        ★ 129 之前只有 1) 2) 两条、没有长度门槛，也没有 ⓪；而且入口的 `len(t) < 6`
+          会把 ⓪ 整个挡掉（这是 A5/A6 两条判据抓出来的）。
         """
         try:
             import re
@@ -15141,17 +15161,35 @@ class RalseiPet(QMainWindow):
                 return re.sub(r'[\s，。！？!?、~…—\-（）()「」“”"\'’*`]', '', str(s))
 
             t = _norm(text)
-            if len(t) < 6 or not recent:
+            # ★ 129：下限从 6 降到 2 —— 但**只有"逐字复用"这条吃这个下限**。
+            #   为什么：旧代码 `len(t) < 6 → return False` 会把 ⓪ 这条整个挡在门外
+            #   （「我在呢」3 字，连说两遍确实是复读，却永远判不出来）。
+            #   模糊判据（相似度/公共块）仍要求 ≥ 6 字，理由见下面。
+            if len(t) < 2 or not recent:
                 return False
+            # ★ 129：短句只认"逐字相同"，不认相似度（见 REPEAT_MIN_CHARS 的注释）。
+            #   取 `type(self)` 而不是 `RalseiPet`：本方法在测试桩/抽出的副本上也要能跑
+            #   （`getattr` 缺省即用 12，不会因为拿不到类而静默失效）。
+            min_len = getattr(type(self), 'REPEAT_MIN_CHARS', 12)
             for sample in recent:
                 s = _norm(sample)
-                if len(s) < 6:
+                if not s:
                     continue
-                if abs(len(s) - len(t)) <= 6 and \
-                        difflib.SequenceMatcher(None, t, s).ratio() >= 0.82:
+                # ⓪ 逐字复用（含只差标点）—— 零误伤，所以 2 字的短句也认
+                if t == s:
                     return True
+                # 模糊判据对 6 字以下的句子没有分辨力（「我在呢」vs「我不在」ratio 也高），
+                # 所以从这里往下都要求"像样长度"
+                if len(t) < 6 or len(s) < 6:
+                    continue
+                sm = difflib.SequenceMatcher(None, t, s)
+                # 1) 整句改写：只在够长的句子上用相似度
+                if min(len(t), len(s)) >= min_len and abs(len(s) - len(t)) <= 6 \
+                        and sm.ratio() >= 0.82:
+                    return True
+                # 2) 大段原样搬运（与长度无关：12 字公共块在短句上几乎不可能出现）
                 biggest = max(
-                    (b.size for b in difflib.SequenceMatcher(None, t, s).get_matching_blocks()),
+                    (b.size for b in sm.get_matching_blocks()),
                     default=0)
                 if biggest >= 12:
                     return True

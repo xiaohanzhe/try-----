@@ -1,0 +1,105 @@
+{
+ "input": {
+  "repeat_src_chars": 2876,
+  "raw_dir": "code-quality-audit/第128轮-结巴率收敛/_evidence/raw",
+  "repeat_min_chars": 12,
+  "n": {
+   "base": 50,
+   "pnew_bold": 50,
+   "pnew_bnew": 50,
+   "pnew_bnew2": 50,
+   "pnew_relax": 100
+  },
+  "same_q_pairs": 50
+ },
+ "arms": {
+  "base": {
+   "n": 50,
+   "ooc": 0,
+   "banned": 0,
+   "both": 0
+  },
+  "pnew_bold": {
+   "n": 50,
+   "ooc": 0,
+   "banned": 0,
+   "both": 0
+  },
+  "pnew_bnew": {
+   "n": 50,
+   "ooc": 1,
+   "banned": 0,
+   "both": 0
+  },
+  "pnew_bnew2": {
+   "n": 50,
+   "ooc": 0,
+   "banned": 0,
+   "both": 0
+  },
+  "pnew_relax": {
+   "n": 100,
+   "ooc": 0,
+   "banned": 1,
+   "both": 0
+  },
+  "_total": {
+   "n": 300,
+   "ooc": 1,
+   "ban": 1,
+   "both": 0
+  },
+  "_c1_same_question": {
+   "pairs": 50,
+   "repeat": 2,
+   "median": 0.21212121212121213,
+   "mean": 0.22733980056167907,
+   "max": 0.4810126582278481,
+   "examples": [
+    {
+     "user": "你平时喜欢做什么",
+     "a": "我平时最喜欢在城堡里走走，看看喷泉里的光影变化。有时候我会坐在喷泉边发呆，思考一些和平、沟通的事情。你呢？有没有什么喜欢做的事情？",
+     "b": "我平时喜欢在城堡里四处走走，看看那些喷泉和花园里的花花草草。有时候我会坐在喷泉边发呆，静静地听水声、风声，还有偶尔传来的鸟鸣声——这些都是我很享受的东西。\n\n你说累的时候，我就想陪你坐在这里，一起听听外面的声音，也许能让你心情好一点。"
+    },
+    {
+     "user": "我想养只猫",
+     "a": "嗯...听起来挺有意思的。你之前有养过宠物吗？还是说完全是个新想法呢？那边的黑暗世界里有没有什么特别让你想到猫的事情？",
+     "b": "你说想养只猫呀，听起来好温馨呢。那边的黑暗世界里有没有什么适合养猫的地方？喷泉旁边或者城堡角落，你觉得哪个地方会是猫咪的好家？"
+    }
+   ]
+  },
+  "_c2_cross_topic": {
+   "n": 97,
+   "repeat": 0,
+   "examples": []
+  }
+ },
+ "controls": {
+  "per_pattern": {
+   "BAN:有什么能帮": 1
+  },
+  "ooc_pos_hit": 6,
+  "ooc_pos_n": 6,
+  "ooc_neg_falsehit": [],
+  "known_miss": [
+   [
+    "首先，我们需要冷静下来分析。",
+    "ban"
+   ]
+  ],
+  "known_miss_still_missing": 1,
+  "false_pos_pairs": 12,
+  "false_pos_hits": [],
+  "false_neg_pairs": 6,
+  "false_neg_miss": []
+ },
+ "findings": [
+  {
+   "id": "B",
+   "desc": "出戏/客服腔总命中",
+   "n": 300,
+   "ooc": 1,
+   "banned": 1
+  }
+ ]
+}

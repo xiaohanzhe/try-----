@@ -148,13 +148,33 @@ def _load_role_marker_re():
         return None
 
 
+def _load_repeat_min():
+    """从 src/main.py 里取 `REPEAT_MIN_CHARS`（车轱辘话判据②的长度门槛）。
+
+    ★ 129 加这条抽取的理由：这个数**必须与产品同源**。上一版探针里没有任何长度
+    门槛，而产品第129轮加了 12 —— 如果探针自己再写一个常量，两边就会漂移，
+    W2 的"逐条一致"变成"两份各自错、恰好都不报红"。
+    抽不到返回 None，由调用方用 12 兜底（与产品 getattr 的缺省值同一个数）。
+    """
+    try:
+        import re
+        src = io.open(os.path.join(PET, 'src', 'main.py'), encoding='utf-8').read()
+        m = re.search(r'^\s*REPEAT_MIN_CHARS\s*=\s*(\d+)', src, re.M)
+        return int(m.group(1)) if m else None
+    except Exception:
+        return None
+
+
 def _is_repeat_of_recent(text, recent):
     """复刻 `RalseiPet._is_repeat_of_recent` 的车轱辘话判据（第 2 步）。
 
-    判据**逐字对齐** src/main.py（第十八轮定的经验值，两条互补）：
-      1) 整体相似度 difflib ≥ 0.82（且长度差 ≤ 6）—— 抓"只改两三个字"的整句复用；
+    判据**逐字对齐** src/main.py（129 修订为三条）：
+      ⓪ 归一化后逐字相同 —— 抓"整句原样再说一遍"（含只差标点）；零误伤，短句也认；
+      1) 整体相似度 difflib ≥ 0.82（且长度差 ≤ 6），**只在 ≥ `REPEAT_MIN_CHARS` 字
+         的句子上生效** —— 抓"只改两三个字"的整句复用；
       2) 最长公共匹配块 ≥ 12 字 —— 抓"整体相似度不到 0.82、但有一大段原样搬来"。
-    归一化先去标点/空白/星号（与产品一致）。
+    归一化先去标点/空白/星号（与产品一致）。`REPEAT_MIN_CHARS` 从产品源码抽取，
+    不在本文件另写一个数。
 
     ⚠️ 这里是**唯一的例外**：产品那份判据写在 `main.py` 的实例方法里，
     没法从源码里"取出来直接用"（它依赖 `self` 与 `difflib` 运行时），
@@ -169,17 +189,24 @@ def _is_repeat_of_recent(text, recent):
             return _re.sub(r'[\s，。！？!?、~…—\-（）()「」“”"\'’*`]', '', str(s))
 
         t = _norm(text)
-        if len(t) < 6 or not recent:
+        # 与产品同步：下限 2 字只服务"逐字复用"；模糊判据仍要求 ≥ 6 字
+        if len(t) < 2 or not recent:
             return False
+        min_len = _REPEAT_MIN if _REPEAT_MIN else 12
         for sample in recent:
             s = _norm(sample)
-            if len(s) < 6:
+            if not s:
                 continue
-            if abs(len(s) - len(t)) <= 6 and \
-                    difflib.SequenceMatcher(None, t, s).ratio() >= 0.82:
+            if t == s:
+                return True
+            if len(t) < 6 or len(s) < 6:
+                continue
+            sm = difflib.SequenceMatcher(None, t, s)
+            if min(len(t), len(s)) >= min_len and \
+                    abs(len(t) - len(s)) <= 6 and sm.ratio() >= 0.82:
                 return True
             biggest = max(
-                (b.size for b in difflib.SequenceMatcher(None, t, s).get_matching_blocks()),
+                (b.size for b in sm.get_matching_blocks()),
                 default=0)
             if biggest >= 12:
                 return True
@@ -232,6 +259,7 @@ except Exception as _e:                                  # pragma: no cover
 
 _ROLE_RE = _load_role_marker_re()
 _MD_RE = _load_md_strip_re()
+_REPEAT_MIN = _load_repeat_min()
 _MD_FALLBACK = _MD_RE is None
 
 
