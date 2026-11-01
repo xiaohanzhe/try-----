@@ -683,15 +683,30 @@ def looks_like_narration(text):
 
 
 def guard_reaction(text):
-    """事件台词的可用性判定：出戏 / 客服腔 / 括号动作 / 旁白化 / 空 → 返回空串（调用方处理）。
+    """事件台词的可用性判定：出戏 / 客服腔 / 元话语 / 括号动作 / 旁白化 / 空 → 返回空串（调用方处理）。
 
     2026-09-19 起新增一道**删减式**处理：句中夹带的「括号动作旁白」不再整句作废，
     而是**把那一段删掉**再把剩下的台词放行（`strip_action_parentheticals`）。
     所以本函数的返回值**可能不等于入参** —— 这是有意的，调用方拿到的就是该显示的文本。
+
+    ★ 第133轮补第132轮的一道闸（`looks_like_meta_leak`）：事件链 `lean=True` 时
+      system **就是整份人设**（`main.chat_with_ai` 14171 行注释：「只发 persona，
+      一个字节都不变」），而人设「语气示范」正是元话语泄漏的源头 ⇒ 这条链结构上
+      同样暴露，只是此前只有对话链装了闸。
+    ★★ 位置：排在 `strip_action_parentheticals` **之前**，与上面两道"整句作废"的闸并列。
+      一开始我以为这是硬约束（理由是形态③的括注自评会被剥掉、剥完就只剩正常台词）。
+      **实测否掉了这个理由**：`strip_action_parentheticals` 只认"动作旁白/描述性旁白/
+      引号台词"，对「（这里说的是你自己的事…）」这种**合规说明**根本不删 ——
+      剥前剥后都命中，两种顺序等价。仍排在剥前的理由改成两条：
+      ① 与两道 sibling 闸同位置，三道闸的分工一眼能看完；
+      ② 不依赖 strip 的实现细节 —— 哪天 strip 扩了词表认了这种括号，排在剥前才不会漏。
+      取证：`第133轮-事件台词元话语核查/_tools/diag133.py` 第 1 节。
     """
     if looks_out_of_character(text):
         return ""
     if looks_like_assistant_speak(text):
+        return ""
+    if looks_like_meta_leak(text):
         return ""
     t = strip_action_parentheticals(text)
     if not t:

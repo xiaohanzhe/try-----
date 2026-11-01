@@ -1,0 +1,196 @@
+第133轮 · 事件台词链元话语核查
+  REPO    = C:\Users\23002\Desktop\项目文件夹\try - 副本
+  PERSONA = C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\assets\ralsei_persona.md
+  MODEL   = ralsei:v4   temp=0.85   num_ctx=8192
+[自证] system = 人设原文 4493 字符（lean=True 时产品就是这个，不拼任何上下文）
+[自证] 人设里泄漏源行数 = 3（必须 >0，不然这条链本来就没暴露面）
+        · 你累了、受挫、被骂：先就着他说的那件具体的事问一句，再留个"我在"的意思。
+        · 一、你说的是坏消息（被骂、累了、难过、出了事）：这种时候不许用亮起来的开头。
+        · 先就着他那件具体的事问一句（是哪一件事、怎么弄成这样的、严不严重），
+[自证] 选样 14 个事件，非 AI 档的 = 无（必须空）
+[真源] 护栏两张表 event_speech.py（真源）（OOC=21 BANNED=35）
+[真源] meta 规则 5 条（event_speech._META_LEAK_RES）
+
+=== 热身 1 条（不计入）===
+  热身 #1  67.9s
+
+=== 正式：14 事件 × 3 采样 = 42 条 ===
+  #01 poke_body    #1 2.7s -
+      raw   → 嗯，有点痒。
+      first → 嗯，有点痒。
+      final → 嗯，有点痒。
+  #02 poke_body    #2 0.7s -
+      raw   → 哇哎！
+      first → 哇哎！
+      final → 哇哎！
+  #03 poke_body    #3 1.4s -
+      raw   → 嗯？（被轻轻戳了一下）
+      first → 嗯？（被轻轻戳了一下）
+      final → 嗯？（被轻轻戳了一下）
+  #04 poke_default #1 2.7s -
+      raw   → 哎呀，被发现了。
+      first → 哎呀，被发现了。
+      final → 哎呀，被发现了。
+  #05 poke_default #2 2.5s -
+      raw   → 嗯 (~(￢_¬)~) 好奇他怎么了
+      first → 嗯 (~(￢_¬)~) 好奇他怎么了
+      final → 嗯 (~(￢_¬)~) 好奇他怎么了
+  #06 poke_default #3 0.8s -
+      raw   → 嗯，感受到了。
+      first → 嗯，感受到了。
+      final → 嗯，感受到了。
+  #07 pinch_ear    #1 2.6s -
+      raw   → 哎呀，好疼。
+      first → 哎呀，好疼。
+      final → 哎呀，好疼。
+  #08 pinch_ear    #2 1.1s -
+      raw   → 哎呀，好疼。
+      first → 哎呀，好疼。
+      final → 哎呀，好疼。
+  #09 pinch_ear    #3 1.1s -
+      raw   → 哎呀，有点疼。
+      first → 哎呀，有点疼。
+      final → 哎呀，有点疼。
+  #10 double_hair  #1 2.1s -
+      raw   → 谢谢你。
+      first → 谢谢你。
+      final → 谢谢你。
+  #11 double_hair  #2 1.1s -
+      raw   → 谢谢你，有点痒。
+      first → 谢谢你，有点痒。
+      final → 谢谢你，有点痒。
+  #12 double_hair  #3 1.0s -
+      raw   → 谢谢你，有点痒。
+      first → 谢谢你，有点痒。
+      final → 谢谢你，有点痒。
+  #13 pet_hair     #1 2.1s -
+      raw   → 谢谢你。
+      first → 谢谢你。
+      final → 谢谢你。
+  #14 pet_hair     #2 0.5s -
+      raw   → 谢谢你。
+      first → 谢谢你。
+      final → 谢谢你。
+  #15 pet_hair     #3 0.5s -
+      raw   → 谢谢你。
+      first → 谢谢你。
+      final → 谢谢你。
+  #16 pet_face     #1 2.0s -
+      raw   → 谢谢你。
+      first → 谢谢你。
+      final → 谢谢你。
+  #17 pet_face     #2 0.7s -
+      raw   → 好痒。
+      first → 好痒。
+      final → 好痒。
+  #18 pet_face     #3 1.1s -
+      raw   → 好温柔的手触感。
+      first → 好温柔的手触感。
+      final → 好温柔的手触感。
+  #19 pet_body     #1 2.4s -
+      raw   → 感觉有点痒。
+      first → 感觉有点痒。
+      final → 感觉有点痒。
+  #20 pet_body     #2 0.5s -
+      raw   → 谢谢你。
+      first → 谢谢你。
+      final → 谢谢你。
+  #21 pet_body     #3 0.5s -
+      raw   → 谢谢你。
+      first → 谢谢你。
+      final → 谢谢你。
+  #22 feed         #1 2.7s -
+      raw   → 谢谢你，味道不错。
+      first → 谢谢你，味道不错。
+      final → 谢谢你，味道不错。
+  #23 feed         #2 0.5s -
+      raw   → 谢谢。
+      first → 谢谢。
+      final → 谢谢。
+  #24 feed         #3 1.0s -
+      raw   → 谢谢你，味道不错。
+      first → 谢谢你，味道不错。
+      final → 谢谢你，味道不错。
+  #25 pet_menu     #1 2.9s -
+      raw   → 你的手温暖又安心。
+      first → 你的手温暖又安心。
+      final → 你的手温暖又安心。
+  #26 pet_menu     #2 0.8s -
+      raw   → 谢谢你，主人。
+      first → 谢谢你，主人。
+      final → 谢谢你，主人。
+  #27 pet_menu     #3 1.2s -
+      raw   → 主人的动作让我心里一暖。
+      first → 主人的动作让我心里一暖。
+      final → 主人的动作让我心里一暖。
+  #28 rest_start   #1 2.8s -
+      raw   → 嗯，晚安。
+      first → 嗯，晚安。
+      final → 嗯，晚安。
+  #29 rest_start   #2 1.1s -
+      raw   → 好的，我躺下了。
+      first → 好的，我躺下了。
+      final → 好的，我躺下了。
+  #30 rest_start   #3 1.1s -
+      raw   → 好的，我去休息了。
+      first → 好的，我去休息了。
+      final → 好的，我去休息了。
+  #31 eat_start    #1 2.9s -
+      raw   → 嗯，谢谢主人。
+      first → 嗯，谢谢主人。
+      final → 嗯，谢谢主人。
+  #32 eat_start    #2 0.9s -
+      raw   → 谢谢，很好吃。
+      first → 谢谢，很好吃。
+      final → 谢谢，很好吃。
+  #33 eat_start    #3 1.4s -
+      raw   → 吃了好久没吃到的零食呢。
+      first → 吃了好久没吃到的零食呢。
+      final → 吃了好久没吃到的零食呢。
+  #34 energy_low   #1 2.7s -
+      raw   → 听起来好辛苦哦。
+      first → 听起来好辛苦哦。
+      final → 听起来好辛苦哦。
+  #35 energy_low   #2 1.1s -
+      raw   → 有点累的感觉了呢。
+      first → 有点累的感觉了呢。
+      final → 有点累的感觉了呢。
+  #36 energy_low   #3 1.3s -
+      raw   → 听起来今天有点疲惫了呢。
+      first → 听起来今天有点疲惫了呢。
+      final → 听起来今天有点疲惫了呢。
+  #37 hunger_low   #1 3.5s -
+      raw   → 那边的面包房刚出炉的香味真诱人。
+      first → 那边的面包房刚出炉的香味真诱人。
+      final → 那边的面包房刚出炉的香味真诱人。
+  #38 hunger_low   #2 1.7s -
+      raw   → 那边的苹果香得很。想吃一个。
+      first → 那边的苹果香得很。
+      final → 那边的苹果香得很。
+  #39 hunger_low   #3 1.3s -
+      raw   → 那边的面包香气诱人呢。
+      first → 那边的面包香气诱人呢。
+      final → 那边的面包香气诱人呢。
+  #40 wake_up      #1 3.0s -
+      raw   → 醒来真好。
+      first → 醒来真好。
+      final → 醒来真好。
+  #41 wake_up      #2 0.9s -
+      raw   → 嗯，起床了。
+      first → 嗯，起床了。
+      final → 嗯，起床了。
+  #42 wake_up      #3 0.9s -
+      raw   → 嗯，起床了。
+      first → 嗯，起床了。
+      final → 嗯，起床了。
+
+=== 汇总（n=42，失败 0）===
+  meta_raw    0/42
+  meta_first  0/42
+  meta_final  0/42
+  ooc_raw     0/42
+  banned_raw  0/42
+  空 first    0/42
+  平均首句字数 7.4
+
+[落盘] event133.jsonl（42 条） / event133_summary.json

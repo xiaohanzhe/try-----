@@ -1,0 +1,36 @@
+{
+ "model": "ralsei:v4",
+ "temperature": 0.85,
+ "num_ctx": 8192,
+ "samples": 3,
+ "events": [
+  "poke_body",
+  "poke_default",
+  "pinch_ear",
+  "double_hair",
+  "pet_hair",
+  "pet_face",
+  "pet_body",
+  "feed",
+  "pet_menu",
+  "rest_start",
+  "eat_start",
+  "energy_low",
+  "hunger_low",
+  "wake_up"
+ ],
+ "system_chars": 4493,
+ "leak_source_lines": 3,
+ "guard_src": "event_speech.py（真源）",
+ "ooc_n": 21,
+ "banned_n": 35,
+ "meta_res_n": 5,
+ "n_rows": 42,
+ "counts": {
+  "meta_raw": 0,
+  "meta_first": 0,
+  "meta_final": 0,
+  "ooc_raw": 0,
+  "banned_raw": 0
+ }
+}
