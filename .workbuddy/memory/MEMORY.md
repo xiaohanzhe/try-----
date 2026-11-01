@@ -15,7 +15,7 @@
 - ⭐⭐ **代理端口逐端口实测 CONNECT 再选**。⭐⭐ **编辑保持原 EOL**；中文路径⇒`git ls-files -z`+`surrogateescape`。
 - ★★★ **游戏文件+UTMT⇒详版 §87.10(a)/§76.2/§76.3**（`UndertaleModCli.exe` **只认 `load <data> -s <script.csx>`**·**stdout 须落文件**）。
 ## 2. git push（skill `win-git-utf8-push`；**§39.5/§37.13/§71.4/§101.13**）
-- ★★ **一把跑完 = `…/第38轮-场景系统审查/_tools/gitpush.py <msgfile> [--proxy <url>] [--allow-del N]`**。提交信息用 **Write 写 UTF-8+`git commit -F`**（`-m` 假成功）。⛔ **绝不循环重试 push**。★★ **`[0r]` 自证树/分支/refspec**（曾因硬编码 `REPO`＋固定 `main` "全绿却假成功"）。
+- ★★ **一把跑完 = `…/第38轮-场景系统审查/_tools/gitpush.py <msgfile> [--proxy <url>]`**。提交信息用 **Write 写 UTF-8+`git commit -F`**（`-m` 假成功）。⛔ **绝不循环重试 push**。★★ **`[0r]` 自证树/分支/refspec**（曾因硬编码 `REPO`＋固定 `main` 假成功）。★★ 必带 `--refspec HEAD:local-N`（main 停在118轮）。
 - ★ `--allow-del` **带数字**；超限先 `numstat` 归因。❗**核验命令自己会说谎**⇒`ls-remote` **独立构造**+3~5 重试+`rev-parse origin/main` 交叉验证＋**必带 CA**（否则 TLS 假阴性）。
 - ★★ 两根因（**§39.5**）：**TLS**⇒`sslBackend=openssl`+HTTP/1.1；**凭据**⇒直取 GCM。★★★ **GCM 路径硬编码随 PortableGit 升级失效**⇒"无凭据"实为 `FileNotFoundError`（113轮）⇒ 先 `wincredman` 自证再查路径。
 ## 3. 勿回退契约（13 组；**原文见详版 §75.10**+§4.1–§4.12/§10/§23.9）
