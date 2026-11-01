@@ -36,6 +36,12 @@ EVENT_MAX_CHARS = 24
 # 「嗯？」—— 对即时反应来说信息量太低，反而不像人说话。
 MIN_FIRST_CHARS = 6
 
+# 句末标点（第135轮）：`first_sentence` 取"最靠前的"一个。
+# ★ 为什么不含 `…`/`——`：它们是**句内**停顿，拿它们当句末会把
+#   「嗯……（想了下）」切成半个动作。真机里 `…` 常跟括号旁白一起出现。
+# ★ 含 `\n`：模型爱用空行分段，换行是天然的句边界（但**不加**标点，见调用处）。
+_SENTENCE_ENDS = u'。！？!?\n'
+
 # 摸/戳的身体部位（与 main.get_ralsei_body_part 的返回值对齐）
 PET_PARTS = ("hair", "ear", "face", "body", "arm", "shoulder")
 
@@ -204,7 +210,27 @@ def build_prompt(kind, detail=""):
 def first_sentence(text, max_chars=EVENT_MAX_CHARS):
     """取第一句并压到 max_chars 内；取不到实义字符就返回空串。
 
-    与 `start_autonomous_speech` 里那段截断同源（那边是内联的），本函数供事件链路用。
+    ★★ 第135轮：切点改成**取文本里最靠前的那个句末标点**。
+      原来按标点**类型**优先级挑（`。`→`！`→`？`→`!`→`?`→`\\n`，看哪个类型先出现在文里，
+      再用它的第一个下标切）。于是"第一句是问句、后面某句有句号"时，切点被推到
+      **后面那句的句号**上，再硬截 max_chars ⇒ 截在半个句子上，直接显示成吊尾巴的坏台词。
+      真机证据（第131轮 3 条长回复，其中 2 条是这种形状）：
+
+        raw = 「你说的是坏消息吗？\\n\\n你说的是坏消息的时候我不该用亮起来的开头，…。」
+        old = 「你说的是坏消息吗？\\n\\n你说的是坏消息的时候我不该」   ← 24 字，断在"我不该"
+        new = 「你说的是坏消息吗？」                                  ← 9 字，完整
+
+      取证：`code-quality-audit/第135轮-事件截断吊尾巴/_tools/diag135.py`（旧/新逐条对照）。
+      实测影响面：42 条真机事件回复**逐字不变**（它们本来就短），只有长回复变干净。
+
+    ★ `MIN_FIRST_CHARS` 的语义**原样保留**：若没有任何切点够长，而全文又没超上限，
+      就整句保留 —— 这一条是真机逼出来的（「嗯？发生了什么吗？」不能被切成 2 个字的「嗯？」）。
+      新写法里它落在"找不到合格切点"那个分支上，不要顺手删掉。
+
+    ★ 与 `main.start_autonomous_speech` 里那段内联截断**不是同一份实现**：
+      那边 sep 顺序是 `\\n` 优先、上限 40 字、没有 MIN 规则。原注释写的"同源"是假断言，
+      第135轮改正。两边口径要不要统一登记在 §135 报告，本轮**不动那条链**。
+
     注意：markdown / 自问自答 / 车轱辘话由 `RalseiPet._clean_ai_reply` 在更上游处理，
     这里只管"长度与句数" —— 两层规则的分工不要混（S8 的教训：规则必须单一真源）。
     """
@@ -216,22 +242,37 @@ def first_sentence(text, max_chars=EVENT_MAX_CHARS):
     t = t.strip('"\'“”「」『』《》').strip()
     if not t:
         return ""
-    # 句末切分：**按偏好顺序**取第一个出现的终结符（优先句号 = 一个完整的想法），
-    # 与 start_autonomous_speech 里那段内联截断保持同一口径 ——
-    # "第一句"在项目里只能有一份定义，否则两个入口的截断长度会漂移。
-    chosen = None
-    for sep in ('。', '！', '？', '!', '?', '\n'):
-        if sep in t:
-            chosen = sep
-            break
-    if chosen is not None:
-        i = t.index(chosen)
-        head = t[:i] if chosen == '\n' else t[:i + 1]
-        # 首句太短 + 全文放得下 → 整句保留（见 MIN_FIRST_CHARS 的实测起因）
-        if len(head.strip()) < MIN_FIRST_CHARS and len(t) <= max_chars:
-            pass
+    # ★★ 切点规则（第135轮）：**句号仍然是"一个想法结束了"的边界**，
+    #   但句号之前若还有更早的句末标点、且那一句已经够长，就用更早的那个。
+    #   三条分支，每条都有判据/真机样本撑着：
+    #     ① 有句号 ⇒ 只在"句号及之前"的切点里挑第一个够长的；都不够长就用句号本身
+    #        （`诶？！好舒服呀。后面还有好多话要说呢。` ⇒ `诶？！好舒服呀。`）；
+    #     ② 没句号 ⇒ 只看**第一个**句末标点，够长就切、太短就整句保留
+    #        （`哎呀！别捏我的耳朵！好痒呀！` 三个短感叹连起来才是一句反应）；
+    #     ③ 没句号 + 太短 + 全文超上限 ⇒ 切（保持改造前行为，不在这里发明新策略）。
+    #   ⚠️ 第一版写的是"取最靠前的够长切点"，被 `s7_event_speech A11` 当场判红：
+    #      它把 `诶？！好舒服呀。后面还有好多话要说呢。` 整句留下了，说明
+    #      **"句号优先"这条语义不能丢**（`A11` 守的是既有契约，不是绊脚石）。
+    ends = sorted(i for i, ch in enumerate(t) if ch in _SENTENCE_ENDS)
+    if ends:
+        _periods = [i for i in ends if t[i] == u'。']
+        if _periods:
+            _p = _periods[0]
+            pick = _p
+            for i in ends:
+                if i > _p:
+                    break
+                head = t[:i] if t[i] == '\n' else t[:i + 1]
+                if len(head.strip()) >= MIN_FIRST_CHARS:
+                    pick = i
+                    break
         else:
-            t = head
+            i = ends[0]
+            head = t[:i] if t[i] == '\n' else t[:i + 1]
+            pick = i if (len(head.strip()) >= MIN_FIRST_CHARS
+                         or len(t) > max_chars) else None
+        if pick is not None:
+            t = t[:pick] if t[pick] == '\n' else t[:pick + 1]
     t = t.strip()
     if len(t) > max_chars:
         t = t[:max_chars].rstrip('，,、。！？!?；;：: ')
