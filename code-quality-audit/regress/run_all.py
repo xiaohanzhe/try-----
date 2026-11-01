@@ -3740,6 +3740,41 @@ SUITES = [
                 'E 连续句末标点（含负控制与真实语料正收益）· F 事件链 3 条泄漏仍是 9 字完整句 · G 自检。'
                 '★ 零 Qt、零网络、零外部盘。',
     },
+    {
+        'id': 'check137',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第137轮-主宠训练补丁', '_tools', 'check137.py'),
+        'offscreen': True,
+        'desc': '第一百三十七轮：`patches["ralsei"]` **真的**进主宠 system（修第134轮登记的"零读取"缺口）。'
+                '病根：训练卡为**全部 96 位**角色各产出一条 `patch`（实测出过的毛病对应的纠正句），'
+                'NPC 那边 `npc_persona.build_system_prompt()` 早就拼进 system 了；'
+                '只有主宠走 `chat_with_ai(speaker="ralsei")` 的老路径，'
+                '`system = self._build_persona_prompt()` 只读 persona 文件 ⇒ 那条 160 字的 patch **零读取**。'
+                '★★ 这条 patch 到底补了什么（判据 B 段专门断"人设里确实没有"）：'
+                '① "一次最多两三句"与人设「一次只说 1~3 句」**语义重复**（冗余无害）；'
+                '② 只认原作里真有的名字（Kris/Susie/Lancer/Toriel/Asgore/Asriel/Noelle/Berdly）；'
+                '③ 不要自己造人名（「凯斯恩」这种把两个名字拼起来的说法）——② ③ 在人设里**一个字都没有**。'
+                '★★★ 接法：新增**模块级** `_with_ralsei_patch(system)`，在 `chat_with_ai` 与 '
+                '`_prewarm_ai_cache` **各调用一次**。三条理由写在函数 docstring 里：'
+                '(a) 不并进 `_build_persona_prompt()` —— 那个方法的契约是"读到的就是 persona **全文**"'
+                '（`persona_chat B8` 守着），而本块是训练产出的增量、来源不同；'
+                '(b) 必须是模块级函数而不是方法 —— 第一版写成 `RalseiPet` 的方法，'
+                '`s7_event_speech F1` 当场 `AttributeError` 崩掉（桩只手工绑了少数方法）；'
+                '(c) 预热**必须**同源 —— 否则预热喂的前缀比真实请求短 160 字，'
+                '那 160 字每轮都要重新 prefill，预热白做一半。'
+                '★ A 数据面（patch 在 / 三条要求在 / 带实测例「凯斯恩」）· '
+                'B 人设面（"造人名"/"凯斯恩"/名字白名单三样**都不在** persona —— '
+                '否则这轮的"补缺口"就是自欺；①"两三句"**故意不断**，它本来就与"1~3 句"重复）· '
+                'C 行为面（以 persona 原文开头 / patch 逐字在 / 排在正文之后 / 第一人称标题 / '
+                '空串与 None 不抛 / **破坏性负控制**：`training_patch` 返回空 ⇒ 尾块整个消失 / 恢复自证）'
+                '+ ★ C8：打桩必须打在产品那**一个**模块实例上 —— 第一版 `import npc_persona` '
+                '（`modules` 是包，`main` 用的是 `from modules import npc_persona`）会**再造一个实例**，'
+                '负控制因此假绿，是 C6 报红抓出来的 · '
+                'D 接线 AST（两处各 1 次、都排在 `_build_persona_prompt()` 之后、'
+                '`_build_persona_prompt` 自己不碰训练纠正）· '
+                'E 契约不破（桩上真跑：`_build_persona_prompt()` 仍逐字等于 persona 文件）· F 自检。'
+                '★ 只读仓库内三份文件；Qt 用 offscreen；零网络、零外部盘。',
+    },
 ]
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')

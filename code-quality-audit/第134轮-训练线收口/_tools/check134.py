@@ -173,6 +173,14 @@ check(u'B0 三类卡覆盖数：patch 59 / relation 58 / evolution 44（分母�
 #   ⇒ 下面每条"进 prompt"的分母一律取 `PERSONAS`（能进链的那 76 个），
 #     ralsei 单独由 B1b（数据完好）/ B1c + B1c2（结构成因）/ D3（不在名单里）三条钉住。
 #     谁哪天把他接上了，B1c 会红 ⇒ 逼人回来复审这几条，而不是悄悄多读一条。
+#
+# ★★★ 第137轮更新（缺口的**下半句**）：那个缺口已经接上了，但**不是**走 `build_system_prompt()` ——
+#   而是 `main._with_ralsei_patch()`（对话 + 预热各一处，见 `check137`）。
+#   所以本节下面几条**依然成立**（NPC 链的分母没变、ralsei 仍不在 `PATCH_IN`、
+#   `npc_system_prompt()` 仍不服务他），但"`training_patch('ralsei')` 零读取"这句话
+#   **已经过时**，别照着它再做一次"补接线"。
+#   本判据的 B1c2 会因为源码里多出两个 `'ralsei'` 字面量而改变回显计数（17 → 19），
+#   那是**计数回显**，不是行为变化；真正的接线由 `check137 D1/D2/D3` 守。
 PATCH_IN = [nid for nid in PATCH if nid in PERSONAS]
 REL_IN = dict((k, v) for k, v in REL.items() if k in PERSONAS and v)
 EVO_IN = dict((k, v) for k, v in EVO.items() if k in PERSONAS and v)

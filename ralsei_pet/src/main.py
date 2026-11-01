@@ -758,6 +758,49 @@ def prewarm_order(ids, team=(), here=()):
     return sorted((n for n in (ids or ()) if isinstance(n, str) and n), key=_key)
 
 
+#: Ralsei 自己那条训练纠正块的标题。
+#: ★ 用**第一人称**（"我"），不是 NPC 那边的「这个角色容易犯的毛病」：
+#:   Ralsei 的人设通篇第一人称，混一句第三人称的标题会让模型把"这个角色"
+#:   当成别人来演 —— 第75轮的教训就是"多写一句措辞就能改掉说话方式"。
+PATCH_HEADER_RALSEI = '【我容易犯的毛病（照着改）】'
+
+
+def _with_ralsei_patch(system):
+    """把 `patches["ralsei"]` 追加到 system 尾部；没有纠正就**原样返回**。
+
+    为什么 Ralsei 也要这条：训练卡是为**全部 96 位**角色产出的，NPC 那边
+    `build_system_prompt()` 早就把它拼进 system 了，只有主宠因为走
+    `speaker == 'ralsei'` 的老路径而**从来没读过**（第134轮登记的缺口）。
+    这条 patch 是三句实测纠正：① 一次最多两三句；② 只认原作里真有的名字；
+    ③ 不要自己造人名（「凯斯恩」这种把两个名字拼起来的说法）。人设正文里 ② ③ 一个字都没有。
+
+    ★★ 为什么是**模块级函数**而不是 `RalseiPet` 的方法：`chat_with_ai` 会被回归套件
+      在 `SimpleNamespace` 桩上直接调用，桩只手工绑了少数方法（`_build_persona_prompt`
+      等）。第一版写成方法后，`s7_event_speech F1` 当场 `AttributeError` 崩掉 ——
+      这跟 `_build_persona_prompt` 的 docstring 里那条"只依赖类属性与局部量"是同一条约束。
+    ★★ 为什么单独一个函数、而不是在调用点写 `system + ...`：两处调用点
+      （对话 / 预热）**必须逐字同源**，否则预热喂的 system 比真实请求短，
+      那 160 字每轮都要重新 prefill，预热白做一半。判据也能直接调它，不必搭 Qt 桩。
+    ★ 为什么在**调用点**追加、而不是并进 `_build_persona_prompt()`：
+      那个方法的契约是"读到的就是 persona 文件**全文**"（`persona_chat B8` 守着），
+      而本块是**训练产出的增量**，来源不同（`_training/_index.json`）。
+      混在一起以后就说不清"这句到底是有证据的纠正，还是原始设定"——
+      这正是 `npc_persona.training_patch` 与 `relation_patch` 分家的同一条理由。
+    ★ 读不到时返回原文，绝不塞默认文案：没有实测依据的一句话**会改变**角色的
+      说话方式（`npc_persona.training_patch` 的 docstring 里已写死这条）。
+    """
+    base = system if isinstance(system, str) else ''
+    try:
+        patch = npc_persona_mod.training_patch('ralsei')
+    except Exception as e:
+        _log.debug('训练纠正读取失败（按无纠正处理）: %s', e)
+        patch = ''
+    patch = (patch or '').strip()
+    if not patch:
+        return base
+    return base + '\n\n' + PATCH_HEADER_RALSEI + '\n' + patch
+
+
 class RalseiPet(QMainWindow):
     # 跨线程 API 结果信号：(response, callback) —— 工作线程 emit，主线程槽处理，
     # 避免线程内 QTimer.singleShot 因无 Qt 事件循环导致回调永不触发
@@ -14052,8 +14095,11 @@ class RalseiPet(QMainWindow):
           代价：事件回复不再知道"现在几点/刚才在聊什么"—— 事件是 ≤24 字的触觉反应，
           不需要这些；**对话路径（send_message）不传 lean，行为不变**。
         - ★ **`speaker`（第55轮）**：这一轮开口的是谁。
-          `None` / `'ralsei'` ⇒ 老路径，**一个字节都不变**（人设、上下文、话题锚、
-          记忆召回、关系、历史、护栏比对集合全部照旧）。
+          `None` / `'ralsei'` ⇒ 老路径： system = persona 全文 **+ 训练纠正尾块**
+          （`_with_ralsei_patch`，第137轮接上）；人设正文、上下文、话题锚、
+          记忆召回、关系、历史、护栏比对集合全部照旧。
+          （第137轮之前这里写的是"一个字节都不变" —— 现在 system 尾部多了那 160 字，
+            它**不随轮次变**，所以 KV 前缀缓存语义没变，但"字节完全一致"不再成立。）
           传了别的 id ⇒ NPC 路径：system 只由 `npc_system_prompt()` 装配
           （人设 + 他自己的记忆 + 共有的环境），**且回复只写进他自己的记忆**。
           ★ 为什么 NPC 路径连"关系档位 / 世界观召回 / 话题锚"都跳过：
@@ -14181,8 +14227,15 @@ class RalseiPet(QMainWindow):
                     return
         else:
             system = self._build_persona_prompt()
-        # lean（事件台词）：**只发 persona，一个字节都不变** → 每次事件都命中
-        # KV 前缀缓存 → 首字回到 0.6s 量级（实测见 docstring 的 probe 出处）。
+            # ★ 第137轮：把 `patches["ralsei"]` **真的接上**（第134轮登记的"零读取"缺口）。
+            #   注意 `_build_persona_prompt()` 读盘失败会退回 `_PERSONA_FALLBACK`，
+            #   这条补丁在**两种情况下都追加**：它讲的是"不造名字 / 两三句"，
+            #   跟哪一份人设正文都无关。
+            system = _with_ralsei_patch(system)
+        # lean（事件台词）：只发 persona + 这一块**常量**训练纠正 → 逐字节稳定，
+        # 每次事件仍命中 KV 前缀缓存 → 首字回到 0.6s 量级（实测见 docstring 的 probe 出处）。
+        # （本次改动之前这里写的是"一个字节都不变"；现在多了这 160 字，
+        #   但它**不随轮次变**，所以缓存语义不变。）
         # 注意这里连 `_build_ai_context()` 都跳过：它内部会读天气/情绪/记忆，
         # 开销虽小但**每轮结果不同**，挂了就等于把缓存打掉。
         _ctx = "" if (lean or _sys_fixed) else self._build_ai_context()
@@ -14717,7 +14770,8 @@ class RalseiPet(QMainWindow):
     def _prewarm_ai_cache(self):
         """启动预热（`startup.prewarm`，默认 false）。
 
-        口径与事件台词那条路径**完全一致**：只发 persona，一个字节都不变
+        口径与事件台词那条路径**完全一致**：都发 persona 全文 + 训练纠正尾块
+        （`_with_ralsei_patch`，第137轮起两边同源；那块是常量、不随轮次变）
         （见 chat_with_ai 里 lean=True 的注释）—— 这样预热命中的前缀与真实对话
         是**同一段字节**，用户第一句话就直接吃缓存。
 
@@ -14747,8 +14801,11 @@ class RalseiPet(QMainWindow):
         def _worker():
             try:
                 system = self._build_persona_prompt()
+                # ★ 第137轮：**必须与对话链路同源** —— 否则预热喂进去的前缀
+                #   比实际请求短 160 字，那 160 字每轮都要重新 prefill，预热白做一半。
+                system = _with_ralsei_patch(system)
                 opts = self._ai_chat_options()
-                # 只发 persona、只要 1 个 token：目的是让 prefill 进缓存，不是要内容。
+                # 只发 persona（+常量纠正）、只要 1 个 token：目的是让 prefill 进缓存，不是要内容。
                 t0 = time.time()
                 cli.chat('嗯。', system_prompt=system,
                          temperature=opts.get('temperature', 0.7),
