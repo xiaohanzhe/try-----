@@ -3644,6 +3644,35 @@ SUITES = [
                 '（第一版只看 `tree.body`，漏掉类方法 `_clean_ai_reply` ⇒ 改递归）· F 自检。'
                 '★ 零 Qt、零网络、零外部盘（只读本轮冻结的 42 条记录 + 第131轮的 42 条）。',
     },
+    {
+        'id': 'check134',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第134轮-训练线收口', '_tools', 'check134.py'),
+        'desc': '第一百三十四轮：**训练线收口** —— 把"登记了没人读"这条老坑钉在训练产物上。'
+                '113 轮起陆续落了四类产物（人设 76 份 · `patch` 59 人 · `relation` 58 人 · '
+                '`evolution` 44 人），它们都由 `npc_persona.build_system_prompt` 拼进 system，'
+                '但**没有任何判据守着这条接线**：`check113 C2` 只用一条**合成** patch 验证'
+                '"传进去就会进 prompt"，把 `main.py` 的 `patch=npc_persona_mod.training_patch(...)`'
+                ' 整行删掉，`check113` 照样全绿。'
+                'A 数据面（96 条目 / 78+18 / persona 三态 76+1+19 / 96 张卡 / patch 59 全 main / '
+                '`_index.counts` 对账 / gaps=[knight] / `_seek` 72+24，四个数从磁盘数出来）· '
+                'B 端到端**真跑** `build_system_prompt`：进链的 58 条 patch / 57 条 relation / '
+                '44 条 evolution **逐字**进 prompt，且没有卡的角色**一个块标题都不许出现**（成对负控制，'
+                '分母 18 / 19）· **B5 第一版是恒真判据**：`_other_leak` 用 `nid not in REL` 过滤，'
+                '而 `REL` 是**全 96 个 id** 的字典 ⇒ 永不为空 ⇒ 这条"守"其实没守，改成 `REL_IN` 后'
+                '才真的能红 · C 接线（AST）：三个关键字实参在、值分别来自那三个函数，'
+                '**破坏性负控制**（删掉 `patch=` 那一行 ⇒ 同一判据必须报缺）· '
+                'D 空人设短路（`persona=""` ⇒ 返回 `""`，连 patch 也不拼；正控制证明不是"永远返回空"）· '
+                'E `Twinkly` 结案：目标卡登记名是「Asriel Dreemurr 与 Twinkly」**两个人合一**、'
+                '且已有 5 条出边 ⇒ 接它等于把两人当一人，本轮不接的理由钉在数据上 · F 自检。'
+                '★★ 本轮**新发现的真缺口**（按现状登记，未改产品）：`patches["ralsei"]`（160 字，'
+                '"不要自己造人名"那条）在链上**零读取** —— 他有卡，但 `load_personas()` 收的是 '
+                '`_personas.json` 那 76 份游戏 NPC，不含主宠；而 `chat_with_ai` 把 '
+                '`speaker == "ralsei"` 直接判成老路径 ⇒ `npc_system_prompt()` 永不服务他。'
+                'B0b/B1b/B1c/B1c2 四条把这个状态**显式钉住**（含"把 `ralsei` 这个字面量全替掉后 '
+                'B1c 必须报红"的破坏性负控制），所以谁哪天接上了会红 —— 逼人回来复审，而不是悄悄多读一条。'
+                '★ 零 Qt、零网络、零外部盘（只读仓库内的 registry / 索引 / 人设文件）。',
+    },
 ]
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')
