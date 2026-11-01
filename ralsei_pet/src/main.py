@@ -666,7 +666,9 @@ from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   head_hesitation_hit,
                                   head_hesitation_pause_hit,
                                   set_head_hesitation_allowance,
-                                  looks_out_of_character, looks_like_assistant_speak)
+                                  looks_out_of_character, looks_like_assistant_speak,
+                                  # ★ 第132轮：元话语泄漏（念规则/引模板/括注自评）
+                                  looks_like_meta_leak)
 # ★★ 宠物手势判定（第75轮 B3）：**唯一真源**。
 # 改造前 `mousePressEvent` / `mouseMoveEvent` / `mouseReleaseEvent` /
 # `mouseDoubleClickEvent` 各写了一份"部位识别 + 手势识别"（含 `get_ralsei_body_part`
@@ -15105,7 +15107,15 @@ class RalseiPet(QMainWindow):
             #     `_evidence/probe_vividness.txt`）。所以代码里兜一道，与 event_speech
             #     的 `_OOC_PATTERNS` / `_BANNED_PATTERNS` 同源，避免两处判据漂移。
             #     命中 → 判无效；由调用方走既有的"换一个说法重采样"路径（不是直接沉默）。
-            if looks_out_of_character(t) or looks_like_assistant_speak(t):
+            #   ★ 第132轮补第三道：**元话语泄漏**（念规则/引用模板/括注自评）。
+            #     证据：第131轮真机 42 条里 3 条这么干，且**全在缺身份抓手的那一臂**——
+            #     「你说的是坏消息的时候我不该用亮起来的开头，先就着那件具体的事问一句」。
+            #     ⚠️ 别用"与 system 的字面重合度"判：本轮实测，重合度最高的两条
+            #     反而是**正常好答案**（人设本来就在讲城堡/喷泉/角色）。
+            #     详见 `event_speech.looks_like_meta_leak` 的注释与
+            #     `第132轮/_evidence/leak_scan_132.json`。
+            if looks_out_of_character(t) or looks_like_assistant_speak(t) \
+                    or looks_like_meta_leak(t):
                 return None
             # 1) 自问自答续写 → 截到标记之前
             m = RalseiPet._role_marker_re().search(t)
