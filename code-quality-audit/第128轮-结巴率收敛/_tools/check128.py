@@ -282,8 +282,30 @@ def b_persona():
           u'不是每句都结巴' in md)
     check(u'B6 persona 体积仍 ≥ 9000 字节（没被砍瘦）', len(raw) >= 9000,
           u'%d 字节' % len(raw))
-    check(u'B6b persona 体积 ≤ 10240 字节（历史 K3 上限）', len(raw) <= 10240,
-          u'%d 字节' % len(raw))
+    # ★★ 130：上界**不另写数字**，跟 K3 同源抽。原来这里硬编码 10240（"历史 K3 上限"），
+    #   而第130轮 K3 因恢复第115轮四节调到 13500 ⇒ 两份实现立刻打架（同一条口径两份数字
+    #   是第129轮刚记过的教训）。抽不到就如实判红，不许静默放过。
+    def _k3_limit():
+        _p = os.path.join(ROOT, 'code-quality-audit', '人味改造-2026-09-18',
+                          'verify_persona_chat.py')
+        try:
+            _tree = ast.parse(io.open(_p, encoding='utf-8').read())
+        except Exception:  # noqa: BLE001
+            return None
+        for _nd in _tree.body:
+            if isinstance(_nd, ast.Assign):
+                for _tg in _nd.targets:
+                    if isinstance(_tg, ast.Name) and _tg.id == '_K3_LIMIT':
+                        try:
+                            return ast.literal_eval(_nd.value)
+                        except Exception:  # noqa: BLE001
+                            return None
+        return None
+
+    _K3 = _k3_limit()
+    check(u'B6b persona 体积 ≤ K3 上界（跟 K3 同源，不另写数字）',
+          (_K3 is not None) and len(raw) <= int(_K3),
+          u'%d / %s 字节' % (len(raw), _K3))
     check(u'B7 persona 无 BOM、无 U+FFFD',
           (not raw.startswith(b'\xef\xbb\xbf')) and (b'\xef\xbf\xbd' not in raw))
 

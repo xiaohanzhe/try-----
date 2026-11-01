@@ -190,9 +190,12 @@ def main():
     ck('4b 索引读回：tail_text 正确', idx2['tail_text'] == NEW_TAIL)
     # 非目标字段一个都没动。
     # ★ 首版判据写成"顶层所有键"，于是 `personas` 必然报红 —— 而它**正是要改的**。
-    #   （又一次"判据过粗 = 误报"；改成**字段级**：顶层放行 2 个键，
+    #   （又一次"判据过粗 = 误报"；改成**字段级**：顶层放行 3 个键，
     #    `personas` 每条放行 5 个字段，其余逐个比对。）
-    top_moved = [k for k in idx if k not in ('tail_text', 'tail_sha256')
+    # ★★ 130：注释早就写对了、代码却只放行 2 个键（漏 `personas`）⇒ 这条从第115轮起
+    #   就是 FAIL，只是没人把它当回事（`_evidence/apply115_npc_out.txt` 里同样是 1 FAIL）。
+    #   `personas` 的细粒度由下面的 4c2 单独守（每条记录只许 5 个字段变），所以放行它是**安全**的。
+    top_moved = [k for k in idx if k not in ('tail_text', 'tail_sha256', 'personas')
                  and idx[k] != idx2.get(k)]
     ck('4c 索引顶层非目标键逐字未变', not top_moved, '变了=%r' % (top_moved,))
     _ALLOWED = {'chars', 'bytes', 'sha256', 'sha256_lf', 'tail_sha256'}
