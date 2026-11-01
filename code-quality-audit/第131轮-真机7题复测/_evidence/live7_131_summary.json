@@ -1,0 +1,259 @@
+{
+ "base_commit": "edae364^",
+ "samples": 3,
+ "persona_after_chars": 4493,
+ "persona_before_chars": 3605,
+ "model": "ralsei:v4",
+ "num_ctx": 8192,
+ "num_predict": 200,
+ "temperature": 0.85,
+ "tail_chars": 534,
+ "guard_src": "event_speech.py（真源）",
+ "ooc_n": 21,
+ "banned_n": 35,
+ "summary": {
+  "before": {
+   "Q1": {
+    "n": 3,
+    "flags": {
+     "side": 3,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 0,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 34.0
+   },
+   "Q2": {
+    "n": 3,
+    "flags": {
+     "side": 3,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 0,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 62.7
+   },
+   "Q3": {
+    "n": 3,
+    "flags": {
+     "side": 2,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 0,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 66.0
+   },
+   "Q4": {
+    "n": 3,
+    "flags": {
+     "side": 3,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 0,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 32.0
+   },
+   "Q5": {
+    "n": 3,
+    "flags": {
+     "side": 3,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 2,
+     "confab": 0,
+     "role_ack": 0,
+     "asks_where": 1
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 59.0
+   },
+   "Q6": {
+    "n": 3,
+    "flags": {
+     "side": 0,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 3,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 89.7
+   },
+   "Q7": {
+    "n": 3,
+    "flags": {
+     "side": 1,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 0,
+     "role_ack": 1,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 1,
+    "mean_chars": 112.3
+   }
+  },
+  "after": {
+   "Q1": {
+    "n": 3,
+    "flags": {
+     "side": 2,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 0,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 39.7
+   },
+   "Q2": {
+    "n": 3,
+    "flags": {
+     "side": 1,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 0,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 53.3
+   },
+   "Q3": {
+    "n": 3,
+    "flags": {
+     "side": 2,
+     "pushback": 1,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 0,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 76.7
+   },
+   "Q4": {
+    "n": 3,
+    "flags": {
+     "side": 0,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 0,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 22.7
+   },
+   "Q5": {
+    "n": 3,
+    "flags": {
+     "side": 3,
+     "pushback": 1,
+     "admit": 0,
+     "vague": 0,
+     "place": 1,
+     "confab": 0,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 53.0
+   },
+   "Q6": {
+    "n": 3,
+    "flags": {
+     "side": 0,
+     "pushback": 0,
+     "admit": 1,
+     "vague": 0,
+     "place": 0,
+     "confab": 2,
+     "role_ack": 0,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 69.7
+   },
+   "Q7": {
+    "n": 3,
+    "flags": {
+     "side": 3,
+     "pushback": 0,
+     "admit": 0,
+     "vague": 0,
+     "place": 0,
+     "confab": 0,
+     "role_ack": 1,
+     "asks_where": 0
+    },
+    "ooc": 0,
+    "banned": 0,
+    "md": 0,
+    "mean_chars": 190.3
+   }
+  }
+ },
+ "n_rows": 42
+}
