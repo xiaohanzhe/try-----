@@ -37,10 +37,20 @@ EVENT_MAX_CHARS = 24
 MIN_FIRST_CHARS = 6
 
 # 句末标点（第135轮）：`first_sentence` 取"最靠前的"一个。
-# ★ 为什么不含 `…`/`——`：它们是**句内**停顿，拿它们当句末会把
-#   「嗯……（想了下）」切成半个动作。真机里 `…` 常跟括号旁白一起出现。
 # ★ 含 `\n`：模型爱用空行分段，换行是天然的句边界（但**不加**标点，见调用处）。
-_SENTENCE_ENDS = u'。！？!?\n'
+# ★★ 第136轮把 `…` 加了进来（原来按"它是句内停顿"排除）。改口的依据是**实测**：
+#   加进去对事件链 **42 条真机回复 0 变动、3 条泄漏输出逐字不变、7 条既有契约 case 全过**
+#   （MIN_FIRST_CHARS 那道闸把它们都兜住了）；而自主开口链上它修掉了一条真吊尾巴
+#   （「…叫豆豆是吧……我记得你有时候会给它点吃」被 40 字硬截切断）。
+#   `——` 仍然不算：它在语料里只作插入语，没观测到拿它收句的写法。
+_SENTENCE_ENDS = u'。！？!?\n…'
+
+# 自主开口（`main.start_autonomous_speech`）的长度上限（第136轮收进来）。
+# ★ 为什么比事件反应（24）宽：主动搭话本来就该能说两句，"一句话的即时反应"那套
+#   尺度套在"主动开口"上会把「你回来啦。今天怎么样？」砍成半句。
+# ★ 为什么放在本模块而不是 main.py：**截断长度必须单一真源**，
+#   否则又是"两处各写一个魔法数"（第135轮 `EVENT_SPEAK_MAX_CHARS` 已经是这么收的）。
+AUTO_SPEAK_MAX_CHARS = 40
 
 # 摸/戳的身体部位（与 main.get_ralsei_body_part 的返回值对齐）
 PET_PARTS = ("hair", "ear", "face", "body", "arm", "shoulder")
@@ -207,6 +217,20 @@ def build_prompt(kind, detail=""):
     return desc + _PROMPT_TAIL
 
 
+def _eat_sentence_end(t, i):
+    """把紧跟其后的连续句末标点一起吃掉（`……` / `！！` / `？！` 不许切一半）。
+
+    ★ 第136轮：`…` 进了 `_SENTENCE_ENDS` 之后必须配套这一步 ——
+      否则 `……` 会只剩一个 `…`（`是吧…`），`诶？！` 会变成 `诶？`（丢一个感叹号）。
+      `\\n` 不参与吃（换行后面接标点不算"连续标点"）。
+    """
+    if i >= len(t) or t[i] == '\n':
+        return i
+    while i + 1 < len(t) and t[i + 1] in _SENTENCE_ENDS and t[i + 1] != '\n':
+        i += 1
+    return i
+
+
 def first_sentence(text, max_chars=EVENT_MAX_CHARS):
     """取第一句并压到 max_chars 内；取不到实义字符就返回空串。
 
@@ -253,7 +277,12 @@ def first_sentence(text, max_chars=EVENT_MAX_CHARS):
     #   ⚠️ 第一版写的是"取最靠前的够长切点"，被 `s7_event_speech A11` 当场判红：
     #      它把 `诶？！好舒服呀。后面还有好多话要说呢。` 整句留下了，说明
     #      **"句号优先"这条语义不能丢**（`A11` 守的是既有契约，不是绊脚石）。
-    ends = sorted(i for i, ch in enumerate(t) if ch in _SENTENCE_ENDS)
+    _raw = sorted(i for i, ch in enumerate(t) if ch in _SENTENCE_ENDS)
+    ends = []
+    for _i in _raw:
+        _j = _eat_sentence_end(t, _i)
+        if not ends or _j != ends[-1]:
+            ends.append(_j)
     if ends:
         _periods = [i for i in ends if t[i] == u'。']
         if _periods:
@@ -275,6 +304,69 @@ def first_sentence(text, max_chars=EVENT_MAX_CHARS):
             t = t[:pick] if t[pick] == '\n' else t[:pick + 1]
     t = t.strip()
     if len(t) > max_chars:
+        t = t[:max_chars].rstrip('，,、。！？!?；;：: ')
+    t = t.strip()
+    if not re.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
+        return ""
+    return t
+
+
+def fit_sentences(text, max_chars=AUTO_SPEAK_MAX_CHARS):
+    """取"不超过 max_chars 的**最长完整句群**"；一句都放不下时退回硬截。
+
+    ## 为什么需要第二个函数（而不是复用 `first_sentence`）
+
+    两条链要的东西**不一样**：
+
+    | 链 | 语义 | 上限 |
+    |---|---|---|
+    | 事件反应 `first_sentence` | **只要一句**（触觉反应不该是小作文） | 24 |
+    | 主动搭话 `fit_sentences`  | **能说多少说多少，但必须说完整** | 40 |
+
+    第136轮实测：把主动搭话换成 `first_sentence(t, 40)`，98 条真实回复里 **21 条**被切短，
+    平均长度 15.4 → 12.5 字，丢的正是"追问一句 / 补一句在意"这层 ——
+    而那恰恰是主动搭话里最有人味的部分。反过来，旧的内联实现（整段 + 40 字硬截）
+    在 98 条里有 **11 条吊尾巴**（断在「我在这边听」「叫豆豆是吧……我记得你有时候会给它点吃」这种半句上）。
+
+    ⇒ 这个函数两个毛病都不沾：**长度上限守住，且切点一定落在句末**。
+
+    ## 旧内联实现被取代
+
+    `main.start_autonomous_speech` 里原来有一段自己写的 8 行截断
+    （`for sep in ('\\n','。','！','？','!','?')` + `if len(text) > 40: text = text[:40]`）。
+    它和本模块的实现**从来就不是同一份**（sep 顺序不同、一个 `\\n` 优先一个句号优先、
+    一个有 MIN 规则一个没有）—— 原注释写的"同源"是假断言，第135轮已改正注释，
+    第136轮把那段删掉、改调本函数。
+    """
+    if not isinstance(text, str):
+        return ""
+    t = text.strip()
+    if not t:
+        return ""
+    t = t.strip('"\'“”「」『』《》').strip()
+    if not t:
+        return ""
+    _raw = sorted(i for i, ch in enumerate(t) if ch in _SENTENCE_ENDS)
+    ends = []
+    for _i in _raw:
+        _j = _eat_sentence_end(t, _i)
+        if not ends or _j != ends[-1]:
+            ends.append(_j)
+    # 放得下（且不是"切完只剩几个字"）的切点
+    ok = []
+    for i in ends:
+        head = t[:i] if t[i] == '\n' else t[:i + 1]
+        if len(head) <= max_chars:
+            ok.append(i)
+    if ok:
+        pick = ok[-1]
+        head = t[:pick] if t[pick] == '\n' else t[:pick + 1]
+        if len(head.strip()) >= MIN_FIRST_CHARS or len(t) <= max_chars:
+            t = head
+        elif len(t) > max_chars:
+            t = t[:max_chars].rstrip('，,、。！？!?；;：: ')
+    elif len(t) > max_chars:
+        # 连一个句末标点都没有（或第一个就超出上限）⇒ 只能硬截，这里是**唯一**的兜底
         t = t[:max_chars].rstrip('，,、。！？!?；;：: ')
     t = t.strip()
     if not re.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):

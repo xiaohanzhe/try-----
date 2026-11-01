@@ -662,6 +662,9 @@ from modules import npc_plan_store as npc_plan_store_mod
 from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   build_prompt, guard_reaction, pet_kind, tier_of,
                                   first_sentence, strip_action_parentheticals,
+                                  # ★ 第136轮：自主开口的长度上限与截断都收到模块里
+                                  #   （原来 main 里有一段自己写的 8 行截断 + 魔法数 40）
+                                  fit_sentences, AUTO_SPEAK_MAX_CHARS,
                                   strip_head_hesitation,
                                   head_hesitation_hit,
                                   head_hesitation_pause_hit,
@@ -12110,15 +12113,25 @@ class RalseiPet(QMainWindow):
             if not text or text in ("。", "…", "。。。", "（保持沉默）"):
                 _log.debug("[自主对话] AI 选择沉默或不可用，本次不开口")
                 return
-            # 只保留第一句，避免模型长篇大论撑爆对话框（保留句末标点）
-            for sep in ('\n', '。', '！', '？', '!', '?'):
-                if sep in text:
-                    head = text.split(sep, 1)[0].strip()
-                    if head:
-                        text = head + ('' if sep == '\n' else sep)
-                    break
-            if len(text) > 40:
-                text = text[:40]
+            # 压到「主动开口」的长度上限内，且**切点一定落在句末**（保留句末标点）。
+            # ⚠️ 这里原来是「只保留第一句，避免模型长篇大论撑爆对话框」——第136轮**改了口径**，
+            #   理由写清楚，别让后来的人以为是顺手改的：
+            #     ① 那句注释的**目的**是防撑爆，而 40 字上限本身就独立保证了这一点
+            #        （对话链的 `AI_REPLY_MAX_CHARS` 是 220，气泡容得下，40 更不是问题）；
+            #     ② 「只取第一句」这个**手段**在真实语料上代价太大：第131轮 84 条真机回复里，
+            #        修掉吊尾巴之后只剩 10~12 字（例：「听说被领导训了一顿？」），
+            #        把"追问一句 / 补一句在意"这层人味整个砍掉 —— 而那正是主动搭话里最像人的部分；
+            #     ③ 所以改成"能说几句就说几句，但必须说完整"，上限仍是 40。
+            #   ⇒ 既有回归锁 `round6_verify B7`（原期望"只取第一句"）随之更新，
+            #     它现在守的是**新的**契约（显示一次 / ≤40 字 / 切点落在句末），不是被删掉。
+            #     逐条对照见 `code-quality-audit/第136轮-截断单一真源/_evidence/diag136c.txt`。
+            # ★★ 第136轮：这段原来是**自己写的** 8 行（`for sep in ('\n','。','！','？','!','?')`
+            #   + `if len(text) > 40: text = text[:40]`），和事件链的截断**从来就不是同一份**
+            #   （sep 顺序不同、一个换行优先一个句号优先、一个有 MIN 规则一个没有）。
+            #   第136轮实测它在 98 条真实回复上产生 **11 条吊尾巴**（断在"我在这边听"这种半句上）。
+            #   现在统一走 `event_speech.fit_sentences`：**长度上限守住、切点一定落在句末**。
+            #   两条链的长度上限仍有差别（有意保留）—— 主动搭话 40 字，事件反应 24 字。
+            text = fit_sentences(text, AUTO_SPEAK_MAX_CHARS)
             if not text:
                 return
             # 二次校验：AI 思考期间用户可能已经自己打开了对话/开始打字

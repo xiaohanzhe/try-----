@@ -1,0 +1,77 @@
+语料：1250 条（前缀 × 连续标点 × 尾巴 的笛卡尔积）
+
+==============================================================================
+① `fit_sentences`：有没有输入会因为 eat 而变？
+有 114 条不同，前 5 条：
+  max=12  'aaaaaaaaaa！！！'
+     eat=on  'aaaaaaaaaa'
+     eat=off 'aaaaaaaaaa！！'
+  max=12  'aaaaaaaaaa！！！后面还有好多话要说呢。'
+     eat=on  'aaaaaaaaaa'
+     eat=off 'aaaaaaaaaa！！'
+  max=12  'aaaaaaaaaa！！！我记得你有时候会给它点吃'
+     eat=on  'aaaaaaaaaa'
+     eat=off 'aaaaaaaaaa！！'
+  max=12  'aaaaaaaaaa！！！bbbbbbbbbbbbbbbbbbbb'
+     eat=on  'aaaaaaaaaa'
+     eat=off 'aaaaaaaaaa！！'
+  max=12  'aaaaaaaaaa！！！嗯。好。'
+     eat=on  'aaaaaaaaaa'
+     eat=off 'aaaaaaaaaa！！'
+
+   （run-final 放不下时：ok 里只剩靠前那个，但紧接着的 `elif len(t) > max_chars`
+     硬截路径产出的前缀与"带着重复标点硬截"逐字相同，两条路又合流。）
+
+==============================================================================
+② `first_sentence`：最小可变形态
+会因为 eat 而变的输入：401 条 / 1250
+  'aa！！！bbbbbbbbbbbbbbbbbbbb'
+     eat=on  'aa！！！'（5 字）
+     eat=off 'aa！'（3 字）
+  'aaa……bbbbbbbbbbbbbbbbbbbb'
+     eat=on  'aaa……'（5 字）
+     eat=off 'aaa…'（4 字）
+  'aaa？！bbbbbbbbbbbbbbbbbbbb'
+     eat=on  'aaa？！'（5 字）
+     eat=off 'aaa？'（4 字）
+  'aaa！！！我记得你有时候会给它点吃'
+     eat=on  'aaa！！！'（6 字）
+     eat=off 'aaa！！！我记得你有时候会给它点吃'（18 字）
+  'aaa！！！bbbbbbbbbbbbbbbbbbbb'
+     eat=on  'aaa！！！'（6 字）
+     eat=off 'aaa！'（4 字）
+  'aaaa……我记得你有时候会给它点吃'
+     eat=on  'aaaa……'（6 字）
+     eat=off 'aaaa……我记得你有时候会给它点吃'（18 字）
+  'aaaa……bbbbbbbbbbbbbbbbbbbb'
+     eat=on  'aaaa……'（6 字）
+     eat=off 'aaaa…'（5 字）
+  'aaaa？！我记得你有时候会给它点吃'
+     eat=on  'aaaa？！'（6 字）
+     eat=off 'aaaa？！我记得你有时候会给它点吃'（18 字）
+
+最短的一条（拿它做负控制输入）：'aaaa……。'
+  eat=on  'aaaa……。'
+  eat=off 'aaaa……'   ← 只剩一个 `…`，就是"切一半"
+
+==============================================================================
+③ 为什么现有 E1 / E2 停掉 eat 后**照样成立**
+
+E1  '嗯，好吧……'
+  fit  on='嗯，好吧……'  off='嗯，好吧……'  相同
+  first on='嗯，好吧……'  off='嗯，好吧……'  相同
+
+E2  '诶？！好舒服呀。后面还有好多话要说呢。'
+  fit  on='诶？！好舒服呀。后面还有好多话要说呢。'  off='诶？！好舒服呀。后面还有好多话要说呢。'  相同
+  first on='诶？！好舒服呀。'  off='诶？！好舒服呀。'  相同
+
+E1：全文 6 字 ≤ 上限 40 ⇒ 走"整段就是 head"那条路，切点下标是谁都一样。
+E2：有句号 ⇒ 走句号分支，而 `诶？`（2 字）/ `诶？！`（3 字）都 < MIN_FIRST_CHARS(6)，
+    循环会跳过它们一路走到句号 ⇒ eat 有没有都不影响最终 pick。
+
+==============================================================================
+④ 真实语料上 eat 到底改变了什么（98 条）
+真实语料 84 条
+  `fit_sentences` 会变的：0 条
+  `first_sentence` 会变的：3 条
+⇒ 真实语料里有实际差异，需逐条看。
