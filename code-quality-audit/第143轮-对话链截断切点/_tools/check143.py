@@ -252,8 +252,12 @@ def main():
                 for t in nd.targets):
             if isinstance(nd.value, ast.Constant):
                 es_val = nd.value.value
+    # ★★ 第145轮：extra 原来回显**整条常量**（`常量='。！？!?\n…'`）—— 那是时相量：
+    #   第145轮给事件链补了 ASCII `.`，本判据**判定没变**（仍含 `…`）却报了 DIFF。
+    #   口径照第138轮：**只改 extra，不改判定** ⇒ 改成"含 `…` 与否"的布尔。
     check(u'B6 事件链 `_SENTENCE_ENDS` **仍含** `…`（不许被"顺手统一"掉）',
-          bool(es_val) and u'\u2026' in es_val, u'常量=%r' % (es_val,))
+          bool(es_val) and u'\u2026' in es_val,
+          u'含…=%s' % (bool(es_val) and u'\u2026' in es_val))
     n_main = src.count(u'rfind(sep')
     check(u'B7 全仓 `main.py` 里 `rfind(sep` 只 1 处（没有第二条截断链）',
           n_main == 1, u'处数=%d' % n_main)

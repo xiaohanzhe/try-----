@@ -347,8 +347,12 @@ def main():
           and _is_sent_limit_const('_max_sent') is False
           and _is_sent_limit_const('AI_REPLY_MAX_CHARS') is False)
 
+    # ★★ 第145轮：extra 原来回显**整条常量**（`_SENTENCE_ENDS='。！？!?\n…'`）—— 那是时相量：
+    #   第145轮给事件链补了 ASCII `.`，本判据**判定没变**（仍含 `…`）却报了 DIFF。
+    #   口径照第138轮：**只改 extra，不改判定** ⇒ 改成"含 `…` 与否"的布尔。
     check(u'C2 切句尺 `_SENTENCE_ENDS` 仍**含** `…`（截断切点要温柔，不许改成不含）',
-          u'\u2026' in ES._SENTENCE_ENDS, u'_SENTENCE_ENDS=%r' % ES._SENTENCE_ENDS)
+          u'\u2026' in ES._SENTENCE_ENDS,
+          u'含…=%s' % (u'\u2026' in ES._SENTENCE_ENDS))
 
     loads_ms = []
     for nd in ast.walk(tree_main):

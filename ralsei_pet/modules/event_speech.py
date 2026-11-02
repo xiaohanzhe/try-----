@@ -44,7 +44,20 @@ MIN_FIRST_CHARS = 6
 #   （MIN_FIRST_CHARS 那道闸把它们都兜住了）；而自主开口链上它修掉了一条真吊尾巴
 #   （「…叫豆豆是吧……我记得你有时候会给它点吃」被 40 字硬截切断）。
 #   `——` 仍然不算：它在语料里只作插入语，没观测到拿它收句的写法。
-_SENTENCE_ENDS = u'。！？!?\n…'
+# ★★★ 第145轮把 ASCII `.` 加了进来。原来它不在表里，于是**英文回复一个切点都没有**
+#   ⇒ 只能走末尾 `t[:max_chars].rstrip('，,、。！？!?；;：: ')` 硬截 ⇒ 切在**半个单词**上。
+#   实测（77 人 / 5592 条真机回复，`第145轮/_evidence/lead145.json`）：
+#     · 事件链（24 字）英文 **203/448 = 45.3%** 切在单词中间
+#       （`Well, well, well. What d` ← 后面紧跟 `o we have he`）；
+#     · 主动开口（40 字）英文 **184/448 = 41.1%**；
+#     · 中文侧也有 1031/5144 条没切在标点上，但那是**24 字里本来就没有句末标点**
+#       （`rstrip` 兜住的"吊尾巴"，第135轮已定：不在这一步发明新策略）。
+#   ★ 为什么 24 字对英文尤其狠：24 个**字符**大约只有 4 个单词。
+#   ★ 加 `.` 必须配套过滤（见 `_sentence_ends()`）：`.` 还兼作缩写点（`Mr.`）与
+#     小数点（`3.14`），而 24 字预算下 `Mr.` 就能占满整行。
+#   ★ 不加 `,` / `;`：它们在中英文里都是**句内**停顿，在 `.` 上切是"到句末了"，
+#     在 `,` 上切是"话没说完就换行"，那是另一种坏。
+_SENTENCE_ENDS = u'。！？!?\n….'
 
 # 自主开口（`main.start_autonomous_speech`）的长度上限（第136轮收进来）。
 # ★ 为什么比事件反应（24）宽：主动搭话本来就该能说两句，"一句话的即时反应"那套
@@ -232,6 +245,36 @@ def _eat_sentence_end(t, i):
     return i
 
 
+def _sentence_ends(t):
+    """`t` 里所有**合格的**句末位置（下标已吃掉连续标点），升序、去重。
+
+    ★★★ 第145轮：`first_sentence` 与 `fit_sentences` 原来各自抄了一遍
+      "扫 `_SENTENCE_ENDS` + 吃连续标点 + 去重"这段循环 —— **同一份规则两处算**，
+      正是本项目最贵的坑。加 `.` 的过滤规则必须两边一致，所以合成这一处。
+
+    ★ `.` 的过滤规则（与 `MIN_FIRST_CHARS` 同源）：
+      `.` 前面已经有 **≥ MIN_FIRST_CHARS 个字**，它才够格当句末。理由：
+        · 缩写点：`Mr. Smith` / `J. Doe` —— 头只有 2~3 个字，不是句末，
+          而事件链上限 24 字，一个 `Mr.` 就能把整行吃掉；
+        · 开头的省略号：`...H-H-HERE` —— `_eat_sentence_end` 会吃掉连续点，
+          头是空的，同样不是句末；
+        · 小数点：`3.14` —— 后面紧跟数字，显式排除（不靠 MIN 兜，因为
+          `一共有 1234.5` 这种头已经很长了）。
+      ★ 中文侧几乎不影响（中文用 `。`），实测见 `lead145.json` 的 `ab` 段。
+    """
+    out = []
+    for i in sorted(i for i, ch in enumerate(t) if ch in _SENTENCE_ENDS):
+        j = _eat_sentence_end(t, i)
+        if t[i] == '.':
+            if j + 1 < len(t) and t[j + 1].isdigit():
+                continue                      # 小数点：`3.14`
+            if len(t[:j + 1].strip()) < MIN_FIRST_CHARS:
+                continue                      # 缩写点 / 开头的省略号
+        if not out or j != out[-1]:
+            out.append(j)
+    return out
+
+
 def first_sentence(text, max_chars=EVENT_MAX_CHARS):
     """取第一句并压到 max_chars 内；取不到实义字符就返回空串。
 
@@ -278,12 +321,7 @@ def first_sentence(text, max_chars=EVENT_MAX_CHARS):
     #   ⚠️ 第一版写的是"取最靠前的够长切点"，被 `s7_event_speech A11` 当场判红：
     #      它把 `诶？！好舒服呀。后面还有好多话要说呢。` 整句留下了，说明
     #      **"句号优先"这条语义不能丢**（`A11` 守的是既有契约，不是绊脚石）。
-    _raw = sorted(i for i, ch in enumerate(t) if ch in _SENTENCE_ENDS)
-    ends = []
-    for _i in _raw:
-        _j = _eat_sentence_end(t, _i)
-        if not ends or _j != ends[-1]:
-            ends.append(_j)
+    ends = _sentence_ends(t)          # ★ 第145轮：与另一条链共用一处实现
     if ends:
         _periods = [i for i in ends if t[i] == u'。']
         if _periods:
@@ -347,12 +385,7 @@ def fit_sentences(text, max_chars=AUTO_SPEAK_MAX_CHARS):
     t = t.strip('"\'“”「」『』《》').strip()
     if not t:
         return ""
-    _raw = sorted(i for i, ch in enumerate(t) if ch in _SENTENCE_ENDS)
-    ends = []
-    for _i in _raw:
-        _j = _eat_sentence_end(t, _i)
-        if not ends or _j != ends[-1]:
-            ends.append(_j)
+    ends = _sentence_ends(t)          # ★ 第145轮：与另一条链共用一处实现
     # 放得下（且不是"切完只剩几个字"）的切点
     ok = []
     for i in ends:

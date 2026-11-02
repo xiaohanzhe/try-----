@@ -1,0 +1,171 @@
+{
+ "note": "第145轮：事件链 first_sentence(24) / 主动开口 fit_sentences(40) 在英文回复上切在半个单词的次数。mid = t0[len(res)] 仍是字母/数字。",
+ "files": 77,
+ "turns": 5592,
+ "all": {
+  "turns": 5592,
+  "changed24": 5575,
+  "changed40": 5254,
+  "mid24": 1234,
+  "mid40": 423
+ },
+ "zh": {
+  "turns": 5144,
+  "changed24": 5132,
+  "changed40": 4814,
+  "mid24": 1031,
+  "mid40": 239
+ },
+ "en": {
+  "turns": 448,
+  "changed24": 443,
+  "changed40": 440,
+  "mid24": 203,
+  "mid40": 184
+ },
+ "en_dot_in_24": 194,
+ "en_samples_mid24": [
+  {
+   "id": "hy_ace",
+   "i": 1,
+   "r24": "Well, well, well. What d",
+   "next": "o we have he",
+   "raw": "Well, well, well. What do we have here? 你这是什么意思？你在和我打招呼吗，mon ami？"
+  },
+  {
+   "id": "hy_ace",
+   "i": 1,
+   "r24": "Well, well, well. What b",
+   "next": "rings you he",
+   "raw": "Well, well, well. What brings you here, mon ami?（你从牌桌后面抬起头，你的扑克牌脸微微发亮。）\n\nA little distract"
+  },
+  {
+   "id": "hy_axis",
+   "i": 2,
+   "r24": "AXI-S MODEL 014 R-R-READ",
+   "next": "Y TO GUARD A",
+   "raw": "AXI-S MODEL 014 R-R-READY TO GUARD AND PROTECT. W-WHO ASKED?"
+  },
+  {
+   "id": "hy_axis",
+   "i": 20,
+   "r24": "T-H3N 1-WAS JUS-T A KILL",
+   "next": "ER, T-H-Y-ME",
+   "raw": "T-H3N 1-WAS JUS-T A KILLER, T-H-Y-ME I'M S0L-O-N-L-Y W-A-TCH-I-NG F-U-R-N4C3. Y-O-U-AR3 M3"
+  },
+  {
+   "id": "hy_axis",
+   "i": 32,
+   "r24": "I S-A-Y W4T I M4-K3. T-H",
+   "next": "4T 1-S Q-U-E",
+   "raw": "I S-A-Y W4T I M4-K3. T-H4T 1-S Q-U-E-ST1ON. C-O-ME A-T M3, Y0U P-E-T."
+  },
+  {
+   "id": "hy_axis",
+   "i": 36,
+   "r24": "C-O-ME A-T M3. R-A-D-I-C",
+   "next": "4L D1FF3RC3-",
+   "raw": "C-O-ME A-T M3. R-A-D-I-C4L D1FF3RC3-N75 1-5 H4V3 N-O C-HOICE B-S-H. Y0U A-R-E T-H3 P-R-O-B"
+  },
+  {
+   "id": "hy_bowll",
+   "i": 4,
+   "r24": "I've been worse. You bet",
+   "next": "ter watch wh",
+   "raw": "I've been worse. You better watch where you step! I don't want any cracks showing up on me"
+  },
+  {
+   "id": "hy_bowll",
+   "i": 8,
+   "r24": "...These cracks are my b",
+   "next": "attle scars.",
+   "raw": "...These cracks are my battle scars. They make me strong! But if you must know... I'm just"
+  },
+  {
+   "id": "hy_bowll",
+   "i": 18,
+   "r24": "After that... well, it w",
+   "next": "as like... e",
+   "raw": "After that... well, it was like... everything felt different. When you chose \"Console\" and"
+  },
+  {
+   "id": "hy_bowll",
+   "i": 20,
+   "r24": "Back then and now... wel",
+   "next": "l, back then",
+   "raw": "Back then and now... well, back then I was all about being strong and intimidating. Now, t"
+  }
+ ],
+ "en_samples_mid40": [
+  {
+   "id": "hy_axis",
+   "i": 1,
+   "r40": "...H-H-HERE Y-YOU ARE. H-O-O-OW CAN I HE",
+   "next": "LP T-T TODAY",
+   "raw": "...H-H-HERE Y-YOU ARE. H-O-O-OW CAN I HELP T-T TODAY?"
+  },
+  {
+   "id": "hy_axis",
+   "i": 2,
+   "r40": "AXI-S MODEL 014 R-R-READY TO GUARD AND P",
+   "next": "ROTECT. W-WH",
+   "raw": "AXI-S MODEL 014 R-R-READY TO GUARD AND PROTECT. W-WHO ASKED?"
+  },
+  {
+   "id": "hy_axis",
+   "i": 29,
+   "r40": "T-H4T S-Q-U-E-ST1ON 1-S Q-U-E-ST1ON. T-H",
+   "next": "3 N-E-X-T Q-",
+   "raw": "T-H4T S-Q-U-E-ST1ON 1-S Q-U-E-ST1ON. T-H3 N-E-X-T Q-U-E-St-I0N? S-T-A-R-T-I-N-G T-H-E-W-A-"
+  },
+  {
+   "id": "hy_axis",
+   "i": 32,
+   "r40": "I S-A-Y W4T I M4-K3. T-H4T 1-S Q-U-E-ST1",
+   "next": "ON. C-O-ME A",
+   "raw": "I S-A-Y W4T I M4-K3. T-H4T 1-S Q-U-E-ST1ON. C-O-ME A-T M3, Y0U P-E-T."
+  },
+  {
+   "id": "hy_axis",
+   "i": 35,
+   "r40": "Y-OU A-S-K3D G-OO-D Q-U-E-St-I0N... T-H4",
+   "next": "T 1-S S-T4R7",
+   "raw": "Y-OU A-S-K3D G-OO-D Q-U-E-St-I0N... T-H4T 1-S S-T4R74L, B-U-T C0M3 A-T M3, Y0U P-E-T. COME"
+  },
+  {
+   "id": "hy_bowll",
+   "i": 5,
+   "r40": "You know... being strong and all that ja",
+   "next": "zz. Not real",
+   "raw": "You know... being strong and all that jazz. Not really into hobbies though. Just try not t"
+  },
+  {
+   "id": "hy_bowll",
+   "i": 8,
+   "r40": "...These cracks are my battle scars. The",
+   "next": "y make me st",
+   "raw": "...These cracks are my battle scars. They make me strong! But if you must know... I'm just"
+  },
+  {
+   "id": "hy_bowll",
+   "i": 12,
+   "r40": "You know, with all those cracks and batt",
+   "next": "les I've had",
+   "raw": "You know, with all those cracks and battles I've had... Sometimes my words just come out a"
+  },
+  {
+   "id": "hy_bowll",
+   "i": 15,
+   "r40": "...Yeah, you asked what I do here in Dun",
+   "next": "es most days",
+   "raw": "...Yeah, you asked what I do here in Dunes most days. And then about hobbies or something "
+  },
+  {
+   "id": "hy_bowll",
+   "i": 16,
+   "r40": "...When we first met out here in the san",
+   "next": "ds of Dunes,",
+   "raw": "...When we first met out here in the sands of Dunes, I was thinking: What is this guy doin"
+  }
+ ]
+}

@@ -1,0 +1,186 @@
+{
+ "note": "第145轮 A/B：old = HEAD 版 event_speech.py，new = 工作区版（`_SENTENCE_ENDS` 加 ASCII `.` + `_sentence_ends()` 过滤）。mid = 切点两侧都是字母/数字。",
+ "sha1": {
+  "old": "5637b0279621891b79640620a19758f09958eff7",
+  "new": "b854b55878ea6eb3da9cb20bb737ee5be52daa10"
+ },
+ "all": {
+  "turns": 5592,
+  "mid24": [
+   1234,
+   1094
+  ],
+  "mid40": [
+   423,
+   300
+  ],
+  "changed24": 264,
+  "changed40": 335
+ },
+ "zh": {
+  "turns": 5144,
+  "mid24": [
+   1031,
+   959
+  ],
+  "mid40": [
+   239,
+   200
+  ],
+  "changed24": 132,
+  "changed40": 152
+ },
+ "en": {
+  "turns": 448,
+  "mid24": [
+   203,
+   135
+  ],
+  "mid40": [
+   184,
+   100
+  ],
+  "changed24": 132,
+  "changed40": 183
+ },
+ "diff": {
+  "d24": 264,
+  "d40": 335,
+  "d24_zh": 132,
+  "d24_en": 132
+ },
+ "sample_en_fixed": [
+  {
+   "id": "hy_ace",
+   "i": 1,
+   "old": "Well, well, well. What d",
+   "new": "Well, well, well."
+  },
+  {
+   "id": "hy_ace",
+   "i": 1,
+   "old": "Well, well, well. What b",
+   "new": "Well, well, well."
+  },
+  {
+   "id": "hy_ace",
+   "i": 35,
+   "old": "Well, well, well. Let's",
+   "new": "Well, well, well."
+  },
+  {
+   "id": "hy_ace",
+   "i": 1,
+   "old": "Hey there, mon ami. Come",
+   "new": "Hey there, mon ami."
+  },
+  {
+   "id": "hy_axis",
+   "i": 1,
+   "old": "...H-H-HERE Y-YOU ARE. H",
+   "new": "...H-H-HERE Y-YOU ARE."
+  },
+  {
+   "id": "hy_axis",
+   "i": 4,
+   "old": "T-O D-A-Y... 1 HAV3 N-O",
+   "new": "T-O D-A-Y..."
+  },
+  {
+   "id": "hy_axis",
+   "i": 10,
+   "old": "F-IND-3D-Y0U. R-U-L-I-NG",
+   "new": "F-IND-3D-Y0U."
+  },
+  {
+   "id": "hy_axis",
+   "i": 11,
+   "old": "F-O-U-N-D Y-O-U. A-X-I-S",
+   "new": "F-O-U-N-D Y-O-U."
+  },
+  {
+   "id": "hy_axis",
+   "i": 19,
+   "old": "I D-I-D A-L-L 1-COULD. I",
+   "new": "I D-I-D A-L-L 1-COULD."
+  },
+  {
+   "id": "hy_axis",
+   "i": 23,
+   "old": "C-HUJIN... H3 W4S K-I-N-",
+   "new": "C-HUJIN..."
+  }
+ ],
+ "sample_zh_changed": [
+  {
+   "id": "hy_ace",
+   "i": 12,
+   "old": "Well, well, well. What d",
+   "new": "Well, well, well.",
+   "raw": "Well, well, well. What do we have here? 习惯了油嘴滑舌和用扑克术语比喻一切。无论何时何地，只要能玩个牌局或讲讲故事，我都会感到满足。来吧，我们一起打个牌，看看今天能不能爆出个小冷门？"
+  },
+  {
+   "id": "hy_ace",
+   "i": 26,
+   "old": "Well, well, well. 你这么说可是",
+   "new": "Well, well, well.",
+   "raw": "Well, well, well. 你这么说可是夸我了。但你知道的，每个人都有自己的长处和短处嘛。也许我在牌局上有些本事，但在其他方面可能就不那么出色了。不过现在说这些也没啥意思，不如来打个牌吧！看看今天能不能爆出个小冷门？"
+  },
+  {
+   "id": "hy_ace",
+   "i": 2,
+   "old": "Oh, yeah... Ace of the F",
+   "new": "Oh, yeah...",
+   "raw": "Oh, yeah... Ace of the Feisty Five. 没错，我是那个拿着扑克牌的赌徒。不过，现在你可是在我私人时间里了，怎么不先给我倒杯酒？ 或者我们直接干点别的也行。"
+  },
+  {
+   "id": "hy_ace",
+   "i": 11,
+   "old": "如果真到了那种情况... 我可能不会那么轻易地就",
+   "new": "如果真到了那种情况...",
+   "raw": "如果真到了那种情况... 我可能不会那么轻易地就承认吧。毕竟，在这牌局里我总是用那些狡猾的手法让自己赢，不会那么容易被打败。\n\n不过，我也知道那样做会伤害别人的感情——尤其是 Starlo 他们。所以我可能会先缓和一下气氛：“嘿，嘿！别这么"
+  },
+  {
+   "id": "hy_ace",
+   "i": 13,
+   "old": "Well, well, well. What d",
+   "new": "Well, well, well.",
+   "raw": "Well, well, well. What do we have here? 你可真是个有趣的人。（歪头笑）Life's a game of cards, mon ami. You play the hand you're dealt. "
+  },
+  {
+   "id": "hy_ace",
+   "i": 16,
+   "old": "嗯，就是那种感觉... 早晨醒来时的阳光透过窗户",
+   "new": "嗯，就是那种感觉...",
+   "raw": "嗯，就是那种感觉... 早晨醒来时的阳光透过窗户洒进来，沙尘在空中轻舞飞扬；牌桌上的喧嚣声和欢笑声交织在一起，就像是生活的乐章。每次回到 Dunes 的酒吧，都有一种莫名的归属感。\n\n我习惯在那里等待日出，洗牌、发牌，偶尔也会有人找上门来—"
+  },
+  {
+   "id": "hy_ace",
+   "i": 19,
+   "old": "嗯，Clover 拒绝玩牌的时候... 我其实有",
+   "new": "嗯，Clover 拒绝玩牌的时候...",
+   "raw": "嗯，Clover 拒绝玩牌的时候... 我其实有点惊讶，但也挺理解她的决定的。毕竟不是每个人都是天生的赌徒。\n\n但她那股认真劲儿，还有那种不太在乎的态度... 那时候我就开始对她产生了不一样的看法。也许她是那个能识破我所有把戏的人吧？这倒是"
+  },
+  {
+   "id": "hy_ace",
+   "i": 20,
+   "old": "嗯，现在回想起来... 最想不通的就是 Star",
+   "new": "嗯，现在回想起来...",
+   "raw": "嗯，现在回想起来... 最想不通的就是 Starlo 为什么会选择我吧。星洛是个梦想家，他想要成为英雄，而我是那个拿着扑克牌的赌徒——我们两个看似没什么交集。\n\n但他知道我不是在装作正义的样子，或许是因为他知道这世界上有些东西无法真正衡量的"
+  },
+  {
+   "id": "hy_ace",
+   "i": 29,
+   "old": "Well, well, well. 也许我会稍微",
+   "new": "Well, well, well.",
+   "raw": "Well, well, well. 也许我会稍微调整一下自己说的话吧。毕竟，我是个喜欢戏剧化的牌术师。\n\n不过真的要说的话... 我可能会少用一点自恋的词句。“不是不知道自己是谁——我是 Ace” 这一句可能有点过了。Ace 不只是那个角色"
+  },
+  {
+   "id": "hy_ace",
+   "i": 36,
+   "old": "Well, well, well... 夸奖什么",
+   "new": "Well, well, well...",
+   "raw": "Well, well, well... 夸奖什么的我都会听一听。但真正让我相信那句话可没那么容易——我还是那个赌徒嘛。不过谢谢你的鼓励，Chirpy。（笑）有时候虚张声势也是有必要的。"
+  }
+ ]
+}
