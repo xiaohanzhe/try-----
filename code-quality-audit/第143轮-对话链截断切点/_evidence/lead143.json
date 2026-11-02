@@ -1,0 +1,149 @@
+{
+ "files": 77,
+ "turns": 5592,
+ "over": 336,
+ "hard_cut": 61,
+ "cut_char": {
+  "\n": 99,
+  "!": 23,
+  "?": 33,
+  "。": 104,
+  "！": 3,
+  "？": 13
+ },
+ "early_cut": 56,
+ "hard_samples": [
+  {
+   "id": "hy_bowll",
+   "max_chars": 200,
+   "len": 226,
+   "head": "Strong means not easily broken or hurt. You know... like a b"
+  },
+  {
+   "id": "hy_bowll",
+   "max_chars": 200,
+   "len": 371,
+   "head": "After that... well, it was like... everything felt different"
+  },
+  {
+   "id": "hy_bowll",
+   "max_chars": 200,
+   "len": 478,
+   "head": "Back then and now... well, back then I was all about being s"
+  },
+  {
+   "id": "hy_bowll",
+   "max_chars": 200,
+   "len": 454,
+   "head": "The moment with Clover when he chose to console me and clean"
+  },
+  {
+   "id": "hy_bowll",
+   "max_chars": 200,
+   "len": 258,
+   "head": "Well... that’s probably because of those battle scars and my"
+  },
+  {
+   "id": "hy_bowll",
+   "max_chars": 200,
+   "len": 293,
+   "head": "Believing in other worlds is kind of hard when you're stuck "
+  },
+  {
+   "id": "hy_chujin_ketsukane",
+   "max_chars": 200,
+   "len": 233,
+   "head": "Woodworking refers to the craft of making things out of wood"
+  },
+  {
+   "id": "hy_chujin_ketsukane",
+   "max_chars": 200,
+   "len": 228,
+   "head": "In those moments on the tape, I think about Ceroba and Kanak"
+  },
+  {
+   "id": "hy_chujin_ketsukane",
+   "max_chars": 200,
+   "len": 247,
+   "head": "The incident changed me deeply; it left me questioning my de"
+  },
+  {
+   "id": "hy_chujin_ketsukane",
+   "max_chars": 200,
+   "len": 242,
+   "head": "I am Chujin Ketsukane, the builder of Ketsukane Manor and a "
+  }
+ ],
+ "with_ellipsis": {
+  "moved": 16,
+  "p50": 11,
+  "p90": 48,
+  "max": 188,
+  "still_hard": 59
+ },
+ "definitions": [
+  {
+   "where": "event_speech._SENTENCE_ENDS",
+   "literal": "。！？!?\n…",
+   "repr": "'。！？!?\\n…'",
+   "has_ellipsis": true,
+   "only_here": [],
+   "missing": []
+  },
+  {
+   "where": "main._clean_ai_reply 第3步 for sep",
+   "literal": "。！？!?\n",
+   "repr": "'。！？!?\\n'",
+   "has_ellipsis": false,
+   "only_here": [],
+   "missing": [
+    "…"
+   ]
+  },
+  {
+   "where": "common113._sentences 正则",
+   "literal": "[。！？!?…]+",
+   "repr": "'[。！？!?…]+'",
+   "has_ellipsis": true,
+   "only_here": [],
+   "missing": [
+    "\n"
+   ]
+  },
+  {
+   "where": "extreme113.RE_SENT",
+   "literal": "[。！？!?；;\\n]+",
+   "repr": "'[。！？!?；;\\\\n]+'",
+   "has_ellipsis": false,
+   "only_here": [
+    ";",
+    "\\",
+    "n",
+    "；"
+   ],
+   "missing": [
+    "\n",
+    "…"
+   ]
+  },
+  {
+   "where": "measure142b.END",
+   "literal": "。！？!?\n",
+   "repr": "'。！？!?\\n'",
+   "has_ellipsis": false,
+   "only_here": [],
+   "missing": [
+    "…"
+   ]
+  }
+ ],
+ "seps_main": [
+  "。",
+  "！",
+  "？",
+  "!",
+  "?",
+  "\n"
+ ],
+ "seps_event_chain": "。！？!?\n…"
+}

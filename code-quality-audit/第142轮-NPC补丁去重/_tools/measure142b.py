@@ -37,7 +37,14 @@ TRAIN = os.path.join(PET, 'assets', 'npc', '_training')
 RAW = os.path.join(ROOT, 'code-quality-audit', '第113轮-全体角色AI训练',
                    '_evidence', 'raw30')
 MAX_CHARS = 200
-END = u'\u3002\uff01\uff1f!?\n'      # 与 common113._sentences 同口径（不含 `…`）
+# ★★★ 第143轮订正：原来这行注释写的是「与 `common113._sentences` 同口径（不含 `…`）」
+#   ——**与实现相反**。`_sentences` 的正则是 `[。！？!?…]+`，**含** `…`。
+#   ⇒ 本文件这份 `END` **不含** `…`，切出来的段**更少** ⇒ 判出的"超 3 句"**更少** ⇒
+#   这一列比产品**更宽（更宽松）**，第142轮那张表里"超句"的百分数**偏低**。
+#   ⚠️ 第142轮的主结论走的是**长度**（`TOO_LONG`，247 条），不受影响；
+#   "100% 有 >3 句"这种**已经到顶**的数字也不受影响（真实值只会更高）；
+#   但中间的百分数以后**不许再引用**，要用就按 `_sentences` 重算。
+END = u'\u3002\uff01\uff1f!?\n'      # 比 common113._sentences 宽：故意不含 `…`（见上）
 
 
 def _read(p):

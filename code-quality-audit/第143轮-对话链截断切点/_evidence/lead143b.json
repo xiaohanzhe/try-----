@@ -1,0 +1,76 @@
+{
+ "over": 336,
+ "over_zh": 170,
+ "over_en": 166,
+ "lead38_over": 247,
+ "variants": {
+  "V0 现状": {
+   "hard_zh": 0,
+   "hard_en": 61,
+   "hard_total": 61,
+   "risky_dot": 0,
+   "cut_chars": {
+    "。": 104,
+    "？": 13,
+    "\\n": 99,
+    "?": 33,
+    "!": 23,
+    "！": 3
+   }
+  },
+  "V1 +`…`": {
+   "hard_zh": 0,
+   "hard_en": 59,
+   "hard_total": 59,
+   "risky_dot": 0,
+   "cut_chars": {
+    "。": 96,
+    "？": 13,
+    "\\n": 94,
+    "?": 33,
+    "!": 22,
+    "…": 16,
+    "！": 3
+   }
+  },
+  "V2 +`.`": {
+   "hard_zh": 0,
+   "hard_en": 2,
+   "hard_total": 2,
+   "risky_dot": 0,
+   "cut_chars": {
+    "。": 88,
+    "？": 12,
+    "\\n": 86,
+    ".": 114,
+    "?": 20,
+    "!": 12,
+    "！": 2
+   }
+  },
+  "V3 +`…`+`.`": {
+   "hard_zh": 0,
+   "hard_en": 1,
+   "hard_total": 1,
+   "risky_dot": 0,
+   "cut_chars": {
+    "。": 81,
+    "？": 12,
+    "\\n": 81,
+    ".": 113,
+    "?": 20,
+    "!": 12,
+    "…": 14,
+    "！": 2
+   }
+  }
+ },
+ "still_hard_v3": [
+  {
+   "id": "hy_dalv",
+   "lang": "en",
+   "len": 280,
+   "head": "I suppose I am in a place of both memory and imagi"
+  }
+ ]
+}
