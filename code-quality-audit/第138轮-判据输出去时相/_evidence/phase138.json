@@ -1,6 +1,7 @@
 {
- "files_scanned": 142,
- "calls_scanned": 6274,
+ "_note": "第138轮首次落盘时的快照：那时 SUITES 里还没有 check138 自己，所以只扫到 137 个判据文件（注册后是 138）。★ 第144轮起本文件**冻结**——check138 不再刷新它（改写到 code-quality-audit/regress/_out/phase138.live.json，该目录已被 .gitignore 忽略）。原因：这里的两个计数会随套件数变化，git log 显示它从第138轮起连续 6 个提交（138~143）全被改，每轮 commit 都捎带一个语义无关的改动。会自己变的历史证据不能拿来对账。★ 内容由 check144 逐字钉住。",
+ "files_scanned": 137,
+ "calls_scanned": 6120,
  "bad_lineno": 0,
  "bad_size": 0
 }

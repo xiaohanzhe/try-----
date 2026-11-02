@@ -1,0 +1,138 @@
+{
+ "history": [
+  {
+   "commit": "0e4544b3",
+   "subject": "第143轮：对话链截断补 ASCII `.` —— 英文 NPC 不再被切成半个",
+   "files": 142,
+   "calls": 6274
+  },
+  {
+   "commit": "5562ac09",
+   "subject": "第142轮：那 38 条不是\"重复\"，是 38 份实测诊断（不改 + 订正第13",
+   "files": 141,
+   "calls": 6246
+  },
+  {
+   "commit": "c3600942",
+   "subject": "第141轮：「一句话太长」不上闸；出戏闸补「自陈按设定扮演」",
+   "files": 140,
+   "calls": 6228
+  },
+  {
+   "commit": "ea67b36f",
+   "subject": "第140轮：length_policy 从死数据变成真执行的规格（只执行字数那一",
+   "files": 139,
+   "calls": 6198
+  },
+  {
+   "commit": "43216d24",
+   "subject": "第139轮：patches[\"ralsei\"] 与人设去重（一次说几句那条规格写",
+   "files": 138,
+   "calls": 6158
+  },
+  {
+   "commit": "46288e2b",
+   "subject": "第138轮：判据的输出里不许含\"时相量\"",
+   "files": 137,
+   "calls": 6120
+  }
+ ],
+ "n_commits": 6,
+ "deltas": [
+  {
+   "commit": "0e4544b3",
+   "d_files": 1,
+   "d_calls": 28
+  },
+  {
+   "commit": "5562ac09",
+   "d_files": 1,
+   "d_calls": 18
+  },
+  {
+   "commit": "c3600942",
+   "d_files": 1,
+   "d_calls": 30
+  },
+  {
+   "commit": "ea67b36f",
+   "d_files": 1,
+   "d_calls": 40
+  },
+  {
+   "commit": "43216d24",
+   "d_files": 1,
+   "d_calls": 38
+  }
+ ],
+ "refs": {
+  "write": [
+   {
+    "file": "code-quality-audit\\第138轮-判据输出去时相\\_tools\\check138.py",
+    "line": "with io.open(os.path.join(_LIVE, 'phase138.live.json'), 'w',"
+   }
+  ],
+  "read": [],
+  "doc": [
+   {
+    "file": "code-quality-audit\\第138轮-判据输出去时相\\_tools\\check138.py",
+    "line": "# ★★★ 第144轮：**不再写 `_evidence/phase138.json`**，改写到 `regress/_out/`。"
+   },
+   {
+    "file": "code-quality-audit\\第138轮-判据输出去时相\\_tools\\check138.py",
+    "line": "#   ★ 冻结后的 `phase138.json` 由 `check144` 钉住（内容必须逐字等于 138 轮那份）。"
+   },
+   {
+    "file": "code-quality-audit\\第141轮-单句长度测量\\_tools\\recheck141_core.py",
+    "line": "u'code-quality-audit/第138轮-判据输出去时相/_evidence/phase138.json',"
+   },
+   {
+    "file": "code-quality-audit\\第142轮-NPC补丁去重\\_tools\\recheck142_core.py",
+    "line": "u'code-quality-audit/第138轮-判据输出去时相/_evidence/phase138.json',"
+   },
+   {
+    "file": "code-quality-audit\\第143轮-对话链截断切点\\_tools\\recheck143_core.py",
+    "line": "(u'code-quality-audit/第138轮-判据输出去时相/_evidence/phase138.json',"
+   },
+   {
+    "file": "code-quality-audit\\第144轮-证据冻结\\_tools\\measure144.py",
+    "line": "\"\"\"第144轮 · 量：`phase138.json` 到底被改过几次、每次都变成了什么、谁在读它。"
+   },
+   {
+    "file": "code-quality-audit\\第144轮-证据冻结\\_tools\\measure144.py",
+    "line": "2. **谁在读它**：全仓搜 `phase138.json`，把命中分成「写盘 / 读盘 / 只在文档里提到」"
+   },
+   {
+    "file": "code-quality-audit\\第144轮-证据冻结\\_tools\\measure144.py",
+    "line": "REL = u'code-quality-audit/\\u7b2c138\\u8f6e-\\u5224\\u636e\\u8f93\\u51fa\\u53bb\\u65f6\\u76f8/_evi"
+   },
+   {
+    "file": "code-quality-audit\\第144轮-证据冻结\\_tools\\measure144.py",
+    "line": "say(u'=== 1. `phase138.json` 的提交史（%d 次）===' % len(commits))"
+   },
+   {
+    "file": "code-quality-audit\\第144轮-证据冻结\\_tools\\measure144.py",
+    "line": "say(u'=== 2. 全仓谁提到 `phase138.json` ===')"
+   },
+   {
+    "file": "code-quality-audit\\第144轮-证据冻结\\_tools\\measure144.py",
+    "line": "if u'phase138' not in src:"
+   },
+   {
+    "file": "code-quality-audit\\第144轮-证据冻结\\_tools\\measure144.py",
+    "line": "if u'phase138' not in ln:"
+   }
+  ]
+ },
+ "n_readers": 0,
+ "gitignore_out": [
+  "code-quality-audit/regress/_out/\r"
+ ],
+ "out_ignored": true,
+ "frozen": {
+  "files_scanned": 137,
+  "calls_scanned": 6120,
+  "bad_lineno": 0,
+  "bad_size": 0
+ }
+}

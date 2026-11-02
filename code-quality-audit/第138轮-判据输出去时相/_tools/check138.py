@@ -347,11 +347,26 @@ check(u'F4 本文件自己不回显行号 / 体积',
       not find_lineno(_self) and not find_size(_self))
 
 # =============================================== 落盘
+# ★★★ 第144轮：**不再写 `_evidence/phase138.json`**，改写到 `regress/_out/`。
+#   病根：这个文件里有两个**必然随套件数变化**的计数（`files_scanned` /
+#   `calls_scanned`），而每加一个判据套件、每加一条判据，它们就会变。
+#   ⇒ `git log -- <该文件>` 显示它从第138轮起 **连续 6 个提交（138~143）全被改**，
+#   每轮 commit 都捎带一个语义无关的改动，review 时纯噪声。
+#   ★ 为什么不是"就让它变"：它是**证据文件**，证据的语义是"当时量到的东西"，
+#     而不是"此刻的实时值" —— 一个会自己变的历史证据，谁都不能拿它做对账。
+#   ★ 为什么不是"干脆不落盘"：当前扫描面还是有人想看的，所以仍然写一份，
+#     只是写到 `code-quality-audit/regress/_out/`（`.gitignore` 已忽略整个目录）——
+#     **证据冻结在仓库里，活计数留在工作区外**。
+#   ★ 冻结后的 `phase138.json` 由 `check144` 钉住（内容必须逐字等于 138 轮那份）。
 if not os.path.isdir(EV):
     os.makedirs(EV)
 _ev = {'files_scanned': len(_targets), 'calls_scanned': _n_calls,
        'bad_lineno': len(_bad_ln), 'bad_size': len(_bad_sz)}
-with io.open(os.path.join(EV, 'phase138.json'), 'w', encoding='utf-8', newline='') as f:
+_LIVE = os.path.join(ROOT, 'code-quality-audit', 'regress', '_out')
+if not os.path.isdir(_LIVE):
+    os.makedirs(_LIVE)
+with io.open(os.path.join(_LIVE, 'phase138.live.json'), 'w',
+             encoding='utf-8', newline='') as f:
     f.write(json.dumps(_ev, ensure_ascii=False, indent=1))
 
 print(u'')
