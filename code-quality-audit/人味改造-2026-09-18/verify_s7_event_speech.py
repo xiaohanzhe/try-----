@@ -1181,7 +1181,9 @@ def make_lean_host():
     fh._ai_stream_enabled = lambda: True
     fh._ai_chat_options = lambda: {'temperature': 0.85, 'max_tokens': 256}
     # _clean_ai_reply 不在本组关注点（它有独立套件），直接放行，避免牵扯别的依赖
-    fh._clean_ai_reply = lambda reply, recent=None: reply
+    # ★ 第140轮：产品侧多了一个 `speaker=` 实参（长度规格按角色卡取），桩要跟着收，
+    #   否则 TypeError 会被 main 的防御性 except 吞成一条 WARNING，污染输出比对。
+    fh._clean_ai_reply = lambda reply, recent=None, speaker=None: reply
     fh._build_ai_context = lambda: _MARK_CTX       # 用桩顶掉真实现（真实现会读天气/情绪）
     for name in ('chat_with_ai', '_build_persona_prompt'):
         setattr(fh, name, types.MethodType(getattr(R, name), fh))

@@ -257,7 +257,11 @@ if not os.path.isdir(EV):
     os.makedirs(EV)
 _ev = {'patch_len': len(patch), 'persona_len': len(persona),
        'out_len': len(_out), 'header': _HEADER,
-       'chat_call': _chat_p, 'prewarm_call': _pre_p}
+       # ★ 第140轮：这里原来落的是**行号**（`chat_call: [14234]` / `prewarm_call: [14806]`）。
+       #   行号是纯时相量 —— 第140轮只在 `chat_with_ai` 里加了 2 行注释，
+       #   `prewarm_call` 就从 14806 漂到 14808，**判定一个字没变**却把工作区搞脏，
+       #   逼人每次提交都得为它写一条解释。与第138轮那条口径同一类，改成**处数**。
+       'chat_call_n': len(_chat_p), 'prewarm_call_n': len(_pre_p)}
 with io.open(os.path.join(EV, 'patch137.json'), 'w', encoding='utf-8', newline='') as f:
     f.write(json.dumps(_ev, ensure_ascii=False, indent=1))
 

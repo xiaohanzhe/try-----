@@ -14431,7 +14431,8 @@ class RalseiPet(QMainWindow):
                 reply = _ask(system, opts)
                 # 输出护栏：小模型（3B）会自问自答续写、把同一句话反复念，
                 # 清洗后才交给 UI（见 _clean_ai_reply）
-                cleaned = self._clean_ai_reply(reply, recent=recent)
+                # ★ 第140轮：把说话人一起传下去 —— 长度规格是**按角色卡**取的
+                cleaned = self._clean_ai_reply(reply, recent=recent, speaker=speaker)
                 # 护栏判退（重复自己的旧台词 / 整条续写 / 只有标点）时**重采样一次**，
                 # 而不是直接沉默：这类判退的成因是"这一次采样又落在了记忆里那句上"，
                 # 抬高温度 + 明确要求换个说法，重采样几乎必出一条新的。
@@ -14448,7 +14449,8 @@ class RalseiPet(QMainWindow):
                             1.0, float(opts.get('temperature', 0.85)) + 0.1)
                         reply2 = _ask(
                             system + "\n\n" + RalseiPet._RETRY_NUDGE, retry_opts)
-                        cleaned = self._clean_ai_reply(reply2, recent=recent)
+                        cleaned = self._clean_ai_reply(reply2, recent=recent,
+                                                      speaker=speaker)
                         _log.debug("[本地AI] 护栏判退后重采样：%r → %r",
                                    (reply or '')[:40], (cleaned or '')[:40])
                     except Exception as e:
@@ -15066,7 +15068,7 @@ class RalseiPet(QMainWindow):
         "用你自己的话重新回应主人刚刚说的那件事，不要沿用你想到的第一句。"
     )
 
-    def _clean_ai_reply(self, reply, recent=None):
+    def _clean_ai_reply(self, reply, recent=None, speaker=None):
         """模型输出护栏（对话与自主开口共用）。返回清洗后的文本，或 None。
 
         小模型的几种已知失态靠提示词治不干净，必须在这里拦（顺序即优先级，别随便调）：
@@ -15092,9 +15094,14 @@ class RalseiPet(QMainWindow):
           2) **车轱辘话**：与**自己最近说过的某句**高度重合 → 判无效返回 None，
              交给调用方换说法重采样（判据与取舍见 `_is_repeat_of_recent`）
           3) **超长跑飞**：超过 max_chars → 从最近的句末标点处截断
+             （max_chars 来自**角色卡**的 `length_policy.max_chars`，经
+             `npc_persona.reply_length_limits()` 只许收紧 `AI_REPLY_MAX_CHARS`；
+             卡缺失才回落 220。句数那一半**不执行**，理由写在那里）
 
         参数 `recent` = Ralsei 最近说过的回复文本（列表）；不传则**跳过第 2 步**
         （0a/0b/0c/1/3 都与 recent 无关）。
+        参数 `speaker` = 这次是谁在说话（NPC id；`None` = 主宠 Ralsei），
+        只用来决定第 3 步取哪张卡的 `length_policy`。
 
         实现约定：`_is_repeat_of_recent` 用 getattr 取、缺失即跳过该步，
         使本方法在测试桩上也能独立工作（桩只需绑本方法即可）。
@@ -15200,7 +15207,17 @@ class RalseiPet(QMainWindow):
                 _log.debug("[本地AI] 回复与近期台词高度重合，判为重播，丢弃")
                 return None
             # 3) 超长 → 从最近的句末标点截断
-            max_chars = getattr(self, 'AI_REPLY_MAX_CHARS', None) or RalseiPet.AI_REPLY_MAX_CHARS
+            #    ★★ 第140轮：阈值不再写死，改由**角色卡**决定 ——
+            #      `npc_persona.reply_length_limits()` 读 `cards/<id>.json` 的
+            #      `length_policy.max_chars`（目前 77 张卡都是 200），且只许**收紧**
+            #      这里的 `AI_REPLY_MAX_CHARS`。改造前这一步硬写 220，
+            #      与卡片里的 200 并存 ⇒ 卡片从来没生效过（96 张卡写了个寂寞）。
+            #    ★ 走**模块级**函数而不是 `self.xxx()`：回归桩只绑本方法，
+            #      挂在 self 上的新函数在桩上会 AttributeError，被下面的 except
+            #      静默吞掉 ⇒ 整条护栏返回原文不洗（第140轮第一版实测，13 条判据一起红）。
+            max_chars, _max_sent = npc_persona_mod.reply_length_limits(
+                speaker or 'ralsei',
+                getattr(self, 'AI_REPLY_MAX_CHARS', None) or RalseiPet.AI_REPLY_MAX_CHARS)
             if len(t) > max_chars:
                 cut = -1
                 for sep in ('。', '！', '？', '!', '?', '\n'):

@@ -900,6 +900,111 @@ def training_patch(npc_id, assets_dir=None):
 _PATCH_CACHE = {}
 
 
+def training_length_policy(npc_id, assets_dir=None):
+    """该角色「一次能说多少」的规格（`cards/<id>.json` 的 `length_policy`）。没有 ⇒ `None`。
+
+    数据源：`assets/npc/_training/cards/<npc_id>.json` 的 `length_policy`，
+    形如 `{"max_chars": 200, "max_sentences": 3}`。
+
+    ★★ 第140轮：这个字段从 `eval113` 生成那天起就**一直没人读**（全仓零调用），
+      属于第139轮刚清理过的同一种毛病 —— 规格写了、却一处不执行。
+      真正生效的是 `main._clean_ai_reply` 里硬写的 220 ⇒ **两套数字并存，
+      以没人维护的那个为准**。本轮把它接到那个唯一的执行点。
+
+    ★ 两个字段的待遇**故意不一样**，不是漏做：
+
+      · `max_chars` → **执行**。它就是截断阈值，改卡片即改行为。
+      · `max_sentences` → **只读、不参与截断**。依据（77 个角色 / 5592 条真机回复，
+        切句**不把省略号当句号**，见人设第 57 行「别拿它当句号」）：
+
+          | 句数 | 占比 | 累计 ≥N 句 |
+          |---|---|---|
+          | 3 | 17.8% | 73.7% |
+          | 4 | 17.5% | 55.9% |
+          | 6 | 9.6% | 24.7% |
+          | 8 | 4.1% | 8.7% |
+
+        中位数是 **4 句**、**44.1% 的回复在 3 句以内**（第139轮那个"83.3% 不遵守"
+        是切句把 `…` 当句号算出来的；同一批 48 轮换成不含省略号的切法只有 **64.6%**）。
+        ⚠️ 注意"≥3 句 73.7%"与"按 3 句砍会动 73.7%"**不是一回事**：后者只动 **>3 句**的，
+        实际是 **55.9%**（`>6` 句是 **15.1%**）—— 这个数我第一次也读错过，别混。
+        而那批 6 句的回复平均才 **150 字**，**还在字数预算内** ——
+        说明"句子多"和"话太多"不是同一件事。
+
+        ⇒ 它是**目标倾向**，不是"超了就砍"的闸。硬执行按 3 句要削掉一半以上的回复，
+          而截断砍的是**结尾**，人设要求的「先接住、再补一句我自己的感受」正好落在那里。
+
+        量化与全部切句口径见 `code-quality-audit/第140轮-执行长度规格/_evidence/report140.md`。
+
+    ★ 与 `training_patch` 同口径：读盘失败一律 `None`（**不抛**）、带进程内缓存。
+      返回 `(max_chars, max_sentences)`；任一不是正整数 ⇒ `None`（**不猜默认值**，
+      猜一个就又是"没人维护的数字"）。
+    """
+    if not isinstance(npc_id, str) or not npc_id:
+        return None
+    key = (npc_id, assets_dir)
+    if key in _POLICY_CACHE:
+        return _POLICY_CACHE[key]
+    val = None
+    try:
+        base = assets_dir
+        if base is None:
+            here = os.path.dirname(os.path.abspath(__file__))
+            base = os.path.join(here, '..', 'assets')
+        path = os.path.join(base, 'npc', '_training', 'cards', npc_id + '.json')
+        with open(path, 'rb') as fh:
+            card = json.loads(fh.read().decode('utf-8'))
+        lp = card.get('length_policy') if isinstance(card, dict) else None
+        if isinstance(lp, dict):
+            chars = lp.get('max_chars')
+            sents = lp.get('max_sentences')
+            # `type(...) is int` 而不是 isinstance：`True`/`False` 也是 int 的子类，
+            # 用 isinstance 会把 `"max_chars": true` 当成 1 —— 静默错值。
+            if type(chars) is int and type(sents) is int and chars > 0 and sents > 0:
+                val = (chars, sents)
+    except Exception as e:
+        _log.debug('长度规格读取失败（按无规格处理）：%s', e)
+        val = None
+    _POLICY_CACHE[key] = val
+    return val
+
+
+#: `training_length_policy` 的进程内缓存。键 = (npc_id, assets_dir)。
+#: ★ 单独一份、不与 `_PATCH_CACHE` 混用：两者的键空间相同、值的类型不同，
+#:   混在一起会得到"patch 被当成 tuple 用"这种只在特定调用顺序下才炸的 bug。
+_POLICY_CACHE = {}
+
+
+def reply_length_limits(npc_id, hard):
+    """`_clean_ai_reply` 第 3 步真正用的那两个数 —— 返回 `(max_chars, max_sentences)`。
+
+    ★★ 为什么是**模块级函数**而不是 `RalseiPet` 的方法（第140轮第一版踩的坑）：
+      回归里有二十几个桩只绑了 `_clean_ai_reply` 一个方法。写成 `self._xxx()` 后，
+      桩上没有那个属性 ⇒ `AttributeError` ⇒ 被本方法自己的 `except` **静默吞掉** ⇒
+      整条护栏返回原文不洗 —— 13 条判据一起红，症状看起来像"护栏全废了"。
+      挂到模块级就不依赖桩，桩只要 import 得到本模块就成立。
+
+    ★ `hard` 是产品兜底（`RalseiPet.AI_REPLY_MAX_CHARS`）。卡片只许**收紧**：
+      返回 `min(卡片, hard)`。否则一张写错 2000 的卡就能悄悄绕过粗上限。
+      卡片缺失/读坏 ⇒ 原样返回 `(hard, 0)`，与改造前完全一致（0 = 句数不限）。
+
+    ★ 第二个返回值**不参与截断**，只作记录；理由见 `training_length_policy` 的 docstring。
+    """
+    try:
+        cap = int(hard)
+    except Exception:
+        cap = 220
+    if cap <= 0:
+        cap = 220
+    try:
+        got = training_length_policy(npc_id)
+        if got:
+            return min(int(got[0]), cap), int(got[1])
+    except Exception as e:
+        _log.debug('长度规格结算失败（回落兜底）：%s', e)
+    return cap, 0
+
+
 def relation_patch(npc_id, assets_dir=None):
     """该角色「和其他人的关系」小卡（第113轮）。没有 ⇒ `''`。
 

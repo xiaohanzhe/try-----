@@ -1378,9 +1378,15 @@ if _PVP_OK:
         ('嗯……我在听。（轻轻点头）\n你：那就好', None),
     ]
     _W_DIFF = []
+    # ★ 第140轮：第 3 步的上限**不再是常量**，而是角色卡给的 200
+    #   （`npc_persona.reply_length_limits` 只许收紧 `AI_REPLY_MAX_CHARS`）。
+    #   探针把"上限"当输入，两边就必须吃**同一个数**；这里直接问产品要，
+    #   而不是在判据里再抄一份"怎么取卡"的逻辑 —— 抄一份就是第三处实现。
+    _W_LIMIT = M.npc_persona_mod.reply_length_limits(
+        'ralsei', R.AI_REPLY_MAX_CHARS)[0]
     for _i, (_inp, _rec) in enumerate(_W_CASES, 1):
         _prod = stub._clean_ai_reply(_inp, recent=_rec)
-        _prb, _n, _c = _PVP._apply_gates(_inp, R.AI_REPLY_MAX_CHARS, recent=_rec)
+        _prb, _n, _c = _PVP._apply_gates(_inp, _W_LIMIT, recent=_rec)
         if _prod != _prb:
             _W_DIFF.append((_i, _inp[:24], _prod, _prb))
     ok('W2 %d 条样本下，探针 `_apply_gates` 与产品 `_clean_ai_reply` 输出**逐条一致**'
@@ -1389,7 +1395,7 @@ if _PVP_OK:
 
     # 鉴别力：探针若**漏掉第 2 步**（recent 传空当没有），上面第 13/14/15 条就会
     # 由"判退(None)"变成"原文放行" —— 必须能观察到这个差别，否则 W2 是恒真。
-    _w_no_recent = [_PVP._apply_gates(t, R.AI_REPLY_MAX_CHARS, recent=None)[0]
+    _w_no_recent = [_PVP._apply_gates(t, _W_LIMIT, recent=None)[0]
                     for t, _r in _W_CASES if _r]
     ok('W3 鉴别力：把 recent 抽掉后，车轱辘话样本确实不再判退（证明第 2 步真的在跑）',
        all(v is not None for v in _w_no_recent) and len(_w_no_recent) == 4,

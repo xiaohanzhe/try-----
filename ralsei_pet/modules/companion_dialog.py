@@ -111,6 +111,9 @@ UNKNOWN_SPEAKER = '未知说话人'
 
 #: 单条消息长度上限。★ 必须与 `main.RalseiPet.AI_REPLY_MAX_CHARS` 同值
 #: （由 `verify_companion46.B4` 从 main.py 源码解析后交叉断言，防两边漂移）。
+#: ★ 第140轮补：这是**传输/兜底**的粗上限；角色说得更短的口径在
+#:   `cards/<id>.json` 的 `length_policy.max_chars`，由 `_clean_ai_reply` 执行。
+#:   两者不是同一个数——本常量故意保持宽松，它管"气泡能装多少"，不管"这个角色该说多少"。
 MAX_TEXT_CHARS = 220
 
 #: 消息正文里的"别人的发言行"模式：行首（剥掉装饰后）`名字` + 可选 `说/说道` + `：`，

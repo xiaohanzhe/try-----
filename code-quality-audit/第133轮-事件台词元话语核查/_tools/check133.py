@@ -280,8 +280,12 @@ if _clean is not None:
                 _clean_calls.append(nm)
 check(u'E3 对话链那道闸没退线（`_clean_ai_reply` 仍调用它）',
       'looks_like_meta_leak' in _clean_calls,
-      u'命中=%s（共 %d 个调用）' % ('looks_like_meta_leak' in _clean_calls,
-                                len(_clean_calls)))
+      # ★ 第140轮：extra 原来打"共 %d 个调用"—— 那是**时相量**
+      #   （`_clean_ai_reply` 里任何一处新增调用都会让它变），判定一个字没变却报 DIFF，
+      #   正是第138轮那条口径要禁的形状。改成只回显三闸在不在位（布尔，不随版本漂）。
+      u'三闸在位=%r' % [(g in _clean_calls) for g in
+                        ('looks_out_of_character', 'looks_like_assistant_speak',
+                         'looks_like_meta_leak')])
 
 _pkgs = []
 for n in _es_tree.body:

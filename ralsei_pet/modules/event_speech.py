@@ -27,8 +27,9 @@ import re
 TIER_INSTANT = "instant"
 TIER_AI = "ai"
 
-# 事件台词长度上限（对话链路是 AI_REPLY_MAX_CHARS=80，事件反应必须更短：
-# 「一句话的即时反应」超过这个长度就不是反应、是小作文了）
+# 事件台词长度上限（对话链路的上限见 `main.RalseiPet.AI_REPLY_MAX_CHARS`，
+# 且从第140轮起会被角色卡的 `length_policy.max_chars` 再收紧一道；
+# 事件反应必须更短：「一句话的即时反应」超过这个长度就不是反应、是小作文了）
 EVENT_MAX_CHARS = 24
 
 # 首句短于此长度时，若**全文**没超上限就整句保留。
