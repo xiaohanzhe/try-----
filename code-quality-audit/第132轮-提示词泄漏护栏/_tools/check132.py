@@ -215,13 +215,18 @@ if _fn_cr is not None:
                     v = b.value
                     if v is None or (isinstance(v, ast.Constant) and v.value is None):
                         _gate_ret.append(node.lineno)
+# ★★ 第138轮：extra **不再打印行号**。
+#   旧写法 `u'%r' % (_same_if,)` 把 `[(15183, [...])]` 整个打出来 ⇒ 我在别处加 4 行注释，
+#   这条全绿的判据就 DIFF。行号是**时相量**，不是这条判据的语义
+#   （语义是"同一个 if 里并列着这几道闸"）⇒ 只回显结构。
 check(u'D3 该闸与 out_of_character / assistant_speak 在**同一个 if** 里'
       u'（顺序即优先级：三道并列，不另起一支）',
       len(_same_if) == 1 and {'looks_out_of_character',
                               'looks_like_assistant_speak'} <= set(_same_if[0][1]),
-      u'%r' % (_same_if,))
+      u'%d 个 if；并列闸=%s' % (len(_same_if),
+                               u'/'.join(sorted(_same_if[0][1])) if _same_if else u'-'))
 check(u'D4 命中后 `return None`（走既有的重采样路径，不是直接沉默）',
-      bool(_gate_ret), u'行号=%r' % (_gate_ret,))
+      bool(_gate_ret), u'%d 处均 return None' % len(_gate_ret))
 
 
 # =============================================== E. 自检

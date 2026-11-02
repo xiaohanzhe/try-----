@@ -293,9 +293,11 @@ check(u'D3 零外部盘：本文件与探针里没有盘符路径', not _bad_dri
 check(u'D4 夹具规模在位（%d 条，覆盖 3 个旗标 × 正负控制）' % len(FIX),
       len(FIX) == 8)
 
-check(u'D5 产品人设读到了（非空且节数 ≥ 10）',
-      len(_read(PERSONA)) > 3000 and len(_after_secs) >= 10,
-      u'字符=%d 节=%d' % (len(_read(PERSONA)), len(_after_secs)))
+# ★★ 第138轮：extra **不再打印字符数与节数**（旧写法 `u'字符=%d 节=%d'`）——
+#   那是我改一个人设段落就变的绝对量；本判据的语义是"越过阈值"（> 3000 字符 / ≥ 10 节）。
+_n_d5 = sum([len(_read(PERSONA)) > 3000, len(_after_secs) >= 10])
+check(u'D5 产品人设读到了（> 3000 字符 且 节数 ≥ 10）',
+      _n_d5 == 2, u'%d/2 过阈' % _n_d5)
 
 print(u'')
 print(u'=' * 78)

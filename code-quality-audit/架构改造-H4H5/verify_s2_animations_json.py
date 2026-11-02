@@ -96,7 +96,10 @@ builtin, _node, _lines = ex.extract_literal()
 _regen_a = ex.dumps(ex.build_document(builtin, ex.collect_comments(_lines, _node)))
 _regen_b = ex.dumps(ex.build_document(builtin, ex.collect_comments(_lines, _node)))
 check('A4', '导出器幂等：同一输入连续两次导出逐字节一致',
-      _regen_a == _regen_b, '%d 字节' % len(_regen_a.encode('utf-8')))
+      _regen_a == _regen_b,
+      # ★ 第138轮：原来打 `'%d 字节' % len(...encode())` —— 那是"文件多大"这类时相量，
+      #   动画表一动就 DIFF，而判定根本没变。改成**结构性**回显（两次长度是否一致）。
+      '两次长度相同=%s' % (len(_regen_a) == len(_regen_b)))
 try:
     resolved = ex.resolve_groups(doc)
     _res_ok = True

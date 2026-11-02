@@ -266,8 +266,12 @@ if _n_mut:
     _mut_b = _src_b.replace(u"'ralsei'", u"'ralsei__x'")
     _t2 = ast.parse(_mut_b)
     _neg = _excludes_ralsei(_func(_t2, 'chat_with_ai'))
+# ★★ 第138轮：extra **不再回显 `'ralsei'` 的出现次数**。
+#   旧写法 `u'原文出现 %d 次' % _n_mut` 在**第137轮接上主宠 patch 时变红**
+#   （17 → 19，因为新加的两个调用点各带一个字面量）—— 那是计数回显，不是行为变化。
+#   `_n_mut > 0` 作为分母闸**留在条件里**，只是不打印具体数字。
 check(u'B1c2 负控制：把 `\'ralsei\'` 全部改掉后 B1c 必须报红（用的是真实变异，不是空跑）',
-      _n_mut > 0 and _neg is False, u'原文出现 %d 次，变异后=%r' % (_n_mut, _neg))
+      _n_mut > 0 and _neg is False, u'变异后 B1c=%r（必须 False）' % (_neg,))
 
 
 # 成对负控制：**没有**卡的角色，块标题一个都不许出现（否则就是凭空造设定）

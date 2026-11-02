@@ -258,8 +258,10 @@ _call = [n for n in ast.walk(_t)
          if isinstance(n, ast.Call)
          and ((isinstance(n.func, ast.Name) and n.func.id == 'first_sentence')
               or (isinstance(n.func, ast.Attribute) and n.func.attr == 'first_sentence'))]
+# ★★ 第138轮：extra **不再打印行号**（旧写法 `u'%d 处：第 %s 行'`）——
+#   行号是时相量：第137轮我在 `chat_with_ai` 上方加了注释，这条全绿的判据就 DIFF。
 check(u'F1 `main.py` 里 `first_sentence(...)` 真被调用', len(_call) == 1,
-      u'%d 处：第 %s 行' % (len(_call), [n.lineno for n in _call]))
+      u'%d 处' % len(_call))
 check(u'F2 它的第二个实参是 `self.EVENT_SPEAK_MAX_CHARS`（不是写死的数字）',
       bool(_call) and len(_call[0].args) >= 2
       and isinstance(_call[0].args[1], ast.Attribute)
@@ -282,7 +284,7 @@ check(u'G3 零外部盘（读的文件全在仓库内）',
       all(os.path.abspath(p).startswith(ROOT + os.sep)
           for p in (MAIN_PY, ES_PY, EV133, LIVE131)))
 check(u'G4 `_SENTENCE_ENDS` 在位且含句号（改常量要同时看 C 段）',
-      u'。' in ENDS, u'%r' % ENDS)
+      u'。' in ENDS)
 
 # =============================================== 落盘
 if not os.path.isdir(EV):

@@ -196,13 +196,17 @@ _pre_p = _calls(_pre, u'_with_ralsei_patch')
 _chat_b = _calls(_chat, u'_build_persona_prompt')
 _pre_b = _calls(_pre, u'_build_persona_prompt')
 
-check(u'D1 `chat_with_ai` 里恰好 1 处调用', len(_chat_p) == 1, u'%r' % (_chat_p,))
+# ★★ 第138轮：D1~D3 的 extra **不再打印行号**。
+#   旧写法 `u'%r' % (_chat_p,)` / `u'chat %r vs %r ｜ prewarm %r vs %r'` 把 `[14234]` 这类
+#   绝对值打出来 —— 而 D3 的语义本来就是**相对顺序**（调用在 `_build_persona_prompt()`
+#   之后），D1/D2 的语义是**处数**。行号一改注释就变，全绿也 DIFF。
+check(u'D1 `chat_with_ai` 里恰好 1 处调用', len(_chat_p) == 1, u'%d 处' % len(_chat_p))
 check(u'D2 `_prewarm_ai_cache` 里也恰好 1 处（预热与对话同源，否则预热白做一半）',
-      len(_pre_p) == 1, u'%r' % (_pre_p,))
+      len(_pre_p) == 1, u'%d 处' % len(_pre_p))
+_ok_chat = bool(_chat_b and _chat_p and _chat_p[0] > _chat_b[0])
+_ok_pre = bool(_pre_b and _pre_p and _pre_p[0] > _pre_b[0])
 check(u'D3 两处的调用都排在 `_build_persona_prompt()` **之后**（先读人设、再拼补丁）',
-      _chat_b and _chat_p and _chat_p[0] > _chat_b[0]
-      and _pre_b and _pre_p and _pre_p[0] > _pre_b[0],
-      u'chat %r vs %r ｜ prewarm %r vs %r' % (_chat_b, _chat_p, _pre_b, _pre_p))
+      _ok_chat and _ok_pre, u'chat=%s prewarm=%s' % (_ok_chat, _ok_pre))
 
 _bpp = _func(u'_build_persona_prompt')
 check(u'D4 `_build_persona_prompt` 自己**不碰**训练纠正（B8 契约"读到的就是全文"不许破）',

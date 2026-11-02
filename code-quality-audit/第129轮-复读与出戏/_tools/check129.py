@@ -360,13 +360,18 @@ for _p in (os.path.abspath(__file__), PROBE):
 check(u'D3 零外部盘：本文件与探针里没有盘符路径（回归可在任意机器上跑）',
       not _bad_path, u'' if not _bad_path else u'%r' % (_bad_path,))
 
-check(u'D4 夹具规模在位（短句 %d 对 / 长句 %d 对 / 机器人 %d 条）'
-      % (len(SHORT_PAIRS), len(LONG_PAIRS), len(BOT_LINES)),
-      len(SHORT_PAIRS) == 12 and len(LONG_PAIRS) == 6 and len(BOT_LINES) == 4)
+check(u'D4 夹具规模在位（短句 12 对 / 长句 6 对 / 机器人 4 条）',
+      len(SHORT_PAIRS) == 12 and len(LONG_PAIRS) == 6 and len(BOT_LINES) == 4,
+      u'%d/%d/%d' % (len(SHORT_PAIRS), len(LONG_PAIRS), len(BOT_LINES)))
 
-check(u'D5 产品文件确实读到了（main.py 与 event_speech.py 都非空）',
-      len(_read(MAIN_PY)) > 100000 and len(_read(ES_PY)) > 10000,
-      u'main=%d es=%d' % (len(_read(MAIN_PY)), len(_read(ES_PY))))
+# ★★ 第138轮：extra **不再打印精确字节数**。
+#   旧写法是 `u'main=%d es=%d' % (len(...), len(...))` —— 那只在"文件多大"，
+#   而我改一行注释就让它变（第137轮实测：744500 → 746780 → 747019，全绿却三次 DIFF）。
+#   这条判据的语义是**越过阈值**（>100KB / >10KB，防"文件没读到"），不是"恰好多少字节"。
+#   ⇒ 只回显**过了几道阈**这种结构性事实。
+_n_d5 = sum([len(_read(MAIN_PY)) > 100000, len(_read(ES_PY)) > 10000])
+check(u'D5 产品文件确实读到了（main.py > 100KB 且 event_speech.py > 10KB）',
+      _n_d5 == 2, u'%d/2 过阈' % _n_d5)
 
 print(u'')
 print(u'=' * 78)
