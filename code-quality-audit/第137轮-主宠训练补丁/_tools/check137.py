@@ -15,6 +15,9 @@ NPC 那边 `npc_persona.build_system_prompt()` 早就把它拼进 system 了；�
 
 三句：
   ① 一次最多两三句，短一点 —— 人设「我怎么说」已有「一次只说 1~3 句」，**语义重复**；
+     第139轮做了 A/B（`第139轮/_evidence/ab139.jsonl`，56 条真机）⇒ 这句**没有可测效果**
+     （句数 14/28 vs 13/28、p=0.64；字数 p=0.24），已从数据里**删除**。所以 A1 现在是
+     **反向**判据：patch 不许再复述句数规格。
   ② 只认得原作里真有的名字：Kris / Susie / Lancer / Toriel / Asgore / Asriel / Noelle / Berdly；
   ③ 不要自己造人名（「凯斯恩」这种把两个名字拼起来的说法），拿不准就称「你」「他」「她」。
 
@@ -31,7 +34,7 @@ NPC 那边 `npc_persona.build_system_prompt()` 早就把它拼进 system 了；�
 
 ## 本套件守什么
 
-A 数据面：`patches["ralsei"]` 在、非空、三条要求都在（分母非空）
+A 数据面：`patches["ralsei"]` 在、非空；② ③ 在位；① **已去重**（不在，第139轮）
 B 人设面：② ③ 确实**不在** persona 里（否则这轮的"补缺口"就是自欺）
 C 行为面：`_with_ralsei_patch()` 拼出来的串 = persona 原文 + 尾块；空/非字符串不抛
   **破坏性负控制**：把 `training_patch` 打成返回 `''` ⇒ C1 必须报红（块真没了）
@@ -105,11 +108,18 @@ patches = _idx.get('patches') or {}
 patch = (patches.get('ralsei') or '').strip()
 
 # =============================================== A 数据面
-head(u'A. 数据面：`patches["ralsei"]` 在、非空、三条要求都在')
+head(u'A. 数据面：`patches["ralsei"]` 在；② ③ 在位；① 已去重')
 
+# ★ 第139轮：extra 不再回显"ralsei 多少字" —— 那是**体积**（`check138` 的口径：判据只回显
+#   处数/布尔/`n/m`）。旧写法 `ralsei %d 字` 会让"删掉一句重复"变成一次 DIFF，
+#   而判定本身一个字都没变。
 check(u'A0 分母非空：`_index.json` 的 patches 里有 ralsei', bool(patch),
-      u'共 %d 条 patch，ralsei %d 字' % (len(patches), len(patch)))
-check(u'A1 ① 要求"一次最多两三句"在位', u'两三句' in patch)
+      u'共 %d 条 patch，ralsei 在' % len(patches))
+# ★★ 第139轮翻面：原来是"① 在位"。去重之后，**在**才是错的。
+#   依据：`第139轮/_evidence/ab139.jsonl`（同模型同尾块，只差这 20 字，56 条真机）
+#   ⇒ 句数 14/28 vs 13/28（p=0.64）、字数 p=0.24 —— 两次重复没换来可测差别。
+check(u'A1 ① 句数规格**不在** patch 里（人设已有，训练层不复述）',
+      u'两三句' not in patch and u'随口说' not in patch)
 check(u'A2 ② 要求"只认得原作里真有的名字"在位', u'只认得原作里真有的名字' in patch)
 check(u'A3 ③ 要求"不要自己造人名"在位', u'不要自己造人名' in patch)
 check(u'A4 ③ 带上了实测例「凯斯恩」（不是一句空泛的"别编"）', u'凯斯恩' in patch)
@@ -125,8 +135,9 @@ check(u'B1 persona 正文里没有实测例「凯斯恩」', _B1)
 check(u'B2 persona 正文里没有名字白名单那句', _B2)
 check(u'B3 ★ 三条同时成立才算"真缺口"（缺一条就说明这轮补的是重复内容）',
       _B0 and _B1 and _B2)
-# ★ ①「两三句」**故意不断**：persona「我怎么说」已有"一次只说 1~3 句"，
-#   这条是语义重复（冗余但无害）。判据只断"确实没有"的那两条。
+# ★ ①「两三句」**不在这三条里**：persona「我怎么说」已有"一次只说 1~3 句"。
+#   第137轮写的是"冗余但无害、本轮不清"；第139轮把它当被测物量了一遍（A/B 56 条，
+#   无可测差别）⇒ 已删，A1 反向守着。B 段只断"人设里确实没有"的那两条。
 
 # =============================================== C 行为面
 head(u'C. 行为面：`_with_ralsei_patch()` 拼出来的串')
@@ -136,14 +147,14 @@ _out = M._with_ralsei_patch(persona)
 
 check(u'C0 `_with_ralsei_patch` 是模块级函数（桩上可直调，不需要 Qt 宿主）',
       callable(getattr(M, '_with_ralsei_patch', None)))
-check(u'C1 输出以 persona 原文开头（正文一字未改）', _out.startswith(persona.rstrip()),
-      u'len=%d' % len(_out))
+check(u'C1 输出以 persona 原文开头（正文一字未改）', _out.startswith(persona.rstrip()))
 check(u'C2 patch 逐字在输出里', patch in _out)
 check(u'C3 尾块标题是第一人称「我」（不是 NPC 那句"这个角色"）',
       _HEADER in _out and u'这个角色' not in _out, u'%r' % _HEADER)
+# ★ 第139轮：extra 从 `patch@%d persona_len=%d` 改成布尔。旧写法打的是**偏移量与长度**，
+#   数据一改就 DIFF；而 C4 的语义是"先后关系"，不是"第几个字符"。
 check(u'C4 patch 排在 persona **之后**（不许压在人设前面）',
-      _out.find(patch) > len(persona.rstrip()) - 1,
-      u'patch@%d persona_len=%d' % (_out.find(patch), len(persona.rstrip())))
+      _out.find(patch) > len(persona.rstrip()) - 1, u'在 persona 之后')
 check(u'C5 空串 / None 不抛（防御面）',
       isinstance(M._with_ralsei_patch(u''), str)
       and isinstance(M._with_ralsei_patch(None), str))
@@ -158,8 +169,7 @@ try:
 finally:
     NP.training_patch = _orig_tp
 check(u'C6 负控制：`training_patch` 返回空时，尾块必须整个消失（不是拼个空标题）',
-      patch not in _dry and _HEADER not in _dry,
-      u'len %d → %d' % (len(_out), len(_dry)))
+      patch not in _dry and _HEADER not in _dry, u'块已消失')
 check(u'C7 恢复后 C1/C2 仍成立（负控制没把产品改坏）',
       (lambda o: o.startswith(persona.rstrip()) and patch in o)(M._with_ralsei_patch(persona)))
 
@@ -220,7 +230,7 @@ _stub = types.SimpleNamespace()
 _stub._persona_cache = None
 _got = types.MethodType(M.RalseiPet._build_persona_prompt, _stub)()
 check(u'E1 桩上真跑，返回值逐字等于 persona 文件', _got.strip() == persona.strip(),
-      u'%d vs %d' % (len(_got.strip()), len(persona.strip())))
+      u'逐字相同')
 check(u'E2 它**不含**训练纠正（所以 C1 里"以 persona 开头"不可能靠它蒙过去）',
       patch not in _got)
 

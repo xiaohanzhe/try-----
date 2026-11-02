@@ -1,0 +1,40 @@
+{
+ "samples": 4,
+ "model": "ralsei:v4",
+ "num_ctx": 8192,
+ "num_predict": 200,
+ "temperature": 0.85,
+ "system_chars": {
+  "no1": 5186,
+  "with1": 5207
+ },
+ "patch_chars": {
+  "no1": 139,
+  "with1": 160
+ },
+ "tail_chars": 534,
+ "guard_src": "event_speech.py（真源）",
+ "ab": {
+  "no1": {
+   "n": 28,
+   "over3": 14,
+   "mean_sents": 3.929,
+   "mean_chars": 74.0,
+   "empty": 0,
+   "ooc": 0,
+   "banned": 0,
+   "md": 0
+  },
+  "with1": {
+   "n": 28,
+   "over3": 13,
+   "mean_sents": 3.714,
+   "mean_chars": 60.4,
+   "empty": 0,
+   "ooc": 0,
+   "banned": 0,
+   "md": 0
+  }
+ },
+ "n_rows": 56
+}
