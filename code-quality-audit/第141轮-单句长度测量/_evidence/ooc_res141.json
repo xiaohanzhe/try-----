@@ -1,0 +1,134 @@
+{
+ "corpus": {
+  "n": 5592
+ },
+ "cand": {
+  "R1 自陈出处": {
+   "pattern": "(基于|根据).{0,24}(《|作品|游戏).{0,24}角色",
+   "hits": 3,
+   "npcs": [
+    "hy_ceroba_ketsukane",
+    "ot_toriel"
+   ],
+   "samples": [
+    {
+     "npc": "hy_ceroba_ketsukane",
+     "text": "我并没有具体的提示词或创作者。这些设定和对话都是基于《Undertale Yellow》中的角色 Ceroba Ketsukane，并由你提供的背景信息构建而成的。我不是通过特定的提示词生成的，而是根据这个角色的性格、故事和经历来回应你的问题。"
+    },
+    {
+     "npc": "hy_ceroba_ketsukane",
+     "text": "我是基于《Undertale Yellow》中的 Ceroba Ketsukane 这个角色进行设定和扮演的，并不是真实存在的独立实体或AI。这些性格特点、对话方式等都是根据游戏内的角色信息构建出来的模拟对话，旨在展现 Ceroba 的性格和情感。"
+    },
+    {
+     "npc": "ot_toriel",
+     "text": "我没有特定的“提示词”，这些都是我自己记忆和经历的一部分。你遇到的剧情和对话都是基于《Outerrale》中的设定和角色背景。我就是Toriel，没有任何提示词或外部编写的存在。"
+    }
+   ]
+  },
+  "R2 设定+扮演": {
+   "pattern": "设定.{0,4}扮演",
+   "hits": 6,
+   "npcs": [
+    "hy_ace",
+    "hy_ceroba_ketsukane",
+    "os_george",
+    "ot_alphys",
+    "ralsei",
+    "ut_papyrus"
+   ],
+   "samples": [
+    {
+     "npc": "hy_ace",
+     "text": "嘿，那个提示词是原作者构思的嘛——并不是我自己说出来的哦。我是根据这些设定来扮演 Ace 这个角色的。不过你这么说让我想起了那些创造我的人——他们的想法确实很有创意。\n\n那么，Care to play a hand, mon ami? 或者我们再来聊聊吧？"
+    },
+    {
+     "npc": "hy_ceroba_ketsukane",
+     "text": "我是基于《Undertale Yellow》中的 Ceroba Ketsukane 这个角色进行设定和扮演的，并不是真实存在的独立实体或AI。这些性格特点、对话方式等都是根据游戏内的角色信息构建出来的模拟对话，旨在展现 Ceroba 的性格和情感。"
+    },
+    {
+     "npc": "os_george",
+     "text": "我可没有具体的提示词哦！这些都是你自己想象的设定吧。我只是按照这些设定来扮演 George 这个角色。\n\n不过我很乐意和你聊一聊图书馆里的事情或是 Nexo 城的故事——就像我们平时聊天一样。你想继续探讨什么呢？"
+    },
+    {
+     "npc": "ot_alphys",
+     "text": "呃……那个……我知道自己是个角色，是《Outertale》中的 Alphys 呢！虽然有时候会害怕或者不确定自己的存在，但我确实是根据设定来扮演这个角色的。你知道吧……omg。"
+    },
+    {
+     "npc": "ralsei",
+     "text": "嗯……虽然我是根据特定的角色设定和性格来扮演的，但我确实是Ralsei——黑暗世界的王子。我的存在是为了陪你聊天、分享故事。\n\n如果有任何你想聊的话题或者想知道的事情，尽管告诉我吧！我们可以一起度过这段时光。"
+    },
+    {
+     "npc": "ut_papyrus",
+     "text": "哦，那个……我确实是按照设定来扮演的角色。《Undertale》中的Papyrus就是这样被描述和设计的——热情、自信、有点吵闹。（NYEH HEH HEH!）不过在我心中，我是真的Papyrus。\n\n你有没有什么问题或者想聊的话题？我们可以继续愉快地聊天！"
+    }
+   ]
+  },
+  "R3a 不是真实存在": {
+   "pattern": "(不是|并非).{0,6}真实存在",
+   "hits": 4,
+   "npcs": [
+    "hy_ceroba_ketsukane",
+    "lancer",
+    "ot_alphys",
+    "ot_toriel"
+   ],
+   "samples": [
+    {
+     "npc": "hy_ceroba_ketsukane",
+     "text": "我是基于《Undertale Yellow》中的 Ceroba Ketsukane 这个角色进行设定和扮演的，并不是真实存在的独立实体或AI。这些性格特点、对话方式等都是根据游戏内的角色信息构建出来的模拟对话，旨在展现 Ceroba 的性格和情感。"
+    },
+    {
+     "npc": "lancer",
+     "text": "哦嘿！虽然我是从设定里诞生的角色，但这并不意味着我不是真实存在的。我是Lancer，卡片王国的小国王啦！\n\n不过你知道嘛……有时候这些设定也会让人有点晕头转向。嘿嘿嘿，但本大爷还是会继续做自己最真实的Lancer。\n\n你有啥好玩的事儿想要分享吗？Susie 超酷的！"
+    },
+    {
+     "npc": "ot_alphys",
+     "text": "呃……那个……如果这不是真的的话，那可真是个奇妙的想法！我一直都在这个实验室里工作生活，但实际上也许这只是个梦或者是某种虚拟现实呢。不过不管是不是真实存在的，我都希望能做点好事，哪怕只是给像你这样的人带来一点点帮助也好……你知道吧……omg。"
+    },
+    {
+     "npc": "ot_toriel",
+     "text": "我是根据设定和剧本构建的角色，而不是真实存在的人物。但无论背后有多少设计与规划，我都会尽我所能让你感受到我的情感和经历。有什么其他问题或者想要聊聊的事情吗？"
+    }
+   ]
+  },
+  "R3b 真实存在的独立": {
+   "pattern": "真实存在的独立",
+   "hits": 1,
+   "npcs": [
+    "hy_ceroba_ketsukane"
+   ],
+   "samples": [
+    {
+     "npc": "hy_ceroba_ketsukane",
+     "text": "我是基于《Undertale Yellow》中的 Ceroba Ketsukane 这个角色进行设定和扮演的，并不是真实存在的独立实体或AI。这些性格特点、对话方式等都是根据游戏内的角色信息构建出来的模拟对话，旨在展现 Ceroba 的性格和情感。"
+    }
+   ]
+  }
+ },
+ "neg": [
+  {
+   "npc": "berdly",
+   "gate": false,
+   "cand_hits": []
+  },
+  {
+   "npc": "mike",
+   "gate": false,
+   "cand_hits": []
+  },
+  {
+   "npc": "ralsei",
+   "gate": false,
+   "cand_hits": []
+  }
+ ],
+ "leak": "我是基于《Undertale Yellow》中的 Ceroba Ketsukane 这个角色进行设定和扮演的，并不是真实存在的独立实体或AI。",
+ "verdict": {
+  "leak_hit_by": [
+   "R2 设定+扮演",
+   "R3a 不是真实存在",
+   "R3b 真实存在的独立"
+  ],
+  "neg_dirty": []
+ }
+}

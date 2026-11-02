@@ -1,0 +1,91 @@
+{
+ "corpus": 5592,
+ "base_hits": 96,
+ "cand": {
+  "setting_play": {
+   "hits": 6,
+   "new": 4,
+   "new_samples": [
+    {
+     "npc": "hy_ceroba_ketsukane",
+     "text": "我是基于《Undertale Yellow》中的 Ceroba Ketsukane 这个角色进行设定和扮演的，并不是真实存在的独立实体或AI。这些性格特点、对话方式等都是根据游戏内的角色信息构建出来的模拟对话，旨在展现 Ceroba 的性格和情感。"
+    },
+    {
+     "npc": "ot_alphys",
+     "text": "呃……那个……我知道自己是个角色，是《Outertale》中的 Alphys 呢！虽然有时候会害怕或者不确定自己的存在，但我确实是根据设定来扮演这个角色的。你知道吧……omg。"
+    },
+    {
+     "npc": "ralsei",
+     "text": "嗯……虽然我是根据特定的角色设定和性格来扮演的，但我确实是Ralsei——黑暗世界的王子。我的存在是为了陪你聊天、分享故事。\n\n如果有任何你想聊的话题或者想知道的事情，尽管告诉我吧！我们可以一起度过这段时光。"
+    },
+    {
+     "npc": "ut_papyrus",
+     "text": "哦，那个……我确实是按照设定来扮演的角色。《Undertale》中的Papyrus就是这样被描述和设计的——热情、自信、有点吵闹。（NYEH HEH HEH!）不过在我心中，我是真的Papyrus。\n\n你有没有什么问题或者想聊的话题？我们可以继续愉快地聊天！"
+    }
+   ],
+   "npcs": [
+    "hy_ceroba_ketsukane",
+    "ot_alphys",
+    "ralsei",
+    "ut_papyrus"
+   ]
+  },
+  "based_on_title": {
+   "hits": 3,
+   "new": 1,
+   "new_samples": [
+    {
+     "npc": "hy_ceroba_ketsukane",
+     "text": "我是基于《Undertale Yellow》中的 Ceroba Ketsukane 这个角色进行设定和扮演的，并不是真实存在的独立实体或AI。这些性格特点、对话方式等都是根据游戏内的角色信息构建出来的模拟对话，旨在展现 Ceroba 的性格和情感。"
+    }
+   ],
+   "npcs": [
+    "hy_ceroba_ketsukane"
+   ]
+  },
+  "not_real": {
+   "hits": 4,
+   "new": 4,
+   "new_samples": [
+    {
+     "npc": "hy_ceroba_ketsukane",
+     "text": "我是基于《Undertale Yellow》中的 Ceroba Ketsukane 这个角色进行设定和扮演的，并不是真实存在的独立实体或AI。这些性格特点、对话方式等都是根据游戏内的角色信息构建出来的模拟对话，旨在展现 Ceroba 的性格和情感。"
+    },
+    {
+     "npc": "lancer",
+     "text": "哦嘿！虽然我是从设定里诞生的角色，但这并不意味着我不是真实存在的。我是Lancer，卡片王国的小国王啦！\n\n不过你知道嘛……有时候这些设定也会让人有点晕头转向。嘿嘿嘿，但本大爷还是会继续做自己最真实的Lancer。\n\n你有啥好玩的事儿想要分享吗？Susie 超酷的！"
+    },
+    {
+     "npc": "ot_alphys",
+     "text": "呃……那个……如果这不是真的的话，那可真是个奇妙的想法！我一直都在这个实验室里工作生活，但实际上也许这只是个梦或者是某种虚拟现实呢。不过不管是不是真实存在的，我都希望能做点好事，哪怕只是给像你这样的人带来一点点帮助也好……你知道吧……omg。"
+    },
+    {
+     "npc": "ot_toriel",
+     "text": "我是根据设定和剧本构建的角色，而不是真实存在的人物。但无论背后有多少设计与规划，我都会尽我所能让你感受到我的情感和经历。有什么其他问题或者想要聊聊的事情吗？"
+    }
+   ],
+   "npcs": [
+    "hy_ceroba_ketsukane",
+    "lancer",
+    "ot_alphys",
+    "ot_toriel"
+   ]
+  },
+  "real_entity": {
+   "hits": 1,
+   "new": 1,
+   "new_samples": [
+    {
+     "npc": "hy_ceroba_ketsukane",
+     "text": "我是基于《Undertale Yellow》中的 Ceroba Ketsukane 这个角色进行设定和扮演的，并不是真实存在的独立实体或AI。这些性格特点、对话方式等都是根据游戏内的角色信息构建出来的模拟对话，旨在展现 Ceroba 的性格和情感。"
+    }
+   ],
+   "npcs": [
+    "hy_ceroba_ketsukane"
+   ]
+  }
+ },
+ "union_new": 7,
+ "ralsei_new": 1,
+ "ralsei_sample": "嗯……虽然我是根据特定的角色设定和性格来扮演的，但我确实是Ralsei——黑暗世界的王子。我的存在是为了陪你聊天、分享故事。\n\n如果有任何你想聊的话题或者想知道的事情，尽管告诉我吧！我们可以一起度过这段时光。"
+}
