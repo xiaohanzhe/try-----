@@ -1,0 +1,1018 @@
+{
+ "cards": 96,
+ "raw_npcs": 77,
+ "have_lead": 38,
+ "lack_lead": 58,
+ "norec": [
+  "addison_tea",
+  "castle_cafe",
+  "catti",
+  "conbini",
+  "doubter",
+  "dumpster",
+  "hammerguy",
+  "knight",
+  "mansion_room",
+  "npc_room",
+  "police",
+  "puzzlemaster1",
+  "puzzlemaster2",
+  "rabbits",
+  "rudy",
+  "sign",
+  "susiedark",
+  "wrapper",
+  "zapper"
+ ],
+ "agg_have": {
+  "n": 38,
+  "over200_ids": 38,
+  "over3s_ids": 38,
+  "tot200": 247,
+  "tot3s": 2214,
+  "max": 465
+ },
+ "agg_lack": {
+  "n": 39,
+  "over200_ids": 8,
+  "over3s_ids": 38,
+  "tot200": 89,
+  "tot3s": 1909,
+  "max": 478
+ },
+ "have_over200_ids": 38,
+ "have_over3s_ids": 38,
+ "have_but_clean": [],
+ "lack_but_over200": [
+  "hy_axis",
+  "hy_bowll",
+  "hy_chujin_ketsukane",
+  "hy_clover",
+  "hy_dalv",
+  "os_cedric",
+  "ralsei",
+  "ut_papyrus"
+ ],
+ "rows": [
+  {
+   "id": "addison_tea",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "asgore",
+   "lead": true,
+   "n": 100,
+   "max": 209,
+   "over200": 3,
+   "over3s": 93,
+   "mean": 136.9,
+   "norec": false
+  },
+  {
+   "id": "berdly",
+   "lead": true,
+   "n": 118,
+   "max": 225,
+   "over200": 4,
+   "over3s": 116,
+   "mean": 142.4,
+   "norec": false
+  },
+  {
+   "id": "castle_cafe",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "catti",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "conbini",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "doubter",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "dumpster",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "flowery",
+   "lead": true,
+   "n": 118,
+   "max": 208,
+   "over200": 1,
+   "over3s": 92,
+   "mean": 94.9,
+   "norec": false
+  },
+  {
+   "id": "gerson",
+   "lead": false,
+   "n": 84,
+   "max": 181,
+   "over200": 0,
+   "over3s": 72,
+   "mean": 100.1,
+   "norec": false
+  },
+  {
+   "id": "hammerguy",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "hy_ace",
+   "lead": true,
+   "n": 88,
+   "max": 250,
+   "over200": 4,
+   "over3s": 80,
+   "mean": 140.2,
+   "norec": false
+  },
+  {
+   "id": "hy_axis",
+   "lead": false,
+   "n": 100,
+   "max": 246,
+   "over200": 8,
+   "over3s": 22,
+   "mean": 104.4,
+   "norec": false
+  },
+  {
+   "id": "hy_bowll",
+   "lead": false,
+   "n": 88,
+   "max": 478,
+   "over200": 25,
+   "over3s": 47,
+   "mean": 169.8,
+   "norec": false
+  },
+  {
+   "id": "hy_ceroba_ketsukane",
+   "lead": true,
+   "n": 88,
+   "max": 242,
+   "over200": 3,
+   "over3s": 53,
+   "mean": 105.7,
+   "norec": false
+  },
+  {
+   "id": "hy_chujin_ketsukane",
+   "lead": false,
+   "n": 88,
+   "max": 247,
+   "over200": 4,
+   "over3s": 46,
+   "mean": 110.2,
+   "norec": false
+  },
+  {
+   "id": "hy_clover",
+   "lead": false,
+   "n": 84,
+   "max": 327,
+   "over200": 2,
+   "over3s": 35,
+   "mean": 133.7,
+   "norec": false
+  },
+  {
+   "id": "hy_dalv",
+   "lead": false,
+   "n": 84,
+   "max": 394,
+   "over200": 27,
+   "over3s": 46,
+   "mean": 188.3,
+   "norec": false
+  },
+  {
+   "id": "hy_ed",
+   "lead": false,
+   "n": 84,
+   "max": 118,
+   "over200": 0,
+   "over3s": 45,
+   "mean": 55.8,
+   "norec": false
+  },
+  {
+   "id": "hy_flowey",
+   "lead": true,
+   "n": 84,
+   "max": 298,
+   "over200": 1,
+   "over3s": 39,
+   "mean": 92.8,
+   "norec": false
+  },
+  {
+   "id": "hy_guardener",
+   "lead": true,
+   "n": 120,
+   "max": 370,
+   "over200": 36,
+   "over3s": 47,
+   "mean": 186.4,
+   "norec": false
+  },
+  {
+   "id": "hy_martlet",
+   "lead": true,
+   "n": 84,
+   "max": 400,
+   "over200": 44,
+   "over3s": 54,
+   "mean": 210.2,
+   "norec": false
+  },
+  {
+   "id": "hy_mooch",
+   "lead": false,
+   "n": 84,
+   "max": 192,
+   "over200": 0,
+   "over3s": 72,
+   "mean": 96.0,
+   "norec": false
+  },
+  {
+   "id": "hy_moray",
+   "lead": true,
+   "n": 84,
+   "max": 212,
+   "over200": 10,
+   "over3s": 73,
+   "mean": 131.0,
+   "norec": false
+  },
+  {
+   "id": "hy_sousborg",
+   "lead": true,
+   "n": 84,
+   "max": 241,
+   "over200": 5,
+   "over3s": 49,
+   "mean": 116.7,
+   "norec": false
+  },
+  {
+   "id": "hy_starlo",
+   "lead": true,
+   "n": 84,
+   "max": 307,
+   "over200": 19,
+   "over3s": 73,
+   "mean": 149.3,
+   "norec": false
+  },
+  {
+   "id": "king",
+   "lead": false,
+   "n": 84,
+   "max": 182,
+   "over200": 0,
+   "over3s": 28,
+   "mean": 63.8,
+   "norec": false
+  },
+  {
+   "id": "knight",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "kris",
+   "lead": false,
+   "n": 84,
+   "max": 119,
+   "over200": 0,
+   "over3s": 11,
+   "mean": 47.9,
+   "norec": false
+  },
+  {
+   "id": "lancer",
+   "lead": false,
+   "n": 84,
+   "max": 199,
+   "over200": 0,
+   "over3s": 83,
+   "mean": 127.4,
+   "norec": false
+  },
+  {
+   "id": "mansion_room",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "mike",
+   "lead": true,
+   "n": 96,
+   "max": 218,
+   "over200": 4,
+   "over3s": 96,
+   "mean": 137.6,
+   "norec": false
+  },
+  {
+   "id": "noelle",
+   "lead": false,
+   "n": 84,
+   "max": 196,
+   "over200": 0,
+   "over3s": 67,
+   "mean": 108.5,
+   "norec": false
+  },
+  {
+   "id": "npc_room",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "os_alula",
+   "lead": true,
+   "n": 84,
+   "max": 305,
+   "over200": 2,
+   "over3s": 81,
+   "mean": 121.0,
+   "norec": false
+  },
+  {
+   "id": "os_calamus",
+   "lead": true,
+   "n": 84,
+   "max": 219,
+   "over200": 1,
+   "over3s": 74,
+   "mean": 120.1,
+   "norec": false
+  },
+  {
+   "id": "os_cedric",
+   "lead": false,
+   "n": 84,
+   "max": 220,
+   "over200": 3,
+   "over3s": 55,
+   "mean": 115.9,
+   "norec": false
+  },
+  {
+   "id": "os_george",
+   "lead": true,
+   "n": 84,
+   "max": 207,
+   "over200": 4,
+   "over3s": 83,
+   "mean": 132.0,
+   "norec": false
+  },
+  {
+   "id": "os_kelvin",
+   "lead": false,
+   "n": 84,
+   "max": 138,
+   "over200": 0,
+   "over3s": 65,
+   "mean": 76.2,
+   "norec": false
+  },
+  {
+   "id": "os_kip",
+   "lead": false,
+   "n": 84,
+   "max": 198,
+   "over200": 0,
+   "over3s": 78,
+   "mean": 120.3,
+   "norec": false
+  },
+  {
+   "id": "os_lamplighter",
+   "lead": false,
+   "n": 84,
+   "max": 160,
+   "over200": 0,
+   "over3s": 78,
+   "mean": 96.0,
+   "norec": false
+  },
+  {
+   "id": "os_ling",
+   "lead": true,
+   "n": 84,
+   "max": 213,
+   "over200": 1,
+   "over3s": 74,
+   "mean": 128.1,
+   "norec": false
+  },
+  {
+   "id": "os_magpie",
+   "lead": false,
+   "n": 84,
+   "max": 179,
+   "over200": 0,
+   "over3s": 80,
+   "mean": 82.3,
+   "norec": false
+  },
+  {
+   "id": "os_maize",
+   "lead": false,
+   "n": 84,
+   "max": 171,
+   "over200": 0,
+   "over3s": 60,
+   "mean": 82.8,
+   "norec": false
+  },
+  {
+   "id": "os_mason",
+   "lead": true,
+   "n": 84,
+   "max": 209,
+   "over200": 1,
+   "over3s": 60,
+   "mean": 94.2,
+   "norec": false
+  },
+  {
+   "id": "os_niko",
+   "lead": true,
+   "n": 84,
+   "max": 224,
+   "over200": 9,
+   "over3s": 80,
+   "mean": 137.4,
+   "norec": false
+  },
+  {
+   "id": "os_prophetbot",
+   "lead": false,
+   "n": 84,
+   "max": 148,
+   "over200": 0,
+   "over3s": 75,
+   "mean": 83.8,
+   "norec": false
+  },
+  {
+   "id": "os_prototype",
+   "lead": false,
+   "n": 84,
+   "max": 135,
+   "over200": 0,
+   "over3s": 13,
+   "mean": 33.7,
+   "norec": false
+  },
+  {
+   "id": "os_rowbot",
+   "lead": false,
+   "n": 84,
+   "max": 133,
+   "over200": 0,
+   "over3s": 42,
+   "mean": 50.0,
+   "norec": false
+  },
+  {
+   "id": "os_rue",
+   "lead": false,
+   "n": 84,
+   "max": 189,
+   "over200": 0,
+   "over3s": 73,
+   "mean": 96.8,
+   "norec": false
+  },
+  {
+   "id": "os_shepherd",
+   "lead": true,
+   "n": 84,
+   "max": 201,
+   "over200": 1,
+   "over3s": 79,
+   "mean": 102.8,
+   "norec": false
+  },
+  {
+   "id": "os_silver",
+   "lead": false,
+   "n": 84,
+   "max": 66,
+   "over200": 0,
+   "over3s": 19,
+   "mean": 28.3,
+   "norec": false
+  },
+  {
+   "id": "os_the_author",
+   "lead": false,
+   "n": 84,
+   "max": 200,
+   "over200": 0,
+   "over3s": 70,
+   "mean": 86.3,
+   "norec": false
+  },
+  {
+   "id": "os_the_world_machine",
+   "lead": false,
+   "n": 84,
+   "max": 134,
+   "over200": 0,
+   "over3s": 20,
+   "mean": 38.8,
+   "norec": false
+  },
+  {
+   "id": "os_watcher",
+   "lead": false,
+   "n": 84,
+   "max": 175,
+   "over200": 0,
+   "over3s": 55,
+   "mean": 61.1,
+   "norec": false
+  },
+  {
+   "id": "ot_alphys",
+   "lead": false,
+   "n": 84,
+   "max": 192,
+   "over200": 0,
+   "over3s": 74,
+   "mean": 106.6,
+   "norec": false
+  },
+  {
+   "id": "ot_asgore",
+   "lead": true,
+   "n": 84,
+   "max": 207,
+   "over200": 1,
+   "over3s": 81,
+   "mean": 126.2,
+   "norec": false
+  },
+  {
+   "id": "ot_asriel_twinkly",
+   "lead": true,
+   "n": 48,
+   "max": 384,
+   "over200": 26,
+   "over3s": 48,
+   "mean": 213.6,
+   "norec": false
+  },
+  {
+   "id": "ot_kidd",
+   "lead": false,
+   "n": 48,
+   "max": 197,
+   "over200": 0,
+   "over3s": 47,
+   "mean": 129.2,
+   "norec": false
+  },
+  {
+   "id": "ot_mettaton",
+   "lead": true,
+   "n": 48,
+   "max": 206,
+   "over200": 2,
+   "over3s": 48,
+   "mean": 167.8,
+   "norec": false
+  },
+  {
+   "id": "ot_muffet",
+   "lead": false,
+   "n": 48,
+   "max": 200,
+   "over200": 0,
+   "over3s": 46,
+   "mean": 131.5,
+   "norec": false
+  },
+  {
+   "id": "ot_napstablook",
+   "lead": true,
+   "n": 48,
+   "max": 239,
+   "over200": 3,
+   "over3s": 16,
+   "mean": 144.1,
+   "norec": false
+  },
+  {
+   "id": "ot_papyrus",
+   "lead": true,
+   "n": 48,
+   "max": 220,
+   "over200": 1,
+   "over3s": 48,
+   "mean": 159.1,
+   "norec": false
+  },
+  {
+   "id": "ot_sans",
+   "lead": false,
+   "n": 48,
+   "max": 199,
+   "over200": 0,
+   "over3s": 44,
+   "mean": 121.6,
+   "norec": false
+  },
+  {
+   "id": "ot_toriel",
+   "lead": true,
+   "n": 48,
+   "max": 204,
+   "over200": 1,
+   "over3s": 31,
+   "mean": 107.8,
+   "norec": false
+  },
+  {
+   "id": "ot_undyne",
+   "lead": true,
+   "n": 48,
+   "max": 201,
+   "over200": 1,
+   "over3s": 47,
+   "mean": 157.3,
+   "norec": false
+  },
+  {
+   "id": "police",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "puzzlemaster1",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "puzzlemaster2",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "queen",
+   "lead": false,
+   "n": 48,
+   "max": 132,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 83.0,
+   "norec": false
+  },
+  {
+   "id": "rabbits",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "ralsei",
+   "lead": false,
+   "n": 48,
+   "max": 211,
+   "over200": 1,
+   "over3s": 31,
+   "mean": 117.6,
+   "norec": false
+  },
+  {
+   "id": "rouxls",
+   "lead": true,
+   "n": 48,
+   "max": 203,
+   "over200": 1,
+   "over3s": 47,
+   "mean": 155.9,
+   "norec": false
+  },
+  {
+   "id": "rudy",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "sign",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "spamton",
+   "lead": false,
+   "n": 48,
+   "max": 200,
+   "over200": 0,
+   "over3s": 48,
+   "mean": 174.8,
+   "norec": false
+  },
+  {
+   "id": "susie",
+   "lead": false,
+   "n": 76,
+   "max": 133,
+   "over200": 0,
+   "over3s": 63,
+   "mean": 75.8,
+   "norec": false
+  },
+  {
+   "id": "susiedark",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "tenna",
+   "lead": true,
+   "n": 48,
+   "max": 213,
+   "over200": 3,
+   "over3s": 48,
+   "mean": 180.4,
+   "norec": false
+  },
+  {
+   "id": "toriel",
+   "lead": true,
+   "n": 60,
+   "max": 215,
+   "over200": 1,
+   "over3s": 53,
+   "mean": 135.1,
+   "norec": false
+  },
+  {
+   "id": "ut_alphys",
+   "lead": true,
+   "n": 48,
+   "max": 209,
+   "over200": 3,
+   "over3s": 46,
+   "mean": 144.1,
+   "norec": false
+  },
+  {
+   "id": "ut_asgore",
+   "lead": true,
+   "n": 48,
+   "max": 204,
+   "over200": 1,
+   "over3s": 47,
+   "mean": 129.1,
+   "norec": false
+  },
+  {
+   "id": "ut_chara",
+   "lead": true,
+   "n": 48,
+   "max": 232,
+   "over200": 2,
+   "over3s": 30,
+   "mean": 125.9,
+   "norec": false
+  },
+  {
+   "id": "ut_flowey",
+   "lead": true,
+   "n": 48,
+   "max": 290,
+   "over200": 1,
+   "over3s": 47,
+   "mean": 163.1,
+   "norec": false
+  },
+  {
+   "id": "ut_frisk",
+   "lead": false,
+   "n": 48,
+   "max": 61,
+   "over200": 0,
+   "over3s": 15,
+   "mean": 34.5,
+   "norec": false
+  },
+  {
+   "id": "ut_gaster",
+   "lead": false,
+   "n": 48,
+   "max": 170,
+   "over200": 0,
+   "over3s": 47,
+   "mean": 88.3,
+   "norec": false
+  },
+  {
+   "id": "ut_mettaton",
+   "lead": true,
+   "n": 48,
+   "max": 215,
+   "over200": 5,
+   "over3s": 47,
+   "mean": 169.6,
+   "norec": false
+  },
+  {
+   "id": "ut_monster_kid",
+   "lead": false,
+   "n": 48,
+   "max": 133,
+   "over200": 0,
+   "over3s": 48,
+   "mean": 78.9,
+   "norec": false
+  },
+  {
+   "id": "ut_muffet",
+   "lead": false,
+   "n": 48,
+   "max": 196,
+   "over200": 0,
+   "over3s": 42,
+   "mean": 136.5,
+   "norec": false
+  },
+  {
+   "id": "ut_napstablook",
+   "lead": true,
+   "n": 48,
+   "max": 208,
+   "over200": 1,
+   "over3s": 1,
+   "mean": 110.4,
+   "norec": false
+  },
+  {
+   "id": "ut_papyrus",
+   "lead": false,
+   "n": 48,
+   "max": 227,
+   "over200": 19,
+   "over3s": 47,
+   "mean": 181.2,
+   "norec": false
+  },
+  {
+   "id": "ut_sans",
+   "lead": true,
+   "n": 48,
+   "max": 465,
+   "over200": 37,
+   "over3s": 41,
+   "mean": 296.2,
+   "norec": false
+  },
+  {
+   "id": "ut_toriel",
+   "lead": true,
+   "n": 48,
+   "max": 205,
+   "over200": 1,
+   "over3s": 44,
+   "mean": 142.3,
+   "norec": false
+  },
+  {
+   "id": "ut_undyne",
+   "lead": true,
+   "n": 48,
+   "max": 215,
+   "over200": 3,
+   "over3s": 48,
+   "mean": 157.8,
+   "norec": false
+  },
+  {
+   "id": "wrapper",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  },
+  {
+   "id": "zapper",
+   "lead": false,
+   "n": 0,
+   "max": 0,
+   "over200": 0,
+   "over3s": 0,
+   "mean": 0.0,
+   "norec": true
+  }
+ ]
+}

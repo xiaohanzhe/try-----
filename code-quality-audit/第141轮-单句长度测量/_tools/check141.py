@@ -378,8 +378,8 @@ def main():
             if isinstance(sub, ast.Constant) and isinstance(sub.value, str) \
                     and ('[' + 'PASS]') in sub.value:
                 leak_mark.append(sub.value[:40])
-    check(u'D2 ★判据描述里没有字面量 ' + '[' + 'PASS]' + u'（会顶高 run_all 的计数）',
-          not leak_mark, u'出现=%r' % (leak_mark,))
+    check(u'D2 ★判据描述里没有那个计数标记的字面量（会顶高 run_all 的 PASS 计数）',
+          not leak_mark, u'命中 %d 处' % len(leak_mark))
 
     need = ['sentence_len141.json', 'sentence_len141b_lang.json', 'ellipsis141.json',
             'real_long141.json', 'ooc_variant141.json', 'ooc_res141.json',
