@@ -3195,6 +3195,28 @@ class RalseiPet(QMainWindow):
     #:   （零回归由"恒空看板"结构保证，见 `npc_errand` 抬头）。
     NPC_ERRAND_ENABLED = True
 
+    #: ★★★ 第151轮（§109.5 口径③）：**开机示范差事** —— 一条“留给他去做”的真差事。
+    #:
+    #: 值 = `(npc_id, dest_scene, what)` 或 `None`（默认）。
+    #:   ✔ 能直接用的例子：`('ralsei', 'oneshot.barrens.Blue', '去看看')`
+    #:     （`ralsei` 是纯暗世界居民 ⇒ 走 `free_dark_roam` 那条，
+    #:      `oneshot` 归暗世界 ⇒ 门控放行）。
+    #:     ★ 这个例子被 `check151` 真跑验过——文档里写的例子
+    #:       不允许是“写着好看、跑不通”的。
+    #:
+    #: ★ 为什么默认 `None`（= 不派）：差事的零回归**靠“恒空看板”这个结构**保证。
+    #:   一旦出厂就自动派人出门，96 个人里会有一个**每次开机都跑出去** ——
+    #:   位置、日志、存档全变 ⇒ 所有“逐字比对”的真机套件都得跟着改。
+    #:   所以做成**一处可开的口子**：填上这一行，开机就能看到“他们真能做出来”。
+    #:
+    #: ★★ 为什么必须走 `assign_errand()`（而不是直接 `board.assign()`）：
+    #:   示范差事**不是特权** —— 用户口径「被派不可进入原本不可进入的世界」。
+    #:   派不出去就如实留一条“去不了”的记忆，**不硬塞**。
+    #:
+    #: ★★ 为什么只在**看板为空**时派：它是**种子**，不是“每次开机重派一遍”。
+    #:   看板里有活（上次没办完那条被读回来了）⇒ 先让人把上一件办完。
+    NPC_ERRAND_DEMO = None
+
     #: ★★★ 第81轮（层4 存档）：生活档案的**落盘节流**（秒）。
     #: ★ 120s：驻留期本身是分钟级（`MIN_DWELL_SECONDS` 也是分钟级），120s 足够
     #:   把"世界变了"及时写下去；同时避免每拍都写盘（E 盘 exFAT，无谓写会磨损）。
@@ -3488,6 +3510,12 @@ class RalseiPet(QMainWindow):
             self._npc_seed_bodies(self._npc_scene_id())
         except Exception as e:
             _log.warning('NPC 站位初始化失败（开局无站位）: %s', e)
+
+        # ---- ★★★ 第151轮（§109.5 口径③）：**开机示范差事**（默认不派） ----
+        # ★ 三条纪律见 `NPC_ERRAND_DEMO` 的注释与 `_npc_errand_demo()` 的实现说明。
+        # ★ 放在**最后**：它要用到 `npc_registry` / `npc_memory` / `npc_errand` 三样，
+        #   而这三样都在本函数前半段建好 ⇒ 挑到前面会拿到 None（静默不派）。
+        self._npc_errand_demo()
 
     # ---------------------------------------------------------------- 点名
     def _npc_scene_id(self):
@@ -5857,6 +5885,41 @@ class RalseiPet(QMainWindow):
         if ok:
             self._npc_errand_last_save = now
         return ok
+
+    def _npc_errand_demo(self):
+        """按 `NPC_ERRAND_DEMO` 派一条**示范差事**（默认不派；只当种子用）。
+
+        返回派出的 `Errand`；没派（没配置 / 看板没就位 / 看板非空 / 被门控拒）⇒ `None`。
+
+        ★ 三条纪律（与类属性那里的注释同源，这里是实现侧的写法）：
+          ① **走 `assign_errand()`** —— 示范差事也要过门控，不给自己开后门；
+          ② **只在看板为空时派** —— 种子语义，不覆盖上次没办完的那条；
+          ③ **异常只记 debug** —— 示范差事失败绝不许影响桌宠启动。
+        """
+        spec = getattr(RalseiPet, 'NPC_ERRAND_DEMO', None)
+        if not spec:
+            return None
+        board = getattr(self, 'npc_errand', None)
+        if board is None or not board.enabled or len(board):
+            return None
+        try:
+            npc_id, dest_scene, what = spec
+        except (TypeError, ValueError):
+            _log.warning('示范差事配置不合法（要 (npc_id, dest_scene, what) 三元组）：%r', spec)
+            return None
+        try:
+            e = self.assign_errand(npc_id, dest_scene, what)
+        except Exception as exc:
+            _log.debug('示范差事派出失败（已忽略）: %s', exc)
+            return None
+        if e is None:
+            _log.info('示范差事没派出去：%s → %s（多半是门控不许，见他记忆里那条）',
+                      npc_id, dest_scene)
+        else:
+            _log.info('示范差事已派出：%s → %s 办「%s」（%d 秒到 / %d 秒办完）',
+                      npc_id, dest_scene, what,
+                      int(e.arrive_at - e.start), int(e.finish_at - e.arrive_at))
+        return e
 
     def _npc_roam_roster(self):
         """**自主移动**的候选池 —— 只有"在某个场景里有站位"的人。
