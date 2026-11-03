@@ -668,9 +668,15 @@ check(u'D6 看板没就位（建失败降级）⇒ 返 `None`、不抛（只降�
 #   ⇒ 六条判据，五条是负控制（每一条只松**一处**，期望仍然判 `None`）。
 
 class _ParseHost(object):
-    u"""只装 `_errand_parse_intent` 需要的三样东西（别名表 / 场景解析 / 当前说话人）。"""
+    u"""只装 `_errand_parse_intent` 需要的东西（别名表 / 场景解析 / 当前说话人）。
+
+    ★★ 第152轮补：产品把"名字查找"抽成了 `_errand_find_name`（派活与**叫停**共用
+      一份规则）⇒ 桩必须跟着装 —— 否则本套件在 `D7` 就 `AttributeError` 崩掉
+      （不是产品坏了，是**夹具比产品旧**，与第107轮那条教训同型）。
+    """
 
     _errand_parse_intent = RalseiPet._errand_parse_intent
+    _errand_find_name = RalseiPet._errand_find_name
     _errand_strip_leads = staticmethod(RalseiPet._errand_strip_leads)
 
     def __init__(self, aliases, talking='ralsei'):

@@ -171,8 +171,12 @@ class _Host(object):
 
 for _nm in ('_npc_errand_world', '_npc_errand_world_uncached', '_npc_errand_gate',
             '_errand_index', '_errand_reachable', '_errand_scene_in',
-            '_errand_place_label', '_errand_strip_leads', '_errand_parse_intent'):
+            '_errand_place_label', '_errand_strip_leads', '_errand_parse_intent',
+            '_errand_find_name'):
     setattr(_Host, _nm, M.RalseiPet.__dict__[_nm])
+# ★★ 第152轮补：产品把"名字查找"抽成了 `_errand_find_name`（派活与叫停共用一份
+#   规则）⇒ 桩必须跟着装，否则 G 段在 `_Host` 上直接 `AttributeError`。
+#   这不是产品坏了，是**夹具比产品旧**（第107轮那条教训的同型）。
 
 # ---- 真注册表（96 人）----
 with io.open(os.path.join(PKG, 'assets', 'npc', '_registry.json'),

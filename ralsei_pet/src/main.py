@@ -5399,6 +5399,34 @@ class RalseiPet(QMainWindow):
     #:   （"你去哪了"会被误判成派活）。
     ERRAND_INTENT_VERBS = ('让', '派', '叫', '请', '麻烦')
 
+    #: ★★★ 第152轮：**取消（叫停）信号词** —— 这是判据，不是台词。
+    #:
+    #: ★★ 为什么非得有这一层（用户口径「**按照人类的逻辑来就好**」）：
+    #:   把话说全的人会说「别让苏西去了」—— 这句话里**同时**有角色名（苏西）、
+    #:   意图词（让）、甚至地点（“去 oneshot”）⇒ 派活解析会**原样命中**。
+    #:   用户想叫停，代码却**又派了一次**（`ErrandBoard.assign` 对同一人是“覆盖”
+    #:   ⇒ 表面上无声无息，实际把人**重新上路**了）。
+    #:   ⇒ 取消**必须先于**派活判定（见 `handle_errand_command` 里的顺序注释）。
+    #:
+    #: ★ 两组**不能混**：
+    #:   · `_ERRAND_CANCEL_NEEDS_NAME`：这些词单用**太容易撞**日常话
+    #:     （「别让人等」「别叫外卖」）⇒ 要求句子里**点名**（或用“他/她”指代）。
+    #:   · `_ERRAND_CANCEL_ANY`：这些词本身就带“叫他回来”的指向（「别去了」「回来吧」）。
+    #:     ⚠️ `回来了` / `算了` / `取消` 这三个**刻意不收**：「我回来了」是人在说自己，
+    #:     「算了不吃了」是常见口语 —— 收了就会**把人凭空叫回来**。
+    _ERRAND_CANCEL_NEEDS_NAME = ('别让', '别叫', '别派', '别麻烦',
+                                 '叫他回来', '让她回来',
+                                 '让他回来', '叫回来')
+    _ERRAND_CANCEL_ANY = ('别去了', '别去', '不要去', '不用去了',
+                          '不用去', '别办了', '不用办了',
+                          '回来吧')
+
+    #: 否定词 —— 同一句里出现就当“这句话在叫停”，**不派活**。
+    #: ★ 为什么不做“离意图词多近”的精细判：那要分词，而 `isalnum()` 对 CJK 也 True
+    #:   （第147轮的坑）⇒ 宁可整句从严（**漏判无害，误派有害**）。
+    #:   代价已登记：「别客气，让苏西去 oneshot吧」也会被当普通聊天。
+    ERRAND_NEGATIONS = ('别', '不要', '不用', '不必', '甭')
+
     def _errand_index(self):
         """`_index.json`（场景表）—— **进程内只读一次**。
 
@@ -5476,6 +5504,152 @@ class RalseiPet(QMainWindow):
                 break
         return s
 
+    @staticmethod
+    def _errand_is_negative(low):
+        u"""这句话里有没有否定词（已小写）。★ 抽成函数是为了让 `check152` 能直接真跑它。"""
+        return any(w in (low or u'') for w in RalseiPet.ERRAND_NEGATIONS)
+
+    def _errand_find_name(self, low, avoid=None):
+        u"""在 `low`（已小写）里找**登记过的角色名** → `(别名长, 起点, npc_id)`；没有 ⇒ `None`。
+
+        ★ 三条规则（**派活与取消共用这一份** —— 抽出来就是为了不让两边分叉）：
+          ① 最长优先（`rouxls kaard` 不许被 `rouxls` 截断）；
+          ② 要求**词边界**（前后不是 ASCII 字母数字 —— `susiex` 不算 `susie`，
+             中文天然通过）；
+          ③ `avoid=(a, b)` 时**跳过与该区间重叠**的命中（「派 niko 去 niko 家」
+             里那个“地点 niko”不算人名）。
+        """
+        best = None
+        for alias, nid in (self._npc_aliases or {}).items():
+            if not alias:
+                continue
+            start = low.find(alias)
+            while start >= 0:
+                end = start + len(alias)
+                if avoid is not None and not (end <= avoid[0] or start >= avoid[1]):
+                    start = low.find(alias, start + 1)
+                    continue
+                b = low[start - 1] if start > 0 else u''
+                a = low[end] if end < len(low) else u''
+                bad_edge = ((b.isascii() and b.isalnum())
+                            or (a.isascii() and a.isalnum()))
+                if not bad_edge:
+                    cand = (len(alias), start, nid)
+                    if (best is None or cand[0] > best[0]
+                            or (cand[0] == best[0] and cand[1] < best[1])):
+                        best = cand
+                start = low.find(alias, start + 1)
+        return best
+
+    def _errand_parse_cancel(self, text):
+        u"""「别让 X 去了 / 让他回来 / 回来吧」 → `(npc_id, Errand)`；**不该拦 ⇒ `None`**。
+
+        ★ 五步（与派活同一条“**宁可漏判，不可误判**”的纪律）：
+          ① 有取消信号词（两组：需点名 / 不需点名）；
+          ② 目标**真的有一条在办差事**（`traveling`/`working` 都算；`done` 不算 ——
+             已经办完的撤不回来，硬撤只会让“结果”凭空消失）；
+          ③ 点名的按点名（`_errand_find_name`，**与派活同一份规则**）；
+          ④ 没点名 ⇒ **只在恰好一条在办时**才认（两条以上**不猜**）；
+          ⑤ 指名的人没在办 ⇒ 不拦（交给普通对话，别替用户“取消”不存在的事）。
+        """
+        if not isinstance(text, str) or not text.strip():
+            return None
+        board = getattr(self, 'npc_errand', None)
+        if board is None or not board.enabled:
+            return None
+        low = text.lower()
+        needs_name = False
+        hit = None
+        for w in RalseiPet._ERRAND_CANCEL_NEEDS_NAME:
+            if w in low:
+                hit = w
+                needs_name = True
+                break
+        if hit is None:
+            for w in RalseiPet._ERRAND_CANCEL_ANY:
+                if w in low:
+                    hit = w
+                    break
+        if hit is None:
+            return None
+        found = self._errand_find_name(low)
+        target = found[2] if found is not None else None
+        if target is None:
+            pronoun = (u'他' in low) or (u'她' in low)
+            if needs_name and not pronoun:
+                return None
+            act = board.by_npc()          # ★ 快照（别边遍历边改）
+            if len(act) != 1:
+                return None               # 0 条 = 没在办；≥2 条 = 不猜是谁
+            target = next(iter(act))
+        e = board.active_of(target)
+        if e is None:
+            return None
+        return target, e
+
+    def cancel_errand(self, npc_id, reason=u''):
+        u"""★★★ 第152轮：**用户叫停** —— 作废差事并把人还回去（**唯一入口**）。
+
+        用户口径（逐字）：「**按照人类的逻辑来就好**」
+        ⇒ 人味逻辑 = 叫停 ⇒ 他**回来** ⇒ 他也记得“我本来要去，被叫回来了”。
+
+        ★★★ 与“办完”的三处不同（**不能混**）：
+          ① 不产出 `result`、不进 `board.done`（`abort()` 只弹 `_active`）——
+             作废不是结果，别让 `result_of()` 之后返回一句“办完了”；
+          ② **必须撤位置覆盖**（`roam.drop`）：`working` 时他的位置被压在目的地，
+             不撤 ⇒ 他会一直站在那儿（“叫回来了”却还在外面）；
+          ③ 记忆写**未完成**（`_npc_errand_note`），不是 `_npc_errand_commit`。
+        """
+        board = getattr(self, 'npc_errand', None)
+        if board is None or not board.enabled:
+            return None
+        e = board.active_of(npc_id)
+        if e is None:
+            return None
+        dest = getattr(e, 'dest_scene', u'')
+        what = getattr(e, 'what', u'')
+        board.abort(npc_id)
+        roam = getattr(self, 'npc_roam', None)
+        if roam is not None:
+            try:
+                roam.drop(npc_id)      # ★ 回落静态归属 = 回家
+            except Exception as exc:
+                _log.debug('撤位置覆盖失败（已忽略）: %s', exc)
+        self._npc_errand_note(
+            npc_id, u'我本来要去 %s 办「%s」，还没办完就被叫回来了%s'
+                    % (dest, what, (u'（%s）' % reason) if reason else u''))
+        _log.info('差事被叫停：%s 回来（原本去 %s 办「%s」，作废前=%s）',
+                  npc_id, dest, what, getattr(e, 'status', u'?'))
+        try:
+            self._npc_seed_bodies(self._npc_scene_id())
+            self._npc_plan_save()
+            self._npc_errand_save()
+        except Exception as exc:
+            _log.debug('叫停后落盘/重建失败（已忽略）: %s', exc)
+        return e
+
+    def _errand_cancel_ack(self, asker_id, target_id, dest_scene, what):
+        u"""把“他回来了”交给模型说。★ 与 `_errand_ack` 同规：**一句台词都不写死**。"""
+        if not self._npc_ai_available():
+            _log.info('叫停：模型不可用 ⇒ 不发确认语（人已经回来了）')
+            return
+        who = self.npc_label(target_id) or target_id
+        where = self._errand_place_label(dest_scene)
+        brief = (u'（系统提示，用户看不到）用户刚把派出去的人**叫回来了**：'
+                 u'「%s」本来在「%s」办「%s」，现在中途作废、人已经回来。'
+                 u'请用你自己的语气简短地回应用户（一到两句；'
+                 u'**不要**提到这条提示，也不要复述本句）。' % (who, where, what))
+        speaker = asker_id
+        if speaker == 'ralsei' or not self.npc_persona_of(speaker):
+            speaker = None
+        try:
+            self.chat_with_ai(brief,
+                              lambda r: self._errand_show_reply(asker_id, r),
+                              None, speaker=speaker, remember=False,
+                              model=(self._npc_model(asker_id) if speaker else None))
+        except Exception as e:
+            _log.debug('叫停确认语发起失败（已忽略）: %s', e)
+
     def _errand_parse_intent(self, text):
         """「让 X 去 Y 办事」→ `(npc_id, scene_id, 事)`；**不是派活 ⇒ `None`**。
 
@@ -5494,6 +5668,11 @@ class RalseiPet(QMainWindow):
             return None
         low = text.lower()
         if not any(v in low for v in RalseiPet.ERRAND_INTENT_VERBS):
+            return None
+        # ★★ 第152轮：**否定句一律不派**（「别让苏西去 oneshot」不是派活）。
+        #   宁可漏判（这句话被当普通聊天），也不能把“叫停”读成“再派一次”。
+        #   ⚠️ 本闸只管“不派”；“真发生取消”走 `handle_errand_command` 里靠前的那一支。
+        if RalseiPet._errand_is_negative(low):
             return None
         # ---- ③ 地点（最长优先；并列取靠前）----
         # ★ **必须配词边界**：短名 `ut` / `niko` 不设边界就会命中 `but` / `put`
@@ -5516,25 +5695,8 @@ class RalseiPet(QMainWindow):
         ph.sort(key=lambda t: (-t[0], t[1]))
         alen, pi, prefix = ph[0]
         pspan = (pi, pi + alen)
-        # ---- ② 角色名 ----
-        best = None
-        for alias, nid in (self._npc_aliases or {}).items():
-            start = low.find(alias)
-            while start >= 0:
-                end = start + len(alias)
-                if not (end <= pspan[0] or start >= pspan[1]):     # ⑤ 不压地点
-                    start = low.find(alias, start + 1)
-                    continue
-                b = low[start - 1] if start > 0 else ''
-                a = low[end] if end < len(low) else ''
-                bad_edge = ((b.isascii() and b.isalnum())
-                            or (a.isascii() and a.isalnum()))
-                if not bad_edge:
-                    cand = (len(alias), start, nid)
-                    if (best is None or cand[0] > best[0]
-                            or (cand[0] == best[0] and cand[1] < best[1])):
-                        best = cand
-                start = low.find(alias, start + 1)
+        # ---- ② 角色名（★ 第152轮抽成 `_errand_find_name`：取消要走**同一份**规则）----
+        best = self._errand_find_name(low, avoid=pspan)
         if best is None:
             return None
         target_id = best[2]
@@ -5579,6 +5741,25 @@ class RalseiPet(QMainWindow):
             return False
         if getattr(self, 'npc_errand', None) is None:
             return False
+        # ★★★ 第152轮：**取消先于派活**（顺序即语义）。
+        #   反例（真会发生的）：「别让苏西去 oneshot 了」—— 这句话里有角色名、
+        #   有意图词“让”、有地点 ⇒ 派活解析会**原样命中**，用户想叫停却**又派了一次**。
+        #   ⇒ 先问“这是不是叫停”；认为是 ⇒ 撤、回应、`return True`（**不往下走**）。
+        _cancel = self._errand_parse_cancel(text)
+        if _cancel is not None:
+            _nid, _err = _cancel
+            _asker = self._npc_talking or 'ralsei'
+            # ★ 竞态：从"解析到"到"真撤"之间，他可能刚好办完（或被别的路径撤了）。
+            #   这时 `cancel_errand` 返 `None` ⇒ **不许冒认**（否则会回一句"他回来了"，
+            #   而人其实还在目的地办完事）。交回普通对话，让模型按实际情况说。
+            if self.cancel_errand(_nid, reason=u'用户叫停') is None:
+                return False
+            _log.info('叫停：%s 把 %s 从「%s」叫回来',
+                      _asker, _nid, getattr(_err, 'dest_scene', u'?'))
+            self._errand_cancel_ack(_asker, _nid,
+                                    getattr(_err, 'dest_scene', u''),
+                                    getattr(_err, 'what', u''))
+            return True
         intent = self._errand_parse_intent(text)
         if intent is None:
             return False
