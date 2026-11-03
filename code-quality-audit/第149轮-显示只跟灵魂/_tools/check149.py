@@ -439,18 +439,20 @@ mark(u'D 口径③（可派任何角色去别世界办事）：**显式登记缺
 _ERRAND_FN = sorted(n.name for n in ast.walk(TREE)
                     if isinstance(n, ast.FunctionDef) and 'errand' in n.name.lower())
 _ERRAND_MOD = os.path.exists(os.path.join(MODS, 'npc_errand.py'))
-# ★ 这条**故意**把"缺口"钉成判据：哪天补上了它就红 ⇒ 强制回来更新 §149 的登记，
-#   而不是让"缺口"三个字在记忆里慢慢腐烂成"其实做过吧"。
-check(u'D1 差事仍**零实现**（`npc_errand.py` 不存在且 `main.py` 无 errand 函数）'
-      u'—— 红 = 有人补上了，回来更新 §149',
-      not _ERRAND_MOD and not _ERRAND_FN,
+# ★★★ 第150轮：**这条判据按设计转红了**（上一轮就是这么埋的 —— 见它的原 desc：
+#   "红 = 有人补上了，回来更新 §149"）。第150轮把差事接进本地线，
+#   判据跟着翻面：从"仍零实现"改成"已落地"。翻面不是把判据改宽，
+#   而是它守的东西换了方向 —— **红 = 被回滚了**。
+check(u'D1 差事**已落地**（第150轮补上；红 = 被回滚）'
+      u'—— `npc_errand.py` 在 + `main.py` 有 errand 函数',
+      _ERRAND_MOD and bool(_ERRAND_FN),
       u'模块在=%s 有errand函数=%s' % (_ERRAND_MOD, bool(_ERRAND_FN)))
 
 with io.open(REPORT, 'r', encoding='utf-8', newline='') as _fr:
     _REP = _fr.read()
 # ★ 第一版要求 `'口径③'` **紧邻出现** ⇒ 报告里写的是「口径 ③」（带空格）⇒ 假红。
 #   又是"判据太窄=误报"。改成三个**独立**标记各出现一次即可。
-check(u'D2 缺口已落盘登记（`report149.md` 里同时出现 ③ / "差事" / "缺口"）',
+check(u'D2 口径③ 的**现状已落盘登记**（`report149.md` 里同时出现 ③ / "差事" / "缺口"）',
       (u'\u2462' in _REP) and (u'\u5dee\u4e8b' in _REP)
       and (u'\u7f3a\u53e3' in _REP),
       # ★★ 这里原来还回显 `len=%d` —— 报告是**会一直改**的文档，回显长度就是回显时相量

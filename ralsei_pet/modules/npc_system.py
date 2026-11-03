@@ -474,6 +474,67 @@ def scene_chapter(scene_id):
     return parts[0]
 
 
+#: ★★★ 第114轮：**跨作品章名的两套写法**（同一件事实在数据面有两个名字）。
+#:
+#: · 场景侧（`_index.json` 的 `chapter_id` / `_worlds.json` 的 `rooms` 键）用**短码**：
+#:   `ut` / `uty` / `oneshot` / `outertale`；
+#: · 角色侧（`_registry.json` 的 `chapters`）用**作品全名**：
+#:   `undertale` / `undertale_yellow` / `oneshot` / `outertale`。
+#:
+#: ⇒ 拿 `'ut'` 去比 `['undertale']` **永远不命中**。后果不是"少判一条"而是：
+#:   `ut_*`（14 位）/ `hy_*`（15 位）这 **29 位角色连自己作品的世界都进不去**
+#:   （落进 `REASON_FOREIGN_DARK`）—— 与用户口径「其余 ut 及其同人的**只能
+#:   在非暗世界穿梭**」（"自己那侧本来就该通"）直接矛盾。
+#:
+#: ⚠️ 为什么在**比较处**归一，而不是去改某一边的数据：
+#:   两边各自都被既有断言锁着 —— `check72` 的 C3 用 `'undertale.snowdin.x'`
+#:   这个**自造**的 scene_id 验"回自己作品那侧"（真实数据里并不存在这个章名前缀，
+#:   所以它**恰好绕开**了这个缺口），而 `check77` / `check80` 锁
+#:   `_worlds.json` 的章名表。改数据会撞断言，改断言又会让真缺口继续没判据。
+#:   归一放在比较处：两边都不用动，**短码与全名同时成立**。
+CHAPTER_ALIASES = {
+    'ut': ('undertale',),
+    'uty': ('undertale_yellow',),
+}
+
+
+def chapter_names(name):
+    """一个章名（短码或全名）的**等价名集合**（含它自己）。"""
+    out = {name}
+    for short, fulls in CHAPTER_ALIASES.items():
+        if name == short:
+            out.update(fulls)
+        elif name in fulls:
+            out.add(short)
+            out.update(fulls)
+    return out
+
+
+def same_chapter(ch, name):
+    """场景前缀 `ch` 与角色登记的章名 `name` 是否为**同一个作品的那一侧**。
+
+    ★ 判据是"集合有交集"，所以 `ut`↔`undertale` 双向都成立；
+      与本项目多数"逐字相等"的判据不同 —— 这里**必须**放宽，
+      因为差异是**数据面的既成事实**，不是笔误。
+    """
+    if not isinstance(ch, str) or not isinstance(name, str):
+        return False
+    return bool(chapter_names(ch) & chapter_names(name))
+
+
+def chapter_matches(ch, names):
+    """`ch` 是否命中 `names`（列表/元组）里的任一条（**含跨作品别名归一**）。
+
+    ★ 空 `names` ⇒ `False`（与旧写法 `ch in ()` 逐字等价）。
+    """
+    if not isinstance(ch, str):
+        return False
+    for n in (names or ()):
+        if same_chapter(ch, n):
+            return True
+    return False
+
+
 class GateResult(object):
     __slots__ = ('ok', 'reason', 'detail')
 
@@ -568,6 +629,14 @@ def world_gate(npc, world, scene_id=None, carried=False):
        这也是第71轮"跨作品角色 `home_world=dark` 会不会被球闸拦"那个疑点的答案：
        **不会** —— 拦人的是 `escape_via_bubble`，不是 `home_world`。
 
+    ★★ 第114轮 —— **跨作品章名归一**（`CHAPTER_ALIASES` / `chapter_matches`）
+    -------------------------------------------------------------------
+    本函数里所有"章节是否命中"的判断（`home_production` 与 `ch in chapters`）
+    **一律走 `chapter_matches()`**，不再逐字比较。原因见 `CHAPTER_ALIASES` 抬头：
+    场景侧的 `chapter_id` 写 `ut` / `uty`，而角色侧 `chapters` 写
+    `undertale` / `undertale_yellow` —— 逐字比会把 29 位 UT / UTY 角色
+    **关在自己家门外**（他们本该"只能在非暗世界穿梭"，结果连自己那侧都进不去）。
+
     ★★ 为什么第 0 条必须**排在第 1 条前面**（三条理由，缺一不可）
     ---------------------------------------------------------
     a) **数据层不区分**：`_worlds.json` 的 `overrides.desktop == "light"`
@@ -613,8 +682,12 @@ def world_gate(npc, world, scene_id=None, carried=False):
     #   是**本来就不该来**。理由码必须说真话，否则调用方那句"他不能跟你去那里"
     #   会被读成"这孩子没家"。
     if npc.roam_scope != RoamScope.HOME:
-        # ① 回自己作品的那一侧（`undertale.*` / `oneshot.*` …）—— 放行
-        if ch is not None and ch in npc.chapters:
+        # ① 回自己作品的那一侧（`ut.*` / `oneshot.*` …）—— 放行
+        # ★★ 第114轮：这里必须用 `chapter_matches` 而不是 `ch in npc.chapters` ——
+        #    场景侧写 `ut`、角色侧写 `undertale`，逐字比**永远不命中**（详见
+        #    `CHAPTER_ALIASES` 抬头）。这一处是 `ut_*` / `hy_*` 共 29 位角色的
+        #    "回自己家"通路，判错就是把 29 个人关在门外。
+        if ch is not None and chapter_matches(ch, npc.chapters):
             return GateResult(True, REASON_OK, 'home_production:%s' % ch)
         # ② 全域通行 —— 仅 Niko（Deltarune 的暗世界也放行）
         if npc.roam_scope == RoamScope.ALL:
@@ -626,7 +699,8 @@ def world_gate(npc, world, scene_id=None, carried=False):
         return GateResult(False, REASON_NO_CHAPTERS, '%s 没有登记任何暗世界' % npc.name_cn)
     if ch is None:
         return GateResult(True, REASON_OK, 'no_scene_id')
-    if ch in npc.chapters:
+    # ★★ 第114轮：同 `home_production` 那条 —— 逐字比会漏掉 `ut`/`uty` 的别名。
+    if chapter_matches(ch, npc.chapters):
         return GateResult(True, REASON_OK, ch)
     if free_dark_roam(npc):
         return GateResult(True, REASON_OK, 'free_dark_roam:%s' % ch)

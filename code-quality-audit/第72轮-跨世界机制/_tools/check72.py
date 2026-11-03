@@ -180,7 +180,10 @@ check('B4 world_gate 里出现 roam_scope（本轮确实改了门控，不是只
 _i_roam = _wg_src.find('roam_scope != RoamScope.HOME')
 _i_ch = _wg_src.find('if not npc.chapters:')
 check('B5 跨作品分支排在 chapters 判空**之前**（顺序反了会给误导性理由码）',
-      0 <= _i_roam < _i_ch, 'roam@%d chapters@%d' % (_i_roam, _i_ch))
+      # ★ 第150轮：extra 原来打 `roam@%d chapters@%d` —— 那是**函数内的字符偏移**，
+      #   任何一次往 `world_gate` 里加代码它都会变（本轮加差事门控：3370/3883 → 3799/4552）。
+      #   判定一个字没改，变的只是回显 ⇒ 改成布尔。同第146轮 check138、第149轮 check79。
+      0 <= _i_roam < _i_ch, '顺序对=%s' % (0 <= _i_roam < _i_ch))
 
 # --------------------------------------------------------------------------
 print('=' * 74)
