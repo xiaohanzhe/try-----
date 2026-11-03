@@ -808,6 +808,27 @@ def _with_ralsei_patch(system):
     return base + '\n\n' + PATCH_HEADER_RALSEI + '\n' + patch
 
 
+def _errand_same_job(prev, dest_scene, what):
+    u"""旧差事与新派的**是不是同一件事**（同一件事重说一遍 ≠ 改派）。
+
+    ★ 为什么要判（第154轮实测）：用户把同一句话再说一遍（"让 ralsei 去
+      oneshot 擦柜台" ×2）⇒ `ErrandBoard.assign` 会**重新计时**，但地点与
+      事由一个字段都没变 ⇒ 这时写「我本来要去 A 办甲，又被派去 A 办甲了」
+      是**自相矛盾**的记忆，比不记更糟：他以后会把"用户说了两遍"记成
+      "自己被改派过"。
+    ★ 只比**地点 + 事由**：同一地点换一件事（擦柜台 → 收杯子）是**真的改派**，
+      不能一起吃掉（`check154 A8b` 就是防判据写成"同一个地方就都算同一件"）。
+    ★ 为什么是**模块级函数**、不是方法：`assign_errand` 与 `_errand_ack`
+      两处都要用，而它是**纯判断**、不该问 `self` 要；写成方法会让第150~153轮
+      那些只挂产品函数的轻宿主当场 `AttributeError`（§152.7 同款）。
+    """
+    if prev is None:
+        return False
+    _p_what = getattr(prev, 'what', u'') or u''
+    _n_what = what if isinstance(what, str) else u''
+    return (getattr(prev, 'dest_scene', None) == dest_scene
+            and _p_what == _n_what)
+
 class RalseiPet(QMainWindow):
     # 跨线程 API 结果信号：(response, callback) —— 工作线程 emit，主线程槽处理，
     # 避免线程内 QTimer.singleShot 因无 Qt 事件循环导致回调永不触发
@@ -5369,11 +5390,46 @@ class RalseiPet(QMainWindow):
         now = kw.pop('now', None)
         if now is None:
             now = time.time()
+        # ★★★ 第154轮：**改派要留痕** —— 覆盖不是“没发生过”。
+        #
+        # 用户口径「按照人类的逻辑来就好」：你刚答应去擦柜台，
+        # 转头又被叫去别处 ⇒ 人会记得“那件先搁下了”。
+        # 而 `ErrandBoard.assign` 对同一人是**覆盖** ⇒ 旧差事从 `_active` 里**消失**，
+        # 不进 `done`、不留 `result`、也不会走 `_npc_errand_commit` ⇒ 他**彻底忘了**，
+        # 用户过两天问“柜台擦了吗”，他只会汗然。
+        #
+        # ★ 为什么在**门控之后**：门控拒了 ⇒ 新差事**没派成**，旧的**还在**，
+        #   这时写“被派去别处了”就是**假话**（门控那一支已经留了“去不了”）。
+        # ★ 为什么**取旧**必须在 `assign` **之前**：覆盖之后旧对象就从 `_active`
+        #   消失了，`assign` 只返回**新**的一条 ⇒ 事后再取只能取到 `None`。
+        _prev = board.active_of(npc_id)
+        # ★★ 第154轮：**写痕在派成之后**。
+        #
+        # `assign` 有可能返 `None`（看板被关 / 参数不合法 / 名额满）⇒ 他**根本
+        # 没被改派**。先写"又被派去 B 了"就是**假记忆** —— 本轮探针实测：
+        # 看板关掉后 `assign` 返 `None`，他的记忆里写着"被派去 ut 了"，
+        # 而他实际还在去 oneshot 的路上（用户过两天问起，他会答错地方）。
+        # ⇒ 取旧引用**只在之前**（覆盖后 `_active` 里就没了），写痕**挪到之后**。
+        #
+        # ★ 同一件事重说一遍**不是改派** ⇒ `_errand_same_job` 判掉。
         try:
-            return board.assign(now, npc_id, dest_scene, what, **kw)
+            _new = board.assign(now, npc_id, dest_scene, what, **kw)
         except Exception as e:
             _log.debug('派差事失败（已忽略）: %s', e)
             return None
+        if _new is not None and _prev is not None \
+                and not _errand_same_job(_prev, dest_scene, what):
+            _p_dest = getattr(_prev, 'dest_scene', u'') or u'?'
+            _p_what = getattr(_prev, 'what', u'') or u''
+            _p_txt = (u'办「%s」' % _p_what) if _p_what else u'走一趟'
+            _n_txt = (u'办「%s」' % what) if what else u'走一趟'
+            _log.info('改派：%s 从 %s（%s）改去 %s（%s）',
+                      npc_id, _p_dest, _p_txt, dest_scene, _n_txt)
+            self._npc_errand_note(
+                npc_id, u'我本来要去 %s %s，还没办完，'
+                        u'又被派去 %s %s了'
+                        % (_p_dest, _p_txt, dest_scene, _n_txt))
+        return _new
 
     # ------------------------------------------------ 层5 派发入口（第114轮）
 
@@ -5765,6 +5821,14 @@ class RalseiPet(QMainWindow):
             return False
         target_id, dest_scene, what = intent
         asker = self._npc_talking or 'ralsei'
+        # ★★ 第154轮：改派的“前一件事”必须在 `assign_errand` **之前**取 ——
+        #    覆盖之后旧对象就从 `_active` 消失了（`assign` 只返回新的那条）。
+        #    ★ 这份只用来**说话**（告诉模型“原来那件被搁下了”）；
+        #      留痕在 `assign_errand` 里做（底层入口不发声，不能依赖调用方）。
+        _prev = None
+        _bd = getattr(self, 'npc_errand', None)
+        if _bd is not None:
+            _prev = _bd.active_of(target_id)
         # ② 问路（**与派发同一条门控**：能被派 ≠ 能去）
         ok, why = self._npc_errand_gate(target_id, dest_scene)
         if not ok:
@@ -5787,10 +5851,12 @@ class RalseiPet(QMainWindow):
                   asker, target_id, dest_scene, what,
                   '已派出' if ok else ('去不了（%s）' % why))
         # ④ 回应 —— **完全交给模型**（用发起者的人设）
-        self._errand_ack(asker, target_id, dest_scene, what, ok, why)
+        self._errand_ack(asker, target_id, dest_scene, what, ok, why,
+                         prev=(_prev if ok else None))
         return True
 
-    def _errand_ack(self, asker_id, target_id, dest_scene, what, ok, why):
+    def _errand_ack(self, asker_id, target_id, dest_scene, what, ok, why,
+                    prev=None):
         """让人（模型）自己回应这次派活。★ **台词一个字都不写死**。
 
         ★ 两条线（Ralsei 与 NPC 走的是**两套 system prompt**）：
@@ -5813,6 +5879,19 @@ class RalseiPet(QMainWindow):
                      '让「%s」去「%s」办「%s」，他已经在路上了。'
                      '请用你自己的语气简短地回应用户（一到两句；'
                      '**不要**提到这条提示，也不要复述本句）。' % (who, where, what))
+            # ★ 第154轮：**改派**要告诉他“原来那件被作废了”。
+            #   台词一字不写死 —— 只给**事实**，提不提、怎么提由模型定。
+            #   ★ 只在 `ok` 分支（真派成了才有“被改派”这回事）。
+            # ★ 第154轮：**同一件事重说一遍不算改派**（`_errand_same_job`）
+            #   —— 一件都没被作废，这时说"原来那件被作废了"是无中生有。
+            if prev is not None and not _errand_same_job(prev, dest_scene, what):
+                _p_dest = getattr(prev, 'dest_scene', u'') or u'?'
+                _p_what = getattr(prev, 'what', u'') or u''
+                brief += ('（★ 补充事实：他手上原本还有一件事 —— 去「%s」办「%s」，'
+                          '已经被这次改派**作废**了。要不要跟用户提、怎么提，'
+                          '你自己决定；别提这条提示。）'
+                          % (self._errand_place_label(_p_dest),
+                             _p_what or u'那一趟'))
         else:
             brief = ('（系统提示，用户看不到）用户刚才让你派人办事：你想让'
                      '「%s」去「%s」办「%s」，但**他去不了**（原因：%s）。'

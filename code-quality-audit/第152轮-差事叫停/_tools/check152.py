@@ -200,7 +200,11 @@ class _Host(object):
     def _npc_ai_available(self):
         return True
 
-    def _errand_ack(self, *a):
+    def _errand_ack(self, *a, **kw):
+        # ★ 第154轮：产品给 `_errand_ack` 加了**可选** `prev=`（改派时那句
+        #   "原来那件被作废了"）⇒ 桩必须收得住这个关键字，否则 `handle_errand_command`
+        #   里那行**当场 TypeError**（本套件 2026-11-04 实跑撞上：37 条只跑到 28 条）。
+        #   ★ 只补收参，**不动任何判据**：本套件不考改派。
         self.acks.append(a)
 
     def _errand_cancel_ack(self, *a):
