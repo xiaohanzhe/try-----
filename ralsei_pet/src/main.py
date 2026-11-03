@@ -6820,6 +6820,9 @@ class RalseiPet(QMainWindow):
 
         # ★★ 第52轮：就寝状态
         self._bedtime_fired_date = None      # 已就寝的日期（'YYYY-MM-DD'）；每晚只触发一次
+        # ★ 第149轮：就寝闸的**日志去重**位（上次因「显示不在家」被推迟的场景 id）。
+        #   只为避免每 tick 刷一行日志；**不是**判定依据（判定看 `current_scene`）。
+        self._bedtime_defer_logged = None
         self._bedtime_sleep = False          # 当前这次睡眠是不是"就寝睡"（决定早上自动醒）
         self._last_bedtime_check = 0.0       # 判定节拍时间戳（避免每 30ms 都算日期）
         
@@ -11662,6 +11665,22 @@ class RalseiPet(QMainWindow):
             if self._bedtime_busy():
                 _log.debug("[就寝] 到点但「有事」（冒险/聊天中），本次推迟")
                 return False                      # 窗口内继续等，不标记 fired
+            # ★★★ 第149轮（§109.5 口径 1）：「显示切换只跟灵魂」。
+            #   `current_scene` 就是「显示所在场景」（灵魂与他同址）。
+            #   到点就寝走 `go_to_bed()` → `scene.switch(BEDTIME_HOME_SCENE)`：
+            #   若此刻显示在别的场景，这一下会把画面**连显示一起拽回桌面**，
+            #   而灵魂一步没动 —— 正是 §109.5 要禁的那一类。
+            #   ⇒ 显示不在家时**不就寝**（今晚推迟）；等回到桌面、窗口内再走原逻辑。
+            #   窗口过了仍是既有行为（记“不再补睡”）。
+            #   ★ 只推迟、**不**标记 fired：窗口内每 tick 还会试，回桌面立刻生效。
+            _home = getattr(self, 'BEDTIME_HOME_SCENE', 'desktop')
+            _cur = getattr(self, 'current_scene', None)
+            if _cur and _cur != _home:
+                if getattr(self, '_bedtime_defer_logged', None) != _cur:
+                    self._bedtime_defer_logged = _cur
+                    _log.info("[就寝] 显示在 %s（≠ %s）：不切显示，回桌面再睡",
+                              _cur, _home)
+                return False
             self._bedtime_fired_date = today
             _log.info("[就寝] 到点（目标 %s），回房间睡觉", target.strftime('%H:%M'))
             return bool(self.go_to_bed())

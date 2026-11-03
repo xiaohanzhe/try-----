@@ -735,7 +735,8 @@ for _ln in _msrc.splitlines():
 check('J11 ★★ `BEDTIME_HOME_SCENE` ∈ main.py 且**注释里**有"NPC 不适用/已废弃"声明'
       '（用户裁决 ③「废除」落在**注释真源**上）',
       _bhs >= 1 and _has_npc_depre,
-      'occurrences=%d 有NPC废弃声明=%s' % (_bhs, _has_npc_depre))
+      '出现过=%s 有NPC废弃声明=%s（第149轮起不回显次数：它是时相量，谁多提一次这个常量就 DIFF）'
+      % (_bhs >= 1, _has_npc_depre))
 # ★ J11n 负控制：把**所有注释**抹掉后，同样的检测必须判否
 #   （证明 J11 真在读注释，不是被代码里的标识符蒙对）
 _stripped = '\n'.join(

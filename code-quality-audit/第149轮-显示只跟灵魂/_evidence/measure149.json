@@ -1,0 +1,58 @@
+{
+ "errand_funcs_in_main": 0,
+ "errand_module_present": false,
+ "fork_point": "0efda6b5（第110轮）",
+ "npc_modules": {
+  "npc_intent.py": {
+   "calls": 0,
+   "current_scene_refs": 0
+  },
+  "npc_life.py": {
+   "calls": 0,
+   "current_scene_refs": 0
+  },
+  "npc_placement.py": {
+   "calls": 0,
+   "current_scene_refs": 0
+  },
+  "npc_roam.py": {
+   "calls": 0,
+   "current_scene_refs": 0
+  }
+ },
+ "npc_touches_display": false,
+ "remote_only_commits": [
+  "ac3b9e31 第113轮差事机制层",
+  "844bda0a 第114轮差事门控/派发/落盘"
+ ],
+ "switch_callers": {
+  "_do_scene_transition_swap": [
+   "_advance_scene_transition"
+  ],
+  "_item_enter_scene": [],
+  "_travel_commit": [
+   "travel_to_scene"
+  ],
+  "go_to_bed": [
+   "_bedtime_tick"
+  ]
+ },
+ "switch_calls": [
+  {
+   "host": "_do_scene_transition_swap",
+   "name": "switch"
+  },
+  {
+   "host": "_item_enter_scene",
+   "name": "switch"
+  },
+  {
+   "host": "_travel_commit",
+   "name": "travel_to"
+  },
+  {
+   "host": "go_to_bed",
+   "name": "switch"
+  }
+ ]
+}
