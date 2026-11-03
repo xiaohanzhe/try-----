@@ -223,9 +223,14 @@ def main():
         bad = ES.first_sentence(u'Well, well, well. What do we have here.')
     finally:
         ES._SENTENCE_ENDS = keep
-    check(u'C8 负控制：去掉 `.` ⇒ 立刻退回"切在半个单词上"（证明 C1 不是恒真）',
-          bad != u'Well, well, well.' and bad.endswith(u'd'),
-          repr(bad))
+    # ★★ 第147轮契约变更（已登记）：兜底自己也变好了。
+    #   原来去掉 `.` 后硬截在 24 字 ⇒ `Well, well, well. What d`（**半个单词**）。
+    #   现在 `_hard_cut()` 会退到最后一个空格 ⇒ `Well, well, well. What`（**多带一个悬空的词**）。
+    #   降级依然真实（`bad != 断句结果`），C1 的鉴别力还在（18 字 vs 22 字）；
+    #   但“切在半个单词上”这个描述已不成立 —— 不改就是让判据说假话。
+    check(u'C8 负控制：去掉 `.` ⇒ 退回"多带一个悬空的词"（证明 C1 不是恒真）',
+          bad == u'Well, well, well. What',
+          u'%r ← 第147轮起兜底不再切词' % (bad,))
     # ★ 负控制二：MIN 守卫调 0，`Mr.` 就会被当句末
     mkeep = ES.MIN_FIRST_CHARS
     try:

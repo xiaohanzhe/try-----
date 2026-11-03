@@ -1,0 +1,104 @@
+{
+ "n_turns": 5592,
+ "min_first_chars": 6,
+ "max_event": 24,
+ "max_auto": 40,
+ "event24": {
+  "midword": {
+   "en": 2,
+   "zh": 37
+  },
+  "hardcut": {
+   "en": 437,
+   "zh": 4943
+  },
+  "no_punct_en": 233,
+  "sweep": {
+   "0.0": {
+    "accepted": 2,
+    "avg_lost": 15.0,
+    "min_keep": 7,
+    "min_gain": 13
+   },
+   "0.3": {
+    "accepted": 1,
+    "avg_lost": 13.0,
+    "min_keep": 11,
+    "min_gain": 13
+   },
+   "0.4": {
+    "accepted": 1,
+    "avg_lost": 13.0,
+    "min_keep": 11,
+    "min_gain": 13
+   },
+   "0.5": {
+    "accepted": 0,
+    "avg_lost": 0,
+    "min_keep": 0,
+    "min_gain": 0
+   },
+   "0.6": {
+    "accepted": 0,
+    "avg_lost": 0,
+    "min_keep": 0,
+    "min_gain": 0
+   },
+   "0.7": {
+    "accepted": 0,
+    "avg_lost": 0,
+    "min_keep": 0,
+    "min_gain": 0
+   }
+  }
+ },
+ "auto40": {
+  "midword": {
+   "en": 0,
+   "zh": 3
+  },
+  "hardcut": {
+   "en": 436,
+   "zh": 4634
+  },
+  "no_punct_en": 155,
+  "sweep": {
+   "0.0": {
+    "accepted": 0,
+    "avg_lost": 0,
+    "min_keep": 0,
+    "min_gain": 0
+   },
+   "0.3": {
+    "accepted": 0,
+    "avg_lost": 0,
+    "min_keep": 0,
+    "min_gain": 0
+   },
+   "0.4": {
+    "accepted": 0,
+    "avg_lost": 0,
+    "min_keep": 0,
+    "min_gain": 0
+   },
+   "0.5": {
+    "accepted": 0,
+    "avg_lost": 0,
+    "min_keep": 0,
+    "min_gain": 0
+   },
+   "0.6": {
+    "accepted": 0,
+    "avg_lost": 0,
+    "min_keep": 0,
+    "min_gain": 0
+   },
+   "0.7": {
+    "accepted": 0,
+    "avg_lost": 0,
+    "min_keep": 0,
+    "min_gain": 0
+   }
+  }
+ }
+}

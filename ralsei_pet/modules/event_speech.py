@@ -59,6 +59,16 @@ MIN_FIRST_CHARS = 6
 #     在 `,` 上切是"话没说完就换行"，那是另一种坏。
 _SENTENCE_ENDS = u'。！？!?\n….'
 
+# 硬截兜底要去掉的尾巴：空白 + 句内标点。**三处调用共用一份**（第147轮收进来）。
+_HARD_CUT_TAIL = u'，,、。！？!?；;：: '
+
+# 只有空格分词的文字才有“词边界”。★ 必须限定 ASCII：
+#   `str.isalnum()` 对 CJK 也返回 True，用它判“切在词中”会把**每一次中文硬截**
+#   都当成切在词中 ⇒ 退到空格（往往在英文人名前）⇒ 白丢 4~8 个汉字。
+#   第147轮实测：用 `isalnum()` 时中文输出变了 **151 / 57 条**；改 ASCII 后归 0。
+_WORDY = (u'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+          u"'\u2019-")
+
 # 自主开口（`main.start_autonomous_speech`）的长度上限（第136轮收进来）。
 # ★ 为什么比事件反应（24）宽：主动搭话本来就该能说两句，"一句话的即时反应"那套
 #   尺度套在"主动开口"上会把「你回来啦。今天怎么样？」砍成半句。
@@ -275,6 +285,39 @@ def _sentence_ends(t):
     return out
 
 
+def _hard_cut(t, max_chars):
+    """压到 `max_chars` 内。切点落在**单词中间**时，先退到最后一个空格。
+
+    ★ 第147轮：24/40 字里一个句末标点都没有的英文（`hehe that tickles so mu|ch`）
+      原来直接 `t[:max_chars]` ⇒ 用户看到的是一个**残词**。
+      退到最后一个空格能把词收完整，代价实测很小：
+      24 字链 134/135 、40 字链 100/100 条能整词收尾，平均只少 **3.9 / 4.2** 个字
+      （最短还留 14 / 28 字；`_evidence/measure147.json`）。
+    ★ 退让底线两条（**数据选的，不是我拍的**）：
+      ① 留下 ≥ `MIN_FIRST_CHARS`（否则退得只剩几个字，比硬截更难看）；
+      ② 留下 ≥ 半个预算（`len(keep) * 2 >= max_chars`）—— 退让不许吃掉一半以上。
+      阈值扫描：ratio 0/0.3/0.4/0.5 结果完全一致，0.6 起开始少收（135→133→128），
+      所以取 0.5：该收的都收了，也挡得住“唯一空格在最前面”的极端。
+    ★ **必须限 ASCII**（第147轮实测逼出来的）：`str.isalnum()` 对 CJK 也是 True，
+      用它判“切在词中”会把**每一次中文硬截**都当成切在词中 ⇒ 退到空格
+      （往往落在英文人名前）⇒ 白丢 4~8 个汉字。用 `isalnum()` 时中文输出变了
+      **151 / 57 条**，改成 ASCII 白名单后归 **0**（`_evidence/ab147.json` 里 `zh_changed`）。
+    ★ 三处调用（`first_sentence` 一处、`fit_sentences` 两处）共用本函数 ——
+      原来那三处各抄一遍，同一份规则三处算。
+    """
+    if len(t) <= max_chars:
+        return t
+    cut = t[:max_chars].rstrip(_HARD_CUT_TAIL)
+    # 切点两侧都是 **ASCII** 词字符 ⇒ 那个词被劈成两半（中文没有词边界，不参与）
+    if cut and len(cut) < len(t) and cut[-1] in _WORDY and t[len(cut)] in _WORDY:
+        sp = cut.rfind(u' ')
+        if sp > 0:
+            keep = cut[:sp].rstrip(_HARD_CUT_TAIL)
+            if len(keep.strip()) >= MIN_FIRST_CHARS and len(keep) * 2 >= max_chars:
+                return keep
+    return cut
+
+
 def first_sentence(text, max_chars=EVENT_MAX_CHARS):
     """取第一句并压到 max_chars 内；取不到实义字符就返回空串。
 
@@ -343,7 +386,7 @@ def first_sentence(text, max_chars=EVENT_MAX_CHARS):
             t = t[:pick] if t[pick] == '\n' else t[:pick + 1]
     t = t.strip()
     if len(t) > max_chars:
-        t = t[:max_chars].rstrip('，,、。！？!?；;：: ')
+        t = _hard_cut(t, max_chars)
     t = t.strip()
     if not re.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
         return ""
@@ -398,10 +441,10 @@ def fit_sentences(text, max_chars=AUTO_SPEAK_MAX_CHARS):
         if len(head.strip()) >= MIN_FIRST_CHARS or len(t) <= max_chars:
             t = head
         elif len(t) > max_chars:
-            t = t[:max_chars].rstrip('，,、。！？!?；;：: ')
+            t = _hard_cut(t, max_chars)
     elif len(t) > max_chars:
         # 连一个句末标点都没有（或第一个就超出上限）⇒ 只能硬截，这里是**唯一**的兜底
-        t = t[:max_chars].rstrip('，,、。！？!?；;：: ')
+        t = _hard_cut(t, max_chars)
     t = t.strip()
     if not re.search(r'[0-9A-Za-z\u4e00-\u9fff]', t):
         return ""
