@@ -88,6 +88,13 @@ class _Host(object):
     _npc_errand_note = RalseiPet._npc_errand_note
     _npc_errand_tick = RalseiPet._npc_errand_tick
     _npc_errand_commit = RalseiPet._npc_errand_commit
+
+    def _errand_report_ack(self, *a, **kw):
+        # ★ 第153轮：产品在 tick 的 finished 分支里新调了它。
+        #   桩必须跟着装 —— 否则 AttributeError 会被 tick 的
+        #   `except` 吞掉，症状不是报错，而是“finished 那一段整段没执行”。
+        #   看台词的地方在第153轮 `check153`。
+        return None
     assign_errand = RalseiPet.assign_errand
 
     def __init__(self):

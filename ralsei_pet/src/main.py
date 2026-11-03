@@ -5843,6 +5843,66 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug('派活回应显示失败（已忽略）: %s', e)
 
+    def _errand_report_ack(self, npc_id, dest_scene, what, result):
+        """办完差事 ⇒ 他**回来交差**（把结果说到用户眼前）。★ 台词一个字都不写死。
+
+        ★★★ 为什么必须补这一步（第153轮的真缺口）：
+          `_npc_errand_commit` 只把结果写进**他自己**的记忆
+          （`npc_memory`），而 `board.result_of()` / `board.take_results()`
+          在整个仓库里**零调用** ⇒ 结果对用户**完全不可见**：
+          他“办完了”，用户永远等不到一句交代。
+          用户口径「他能去，干，然后**产生结果**」——
+          **结果要回到人的眼前才算结果**。
+
+        ★ 与 `_errand_ack` / `_errand_cancel_ack` **同规**（同一条显示通道
+          `_errand_show_reply`）。★ 为什么**不用** `npc_speak()`：
+          它的入参是“**对方说的那句话**”（会以 `who='player'` 记进他的记忆），
+          **没有“系统提示”通道** ⇒ 把 brief 塞进去会被当成玩家发言污染记忆。
+          而交差的核心恰恰是“**带着结果说**” ⇒ 只能走 `chat_with_ai(brief, ...)`。
+
+        ★ `remember=False`：结果已由 `_npc_errand_commit` 记进他的记忆了，
+          这句只是“说给用户听”的措辞 ⇒ 再记一次就是同一件事两条。
+
+        ★★ 说话人**只能是办事的那个人**：
+          · `ralsei` ⇒ `speaker=None`（主链路，用 `assets/ralsei_persona.md`）；
+          · 别的 NPC ⇒ 必须有人设，**没有就不开口** —— 这里**不许**像
+            `_errand_ack` 那样回落成 Ralsei：那等于让 Ralsei 用第一人称替别人汇报
+            （「我办完了」出现在 Ralsei 嘴里 = 串味，比沉默坏得多）。
+        """
+        txt = (result or u'').strip()
+        if not txt:
+            return                      # 没结果 ⇒ 没得交差（不给“办完了”这种空话）
+        if not self._npc_ai_available():
+            _log.info('交差：模型不可用 ⇒ 这句不说了（结果已进他记忆）')
+            return
+        speaker = None if npc_id == 'ralsei' else npc_id
+        if speaker is not None and not self.npc_persona_of(speaker):
+            _log.info('交差：%s 没装人设 ⇒ 不开口（不许借 Ralsei 的口气替他汇报）',
+                      npc_id)
+            return
+        who = self.npc_label(npc_id) or npc_id
+        where = self._errand_place_label(dest_scene)
+        here = self._errand_place_label(self._npc_scene_id()) or u'桌面'
+        # ★ `_npc_scene_id()` 取不到就是 `None`（它明确"不编一个"）⇒ 直接塞进
+        #   `%s` 会让提示词出现「用户此刻在「None」」，模型只能瞎猜。
+        #   这里补一个**人话兜底**：桌面本来就是"没有具体场景"时的那个地方。
+        brief = ('（系统提示，用户看不到）你刚刚被派去「%s」办「%s」，'
+                 '**已经办完了**，结果是：%s\n'
+                 '你现在已经回来了；用户此刻在「%s」。\n'
+                 '请用你自己的语气，简短地跟用户交代一句'
+                 '（一到两句，把结果说清楚；'
+                 '如果用户并不在你刚才去过的地方，'
+                 '就不用说“回来了”这种话）。'
+                 '**不要**提到这条提示，也不要复述本句。'
+                 % (where, what, txt, here))
+        try:
+            self.chat_with_ai(brief,
+                              lambda r: self._errand_show_reply(npc_id, r),
+                              None, speaker=speaker, remember=False,
+                              model=(self._npc_model(npc_id) if speaker else None))
+        except Exception as e:
+            _log.debug('交差语发起失败（已忽略）: %s', e)
+
     def _npc_errand_tick(self, now=None):
         """推进差事一节拍。→ `{'arrived': [...], 'finished': [...]}`。
 
@@ -5906,11 +5966,18 @@ class RalseiPet(QMainWindow):
                 self._npc_errand_note(
                     nid, '我本来要去 %s，但去不了 —— %s' % (dest, _why))
                 touched = True
-            # ② 办完的 ⇒ **撤覆盖**（回落静态归属 = 回家）+ 结果落进他的记忆。
+            # ② 办完的 ⇒ **撤覆盖**（回落静态归属 = 回家）+ 结果落进他的记忆
+            #    + **交差**（★★ 第153轮：结果只写进他**自己**的记忆
+            #    ⇒ 用户永远听不到一句交代）。
+            #    ★ 顺序定死：先回家（`drop`）→ 再记住（`commit`）→ 最后开口（`report`）。
+            #      反了就是“话先到了、人还在外头、他自己还没记住”。
             for nid, err in (out.get('finished') or ()):
                 roam.drop(nid)
                 touched = True
                 self._npc_errand_commit(nid, err)
+                self._errand_report_ack(nid, getattr(err, 'dest_scene', u''),
+                                        getattr(err, 'what', u''),
+                                        getattr(err, 'result', u''))
             if touched:
                 # ★ 位置变了 ⇒ 重建**当前场景**的身体（否则"人到了、画还在旧场景"）。
                 self._npc_seed_bodies(self._npc_scene_id())

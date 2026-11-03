@@ -394,6 +394,7 @@ WIRING = collections.OrderedDict((
     ('put', '每拍对 `working_positions()` 逐个 `roam.put(nid, scene, now, '
             'reason=errand.reason())`，随后 `_npc_seed_bodies(_npc_scene_id())`'),
     ('finish', '`step()` 的 `finished` ⇒ `roam.drop(nid)`（回落静态归属）+ '
+               '★ 第153轮还要**交差一句**（把结果说到用户眼前；只写进他自己的记忆 = 用户永远听不到）+ '
                '`npc_memory.remember(nid, result, who=nid)` + `npc_memory.save(nid)`'),
     ('decoupled', '本模块**不碰显示**：不 import scene/camera/canvas，'
                   '不调 `switch()` / `travel_to()`（AST 判据锁死）'),
