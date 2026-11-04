@@ -829,6 +829,104 @@ def _errand_same_job(prev, dest_scene, what):
     return (getattr(prev, 'dest_scene', None) == dest_scene
             and _p_what == _n_what)
 
+
+# ---------------------------------------------------------------- 欠账（第156轮）
+
+#: 欠账只提 **一天内** 的 —— 陈年旧账挂在嘴边就成了噪声。
+ERRAND_GIVEN_UP_TTL = 86400.0
+
+#: 欠账最多记 8 件（再多就没法在一句话里说清，也不是人话）。
+ERRAND_GIVEN_UP_MAX = 8
+
+
+def _errand_item_txt(dest, what):
+    u"""一件欠账的人话说法：「去 X 办「甲」」/「去 X 走一趟」（事由为空时）。"""
+    _w = what if isinstance(what, str) else u''
+    return (u'去 %s 办「%s」' % (dest, _w)) if _w else (u'去 %s 走一趟' % (dest,))
+
+
+def _errand_given_up_add(owner, npc_id, dest, what, now=None):
+    u"""把「这件还没办完就被改派挤掉了」记进 `owner._errand_given_up`。
+
+    ★★ 为什么是**模块级**、不是方法：`assign_errand` 是**产品函数**，第150~155轮
+      那些轻宿主都直接挂它（`assign_errand = RalseiPet.assign_errand`）。方法一加，
+      宿主没有它 ⇒ 调到这里当场 `AttributeError`；而这类异常常被 `except` 吞掉，
+      症状是"什么都没发生"（第152轮踩过一模一样的）。模块级只按鸭子类型读 `owner`，
+      宿主**一行都不用改**。
+    ★ 表不在就**就地建**：`getattr` 拿不到时新建一个挂回去 —— 这样"忘了在
+      `__init__` 预声明"也不会炸（预声明仍要写，别依赖这条兜底）。
+    ★ **去重**：同一（地点 + 事由）只留最近一次（他被派回同一件事不该记两笔）。
+    """
+    if not (isinstance(npc_id, str) and npc_id):
+        return
+    tbl = getattr(owner, '_errand_given_up', None)
+    if not isinstance(tbl, dict):
+        tbl = {}
+        try:
+            setattr(owner, '_errand_given_up', tbl)
+        except Exception:
+            return
+    try:
+        now = float(now) if now is not None else time.time()
+    except (TypeError, ValueError):
+        now = time.time()
+    items = tbl.get(npc_id)
+    if not isinstance(items, list):
+        items = []
+    items = [it for it in items
+             if not (isinstance(it, tuple) and len(it) >= 3
+                     and it[1] == dest and it[2] == what)]
+    items.append((now, dest, what if isinstance(what, str) else u''))
+    if len(items) > ERRAND_GIVEN_UP_MAX:
+        items = items[-ERRAND_GIVEN_UP_MAX:]
+    tbl[npc_id] = items
+
+
+def _errand_given_up_of(owner, npc_id, now=None):
+    u"""他手上**还没办完就被叫走**的那几件 `[(dest, what), ...]`（老 → 新）。
+
+    ★ TTL：只返**一天内**的。超过就当它已经淡出（记忆里仍有那几句原话）。
+    """
+    tbl = getattr(owner, '_errand_given_up', None)
+    if not isinstance(tbl, dict):
+        return []
+    items = tbl.get(npc_id)
+    if not isinstance(items, list):
+        return []
+    try:
+        now = float(now) if now is not None else time.time()
+    except (TypeError, ValueError):
+        now = time.time()
+    out = []
+    for it in items:
+        if not (isinstance(it, tuple) and len(it) >= 3):
+            continue
+        ts, dest, what = it[0], it[1], it[2]
+        try:
+            if now - float(ts) > ERRAND_GIVEN_UP_TTL:
+                continue
+        except (TypeError, ValueError):
+            pass
+        out.append((dest, what))
+    return out
+
+
+def _errand_backlog_brief(owner, npc_id, now=None):
+    u"""欠账折成**一句**系统提示（没有 ⇒ `''`）。
+
+    ★★ 返回 `''` 时调用方**一个字都不加** ⇒ 没被派过差事的人 prompt 逐字不变
+      （零回归：`check156 B3` 与全量回归一起守）。
+    ★ 台词一个字不写死 —— 只说事实（欠着哪几件），提不提由模型定（第114轮口径）。
+    """
+    items = _errand_given_up_of(owner, npc_id, now=now)
+    if not items:
+        return u''
+    _txt = u'、'.join(_errand_item_txt(d, w) for d, w in items)
+    return (u'（你手上还有 %d 件没办完就被叫走的事：%s。'
+            u'要不要提、怎么提由你自己决定；别提这条提示。）'
+            % (len(items), _txt))
+
+
 class RalseiPet(QMainWindow):
     # 跨线程 API 结果信号：(response, callback) —— 工作线程 emit，主线程槽处理，
     # 避免线程内 QTimer.singleShot 因无 Qt 事件循环导致回调永不触发
@@ -3261,6 +3359,14 @@ class RalseiPet(QMainWindow):
         #   默认 `None`（建失败 ⇒ `assign_errand` 恒返回 None，只降级不抛出）。
         #   ★ 没被派过 ⇒ 看板恒空 ⇒ **零行为变化**（无需开关即零回归）。
         self.npc_errand = None
+        # ★★★ 第156轮：**欠账** —— 被改派挤掉、还没办完的那几件事。
+        #   为什么不能只靠记忆里那句"又被派去…"：`history_block` 只取**最后 12 条**
+        #   记忆（`npc_persona.history_block(max_lines=12)`）⇒ 跟这个 NPC 聊六轮，
+        #   改派痕迹就**整段**出窗（本轮探针实测：2 条痕迹 + 12 句闲聊 ⇒ 一件不剩）。
+        #   而"我现在欠着什么"是**当前状态**，不是历史 —— 状态该跟"现在几点"放一层。
+        #   结构：`npc_id -> [(ts, dest, what), ...]`（只存内存、不落盘；
+        #   重启后由记忆里那几句"又被派去"兜底）。
+        self._errand_given_up = {}
         self._npc_aliases = {}
         self._npc_invited = []          # 说上过话的 NPC（换场景时才有资格被问"跟不跟"）
         self._npc_follow_pending = []   # 纯 NPC 的"想跟但等你点头"
@@ -3607,10 +3713,18 @@ class RalseiPet(QMainWindow):
                 parts.append('天气%s' % _w)
         except Exception as e:
             _log.debug('NPC 上下文：天气分片失败（已忽略）: %s', e)
-        if not parts:
+        # ★ 第156轮：欠账（被改派挤掉、还没办完的那几件）也挂在这里。
+        #   放这一层而不是只写记忆：记忆只有**最后 12 条**进 prompt，欠账会出窗。
+        #   ★ 空串 ⇒ 什么都不加（没被派过差事的人 prompt 逐字不变）。
+        _backlog = _errand_backlog_brief(self, npc_id)
+        if not parts and not _backlog:
             return ''
-        return ('【此刻】' + '，'.join(parts)
-                + '。（这是当下的环境，可以自然地带一点出来，但别逐条念。）')
+        _txt = (('【此刻】' + '，'.join(parts)
+                 + '。（这是当下的环境，可以自然地带一点出来，但别逐条念。）')
+                if parts else '')
+        if _backlog:
+            _txt = (_txt + '\n' + _backlog) if _txt else _backlog
+        return _txt
 
     def npc_system_prompt(self, npc_id, heard=None):
         """某个 NPC 的 system prompt —— **唯一出口**。
@@ -5456,10 +5570,18 @@ class RalseiPet(QMainWindow):
             _n_txt = (u'办「%s」' % what) if what else u'走一趟'
             _log.info('改派：%s 从 %s（%s）改去 %s（%s）',
                       npc_id, _p_dest, _p_txt, dest_scene, _n_txt)
+            # ★★★ 第156轮：**这条痕迹带上全部欠账**，不是只提"上一件"。
+            #
+            # 人类逻辑：连着被改派三次，人会记得"我本来要擦柜台、收杯子，都没办完，
+            # 又被叫去扫地" —— 而不是只记得"刚才手上那件"。
+            # ★ 为什么必须写全：痕迹会随记忆窗口（最后 12 条）一起出窗，能留一条是
+            #   一条；一条带三件的痕迹 > 三条各带一件（出窗概率小 3 倍）。
+            _errand_given_up_add(self, npc_id, _p_dest, _p_what, now=now)
+            _items = _errand_given_up_of(self, npc_id, now=now)
+            _all_txt = u'、'.join(_errand_item_txt(d, w) for d, w in _items)
             self._npc_errand_note(
-                npc_id, u'我本来要去 %s %s，还没办完，'
-                        u'又被派去 %s %s了'
-                        % (_p_dest, _p_txt, dest_scene, _n_txt))
+                npc_id, u'我本来要%s，还没办完，又被派去 %s %s了'
+                        % (_all_txt, dest_scene, _n_txt))
         return _new
 
     # ------------------------------------------------ 层5 派发入口（第114轮）
@@ -15417,6 +15539,14 @@ class RalseiPet(QMainWindow):
         # 环境信息作为独立小节挂在 system 尾部，而不是塞进用户消息
         if _ctx:
             system = system + "\n\n" + _ctx
+            # ★ 第156轮：**欠账**也挂尾部（与 NPC 线同一条 `_errand_backlog_brief`）。
+            #   为什么必须走 system 而不是只写记忆：`history_block` 只取最后 12 条，
+            #   2 条改派痕迹 + 12 句闲聊就整段出窗（本轮探针 P1 实测）。
+            #   ★ lean（事件台词）与 `_sys_fixed` 走不到这里 ⇒ 逐字节稳定不变；
+            #     欠账为空时也不加 ⇒ 没被派过差事的人 prompt 一个字节都不变。
+            _backlog = _errand_backlog_brief(self, 'ralsei')
+            if _backlog:
+                system = system + "\n\n" + _backlog
         # 对话注意力（第九轮）：把"我们现在在聊什么"交给模型。
         # 用户要求："把那个 AI 整的有些注意力哈，别到时候聊着一个话题呢突然就切换了。"
         # 只把最近的 6 轮原文交给模型，它每轮都要自己猜"该聊什么"，很容易被一句话带跑；
