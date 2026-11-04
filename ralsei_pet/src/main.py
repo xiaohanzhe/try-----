@@ -5713,6 +5713,28 @@ class RalseiPet(QMainWindow):
             self._npc_errand_note(
                 npc_id, u'我本来要%s，还没办完，又被派去 %s %s了'
                         % (_all_txt, dest_scene, _n_txt))
+        # ★★★ 第158轮：**派成的那一刻就落盘**。
+        #
+        # 改前实测（`probe158 --before`，派 A→B→C 之后什么都不做就重启）：
+        #   · 在办 **0 条**、欠账 **0 件** —— 三次改派一件都没剩下；
+        #   · `assign_errand` 体内**一个落盘调用都没有**，全靠 `_npc_errand_tick`
+        #     那处 120 秒节流兜着 ⇒ **"点完就关窗口"/崩溃，人还没出门就当没派过**。
+        #
+        # 人类逻辑（用户口径「按照人类的逻辑来就好」）：我说"让他去擦柜台"，
+        # 这件事**当场就定下了** —— 不该取决于我什么时候关电脑。
+        #
+        # ★★ 为什么必须 `force=True`：`_npc_errand_save()` 走的是
+        #   `NPC_PLAN_SAVE_EVERY`（120s）节流。刚派完的那一拍，上一次落盘
+        #   往往就在几十秒内（甚至就是上一次派活）⇒ **节流会把它整条吃掉**，
+        #   盘上还是派之前的样子。节流是给"每拍都变"的东西（位置推进）用的，
+        #   派活是**低频、且语义上必须落地**的事件。
+        # ★ 为什么放在**所有痕迹写完之后**：`_errand_given_up_add` / 改派留痕
+        #   都改的是随差事一起存的那份文档 ⇒ 先写痕再落盘，一次写全；
+        #   反过来（先落盘再写痕）盘上就少一件，重启后欠账凭空少一条。
+        # ★ 催不会走到这里：同一件事再说一遍在上面 `return _prev` 就走了
+        #   （第155轮），**没变化就不写盘**。门控拒也不会（那一支 `return None`）。
+        if _new is not None:
+            self._npc_errand_save(force=True)
         return _new
 
     # ------------------------------------------------ 层5 派发入口（第114轮）
@@ -5963,7 +5985,13 @@ class RalseiPet(QMainWindow):
         try:
             self._npc_seed_bodies(self._npc_scene_id())
             self._npc_plan_save()
-            self._npc_errand_save()
+            # ★★ 第158轮：`force=True` —— 叫停**必须立刻落地**。
+            # 改前实测（`probe158 --before` P2）：派活 → 落过一次盘 → 30 秒内叫停
+            # → 崩溃重启 ⇒ 在办 **1 条**，**差事复活、人又出门了**。
+            # 病根就是这里的 `_npc_errand_save()` 被 120s 节流挡掉：用户明明已经
+            # 亲口说"回来吧"，盘上还写着他在外面 —— 重启就是"我说话不算数"。
+            # ★ 叫停是低频、用户主动、语义上必须落地的事件 ⇒ 不吃节流。
+            self._npc_errand_save(force=True)
         except Exception as exc:
             _log.debug('叫停后落盘/重建失败（已忽略）: %s', exc)
         return e
@@ -6377,7 +6405,19 @@ class RalseiPet(QMainWindow):
                 self._npc_plan_save()
                 # ★★ 第114轮：差事也落盘（自己的档 = `npc_errands.json`）。
                 #    与生活档案分开两本的理由见 `npc_errand.FILENAME` 的注释。
-                self._npc_errand_save()
+                #
+                # ★★★ 第158轮：**分两种变化**，别一律吃节流。
+                #   · 结构性（`dropped` 被门控作废 / `finished` 办完）⇒ 状态**真变了**
+                #     ⇒ `force=True` 立刻写。改前实测：办完那一拍落盘被节流挡住，
+                #     一崩溃盘上写着他"还在外面办" ⇒ 重启后**他又出门一次**，
+                #     同一件事办两遍、结果再报一遍。
+                #   · 只是把他**压在目的地**（`roam.put`）⇒ 每拍都可能发生、量还大
+                #     ⇒ **保持节流**（有 `_npc_plan_save` 与下一拍兜着，丢了也只是
+                #     位置回退一格，不会凭空多出一件事或一句话）。
+                # ★ 判据 `_structural` 只认这两件事，**不认 `touched`**
+                #   —— 后者含"压位置"，写成 `force=touched` 就等于每拍写盘。
+                _structural = bool(dropped) or bool(out.get('finished'))
+                self._npc_errand_save(force=_structural)
         except Exception as e:
             _log.debug('差事推进异常（本节拍跳过）: %s', e)
             return {'arrived': [], 'finished': []}
@@ -18535,6 +18575,16 @@ class RalseiPet(QMainWindow):
         #      失败只记日志（绝不让"存不上档"拖住退出）。
         try:
             self._npc_plan_save(force=True)
+        except Exception as e:  # 观测代码绝不能影响退出流程
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+
+        # ★★ 第158轮：**差事档也强制写一次**。
+        #   改前这里只写生活档案，差事档只靠 tick 的 120 秒节流
+        #   ⇒ “临关窗口前发生的那一次变化”没地方落地（人下次上线发现他“又出门了”或“还没出门”）。
+        #   两本档共同描述同一个世界 ⇒ 退出时**一起写**才不会一本新一本旧。
+        #   失败只记日志（与上面同规：绝不让“存不上档”拖住退出）。
+        try:
+            self._npc_errand_save(force=True)
         except Exception as e:  # 观测代码绝不能影响退出流程
             _log.debug("main 防御性异常（已忽略）: %s", e)
 
