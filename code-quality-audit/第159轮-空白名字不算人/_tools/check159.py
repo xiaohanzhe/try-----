@@ -365,6 +365,34 @@ try:
     check(u'B7 ★ 空白事由的**归一分支**在位（`what = \'\'`，不是原样存 `\'   \'`）',
           _what_norm)
 
+    # ★★★ 第160轮补 B8：「两半都在」这条**不许绑写法**。
+    #   第159轮只有 recheck 里查过"同一个 if 里两半"，而那种写法一拆段就假红
+    #   （`probe160 --before` 实测）。补进回归锁，并把口径定成"同函数内两半都在"。
+    def _has_not_guard(fn, name):
+        u"""判据里出现 `not name`（挡空串那一半）就算守住 —— 不问它跟 strip 比较是不是同一个 if。"""
+        for n in ast.walk(fn or ast.Module(body=[], type_ignores=[])):
+            if isinstance(n, ast.If):
+                for x in ast.walk(n.test):
+                    if isinstance(x, ast.UnaryOp) and isinstance(x.op, ast.Not) \
+                            and isinstance(x.operand, ast.Name) \
+                            and x.operand.id == name:
+                        return True
+        return False
+
+    _given_up = None
+    for _n in TREE.body:
+        if isinstance(_n, ast.FunctionDef) and _n.name == '_errand_given_up_add':
+            _given_up = _n
+    _pairs8 = ((_assign_host, 'npc_id'), (_assign_host, 'dest_scene'),
+               (_assign_mech, 'npc_id'), (_assign_mech, 'dest_scene'),
+               (_from_mech, 'npc_id'), (_from_mech, 'dest_scene'),
+               (_given_up, 'npc_id'))
+    _bad8 = [nm for fn, nm in _pairs8
+             if not (_has_strip_guard(fn, nm) and _has_not_guard(fn, nm))]
+    check(u'B8 ★★★ 七处判据**两半都在**（挡空串 + 挡首尾空白），且**不要求写在同一个 `if` 里**'
+          u'（绑写法会把语义等价的改写判成破坏）',
+          not _bad8, u'缺一半=%r 覆盖=%d 对' % (_bad8, len(_pairs8)))
+
     # ================================================ C 自检
     mark(u'C 自检：分母闸 · 字面量 · 只用 check() · 编码 · 零外部盘')
 
@@ -386,7 +414,7 @@ try:
     check(u'C0 分母闸：本文件里 `check(` 调用**非空**', _n_check > 0,
           u'处数=%d' % (_n_check,))
     check(u'C1 每条判据的说明都是**非空字面量**（不是变量、不是空串）',
-          not _bad_names and _n_check >= 18,
+          not _bad_names and _n_check >= 26,
           u'坏的=%d 条数=%d' % (len(_bad_names), _n_check))
 
     _n_ok = 0

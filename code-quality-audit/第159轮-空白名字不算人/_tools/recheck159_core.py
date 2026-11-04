@@ -101,11 +101,11 @@ def _calls(fn, attr):
     return out
 
 
-def _strip_cmp_lines(fn, name):
-    u"""找出"`name != name.strip()` 这一类比较"所在的行号。
+def _strip_cmp(fn, name):
+    u"""返回函数体里「`name` 与 `name.strip()` 相比」的 `ast.Compare` 节点。
 
-    ★ 只认**比较表达式**（`ast.Compare`）里同时出现 `Name(name)` 与
-      `.strip()` 调用 —— 断言"提到 strip 就算守住"是恒真的写法，不用。
+    ★ 第160轮：只认**比较表达式**，不认缩进/换行/是否多行拼接 ——
+      判据绑写法 ⇒ 语义等价的改写（拆成两个连续 `if`）会被判成破坏（假红）。
     """
     out = []
     if fn is None:
@@ -118,8 +118,49 @@ def _strip_cmp_lines(fn, name):
                             and x.func.attr == 'strip' for x in sides)
             has_name = any(isinstance(x, ast.Name) and x.id == name for x in sides)
             if has_strip and has_name:
-                out.append(n.lineno)
+                out.append(n)
     return out
+
+
+def _not_guard(fn, name):
+    u"""返回「`not name` 落在 `if` 的 test 里」的那些 `ast.If` 节点。
+
+    ★ 第160轮：与 `_strip_cmp` 分开数 —— **两半在同一个 `if` 里**只是其中一种写法，
+      拆成两个连续 `if` 语义完全等价。判据只该问"两半都在不在"，不该问"长什么样"。
+    """
+    out = []
+    if fn is None:
+        return out
+    for n in ast.walk(fn):
+        if isinstance(n, ast.If):
+            for x in ast.walk(n.test):
+                if isinstance(x, ast.UnaryOp) and isinstance(x.op, ast.Not) \
+                        and isinstance(x.operand, ast.Name) and x.operand.id == name:
+                    out.append(n)
+                    break
+    return out
+
+
+def _what_norm(fn):
+    u"""返回「`not what.strip()` 判据 + `what = ''` 归一」的 `ast.If` 节点（不绑写法）。"""
+    out = []
+    if fn is None:
+        return out
+    for n in ast.walk(fn):
+        if isinstance(n, ast.If):
+            has_test = any(isinstance(x, ast.UnaryOp) and isinstance(x.op, ast.Not)
+                           and isinstance(x.operand, ast.Call)
+                           and isinstance(x.operand.func, ast.Attribute)
+                           and x.operand.func.attr == 'strip'
+                           for x in ast.walk(n.test))
+            has_assign = any(isinstance(s, ast.Assign)
+                             and isinstance(s.value, ast.Constant)
+                             and s.value.value == ''
+                             for s in ast.walk(n))
+            if has_test and has_assign:
+                out.append(n)
+    return out
+
 
 
 _CLS = _CLSOBJ.get('RalseiPet')
@@ -134,10 +175,14 @@ mark(u'H1 改动面：产品侧只该动 `main.py` + `npc_errand.py`')
 _rc, _por = _git('-c', 'core.quotepath=false', 'status', '--porcelain')
 _mod = [ln[3:] for ln in _por.splitlines() if ln[:2].strip() in ('M', 'A', 'D')]
 _prod = sorted(p for p in _mod if p.startswith('ralsei_pet/'))
-check(u'H1a 产品侧被改的**只有** `src/main.py` 与 `modules/npc_errand.py`'
-      u'（其余产品文件一个没动）',
-      _prod == ['ralsei_pet/modules/npc_errand.py', 'ralsei_pet/src/main.py'],
-      u'产品改动=%r' % (_prod,))
+_ALLOWED = ('ralsei_pet/modules/npc_errand.py', 'ralsei_pet/src/main.py')
+_extra = [p for p in _prod if p not in _ALLOWED]
+# ★ 第160轮：这条判据**不许绑时相**。原来写的是"恰好等于那两个文件"，
+#   于是一提交就变成 `[]` ⇒ 必假红（第21轮起的"判据禁回显时相量"同族）。
+#   真正要守的是两件事：① 产品侧**没有第三个文件**被动过；② 那两个文件要么已提交、
+#   要么就是这两处改动本身。第①条用子集判，第②条由上面的 `_mod` 全集兜住。
+check(u'H1a 产品侧**没有第三个文件**被改（只可能是这两个；已提交时为空也算过）',
+      not _extra, u'产品改动=%r 多出来的=%r' % (_prod, _extra))
 check(u'H1b 未跟踪项**全在本轮目录内**（临时件一律落外部盘，不进工作区）',
       all(p.startswith('code-quality-audit/') for p in
           [ln[3:] for ln in _por.splitlines() if ln.startswith('??')]),
@@ -224,15 +269,15 @@ check(u'H4c 本轮三个新工具脚本**全 LF**（与本目录既有套件同�
 mark(u'H5 结构：四处判据都在、**两半**都在、宿主两道在门控**之前**（与 check159 B 段独立实现）')
 
 check(u'H5a 宿主 `assign_errand` 的 `npc_id` 判据含"首尾空白"那一半',
-      bool(_strip_cmp_lines(_ASSIGN, 'npc_id')),
-      u'行=%r' % (_strip_cmp_lines(_ASSIGN, 'npc_id'),))
+      bool(_strip_cmp(_ASSIGN, 'npc_id')),
+      u'行=%r' % ([n.lineno for n in _strip_cmp(_ASSIGN, 'npc_id')],))
 check(u'H5b 宿主 `assign_errand` 的 `dest_scene` 判据同上',
-      bool(_strip_cmp_lines(_ASSIGN, 'dest_scene')),
-      u'行=%r' % (_strip_cmp_lines(_ASSIGN, 'dest_scene'),))
+      bool(_strip_cmp(_ASSIGN, 'dest_scene')),
+      u'行=%r' % ([n.lineno for n in _strip_cmp(_ASSIGN, 'dest_scene')],))
 
 _gate = _calls(_ASSIGN, '_npc_errand_gate')
-_id_l = _strip_cmp_lines(_ASSIGN, 'npc_id')
-_dest_l = _strip_cmp_lines(_ASSIGN, 'dest_scene')
+_id_l = [n.lineno for n in _strip_cmp(_ASSIGN, 'npc_id')]
+_dest_l = [n.lineno for n in _strip_cmp(_ASSIGN, 'dest_scene')]
 check(u'H5c 宿主那两道闸**都排在** `_npc_errand_gate` 之前（脏参数不问路），且门控只调一处',
       len(_gate) == 1 and bool(_id_l) and bool(_dest_l)
       and max(_id_l) < _gate[0].lineno and max(_dest_l) < _gate[0].lineno,
@@ -240,72 +285,58 @@ check(u'H5c 宿主那两道闸**都排在** `_npc_errand_gate` 之前（脏参�
       % (_id_l, _dest_l, _gate[0].lineno if _gate else u'无'))
 
 check(u'H5d 模块级 `_errand_given_up_add` 也有 `npc_id` 判据（欠账表不许多一个看不见的槽）',
-      bool(_strip_cmp_lines(_GIVEN_UP, 'npc_id')),
-      u'行=%r' % (_strip_cmp_lines(_GIVEN_UP, 'npc_id'),))
+      bool(_strip_cmp(_GIVEN_UP, 'npc_id')),
+      u'行=%r' % ([n.lineno for n in _strip_cmp(_GIVEN_UP, 'npc_id')],))
 
 check(u'H5e 机制层 `ErrandBoard.assign` 的 id 与地点判据都含"首尾空白"',
-      bool(_strip_cmp_lines(_E_ASSIGN, 'npc_id'))
-      and bool(_strip_cmp_lines(_E_ASSIGN, 'dest_scene')),
-      u'id行=%r 地点行=%r' % (_strip_cmp_lines(_E_ASSIGN, 'npc_id'),
-                            _strip_cmp_lines(_E_ASSIGN, 'dest_scene')))
+      bool(_strip_cmp(_E_ASSIGN, 'npc_id'))
+      and bool(_strip_cmp(_E_ASSIGN, 'dest_scene')),
+      u'id=%d 处 地点=%d 处' % (len(_strip_cmp(_E_ASSIGN, 'npc_id')),
+                            len(_strip_cmp(_E_ASSIGN, 'dest_scene'))))
 check(u'H5f `Errand.from_dict` 的 id 与地点判据同样含"首尾空白"（老档幽灵才挡得住）',
-      bool(_strip_cmp_lines(_E_FROM, 'npc_id'))
-      and bool(_strip_cmp_lines(_E_FROM, 'dest_scene')),
-      u'id行=%r 地点行=%r' % (_strip_cmp_lines(_E_FROM, 'npc_id'),
-                            _strip_cmp_lines(_E_FROM, 'dest_scene')))
+      bool(_strip_cmp(_E_FROM, 'npc_id'))
+      and bool(_strip_cmp(_E_FROM, 'dest_scene')),
+      u'id=%d 处 地点=%d 处' % (len(_strip_cmp(_E_FROM, 'npc_id')),
+                            len(_strip_cmp(_E_FROM, 'dest_scene'))))
 
-# 「两半」的另一半：必须以 `not x` 起头（挡空串），不能只有 strip 比较
+# ★★★ 第160轮：「两半都在」**只问在不在，不问写法**。
+#   第159轮这里写的是"同一个 `if` 里既 `not x` 又 strip 比较" ⇒ 判据绑了 if 的形状，
+#   而下面这段**语义完全等价**的代码会被判成"缺一半"（`probe160 --before` 实测 H5g 红）：
+#       if not isinstance(npc_id, str) or not npc_id: return None
+#       if npc_id != npc_id.strip():                 return None
+#   ⇒ 判据过窄=误报（第107轮教训同族）。改成按节点分别找：两半各自在同函数内出现即可。
 _bad_half = []
 for _fn, _name in ((_ASSIGN, 'npc_id'), (_ASSIGN, 'dest_scene'),
                    (_E_ASSIGN, 'npc_id'), (_E_ASSIGN, 'dest_scene'),
                    (_E_FROM, 'npc_id'), (_E_FROM, 'dest_scene'),
                    (_GIVEN_UP, 'npc_id')):
-    if _fn is None:
+    if not _strip_cmp(_fn, _name) or not _not_guard(_fn, _name):
         _bad_half.append(_name)
-        continue
-    _hit = False
-    for n in ast.walk(_fn):
-        if isinstance(n, ast.If):
-            _t = n.test
-            _vals = [x for x in ast.walk(_t) if isinstance(x, ast.UnaryOp)
-                     and isinstance(x.op, ast.Not)
-                     and isinstance(x.operand, ast.Name) and x.operand.id == _name]
-            if _vals and _strip_cmp_lines(ast.Module(body=[n], type_ignores=[]), _name):
-                _hit = True
-    if not _hit:
-        _bad_half.append(_name)
-check(u'H5g 判据**两半都在**：既挡空串（`not x`），又挡首尾空白（`x != x.strip()`）',
+check(u'H5g 判据**两半都在**：既挡空串（`not x`），又挡首尾空白（`x != x.strip()`）'
+      u'—— 只问在不在，不问是否挤在同一个 `if` 里（绑写法会假红）',
       not _bad_half, u'缺一半=%r' % (_bad_half,))
 
 # ================================================ H6 令牌回验
-mark(u'H6 令牌逐个回验：新写法在、旧写法不在了（**按预期次数**）')
+mark(u'H6 令牌回验：新判据在、旧写法不在了（**按 AST 数，不按文本片段**）')
 
-_TOK_MAIN = [
-    (u"if not isinstance(npc_id, str) or not npc_id \\\r\n"
-     u"                or npc_id != npc_id.strip():", 1),          # 宿主
-    (u'if not isinstance(npc_id, str) or not npc_id \\\r\n'
-     u'            or npc_id != npc_id.strip():', 1),               # 模块级
-    (u"if not isinstance(dest_scene, str) or not dest_scene \\\r\n"
-     u"                or dest_scene != dest_scene.strip():", 1),
-]
-_bad_tok = []
-for _tok, _n in _TOK_MAIN:
-    if SRC.count(_tok) != _n:
-        _bad_tok.append((_tok.split('\r\n')[0], SRC.count(_tok), _n))
-check(u'H6a `main.py` 里三处新判据各按**预期次数**出现', not _bad_tok,
-      u'不符=%r' % (_bad_tok,))
+# ★★ 第160轮：原来是按"多行拼接的文本片段"计数（`if not isinstance(npc_id, str) or
+#   not npc_id \` + 续行）。语义等价的改写一拆段就不命中 ⇒ 假红（`probe160 --before`
+#   实测 H6a 红）。改成数 `ast.Compare` 节点：问的是"有几处这样的判据"，不是"长什么样"。
+_n_main_id = len(_strip_cmp(_ASSIGN, 'npc_id')) + len(_strip_cmp(_GIVEN_UP, 'npc_id'))
+_n_main_dest = len(_strip_cmp(_ASSIGN, 'dest_scene'))
+check(u'H6a `main.py` 里 `npc_id` 的 strip 比较**恰好 2 处**（宿主 + 欠账表）、'
+      u'`dest_scene` 恰好 1 处（数 AST 节点，不绑缩进/换行）',
+      _n_main_id == 2 and _n_main_dest == 1,
+      u'id=%d 地点=%d' % (_n_main_id, _n_main_dest))
 
-_TOK_E = [
-    (u'npc_id != npc_id.strip()', 2),        # assign + from_dict
-    (u'dest_scene != dest_scene.strip()', 2),
-    (u"elif not what.strip():", 2),          # 两处都归一
-]
-_bad_tok_e = []
-for _tok, _n in _TOK_E:
-    if ESRC.count(_tok) != _n:
-        _bad_tok_e.append((_tok, ESRC.count(_tok), _n))
-check(u'H6b `npc_errand.py` 里三处新写法各按**预期次数**出现', not _bad_tok_e,
-      u'不符=%r' % (_bad_tok_e,))
+_n_e_id = len(_strip_cmp(_E_ASSIGN, 'npc_id')) + len(_strip_cmp(_E_FROM, 'npc_id'))
+_n_e_dest = (len(_strip_cmp(_E_ASSIGN, 'dest_scene'))
+             + len(_strip_cmp(_E_FROM, 'dest_scene')))
+_n_e_what = len(_what_norm(_E_ASSIGN)) + len(_what_norm(_E_FROM))
+check(u'H6b `npc_errand.py` 里 id / 地点各**恰好 2 处**、`what` 归一**恰好 2 处**'
+      u'（两处都归一，漏一处就有 `\'   \'` 原样存进档）',
+      _n_e_id == 2 and _n_e_dest == 2 and _n_e_what == 2,
+      u'id=%d 地点=%d what=%d' % (_n_e_id, _n_e_dest, _n_e_what))
 
 _OLD = [
     u'if not (isinstance(npc_id, str) and npc_id):',

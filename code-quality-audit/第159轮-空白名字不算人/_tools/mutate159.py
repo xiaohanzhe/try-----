@@ -11,6 +11,8 @@ u"""第159轮负控制：逐条破坏产品，断言**恰好**指定的判据变
   · 还原必须**字节级**（sha1 比对）；
   · 收口（Z1）必须再跑一次全绿；Z2 指纹必须与开工前一致；
   · ★ 破坏不许把套件炸掉：每处都保持语法完整、返回值类型不变。
+  · ★★ 第160轮：`expect` 写成**空 tuple** 表示**无害变异** —— 断言的语义反过来，
+    考的是"语义等价的改写会不会被判据误伤"（假红）。负控制不只问"破坏会不会红"。
 """
 import hashlib
 import io
@@ -56,7 +58,7 @@ MUTATIONS = [
      u"""        pass""",
      # 实得：删闸后脏参数一路进到机制层 ⇒ 只有 A5（宿主层不写记忆/不问路）与两道
      #   AST 判据（B4 闸不在、B5 闸不在门控前）必红；A13 走机制层自己的闸，仍然挡得住。
-     ('A5', 'B4', 'B5')),
+     ('A5', 'B4', 'B5', 'B8')),
 
     ('M2', u'机制层 `assign` 的 id 判据**只挡全空白**（漏掉首尾空白）', ERRAND,
      u"""        if not isinstance(npc_id, str) or not npc_id \\
@@ -66,7 +68,7 @@ MUTATIONS = [
             return None""",
      # 实得：机制层只挡全空白 ⇒ A13（`' ralsei '` 被机制层收下）与 B1（判据里没有
      #   `x != x.strip()` 那一半）红；宿主层的闸还在，A 段绝大多数仍然绿。
-     ('A13', 'B1')),
+     ('A13', 'B1', 'B8')),
 
     ('M3', u'`Errand.from_dict` 退回"只挡空串"（老档幽灵复活）', ERRAND,
      u"""            if not isinstance(npc_id, str) or not npc_id \\
@@ -76,7 +78,7 @@ MUTATIONS = [
                 return None""",
      # 实得：from_dict 放开首尾空白 ⇒ A10（机制层双闸）、B3（from_dict 那道闸的 AST 判据）
      #   直接红；A8（老档幽灵丢不丢）也跟着红 —— 幽灵条目真的被读回来了。
-     ('A10', 'A8', 'B3')),
+     ('A10', 'A8', 'B3', 'B8')),
 
     ('M4', u'宿主层判据挪到**门控之后**（脏参数先问路）', MAIN,
      u"""        if not isinstance(npc_id, str) or not npc_id \\
@@ -122,7 +124,7 @@ MUTATIONS = [
      # 实得：一刀切把宿主层的**正常路**也堵死 ⇒ A11（正常派活）/ A2（`'ralsei'` 也
      #   派不成）/ A4（事由归一那一步走不到）红；A12 直接调机制层，不受影响。
      #   B4（闸被换成 `if True`，AST 里找不到 strip 判据）、B5（只剩一道前置判据）红。
-     ('A11', 'A2', 'A4', 'B4', 'B5')),
+     ('A11', 'A2', 'A4', 'B4', 'B5', 'B8')),
 
     ('M8', u'宿主层**删掉** `dest_scene` 闸', MAIN,
      u"""        if not isinstance(dest_scene, str) or not dest_scene \\
@@ -132,7 +134,23 @@ MUTATIONS = [
      u"""        pass""",
      # 实得：A3 仍然绿 —— 机制层 `assign` 自己也挡 `dest_scene`（宿主删除暴露不了，
      #   说明这道闸是双层的）；只剩两条 AST 判据咬住"宿主层那道闸没了"。
-     ('B4', 'B5')),
+     ('B4', 'B5', 'B8')),
+
+    # ★★★ 第160轮新增：**无害变异**（期望空 = 一条都不许红）。
+    #   判据绑写法时，这段**语义完全等价**的改写会被判成破坏（假红，`probe160 --before` 实证）。
+    #   ⇒ 负控制不只问"破坏会不会红"，还要问"**没破坏时会不会假红**"。
+    ('M9', u'（**无害**）宿主闸拆成两个连续的 `if` —— 语义完全等价，不该红任何一条', MAIN,
+     u"""        if not isinstance(npc_id, str) or not npc_id \\
+                or npc_id != npc_id.strip():
+            _log.info('\u6d3e\u6d3b\u88ab\u62d2\uff1anpc_id \u4e3a\u7a7a\u3001\u5168\u662f\u7a7a\u767d\u3001\u6216\u9996\u5c3e\u5e26\u7a7a\u767d\uff08%r\uff09', npc_id)
+            return None""",
+     u"""        if not isinstance(npc_id, str) or not npc_id:
+            _log.info('\u6d3e\u6d3b\u88ab\u62d2\uff1anpc_id \u4e3a\u7a7a\uff08%r\uff09', npc_id)
+            return None
+        if npc_id != npc_id.strip():
+            _log.info('\u6d3e\u6d3b\u88ab\u62d2\uff1a\u9996\u5c3e\u5e26\u7a7a\u767d\uff08%r\uff09', npc_id)
+            return None""",
+     ()),
 ]
 
 
@@ -173,6 +191,16 @@ def main():
         if dry:
             print(u'%s %s ⇒ 红：%s（rc=%d）'
                   % (name, desc, u' '.join(reds) or u'（无！）', rc))
+            continue
+        if not expect:
+            # ★ 第160轮：**无害变异** —— 期望是"一条都不红"，判据反过来考"会不会假红"。
+            ok = (rc == 0) and not reds
+            if not ok:
+                n_bad += 1
+            print(u'%s %s %s ⇒ 红：%s%s'
+                  % (u'[PASS]' if ok else u'[FAIL]', name, desc,
+                     u' '.join(reds) or u'无',
+                     u'' if ok else u'    （无害变异不该红 —— 判据绑写法了）'))
             continue
         ok = (rc != 0) and reds == sorted(expect)
         if not ok:
