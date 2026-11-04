@@ -165,11 +165,17 @@ class Errand(object):
             npc_id = d.get('npc_id')
             dest_scene = d.get('dest_scene')
             what = d.get('what')
-            if not (isinstance(npc_id, str) and npc_id):
+            # ★★ 第159轮：老档里的幽灵条目（`'   '`）**丢那一条**，
+            # 而不是让它重启后又出门一次（同档的正常条目照常读回）。
+            if not isinstance(npc_id, str) or not npc_id \
+                    or npc_id != npc_id.strip():
                 return None
-            if not (isinstance(dest_scene, str) and dest_scene):
+            if not isinstance(dest_scene, str) or not dest_scene \
+                    or dest_scene != dest_scene.strip():
                 return None
             if not isinstance(what, str):
+                what = ''
+            elif not what.strip():
                 what = ''
             start = float(d.get('start'))
             arrive_at = float(d.get('arrive_at'))
@@ -229,11 +235,31 @@ class ErrandBoard(object):
         """
         if not self.enabled:
             return None
-        if not (isinstance(npc_id, str) and npc_id):
+        # ★★★ 第159轮：**空白名字不算一个人**。
+        #
+        # 改前实测（`probe159 --before`）：
+        #   · `assign_errand('   ', …)` 造出一条“看不见的人”的在办 —— 它会写盘、
+        #     会进 prompt、`working_positions()` 每拍还会把他往目的地压；
+        #   · `' ralsei '` 与 `'ralsei'` 占**两个槽**（他一个人两条在办，名额虚耗，
+        #     而且第二次派活 `active_of('ralsei')` 取不到旧的 ⇒ 不算改派 ⇒
+        #     旧那条**永远留在外面**，直到自己到期）。
+        #
+        # ★ 判据是 `strip()` 后非空，但**绝不 strip 后使用**：`' ralsei '` 与注册表里
+        #   的 `'ralsei'` 不是同一个键，静默改写 id 会让“同一个人”在记忆/欠账/名册
+        #   三处对不上（名册按 key 查）。⇒ **宁拒不改写**，与 `from_dict` 同规。
+        # ★ 两半都要拦：① 全空白（`'   '`）；② **首尾带空白**（`' ralsei '`）。
+        #   只拦①会漏掉②：后者在注册表里查不到，却会**占一个独立槽**。
+        if not isinstance(npc_id, str) or not npc_id \
+                or npc_id != npc_id.strip():
             return None
-        if not (isinstance(dest_scene, str) and dest_scene):
+        if not isinstance(dest_scene, str) or not dest_scene \
+                or dest_scene != dest_scene.strip():
             return None
         if not isinstance(what, str):
+            what = ''
+        elif not what.strip():
+            # ★ 纯空白事由 = “没说干什么” ⇒ 归一成 `''`（界面显示“走一趟”）。
+            #   原样存 `'   '` 会让 prompt / 记忆里出现“办「   」”这种空壳。
             what = ''
         try:
             now = float(now)

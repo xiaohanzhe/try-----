@@ -857,7 +857,9 @@ def _errand_given_up_add(owner, npc_id, dest, what, now=None):
       `__init__` 预声明"也不会炸（预声明仍要写，别依赖这条兜底）。
     ★ **去重**：同一（地点 + 事由）只留最近一次（他被派回同一件事不该记两笔）。
     """
-    if not (isinstance(npc_id, str) and npc_id):
+    # ★★ 第159轮：空白 id 不记欠账（否则欠账表里多一个看不见的槽）。
+    if not isinstance(npc_id, str) or not npc_id \
+            or npc_id != npc_id.strip():
         return
     tbl = getattr(owner, '_errand_given_up', None)
     if not isinstance(tbl, dict):
@@ -5619,6 +5621,18 @@ class RalseiPet(QMainWindow):
         """
         board = getattr(self, 'npc_errand', None)
         if board is None:
+            return None
+        # ★★★ 第159轮：**空白名字不算一个人**（第150轮结转的那条）。
+        # 为什么在**门控之前**：门控对未知 id 可能给出“去不了” ⇒ 会写一条
+        # 「我本来要去 X，但去不了」的**假记忆**（他根本不存在）。
+        # 参数就不是人，连问路都不该问；同理不写欠账、不产生档。
+        if not isinstance(npc_id, str) or not npc_id \
+                or npc_id != npc_id.strip():
+            _log.info('派活被拒：npc_id 为空、全是空白、或首尾带空白（%r）', npc_id)
+            return None
+        if not isinstance(dest_scene, str) or not dest_scene \
+                or dest_scene != dest_scene.strip():
+            _log.info('派活被拒：目的地为空、全是空白、或首尾带空白（%r）', dest_scene)
             return None
         # ★★★ 第155轮：**「催」不是「重新派」**（用户口径「按照人类的逻辑来就好」）。
         #
