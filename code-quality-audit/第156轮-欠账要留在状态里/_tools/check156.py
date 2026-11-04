@@ -256,7 +256,10 @@ check(u'A0 分母闸：`assign_errand` / `_build_npc_context` / 欠账三个函�
       and '_errand_given_up_add' in _TOP
       and '_errand_given_up_of' in _TOP
       and '_errand_backlog_brief' in _TOP,
-      u'模块级=%d 个' % (len([n for n in _TOP if n.startswith('_errand_')]),))
+      u'缺=%d 个' % (len([n for n in ('_errand_given_up_add',
+                                     '_errand_given_up_of',
+                                     '_errand_backlog_brief')
+                                    if n not in _TOP]),))
 
 _h = _Host()
 _h.assign_errand('ralsei', _DEST, _WHAT, now=_T)

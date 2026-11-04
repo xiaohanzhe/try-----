@@ -927,6 +927,137 @@ def _errand_backlog_brief(owner, npc_id, now=None):
             % (len(items), _txt))
 
 
+# ---------------------------------------------------------------- 欠账落盘（第157轮）
+#
+# ★★★ 为什么要落盘：第156轮把欠账挂进了 prompt 尾部（解决了"窗口裁掉"），但它**只存内存**
+#   —— 重启就没了。改前实测（`probe157 --before`）：派三次 → 落盘 → 新宿主读回，
+#   **在办差事 1 条（活了）、欠账 0 件（死了）**；而"靠记忆兜底"也不成立：
+#   重启后再聊 12 句，两件欠账**都出窗**（`history_block` 只取最后 12 条）。
+#   ⇒ 用户口径「按照人类的逻辑来就好」：人会记得"我手上还欠着两件事"，
+#     不会因为睡了一觉就忘干净。
+
+def _errand_given_up_dump(owner, now=None):
+    u"""把欠账表折成**能写进 JSON 的形状**：`{npc_id: [[ts, dest, what], ...]}`。
+
+    ★★ 为什么不直接在 `ErrandBoard.to_dict()` 里加这个键：`npc_errand.py` 是**机制层**，
+      它不该认识"欠账"这种人类叙事（`check156 C7` 守着"机制层里不出现 given_up"，
+      `ErrandBoard` 的 docstring 也写着"本模块不认识主角"）。落盘由**宿主**组织：
+      `_ErrandDoc` 把 board 的形状原样拿过来、再补一个键 ⇒ 机制层一个字节不用改。
+    ★ **只写一天内的**（与 `_errand_given_up_of` 同一个 TTL）：过期账不落盘
+      ⇒ 文件不随时间膨胀（否则一天改派几十次，档里会攒一堆永远不再提的名字）。
+    """
+    tbl = getattr(owner, '_errand_given_up', None)
+    if not isinstance(tbl, dict):
+        return {}
+    try:
+        now = float(now) if now is not None else time.time()
+    except (TypeError, ValueError):
+        now = time.time()
+    out = {}
+    for nid in list(tbl.keys()):
+        if not (isinstance(nid, str) and nid):
+            continue
+        items = tbl.get(nid)
+        if not isinstance(items, list):
+            continue
+        keep = []
+        for it in items:
+            if not (isinstance(it, tuple) and len(it) >= 3):
+                continue
+            dest, what = it[1], it[2]
+            try:
+                ts = float(it[0])
+            except (TypeError, ValueError):
+                continue
+            if now - ts > ERRAND_GIVEN_UP_TTL:
+                continue
+            if not (isinstance(dest, str) and dest):
+                continue
+            keep.append([ts, dest, what if isinstance(what, str) else u''])
+        if keep:
+            out[nid] = keep[-ERRAND_GIVEN_UP_MAX:]
+    return out
+
+
+def _errand_given_up_restore(owner, raw, now=None):
+    u"""从存档里把欠账读回 `owner._errand_given_up` → 恢复了几件（**绝不抛**）。
+
+    ★★★ **JSON 里没有 tuple**：写下去是 `[[ts, dest, what], ...]`，读回来是 **list**。
+      而 `_errand_given_up_of` 只认 `tuple`（`isinstance(it, tuple)`）⇒ 不转就
+      **静默全丢**：盘上明明有、界面上永远不提（"写盘能过、读回静默为空"的经典坑）。
+      `check157 A2` 专门钉它。
+    ★ 容错口径与 `Errand.from_dict` 一致：**坏一条丢一条**，不半成品还原
+      （宁可少提一件旧账，也不要整个欠账表变成垃圾）。
+    """
+    tbl = getattr(owner, '_errand_given_up', None)
+    if not isinstance(tbl, dict):
+        tbl = {}
+        try:
+            setattr(owner, '_errand_given_up', tbl)
+        except Exception:
+            return 0
+    if not isinstance(raw, dict):
+        return 0
+    try:
+        now = float(now) if now is not None else time.time()
+    except (TypeError, ValueError):
+        now = time.time()
+    n = 0
+    for nid in list(raw.keys()):
+        if not (isinstance(nid, str) and nid):
+            continue
+        items = raw.get(nid)
+        if not isinstance(items, list):
+            continue
+        rows = []
+        for it in items:
+            # ★ 这里收 `list` **和** `tuple`：盘上是 list，但单测/内存里可能是 tuple。
+            if not (isinstance(it, (list, tuple)) and len(it) >= 3):
+                continue
+            try:
+                ts = float(it[0])
+            except (TypeError, ValueError):
+                continue
+            if now - ts > ERRAND_GIVEN_UP_TTL:
+                continue
+            dest = it[1]
+            if not (isinstance(dest, str) and dest):
+                continue
+            what = it[2] if isinstance(it[2], str) else u''
+            rows.append((ts, dest, what))      # ★★ 转回 **tuple**（关键）
+        if rows:
+            tbl[nid] = rows[-ERRAND_GIVEN_UP_MAX:]
+            n += len(tbl[nid])
+    return n
+
+
+class _ErrandDoc(object):
+    u"""落盘用的**一次性文档**：`ErrandBoard` 的原有形状 + 一个 `given_up` 键。
+
+    ★ 为什么用一个包装对象、而不是直接改 `ErrandBoard.to_dict()`：
+      ① 机制层零改动（`check156 C7` / `check150 G` 都不用改判据）；
+      ② `ErrandBoard.from_dict` 本来就会**忽略**它不认识的键
+         ⇒ 新旧档案**双向兼容**：
+           · 老档（无 `given_up`）→ 读回空账（= 第156轮的行为，不炸）；
+           · 新档被老版本产品读 → board 照常，`given_up` 被忽略（不炸）。
+    ★ `npc_plan_store.save()` 只要求对方有 `to_dict()`，这个类正好满足
+      ⇒ 原子写（`.tmp` + `os.replace`）照旧复用，不另写一套写盘。
+    """
+
+    __slots__ = ('_board', '_given_up')
+
+    def __init__(self, board, given_up):
+        self._board = board
+        self._given_up = given_up if isinstance(given_up, dict) else {}
+
+    def to_dict(self):
+        d = self._board.to_dict() if self._board is not None else {}
+        if not isinstance(d, dict):
+            d = {}
+        d['given_up'] = self._given_up
+        return d
+
+
 class RalseiPet(QMainWindow):
     # 跨线程 API 结果信号：(response, callback) —— 工作线程 emit，主线程槽处理，
     # 避免线程内 QTimer.singleShot 因无 Qt 事件循环导致回调永不触发
@@ -6346,6 +6477,10 @@ class RalseiPet(QMainWindow):
         ★ `ErrandBoard.from_dict` 自己保证"坏数据**不半成品还原**"
           （缺 `start` / `arrive_at` / `finish_at` 任一 ⇒ 丢那一条）——
           宁可少一条"出门"，也不要"某人被永远压在某个场景上回不了家"。
+        ★★ 第157轮：**欠账也在这本档里**（`given_up` 键，由 `_ErrandDoc` 写下去）。
+          这里先把它读回 `self._errand_given_up`，再照旧建看板 ——
+          `ErrandBoard.from_dict` 会**忽略**这个键（它只取 enabled/active/done）
+          ⇒ 机制层不用认识"欠账"，老档没有这个键也只是空账。
         """
         path = self._npc_errand_file()
         self._npc_errand_path = path
@@ -6362,6 +6497,14 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug('差事读盘失败（退空看板）: %s', e)
             return None
+        # ★★ 第157轮：欠账先读回（读坏 ⇒ 只丢欠账，看板照建 —— 两件事的容错**分开**）。
+        if isinstance(raw, dict):
+            try:
+                _n_back = _errand_given_up_restore(self, raw.get('given_up'))
+                if _n_back:
+                    _log.info('欠账读回：%d 件', _n_back)
+            except Exception as e:
+                _log.debug('欠账读回失败（已忽略）: %s', e)
         try:
             return npc_errand_mod.ErrandBoard.from_dict(raw)
         except Exception as e:
@@ -6376,6 +6519,9 @@ class RalseiPet(QMainWindow):
         ★ 写**复用** `npc_plan_store.save()` —— 它只要求对方有 `to_dict()`，而
           `ErrandBoard.to_dict()` 正好满足（`{enabled, active, done}`），
           且它自带原子写（`.tmp` + `os.replace`）。
+        ★★ 第157轮：写下去的是 `_ErrandDoc(board, 欠账dump)` —— 形状仍然是
+          `{enabled, active, done}`，**多一个 `given_up` 键**。为什么加在宿主侧、
+          不加进 `ErrandBoard.to_dict()`：机制层不该认识"欠账"（第156轮定的边界）。
         ⚠️ 读**不能**复用 `npc_plan_store.load()`：那条路走 `Book.from_dict`，
            它只认 `schema_version == 1` ⇒ 会把差事档判成"版本不符"、返回空书。
         """
@@ -6388,7 +6534,8 @@ class RalseiPet(QMainWindow):
         if not force and (now - last) < RalseiPet.NPC_PLAN_SAVE_EVERY:
             return False
         try:
-            ok = bool(npc_plan_store_mod.save(path, board))
+            ok = bool(npc_plan_store_mod.save(
+                path, _ErrandDoc(board, _errand_given_up_dump(self, now=now))))
         except Exception as e:
             _log.debug('差事落盘失败（已忽略）: %s', e)
             ok = False
