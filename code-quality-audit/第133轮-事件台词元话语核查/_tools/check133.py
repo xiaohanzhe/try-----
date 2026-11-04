@@ -229,7 +229,7 @@ finally:
 check(u'D3 破坏性负控制：清空规则表后 C1~C3 三条**全部**失效（仍判退应为 0）',
       len(_still) == 0, u'仍判退 %d/3' % len(_still))
 check(u'D4 规则表已原样恢复（条数一致）', len(ESR._META_LEAK_RES) == len(_orig),
-      u'%d → %d' % (len(_orig), len(ESR._META_LEAK_RES)))
+      u'长度一致=%r（**不回显条数** —— 加一条规则不该让本套件 DIFF，第138/146轮「判据输出禁回显时相量」）' % (len(_orig) == len(ESR._META_LEAK_RES),))
 
 # =============================================== E. 接线：同一个函数，两条链
 head(u'E. 接线（AST）：对话链与事件链调的是**同一个**函数')

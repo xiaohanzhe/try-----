@@ -282,7 +282,7 @@ finally:
 check(u'E5 破坏性正控制：把规则表清空后，那 3 条**全部**不再命中',
       len(_muted) == 3, u'%d/3' % len(_muted))
 check(u'E6 规则表已原样恢复（长度一致）', len(ESR._META_LEAK_RES) == len(_orig),
-      u'%d → %d' % (len(_orig), len(ESR._META_LEAK_RES)))
+      u'长度一致=%r（**不回显条数** —— 加一条规则不该让本套件 DIFF，第138/146轮「判据输出禁回显时相量」）' % (len(_orig) == len(ESR._META_LEAK_RES),))
 
 print(u'')
 print(u'=' * 78)
