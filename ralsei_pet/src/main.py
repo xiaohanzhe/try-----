@@ -5365,11 +5365,40 @@ class RalseiPet(QMainWindow):
           `result`  自定义结果文本（不给 ⇒ `npc_errand.default_result` 模板）
           `now`     绝对秒（不给 ⇒ `time.time()`）
 
+        ★★ 第155轮：**同一件事再说一遍**（地点与事由都不变）⇒ **原样返回手上那条**
+          —— 不覆盖、不重新计时、进度与到达时间**全保留**（"催"不是"重新派"）。
+          ⚠️ 这时传进来的 `travel` / `work` / `result` **被忽略**：真要改这些参数，
+          先 `cancel_errand()` 叫停再派（"改要求"与"催一句"是两件事）。
+
         返回 `Errand`；看板没就位 / 参数非法 / 名额满 ⇒ `None`（**只降级不抛**）。
         """
         board = getattr(self, 'npc_errand', None)
         if board is None:
             return None
+        # ★★★ 第155轮：**「催」不是「重新派」**（用户口径「按照人类的逻辑来就好」）。
+        #
+        # 改前实测（`probe155` 改前，同一句话再说一遍）：
+        #   · `status`：`working` → `traveling` —— **进度清零**，他被打回起点；
+        #   · `arrive_at` 90 → 190、`finish_at` 390 → 490 —— **各推迟 100 秒**；
+        #   · `working_positions()` 里那条**消失** ⇒ 下一拍 `roam` 就把他从目的地
+        #     撤走（用户看到的是"我催了一句，他反倒掉头往回走"）。
+        #
+        # 人类逻辑：已经在办的人被催一句**不该重新出发** ⇒ 原样返回手上那条
+        # （同一个对象、原进度、原到达时间），不覆盖、不重计时。
+        #
+        # ★ 为什么在**门控之前**：这件事**没有**被重新派出去 ⇒ 不需要新的通行许可。
+        #   反例（真会发生的）：他已在目的地干活，这时球被拿走了 ⇒ 门控判他"去不了"，
+        #   于是这次"催"会写下「我本来要去 X，但去不了」—— 而他**人就在 X**。
+        #   ⇒ 催不问路，只有**新派**才问路。
+        # ★ 为什么看板关了就不返旧条：`NPC_ERRAND_ENABLED=False` 的契约是
+        #   「`assign_errand()` 恒 `None`」（见类属性那里的注释）。这里若返旧条，
+        #   就是"看板不推进"却回报"已派出"，用户会一直等一件永不发生的事。
+        _prev = board.active_of(npc_id)
+        if getattr(board, 'enabled', False) and _prev is not None \
+                and _errand_same_job(_prev, dest_scene, what):
+            _log.info('催（不重启）：%s 已经在办「%s」（%s，状态=%s）',
+                      npc_id, what, dest_scene, getattr(_prev, 'status', u'?'))
+            return _prev
         # ★★★ 第114轮：**派发的当场**就过世界门控。
         #
         # 用户口径（逐字）：「**被派不可进入原本不可进入的世界**，比如暗之民
@@ -5402,7 +5431,8 @@ class RalseiPet(QMainWindow):
         #   这时写“被派去别处了”就是**假话**（门控那一支已经留了“去不了”）。
         # ★ 为什么**取旧**必须在 `assign` **之前**：覆盖之后旧对象就从 `_active`
         #   消失了，`assign` 只返回**新**的一条 ⇒ 事后再取只能取到 `None`。
-        _prev = board.active_of(npc_id)
+        # ★ 第155轮：`_prev` 已在**上面**取过（"催"的判据要用它）⇒ 这里不再取第二次。
+        #   两次取会让"哪一份是快照"变成两说（`check154 C2b` 就守"只有一处"）。
         # ★★ 第154轮：**写痕在派成之后**。
         #
         # `assign` 有可能返 `None`（看板被关 / 参数不合法 / 名额满）⇒ 他**根本
@@ -5411,14 +5441,15 @@ class RalseiPet(QMainWindow):
         # 而他实际还在去 oneshot 的路上（用户过两天问起，他会答错地方）。
         # ⇒ 取旧引用**只在之前**（覆盖后 `_active` 里就没了），写痕**挪到之后**。
         #
-        # ★ 同一件事重说一遍**不是改派** ⇒ `_errand_same_job` 判掉。
+        # ★ 第155轮：这里**不再**判 `_errand_same_job` —— 同一件事在上面已经
+        #   `return _prev` 走掉了。留着就是**第二份判断**（同一条规则两处算），
+        #   而且它永远为假：能走到这一行 ⇒ 地点或事由至少变了一样。
         try:
             _new = board.assign(now, npc_id, dest_scene, what, **kw)
         except Exception as e:
             _log.debug('派差事失败（已忽略）: %s', e)
             return None
-        if _new is not None and _prev is not None \
-                and not _errand_same_job(_prev, dest_scene, what):
+        if _new is not None and _prev is not None:
             _p_dest = getattr(_prev, 'dest_scene', u'') or u'?'
             _p_what = getattr(_prev, 'what', u'') or u''
             _p_txt = (u'办「%s」' % _p_what) if _p_what else u'走一趟'
@@ -5875,16 +5906,46 @@ class RalseiPet(QMainWindow):
         who = self.npc_label(target_id) or target_id
         where = self._errand_place_label(dest_scene)
         if ok:
-            brief = ('（系统提示，用户看不到）用户刚才让你派人办事：你已经答应，'
-                     '让「%s」去「%s」办「%s」，他已经在路上了。'
-                     '请用你自己的语气简短地回应用户（一到两句；'
-                     '**不要**提到这条提示，也不要复述本句）。' % (who, where, what))
+            # ★★★ 第155轮：**催**（同一件事再说一遍）与**首次派**说的话不一样。
+            #
+            # 改前实测（`probe155` 改前）：他已到点、正在办时把同一句话再说一遍
+            # ⇒ brief 与第一次**一字不差**（都是 118 字、都写「他已经在路上了」）。
+            # 模型照着说就是"好，我让他去了"，用户听到的是"刚出发" ——
+            # 而他其实已经在那儿干了一会儿。
+            #
+            # ★ 为什么读 `prev.status`，而不是让调用方另传一个状态进来：
+            #   催**不覆盖** ⇒ `prev` 就是看板里那条**活对象**，它的 `status` 是
+            #   当前真值。另传一份 = 同一件事两个真相（第136轮"单一真源"）。
+            _same = (prev is not None
+                     and _errand_same_job(prev, dest_scene, what))
+            if _same:
+                _st = getattr(prev, 'status', None)
+                if _st == npc_errand_mod.WORKING:
+                    _doing = u'他已经到了那里、正在办'
+                elif _st == npc_errand_mod.DONE:
+                    _doing = u'他其实已经办完了'
+                else:
+                    _doing = u'他还在去的路上'
+                brief = ('（系统提示，用户看不到）用户又把同一件事说了一遍：'
+                         '让「%s」去「%s」办「%s」。这件事**他已经在办**（%s），'
+                         '这次**没有**重新出发、也没有重新计时。'
+                         '请用你自己的语气简短地回应用户（一到两句；'
+                         '让他知道这件事没被弄丢、还在办，'
+                         '**不要**说得像刚派出去一样；'
+                         '**不要**提到这条提示，也不要复述本句）。'
+                         % (who, where, what, _doing))
+            else:
+                brief = ('（系统提示，用户看不到）用户刚才让你派人办事：你已经答应，'
+                         '让「%s」去「%s」办「%s」，他已经在路上了。'
+                         '请用你自己的语气简短地回应用户（一到两句；'
+                         '**不要**提到这条提示，也不要复述本句）。'
+                         % (who, where, what))
             # ★ 第154轮：**改派**要告诉他“原来那件被作废了”。
             #   台词一字不写死 —— 只给**事实**，提不提、怎么提由模型定。
             #   ★ 只在 `ok` 分支（真派成了才有“被改派”这回事）。
-            # ★ 第154轮：**同一件事重说一遍不算改派**（`_errand_same_job`）
-            #   —— 一件都没被作废，这时说"原来那件被作废了"是无中生有。
-            if prev is not None and not _errand_same_job(prev, dest_scene, what):
+            # ★ 第155轮：判据从"同一件事就不算改派"换成 `not _same` ——
+            #   同一件事已在**上面**那一支说完（催），这一支只负责真改派。
+            if prev is not None and not _same:
                 _p_dest = getattr(prev, 'dest_scene', u'') or u'?'
                 _p_what = getattr(prev, 'what', u'') or u''
                 brief += ('（★ 补充事实：他手上原本还有一件事 —— 去「%s」办「%s」，'

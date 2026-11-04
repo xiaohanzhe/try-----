@@ -485,8 +485,11 @@ _ln_dispatch = _ln_notes[-1] if _ln_notes else None
 check(u'C2 ★★ 改派那次留痕在 `board.assign` **之后**（派成了才写）'
       u'—— 写在之前 ⇒ 派发失败也会留下"被派去 B 了"的假记忆',
       len(_ln_notes) == 2 and _ln_dispatch > _ln_assign,
-      u'note 处数=%d 留痕行=%s assign 行=%s'
-      % (len(_ln_notes), _ln_dispatch, _ln_assign))
+      # ★ 第155轮：extra 原来回显**行号**（`留痕行=5428 assign 行=5416`）⇒ 产品里多
+      #   十几行注释它就 DIFF，而判定一个字没变 —— 正是第138/146轮那条口径
+      #   「判据的输出里不许含**时相量**」。改成布尔：判定表达式**一字未动**。
+      u'note 处数=%d 留痕在 assign 之后=%s'
+      % (len(_ln_notes), _ln_dispatch > _ln_assign))
 
 # ★ "取"和"写"是两件事，得各有一条判据（第153轮：一条判据只考一件事）：
 #   C2 管"写痕在派成之后"，C2b 管"旧对象只取一次、之后持有引用不重读"。
