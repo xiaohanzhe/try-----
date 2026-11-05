@@ -176,6 +176,30 @@ CLIMB_SPAN_JUMP_MAX = 5          # 跨度 ≤ 5（相邻一层，platform_height
 CLIMB_HORIZONTAL_RUN = 90        # 衔接要预留的水平距离（px，位置坐标口径）
 CLIMB_MIN_RESERVE = 24           # 吸附后仍要保留的最小水平位移（否则换方向再试）
 CLIMB_LANDING_MAX_TRAVEL = 320   # 落点离宠物超过这个距离就不成立（"只到够得着的那块楼板"）
+
+# ----------------------------------------------------------------------
+# ★★★ 第164轮：**助跑**（"要有助跑距离哦"—— 用户 2026-11-05）
+# ----------------------------------------------------------------------
+# 用户口径：
+#   「跳跃不能原地起跳后出现横向位移 —— 你需要给他一个水平初速度他才能跳远」
+#   「要有助跑距离哦」＋「这个预留点可别和助跑距离搞混了」
+# 两个量**必须分开**，别互相顶替：
+#   · **预留点**（`CLIMB_HORIZONTAL_RUN` = 90px）= **站哪儿起跳**，是**空间**约束，
+#     由目标的几何决定（要在目标边缘外留出腾空余量，否则就成了"穿过地板"）。
+#   · **助跑距离**（下面 `RUNUP_*`）= **从哪儿开始加速**，是**动力学**约束
+#     （`v²/(2a)`：速度差决定要跑多远），与目标几何无关。
+# 助跑只解决一件事：**水平初速不够**（闸门 reason == 'too_far'）。
+# 高度不够（'too_high'）助跑毫无用处（跑得再快也跳不高），直接求助。
+RUNUP_ACCEL = 600.0          # px/s^2 助跑加速度（与 modules/motion2d.RUN_ACCEL 同源）
+RUNUP_SPEED_MAX = 320.0      # px/s 冲刺速度上限（助跑能提供的最大水平初速）
+RUNUP_MIN_PX = 40            # 最短助跑距离（再短不算助跑，直接跳）
+RUNUP_MAX_PX = 320           # 最长助跑距离（再长就绕得离谱，且容易从楼板另一端掉下去）
+RUNUP_MAX_TRIES = 1          # 助跑只试一次；再不行就求助（= motion2d.RUNUP_MAX_TRIES）
+RUNUP_TIMEOUT_S = 8.0        # 整段助跑（退 + 冲）的超时，防止状态机卡死
+# 冲刺腿"真的到了"的判定半径（px）。**不能**沿用通用的到达阈值
+# `max(speed*3, 30)`：差 30px 就起跳，等于把这一跳凭空拉长 30px
+# ⇒ 刚助跑换来的那点速度又被吃掉（正好抵掉助跑的收益）。
+RUNUP_FIRE_PX = 18.0
 # 摔扁门槛（要求 第36/37行 + 用户第十八轮口径"层数比较高且掉下来"）：
 # 落差 ≥ 两层（platform_height 差 ≥10）才算"层数比较高"。一层（5）掉下去不摔扁。
 FALL_SPLAT_MIN_DROP = 10
@@ -8348,6 +8372,24 @@ class RalseiPet(QMainWindow):
         self.jump_start_pos = QPoint(0, 0)
         self.jump_target_pos = QPoint(0, 0)
         self.jump_target_window = None
+
+        # ★★★ 第164轮：助跑状态（见文件头 `RUNUP_*` 那一段）
+        #   `_runup`        —— 进行中的助跑，None = 没有。字段：
+        #                      {'from':QPoint 起跑点, 'to':QPoint 起跳点,
+        #                       'args':(floor, edge, land), 'leg':'back'|'dash',
+        #                       't0':起始时刻}
+        #   `_runup_dashing`—— 正在冲刺（移动循环据此提高目标速度上限）
+        #   `_runup_ready`  —— **这一次起跳是从助跑来的**，闸门据此允许冲刺速度
+        #   `_runup_tried`  —— 已经助跑过几次（`RUNUP_MAX_TRIES` 次后改求助）
+        #   `_last_move_speed_px_s` —— 上一移动帧的实测平面速度（px/s）。
+        #      ⚠️ 必须在**移动帧**里记：到达分支会把 `current_speed_*` 清零，
+        #      到那时再读就永远是 0（闸门会永远判"没助跑"）。
+        self._runup = None
+        self._runup_dashing = False
+        self._runup_ready = False
+        self._runup_tried = 0
+        self._last_move_speed_px_s = 0.0
+        self._runup_best_px_s = 0.0
         
         # 跳跃疲劳系统（人体功能模拟）
         self.jump_count = 0  # 当前跳跃次数
@@ -9967,6 +10009,11 @@ class RalseiPet(QMainWindow):
         except Exception:
             timer_dt = float(elapsed_time)
 
+        # ---- 助跑（RUNUP，第164轮）：看门狗，每帧一次 ----
+        # ★ 放在真正的位置推进之前：助跑是**两段移动**的状态机，
+        #   任何一腿没走完却没了后续信号都会把它永远挂住（见 `_runup_tick`）。
+        self._runup_tick()
+
         # ---- 灵魂（SOUL，第55轮）：每帧推进 ----
         # ★ 位置必须在**所有早退分支之前**（睡眠 / 施法 / 躲猫猫 / 拖拽保护 /
         #   特殊动画都会 return）：灵魂是独立实体，宠物睡着时它照样该能动。
@@ -10412,7 +10459,24 @@ class RalseiPet(QMainWindow):
                 if not hasattr(self, '_speed_variation'):
                     self._speed_variation = 1.0
                 target_final_speed *= self._speed_variation
-                
+
+                # ★★★ 第164轮：助跑**冲刺**腿 —— 把目标速度顶到冲刺速度。
+                #   位置很讲究（放在情绪/波动之后、平滑与夹紧之前）：
+                #   ① 放在**最后**用 `max` 顶上去 ⇒ 助跑承诺的速度一定兑现。
+                #      若让疲惫因子（0.4）先把它压下来，闸门就会按实测速度判
+                #      "还差一点" ⇒ 用户看到的是"有时跳得过去、有时跳不过去"，
+                #      那是**看起来像 bug 的随机性**，比干脆拒绝更糟。
+                #   ② 必须**盖过距离减速**：`distance < 50` 那档会把目标速度压到
+                #      `speed*(distance/50)`，而到达阈值为 30px ⇒ 起跳前的最后几步
+                #      正好落进这一档 ⇒ 实测速度掉到 1px/帧 ⇒ 闸门必拒
+                #      （这是"助跑永远不成功"的头号陷阱，探针 `R5` 专门守它）。
+                _dash_px_frame = 0.0
+                if getattr(self, '_runup_dashing', False):
+                    _dash_px_frame = max(
+                        float(self.speed),
+                        float(RUNUP_SPEED_MAX) * float(timer_dt or 0.033))
+                    target_final_speed = max(target_final_speed, _dash_px_frame)
+
                 # 平滑过渡到目标速度
                 current_speed = math.hypot(self.current_speed_x, self.current_speed_y)
                 new_speed = current_speed + (target_final_speed - current_speed) * 0.5
@@ -10420,7 +10484,9 @@ class RalseiPet(QMainWindow):
                 # 优化：简化移动距离计算
                 # speed 的语义是"像素/帧"，base_move_distance 直接用 new_speed（不乘 elapsed_time）
                 # 60FPS 下 speed=6 → 每秒 360 像素的自然走路速度；乘 elapsed_time 会导致 0.1 像素 → 四舍五入为 0（太空滑步）
-                max_move_distance = self.speed * 1.0
+                # 第164轮：冲刺腿同样要抬这个夹子，否则上面顶上去的速度会被夹回 `speed`
+                max_move_distance = max(self.speed * 1.0, _dash_px_frame)
+
                 base_move_distance = new_speed
                 move_distance = min(distance, base_move_distance, max_move_distance)
                 
@@ -10481,6 +10547,19 @@ class RalseiPet(QMainWindow):
                 
                 # 移动Ralsei
                 self.move(new_x, new_y)
+
+                # ★★★ 第164轮：记下**本帧实测平面速度**（px/s），供起跳闸门判断
+                #   "这一跳到底有没有助跑动量"。为什么必须在**这里**记：
+                #   下面的到达分支会把 `current_speed_x/y` 清零，等起跳时再读永远是 0
+                #   （那样闸门就永远不会为助跑放行 —— 静默的假阴性）。
+                #   换算用**名义帧长**（不是当帧 dt），理由见 `_nominal_move_dt`。
+                self._last_move_speed_px_s = (
+                    float(new_speed) / self._nominal_move_dt())
+                # 冲刺腿：记下这一趟**跑出过的最高速度**（闸门取它，别取最后一帧）
+                if getattr(self, '_runup_dashing', False):
+                    self._runup_best_px_s = max(
+                        float(getattr(self, '_runup_best_px_s', 0.0) or 0.0),
+                        self._last_move_speed_px_s)
 
                 # 优化：使用速度向量来确定动画方向，确保方向一致
                 # 基于当前速度向量决定动画方向，确保动画方向与实际移动方向一致
@@ -10559,6 +10638,13 @@ class RalseiPet(QMainWindow):
             # 到达阈值放大：speed*3 或至少30px（游戏/施法的移动容忍更大）
             _threshold_sq = max((self.speed * 3.0) ** 2, 30.0 ** 2)
             if distance_sq <= _threshold_sq:
+                # ★★★ 第164轮：**助跑接手检查必须排在"到达收尾"之前**。
+                #   助跑是"退到起跑点 → 冲到起跳点 → 重跳"两腿，
+                #   每一腿走完都**不是**真的到达（不能歇、不能切 idle、不能通知代理）；
+                #   若放到 `_notify_arrived_if_needed()` 之后，自主代理会先收到
+                #   "到了"，接着才起跳 —— 它会把这两段当成一次普通的闲逛结束。
+                if self._runup_on_arrive():
+                    return
                 # 到达目标位置，直接停止移动，避免速度波动
                 self.is_moving = False
                 self.idle_timer = 0
@@ -11021,17 +11107,46 @@ class RalseiPet(QMainWindow):
     #   · 距离：`|vx| <= 最大冲刺速度`    ⇒ 速度不够就不许跳远（**该助跑**）
     # ★ 这里**不重算弹道** —— `handle_jump` 那条 `vy0 = (Δy − 0.5gT²)/T` 已经是对的
     #   （第90轮修过坐标系），闸门只是拿**同一个** vy0 去比上限（同源，不另算一遍）。
+    def _nominal_move_dt(self):
+        """换算"像素/帧 ⇄ px/s"**统一用**的帧长。
+
+        ⚠️ 不能直接拿当帧实测 dt 去换算：`speed` 的语义是**像素/帧**
+        （本文件的位移全是 `速度 × 1`，不乘 dt），所以当帧 dt 只影响
+        "这一帧画得快不快"，不影响"这一帧走了多少像素"。
+        拿实测 dt 去除会得到**帧率越高速度越离谱**的假数字 ——
+        实测踩过：Qt 定时器与探针的 sleep 交错时某帧 dt≈2ms，
+        `5px/帧 ÷ 0.002s = 2500px/s`，闸门当场按 2500 放行 = **假放行**。
+        统一用名义帧长（取 `_last_move_dt`，无则 1/30）后，
+        "走路 5px/帧 ⇒ 151px/s、冲刺 10.2px/帧 ⇒ 310px/s" 才是可比的口径。
+        """
+        dt = float(getattr(self, '_last_move_dt', 0) or 0)
+        return dt if dt > 1e-6 else 0.033
+
     def _max_run_px_s(self):
-        """跑步能达到的最大水平速度（px/s）。
+        """起跳瞬间**真正**能拿到的水平速度上限（px/s）。
 
         ⚠️ `max_speed` 是**每帧像素**（配置项 movement.max_speed，默认 15），
         **不是** px/s —— 必须换算，别把 15 直接当速度。
-        帧长取 `_last_move_dt`；取不到按 1/30 兜底（产品移动 tick 的量级）。
+
+        ★★★ 第164轮：**助跑**才解锁冲刺速度。
+        平时上限就是走路速度（`max_speed/名义帧长`）；只有这一跳确实是从助跑来的
+        （`_runup_ready`）才允许提到 `RUNUP_SPEED_MAX`，而且取
+        **助跑过程中达到过的最高速度**与它的较小值 —— 也就是说：
+        **真跑那么快才放行**。绝不能因为"标记成助跑了"就直接给 320：
+          · 疲惫（`_cached_mood_factor` = 0.4）或情绪压制时实际冲不到，
+            给了就是**假放行** ⇒ 跳出去半路掉下来，比拒绝更糟；
+          · 到达前最后 30px 会减速（`distance < 50` 那一档），实测速度会掉，
+            那时候放行同样是假的。
+        取"最高"而不是"最后一帧"：冲刺腿末尾正好卡在减速档/短帧上时，
+        最后一帧的速度不代表这一趟真跑出来的动量（探针 `C` 段守这条）。
         """
-        dt = float(getattr(self, '_last_move_dt', 0) or 0)
-        if dt <= 1e-6:
-            dt = 0.033
-        return float(getattr(self, 'max_speed', 15.0) or 15.0) / dt
+        dt = self._nominal_move_dt()
+        _base = float(getattr(self, 'max_speed', 15.0) or 15.0) / dt
+        if not getattr(self, '_runup_ready', False):
+            return _base
+        _meas = max(float(getattr(self, '_last_move_speed_px_s', 0.0) or 0.0),
+                    float(getattr(self, '_runup_best_px_s', 0.0) or 0.0))
+        return max(_base, min(RUNUP_SPEED_MAX, _meas))
 
     def _jump_reach_ok(self):
         """起跳闸门。True = 这一跳在能力范围内；False = 够不着（并记下原因）。
@@ -11090,23 +11205,35 @@ class RalseiPet(QMainWindow):
             }
         ok = self.start_jump(target_window, edge, target_floor=floor,
                              target_pos=land)
-        if not ok:
-            # ★ 第164轮：够不着（太高/太远）⇒ 不硬跳，说一句求助。
-            #   这里**不做分段** —— 分段需要"先走到边缘外的预留点"，
-            #   是另一套落点选择（预留空间 ≠ 助跑距离），留到下一批单独做。
-            self._on_jump_rejected(floor, land)
+        if ok:
+            # 起跳成功 ⇒ 清掉"助跑已试过"的计数（否则一次失败会永久禁用助跑）
+            self._runup_tried = 0
+        else:
+            # ★ 第164轮：够不着（太高/太远）⇒ 不硬跳。
+            #   **先试助跑**（只对"太远"有意义），助跑也不行才说一句求助。
+            #   `edge` 必须一起传下去 —— 助跑跑完要**重放同一次起跳**，
+            #   少一个参数就得靠猜（而 `edge` 会影响落点启发式）。
+            self._on_jump_rejected(floor, land, edge)
         return ok
 
-    def _on_jump_rejected(self, floor, land):
-        """起跳被闸门拒绝之后的收尾：记日志 + 说一句求助。
+    def _on_jump_rejected(self, floor, land, edge=None):
+        """起跳被闸门拒绝之后的收尾：先试助跑 → 不行再说一句求助。
 
-        用户口径（2026-11-05）：「有中途落脚那就**分段**，无那就**放弃或向用户求助**」。
-        本轮先做"求助"这一半；分段留到下一批（要动落点选择）。
+        用户口径（2026-11-05）：「有中途落脚那就**分段**，无那就**放弃或向用户求助**」
+        「**要有助跑距离哦**」。
+
+        顺序是**硬性**的，别调换：
+          ① `too_far`（水平速度不够）⇒ 助跑**确实能解决** ⇒ `_try_runup`；
+          ② `too_high`（跳力不够）⇒ 助跑**毫无用处**（跑得再快也跳不高）⇒ 直接求助；
+          ③ 助跑已经试过还是不行 ⇒ 求助。
         `start_autonomous_speech` 自带 10 分钟闸门与"AI 不可用就沉默"两条设计，
         这里**不绕过**它们 —— 说不出来就只留日志，不回落内置台词。
         """
         reason, got, limit = (getattr(self, '_jump_reject', None)
                               or ('unknown', None, None))
+        if reason == 'too_far' and getattr(self, '_runup', None) is None:
+            if self._try_runup(floor, land, edge, got):
+                return
         _log.debug("够不着目标楼层（原因=%s，实得=%s，上限=%s），改为求助",
                    reason, got, limit)
         if reason in ('too_high', 'too_far'):
@@ -11114,6 +11241,195 @@ class RalseiPet(QMainWindow):
                 self.start_autonomous_speech('jump_blocked')
             except Exception as e:                    # noqa: BLE001
                 _log.debug("求助语句未能发起: %s", e)
+
+    # ------------------------------------------------------------------
+    # 第164轮：助跑（"要有助跑距离哦"）
+    # ------------------------------------------------------------------
+    def _runup_tick(self):
+        """助跑的看门狗：超时 / 被拖拽 / 施法 / 已经跳起来 ⇒ 整段作废。
+
+        为什么要它：助跑是**两段移动**（退到起跑点 → 冲向起跳点），中间任何一步
+        没走到却没了后续信号，`_runup` 就会永远挂着 ⇒ `_on_jump_rejected` 里
+        "已经在助跑就别再试"那条永远成立 ⇒ **这一层楼以后再也上不去**（静默死锁）。
+        本函数每帧跑一次，代价可忽略。
+        """
+        _ru = getattr(self, '_runup', None)
+        if _ru is None:
+            return
+        _kill = False
+        if float(getattr(self, 'is_jumping', False) or False):
+            _kill = True                      # 已经跳了（手动/惊讶/别处触发）
+        elif time.time() - float(_ru.get('t0', 0.0)) > RUNUP_TIMEOUT_S:
+            _kill = True
+        elif getattr(self, '_spell_stage', None) is not None:
+            _kill = True
+        elif getattr(self, '_is_being_dragged', False):
+            _kill = True
+        elif getattr(self, 'is_falling', False) or getattr(self, 'is_gravity_falling', False):
+            _kill = True
+        elif bool(getattr(self, 'game_state', {}).get('is_playing')):
+            _kill = True
+        if _kill:
+            _log.debug("[助跑] 中止（腿=%s，已试 %s 次）",
+                       _ru.get('leg'), getattr(self, '_runup_tried', 0))
+            self._runup = None
+            self._runup_dashing = False
+            self._runup_ready = False
+
+    def _try_runup(self, floor, land, edge, v_req):
+        """够不着（水平速度不够）⇒ 退到起跑点、再冲刺回起跳点、然后重跳一次。
+
+        True = 已经把助跑排上队了（调用方**不要**再走求助）。
+
+        ★★★ 两个量绝不混用（用户原话：「这个预留点可别和助跑距离搞混了哦」）：
+          · **起跳点** `to` —— 就是宠物**现在站的位置**。它相对目标层的
+            "预留空间"由 `CLIMB_HORIZONTAL_RUN` 那套落点选择负责，**本函数不动它**。
+          · **起跑点** `from` —— `to` 沿"远离落点"的方向退 `L` 米，
+            `L = v²/(2a)`（速度差决定）。退多远跟目标几何**无关**。
+
+        为什么方向取"远离落点"：助跑要**朝着**目标跑，冲到底才起跳；
+        从侧后方绕过去会变成"边走边转向"，起跳那一刻速度又掉了。
+
+        返回 False 的四种情形（都**不算**缺陷，属于物理上做不到）：
+          ① 已经在助跑 / 已经试满 `RUNUP_MAX_TRIES` 次；
+          ② 这一跳几乎**垂直**（水平分量 < 0.2）⇒ 助跑买不到任何横向速度；
+          ③ 退后落不到**同一楼层的可见区域**（缩短到 `RUNUP_MIN_PX` 仍不行）；
+          ④ 已经冲不到需要的那点速度（`RUNUP_SPEED_MAX` 都不够）。
+        """
+        if getattr(self, '_runup', None) is not None:
+            return False
+        if getattr(self, '_runup_tried', 0) >= RUNUP_MAX_TRIES:
+            return False
+        try:
+            to = QPoint(self.pos().x(), self.pos().y())
+            dx = float(land.x()) - float(to.x())
+            dy = float(land.y()) - float(to.y())
+            dist = math.hypot(dx, dy)
+            if dist < 1.0:
+                return False
+            ux, uy = dx / dist, dy / dist
+            if abs(ux) < 0.2:
+                # 近乎垂直的跳 —— 助跑一点用没有（用户："没有水平初速度就只能跳高"）
+                return False
+            # 需要多少速度 → 要退多远。从**静止**起算（退到点后人就停住了）
+            _v_req = float(v_req or 0.0)
+            if _v_req > RUNUP_SPEED_MAX + 1e-6:
+                return False                  # 冲刺也够不着 ⇒ 物理上做不到
+            L = motion2d.runup_distance(_v_req, 0.0, RUNUP_ACCEL)
+            L = max(float(RUNUP_MIN_PX), min(float(RUNUP_MAX_PX), L))
+
+            # 起跑点要落在**同一楼层的可见区域**里（否则退出去就掉下去了）
+            fm = getattr(self, 'floor_manager', None)
+            cur_floor = getattr(self, 'current_floor', None)
+            from_pt = None
+            # ⚠️ 缩短下限只到 `RUNUP_MIN_PX`：再短就不是助跑（而且会掉进
+            #    "到达阈值 30px 比助跑距离还长"的陷阱 ⇒ 根本没跑就判定到了）。
+            #    真的放不下就**放弃助跑**（返回 False，交给求助），不要凑合。
+            for _scale in (1.0, 0.75, 0.5):
+                _L = max(float(RUNUP_MIN_PX), L * _scale)
+                _p = QPoint(int(round(to.x() - ux * _L)),
+                            int(round(to.y() - uy * _L)))
+                if fm is None or cur_floor is None:
+                    from_pt = _p
+                    break
+                try:
+                    if fm.floor_visible_contains(cur_floor, _p):
+                        from_pt = _p
+                        break
+                except Exception as e:                # noqa: BLE001
+                    _log.debug("[助跑] 起跑点校验异常（当作可行）: %s", e)
+                    from_pt = _p
+                    break
+            if from_pt is None:
+                return False
+
+            self._runup_tried = int(getattr(self, '_runup_tried', 0)) + 1
+            self._runup = {
+                'from': from_pt,
+                'to': to,
+                'args': (floor, edge, land),
+                'leg': 'back',
+                't0': time.time(),
+            }
+            self._runup_dashing = False
+            self._runup_ready = False
+            # 第一腿：退回起跑点（不冲刺，慢慢退就行 —— 冲刺是用来"冲"的）
+            self.target_pos = from_pt
+            self._subpixel_x = 0.0
+            self._subpixel_y = 0.0
+            self._no_progress_frames = 0
+            self.is_moving = True
+            self.idle_timer = 0
+            _log.debug("[助跑] 安排：起跳点 (%d,%d) 需要 %.0fpx/s "
+                       "⇒ 退到 (%d,%d)（%.0fpx）再冲",
+                       to.x(), to.y(), _v_req,
+                       from_pt.x(), from_pt.y(), math.hypot(from_pt.x() - to.x(),
+                                                           from_pt.y() - to.y()))
+            return True
+        except Exception as e:                        # noqa: BLE001
+            _log.debug("[助跑] 规划失败（放弃助跑）: %s", e)
+            self._runup = None
+            self._runup_dashing = False
+            return False
+
+    def _runup_on_arrive(self):
+        """到达 `target_pos` 时调用。True = 助跑接手了（别再按"到达"收尾）。
+
+        `back` 腿走完 ⇒ 换目标到起跳点并**开冲刺**；
+        `dash` 腿走完 ⇒ 用**同一组参数**重放那次起跳（此刻实测速度已经上来了）。
+        """
+        _ru = getattr(self, '_runup', None)
+        if _ru is None:
+            return False
+        if _ru.get('leg') == 'back':
+            _ru['leg'] = 'dash'
+            self._runup_dashing = True
+            # 冲刺腿开始 ⇒ 从 0 重新记"这一趟跑出过的最高速度"
+            self._runup_best_px_s = 0.0
+            self.target_pos = QPoint(_ru['to'].x(), _ru['to'].y())
+            self._subpixel_x = 0.0
+            self._subpixel_y = 0.0
+            self._no_progress_frames = 0
+            self.is_moving = True
+            self._log_runup_dash()
+            return True
+        # dash 腿：**必须真的跑到起跳点**才起跳。
+        # 理由（探针 `R6` 守这条）：通用到达阈值是 `max(speed*3, 30)` = 30px，
+        # 若在 30px 外就起跳，`jump_start_pos → land` 的 dx 会比规划时大 30px
+        # ⇒ 需要的水平速度更高 —— 正好把助跑换来的那点速度吃掉，
+        # 于是助跑"看似做了、结果还是跳不过去"（假阴性，最难查）。
+        _to = _ru.get('to')
+        _d = math.hypot(self.pos().x() - _to.x(), self.pos().y() - _to.y())
+        if _d > float(RUNUP_FIRE_PX):
+            self.target_pos = QPoint(_to.x(), _to.y())
+            self.is_moving = True
+            return True
+        # dash 腿真的到了 ⇒ 起跳
+        self._runup = None
+        self._runup_dashing = False
+        self.is_moving = False
+        self._runup_ready = True          # 闸门据此把冲刺速度算进上限
+        try:
+            _args = _ru.get('args') or ()
+            self._start_floor_jump(*_args)
+        except Exception as e:                        # noqa: BLE001
+            _log.debug("[助跑] 重跳异常（按失败处理）: %s", e)
+        finally:
+            self._runup_ready = False
+        # ⚠️ 失败**不在这里**补一次 `_on_jump_rejected`：
+        #    `_start_floor_jump` 内部已经调过了（它才是拒绝的唯一收口）。
+        #    这里再补一次会让"求助"说两遍（`_runup_tried` 已达上限，
+        #    所以补的那次不会又排一次助跑，但会重复触发语音）。
+        return True
+
+    def _log_runup_dash(self):
+        """冲刺开始时的日志（单独抽出来，便于探针打桩计数）。"""
+        _ru = getattr(self, '_runup', None) or {}
+        _to = _ru.get('to')
+        _log.debug("[助跑] 起跑完成，冲向起跳点 (%s,%s)，实测 %.0fpx/s",
+                   getattr(_to, 'x', lambda: -1)(), getattr(_to, 'y', lambda: -1)(),
+                   float(getattr(self, '_last_move_speed_px_s', 0.0) or 0.0))
+
 
     # ------------------------------------------------------------------
     # 「建楼」批次 B（第十八轮）：层高闸门 —— "自己走出来的换层必须靠跳/攀爬"
@@ -11193,14 +11509,19 @@ class RalseiPet(QMainWindow):
         return land, _jump_hdir_for(cur, land)
 
     def _start_climb_transition(self, old_floor, new_floor):
-        """层高闸门：把"宠物自己走出来"的高低变换交给跳/攀爬衔接。True = 已起跳。
+        """层高闸门：把"宠物自己走出来"的高低变换交给跳/攀爬衔接。
+        True = 已接手（已经起跳，或**已排上助跑**）。
 
         用户口径："走进更低的楼层也是一样，反正只要是楼层高低变换就要通过跳来衔接，
         注意，下楼的时候别用掉落，也用跳"—— 所以上下行都走这里，**不走** `start_falling`。
 
-        返回 False = 目标楼板够不着（吸附后被推得太远 / 不可见）→ 由调用方兜底：
+        返回 False = 目标楼板够不着，**而且助跑也排不上**（吸附后被推得太远 / 不可见 /
+        垂直跳 / 冲断腿也够不着）→ 由调用方兜底：
         · 上楼够不着 → 保持原楼层（"静默提升"是复检缺口 G3 本身，不能留着当兜底）；
         · 下楼够不着 → 服从重力（要求⑭："脚下没东西了就该直直掉下去"）。
+        ★ 第164轮补：闸门拒绝"太远"时会先排助跑（`_try_runup`），这时本函数返回
+          **True**（已接手），调用方据此不要走下楼的坠落兜底 —— 人正要退后助跑，
+          当场判他"脚下没东西了"就把他扔下去了。
 
         ---- 为什么**不**把"跨度高"拆成逐层小跳（勿回退，第十八轮实测推理）----
         用户还说过"他也不能一次性跳上跨度很高的楼层……只能相邻"。直觉做法是把一次
@@ -11229,8 +11550,17 @@ class RalseiPet(QMainWindow):
         _ok = self._start_floor_jump(new_floor, 'bottom' if span > 0 else 'top',
                                      land)
         if not _ok:
-            # ★ 第164轮：闸门拒绝（太高/太远）⇒ 返回 False，交给调用方兜底：
+            # ★ 第164轮：闸门拒绝（太高/太远）⇒ 交给调用方兜底：
             #   上楼保持原楼层、下楼服从重力。**不许**在这里"静默提升"。
+            #   ⚠️ 但"拒绝"≠"放弃"：够不着（太远）时 `_on_jump_rejected` 已经
+            #   **排上了助跑**（`_runup` 非空）。这时必须把"已接手"报给调用方，
+            #   否则调用方会按"够不着"的兜底把这次助跑**当场作废** ——
+            #   下楼那条更狠，会直接开始坠落（人还没跑起来就掉下去了）。
+            if getattr(self, '_runup', None) is not None:
+                _log.debug("层高闸门：%s → %s 够不着，已排助跑（落点 %s）",
+                           old_floor.get('platform_height'),
+                           new_floor.get('platform_height'), land)
+                return True
             return False
         _log.debug("层高闸门：%s → %s（跨度 %s，%s，爬向 %s，落点 %s）",
                    old_floor.get('platform_height'), new_floor.get('platform_height'),
