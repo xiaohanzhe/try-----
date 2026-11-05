@@ -8390,6 +8390,9 @@ class RalseiPet(QMainWindow):
         self._runup_tried = 0
         self._last_move_speed_px_s = 0.0
         self._runup_best_px_s = 0.0
+        # 分段（够不着时拆成两跳）的递归闸：`_try_segment → _start_floor_jump →
+        # `_on_jump_rejected` → `_try_segment` 会自己咬自己，没有这道闸就是无限递归。
+        self._segment_busy = False
         
         # 跳跃疲劳系统（人体功能模拟）
         self.jump_count = 0  # 当前跳跃次数
@@ -11217,30 +11220,123 @@ class RalseiPet(QMainWindow):
         return ok
 
     def _on_jump_rejected(self, floor, land, edge=None):
-        """起跳被闸门拒绝之后的收尾：先试助跑 → 不行再说一句求助。
+        """起跳被闸门拒绝之后的收尾。顺序**硬性**，别调换：
+
+          ① `too_far`（水平速度不够）⇒ 助跑**确实能解决** ⇒ `_try_runup`；
+          ② `too_high` / 助跑也不行 ⇒ 看有没有**中途落脚板** ⇒ `_try_segment`（分段）；
+          ③ 都没有 ⇒ 说一句求助。
 
         用户口径（2026-11-05）：「有中途落脚那就**分段**，无那就**放弃或向用户求助**」
-        「**要有助跑距离哦**」。
+        「**要有助跑距离哦**」「**要预留空间**」。
 
-        顺序是**硬性**的，别调换：
-          ① `too_far`（水平速度不够）⇒ 助跑**确实能解决** ⇒ `_try_runup`；
-          ② `too_high`（跳力不够）⇒ 助跑**毫无用处**（跑得再快也跳不高）⇒ 直接求助；
-          ③ 助跑已经试过还是不行 ⇒ 求助。
         `start_autonomous_speech` 自带 10 分钟闸门与"AI 不可用就沉默"两条设计，
         这里**不绕过**它们 —— 说不出来就只留日志，不回落内置台词。
+
+        ★ `_segment_busy`：分段尝试内部那一跳失败时会**再进本函数**。
+          那时候**不喊** —— 求助留给最外层统一喊一次，否则一次够不着会连说三句话。
         """
         reason, got, limit = (getattr(self, '_jump_reject', None)
                               or ('unknown', None, None))
         if reason == 'too_far' and getattr(self, '_runup', None) is None:
             if self._try_runup(floor, land, edge, got):
                 return
+        if self._try_segment(floor, land, edge):
+            return
         _log.debug("够不着目标楼层（原因=%s，实得=%s，上限=%s），改为求助",
                    reason, got, limit)
+        if getattr(self, '_segment_busy', False):
+            # 内层（分段里某一跳）失败：求助由最外层统一喊
+            return
         if reason in ('too_high', 'too_far'):
             try:
                 self.start_autonomous_speech('jump_blocked')
             except Exception as e:                    # noqa: BLE001
                 _log.debug("求助语句未能发起: %s", e)
+
+    def _segment_candidates(self, fm, cur_floor, target_floor):
+        """一次跳不到时，能当中途落脚板的楼层（**先近后远**）。
+
+        口径（用户 2026-11-05「做，按 2.5D 解」）：
+          · 只取**严格夹在**当前层与目标层之间的层（"只能相邻"的物理含义）；
+          · 且必须是**朝目标方向前进**的那一侧 —— 上楼只往更高层找，
+            下楼只往更低层找，否则会在两层之间来回弹；
+          · 排序按"离当前层最近"（爬楼是一层层往上，不是一次蹦到顶）。
+
+        ⚠️ 这里**不判**中间层"在当前位置有没有可见区域" —— 那正是第十八轮
+        "勿回退"论证里卡死的那一步。按 2.5D 口径，可见区域是**从落点探针**
+        （`_climb_landing` 的 90px 让开）去问的，不是从"当前位置的垂直投影"去问的。
+        """
+        cur_h = cur_floor.get('platform_height', 0) or 0
+        tgt_h = target_floor.get('platform_height', 0) or 0
+        if cur_h == tgt_h:
+            return []
+        ups = tgt_h > cur_h
+        lo, hi = min(cur_h, tgt_h), max(cur_h, tgt_h)
+        out = []
+        for f in (getattr(fm, 'floors', None) or []):
+            try:
+                h = f.get('platform_height', 0) or 0
+            except Exception:                         # noqa: BLE001
+                continue
+            if not (lo < h < hi):
+                continue
+            if ups and h <= cur_h:
+                continue
+            if (not ups) and h >= cur_h:
+                continue
+            out.append(f)
+        out.sort(key=lambda f: abs((f.get('platform_height', 0) or 0) - cur_h))
+        return out
+
+    def _try_segment(self, floor, land, edge):
+        """够不着 ⇒ 拆成两跳：先跳到**中途落脚板**，到了再跳最终目标。
+
+        True = 已接手（要么起跳了，要么这一步也排上了助跑）。
+        下一跳不需要这里记账：宠物站到中途板上以后，`check_nearby_windows`
+        那条既有链路会重新枚举候选，目标层仍在附近，于是自然再跳一次 ——
+        一次只拆**一层**，不在这里写死"要跳几段"（那会变成第二个真源）。
+
+        ★ "走到边缘外的预留点"这件事由 `_climb_landing` 的
+          `CLIMB_HORIZONTAL_RUN = 90` 让开实现：它把落点探针先水平推开 90px
+          再吸附进目标层可见区域 ⇒ 观感与判定都是**斜跳**，不是垂直起落。
+          分段沿用它，**不另加**一套起跳侧的预留 —— 两侧都留会叠成 180px，
+          把本来够得着的一跳推成够不着。
+        """
+        if getattr(self, '_segment_busy', False):
+            return False                  # 递归闸：内层不再往下拆
+        fm = getattr(self, 'floor_manager', None)
+        if fm is None or floor is None:
+            return False
+        cur_floor = getattr(self, 'current_floor', None)
+        if cur_floor is None:
+            cur_floor = getattr(fm, 'desktop_floor', None)
+        if cur_floor is None:
+            return False
+        cands = self._segment_candidates(fm, cur_floor, floor)
+        if not cands:
+            return False
+        ups = ((floor.get('platform_height', 0) or 0)
+               > (cur_floor.get('platform_height', 0) or 0))
+        for mid in cands[:3]:
+            mid_land, _dir = self._climb_landing(fm, mid)
+            if mid_land is None:
+                continue
+            self._segment_busy = True
+            try:
+                ok = self._start_floor_jump(
+                    mid, 'bottom' if ups else 'top', mid_land)
+            except Exception as e:                    # noqa: BLE001
+                _log.debug("[分段] 中途跳异常: %s", e)
+                ok = False
+            finally:
+                self._segment_busy = False
+            if ok or getattr(self, '_runup', None) is not None:
+                _log.debug("[分段] 够不着 %s 层 ⇒ 先跳到 %s 层（落点 %s）",
+                           floor.get('platform_height'),
+                           mid.get('platform_height'), mid_land)
+                return True
+        return False
+
 
     # ------------------------------------------------------------------
     # 第164轮：助跑（"要有助跑距离哦"）

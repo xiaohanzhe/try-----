@@ -381,6 +381,109 @@ def main():
     # ------------------------------------------------------------------
     print()
     print('=' * 68)
+    print('F 分段：够不着 ⇒ 先跳到中途落脚板（第十八轮"勿回退"按 2.5D 解重开）')
+    print('=' * 68)
+
+    class _FakeFm:
+        def __init__(self, floors):
+            self.floors = floors
+            self.desktop_floor = floors[0]
+
+    def fake_floors(heights):
+        return [{'type': 'desktop' if i == 0 else 'window',
+                 'platform_height': h, 'title': 'f%d' % i}
+                for i, h in enumerate(heights)]
+
+    def cands(heights, cur_i, tgt_i):
+        fl = fake_floors(heights)
+        return [f.get('platform_height')
+                for f in w._segment_candidates(_FakeFm(fl), fl[cur_i], fl[tgt_i])]
+
+    # 上楼：0 → 15，中间有 5 / 10
+    c_up = cands([0, 5, 10, 15], 0, 3)
+    print('   上楼 0→15，候选（先近后远）= %s' % c_up)
+    ok(c_up == [5, 10],
+       '★ 只取**严格夹在中间**的层、且**先近后远**（实得 %s）' % c_up)
+    ok(all(h > 0 for h in c_up),
+       '★ 上楼只往**更高**找（不会把本层或更低层当跳板，否则两层之间来回弹）')
+
+    # 下楼：15 → 0
+    c_dn = cands([0, 5, 10, 15], 3, 0)
+    print('   下楼 15→0，候选 = %s' % c_dn)
+    ok(c_dn == [10, 5], '★ 下楼镜像：先 10 后 5（实得 %s）' % c_dn)
+
+    # 相邻层：没有中间层
+    c_none = cands([0, 5, 10, 15], 0, 1)
+    ok(c_none == [], '相邻两层之间没有候选（0→5 实得 %s）' % c_none)
+    c_none2 = cands([0, 5], 0, 1)
+    ok(c_none2 == [], '只有两层时也没有候选（实得 %s）' % c_none2)
+
+    # 递归闸
+    w._segment_busy = True
+    _fl = fake_floors([0, 5, 10, 15])
+    ok(w._try_segment(_fl[3], QPoint(900, 100), 'bottom') is False,
+       '★ `_segment_busy=True` 时立刻返回 False（`_start_floor_jump` 失败会回调'
+       ' `_on_jump_rejected` 再进本函数，没这道闸就是无限递归）')
+    w._segment_busy = False
+
+    # 真起跳：把 _climb_landing / _start_floor_jump 换成可数的桩
+    _orig_cl = w._climb_landing
+    _orig_sfj2 = w._start_floor_jump
+    jump_calls = []
+    w._climb_landing = lambda fmx, fl: (QPoint(700, 300), 'right')
+    w._start_floor_jump = lambda f, e, l: (jump_calls.append(f.get('platform_height'))
+                                          or True)
+    _save_fm = w.floor_manager
+    w.floor_manager = _FakeFm(_fl)
+    w.current_floor = _fl[0]
+    r = w._try_segment(_fl[3], QPoint(900, 100), 'bottom')
+    ok(r is True and jump_calls == [5],
+       '★ 够不着 15 层 ⇒ 真的改成跳 **5 层**（实得跳跃目标=%s）' % jump_calls)
+
+    # 中途层也够不着 ⇒ 逐个换候选，最后如实返回 False
+    jump_calls[:] = []
+    w._start_floor_jump = lambda f, e, l: (jump_calls.append(f.get('platform_height'))
+                                          or False)
+    r = w._try_segment(_fl[3], QPoint(900, 100), 'bottom')
+    ok(r is False and jump_calls == [5, 10],
+       '★ 所有候选都够不着 ⇒ 逐个试完（%s）后如实返回 False（交给求助）'
+       % jump_calls)
+
+    w._climb_landing = _orig_cl
+    w._start_floor_jump = _orig_sfj2
+    w.floor_manager = _save_fm
+
+    # 端到端：too_high + 存在中间层 ⇒ 说话一次都不该发生
+    spoken[0] = 0
+    _orig_speech2 = w.start_autonomous_speech
+    w.start_autonomous_speech = lambda *a, **k: spoken.__setitem__(0, spoken[0] + 1)
+    _orig_seg = w._try_segment
+    w._try_segment = lambda f, l, e: True          # 假装分段排上了
+    w._runup = None
+    w._jump_reject = ('too_high', 900.0, 700.0)
+    w._on_jump_rejected(_fl[3], QPoint(900, 100), 'bottom')
+    ok(spoken[0] == 0, '★ 分段能接手时**不喊求助**（实得 %d 次）' % spoken[0])
+    w._try_segment = _orig_seg
+    w._try_segment = lambda f, l, e: False
+    spoken[0] = 0
+    w._on_jump_rejected(_fl[3], QPoint(900, 100), 'bottom')
+    ok(spoken[0] == 1, '连分段都没接手 ⇒ 才喊求助（实得 %d 次）' % spoken[0])
+    w._try_segment = _orig_seg
+
+    # 内层不喊：分段内部某一跳失败时，求助留给最外层
+    spoken[0] = 0
+    w._segment_busy = True
+    w._try_segment = lambda f, l, e: False
+    w._on_jump_rejected(_fl[3], QPoint(900, 100), 'bottom')
+    ok(spoken[0] == 0,
+       '★ `_segment_busy=True` 的内层失败**不喊**（否则一次够不着连说三句）')
+    w._segment_busy = False
+    w._try_segment = _orig_seg
+    w.start_autonomous_speech = _orig_speech2
+
+    # ------------------------------------------------------------------
+    print()
+    print('=' * 68)
     print('通过 %d 项，失败 %d 项' % (_passes[0], len(_fails)))
     if _fails:
         for f in _fails:
