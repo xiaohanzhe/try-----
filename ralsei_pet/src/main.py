@@ -200,6 +200,14 @@ RUNUP_TIMEOUT_S = 8.0        # 整段助跑（退 + 冲）的超时，防止状�
 # `max(speed*3, 30)`：差 30px 就起跳，等于把这一跳凭空拉长 30px
 # ⇒ 刚助跑换来的那点速度又被吃掉（正好抵掉助跑的收益）。
 RUNUP_FIRE_PX = 18.0
+# ★★★ 第165轮：运动能力档案 —— 桌宠本人是谁的档案
+# 用户口径（2026-11-06）：「给AI加装一个学习模块，让他能够像是练习一样练出来，
+# 当然，针对不同NPC的特点，运动能力肯定也不同，所以初始和进步速度都不同哦」
+# 实现：能力存**倍率**（`assets/npc/_motion_profile.json`，每人一份），
+# 倍率 1.0 = 下面这些全局常量本身 ⇒ 没档案 ⇒ 乘法恒等 ⇒ 现有行为逐值不变。
+# 练（真跳成功/失败）攒经验，`motion_progress.json` 落盘；**不练不退步、练满封顶**。
+MOTION_PROFILE_ID = 'ralsei'      # 桌宠本人用哪一份档案
+MOTION_PROGRESS_FILE = 'motion_progress.json'   # 经验落盘文件名（走 data_store）
 # 摔扁门槛（要求 第36/37行 + 用户第十八轮口径"层数比较高且掉下来"）：
 # 落差 ≥ 两层（platform_height 差 ≥10）才算"层数比较高"。一层（5）掉下去不摔扁。
 FALL_SPLAT_MIN_DROP = 10
@@ -514,6 +522,9 @@ from modules.emotion_system import EmotionSystem
 # ★ 第164轮：2.5D 跳跃的纯数学（零依赖）。只借它的"跳力/高度上限/助跑距离"
 # 三个量，不在这里重建一套积分 —— 单一真源。
 from modules import motion2d
+# ★ 第165轮：运动能力档案（零依赖）。**倍率制** —— 1.0 就是上面那些全局常量本身，
+# 所以"没档案的人物"乘法恒等，现有行为逐值不变。详见 modules/motion_profile.py 抬头。
+from modules import motion_profile as motion_profile_mod
 from modules.memory_system import MemorySystem
 from modules.customization_system import CustomizationSystem
 from modules.social_growth_system import SocialGrowthSystem
@@ -8394,6 +8405,16 @@ class RalseiPet(QMainWindow):
         # `_on_jump_rejected` → `_try_segment` 会自己咬自己，没有这道闸就是无限递归。
         self._segment_busy = False
         
+        # ★ 第165轮：运动能力档案（倍率制）。四个都是"没有就用默认"的安全初值：
+        #   `_motion_exp` 0.0      —— 没练过 ⇒ 倍率 1.0 ⇒ 与加这个模块之前行为一致
+        #   `_motion_eff_cache`    —— 倍率缓存；升级/换档案时置 None 重算
+        #   `_motion_profile_cache`—— 96 人档案表；None = 还没读
+        #   `_motion_dirty`        —— 有未落盘的经验（`_motion_progress_save` 用）
+        self._motion_exp = 0.0
+        self._motion_eff_cache = None
+        self._motion_profile_cache = None
+        self._motion_dirty = False
+
         # 跳跃疲劳系统（人体功能模拟）
         self.jump_count = 0  # 当前跳跃次数
         self.max_jumps = 3  # 最大连续跳跃次数
@@ -11110,6 +11131,91 @@ class RalseiPet(QMainWindow):
     #   · 距离：`|vx| <= 最大冲刺速度`    ⇒ 速度不够就不许跳远（**该助跑**）
     # ★ 这里**不重算弹道** —— `handle_jump` 那条 `vy0 = (Δy − 0.5gT²)/T` 已经是对的
     #   （第90轮修过坐标系），闸门只是拿**同一个** vy0 去比上限（同源，不另算一遍）。
+    # ------------------------------------------------------------------
+    # 第165轮：运动能力档案（倍率）—— 「练出来的能力」
+    # ------------------------------------------------------------------
+    # 用户口径（2026-11-06）：「给AI加装一个学习模块，让他能够像是练习一样练出来，
+    #   当然，针对不同NPC的特点，运动能力肯定也不同，所以初始和进步速度都不同哦」
+    # 设计要点（三条，缺一条就会把零回归弄坏）：
+    #   ① 存**倍率**不存绝对值 ⇒ 万人 1.0 时乘法恒等，旧行为逐值不变；
+    #   ② 档案读不到 ⇒ **空表**（不是"每人 1.0 一份"）⇒ 与"没有这个模块"同构；
+    #   ③ 经验只加不减（`motion_profile.apply_exp`）⇒ 不练也不退步是结构性的。
+    def _motion_profile_table(self):
+        """懒加载 `assets/npc/_motion_profile.json`（96 人运动档案）。读不到 ⇒ 空表。
+
+        ★ 为什么退化成**空表**而不是"给每人造一份 1.0"：空表 ⇒ `_motion_profile_of`
+          回落默认档 ⇒ 乘法恒等 ⇒ 与没有这个模块**逐值相同**。
+          "没数据"和"数据说 1.0"在数值上等价，但在**行为追溯**上必须能分开
+          （同一取舍见 `_npc_seek_table`：退化成空表，不退化成"人人 1.0"）。
+        """
+        cached = getattr(self, '_motion_profile_cache', None)
+        if cached is not None:
+            return cached
+        table = {}
+        try:
+            import json
+            path = os.path.join(project_root, 'assets', 'npc', '_motion_profile.json')
+            if os.path.isfile(path):
+                with open(path, 'r', encoding='utf-8') as fh:
+                    raw = json.load(fh)
+                if isinstance(raw, dict):
+                    table = raw
+        except Exception as e:                        # noqa: BLE001
+            _log.debug('读取 _motion_profile.json 失败（按默认档处理）: %s', e)
+            table = {}
+        self._motion_profile_cache = table
+        return table
+
+    def _motion_profile_of(self, npc_id):
+        """某人物的档案（缺 ⇒ 默认档）。★ `_meta` 是说明块，**不是**人物。"""
+        table = self._motion_profile_table()
+        ent = table.get(npc_id) if (npc_id and npc_id != '_meta') else None
+        try:
+            return motion_profile_mod.from_dict(ent)
+        except Exception as e:                        # noqa: BLE001
+            _log.debug('档案规范化异常（按默认档处理）: %s', e)
+            return motion_profile_mod.default_profile()
+
+    def _motion_eff(self, npc_id=None):
+        """某人**实际生效**的三项倍率 `{'jump','run','accel'}`（含成长）。
+
+        · 桌宠本人（`npc_id=None`）走缓存：闸门每帧都问，重复 `from_dict` 太浪费；
+        · 别人（NPC）现算：调用频率低，缓存反而要额外处理失效。
+        ★ `_motion_exp` 还没读盘时是 0.0 ⇒ 返回**基础倍率** ⇒ 与"没有这个模块"等价。
+        """
+        nid = MOTION_PROFILE_ID if npc_id is None else npc_id
+        cached = getattr(self, '_motion_eff_cache', None)
+        if npc_id is None and cached is not None:
+            return cached
+        try:
+            exp = float(getattr(self, '_motion_exp', 0.0) or 0.0) if npc_id is None else 0.0
+            eff = motion_profile_mod.effective(self._motion_profile_of(nid), exp)
+        except Exception as e:                        # noqa: BLE001
+            _log.debug('运动倍率计算异常（按 1.0 处理）: %s', e)
+            eff = {'jump': 1.0, 'run': 1.0, 'accel': 1.0}
+        if npc_id is None:
+            self._motion_eff_cache = eff
+        return eff
+
+    def _motion_note_practice(self, kind):
+        """练一笔：`kind` ∈ {'jump_ok','jump_fail'}。**只加不减**，满了就停。
+
+        ★ 失败也给经验（`EXP_JUMP_FAIL`）：用户要的是「像练习一样练出来」，
+          练失败也是练。但成功给得多（12 : 3），否则"撞墙"比"跳成功"更划算。
+        · 落盘由第 5 步的 `_motion_progress_save()` 统一做，这里只管内存与缓存失效。
+        """
+        try:
+            amt = (motion_profile_mod.EXP_JUMP_OK if kind == 'jump_ok'
+                   else motion_profile_mod.EXP_JUMP_FAIL)
+            old = float(getattr(self, '_motion_exp', 0.0) or 0.0)
+            new = motion_profile_mod.apply_exp(old, amt)
+            if new != old:
+                self._motion_exp = new
+                self._motion_eff_cache = None      # ★ 练了就重算，否则涨了也不生效
+                self._motion_dirty = True
+        except Exception as e:                        # noqa: BLE001
+            _log.debug('练习记账异常（忽略这一笔）: %s', e)
+
     def _nominal_move_dt(self):
         """换算"像素/帧 ⇄ px/s"**统一用**的帧长。
 
@@ -11157,7 +11263,13 @@ class RalseiPet(QMainWindow):
             return _base
         _meas = max(float(getattr(self, '_last_move_speed_px_s', 0.0) or 0.0),
                     float(getattr(self, '_runup_best_px_s', 0.0) or 0.0))
-        return max(_base, min(RUNUP_SPEED_MAX, _meas))
+        # ★ 第165轮：冲刺上限乘本人「run」倍率。
+        #   `_base`（= 走路速度 `max_speed/帧长`）**故意不乘** ——
+        #   ① 走路手感不随练习变（用户没要"走更快"）；
+        #   ② `max_speed` 被 19 个套件引用，改它的语义等于全盘重钉基线。
+        #   要"走路也变快"是另一条改动，别混进来。
+        _cap = RUNUP_SPEED_MAX * self._motion_eff()['run']
+        return max(_base, min(_cap, _meas))
 
     def _jump_reach_ok(self):
         """起跳闸门。True = 这一跳在能力范围内；False = 够不着（并记下原因）。
@@ -11182,6 +11294,9 @@ class RalseiPet(QMainWindow):
             vy0 = (dy - 0.5 * g * T * T) / T      # 与 handle_jump 同一条公式
 
             _limit = float(getattr(self, 'JUMP_SPEED_MAX', 700.0))
+            # ★ 第165轮：跳力上限乘本人「jump」倍率（1.0 = 就是全局常量本身）。
+            #   能力是练出来的 ⇒ 这条线会随经验抬高，于是"原来够不着的层"后来够得着。
+            _limit *= self._motion_eff()['jump']
             if abs(vy0) > _limit + 1e-6:
                 self._jump_reject = ('too_high', abs(vy0), _limit)
                 return False
@@ -11419,7 +11534,11 @@ class RalseiPet(QMainWindow):
             _v_req = float(v_req or 0.0)
             if _v_req > RUNUP_SPEED_MAX + 1e-6:
                 return False                  # 冲刺也够不着 ⇒ 物理上做不到
-            L = motion2d.runup_distance(_v_req, 0.0, RUNUP_ACCEL)
+            # ★ 第165轮：助跑加速度乘本人「accel」倍率。
+            #   `L = v²/(2a)` ⇒ a 越大，达到同一个 `_v_req` 需要的助跑距离越**短**
+            #   （起跑灵活的人少退几步就够）。倍率 1.0 时与原来逐值相同。
+            _acc = RUNUP_ACCEL * self._motion_eff()['accel']
+            L = motion2d.runup_distance(_v_req, 0.0, _acc)
             L = max(float(RUNUP_MIN_PX), min(float(RUNUP_MAX_PX), L))
 
             # 起跑点要落在**同一楼层的可见区域**里（否则退出去就掉下去了）

@@ -173,6 +173,11 @@ class _FakePet(object):
         self.current_floor = None
         self.floor_manager = None
         self.spoken = 0
+        # ★ 第165轮：产品新增的「运动倍率三件套」，在这里**统一**绑上。
+        #   放在 `__init__` 而不是每个调用点手工补 —— 漏一处就是一条假红
+        #   （实测漏绑时 B4/B4b/B5/B5b/B6 五条全红，看着像"闸门坏了"）。
+        #   `_bind_motion` 定义在类之后，但这里只在**实例化时**解析全局名，成立。
+        _bind_motion(self)
 
     def pos(self):
         return QPoint(self._px, self._py)
@@ -205,6 +210,25 @@ _TRY_RUNUP = _raw('_try_runup')
 _RUNUP_ARRIVE = _raw('_runup_on_arrive')
 _RUNUP_TICK = _raw('_runup_tick')
 _SEG_CANDS = _raw('_segment_candidates')
+# ★★★ 第165轮补：产品给闸门/助跑加了「运动能力倍率」（`_motion_eff` 三件套）。
+#   夹具**必须跟着绑**，否则 `_jump_reach_ok` 里 `self._motion_eff()` 抛
+#   `AttributeError`，被它自己的 `except` 当成"判定异常 ⇒ 按放行处理" ——
+#   实测 B4/B4b/B5/B5b/B6 五条全红，而现象看起来像"闸门坏了"。
+#   这正是「桩比产品旧 ＝ 假红」的老坑（第156轮第 4 次同型）。
+_MOTION_TABLE = _raw('_motion_profile_table')
+_MOTION_PROF = _raw('_motion_profile_of')
+_MOTION_EFF = _raw('_motion_eff')
+
+
+def _bind_motion(pet):
+    """把运动倍率三件套绑到假 self 上（缺一个就会走 except 放行分支）。"""
+    if _MOTION_TABLE is not None:
+        pet._motion_profile_table = _mt(pet, _MOTION_TABLE)
+    if _MOTION_PROF is not None:
+        pet._motion_profile_of = _mt(pet, _MOTION_PROF)
+    if _MOTION_EFF is not None:
+        pet._motion_eff = _mt(pet, _MOTION_EFF)
+    return pet
 
 
 # ============================================================ A · motion2d
@@ -701,8 +725,12 @@ _raw = read_bytes(MAIN)
 check(u'F1 产品文件无 BOM', not _raw.startswith(b'\xef\xbb\xbf'))
 _n_lf = _raw.count(b'\n')
 _n_crlf = _raw.count(b'\r\n')
+# ⚠️ 第165轮修正：extra 原来回显 `LF=%d CRLF=%d` —— 那是**时相量**，
+#    产品每加十几行它就变（实测 19642→19761），判定一个字没变却报 DIFF。
+#    这正是第138/146轮那条口径（判据输出不许含时相量），第 10 次复发。
+#    ⇒ 只报**布尔**：裸 LF 是否为 0。行数留在 `_out/` 里，别放进基线。
 check(u'F1b 行尾仍是 CRLF（零裸 LF —— 编辑不许改 EOL）',
-      _n_lf == _n_crlf, 'LF=%d CRLF=%d' % (_n_lf, _n_crlf))
+      _n_lf == _n_crlf, u'零裸LF=%s' % (_n_lf == _n_crlf))
 
 _m2_path = os.path.join(PET, 'modules', 'motion2d.py')
 _m2_raw = read_bytes(_m2_path)

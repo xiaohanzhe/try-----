@@ -1,0 +1,799 @@
+{
+  "_meta": {
+    "round": 165,
+    "why": "运动能力档案：倍率制，1.0 = 全局常量本身；没档案的人物一律 1.0",
+    "evidence_levels": [
+      "明证",
+      "推断",
+      "无据"
+    ],
+    "limits": {
+      "jump": [
+        0.4,
+        2.0
+      ],
+      "run": [
+        0.4,
+        2.0
+      ],
+      "accel": [
+        0.4,
+        2.0
+      ],
+      "growth": [
+        0.3,
+        2.5
+      ]
+    },
+    "growth_note": "level = exp // 240.0（上限 5 级，满级 1200.0 经验）；mult = 1 + 0.06 * growth * level",
+    "source": "code-quality-audit/第165轮-运动能力养成/_tools/gen165_profiles.py"
+  },
+  "ralsei": {
+    "jump": 1.0,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.25,
+    "evidence": "推断",
+    "why": "基准人：现有全局常量就是照他的手感定的，故取 1.0；矮小温和 ⇒ 靠练而不是靠底子"
+  },
+  "kris": {
+    "jump": 1.1,
+    "run": 1.15,
+    "accel": 1.1,
+    "growth": 1.3,
+    "evidence": "明证",
+    "why": "主角，跑/跳/挥剑都由玩家直接操作本体"
+  },
+  "susie": {
+    "jump": 1.3,
+    "run": 1.35,
+    "accel": 1.3,
+    "growth": 1.5,
+    "evidence": "明证",
+    "why": "高大强壮、挥大斧，战斗与奔跑都有直接表现"
+  },
+  "toriel": {
+    "jump": 1.15,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 0.9,
+    "evidence": "推断",
+    "why": "成年山羊体型高大、走路稳重；原作没有奔跑动作"
+  },
+  "asgore": {
+    "jump": 1.35,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "明证",
+    "why": "全作体型最大之一，持三叉戟近战，力量明显强于速度"
+  },
+  "king": {
+    "jump": 1.4,
+    "run": 0.85,
+    "accel": 0.9,
+    "growth": 0.6,
+    "evidence": "明证",
+    "why": "黑桃王体型巨大、动作缓慢，是典型的重力型"
+  },
+  "lancer": {
+    "jump": 0.9,
+    "run": 1.2,
+    "accel": 1.15,
+    "growth": 1.6,
+    "evidence": "明证",
+    "why": "个子小，但原作里骑自行车速度极快；小孩成长空间大"
+  },
+  "queen": {
+    "jump": 1.1,
+    "run": 0.8,
+    "accel": 0.85,
+    "growth": 0.5,
+    "evidence": "明证",
+    "why": "常坐椅子/机械臂代步，几乎没有自主奔跑"
+  },
+  "spamton": {
+    "jump": 1.2,
+    "run": 1.3,
+    "accel": 1.2,
+    "growth": 1.1,
+    "evidence": "推断",
+    "why": "极瘦小、动作神经质而快；原作没有量化描写"
+  },
+  "berdly": {
+    "jump": 1.2,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "明证",
+    "why": "有翅膀能飞（ch2），但本人自知体力不行"
+  },
+  "noelle": {
+    "jump": 0.8,
+    "run": 0.85,
+    "accel": 0.9,
+    "growth": 1.4,
+    "evidence": "推断",
+    "why": "体弱胆小的鹿少女，原作以魔法为主；底子差但肯练"
+  },
+  "tenna": {
+    "jump": 1.0,
+    "run": 1.1,
+    "accel": 1.05,
+    "growth": 0.8,
+    "evidence": "推断",
+    "why": "电视主持型角色，舞台动作多，但缺乏运动量描写"
+  },
+  "rouxls": {
+    "jump": 0.85,
+    "run": 0.85,
+    "accel": 0.9,
+    "growth": 0.9,
+    "evidence": "推断",
+    "why": "自命不凡但体格普通，原作无运动表现"
+  },
+  "gerson": {
+    "jump": 0.9,
+    "run": 0.8,
+    "accel": 0.85,
+    "growth": 0.5,
+    "evidence": "推断",
+    "why": "年迈的龟，原作以知识/商店为主，成长空间小"
+  },
+  "mike": {
+    "jump": 1.0,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "原作信息极少，落默认档"
+  },
+  "knight": {
+    "jump": 1.3,
+    "run": 1.15,
+    "accel": 1.15,
+    "growth": 1.2,
+    "evidence": "推断",
+    "why": "咆哮骑士，重甲形象；没有直接运动描写"
+  },
+  "flowery": {
+    "jump": 0.9,
+    "run": 0.9,
+    "accel": 1.0,
+    "growth": 1.3,
+    "evidence": "无据",
+    "why": "花形角色，没有肢体运动依据"
+  },
+  "hammerguy": {
+    "jump": 1.2,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.4,
+    "evidence": "推断",
+    "why": "拿锤子的工人形象，力量型"
+  },
+  "puzzlemaster1": {
+    "jump": 0.9,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "谜题 NPC，无运动描写"
+  },
+  "puzzlemaster2": {
+    "jump": 0.9,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "谜题 NPC，无运动描写"
+  },
+  "sign": {
+    "jump": 0.4,
+    "run": 0.4,
+    "accel": 0.4,
+    "growth": 0.3,
+    "evidence": "无据",
+    "why": "告示牌，不是生物，取区间下限"
+  },
+  "npc_room": {
+    "jump": 0.4,
+    "run": 0.4,
+    "accel": 0.4,
+    "growth": 0.3,
+    "evidence": "无据",
+    "why": "空房间占位，不是生物"
+  },
+  "conbini": {
+    "jump": 0.95,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.1,
+    "evidence": "推断",
+    "why": "便利店店员，长期站柜台"
+  },
+  "police": {
+    "jump": 1.1,
+    "run": 1.15,
+    "accel": 1.1,
+    "growth": 1.2,
+    "evidence": "推断",
+    "why": "警察，职业本身要求体能与追捕"
+  },
+  "catti": {
+    "jump": 0.9,
+    "run": 0.95,
+    "accel": 0.95,
+    "growth": 1.1,
+    "evidence": "推断",
+    "why": "猫，慵懒但不弱小"
+  },
+  "rudy": {
+    "jump": 0.85,
+    "run": 0.8,
+    "accel": 0.85,
+    "growth": 1.0,
+    "evidence": "推断",
+    "why": "病中的鹿，体能受限"
+  },
+  "dumpster": {
+    "jump": 0.4,
+    "run": 0.4,
+    "accel": 0.4,
+    "growth": 0.3,
+    "evidence": "无据",
+    "why": "垃圾桶，不是生物"
+  },
+  "addison_tea": {
+    "jump": 1.0,
+    "run": 1.05,
+    "accel": 1.0,
+    "growth": 1.1,
+    "evidence": "推断",
+    "why": "店老板，日常走动多"
+  },
+  "castle_cafe": {
+    "jump": 0.95,
+    "run": 0.95,
+    "accel": 0.95,
+    "growth": 1.0,
+    "evidence": "推断",
+    "why": "咖啡店老板，普通体格"
+  },
+  "rabbits": {
+    "jump": 0.85,
+    "run": 1.1,
+    "accel": 1.1,
+    "growth": 1.4,
+    "evidence": "推断",
+    "why": "兔子，跳跃见长但体量小"
+  },
+  "wrapper": {
+    "jump": 0.5,
+    "run": 0.5,
+    "accel": 0.6,
+    "growth": 0.8,
+    "evidence": "无据",
+    "why": "包装怪，形态不明"
+  },
+  "doubter": {
+    "jump": 1.0,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 0.9,
+    "evidence": "无据",
+    "why": "质疑者，无运动描写"
+  },
+  "zapper": {
+    "jump": 1.05,
+    "run": 1.05,
+    "accel": 1.05,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "电击者，无运动描写"
+  },
+  "susiedark": {
+    "jump": 1.3,
+    "run": 1.35,
+    "accel": 1.3,
+    "growth": 1.5,
+    "evidence": "推断",
+    "why": "暗之苏西，与苏西同体设定"
+  },
+  "mansion_room": {
+    "jump": 0.4,
+    "run": 0.4,
+    "accel": 0.4,
+    "growth": 0.3,
+    "evidence": "无据",
+    "why": "宅邸房间占位，不是生物"
+  },
+  "os_niko": {
+    "jump": 1.0,
+    "run": 1.1,
+    "accel": 1.05,
+    "growth": 1.5,
+    "evidence": "明证",
+    "why": "主角，原作需要在世界里跑动探索"
+  },
+  "os_the_world_machine": {
+    "jump": 0.6,
+    "run": 0.6,
+    "accel": 0.6,
+    "growth": 0.4,
+    "evidence": "无据",
+    "why": "世界机器，非生物形态"
+  },
+  "os_the_author": {
+    "jump": 0.5,
+    "run": 0.5,
+    "accel": 0.5,
+    "growth": 0.4,
+    "evidence": "无据",
+    "why": "作者（元层概念），没有身体"
+  },
+  "os_prophetbot": {
+    "jump": 0.9,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 0.6,
+    "evidence": "推断",
+    "why": "机器人，机械式行动，参数难改"
+  },
+  "os_silver": {
+    "jump": 1.0,
+    "run": 1.05,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "推断",
+    "why": "机器人角色，行动稳定"
+  },
+  "os_rowbot": {
+    "jump": 0.9,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 0.6,
+    "evidence": "推断",
+    "why": "船形机器人，靠推进移动"
+  },
+  "os_prototype": {
+    "jump": 0.95,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 0.8,
+    "evidence": "无据",
+    "why": "原型机，细节不足"
+  },
+  "os_calamus": {
+    "jump": 0.9,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 0.9,
+    "evidence": "无据",
+    "why": "信息不足，落接近默认档"
+  },
+  "os_alula": {
+    "jump": 0.85,
+    "run": 0.95,
+    "accel": 0.95,
+    "growth": 1.3,
+    "evidence": "推断",
+    "why": "小孩形象，活泼但体量小"
+  },
+  "os_maize": {
+    "jump": 0.9,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "信息不足"
+  },
+  "os_magpie": {
+    "jump": 0.95,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.1,
+    "evidence": "推断",
+    "why": "鸟形，轻快"
+  },
+  "os_shepherd": {
+    "jump": 1.0,
+    "run": 0.95,
+    "accel": 0.95,
+    "growth": 1.0,
+    "evidence": "推断",
+    "why": "牧羊人，长期行走"
+  },
+  "os_cedric": {
+    "jump": 1.0,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "信息不足"
+  },
+  "os_lamplighter": {
+    "jump": 0.9,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 0.9,
+    "evidence": "无据",
+    "why": "灯夫，信息不足"
+  },
+  "os_watcher": {
+    "jump": 0.8,
+    "run": 0.8,
+    "accel": 0.8,
+    "growth": 0.7,
+    "evidence": "推断",
+    "why": "观察者，静多于动"
+  },
+  "os_ling": {
+    "jump": 1.0,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "信息不足"
+  },
+  "os_mason": {
+    "jump": 1.05,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "推断",
+    "why": "石匠/工人形象，体力中等偏上"
+  },
+  "os_kelvin": {
+    "jump": 1.0,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "信息不足"
+  },
+  "os_kip": {
+    "jump": 0.95,
+    "run": 1.05,
+    "accel": 1.05,
+    "growth": 1.3,
+    "evidence": "推断",
+    "why": "小孩形象，成长快"
+  },
+  "os_george": {
+    "jump": 1.0,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "信息不足"
+  },
+  "os_rue": {
+    "jump": 0.95,
+    "run": 0.95,
+    "accel": 0.95,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "信息不足"
+  },
+  "ut_toriel": {
+    "jump": 1.15,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 0.9,
+    "evidence": "推断",
+    "why": "同 Deltarune 的 Toriel：成年山羊，体型高大、动作稳重"
+  },
+  "ut_sans": {
+    "jump": 1.0,
+    "run": 1.2,
+    "accel": 1.1,
+    "growth": 0.6,
+    "evidence": "明证",
+    "why": "战斗中闪避极快，但日常极度懒惰，练不动"
+  },
+  "ut_papyrus": {
+    "jump": 1.45,
+    "run": 1.4,
+    "accel": 1.35,
+    "growth": 1.8,
+    "evidence": "明证",
+    "why": "反复自夸体力并坚持训练；跑步/跳跃表现明确，成长最快"
+  },
+  "ut_undyne": {
+    "jump": 1.4,
+    "run": 1.5,
+    "accel": 1.4,
+    "growth": 1.7,
+    "evidence": "明证",
+    "why": "全程追捕玩家、长矛近战，体力与速度都是顶级"
+  },
+  "ut_alphys": {
+    "jump": 0.75,
+    "run": 0.7,
+    "accel": 0.85,
+    "growth": 1.3,
+    "evidence": "明证",
+    "why": "自称宅、体力差、不擅长运动；但因起点低，练起来涨幅明显"
+  },
+  "ut_mettaton": {
+    "jump": 1.2,
+    "run": 1.25,
+    "accel": 1.2,
+    "growth": 0.7,
+    "evidence": "明证",
+    "why": "机械身体、腿功与舞台动作强；但机器人参数难改"
+  },
+  "ut_muffet": {
+    "jump": 1.15,
+    "run": 1.2,
+    "accel": 1.25,
+    "growth": 1.2,
+    "evidence": "明证",
+    "why": "蜘蛛，多肢体、动作敏捷"
+  },
+  "ut_napstablook": {
+    "jump": 0.6,
+    "run": 0.6,
+    "accel": 0.7,
+    "growth": 0.8,
+    "evidence": "明证",
+    "why": "幽灵，没有腿脚，靠漂浮移动"
+  },
+  "ut_monster_kid": {
+    "jump": 0.9,
+    "run": 1.05,
+    "accel": 1.0,
+    "growth": 1.5,
+    "evidence": "推断",
+    "why": "小孩，爱跑动"
+  },
+  "ut_asgore": {
+    "jump": 1.35,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "明证",
+    "why": "同 Deltarune 的 Asgore：体型最大之一，力量型"
+  },
+  "ut_flowey": {
+    "jump": 0.7,
+    "run": 0.65,
+    "accel": 0.8,
+    "growth": 1.5,
+    "evidence": "明证",
+    "why": "花，没有肢体，靠藤蔓与根系"
+  },
+  "ut_frisk": {
+    "jump": 1.1,
+    "run": 1.2,
+    "accel": 1.1,
+    "growth": 1.6,
+    "evidence": "明证",
+    "why": "主角，跑跳闪避全部由玩家执行；成长空间大"
+  },
+  "ut_chara": {
+    "jump": 1.1,
+    "run": 1.2,
+    "accel": 1.1,
+    "growth": 1.6,
+    "evidence": "推断",
+    "why": "与 Frisk 同体，运动能力按本体计"
+  },
+  "ut_gaster": {
+    "jump": 0.9,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 1.0,
+    "evidence": "推断",
+    "why": "消失的科学家，形态破碎、行动方式不明"
+  },
+  "hy_ace": {
+    "jump": 1.05,
+    "run": 1.1,
+    "accel": 1.05,
+    "growth": 1.1,
+    "evidence": "推断",
+    "why": "扑克牌意象，身手灵活"
+  },
+  "hy_axis": {
+    "jump": 1.0,
+    "run": 0.95,
+    "accel": 0.95,
+    "growth": 0.5,
+    "evidence": "明证",
+    "why": "机器人，出厂参数固定，能练的余地小"
+  },
+  "hy_bowll": {
+    "jump": 1.0,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "信息不足"
+  },
+  "hy_ceroba_ketsukane": {
+    "jump": 1.2,
+    "run": 1.3,
+    "accel": 1.25,
+    "growth": 1.2,
+    "evidence": "明证",
+    "why": "狐面忍者型，动作迅速"
+  },
+  "hy_chujin_ketsukane": {
+    "jump": 0.95,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 0.8,
+    "evidence": "推断",
+    "why": "科学家型父亲，非战斗角色"
+  },
+  "hy_clover": {
+    "jump": 1.1,
+    "run": 1.2,
+    "accel": 1.1,
+    "growth": 1.6,
+    "evidence": "明证",
+    "why": "主角，跑动探索与战斗都由玩家执行"
+  },
+  "hy_dalv": {
+    "jump": 1.0,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 0.7,
+    "evidence": "推断",
+    "why": "吸血鬼，宅居、喜静"
+  },
+  "hy_ed": {
+    "jump": 0.95,
+    "run": 0.95,
+    "accel": 0.95,
+    "growth": 1.0,
+    "evidence": "无据",
+    "why": "信息不足，落接近默认档"
+  },
+  "hy_flowey": {
+    "jump": 0.7,
+    "run": 0.65,
+    "accel": 0.8,
+    "growth": 1.5,
+    "evidence": "推断",
+    "why": "与 UT 的 Flowey 同形态：花，无肢体"
+  },
+  "hy_guardener": {
+    "jump": 1.05,
+    "run": 0.95,
+    "accel": 0.95,
+    "growth": 0.6,
+    "evidence": "推断",
+    "why": "园丁机器人，体量大但参数固定"
+  },
+  "hy_martlet": {
+    "jump": 1.3,
+    "run": 1.25,
+    "accel": 1.2,
+    "growth": 1.4,
+    "evidence": "明证",
+    "why": "蓝色鸟，原作明确能飞"
+  },
+  "hy_mooch": {
+    "jump": 1.05,
+    "run": 1.2,
+    "accel": 1.15,
+    "growth": 1.3,
+    "evidence": "推断",
+    "why": "小偷型，动作快"
+  },
+  "hy_moray": {
+    "jump": 1.0,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.1,
+    "evidence": "推断",
+    "why": "水中形象，灵活度中等"
+  },
+  "hy_sousborg": {
+    "jump": 0.95,
+    "run": 0.9,
+    "accel": 0.9,
+    "growth": 0.6,
+    "evidence": "推断",
+    "why": "厨师机器人，重且稳"
+  },
+  "hy_starlo": {
+    "jump": 1.1,
+    "run": 1.1,
+    "accel": 1.0,
+    "growth": 0.9,
+    "evidence": "推断",
+    "why": "牛仔镇长，中年，体能中等"
+  },
+  "ot_alphys": {
+    "jump": 0.75,
+    "run": 0.7,
+    "accel": 0.85,
+    "growth": 1.3,
+    "evidence": "推断",
+    "why": "Outertale 版 Alphys，沿用本体的体力短板"
+  },
+  "ot_asgore": {
+    "jump": 1.35,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 1.0,
+    "evidence": "推断",
+    "why": "Outertale 版 Asgore，沿用本体的力量型体格"
+  },
+  "ot_asriel_twinkly": {
+    "jump": 1.0,
+    "run": 1.1,
+    "accel": 1.05,
+    "growth": 1.4,
+    "evidence": "推断",
+    "why": "少年体型 + Twinkly 小形态，轻快但体量小"
+  },
+  "ot_kidd": {
+    "jump": 1.0,
+    "run": 1.05,
+    "accel": 1.0,
+    "growth": 1.3,
+    "evidence": "推断",
+    "why": "少年形象，成长空间中等偏上"
+  },
+  "ot_mettaton": {
+    "jump": 1.2,
+    "run": 1.25,
+    "accel": 1.2,
+    "growth": 0.7,
+    "evidence": "推断",
+    "why": "Outertale 版 Mettaton，机械身体、参数难改"
+  },
+  "ot_muffet": {
+    "jump": 1.15,
+    "run": 1.2,
+    "accel": 1.25,
+    "growth": 1.2,
+    "evidence": "推断",
+    "why": "Outertale 版 Muffet，沿用多肢体敏捷"
+  },
+  "ot_napstablook": {
+    "jump": 0.6,
+    "run": 0.6,
+    "accel": 0.7,
+    "growth": 0.8,
+    "evidence": "推断",
+    "why": "Outertale 版 Napstablook，幽灵形态、无腿"
+  },
+  "ot_papyrus": {
+    "jump": 1.45,
+    "run": 1.4,
+    "accel": 1.35,
+    "growth": 1.8,
+    "evidence": "推断",
+    "why": "Outertale 版 Papyrus，沿用本体的高强度训练设定"
+  },
+  "ot_sans": {
+    "jump": 1.0,
+    "run": 1.2,
+    "accel": 1.1,
+    "growth": 0.6,
+    "evidence": "推断",
+    "why": "Outertale 版 Sans，沿用本体的\"闪避快但懒\""
+  },
+  "ot_toriel": {
+    "jump": 1.15,
+    "run": 1.0,
+    "accel": 1.0,
+    "growth": 0.9,
+    "evidence": "推断",
+    "why": "Outertale 版 Toriel，体型与动作特征沿用本体"
+  },
+  "ot_undyne": {
+    "jump": 1.4,
+    "run": 1.5,
+    "accel": 1.4,
+    "growth": 1.7,
+    "evidence": "推断",
+    "why": "Outertale 版 Undyne，沿用本体的顶级体力"
+  }
+}
