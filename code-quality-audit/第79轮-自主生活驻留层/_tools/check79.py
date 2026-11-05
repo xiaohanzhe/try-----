@@ -433,7 +433,7 @@ for _n in ast.walk(_roster[0]) if _roster else []:
     if isinstance(_n, ast.Call) and isinstance(_n.func, ast.Attribute):
         _r_calls.add(_n.func.attr)
 check('W5 ★★★ `_npc_scene_roster` 真调 `resident_of()`（层2 不是死代码）',
-      'resident_of' in _r_calls, 'calls=%s' % sorted(_r_calls))
+      'resident_of' in _r_calls, '含 resident_of=%s' % ('resident_of' in _r_calls))
 # ★ 且**同时**回落 `scene_of()`（覆盖模式：没覆盖要回站位表）
 check('W5b ★ 同时保留 `scene_of()` 回落（覆盖模式，不是替换）',
       'scene_of' in _r_calls, '')
@@ -449,7 +449,7 @@ for _n in ast.walk(_tick[0]) if _tick else []:
         elif isinstance(_n.func, ast.Name):
             _t_calls.add(_n.func.id)
 check('W6 ★★ `_npc_roam_tick` 真调 `step()`（推进真发生）',
-      'step' in _t_calls, 'calls=%s' % sorted(_t_calls))
+      'step' in _t_calls, '含 step=%s' % ('step' in _t_calls))
 
 # ★★ update_movement 真调 _npc_roam_tick，且排在所有 return 之前
 _um = [n for n in ast.walk(_cls)
@@ -466,13 +466,18 @@ for _n in ast.walk(_um[0]) if _um else []:
 #    于是本判据每轮都报假 DIFF（第92轮实测：基线记 6699、实际 6347，差 352 行）。
 #    判据本身（"有调用点" / "调用点早于第一个 return"）**逐字未改**，只把**证据形态**
 #    从"行号"换成"计数 + 布尔"（同样可判、且不漂）。
+# ⚠️ 第164轮：`returns=%d` 也**不许**回显 —— 同一个病。`update_movement` 每轮都可能
+#    合法地新加一条早退分支（164 轮加助跑时就从 11 变 12）⇒ 判定一个字没变、
+#    `call_before_first_return` 仍是 True，套件却报"输出与基线不一致"。
+#    "有几个 return" 不是本判据的**语义**，语义只是"调用点排在最早的 return 之前"，
+#    所以证据只留**调用点数 + 布尔**。
 check('W7 ★★ `update_movement` 真调 `_npc_roam_tick`（挂在主循环上）',
       bool(_um_calls_ln), '调用点数=%d' % len(_um_calls_ln))
 check('W7b ★★ 且排在**所有 `return`（早退分支）之前** —— 宠物睡着时世界照样转',
       bool(_um_calls_ln) and bool(_um_rets) and min(_um_calls_ln) < min(_um_rets),
-      'call_before_first_return=%s (calls=%d returns=%d)'
+      'call_before_first_return=%s (calls=%d)'
       % (bool(_um_calls_ln and _um_rets and min(_um_calls_ln) < min(_um_rets)),
-         len(_um_calls_ln), len(_um_rets)))
+         len(_um_calls_ln)))
 
 # ★ 开关判据：`_npc_roam_tick` 必须**读** NPC_AUTONOMOUS_MOVE（否则开关是摆设）
 _tick_src = ast.get_source_segment(_msrc, _tick[0]) if _tick else ''
@@ -700,7 +705,8 @@ for _n in ast.walk(_sleep_m[0]) if _sleep_m else []:
     if isinstance(_n, ast.Call) and isinstance(_n.func, ast.Attribute):
         _sl_calls.add(_n.func.attr)
 check('J10b ★★★ `_npc_roam_sleep` 真调 `choose_sleep_scene`（真源，不是自己另编一套）',
-      'choose_sleep_scene' in _sl_calls, 'calls=%s' % sorted(_sl_calls))
+      'choose_sleep_scene' in _sl_calls,
+      '含 choose_sleep_scene=%s' % ('choose_sleep_scene' in _sl_calls))
 # ★ 且 `step()` 调用点真注入 `sleep_fn=self._npc_roam_sleep`
 _sf_injected = False
 for _n in ast.walk(_tick[0]) if _tick else []:

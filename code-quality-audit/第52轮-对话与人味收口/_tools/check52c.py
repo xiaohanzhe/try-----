@@ -255,10 +255,18 @@ check("A2c 判据鉴别力：合成的旧写法必须被判为「不含 _lounge_
 
 # ---- A3 调用点与顺序 ----
 _um_calls = RV.call_order('update_movement')
+# ⚠️ 诊断串**不许**回显"调用表尾"整段列表（第164轮修正）：`update_movement` 每轮
+#    都可能合法地新加调用（164 轮就加了 `_nominal_move_dt` / `_runup_on_arrive`）
+#    ⇒ 判定一个字没变，套件却报"输出与基线不一致"。这与第56轮那条"不许打字节偏移"
+#    是同一个病（判据输出含**时相量**，见第138/146轮口径），危害也一样：训练出
+#    闭眼 `--update` 的习惯，于是一条真回归被顺手吞掉。
+#    ⇒ 只报**命中数**（双调用才是真问题，与无关改动无关）。
 check("A3 update_movement 里真的调用了 `_idle_lounge_tick`",
-      '_idle_lounge_tick' in _um_calls, "调用表尾=%s" % (_um_calls[-8:],))
+      '_idle_lounge_tick' in _um_calls,
+      "命中=%d" % (_um_calls.count('_idle_lounge_tick'),))
 check("A3b `_bedtime_tick` 也在 update_movement 里被调用",
-      '_bedtime_tick' in _um_calls, "调用表尾=%s" % (_um_calls[-8:],))
+      '_bedtime_tick' in _um_calls,
+      "命中=%d" % (_um_calls.count('_bedtime_tick'),))
 _u_src = MAIN_CODE
 _i_lounge = _u_src.find('self._idle_lounge_tick(current_time)')
 _i_rand = _u_src.find('self.randomize_movement_pattern()',
