@@ -11542,6 +11542,12 @@ class RalseiPet(QMainWindow):
         tgt_fid = self._floor_identity_key(getattr(self, 'jump_target_floor', None))
         all_floors = self.floor_manager.get_all_floors()
         for floor in all_floors:
+            # ★★★ 第164轮：惊讶时的**原地小跳**（`_hop_mode`）不参与楼层穿透判定。
+            #   它原地起跳、原地下落，脚下那块楼板必然与自身矩形相交 ⇒
+            #   旧判定会当场判成"穿透"并 `start_falling()`（等于一跳就摔）。
+            #   跨层跳跃仍照旧逐层检查，这条只对日常小跳开。
+            if getattr(self, '_hop_mode', False):
+                break
             if self._floor_identity_key(floor) in (cur_fid, tgt_fid):
                 continue
             # ★★★ 第97轮修复（用户真机原话："那个坠落的触发逻辑不对吧"）：
@@ -11612,6 +11618,10 @@ class RalseiPet(QMainWindow):
             self.is_jumping = False
             # 清掉"跨度大用攀爬素材"的覆盖标记，避免残留到下一次跳跃
             self._jump_anim_override = None
+            # ★ 第164轮：惊讶小跳落地，撤掉"跳过楼层穿透判定"的标记。
+            #   不撤的话，下一次**跨层跳跃**会继承它 ⇒ 穿透检查被静默关掉
+            #   （"改一处漏一处"那类）：必须在落地这一处收干净。
+            self._hop_mode = False
             # ★ 第93轮修复（P1-6）：落地分支在此**收口返回**。
             #   不返回就会**继续往下走**：函数末尾那段是"飞行中的每一帧"的兜底 ——
             #   它会按**弹道式**（用 `elapsed` 重算 x/y）再 `move()` 一次，于是刚落定的
@@ -12643,6 +12653,66 @@ class RalseiPet(QMainWindow):
                     self.change_animation(_target, force=True)
                 except Exception as e:
                     _log.debug("main 防御性异常（已忽略）: %s", e)
+
+        # ★★★ 第164轮：把"跳一下"**真正**接上。
+        #   挂在这里而不是 `update_animation`，有两个理由：
+        #     ① `trigger_surprise()` 是惊讶的**唯一入口**，于是站着、窝着、睡着
+        #        被吓到都会跳（旧实现在 `is_moving` 子树里，只有走路时可能走到）；
+        #     ② 第54轮"表演/情绪动画不在静止分支自动驱动"约束的是**动画**，
+        #        而跳跃是**位移**，不受那条约束 —— 所以这里可以直接起跳。
+        self._start_surprised_hop()
+
+    def _start_surprised_hop(self, duration=0.5):
+        """★ 第164轮：惊讶时**真的**原地跳一小下（2.5D 真抛体）。
+
+        为什么要有这个函数
+        ------------------
+        旧实现在 `update_animation` 的 `is_moving` 子树里只写
+        `jump_height = 20` / `jump_duration = 0.5` 与 `jump_start_*`，
+        **从不置 `is_jumping`**（第99轮 `A9` 登记为"未实现"）⇒ `handle_jump`
+        一次都没被驱动过，"跳一小下"从来只是记账（`jump_count += 1`）。
+
+        现在的口径（用户 2026-11-05）
+        -----------------------------
+        · 真正走 `handle_jump` 那条抛物线 —— **单一真源**，不另起一套积分；
+        · **目标点 = 当前位置** ⇒ `dx = dy = 0` ⇒ 水平初速为 0
+          ⇒ 只跳高、绝不横移（用户原话："没有水平初速度就只能跳高"）；
+        · `_hop_mode = True` 让 `handle_jump` 跳过楼层穿透判定
+          （原地跳脚下必然是**自己站的那块**楼板，旧判定会当场判成穿透并摔下来）。
+
+        与 `is_moving` 解耦：本函数由 `trigger_surprise()` 直接调用，
+        所以站着、窝着、睡着被吓到都会跳（旧实现只有走路时才可能走到那段）。
+        """
+        # 正在跳（跨层跳跃 / 上一次小跳还没落地）⇒ 不打断，也不叠加。
+        # ★ 去重**只靠这一条**：不要另加时间窗 —— 小跳只有 0.5s，
+        #   跳完之后再来一次惊讶**就该再跳**（`check99 B4` 守的就是这条）。
+        if getattr(self, 'is_jumping', False):
+            return
+        self._hop_fired_at = time.time()
+
+        # 还原点：`jump_duration` 是**全局**跳跃参数，小跳改完必须还原
+        # （复用第99轮的 `_surprised_saved_jump` + `_restore_surprised_jump` 那条收尾路径）
+        if not hasattr(self, '_surprised_saved_jump'):
+            self._surprised_saved_jump = (
+                getattr(self, 'jump_height', None),
+                getattr(self, 'jump_duration', None))
+
+        self._hop_mode = True
+        self.is_jumping = True
+        self.jump_start_time = time.time()
+        self.jump_start_pos = self.pos()
+        # ★ 原地：目标点就是起点 ⇒ `handle_jump` 里 `vx = delta_x / T = 0`
+        self.jump_target_pos = QPoint(self.pos().x(), self.pos().y())
+        self.jump_duration = duration
+        self.jump_start_spatial = self.spatial_pos.copy()
+        self.jump_target_z = self.spatial_pos.get('z', 0)
+        self.jump_z_diff = 0
+        self.jump_target_floor = None
+        self.jump_target_window = None
+        self._jump_anim_override = None
+        self.jump_count += 1
+        self.last_jump_time = time.time()
+        self.needs_rest = False
 
     def _restore_surprised_jump(self):
         """★ 第99轮：还原"惊讶跳"临时改掉的跳跃参数，并复位一次性标志。
@@ -17363,23 +17433,16 @@ class RalseiPet(QMainWindow):
                     # 添加向上跳一小下的效果
                     if not hasattr(self, 'surprised_jump'):
                         self.surprised_jump = True
-                        # ★★ 第99轮：**还原点**（第96b轮"接线前置①"的落地）。
-                        #   下面两行把全局跳跃参数写死成 20 / 0.5，原实现在惊讶结束后
-                        #   **不还原** ⇒ 一次惊讶永久污染之后所有跳跃（变"矮而快"）。
-                        #   这里先存原值，由 `_restore_surprised_jump()` 在
-                        #   惊讶清除时（以及 `reset_special_states` 里）还原。
-                        if not hasattr(self, '_surprised_saved_jump'):
-                            self._surprised_saved_jump = (
-                                getattr(self, 'jump_height', None),
-                                getattr(self, 'jump_duration', None))
-                        # 添加向上跳的物理效果
-                        self.jump_count += 1
-                        self.last_jump_time = current_time
-                        self.needs_rest = False
-                        self.jump_start_time = current_time
-                        self.jump_start_pos = self.pos()
-                        self.jump_height = 20  # 向上跳20像素
-                        self.jump_duration = 0.5
+                        # ★★★ 第164轮：这里**不再自己写跳跃参数**，改为调用统一入口。
+                        #   旧写法只置 `jump_start_time/jump_start_pos` 加
+                        #   `jump_height=20` / `jump_duration=0.5`，却**从不置 `is_jumping`**
+                        #   ⇒ `handle_jump` 从不运行，"跳一小下"一次也没跳起来过
+                        #   （第99轮 A9 登记的就是这个不变量，本轮把它翻面）。
+                        #   现在：目标点 = 当前位置 ⇒ 水平初速 0 ⇒ **只跳高、不横移**；
+                        #   `_hop_mode` 让 `handle_jump` 跳过楼层穿透判定。
+                        #   去重交给 `_hop_fired_at` 的 1.5s 窗口 ——
+                        #   `trigger_surprise()` 通常已经先调过一次，这里会直接返回。
+                        self._start_surprised_hop()
                 elif self.current_direction == "up":
                     new_animation = "surprised_behind"
                     # 修复：此前 up 方向用 surprised_start_time 1秒清除、down 方向只能靠

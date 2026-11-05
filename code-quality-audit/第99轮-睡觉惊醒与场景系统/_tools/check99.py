@@ -192,14 +192,18 @@ check('A1b ★不硬拆第8轮契约：正有"一次性特殊动画"在播时，
       and _has(_TS, '_is_special_anim(self.current_animation)'),
       'deferred=%s' % _has(_TS, 'self.next_animation = _target'))
 
-check('A2 `update_animation` 的惊讶分支**先存还原点**（`_surprised_saved_jump`）'
-      '再改 `jump_height` / `jump_duration`',
-      '_surprised_saved_jump' in _UA
-      and 'jump_height' in _UA and 'jump_duration' in _UA
-      and _UA.index('_surprised_saved_jump') < _UA.index('jump_height = 20'),
-      'saved_before_write=%s'
-      % ('_surprised_saved_jump' in _UA
-         and _UA.index('_surprised_saved_jump') < _UA.index('jump_height = 20')))
+# ★★★ 第164轮改口径：还原点从 `update_animation` 的惊讶分支**搬进**
+#   `_start_surprised_hop()` —— 那段旧代码只写参数、从不置 `is_jumping`，
+#   已被替换成"调用统一入口"（见 A8/A9 的翻面说明）。
+#   守的语义不变：**先存还原点，再改全局参数**。
+_SH = _src_of('_start_surprised_hop')
+_hop_saves = ('_surprised_saved_jump' in _SH
+              and 'self.jump_duration = duration' in _SH)
+check('A2 `_start_surprised_hop` **先存还原点**（`_surprised_saved_jump`）'
+      '再改全局 `jump_duration`（第164轮把这段从 update_animation 搬过来）',
+      _hop_saves and _SH.index('_surprised_saved_jump')
+      < _SH.index('self.jump_duration = duration'),
+      'saved_before_write=%s' % _hop_saves)
 
 check('A3 `_restore_surprised_jump` 三件事都做：**还原** `jump_height` /'
       ' `jump_duration` + 删掉还原点 + **删掉**一次性标志 `surprised_jump`',
@@ -301,16 +305,26 @@ if _moving_if is not None:
             break
 _surprise_body = (' | '.join(ast.unparse(s) for s in _surprise_if.body)
                   if _surprise_if is not None else '')
-check('A8 ★★登记（绊线）：惊讶的"跳一下"块**仍嵌在 `elif self.is_moving:` 的子树里** '
-      '⇒ 站着/睡着的宠物被吓到**只会变脸、不会跳**。'
-      '★ 本条是**绊线**：谁把它外提（或真正实现跳），这条会报红 ⇒ 必须重评 B 段与遗留池。',
-      _surprise_if is not None, 'found_in_is_moving=%s' % (_surprise_if is not None))
-check('A9 ★★登记（绊线）：该跳块**从不置 `is_jumping`** ⇒ 即便可达也只是记账'
-      '（`jump_count += 1`），`handle_jump` 的抛物线物理不会跑'
-      '（`jump_height` 第96b轮已证为死变量）。'
-      '★ 绊线同上。',
-      bool(_surprise_body) and 'is_jumping' not in _surprise_body,
-      'body_has_is_jumping=%s' % ('is_jumping' in _surprise_body))
+# ★★★ 第164轮**翻面**（原绊线自己写着："谁把它外提（或真正实现跳），
+#   这条会报红 ⇒ 必须重评 B 段与遗留池"）。用户 2026-11-05 明确选了"补活并物理化"：
+#     · 跳不再是一段内联代码，已抽成 `_start_surprised_hop()`；
+#     · 由 `trigger_surprise()` 直接调用 ⇒ **不再依赖 `is_moving`**（站着/睡着也跳）；
+#     · 它真的置 `is_jumping = True` ⇒ `handle_jump` 的抛物线会跑。
+check('A8 ★★（第164轮翻面）惊讶的"跳一下"已抽成 `_start_surprised_hop()` 且由'
+      '`trigger_surprise()` 直接调用 ⇒ **不再嵌在 `elif self.is_moving:` 子树里**，'
+      '站着/睡着的宠物被吓到也会跳',
+      bool(_SH) and '_start_surprised_hop()' in _TS,
+      'hop_defined=%s called_by_trigger=%s'
+      % (bool(_SH), '_start_surprised_hop()' in _TS))
+check('A9 ★★（第164轮翻面）小跳**真的**置 `is_jumping = True` 与 `jump_target_pos`'
+      '（目标点 = 当前位置 ⇒ 水平初速 0 ⇒ **只跳高不横移**），'
+      '并用 `_hop_mode` 让 `handle_jump` 跳过楼层穿透判定',
+      '_hop_mode' in _SH
+      and 'is_jumping = True' in _SH
+      and 'jump_target_pos' in _SH,
+      'hop_mode=%s is_jumping=%s target=%s'
+      % ('_hop_mode' in _SH, 'is_jumping = True' in _SH,
+         'jump_target_pos' in _SH))
 
 
 # ============================================================ B. 行为级：惊讶三部曲
@@ -400,6 +414,11 @@ if pet is not None:
              hasattr(pet, 'surprised_jump'),
              hasattr(pet, '_surprised_saved_jump')))
 
+    # ★ 第164轮：小跳时长 0.5s，而本套件是**同步**跑的（没有真实时间流逝）⇒
+    #   上一次跳会一直停在 `is_jumping=True`，把第二次挡住 —— 那不是产品问题，
+    #   是夹具没模拟"上一次已经跳完"。显式落地一下。
+    pet.is_jumping = False
+    pet._hop_mode = False
     _jc = pet.jump_count
     pet.trigger_surprise()
     pet._last_animation_time = time.time() - 0.2
@@ -410,6 +429,8 @@ if pet is not None:
     # 负控制：抠掉还原点 ⇒ 参数停在 0.5（证明 B3 不是"恰好就没改"）
     pet._last_animation_time = time.time() - 2.1
     pet.update_animation()                       # 先正常清一次
+    pet.is_jumping = False                       # ★ 第164轮：同上，先落地再触发
+    pet._hop_mode = False
     pet.trigger_surprise()
     pet._last_animation_time = time.time() - 0.2
     pet.update_animation()
