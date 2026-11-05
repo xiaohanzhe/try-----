@@ -11121,9 +11121,17 @@ class RalseiPet(QMainWindow):
         `5px/帧 ÷ 0.002s = 2500px/s`，闸门当场按 2500 放行 = **假放行**。
         统一用名义帧长（取 `_last_move_dt`，无则 1/30）后，
         "走路 5px/帧 ⇒ 151px/s、冲刺 10.2px/帧 ⇒ 310px/s" 才是可比的口径。
+
+        ★ 再夹一道范围：`_last_move_dt` **不是**当帧 dt，它是"移动 tick 的名义周期"。
+          产品里它目前根本没被赋值（全仓零处写入，是死属性），所以实际恒走 1/30。
+          但万一以后有人把它写成当帧 dt，1ms 的帧会把 `max_speed/0.002` 推出
+          **4000px/s** ⇒ 闸门当场假放行。夹到 `[1/60, 1/20]` 之后，
+          最坏也只有 1.65 倍，不再会出现数量级失真（`check164 B10` 守这条）。
         """
         dt = float(getattr(self, '_last_move_dt', 0) or 0)
-        return dt if dt > 1e-6 else 0.033
+        if not (1.0 / 60.0 <= dt <= 1.0 / 20.0):
+            return 0.033
+        return dt
 
     def _max_run_px_s(self):
         """起跳瞬间**真正**能拿到的水平速度上限（px/s）。
