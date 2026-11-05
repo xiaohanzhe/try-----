@@ -5758,6 +5758,17 @@ class RalseiPet(QMainWindow):
         #   `return _prev` 走掉了。留着就是**第二份判断**（同一条规则两处算），
         #   而且它永远为假：能走到这一行 ⇒ 地点或事由至少变了一样。
         try:
+            # ★★★ 第165轮：**跑得快的人早到**。
+            # 旅行时长按「run」倍率**反比**缩放（倍率 1.0 ⇒ 正好 90 秒 = 原值），
+            # 于是"练过腿的人"办同一件差事会早到 —— 这是 NPC 侧看到的运动能力。
+            # ★ 只在调用方**没显式给 travel** 时才注入（不覆盖调用方的意图）。
+            if 'travel' not in kw:
+                try:
+                    _run_eff = float(self._motion_eff(npc_id)['run'])
+                    if _run_eff > 0:
+                        kw['travel'] = npc_errand_mod.DEFAULT_TRAVEL_SECONDS / _run_eff
+                except Exception as _e:           # noqa: BLE001
+                    _log.debug('取运动倍率失败（旅行时长按原值）: %s', _e)
             _new = board.assign(now, npc_id, dest_scene, what, **kw)
         except Exception as e:
             _log.debug('派差事失败（已忽略）: %s', e)
@@ -6500,6 +6511,10 @@ class RalseiPet(QMainWindow):
         """
         mem = getattr(self, 'npc_memory', None)
         if mem is None:
+            # ★ 第165轮：记忆不可用也要给经验 —— 腿是真跑过的，
+            #   "记得结果"和"练到腿"是两件事。这条早退原本直接 `return`，
+            #   记账若只写在下面的 finally 里就会被它吃掉。
+            self._motion_note_practice('errand', npc_id=npc_id)
             return
         try:
             txt = getattr(err, 'result', '') or ''
@@ -6509,6 +6524,12 @@ class RalseiPet(QMainWindow):
             mem.save(npc_id)
         except Exception as e:
             _log.debug('差事结果写记忆失败（已忽略）: %s', e)
+        finally:
+            # ★★ 第165轮：办完一件差事 = 跑了一趟腿 = 练了一次（NPC 侧的运动能力来源）。
+            #   放在 `finally`：记忆写失败也要给 —— 腿是真跑过的。
+            #   ★ 这条**不改变**任何既有行为（`_motion_note_practice` 只写经验与落盘），
+            #     而且经验 0 时倍率仍是 1.0 ⇒ 对差事链的时序零影响。
+            self._motion_note_practice('errand', npc_id=npc_id)
 
     # ---------------------------------------------------------------- 层4 存档
     def _npc_plan_file(self):
@@ -8414,6 +8435,13 @@ class RalseiPet(QMainWindow):
         self._motion_eff_cache = None
         self._motion_profile_cache = None
         self._motion_dirty = False
+        #: 每个 NPC 各自的累计经验 `{npc_id: exp}`（桌宠本人用 `_motion_exp`）。
+        #: ★ 分开存而不是共用一张表：桌宠本人在 `_motion_eff()` 里走缓存，
+        #:   写进表里会多一条要失效的路径（N 个 NPC × 每帧 = 自己给自己找 bug）。
+        self._motion_exp_map = {}
+        self._motion_progress_path = None
+        self._motion_progress_loaded = False
+        self._motion_saved_at = 0.0
 
         # 跳跃疲劳系统（人体功能模拟）
         self.jump_count = 0  # 当前跳跃次数
@@ -11188,7 +11216,11 @@ class RalseiPet(QMainWindow):
         if npc_id is None and cached is not None:
             return cached
         try:
-            exp = float(getattr(self, '_motion_exp', 0.0) or 0.0) if npc_id is None else 0.0
+            self._motion_progress_ensure()
+            if npc_id is None:
+                exp = float(getattr(self, '_motion_exp', 0.0) or 0.0)
+            else:
+                exp = float((getattr(self, '_motion_exp_map', None) or {}).get(nid, 0.0) or 0.0)
             eff = motion_profile_mod.effective(self._motion_profile_of(nid), exp)
         except Exception as e:                        # noqa: BLE001
             _log.debug('运动倍率计算异常（按 1.0 处理）: %s', e)
@@ -11197,24 +11229,131 @@ class RalseiPet(QMainWindow):
             self._motion_eff_cache = eff
         return eff
 
-    def _motion_note_practice(self, kind):
-        """练一笔：`kind` ∈ {'jump_ok','jump_fail'}。**只加不减**，满了就停。
+    def _motion_note_practice(self, kind, npc_id=None):
+        """练一笔：`kind` ∈ {'jump_ok','jump_fail','move_ok','errand'}。**只加不减**。
 
         ★ 失败也给经验（`EXP_JUMP_FAIL`）：用户要的是「像练习一样练出来」，
           练失败也是练。但成功给得多（12 : 3），否则"撞墙"比"跳成功"更划算。
-        · 落盘由第 5 步的 `_motion_progress_save()` 统一做，这里只管内存与缓存失效。
+        · `npc_id=None` ⇒ 桌宠本人在练；否则记那个 NPC 的账。
+        · 落盘按 30 秒**节流**（`_motion_saved_at`）—— 每次跳都写盘会抖，
+          最多丢 30 秒的练习进度，这个代价远小于每帧 IO。
         """
         try:
-            amt = (motion_profile_mod.EXP_JUMP_OK if kind == 'jump_ok'
-                   else motion_profile_mod.EXP_JUMP_FAIL)
-            old = float(getattr(self, '_motion_exp', 0.0) or 0.0)
-            new = motion_profile_mod.apply_exp(old, amt)
-            if new != old:
-                self._motion_exp = new
-                self._motion_eff_cache = None      # ★ 练了就重算，否则涨了也不生效
-                self._motion_dirty = True
+            amt = {
+                'jump_ok': motion_profile_mod.EXP_JUMP_OK,
+                'jump_fail': motion_profile_mod.EXP_JUMP_FAIL,
+                'move_ok': motion_profile_mod.EXP_MOVE_OK,
+                'errand': motion_profile_mod.EXP_ERRAND,
+            }.get(kind, 0.0)
+            self._motion_progress_ensure()
+            if npc_id is None:
+                old = float(getattr(self, '_motion_exp', 0.0) or 0.0)
+                new = motion_profile_mod.apply_exp(old, amt)
+                if new != old:
+                    self._motion_exp = new
+                    self._motion_eff_cache = None      # ★ 练了就重算，否则涨了不生效
+                    self._motion_dirty = True
+            else:
+                m = getattr(self, '_motion_exp_map', None)
+                if m is None:
+                    m = self._motion_exp_map = {}
+                old = float(m.get(npc_id, 0.0) or 0.0)
+                new = motion_profile_mod.apply_exp(old, amt)
+                if new != old:
+                    m[npc_id] = new
+                    self._motion_dirty = True
+            if getattr(self, '_motion_dirty', False):
+                _now = time.time()
+                if _now - float(getattr(self, '_motion_saved_at', 0.0) or 0.0) > 30.0:
+                    self._motion_progress_save()
+                    self._motion_saved_at = _now
         except Exception as e:                        # noqa: BLE001
             _log.debug('练习记账异常（忽略这一笔）: %s', e)
+
+    # ------------------------------------------------------------------
+    # 第165轮：运动经验的落盘（走 `data_store` 唯一入口，不自己拼绝对路径）
+    # ------------------------------------------------------------------
+    def _motion_progress_file(self):
+        """`motion_progress.json` 的路径。取不到 ⇒ None（退内存态，不影响游戏）。"""
+        try:
+            import data_store
+            return data_store.app_file(MOTION_PROGRESS_FILE)
+        except Exception as e:                        # noqa: BLE001
+            _log.debug('运动经验落盘路径不可用（退内存态）: %s', e)
+            return None
+
+    def _motion_progress_ensure(self):
+        """首次用到时把经验读回来（只读一次）。"""
+        if getattr(self, '_motion_progress_loaded', False):
+            return
+        self._motion_progress_loaded = True
+        self._motion_progress_load()
+
+    def _motion_progress_load(self):
+        """读回经验。读不到 / 读坏 ⇒ 当 0（**不抛、不重置别人的档**）。
+
+        ★ 老存档没有这个文件是**正常态**（第165轮之前根本没有），
+          所以"文件不存在"绝不能报错，更不能把 `_motion_exp` 写成 NaN。
+        """
+        path = self._motion_progress_file()
+        self._motion_progress_path = path
+        try:
+            import io as _io
+            import json as _json
+            if not path or not os.path.isfile(path):
+                return
+            with _io.open(path, 'r', encoding='utf-8') as fh:
+                raw = _json.load(fh)
+            if not isinstance(raw, dict):
+                return
+            self._motion_exp = max(0.0, float(raw.get('self', 0.0) or 0.0))
+            table = raw.get('npcs')
+            if isinstance(table, dict):
+                m = {}
+                for k, v in table.items():
+                    try:
+                        fv = float(v)
+                    except (TypeError, ValueError):
+                        continue
+                    if fv == fv:                      # 排除 NaN
+                        m[str(k)] = max(0.0, fv)
+                self._motion_exp_map = m
+            self._motion_eff_cache = None
+        except Exception as e:                        # noqa: BLE001
+            _log.debug('读运动经验失败（按 0 处理）: %s', e)
+
+    def _motion_progress_save(self, force=False):
+        """落盘。`force=False` 时只在 `_motion_dirty` 才写。
+
+        ★ 写法：先写 `.tmp` 再 `os.replace`（原子替换）—— 写到一半断电不会
+          留下半个 json（`_write_memory_atomic` 同款做法）。
+        ★ 失败只记日志：练出来的能力丢一点可以接受，**不能因为它让游戏报错**。
+        """
+        if not force and not getattr(self, '_motion_dirty', False):
+            return False
+        path = getattr(self, '_motion_progress_path', None) or self._motion_progress_file()
+        if not path:
+            return False
+        try:
+            import io as _io
+            import json as _json
+            payload = {
+                'schema_version': 1,
+                'self': round(float(getattr(self, '_motion_exp', 0.0) or 0.0), 3),
+                'npcs': {k: round(float(v), 3)
+                         for k, v in (getattr(self, '_motion_exp_map', None) or {}).items()
+                         if float(v or 0.0) > 0.0},
+            }
+            tmp = path + '.tmp'
+            with _io.open(tmp, 'w', encoding='utf-8') as fh:
+                _json.dump(payload, fh, ensure_ascii=False, indent=1)
+            os.replace(tmp, path)
+            self._motion_progress_path = path
+            self._motion_dirty = False
+            return True
+        except Exception as e:                        # noqa: BLE001
+            _log.debug('写运动经验失败（忽略，下次再试）: %s', e)
+            return False
 
     def _nominal_move_dt(self):
         """换算"像素/帧 ⇄ px/s"**统一用**的帧长。
@@ -11334,7 +11473,14 @@ class RalseiPet(QMainWindow):
         if ok:
             # 起跳成功 ⇒ 清掉"助跑已试过"的计数（否则一次失败会永久禁用助跑）
             self._runup_tried = 0
+            # ★★★ 第165轮：**真跳成功 = 练了一次**。
+            #   用户口径「像是练习一样练出来」⇒ 日常动作本身就是练习，
+            #   不新增行为、不改作息（否则会和漫游/差事/就寝抢时间）。
+            self._motion_note_practice('jump_ok')
         else:
+            # 够不着也是练（给得少）—— 失败不计就变成"撞墙永远不进步"，
+            # 而那正好是"练习"最有价值的时刻。
+            self._motion_note_practice('jump_fail')
             # ★ 第164轮：够不着（太高/太远）⇒ 不硬跳。
             #   **先试助跑**（只对"太远"有意义），助跑也不行才说一句求助。
             #   `edge` 必须一起传下去 —— 助跑跑完要**重放同一次起跳**，
@@ -19355,6 +19501,17 @@ class RalseiPet(QMainWindow):
     def cleanup_on_exit(self):
         """程序退出时的清理工作，根据隐私设置清理用户数据"""
         _log.debug("正在执行退出清理工作...")
+
+        # 0. ★ 第165轮：把「练出来的运动经验」强制落盘。
+        #    记账是 30 秒节流写的，关掉前可能还差几笔没写 —— 这里补一次。
+        #    `force=True` 会绕过 `_motion_dirty`（否则刚练完最后一笔就退会丢）。
+        #    ⚠️ 必须排在最前：后面的清理会把定时器/线程全停掉，越往后越容易
+        #    被"对象已销毁"这类异常顺手吃掉（而这里失败只记 debug，不会阻塞退出）。
+        try:
+            if getattr(self, '_motion_progress_loaded', False):
+                self._motion_progress_save(force=True)
+        except Exception as e:                        # noqa: BLE001
+            _log.debug("运动经验落盘失败（忽略）: %s", e)
 
         # 1. 停止所有定时器，防止退出后回调触发已销毁对象
         for timer_attr in ('animation_timer', 'ai_timer', 'stats_timer',
