@@ -487,6 +487,9 @@ from modules.pet_ai import PetAI
 from modules.desktop_interaction import DesktopInteraction
 from modules.energy_hunger import EnergyHungerSystem
 from modules.emotion_system import EmotionSystem
+# ★ 第164轮：2.5D 跳跃的纯数学（零依赖）。只借它的"跳力/高度上限/助跑距离"
+# 三个量，不在这里重建一套积分 —— 单一真源。
+from modules import motion2d
 from modules.memory_system import MemorySystem
 from modules.customization_system import CustomizationSystem
 from modules.social_growth_system import SocialGrowthSystem
@@ -11006,6 +11009,70 @@ class RalseiPet(QMainWindow):
             return None
         return best[1], best[2], best[3]
 
+    # ------------------------------------------------------------------
+    # 第164轮：起跳闸门（"没有水平初速度就只能跳高"）
+    # ------------------------------------------------------------------
+    # 用户口径（2026-11-05）：
+    #   「跳跃不能原地起跳后出现横向位移 —— 你需要给他一个**水平初速度**
+    #     他才能跳远，否则就是跳高，而且，要有助跑距离哦」
+    #   「窗口也是有层高的，所以**也不可能跳无限高**，和之前同理」
+    # 落成两条**硬判定**，都放在起跳前（跳出去再发现够不着，就只能硬摔）：
+    #   · 高度：`|vy0| <= JUMP_SPEED_MAX` ⇒ 跳力不够就不许跳（层高的数学形式）
+    #   · 距离：`|vx| <= 最大冲刺速度`    ⇒ 速度不够就不许跳远（**该助跑**）
+    # ★ 这里**不重算弹道** —— `handle_jump` 那条 `vy0 = (Δy − 0.5gT²)/T` 已经是对的
+    #   （第90轮修过坐标系），闸门只是拿**同一个** vy0 去比上限（同源，不另算一遍）。
+    def _max_run_px_s(self):
+        """跑步能达到的最大水平速度（px/s）。
+
+        ⚠️ `max_speed` 是**每帧像素**（配置项 movement.max_speed，默认 15），
+        **不是** px/s —— 必须换算，别把 15 直接当速度。
+        帧长取 `_last_move_dt`；取不到按 1/30 兜底（产品移动 tick 的量级）。
+        """
+        dt = float(getattr(self, '_last_move_dt', 0) or 0)
+        if dt <= 1e-6:
+            dt = 0.033
+        return float(getattr(self, 'max_speed', 15.0) or 15.0) / dt
+
+    def _jump_reach_ok(self):
+        """起跳闸门。True = 这一跳在能力范围内；False = 够不着（并记下原因）。
+
+        判定量全部取自**这次跳跃自己的参数**（`jump_duration` / `jump_start_pos` /
+        `jump_target_pos`），不依赖其它状态，便于单独验证。
+        `self._jump_reject` 记录 `(原因, 实得值, 上限)`，给日志和"说一句求助"用。
+        """
+        try:
+            T = float(getattr(self, 'jump_duration', 0) or 0)
+            g = float(getattr(self, 'gravity', 500.0) or 500.0)
+            if T <= 0:
+                self._jump_reject = ('no_duration', None, None)
+                return False
+            start = getattr(self, 'jump_start_pos', None)
+            tgt = getattr(self, 'jump_target_pos', None)
+            if start is None or tgt is None:
+                self._jump_reject = ('no_target', None, None)
+                return False
+            dx = tgt.x() - start.x()
+            dy = tgt.y() - start.y()
+            vy0 = (dy - 0.5 * g * T * T) / T      # 与 handle_jump 同一条公式
+
+            _limit = float(getattr(self, 'JUMP_SPEED_MAX', 700.0))
+            if abs(vy0) > _limit + 1e-6:
+                self._jump_reject = ('too_high', abs(vy0), _limit)
+                return False
+
+            vx = abs(dx) / T
+            v_max = self._max_run_px_s()
+            if vx > v_max + 1e-6:
+                self._jump_reject = ('too_far', vx, v_max)
+                return False
+
+            self._jump_reject = None
+            return True
+        except Exception as e:                        # noqa: BLE001
+            _log.debug("起跳闸门判定异常（按放行处理）: %s", e)
+            self._jump_reject = None
+            return True
+
     def _start_floor_jump(self, floor, edge, land):
         """按楼层目标起跳（落点由楼层可见区域给出）。"""
         target_window = None
@@ -11021,7 +11088,32 @@ class RalseiPet(QMainWindow):
                 'height': rect.height() if rect is not None else floor['rect'].height(),
                 'z_order': w.get('z_order', 0),
             }
-        self.start_jump(target_window, edge, target_floor=floor, target_pos=land)
+        ok = self.start_jump(target_window, edge, target_floor=floor,
+                             target_pos=land)
+        if not ok:
+            # ★ 第164轮：够不着（太高/太远）⇒ 不硬跳，说一句求助。
+            #   这里**不做分段** —— 分段需要"先走到边缘外的预留点"，
+            #   是另一套落点选择（预留空间 ≠ 助跑距离），留到下一批单独做。
+            self._on_jump_rejected(floor, land)
+        return ok
+
+    def _on_jump_rejected(self, floor, land):
+        """起跳被闸门拒绝之后的收尾：记日志 + 说一句求助。
+
+        用户口径（2026-11-05）：「有中途落脚那就**分段**，无那就**放弃或向用户求助**」。
+        本轮先做"求助"这一半；分段留到下一批（要动落点选择）。
+        `start_autonomous_speech` 自带 10 分钟闸门与"AI 不可用就沉默"两条设计，
+        这里**不绕过**它们 —— 说不出来就只留日志，不回落内置台词。
+        """
+        reason, got, limit = (getattr(self, '_jump_reject', None)
+                              or ('unknown', None, None))
+        _log.debug("够不着目标楼层（原因=%s，实得=%s，上限=%s），改为求助",
+                   reason, got, limit)
+        if reason in ('too_high', 'too_far'):
+            try:
+                self.start_autonomous_speech('jump_blocked')
+            except Exception as e:                    # noqa: BLE001
+                _log.debug("求助语句未能发起: %s", e)
 
     # ------------------------------------------------------------------
     # 「建楼」批次 B（第十八轮）：层高闸门 —— "自己走出来的换层必须靠跳/攀爬"
@@ -11134,7 +11226,12 @@ class RalseiPet(QMainWindow):
                 - (old_floor.get('platform_height', 0) or 0))
         # 起跳：沿用第十/十四轮的楼层跳跃链路（目标楼层 + 由可见区域给出的落点）。
         # "跳还是爬"由 start_jump 按跨度单点决定（它同时看得到起跳层与目标层）。
-        self._start_floor_jump(new_floor, 'bottom' if span > 0 else 'top', land)
+        _ok = self._start_floor_jump(new_floor, 'bottom' if span > 0 else 'top',
+                                     land)
+        if not _ok:
+            # ★ 第164轮：闸门拒绝（太高/太远）⇒ 返回 False，交给调用方兜底：
+            #   上楼保持原楼层、下楼服从重力。**不许**在这里"静默提升"。
+            return False
         _log.debug("层高闸门：%s → %s（跨度 %s，%s，爬向 %s，落点 %s）",
                    old_floor.get('platform_height'), new_floor.get('platform_height'),
                    span, _jump_kind_for_span(span), direction, land)
@@ -11396,6 +11493,26 @@ class RalseiPet(QMainWindow):
         
         # 更新跳跃目标位置
         self.jump_target_pos = QPoint(target_x, target_y)
+
+        # ★★★ 第164轮：**起跳闸门** —— 够不着就不许跳。
+        #   以前这里（其实是一进函数就）无条件置 `is_jumping = True`，
+        #   于是"跳不上也硬跳"：目标再高、再远都会被 `vy0` 公式自适应地飞过去
+        #   ⇒ 等于既没有层高、也没有跳远极限（用户："不可能跳无限高"）。
+        #   现在先算一次可达性；不通过就**回滚起跳状态**并返回 False，
+        #   由调用方决定"换候选 / 分段 / 说一句求助"。
+        # ★★★ 用 `getattr` 兜底，**不要**直接 `self._jump_reach_ok()`：
+        #   本项目的老回归桩（`PetStub` / `MoveStub` 等）只代理了当年存在的方法，
+        #   新增的链上方法它们没有 ⇒ 直接调会 `AttributeError` 把整套打崩
+        #   （第156轮已栽过一次，这是第 4 次同款）。取不到就**按放行处理**，
+        #   桩的行为与改动前完全一致（闸门本身由 `probe164_gate` 独立验证）。
+        _gate = getattr(self, '_jump_reach_ok', None)
+        if _gate is not None and not _gate():
+            self.is_jumping = False
+            self._jump_anim_override = None
+            _rej = getattr(self, '_jump_reject', None) or ('unknown', None, None)
+            _log.debug("起跳被闸门拒绝：%s（实得 %s，上限 %s）", *_rej)
+            return False
+        return True
 
     def start_falling(self, fall_velocity=0, is_thrown=False, reason=None):
         # 开始重力掉落，实现"建楼"要求：没有支撑，就必须往下掉
@@ -13705,6 +13822,15 @@ class RalseiPet(QMainWindow):
             prompt = (
                 "（对方主动来找你聊天了，你先开口打个招呼吧。"
                 "简短地说一句话即可，只输出这一句话。）"
+            )
+        elif reason == 'jump_blocked':
+            # ★★★ 第164轮：用户口径「无中途落脚那就**放弃或向用户求助**」。
+            #   只有这一个 reason 走专用文案，其余分支一字不动（不动既有对话链）。
+            #   措辞刻意"口语 + 短"，避免变成解释说明书（人设线要求）。
+            prompt = (
+                "（你想过去，但那边太高或者太远，你跳不过去。"
+                "就着这件事说一句很短的口语，像自言自语那样——"
+                "可以带一点不甘心，别解释原因，别说教。只输出这一句话。）"
             )
         else:
             prompt = (
