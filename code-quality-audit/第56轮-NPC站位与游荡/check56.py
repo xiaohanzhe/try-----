@@ -607,7 +607,11 @@ _main = read_text(_main_p)
 _t_main = ast.parse(_main)
 check('T1 main.py 顶部 import 了 npc_placement',
       'modules.npc_placement' in module_imports(_main_p),
-      str([n for n in module_imports(_main_p) if n.startswith('modules.')][:12]))
+      # ★ 第165轮：这里原来回显 `[n for n in module_imports(...)][:12]`
+      #   —— "顶部 import 了哪些 modules" 是**时相量 + 规模量**（产品每加一个模块
+      #   它都变），于是第165轮加了 `modules.motion_profile` 后本行判据仍 PASS、
+      #   却整行 DIFF。判据输出不许随产品规模变（第138/146轮口径）。
+      '命中=%s' % ('modules.npc_placement' in module_imports(_main_p),))
 _cls = [n for n in _t_main.body
         if isinstance(n, ast.ClassDef) and n.name == 'RalseiPet']
 check('T2 RalseiPet 类存在且唯一', len(_cls) == 1)

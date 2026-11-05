@@ -284,6 +284,12 @@ class MoveStub:
     def _start_floor_jump(self, floor, edge, land):
         return RalseiPet._start_floor_jump(self, floor, edge, land)
 
+    def _motion_note_practice(self, kind, npc_id=None):
+        # ★ 第165轮：`_start_floor_jump` 现在会顺手记一笔运动经验（成功 12 / 失败 3）。
+        #   桩不跟装 ⇒ `AttributeError` 抛在起跳中途 ⇒ 这一跳根本没发生，
+        #   症状是"A1 走上更高楼板→没有起跳"，看着像产品坏了，其实是桩旧了。
+        return None
+
     def start_jump(self, target_window, window_edge, target_floor=None, target_pos=None):
         return RalseiPet.start_jump(self, target_window, window_edge,
                                     target_floor=target_floor, target_pos=target_pos)

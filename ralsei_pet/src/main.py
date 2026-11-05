@@ -11306,7 +11306,19 @@ class RalseiPet(QMainWindow):
                 raw = _json.load(fh)
             if not isinstance(raw, dict):
                 return
-            self._motion_exp = max(0.0, float(raw.get('self', 0.0) or 0.0))
+            # ★ `self` 这一条**单独兜**，不连坐整张表：早先写成
+            #   `max(0.0, float(raw.get('self', 0.0) or 0.0))`，一旦 `self` 被写坏
+            #   （手工改档 / 断电写半截），`float()` 抛 ValueError ⇒ 走到外层
+            #   `except` ⇒ 同一次读里 `npcs` 那 96 人的经验**一起丢**。
+            #   一条坏值毁全表，比"按 0"糟得多（`check165 C8` 守这条）。
+            _self_raw = raw.get('self', 0.0)
+            try:
+                _self_f = float(_self_raw)
+            except (TypeError, ValueError):
+                _self_f = 0.0
+            if _self_f != _self_f or _self_f < 0.0:   # NaN / 负数 ⇒ 按 0
+                _self_f = 0.0
+            self._motion_exp = _self_f
             table = raw.get('npcs')
             if isinstance(table, dict):
                 m = {}

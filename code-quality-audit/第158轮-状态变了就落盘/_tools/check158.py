@@ -185,6 +185,12 @@ class _Host(object):
     _npc_errand_tick = RalseiPet._npc_errand_tick
     _npc_errand_commit = RalseiPet._npc_errand_commit
 
+    def _motion_note_practice(self, kind, npc_id=None):
+        # ★ 第165轮：`_npc_errand_commit` 现在会顺手记一笔运动经验。
+        #   桩不跟装 ⇒ `AttributeError` 被 tick 的 `except` 吞掉 ⇒ 症状是
+        #   「办完那一拍没落盘」（A7 红：在办=1 已办=0），而产品其实没坏。
+        return None
+
     def __init__(self, path, gate_ok=True, enabled=True):
         self._path = path
         self._gate_ok = gate_ok

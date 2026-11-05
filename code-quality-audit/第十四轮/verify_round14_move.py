@@ -238,6 +238,13 @@ class PetStub:
     def _start_floor_jump(self, floor, edge, land):
         return RalseiPet._start_floor_jump(self, floor, edge, land)
 
+    def _motion_note_practice(self, kind, npc_id=None):
+        # ★ 第165轮：`_start_floor_jump` 现在会顺手记一笔运动经验
+        #   （成功 12 / 失败 3）。桩不跟装 ⇒ `AttributeError` 抛在 `start_jump`
+        #   中途 ⇒ **这一跳根本没发生**；症状是"A2 起跳后就再没有 is_jumping"，
+        #   看上去像产品把起跳逻辑改坏了，其实是桩比产品旧。
+        return None
+
     def check_nearby_windows(self, current_pos):
         return RalseiPet.check_nearby_windows(self, current_pos)
 

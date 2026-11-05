@@ -151,6 +151,13 @@ class _Host(object):
     _npc_errand_tick = RalseiPet._npc_errand_tick
     _npc_errand_commit = RalseiPet._npc_errand_commit
 
+    def _motion_note_practice(self, kind, npc_id=None):
+        # ★ 第165轮：`_npc_errand_commit` 现在会顺手记一笔运动经验
+        #   （"办完一件差事 = 跑了一趟腿"）。与上面 `_errand_report_ack` 同一条纪律：
+        #   桩不跟装 ⇒ `AttributeError` 被 tick 的 `except` 吞掉 ⇒ 不是报错，
+        #   而是 finished 那段**整段没执行**（人没回家、没记住、也没开口）。
+        return None
+
     def _errand_report_ack(self, *a, **kw):
         # ★ 第153轮：产品在 tick 的 finished 分支里新调了它。
         #   桩必须跟着装 —— 否则 AttributeError 会被 tick 的
