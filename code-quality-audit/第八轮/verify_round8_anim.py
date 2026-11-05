@@ -608,7 +608,11 @@ def t_g_play_to_finish_and_no_move():
     after = (p.pos().x(), p.pos().y())
     check("G1.5 特殊动画播放期间不移动（不被鼠标跟随拖动）",
           p._special_anim_locked() and before == after,
-          "locked=%s before=%s after=%s" % (p._special_anim_locked(), before, after))
+          # ★ 第162轮：原来回显 `before=`/`after=` **绝对坐标**，只要初始落点变了
+          #   （本轮把尺寸锚点从"保中心"改成"保底边"，窗口整体上移 21px）就 DIFF，
+          #   而判定一个字没变。改回显**位移量**：判据要的就是"没动"。
+          "locked=%s moved=%s" % (p._special_anim_locked(),
+                                  (after[0] - before[0], after[1] - before[1])))
     p.is_following_mouse = False
     p._play_once_active = False
 

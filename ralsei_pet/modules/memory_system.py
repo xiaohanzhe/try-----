@@ -535,48 +535,86 @@ class MemorySystem:
         except Exception as e:  # 修复：原先静默吞噬
             _log.debug("memory_system 防御性异常（已忽略）: %s", e)
     
+    # ------------------------------------------------------------ 落盘（第162轮重构）
+    #: 设备侧写不进去时的回落目录名（与 `data_store.STAGING_DIRNAME` 同一口径；
+    #: 这里不 import data_store —— `data_store → memory_store → logger_utils` 那条
+    #: 链上再挂一个反向 import 会重演第12轮的初始化环）。
+    FALLBACK_DIRNAME = 'RalseiPet'
+
+    def _fallback_memory_file(self):
+        """设备侧写失败时的落点：`%LOCALAPPDATA%\\RalseiPet\\memory.json`。
+
+        `RALSEI_DATA_DIR` 有值时以它为准（与 `data_store.staging_root` 同一条规则，
+        自检/离屏演练靠这个把数据钉在沙箱里）。算不出来返回 `''`。
+        """
+        try:
+            base = os.environ.get('RALSEI_DATA_DIR')
+            if not base:
+                _la = os.environ.get('LOCALAPPDATA')
+                if not _la:
+                    _la = os.path.join(os.path.expanduser('~'), 'AppData', 'Local')
+                base = os.path.join(_la, self.FALLBACK_DIRNAME)
+            return os.path.join(base, 'memory.json')
+        except Exception as e:  # 绝不因为"算不出退路"把保存整条打断
+            _log.debug("memory_system 防御性异常（已忽略）: %s", e)
+            return ''
+
+    def _memory_payload(self):
+        """要落盘的那份 dict（纯数据，不碰 IO —— 让"写失败再换根重试"能复用同一份）。"""
+        return {
+            'schema': self.SCHEMA,
+            'saved_at': time.time(),
+            'long_term_memory': self.long_term_memory,
+            'experience': self.experience,
+            'level': self.level,
+            # 修复（B4）：learning_rate / memory_strength 原先不落盘，重启即丢
+            'learning_rate': self.learning_rate,
+            'memory_strength': self.memory_strength,
+            # 拟人记忆层（第九轮）
+            'fragments': self.fragments,
+            'keys': self.keys,
+            'digests': self.digests,
+            'assoc': self.assoc,
+            'next_id': self._next_id,
+            # 第十轮：图的检索参数（弱边压制量是"学"出来的，重启不能丢）
+            # 与召回质量指标（有用率/成功率——不落盘就没法跨会话评估）
+            'graph': {'weak_penalty': round(float(
+                getattr(self._graph, 'weak_penalty', 0.0) or 0.0), 4)},
+            'recall_stats': self.recall_stats,
+            # 只记"存在设备上还是桌面兜底"，不落绝对路径（隐私/可移植）
+            'storage_kind': 'device' if self._on_device else 'desktop',
+        }
+
+    def _write_memory_atomic(self, path, data):
+        """原子写：临时文件 + `os.replace`（写一半断电不会毁掉整个记忆文件）。"""
+        os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
+        _tmp = path + ".tmp"
+        with open(_tmp, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        os.replace(_tmp, path)
+
     def save_memory(self):
-        """保存记忆"""
+        """保存记忆。
+
+        ★ 第162轮：**写失败不再静默丢弃**。
+          改前异常分支只有一条 `_log.warning` —— E 盘抽风（实测
+          `os.listdir('E:\\RalseiMemory')` 抛 `OSError(22,'函数不正确')`）时，
+          记忆每 30 秒丢一次，产品侧没有任何补救，用户看到的就是"他记不住"。
+          现在：主落点失败 ⇒ 换本地中转站再写一次，**并把 `memory_file` 切过去**，
+          后续读写都跟着走（否则下一次又从坏盘读、又忘一遍）。
+          只在**真的写不进去**时才切，不预判、不因为"探测失败"就搬库。
+        """
+        data = None
         try:
             # 写盘段必须串行：recall_feedback 等后台线程会与主线程并发调
             # save_memory，Windows 下同时 open 同一个 .tmp 可能互相踩踏，
             # 故用同一把 RLock 串行化（第89轮加的防御；当年观察到的
             # "每 30 秒一次 Errno 13" 实为沙箱环境限制，与并发无关）。
             with self._lock:
-                # 确保目录存在
-                os.makedirs(os.path.dirname(self.memory_file), exist_ok=True)
-
-                data = {
-                    'schema': self.SCHEMA,
-                    'saved_at': time.time(),
-                    'long_term_memory': self.long_term_memory,
-                    'experience': self.experience,
-                    'level': self.level,
-                    # 修复（B4）：learning_rate / memory_strength 原先不落盘，重启即丢
-                    'learning_rate': self.learning_rate,
-                    'memory_strength': self.memory_strength,
-                    # 拟人记忆层（第九轮）
-                    'fragments': self.fragments,
-                    'keys': self.keys,
-                    'digests': self.digests,
-                    'assoc': self.assoc,
-                    'next_id': self._next_id,
-                    # 第十轮：图的检索参数（弱边压制量是"学"出来的，重启不能丢）
-                    # 与召回质量指标（有用率/成功率——不落盘就没法跨会话评估）
-                    'graph': {'weak_penalty': round(float(
-                        getattr(self._graph, 'weak_penalty', 0.0) or 0.0), 4)},
-                    'recall_stats': self.recall_stats,
-                    # 只记"存在设备上还是桌面兜底"，不落绝对路径（隐私/可移植）
-                    'storage_kind': 'device' if self._on_device else 'desktop',
-                }
-
-                # 修复：原实现直接 open(w) 覆写，写一半崩溃/断电会损坏整个记忆文件
-                # （下次加载失败 → 全部记忆丢失）。改为临时文件 + 原子替换。
-                _tmp = self.memory_file + ".tmp"
-                with open(_tmp, 'w', encoding='utf-8') as f:
-                    json.dump(data, f, ensure_ascii=False, indent=2)
-                os.replace(_tmp, self.memory_file)
+                data = self._memory_payload()
+                self._write_memory_atomic(self.memory_file, data)
             self._last_save_ts = time.time()
+            return True
         except Exception as e:
             _log.warning("保存记忆失败: %s", e)
             try:
@@ -584,6 +622,28 @@ class MemorySystem:
                     os.remove(self.memory_file + ".tmp")
             except Exception as e:
                 _log.debug("memory_system 防御性异常（已忽略）: %s", e)
+
+        # ---- 回落：换本地中转站再写一次（第162轮）----
+        try:
+            alt = self._fallback_memory_file()
+            if not alt:
+                _log.warning("记忆无可用回落位置，本次未落盘")
+                return False
+            if os.path.abspath(alt) == os.path.abspath(self.memory_file):
+                return False          # 本来就在中转站 ⇒ 没有第二条路可退
+            if data is None:
+                data = self._memory_payload()
+            _old = self.memory_file
+            self._write_memory_atomic(alt, data)
+            self.memory_dir = os.path.dirname(alt)
+            self.memory_file = alt
+            self._on_device = False
+            self._last_save_ts = time.time()
+            _log.warning("记忆已改存本地中转站（原位置写不进去）: %s → %s", _old, alt)
+            return True
+        except Exception as e2:
+            _log.warning("回落本地中转站仍失败: %s", e2)
+            return False
 
     def autosave(self, force=False):
         """节流落盘：高频的片段登记不必每次都写盘（性能），但要保证不丢。

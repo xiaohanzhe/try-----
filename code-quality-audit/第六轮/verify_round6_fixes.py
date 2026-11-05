@@ -9,6 +9,7 @@
   E "站起身"类动作只播一次
   F 动画帧率默认 6；多显示器夹紧不再把宠物拉回主屏
 """
+import ast
 import io
 import json
 import os
@@ -32,6 +33,28 @@ def check(name, ok, detail=""):
 
 
 MAIN_SRC = io.open(os.path.join(BASE, "src", "main.py"), encoding="utf-8").read()
+
+
+def _calls_in_func(src, func_name, attr):
+    """`func_name` 的函数体里有没有 `xxx.<attr>(...)` 这种调用 —— AST，不绑写法。
+
+    ★ 为什么加这个：第162轮把普通地面从 `_desktop_floor_y()`（整屏底，含任务栏）
+      换成了 `_desktop_ground_y()`（工作区底），旧判据断的是
+      `"ground_y = self._desktop_floor_y()" in MAIN_SRC` 这样一个**精确字符串**
+      —— 语义变强了它反而红（"判据绑写法"）。改成 AST：只要那个函数真被调用就算过。
+    """
+    try:
+        tree = ast.parse(src)
+    except SyntaxError:
+        return False
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef) and node.name == func_name:
+            for sub in ast.walk(node):
+                if (isinstance(sub, ast.Call) and isinstance(sub.func, ast.Attribute)
+                        and sub.func.attr == attr):
+                    return True
+    return False
+
 DS_SRC = io.open(os.path.join(BASE, "modules", "dialogue_system.py"), encoding="utf-8").read()
 
 import main as main_mod  # noqa: E402
@@ -415,6 +438,11 @@ def make_fall_stub(launch_y=500, floor_y=700):
 
     o.move = _move
     o._desktop_floor_y = lambda: floor_y
+    # ★ 第162轮：产品把"普通地面"从整屏底换成了 `_desktop_ground_y()`（= 工作区底，
+    #   不含任务栏）。桩比产品旧就会 AttributeError（本轮 G2 就是这么炸的）。
+    #   这里让桩的地面**仍等于 `_desktop_floor_y`**：本套件考的是抛物线/落地语义，
+    #   "用哪条地面"由 `check162` C 段单独守 ⇒ 老断言的数值一个都不用改。
+    o._desktop_ground_y = o._desktop_floor_y
     o._clamp_pos_to_desktop = lambda x, y: (int(x), max(0, min(int(y), floor_y)))
     o._anims = []
     o._once = []
@@ -489,8 +517,8 @@ check("E2 摔倒恢复分支用 play_animation_once('land', restore_to='idle')",
 check("E3 跳跃落地也用一次性 land（不再 change_animation 循环重播）",
       MAIN_SRC.count('play_animation_once("land", restore_to="idle")') >= 3)
 
-check("E4 update_bounce 地面改用 _desktop_floor_y（多显示器）",
-      "ground_y = self._desktop_floor_y()" in MAIN_SRC)
+check("E4 update_bounce 地面改用 _desktop_ground_y（第162轮：工作区底，任务栏/多显示器都对）",
+      _calls_in_func(MAIN_SRC, "update_bounce", "_desktop_ground_y"))
 
 # ============================================================
 print("=== F. 帧率与多显示器夹紧 ===")

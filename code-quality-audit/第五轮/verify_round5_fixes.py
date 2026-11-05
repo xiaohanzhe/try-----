@@ -287,7 +287,14 @@ print()
 print("=== V5 memory save_memory 落盘键 ===")
 import memory_system as mem_mod
 src_save = inspect.getsource(mem_mod.MemorySystem.save_memory)
-keys = re.findall(r"'(\w+)':\s*self\.", src_save)
+# ★ 第162轮：落盘载荷搬进了 `_memory_payload()`（写失败要换根重试，得复用同一份数据），
+#   `save_memory` 自己的源码里已经没有那份键表了 ⇒ 抓**真正产键的那个函数**。
+_src_payload = src_save
+try:
+    _src_payload = inspect.getsource(mem_mod.MemorySystem._memory_payload)
+except AttributeError:
+    pass
+keys = re.findall(r"'(\w+)':\s*self\.", _src_payload)
 print("  save_memory 实际落盘键:", keys)
 ms = mem_mod.MemorySystem.__dict__.get('__init__')
 print("  记录：memory_strength 是否在落盘键中 ->", "memory_strength" in keys)

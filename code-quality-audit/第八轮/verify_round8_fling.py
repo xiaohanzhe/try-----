@@ -110,6 +110,11 @@ def make_fall_stub(launch_y=500, floor_y=969, gravity=2000.0):
     o.height = lambda: 110
     o.frameGeometry = lambda: QRect(o._x, o._y, 110, 110)
     o._desktop_floor_y = lambda: int(floor_y)
+    # ★ 第162轮：产品的普通地面换成了 `_desktop_ground_y()`（工作区底，不含任务栏）。
+    #   桩比产品旧 ⇒ AttributeError（本轮 G2 就是这么炸的）。
+    #   桩上让它仍等于 `_desktop_floor_y`：本套件考的是抛物线形状与落点吸附，
+    #   "地面取哪条线"由 `check162` C 段单独守 ⇒ 老断言数值一个都不用动。
+    o._desktop_ground_y = o._desktop_floor_y
     o._clamp_pos_to_desktop = lambda x, y: (int(x), max(0, min(int(y), int(floor_y))))
     return o
 

@@ -302,6 +302,22 @@ def _fall_projection_px(pet, landed_floor):
     return int(max(FALL_PROJ_MIN_PX, min(FALL_PROJ_MAX_PX, px)))
 
 
+def anchored_resize_xy(pos_x, pos_y, old_w, old_h, new_w, new_h):
+    """窗口尺寸变化后的新左上角：**水平保中心、垂直保底边**（第162轮）。
+
+    为什么垂直不再"保中心"（第94轮那版）：
+      角色是**站在地上**的，脚底才是不变量。按中心缩放时，每换一次动画角色就
+      整体沉浮 Δh/2 —— 真机实测 `100x100 → 229x156` 脚底 **+28px**、
+      `63x133 ↔ 229x156` 每次 **±11~13px**（30 秒 33 次），观感是"起步/停下
+      顿一下"，站在任务栏边时脚还会被压进去十几像素。
+      水平保中心不动：角色左右对称，屏幕上的"立轴"就是窗口中心。
+
+    纯函数（零 Qt），所以 `check162` 能直接喂数字断言，不用起窗口。
+    """
+    cx = int(pos_x) + int(old_w) // 2
+    return cx - int(new_w) // 2, int(pos_y) + int(old_h) - int(new_h)
+
+
 def pick_corner_screen_work_area(virtual_rect, screens):
     """从「虚拟桌面矩形 + 各显示器(几何, 工作区)」里挑出**右下角那块屏的工作区**。
 
@@ -12193,25 +12209,30 @@ class RalseiPet(QMainWindow):
         #   现在 = 起点 y + 落差投影（`_fall_projection_px`）⇒ 落点是"脚下那块平面"。
         #   ⚠️ 只在**本次坠落的第一帧**算一次：下落途中 x 会因惯性漂移，逐帧重算会让
         #      "落到哪块平面"随位置抖动（同一次坠落的前后两帧给出不同落点）。
-        if not hasattr(self, '_fall_land_y'):
+        if getattr(self, '_is_thrown', False):
+            # 甩飞：观感就是要"飞出去" ⇒ 保持改前的"一路落到接住它为止"。
+            # ★ 第162轮：① 地面从"整屏底"换成"任务栏上沿"（见 `_desktop_ground_y`），
+            #   否则甩出去的东西总是沉进任务栏后面 —— 那正是用户抱怨的那一下；
+            #   ② **逐帧重算**而不是缓存：`_desktop_ground_y()` 只依赖"工作区底 −
+            #   当前窗口高"，不依赖横坐标，所以不会像"偏俯视投影"那样随 x 漂移抖动；
+            #   而缓存会在下落途中换动画（133 ↔ 156）时按旧高度定死，落地后悬空
+            #   20 多像素（真机实测 bottom=1505 而任务栏上沿 1528）。
+            self._fall_land_y = self._desktop_ground_y()
+        elif not hasattr(self, '_fall_land_y'):
             _y0 = int(current_pos.y())
-            if getattr(self, '_is_thrown', False):
-                # 甩飞：观感就是要"飞出去" ⇒ 保持改前的"一路落到接住它为止"。
-                self._fall_land_y = self._desktop_floor_y()
-            else:
-                _lf, _ = self.floor_manager.get_drop_destination(
-                    QPoint(int(current_pos.x()), _y0), self.current_floor)
-                if _lf is not None and (
-                        _lf.get('type') == 'desktop'
-                        or self._floor_identity_key(_lf)
-                        == self._floor_identity_key(self.current_floor)):
-                    _lf = None
-                if _lf is None:
-                    _lf = self.floor_manager.desktop_floor
-                # ★ 缓存"落在哪块平面"：下面算"掉多远"、落地时算"落差/是否摔扁"，
-                #   必须吃**同一份**判定，否则会出现"掉了 300px 却按一层楼判不扁"。
-                self._fall_land_floor = _lf
-                self._fall_land_y = _y0 + _fall_projection_px(self, _lf)
+            _lf, _ = self.floor_manager.get_drop_destination(
+                QPoint(int(current_pos.x()), _y0), self.current_floor)
+            if _lf is not None and (
+                    _lf.get('type') == 'desktop'
+                    or self._floor_identity_key(_lf)
+                    == self._floor_identity_key(self.current_floor)):
+                _lf = None
+            if _lf is None:
+                _lf = self.floor_manager.desktop_floor
+            # ★ 缓存"落在哪块平面"：下面算"掉多远"、落地时算"落差/是否摔扁"，
+            #   必须吃**同一份**判定，否则会出现"掉了 300px 却按一层楼判不扁"。
+            self._fall_land_floor = _lf
+            self._fall_land_y = _y0 + _fall_projection_px(self, _lf)
         max_y = int(self._fall_land_y)
         if int(new_y) > max_y:
             new_y = max_y
@@ -12333,7 +12354,8 @@ class RalseiPet(QMainWindow):
                     _nx = int(_cur.x() + _vx * elapsed_time)
                     _ny = int(_cur.y() + _vy * elapsed_time)
                     _launch_y = int(getattr(self, '_fall_launch_y', _cur.y()))
-                    _floor_y = self._desktop_floor_y()
+                    # 第162轮：实心地面 = 任务栏上沿（不是整屏底），否则落地即被任务栏压住
+                    _floor_y = self._desktop_ground_y()
                     _nx, _ny = self._clamp_pos_to_desktop(_nx, _ny)
                     # 落地判定：正在下落且回到起跳高度，或已经顶到桌面底边。
                     # 落点直接"吸附"到平面上，避免离散积分多冲出去一帧（几像素的抖动）
@@ -14615,7 +14637,19 @@ class RalseiPet(QMainWindow):
         hide_action = QAction("隐藏", self)
         hide_action.triggered.connect(self._hide_ralsei)
         menu.addAction(hide_action)
-        
+
+        # ★ 第162轮：右键菜单补"退出"。
+        #   为什么补：全产品的退出入口只有托盘图标那一条（`_quit_from_tray`），
+        #   而 Windows 11 默认把**新注册**的托盘图标收进"隐藏的图标"溢出区
+        #   ⇒ 图标被折叠时，用户既不右键菜单里找不到退出、又不敢直接杀进程。
+        #   （托盘首启气泡只提示一次，折叠之后仍是死路。）
+        #   走**同一条**清理路径，不另开一份：`_quit_from_tray` 里就是
+        #   `cleanup_on_exit()` + 隐藏托盘 + `QApplication.quit()`。
+        menu.addSeparator()
+        quit_action = QAction("退出 Ralsei", self)
+        quit_action.triggered.connect(self._quit_from_tray)
+        menu.addAction(quit_action)
+
         # 显示菜单
         menu.exec_(pos)
     
@@ -17529,14 +17563,12 @@ class RalseiPet(QMainWindow):
                     
                     # 优化：只有在窗口大小改变时才调整大小和位置，避免瞬移
                     if self.width() != target_width or self.height() != target_height:
-                        # 保存当前位置和大小
+                        # 保存当前位置、算新左上角（第162轮：水平保中心 / 垂直保底边）
+                        # 细节与实测数据见模块级 `anchored_resize_xy`
                         old_pos = self.pos()
-                        old_center_x = old_pos.x() + self.width() // 2
-                        old_center_y = old_pos.y() + self.height() // 2
-                        
-                        # 调整大小和位置，保持中心不变
-                        new_x = old_center_x - target_width // 2
-                        new_y = old_center_y - target_height // 2
+                        new_x, new_y = anchored_resize_xy(
+                            old_pos.x(), old_pos.y(), self.width(), self.height(),
+                            target_width, target_height)
                         
                         # ★★ 第94轮修复（拖拽“先窜后弹”）：拖拽期间唯一的不变量是
                         #   “窗口左上角 = 鼠标 − drag_position”（1:1 跟随），而上面这条
@@ -17555,7 +17587,7 @@ class RalseiPet(QMainWindow):
                                 self.drag_position.x()
                                 + target_width // 2 - self.width() // 2,
                                 self.drag_position.y()
-                                + target_height // 2 - self.height() // 2)
+                                + target_height - self.height())
 
                         # 批量更新大小和位置，减少重绘
                         self.setGeometry(new_x, new_y, target_width, target_height)
@@ -17711,14 +17743,12 @@ class RalseiPet(QMainWindow):
                     
                     # 优化：只有在窗口大小改变时才调整大小和位置，避免瞬移
                     if self.width() != target_width or self.height() != target_height:
-                        # 保存当前位置和大小
+                        # 保存当前位置、算新左上角（第162轮：水平保中心 / 垂直保底边）
+                        # 细节与实测数据见模块级 `anchored_resize_xy`
                         old_pos = self.pos()
-                        old_center_x = old_pos.x() + self.width() // 2
-                        old_center_y = old_pos.y() + self.height() // 2
-                        
-                        # 调整大小和位置，保持中心不变
-                        new_x = old_center_x - target_width // 2
-                        new_y = old_center_y - target_height // 2
+                        new_x, new_y = anchored_resize_xy(
+                            old_pos.x(), old_pos.y(), self.width(), self.height(),
+                            target_width, target_height)
                         
                         # ★★ 第94轮修复（拖拽“先窜后弹”）：拖拽期间唯一的不变量是
                         #   “窗口左上角 = 鼠标 − drag_position”（1:1 跟随），而上面这条
@@ -17737,7 +17767,7 @@ class RalseiPet(QMainWindow):
                                 self.drag_position.x()
                                 + target_width // 2 - self.width() // 2,
                                 self.drag_position.y()
-                                + target_height // 2 - self.height() // 2)
+                                + target_height - self.height())
 
                         # 批量更新大小和位置，减少重绘
                         self.setGeometry(new_x, new_y, target_width, target_height)
@@ -17876,8 +17906,8 @@ class RalseiPet(QMainWindow):
         y_displacement = velocity_y * elapsed + 0.5 * gravity * elapsed ** 2
         new_y = int(start_pos.y() + y_displacement)
         
-        # 检查是否触地反弹（多显示器：虚拟桌面底边）
-        ground_y = self._desktop_floor_y()
+        # 检查是否触地反弹（第162轮：桌面地面 = 任务栏上沿，不是整屏底）
+        ground_y = self._desktop_ground_y()
 
         if new_y >= ground_y:
             # 触地，反弹
@@ -18330,6 +18360,27 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
             return QApplication.desktop().availableGeometry().height() - max(1, self.height())
+
+    def _desktop_ground_y(self):
+        """桌面上"脚踩的那条线"的窗口 y（= 工作区底 − 窗口高，即任务栏上沿之上）。
+
+        ★ 第162轮：**落地判定统一走这里**。
+          与 `_desktop_floor_y()` 的差别只有一条：后者是**整屏底边**，含任务栏
+          覆盖的那一条（实测本机 72px）。拿它当"实心地面"时，宠物一路掉到屏幕
+          最底，下半截被任务栏压住 —— 真机截图实测窗口 bottom=1599、任务栏上沿
+          1528，71px 不见。产品自己在 `_taskbar_top_y()` 的注释里就写着这种落点
+          是错的（"用户看到的就是人沉到快捷栏底下去了"），只是那句话当时只服务于
+          "待机窝着"这一条路径。
+
+        ⚠️ 只用于"落到**桌面**"。站在**窗口**上（建楼）时地面是那扇窗的顶边，
+           由 `floor_manager` 给出，绝不能拿这条顶掉。
+        ⚠️ 任务栏自动隐藏 / 竖屏侧边栏时，工作区≈整屏 ⇒ 与旧行为一致，不会突变。
+        """
+        try:
+            return int(self._taskbar_top_y())
+        except Exception as e:
+            _log.debug("main 防御性异常（已忽略）: %s", e)
+            return self._desktop_floor_y()
 
     # ==============================================================
     # ★ 第52轮：任务栏（快捷栏）上沿 —— "静止时到快捷栏上面待着"的落点基准

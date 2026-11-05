@@ -428,8 +428,26 @@ def test_integration():
     ok('I4 update 触发遗忘周期与存储迁移',
        ('forget_cycle' in up) and ('maybe_relocate_storage' in up), None)
 
+    # ★ 第162轮改判据口径：原先是「`save_memory` 函数体里有没有 `'schema': self.SCHEMA` 这行」
+    #   —— 那是**绑写法**。第162轮把数据组装抽进 `_memory_payload()`（写失败要换根重试，
+    #   得复用同一份数据），语义一个字没变，判定却红了（第160轮那族"判据过窄=误报"）。
+    #   改成**断行为**：真落一次盘、把 JSON 读回来，看 schema 与拟人记忆层是不是真在里面。
+    _msI5 = new_ms('msI5')
+    _msI5.add_fragment('schema 判据用的这一句话', who='user')
+    _wroteI5 = _msI5.save_memory()
+    _docI5 = {}
+    try:
+        with io.open(_msI5.memory_file, encoding='utf-8') as _fh:
+            _docI5 = json.load(_fh)
+    except Exception as _e:
+        _docI5 = {'__read_err__': repr(_e)}
     ok('I5 save_memory 落盘 schema 与记忆层',
-       "'schema': self.SCHEMA" in func_src(mss, 'save_memory'), None)
+       _wroteI5 is True
+       and _docI5.get('schema') == _msI5.SCHEMA
+       and isinstance(_docI5.get('long_term_memory'), dict)
+       and isinstance(_docI5.get('fragments'), list)
+       and isinstance(_docI5.get('keys'), list),
+       (_wroteI5, _docI5.get('schema'), _msI5.SCHEMA))
     ok('I6 memory_store 在 import 期不做磁盘操作',
        ('makedirs' not in code_only(read(os.path.join(MODS, 'memory_store.py')).split('def ', 1)[0])), None)
 
