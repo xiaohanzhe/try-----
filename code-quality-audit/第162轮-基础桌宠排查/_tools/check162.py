@@ -283,6 +283,18 @@ try:
     #   从 39KB 写成了 72KB）。回归不许碰外部盘，这条是硬闸。
     import memory_store as _MSTORE
     _MSTORE.find_device_dir = lambda create=True: None
+
+    # ★★★ 第163轮补漏：只打 `find_device_dir` **不够**。设备为 None 时
+    #   `default_memory_dir()` 会走 `fallback_dir()` = **用户桌面 `Desktop\memory\`**
+    #   （产品设计：U 盘不在时记忆落桌面兜底）。于是本套件每次都去读/写用户桌面，
+    #   输出还跟着桌面上那个文件的状态变 —— 第163轮的探针改过桌面 `memory.json` 之后，
+    #   本套件当场 DIFF（判据仍 30/0，只是"新位置无记忆，已从旧版继承"那 4 条 INFO
+    #   消失了）。⇒ 这里把 `default_memory_dir` 整体钉进沙箱，回归绝不碰用户桌面。
+    def _sandbox_memdir():
+        _d = os.path.join(_TMP, 'init')
+        os.makedirs(_d, exist_ok=True)
+        return (_d, False, None)
+    _MSTORE.default_memory_dir = _sandbox_memdir
     import memory_system as MS  # noqa: E402
 
     def _fresh():

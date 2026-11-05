@@ -213,6 +213,11 @@ def make_stub():
     o._anim_anchor_offsets = types.MethodType(RalseiPet._anim_anchor_offsets, o)
     o._alpha_row_bits = RalseiPet._alpha_row_bits
     o._main_component_bbox = RalseiPet._main_component_bbox
+    # ★★★ 第163轮补：垂直落位改成"**本体下沿贴画布底沿**"（原先是"本体中心对
+    #   画布中心"）。产品侧已用 `getattr` 兜底（旧桩不再崩），但**判据必须走新路径**
+    #   —— 不挂这个方法，`_compose_anchored_sprite` 会退回旧中心口径，
+    #   D1.1 就变成"测自己"的假绿。所以这里显式绑产品真实方法。
+    o._anim_anchor_bottom = types.MethodType(RalseiPet._anim_anchor_bottom, o)
     return o
 
 
@@ -313,17 +318,18 @@ def _per_frame_center_dev(o, sl, anim):
         if bb is None:
             continue
         # 量具误差：缩放插值把"本体"重新定义了多少
+        # ★ 第163轮：垂直口径改成"下沿"，量具误差也跟着改成下沿误差
         tol = 0.0
         b_src = _body_bbox_of_canvas(o, pm)
         b_sc = _body_bbox_of_canvas(o, sp)
         if b_src is not None and b_sc is not None:
             tol = max(
                 abs((b_sc[0] + b_sc[2]) / 2.0 - (b_src[0] + b_src[2]) / 2.0 * SCALE),
-                abs((b_sc[1] + b_sc[3]) / 2.0 - (b_src[1] + b_src[3]) / 2.0 * SCALE))
+                abs(b_sc[3] - b_src[3] * SCALE))
         cw, ch = canvas.width(), canvas.height()
         out.append((_i,
-                    (bb[0] + bb[2]) / 2.0 - cw / 2.0,
-                    (bb[1] + bb[3]) / 2.0 - ch / 2.0,
+                    (bb[0] + bb[2]) / 2.0 - cw / 2.0,   # 水平：仍测"中心"（保中心未改）
+                    bb[3] - ch,                          # 垂直：测"本体下沿 − 画布底沿"
                     cw, ch, tol))
     return out
 
@@ -354,7 +360,7 @@ def t_d1_composed_centered():
     o = make_stub()
     sl = loader()
     worst, bad = _d1_scan(o, sl)
-    check("D1.1 **每一帧**合成后本体包围盒中心 = 该帧画布中心（≤1px）",
+    check("D1.1 **每一帧**合成后本体水平居中、下沿贴画布底沿（≤1px）",
           not bad, "超差=%s 最差=%s" % (bad[:5], worst))
     # ★ 负控制（第98轮补）：把同一批偏移整体推 5px ⇒ 判据必须报红。
     #   为什么必须要：新口径下偏移**定义**就是"本体中心与画布中心之差"，
@@ -386,7 +392,7 @@ def t_d2_position_invariant_across_switch():
     #   ⚠️ 逐帧口径下两者表达式相同 —— 保留两条是**有意**的（名字与历史结论各自可追溯），
     #      不是为了凑数：第八轮 D2.1 记下的"修复前 idle↔其它差 40px"就是本条的存在理由。
     worst, bad = _d1_scan(o, sl)
-    check("D2.1 所有动作的角色屏幕位置都相同（≤1px，修复前 idle↔其它差 40px）",
+    check("D2.1 所有动作的**脚底**屏幕位置都相同（≤1px，修复前 idle↔其它差 40px）",
           not bad, "超差=%s 最差=%s" % (bad[:5], worst))
 
 

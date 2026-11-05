@@ -16941,33 +16941,81 @@ class RalseiPet(QMainWindow):
         return offs[i]
 
     def _anim_anchor_offsets(self, animation):
-        """按动画缓存的"**逐帧**锚点偏移表"（源像素）。口径见 `_anim_anchor_offset`。"""
+        """按动画缓存的"**逐帧**锚点偏移表"（源像素）。口径见 `_anim_anchor_offset`。
+
+        ★ 第163轮：顺带缓存"逐帧本体**下沿**"到 `self._anim_bottom_cache`，
+          供 `_compose_anchored_sprite` 做垂直落位（见 `_anim_anchor_bottom`）。
+          两个表同一次 `_alpha_row_bits` 循环算出来，不重复扫像素。
+        """
         cache = getattr(self, '_anim_anchor_cache', None)
         if cache is None:
             cache = {}
             self._anim_anchor_cache = cache
+        bcache = getattr(self, '_anim_bottom_cache', None)
+        if bcache is None:
+            bcache = {}
+            self._anim_bottom_cache = bcache
         if animation in cache:
             return cache[animation]
 
         offs = []
+        bottoms = []
         try:
             frames = self.sprite_loader.sprites.get(animation) or []
             for f in frames:
                 if f is None or f.isNull():
                     offs.append((0.0, 0.0))
+                    bottoms.append(None)
                     continue
                 rows = self._alpha_row_bits(f)
                 bb = self._main_component_bbox(rows, f.width())
                 if bb is None:
                     offs.append((0.0, 0.0))
+                    bottoms.append(None)
                 else:
                     offs.append(((bb[0] + bb[2]) / 2.0 - f.width() / 2.0,
                                  (bb[1] + bb[3]) / 2.0 - f.height() / 2.0))
+                    bottoms.append(float(bb[3]))
         except Exception as e:
             _log.debug("计算动画锚点偏移失败（按画布居中处理）: %s", e)
             offs = []
+            bottoms = []
         cache[animation] = offs
+        bcache[animation] = bottoms
         return offs
+
+    def _anim_anchor_bottom(self, animation, frame_index=None):
+        """该动画**第 frame_index 帧**"本体"（最大 alpha 连通块）的**下沿**（源像素，
+        相对该帧画布顶端）。无像素/无缓存返回 None。
+
+        ★★★ 第163轮新增。为什么垂直要单独给一个量：
+          第98轮的锚点口径是"本体**中心**钉到画布中心"，水平方向没问题（那正是
+          它要修的 20px 横跳）；但**垂直**用中心对齐，会让"本体高度变了多少"
+          变成"脚底动了它的一半" —— 蹲下/落地/施法时本体变矮，脚底就会**离地抬起**。
+          逐帧实测（`probe163_round2.py`，走产品自己的 `_compose_anchored_sprite` 合成后量）：
+              跨动画（桌面会播的 34 个）视觉脚底 y 跨度 = 10.0 px
+              （idle/neutral 悬空 4px、sit_rest 5px，其余多数贴底）
+              同一动画内逐帧脚底抖动：act 10.0 / run_up 8.0 / fall_back 7.0 /
+                                        land 6.0 / spell 5.0 / sit 5.0 px
+          解析式：本体下沿在画布内的位置 = ch/2 + 本体高*s/2
+                  ⇒ 距画布底空隙 = (ch − 本体高×s)/2 —— 只取决于本体高，
+                     **与本体画在帧里的位置无关**。代入 act 的实测空隙 [1,2,9,10,9]
+                     ⇒ 本体高 38→37→25→24，即"蹲下 14px、脚抬高 10px"。
+          ⇒ 垂直改钉**本体下沿 = 画布底沿**：本体高度怎么变，脚底都不动；
+            配合第162轮的 `anchored_resize_xy`（窗口底边固定）⇒ 脚底在屏幕上恒定。
+          为什么不会裁头：本体下沿 ≤ 帧高 ≤ 容器高 ⇒ dy = ch − 下沿*s ≥ 0；
+            本体特别高的帧顶多贴到画布顶，不会越界。
+        """
+        bcache = getattr(self, '_anim_bottom_cache', None)
+        if bcache is None:
+            self._anim_anchor_offsets(animation)      # 触发一次计算并填两份缓存
+            bcache = getattr(self, '_anim_bottom_cache', None) or {}
+        vals = bcache.get(animation)
+        if not vals:
+            return None
+        i = 0 if frame_index is None else int(frame_index)
+        i = max(0, min(len(vals) - 1, i))
+        return vals[i]
 
     @staticmethod
     def _alpha_row_bits(pixmap):
@@ -17077,7 +17125,7 @@ class RalseiPet(QMainWindow):
         （最大 alpha 连通块）—— 否则同一动画里【身体之外的粒子】（爱心/星星）
         会把并集包围盒撑宽、把角色整体推走（act 实测 20 屏幕px）。
         """
-        off_x, off_y = self._anim_anchor_offset(animation, frame_index)
+        off_x, _off_y = self._anim_anchor_offset(animation, frame_index)
         if container:
             cw = int(container[0] * scale_factor)
             ch = int(container[1] * scale_factor)
@@ -17089,7 +17137,26 @@ class RalseiPet(QMainWindow):
         canvas = QPixmap(cw, ch)
         canvas.fill(Qt.transparent)
         dx = (cw - sprite.width()) // 2 - int(round(off_x * scale_factor))
-        dy = (ch - sprite.height()) // 2 - int(round(off_y * scale_factor))
+        # ★★★ 第163轮：垂直改成"本体下沿贴画布底沿"，不再"本体中心对齐画布中心"。
+        #   水平仍保中心（第98轮的成果，专治 act 爱心撑宽导致的 20px 横跳）。
+        #   理由与实测见 `_anim_anchor_bottom` 的 docstring。
+        _bb_bottom = None
+        # ★★ 用 getattr 而不是硬取：本轮之前写的桩（如 `verify_round8_anim.py` 的
+        #   `types.SimpleNamespace`）只装了 `_anim_anchor_cache`，硬取会当场
+        #   `AttributeError` 把整条老套件打崩（实测第163轮就崩了）。
+        #   取不到就退回旧的中心口径 —— 老桩因此仍然可用，但也意味着**判据必须自己
+        #   确认走的是新路径**（`check163` 的 A 段就是为此走产品真实方法链的）。
+        _ab = getattr(self, '_anim_anchor_bottom', None)
+        if callable(_ab):
+            _bb_bottom = _ab(animation, frame_index)
+        if _bb_bottom is None:
+            # 拿不到本体（空帧/纯透明）⇒ 退回旧的中心口径，绝不让它跳到别处
+            dy = (ch - sprite.height()) // 2 - int(round(_off_y * scale_factor))
+        else:
+            # sprite 已按 scale 缩放，本体下沿在 sprite 内的位置 ≈ 下沿*scale
+            dy = ch - int(round(_bb_bottom * scale_factor))
+            if dy < 0:
+                dy = 0
         painter = QPainter(canvas)
         painter.drawPixmap(dx, dy, sprite)
         painter.end()
