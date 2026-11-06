@@ -540,6 +540,9 @@ from modules.entertainment_system import EntertainmentSystem
 from modules.config_manager import ConfigManager
 
 from modules.floor_manager import FloorManager
+# ★ 第167轮：置顶走 SetWindowPos 的 HWND_TOPMOST/HWND_NOTOPMOST，
+#   两个常量住在 floor_manager 模块里（不经 `FloorManager.` 取，它们是模块级）。
+from modules import floor_manager as floor_manager_mod
 from modules.api_client import create_client, WarmKeeper
 from modules.ai_driver import AiActionDriver
 from modules.command_manager import CommandManager
@@ -1498,6 +1501,11 @@ class RalseiPet(QMainWindow):
         self.scene_canvas = SceneCanvas(None, as_window=True)
         self.scene_canvas.move(0, 0)
         self._scene_layer_visible = False
+        #: ★★★ 第167轮：场景层是否处于「成组置顶」态（用户口径「只有桌面显示
+        #:   正常的，其余都置顶」）。**唯一写者是 `_set_scene_topmost`**，
+        #:   别处只读 —— 它的作用是：① 幂等（每帧调也只在翻转时真动 z 序）；
+        #:   ② 给 `_apply_pet_z_order` 当闸门（置顶中不许把宠物插回普通层）。
+        self._scene_topmost_on = False
 
         # ---- ★★★ 第109轮「原作式场景过渡」状态机 ----
         # 原作实现（UTMT 反编译 ch1，逐字，证据见
@@ -9894,9 +9902,16 @@ class RalseiPet(QMainWindow):
             #   会连同桌面壳一起被压下去 ⇒ 整块画布不上屏。
             if getattr(canvas, 'as_window', False):
                 # 独立顶层窗口：**不 lower**，反要 raise_（见 docstring 的血泪）
-                canvas.raise_()
+                # ★★★ 第167轮：**置顶态下不许再 raise_** —— 画布与宠物同在置顶
+                #   带里，`raise_()` 会把画布顶到宠物之上 ⇒ 非桌面场景是不透明
+                #   整屏黑底，一 raise 就把角色整只盖没。置顶态的层序由
+                #   `_set_scene_topmost` 一次排定，这里不参与。
+                if not getattr(self, '_scene_topmost_on', False):
+                    canvas.raise_()
             else:
                 canvas.lower()   # 子控件模式：压到 sprite_label 之下
+            # ★ 第167轮：画布**显示出来之后**再成组置顶（桌面场景自动落回不置顶）
+            self._set_scene_topmost(True)
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
 
@@ -9907,8 +9922,105 @@ class RalseiPet(QMainWindow):
             if canvas.isVisible():
                 canvas.hide()
             self._scene_layer_visible = False
+            # ★ 第167轮：画布都不显示了 ⇒ 没有"盖住一切"的理由，成组还原
+            self._set_scene_topmost(False)
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
+
+    # ------------------------------------------------------------------
+    #  ★★★ 第167轮：场景层「成组置顶」
+    #  用户口径（逐字）：「**就是只有桌面显示正常的，其余都置顶**」
+    #  ⇒ 桌面场景 = 不置顶（现状即"正常"）；除桌面外的所有场景 = 置顶。
+    #  这一节同时结掉第99轮遗留的「置顶 vs 禁置顶」口径冲突：
+    #  禁的是**窗口标志**（`round13_build E1` / `check89 I2` 守着，改标志会重建
+    #  原生窗口、且让遮挡关系永久失效），这里只走 `SetWindowPos` 的 z 序开关，
+    #  两件事互不冲突。
+    # ------------------------------------------------------------------
+    def _scene_topmost_targets(self):
+        """收集要参与置顶的**顶层窗口**，返回 `[(名字, hwnd), ...]`。
+
+        顺序 = **提升顺序**，不是随手排的：
+        `SetWindowPos(hwnd, HWND_TOPMOST)` 会把窗口放到"置顶带"的**最上面**
+        ⇒ 后设置的压在前者之上。所以要的画面序
+        「画布（背景）＜ 宠物 ＜ 灵魂／幽灵」就得**按这个顺序**依次设置。
+
+        ⚠️ 一件都拿不到时返回空表（调用方照样翻转状态位，免得每帧重试同一件
+           不可能的事）；单件失败只跳过它，绝不连累其余
+           （灵魂/幽灵都有总开关，关掉时是 None）。
+        """
+        out = []
+        for _name in ('scene_canvas', 'self', 'soul', 'ghost'):
+            try:
+                w = self if _name == 'self' else getattr(self, _name, None)
+                if w is None:
+                    continue
+                # ⚠️ 已析构的 QWidget 调 winId() 会抛 RuntimeError ⇒ 必须逐件包
+                hwnd = int(w.winId())
+                if hwnd:
+                    out.append((_name, hwnd))
+            except Exception as e:
+                _log.debug("取场景层窗口句柄失败（跳过 %s）: %s", _name, e)
+        return out
+
+    def _set_scene_topmost(self, on):
+        """把「画布 ＋ 宠物 ＋ 灵魂 ＋ 幽灵」**成组**置顶 / 还原。
+
+        ★★★ 为什么必须成组，而不能只把画布置顶
+        ----------------------------------------
+        画布是**背景层**（角色由 `sprite_label` 画，压在它之上）。
+        只把画布提到置顶带 ⇒ 置顶带里就它一个 ⇒ 宠物反被**整屏不透明场景盖没**
+        （非桌面场景铺黑底盖住桌面，用户会看到"Ralsei 不见了"）。
+        ⇒ 要么一起置顶，要么一起不置顶，没有中间态。
+
+        ★ 归一：**桌面场景永不置顶**。调用点因此可以无脑传 `True`，
+          桌面场景自己在函数里落回"不置顶"，不必让每个调用点重复判一次。
+
+        ★ 幂等：只在 `_scene_topmost_on` **翻转**时真动 z 序。本函数每帧都会被
+          `_show_scene_layer` 调到 —— 不幂等就是每秒几十次 `SetWindowPos`
+          （闪烁 + 白烧 CPU）。
+
+        ★ 为什么不改窗口标志：那是建楼硬契约禁止的（见本节顶上的说明）。
+          这里走 `floor_manager.HWND_TOPMOST / HWND_NOTOPMOST`，只动 z 序、
+          不动位置/大小/焦点（`SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE`）。
+
+        返回是否处于置顶态（异常一律返回 False，保持原 z 序）。
+        """
+        try:
+            # ★ 保守归一：**场景还没认出来 ⇒ 不置顶**。
+            #   `_scene_is_desktop_scene()` 取不到场景时返回 False（语义是
+            #   "不是桌面"），若直接拿它取反，就会在"场景系统还没起来"时
+            #   把宠物+灵魂+幽灵一股脑提到所有窗口之上 —— 那是个很显眼的
+            #   骚扰性 bug。⇒ 先确认 scene_id 认得出来，再谈置顶。
+            #   （场景未知的常规路径已经在 `_update_scene_layer` 里走 hide 分支，
+            #     这里只是把"万一"兜住。）
+            _state = self.__dict__.get('_scene_state')
+            if _state is None:
+                _state = getattr(self, 'current_scene_state', None)
+            _sid = getattr(_state, 'scene_id', None) if _state is not None else None
+            if _sid is None and isinstance(_state, dict):
+                _sid = _state.get('scene_id')
+            _unknown = not (isinstance(_sid, str) and _sid)
+            want = (not _unknown) and bool(on) and not self._scene_is_desktop_scene()
+            if want == bool(getattr(self, '_scene_topmost_on', False)):
+                return bool(self._scene_topmost_on)
+            targets = self._scene_topmost_targets()
+            if not want:
+                # 还原时**反着摘**：从最上面那件开始，最后落到画布
+                targets = list(reversed(targets))
+            after = (floor_manager_mod.HWND_TOPMOST if want
+                     else floor_manager_mod.HWND_NOTOPMOST)
+            done = 0
+            for _name, hwnd in targets:
+                if FloorManager.set_window_behind(hwnd, after):
+                    done += 1
+            # ★ 状态位照翻（哪怕一个句柄都没拿到）：否则每帧都会重试同一件不可能的事
+            self._scene_topmost_on = want
+            _log.info('场景层置顶%s：%d/%d 个窗口（画布/宠物/灵魂/幽灵）',
+                      '开' if want else '关', done, len(targets))
+            return want
+        except Exception as e:
+            _log.debug("场景层置顶失败（保持原 z 序）: %s", e)
+            return bool(getattr(self, '_scene_topmost_on', False))
 
     # ------------------------------------------------------------------
     #  球容器（第50轮）—— 「Ralsei 在光世界必须被扭蛋球罩住」
@@ -12856,6 +12968,15 @@ class RalseiPet(QMainWindow):
         需要定时重刷的原因：窗口被激活/移动、用户切换前台窗口之后 z 序会变，
         宠物要重新归位（与楼层检查同节拍，1 秒一次）。
         """
+        # ★★★ 第167轮：场景层置顶期间**禁止**把宠物插回普通层。
+        #   本函数干的事是 `SetWindowPos(宠物, hWndInsertAfter=脚下的楼板)`，
+        #   而 `hWndInsertAfter` 一旦给的是**非置顶**窗口，Windows 就会把宠物
+        #   **移出置顶带**（这是 Win32 的既定语义，不是副作用）⇒ 场景层那块
+        #   整屏不透明画布立刻反过来盖住宠物 ⇒ 用户看到"角色每秒闪一下没了"。
+        #   ⇒ 置顶态下直接返回。退出置顶时 `_set_scene_topmost(False)` 会还原，
+        #     下一个 1 秒节拍再自然归位，不需要在这里补偿。
+        if getattr(self, '_scene_topmost_on', False):
+            return False
         try:
             hwnd = int(self.winId())
         except Exception as e:
@@ -19660,6 +19781,17 @@ class RalseiPet(QMainWindow):
     def cleanup_on_exit(self):
         """程序退出时的清理工作，根据隐私设置清理用户数据"""
         _log.debug("正在执行退出清理工作...")
+
+        # 0.05 ★ 第167轮：先把「场景层成组置顶」**还原**。
+        #   为什么排在最前：置顶是 `SetWindowPos` 留在系统里的**窗口状态**，
+        #   不是我们的对象状态 —— 进程没了它还在（下次启动看到的是别人桌面，
+        #   会有一瞬间"我的窗口被什么东西压着"）。而且必须早于第 2.53 步
+        #   （那步会把灵魂窗口 close 掉，句柄失效后就还原不了了）。
+        #   失败只记 debug，绝不阻塞退出。
+        try:
+            self._set_scene_topmost(False)
+        except Exception as e:                        # noqa: BLE001
+            _log.debug("退出时还原场景层置顶失败（忽略）: %s", e)
 
         # 0. ★ 第165轮：把「练出来的运动经验」强制落盘。
         #    记账是 30 秒节流写的，关掉前可能还差几笔没写 —— 这里补一次。

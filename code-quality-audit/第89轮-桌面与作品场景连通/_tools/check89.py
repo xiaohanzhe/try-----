@@ -1256,6 +1256,103 @@ check('I11 负控制：`TRANSPARENT_BG` 是**非空真值字符串**'
       '（正因如此才必须显式归一 —— 空串/None 不会有这个坑）',
       isinstance('__transparent__', str) and bool('__transparent__'), star=True)
 
+# ================================================================ I.12 第167轮：场景层「成组置顶」
+# 用户口径（逐字）：「**就是只有桌面显示正常的，其余都置顶**」
+#   ⇒ 桌面场景 = 不置顶（现状即"正常"）；除桌面外的所有场景 = 画布+宠物+灵魂+幽灵
+#     **成组**置顶。这也结掉了第99轮遗留的「置顶 vs 禁置顶」口径冲突：
+#     禁的是**窗口标志**（I2 / round13_build E1 守着），这里只走 `SetWindowPos`。
+#
+# ★★★ 这条判据守的是**结构**，不是像素。为什么必须守：
+#   置顶是 `SetWindowPos` 留在**系统里**的窗口状态，**不是我们的对象状态** ——
+#   少还原一条退出路径，用户桌面上就永远压着一层整屏不透明黑，
+#   而进程内一切断言照样全绿（"静态自洽"的典型形态，记忆铁律那条）。
+def _names_in(node, want):
+    """在 AST 里数名字：属性写法 `self._x` 与字符串写法 `getattr(self, '_x')` 都算。
+
+    ★ 两种**都必须**扫（第125轮教训）：`self._scene_topmost_on` 是
+      `ast.Attribute`，而 `getattr(self, '_scene_topmost_on', False)` 里那个是
+      **`ast.Constant` 字符串** —— 只扫一种会**恒空**（判据永远假，比不写更危险）。
+    """
+    hit = 0
+    for _n in ast.walk(node):
+        if isinstance(_n, ast.Attribute) and _n.attr == want:
+            hit += 1
+        elif isinstance(_n, ast.Constant) and _n.value == want:
+            hit += 1
+    return hit
+
+
+# main.py 有 1.1 MB —— 只解析**一次**，别在每条判据里各来一遍
+_MT = _ast(MAIN)
+_TOP = _func_node(_MT, '_set_scene_topmost')
+_HIDE = _func_node(_MT, '_hide_scene_layer')
+_CLEAN = _func_node(_MT, 'cleanup_on_exit')
+_ZORD = _func_node(_MT, '_apply_pet_z_order')
+
+# I12：统一驱动点存在，且**不碰窗口标志**
+_top_flags = 0
+if _TOP is not None:
+    for _n in ast.walk(_TOP):
+        if isinstance(_n, ast.Call) and isinstance(_n.func, ast.Attribute) \
+                and _n.func.attr == 'setWindowFlags':
+            _top_flags += 1
+check('I12 ★★★ 场景层置顶只由 `_set_scene_topmost` **统一驱动**，'
+      '且它**不得**调用 `setWindowFlags`（改窗口标志会重建原生窗口、'
+      '并让遮挡关系永久失效；置顶只能走 SetWindowPos 的 z 序开关）—— 判据走 AST',
+      _TOP is not None and _top_flags == 0, star=True)
+
+# I12b：显示 / 隐藏 / 退出 三条路径都真的接上了
+_calls_top = 0
+for _node in (_MS, _HIDE, _CLEAN):
+    if _node is None:
+        continue
+    for _n in ast.walk(_node):
+        if isinstance(_n, ast.Call) and isinstance(_n.func, ast.Attribute) \
+                and _n.func.attr == '_set_scene_topmost':
+            _calls_top += 1
+check('I12b ★★★ 三条路径都接上了置顶驱动：`_show_scene_layer`（开）、'
+      '`_hide_scene_layer`（关）、`cleanup_on_exit`（退出兜底还原）'
+      '—— 少一条就是"某条退出路径忘了还原 ⇒ 桌面上永远压着一层黑"',
+      _calls_top >= 3, star=True)
+print('        `_set_scene_topmost` 调用点=%d（show / hide / cleanup 各 1）'
+      % (_calls_top,))
+
+# I12c：置顶态的两道闸门
+#   ① `_show_scene_layer` 里不许再 `raise_()` 画布 —— 画布与宠物同在置顶带，
+#      `raise_()` 会把画布顶到宠物之上 ⇒ 非桌面场景（不透明整屏黑）把角色盖没；
+#   ② `_apply_pet_z_order` 必须直接返回 —— 它的 `hWndInsertAfter` 是**非置顶**
+#      楼板窗口，一调就把宠物**移出置顶带** ⇒ 每秒闪一下"角色消失"。
+_guard_show = _names_in(_MS, '_scene_topmost_on') if _MS is not None else 0
+_guard_zord = _names_in(_ZORD, '_scene_topmost_on') if _ZORD is not None else 0
+check('I12c ★★★ 置顶态两道闸门都在：`_show_scene_layer` 由 `_scene_topmost_on` '
+      '守住不再 raise_ 画布、`_apply_pet_z_order` 由同一状态位守住不再插回普通层'
+      '—— 判据同时认属性与字符串常量两种写法',
+      _guard_show >= 1 and _guard_zord >= 1, star=True)
+print('        置顶守卫命中：show=%d  zorder=%d' % (_guard_show, _guard_zord))
+
+# I12d 负控制：开 / 关两个方向**必须真的不同**
+#   ★ 这条专堵"恒真判据"：若两个常量相等（或都没取到），上面 I12~I12c 照样全绿，
+#     但"置顶"与"还原"是**同一个动作** ⇒ 全部判据失去鉴别力。
+_fm_vals = {}
+_fmt = _ast(os.path.join(PKG, 'modules', 'floor_manager.py'))
+if _fmt is not None:
+    for _n in _fmt.body:                       # ★ 只认**模块级**赋值
+        if isinstance(_n, ast.Assign) and len(_n.targets) == 1 \
+                and isinstance(_n.targets[0], ast.Name) \
+                and _n.targets[0].id in ('HWND_TOPMOST', 'HWND_NOTOPMOST') \
+                and isinstance(_n.value, ast.UnaryOp) \
+                and isinstance(_n.value.op, ast.USub) \
+                and isinstance(_n.value.operand, ast.Constant):
+            _fm_vals[_n.targets[0].id] = -_n.value.operand.value
+_tm = _fm_vals.get('HWND_TOPMOST')
+_ntm = _fm_vals.get('HWND_NOTOPMOST')
+check('I12d 负控制：`floor_manager` 的 `HWND_TOPMOST` / `HWND_NOTOPMOST` '
+      '**真存在、都是负数、且互不相等**（若两者相等，"置顶"和"还原"就是'
+      '同一个动作 ⇒ 上面几条全成恒真判据）',
+      _tm is not None and _ntm is not None and _tm != _ntm
+      and _tm < 0 and _ntm < 0, star=True)
+print('        HWND_TOPMOST=%r  HWND_NOTOPMOST=%r' % (_tm, _ntm))
+
 # ================================================================ J. 不许自作主张开 B站
 # 用户口径（逐字）：**「对了，别让他打开bilbil了」**（第89轮）
 #
