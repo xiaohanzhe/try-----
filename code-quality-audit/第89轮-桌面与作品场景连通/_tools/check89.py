@@ -1353,6 +1353,148 @@ check('I12d 负控制：`floor_manager` 的 `HWND_TOPMOST` / `HWND_NOTOPMOST` '
       and _tm < 0 and _ntm < 0, star=True)
 print('        HWND_TOPMOST=%r  HWND_NOTOPMOST=%r' % (_tm, _ntm))
 
+# I12e ★★★ 状态位初值必须是 **None（未定）**，不能是 False
+#   真机实测（第167轮）：宠物窗口刚建出来那一下**本身就带着 topmost**，
+#   而桌面场景的 `want` 恰好也是 False ⇒ 初值写 False 会让第一次调用
+#   "判定没翻转 ⇒ 直接返回" ⇒ 一次 SetWindowPos 都不发 ⇒ 那点 topmost
+#   被原样保留（遮挡关系在那段时间里是坏的）。
+#   ★ 判据走 AST 读 `self._scene_topmost_on = <常量>` 的赋值值，不看注释。
+_init_topmost = None
+_init_found = 0
+if _MT is not None:
+    for _n in ast.walk(_MT):
+        if isinstance(_n, ast.Assign) and len(_n.targets) == 1 \
+                and isinstance(_n.targets[0], ast.Attribute) \
+                and _n.targets[0].attr == '_scene_topmost_on' \
+                and isinstance(_n.value, ast.Constant):
+            _init_topmost = _n.value.value
+            _init_found += 1
+check('I12e ★★★ 置顶状态位**初值是 `None`（未定）**，不是 `False`'
+      '（`False` 初值 ⇒ 桌面场景第一次调用被"没翻转"挡掉 ⇒ 启动时那点 '
+      'topmost 原样留着、遮挡关系坏掉）—— 判据 AST 读赋值常量',
+      _init_found == 1 and _init_topmost is None, star=True)
+print('        _scene_topmost_on 常量赋值 %d 处，初值 = %r'
+      % (_init_found, _init_topmost))
+
+# ================================================================ I13. 托盘抽搐（第167轮真机抓出）
+#   ★★★ 事件经过（全部真机实测，判据是 `TrayNotifyWnd` 的**矩形跃迁率**）：
+#     · 无 App 跑                     → 0.0/s
+#     · App 正常跑                    → 10.6/s
+#     · 停 `movement_timer`（30ms）   → 0.0/s      ⇒ 每帧链路
+#     · `set_plan` 打桩成 no-op       → 0.0/s      ⇒ 就在 set_plan 里
+#     · 只把 `view_size` 强制成当前尺寸 → 0.0/s      ⇒ 是"尺寸真变了"的 resize
+#     · 只砍 `update()`（resize 照旧） → 11.1/s     ⇒ 不是重绘
+#   唯一变化窗口 = `TrayNotifyWnd`，宽 519 ↔ 561（±42px = 一个图标位 @150%）。
+#   ⇒ `set_plan` 那句无条件 `self.resize(view)` 让画布每帧在
+#     **整屏 2560×1600 ↔ 画面 1066×800** 之间来回变尺寸，explorer 把它当成
+#     "反复进出全屏" ⇒ 通知区反复多预留/撤掉一个图标位 ⇒ **用户的托盘在抽搐**。
+#   ⇒ 修法：`apply_geometry=False` 时只记 `_view_size`（绘制坐标空间）、不动几何。
+#     ⚠️ 默认值必须仍是 `True` —— 其它调用方（球前层）语义零变化。
+_SCV = _ast(os.path.join(PKG, 'modules', 'scene_canvas.py'))
+
+
+def _setplan_nodes(tree):
+    out = []
+    if tree is None:
+        return out
+    for _n in ast.walk(tree):
+        if isinstance(_n, ast.FunctionDef) and _n.name == 'set_plan':
+            out.append(_n)
+    return out
+
+
+def _parent_map(root):
+    pm = {}
+    for _n in ast.walk(root):
+        for _c in ast.iter_child_nodes(_n):
+            pm[_c] = _n
+    return pm
+
+
+_plans = _setplan_nodes(_SCV)
+_resize_total = 0          # 负控制用：全文件 `self.resize(...)` 计数
+_resize_guarded = 0
+_guard_nodes = 0
+_defaults_ok = 0
+for _fn in _plans:
+    _pm = _parent_map(_fn)
+    # -- 默认值：apply_geometry 必须是 True
+    _args = _fn.args.args
+    _defs = _fn.args.defaults
+    _off = len(_args) - len(_defs)
+    for _i, _a in enumerate(_args):
+        if _a.arg == 'apply_geometry' and _i >= _off:
+            _dv = _defs[_i - _off]
+            if isinstance(_dv, ast.Constant) and _dv.value is True:
+                _defaults_ok += 1
+    # -- 每个 self.resize(...) 必须在 `if apply_geometry:` 的 body 里
+    _guards = set()
+    for _n in ast.walk(_fn):
+        if isinstance(_n, ast.If) and isinstance(_n.test, ast.Name) \
+                and _n.test.id == 'apply_geometry':
+            _guards.add(id(_n))
+    _guard_nodes += len(_guards)
+    for _n in ast.walk(_fn):
+        if isinstance(_n, ast.Call) and isinstance(_n.func, ast.Attribute) \
+                and _n.func.attr == 'resize' \
+                and isinstance(_n.func.value, ast.Name) \
+                and _n.func.value.id == 'self':
+            _resize_total += 1
+            _cur, _ok = _n, False
+            while _cur in _pm:
+                _cur = _pm[_cur]
+                if isinstance(_cur, ast.If) and isinstance(_cur.test, ast.Name) \
+                        and _cur.test.id == 'apply_geometry':
+                    _ok = True
+                    break
+            if _ok:
+                _resize_guarded += 1
+
+check('I13 ★★★ `SceneCanvas` / 球前层两个 `set_plan` 里的 `self.resize(...)` '
+      '**全部**被 `if apply_geometry:` 守住（未守 ⇒ 画布每帧在"整屏↔画面"'
+      '之间变尺寸 ⇒ explorer 当成反复进出全屏 ⇒ **托盘抽搐**）'
+      '—— 判据走 AST 父链，不认注释',
+      len(_plans) == 2 and _resize_total > 0
+      and _resize_guarded == _resize_total, star=True)
+print('        set_plan 函数=%d 处  self.resize=%d 处（已被 apply_geometry 守住 %d 处）'
+      % (len(_plans), _resize_total, _resize_guarded))
+
+check('I13b `apply_geometry` 的**默认值必须是 `True`**'
+      '（改成 False ⇒ 其它调用方"换一个类就静默不 resize"，是另一类坑）',
+      _defaults_ok == 2, star=True)
+print('        apply_geometry 默认 True 的 set_plan = %d/2' % (_defaults_ok,))
+
+# ---- I13c：调用侧真的传了 False（否则开关写了没人用 = 白写）----
+_USL = _func_node(_MT, '_update_scene_layer')
+_call_false = 0
+_call_setplan = 0
+if _USL is not None:
+    for _n in ast.walk(_USL):
+        if isinstance(_n, ast.Call) and isinstance(_n.func, ast.Attribute) \
+                and _n.func.attr == 'set_plan':
+            _call_setplan += 1
+            for _kw in _n.keywords:
+                if _kw.arg == 'apply_geometry' \
+                        and isinstance(_kw.value, ast.Constant) \
+                        and _kw.value.value is False:
+                    _call_false += 1
+check('I13c `_update_scene_layer` 调 `canvas.set_plan(...)` 时**必须带 '
+      '`apply_geometry=False`**（写了开关却不用 = 白写，抽搐照旧）',
+      _call_setplan >= 1 and _call_false >= 1, star=True)
+print('        _update_scene_layer 调 set_plan=%d 处，带 apply_geometry=False 的 %d 处'
+      % (_call_setplan, _call_false))
+
+# ---- I13d 负控制：上面几条"一个都没找到"时必须报红，不许静默全绿 ----
+#   ★ 记忆铁律「恒真判据比不写还危险」：若 `set_plan` 改名 / resize 写法变了，
+#     `_resize_total` 会变成 0 ⇒ `_resize_guarded == _resize_total` 恒真 ⇒ 全绿。
+#   ★ 这里**只**断言"resize 确实存在 2 处"，不掺 `_guard_nodes`：
+#     掺进去会让"守卫被摘掉"同时红两条（I13 + I13d）⇒ 变异测试失去"恰好一条"的鉴别力。
+check('I13d 负控制：两个 `set_plan` 里**确实各有一处** `self.resize(...)`'
+      '（若为 0，"全被守住"就是恒真判据；实测基线应为 2）',
+      _resize_total == 2, star=True)
+print('        resize=%d  apply_geometry 守卫节点=%d'
+      % (_resize_total, _guard_nodes))
+
 # ================================================================ J. 不许自作主张开 B站
 # 用户口径（逐字）：**「对了，别让他打开bilbil了」**（第89轮）
 #

@@ -684,12 +684,32 @@ class SceneCanvas(QWidget):
         return self._transition_alpha
 
     # -- 数据入口 --------------------------------------------------------
-    def set_plan(self, plan, view_size=None):
+    def set_plan(self, plan, view_size=None, apply_geometry=True):
         """提交这一帧的绘制指令 + 画布尺寸，并请求重绘。
 
         返回是否需要重绘（尺寸或内容有变）—— 调用方可用它省掉无谓的 update()。
         判据只比"指令清单长度 + 画布尺寸"（不做深比较：每帧深比 85 条 dict
         比直接重绘还贵，而且场景内容变化本来就伴随长度/尺寸变化）。
+
+        ★★★ 第167轮：`apply_geometry=False` = **只记 `_view_size`（绘制坐标空间），
+        不动 widget 几何**。默认 `True` 保持旧语义，其它调用方零变化。
+
+        为什么需要这个开关（真机抓出来的产品 bug，不是洁癖）：
+          第107轮起画布改成**整屏固定**、`view` 只是"画面"的坐标空间，
+          但 `set_plan` 里这句 `self.resize(view)` 是"小窗口时代"的遗留 ——
+          于是 `_update_scene_layer()` 每帧把画布 **2560×1600 → 1066×800 →
+          2560×1600** 折腾一遍（30ms 一次，≈33Hz）。
+          实测（第167轮，`TrayNotifyWnd` 矩形跃迁率当判据）：
+            · 正常跑                       → 10.6/s
+            · 停 `movement_timer`          → 0.0/s
+            · `set_plan` 打桩成 no-op      → 0.0/s
+            · 只把 view_size 强制成当前尺寸 → 0.0/s
+            · 只砍 `update()`（resize 照旧）→ 11.1/s
+          ⇒ 元凶就是这次"尺寸真变了"的 resize。后果是**用户的托盘在抽搐**：
+            explorer 每次都当作"全屏窗口进出全屏"重算通知区布局，
+            `TrayNotifyWnd` 宽在 519 ↔ 561 之间来回跳（±42px = 一个图标位 @150%）。
+          ⇒ 第110轮那条"`set_plan` 之后必须把画布铺回整屏"只是**补后果**，
+            这里拆的是**原因**；那条 resize 留着当守卫（同值 resize 实测无害）。
         """
         plan = plan or []
         if view_size is None:
@@ -700,7 +720,9 @@ class SceneCanvas(QWidget):
         self._plan = plan
         if view_size and len(view_size) == 2:
             self._view_size = (int(view_size[0]), int(view_size[1]))
-            self.resize(max(0, self._view_size[0]), max(0, self._view_size[1]))
+            if apply_geometry:
+                self.resize(max(0, self._view_size[0]),
+                            max(0, self._view_size[1]))
         if changed:
             self.update()
         return changed
@@ -790,8 +812,13 @@ class BubbleOverlay(QWidget):
         self._scale_x = sx
         self._scale_y = sy
 
-    def set_plan(self, plan, view_size=None):
-        """提交球前层的绘制指令（语义同 `SceneCanvas.set_plan`）。"""
+    def set_plan(self, plan, view_size=None, apply_geometry=True):
+        """提交球前层的绘制指令（语义同 `SceneCanvas.set_plan`）。
+
+        ★ `apply_geometry` 与 `SceneCanvas.set_plan` 同一口径（第167轮）：
+          球前层是**画布的子控件**，它的 resize 不进任务栏，所以默认仍是 `True`；
+          这个参数只是为了两个类的签名一致，避免调用方"换一个类就 AttributeError"。
+        """
         plan = plan or []
         if view_size is None:
             view_size = self._view_size
@@ -801,7 +828,9 @@ class BubbleOverlay(QWidget):
         self._plan = plan
         if view_size and len(view_size) == 2:
             self._view_size = (int(view_size[0]), int(view_size[1]))
-            self.resize(max(0, self._view_size[0]), max(0, self._view_size[1]))
+            if apply_geometry:
+                self.resize(max(0, self._view_size[0]),
+                            max(0, self._view_size[1]))
         if changed:
             self.update()
         return changed

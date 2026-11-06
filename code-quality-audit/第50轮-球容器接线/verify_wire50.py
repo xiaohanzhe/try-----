@@ -492,14 +492,26 @@ _upd_names = _names_in(_upd) if _upd is not None else set()
 check('G4', 'split_bubble_layers' in _upd_names and '_update_bubble_overlay' in _upd_names,
       '_update_scene_layer 里真调用了 split_bubble_layers 与 _update_bubble_overlay')
 _kw = set()
+_pf_calls = 0
 if _upd is not None:
     for sub in ast.walk(_upd):
         if isinstance(sub, ast.Call):
-            for kw in sub.keywords:
-                if kw.arg:
-                    _kw.add(kw.arg)
+            # ★ 第167轮修正：**只认 `plan_frame(...)` 这次调用**。
+            #   原实现把函数里**所有** Call 的关键字名并进 `_kw` ——
+            #   名义上断"plan_frame 带 bubbles="，实际只要函数里任何地方出现
+            #   `bubbles=` 就算过；而且 extra 回显整个并集，**加一个无关关键字
+            #   就让基线漂**（第167轮加了 `apply_geometry=` 后 G5 当场 DIFF，
+            #   判定一个字没变）⇒ 正是第138/146轮那条「输出里不许含时相量」。
+            if isinstance(sub.func, ast.Attribute) and sub.func.attr == 'plan_frame':
+                _pf_calls += 1
+                for kw in sub.keywords:
+                    if kw.arg:
+                        _kw.add(kw.arg)
 check('G5', 'bubbles' in _kw,
-      'plan_frame 调用带 `bubbles=` 关键字（实得 kwargs=%r）' % (sorted(_kw),))
+      'plan_frame 调用带 `bubbles=` 关键字（plan_frame 调用 %d 处，带 bubbles=%s）'
+      % (_pf_calls, 'bubbles' in _kw))
+check('G5b', _pf_calls >= 1,
+      '_update_scene_layer 里真的调了 `plan_frame(...)`（0 处 ⇒ G5 是恒假判据）')
 check('G6', 'transfer_world' in _upd_names,
       '世界切换时调 fld.transfer_world(...)（回暗世界自动脱下球）')
 

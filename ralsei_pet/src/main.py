@@ -1505,7 +1505,13 @@ class RalseiPet(QMainWindow):
         #:   正常的，其余都置顶」）。**唯一写者是 `_set_scene_topmost`**，
         #:   别处只读 —— 它的作用是：① 幂等（每帧调也只在翻转时真动 z 序）；
         #:   ② 给 `_apply_pet_z_order` 当闸门（置顶中不许把宠物插回普通层）。
-        self._scene_topmost_on = False
+        #: ★★★ **初值必须是 `None`（未定），不能是 `False`**：真机实测（第167轮）
+        #:   宠物启动后**本身就可能带着 topmost**（窗口刚建出来那一下的既有状态），
+        #:   而桌面场景的 `want` 恰好也是 `False` ⇒ 写 `False` 会让第一次调用
+        #:   "判定没翻转 ⇒ 直接返回" ⇒ **一次 `SetWindowPos` 都不发** ⇒ 那点
+        #:   topmost 被原样保留到下一次楼层刷新，遮挡关系在这段时间里是坏的。
+        #:   `None` 与任何布尔都不相等 ⇒ 第一次调用**必定真打一次**。
+        self._scene_topmost_on = None
 
         # ---- ★★★ 第109轮「原作式场景过渡」状态机 ----
         # 原作实现（UTMT 反编译 ch1，逐字，证据见
@@ -9422,7 +9428,16 @@ class RalseiPet(QMainWindow):
             #   ⇒ 第110轮画面砍半后（1066×800 vs 屏 2560×1600）差异立刻显形。
             # ★ 顺序修正：`set_plan` 会 resize ⇒ 必须**在它之后**把画布铺回整屏，
             #   否则整屏尺寸被画面尺寸覆盖（见上）。`resize` 幂等（尺寸没变时不重排）。
-            canvas.set_plan(behind, view)
+            # ★★★ 第167轮：**上面这条顺序修正只是补后果，现在把原因也拆了**。
+            #   `apply_geometry=False` ⇒ `set_plan` 只更新 `_view_size`（绘制坐标
+            #   空间），**不动 widget 几何** ⇒ 画布不再每帧在"整屏 ↔ 画面"之间
+            #   来回变尺寸。真机实测（`TrayNotifyWnd` 矩形跃迁率当判据，见
+            #   `scene_canvas.set_plan` 的 docstring）：那句 resize 让 explorer
+            #   把画布当成"反复进出全屏"，通知区宽度在 519↔561 之间跳
+            #   （±42px = 一个图标位 @150%）⇒ **用户的托盘在抽搐**。
+            #   下面的 `canvas.resize(sw, sh)` 留着当守卫：同值 resize 实测无害
+            #   （`view_size` 强制成当前尺寸时仍 0.0/s）。
+            canvas.set_plan(behind, view, apply_geometry=False)
             canvas.resize(int(sw), int(sh))
             self._place_scene_layer()
             self._update_bubble_overlay(front, view)
@@ -9978,6 +9993,9 @@ class RalseiPet(QMainWindow):
         ★ 幂等：只在 `_scene_topmost_on` **翻转**时真动 z 序。本函数每帧都会被
           `_show_scene_layer` 调到 —— 不幂等就是每秒几十次 `SetWindowPos`
           （闪烁 + 白烧 CPU）。
+        ★ 但**第一次**调用一定要真打（状态位初值 `None` = 未定），原因见
+          `__init__` 里那段：初值写 `False` 会让桌面场景的第一次调用被
+          "没翻转"挡掉，启动时那点 topmost 就留下来了。
 
         ★ 为什么不改窗口标志：那是建楼硬契约禁止的（见本节顶上的说明）。
           这里走 `floor_manager.HWND_TOPMOST / HWND_NOTOPMOST`，只动 z 序、
@@ -10001,8 +10019,12 @@ class RalseiPet(QMainWindow):
                 _sid = _state.get('scene_id')
             _unknown = not (isinstance(_sid, str) and _sid)
             want = (not _unknown) and bool(on) and not self._scene_is_desktop_scene()
-            if want == bool(getattr(self, '_scene_topmost_on', False)):
-                return bool(self._scene_topmost_on)
+            # ★ 注意：这里比的是**原值**（可能是 `None`），不是 `bool(...)`。
+            #   转成 bool 的话 `None` 会变 `False`，桌面场景又恰好 `want=False`
+            #   ⇒ 第一次调用照样被"没翻转"挡掉，等于白设了 None 初值。
+            _cur = getattr(self, '_scene_topmost_on', None)
+            if want == _cur:
+                return bool(_cur)
             targets = self._scene_topmost_targets()
             if not want:
                 # 还原时**反着摘**：从最上面那件开始，最后落到画布
@@ -10015,8 +10037,14 @@ class RalseiPet(QMainWindow):
                     done += 1
             # ★ 状态位照翻（哪怕一个句柄都没拿到）：否则每帧都会重试同一件不可能的事
             self._scene_topmost_on = want
-            _log.info('场景层置顶%s：%d/%d 个窗口（画布/宠物/灵魂/幽灵）',
-                      '开' if want else '关', done, len(targets))
+            # ★★ 第167轮：这行**只能是 debug**，不能是 info。
+            #   它是"每次状态翻转"的诊断，一次换场景就打一行；写成 info 会把
+            #   它塞进**所有构造 `RalseiPet()` 的 G2 套件的 stdout**（实测：
+            #   round8_anim / soul_round55 / check99 / check89 / npc_persona55 /
+            #   npc_place56 / check67 / check73 八个套件同时 DIFF，判定一个字没变）
+            #   ⇒ 那正是第138/146轮那条「判据/输出里不许含时相量」的同类坑。
+            _log.debug('场景层置顶%s：%d/%d 个窗口（画布/宠物/灵魂/幽灵）',
+                       '开' if want else '关', done, len(targets))
             return want
         except Exception as e:
             _log.debug("场景层置顶失败（保持原 z 序）: %s", e)
