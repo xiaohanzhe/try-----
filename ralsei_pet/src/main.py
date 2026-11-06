@@ -200,6 +200,14 @@ RUNUP_TIMEOUT_S = 8.0        # 整段助跑（退 + 冲）的超时，防止状�
 # `max(speed*3, 30)`：差 30px 就起跳，等于把这一跳凭空拉长 30px
 # ⇒ 刚助跑换来的那点速度又被吃掉（正好抵掉助跑的收益）。
 RUNUP_FIRE_PX = 18.0
+# ★★★ 第166轮（D1 修复）：落地"阈值内吸附"半径（px）。
+# 起跳瞬间的横向速度被**锁存**成他真跑出来的那个数（`_jump_vx0`），
+# 于是落点 = `起跳点 + vx0 × T` 是由物理算出来的，**不再**强写回 `jump_target_pos`。
+# 实测速度与规划速度必然有末帧/浮点级的差（`sqrt(2aL)` 的连续性、`_runup_best_px_s`
+# 记的是峰值），差在半个身位内就吸附回目标 —— 用户第166轮口径「阈值内吸附，超出如实掉」。
+# 超出这个半径 ⇒ 落点就是落点：还在目标层可见区域内就**就地落**（不往回拉），
+# 出去了就 `start_falling()`（2.5D：走出平台边缘＝掉下去）。
+JUMP_SNAP_PX = 12.0
 # ★★★ 第165轮：运动能力档案 —— 桌宠本人是谁的档案
 # 用户口径（2026-11-06）：「给AI加装一个学习模块，让他能够像是练习一样练出来，
 # 当然，针对不同NPC的特点，运动能力肯定也不同，所以初始和进步速度都不同哦」
@@ -8404,6 +8412,15 @@ class RalseiPet(QMainWindow):
         self.jump_start_pos = QPoint(0, 0)
         self.jump_target_pos = QPoint(0, 0)
         self.jump_target_window = None
+        # ★★★ 第166轮（D1）：起跳瞬间锁存的弹道初速。
+        #   `_jump_vx0` —— 横向初速度（px/s，**带符号**）。`None` = 这一跳没走
+        #                 `start_jump`（老回归桩 / 惊讶小跳）或锁存失败 ⇒ `handle_jump`
+        #                 退回旧的"按目标反推"口径，行为与改动前逐值相同。
+        #   `_jump_vy0` —— 竖直初速度（px/s，负=朝上）。
+        #   `_jump_dur0`—— 与它们同一时刻的飞行时长（秒），落地算 `x = x0 + vx0·T` 用它。
+        self._jump_vx0 = None
+        self._jump_vy0 = None
+        self._jump_dur0 = None
 
         # ★★★ 第164轮：助跑状态（见文件头 `RUNUP_*` 那一段）
         #   `_runup`        —— 进行中的助跑，None = 没有。字段：
@@ -12223,7 +12240,66 @@ class RalseiPet(QMainWindow):
             _rej = getattr(self, '_jump_reject', None) or ('unknown', None, None)
             _log.debug("起跳被闸门拒绝：%s（实得 %s，上限 %s）", *_rej)
             return False
+
+        # ★★★ 第166轮（D1 修复）：**起跳瞬间锁存速度**。
+        #   旧的 `handle_jump` 写的是 `vx = delta_x / jump_duration` ——
+        #   横向速度由**目标位置反推**，于是"站着不动也能横移"，这正是 D1：
+        #   距离成了输入，物理上不可能（`motion2d` 推论1：`v=0 ⇒ 位移=0`）。
+        #   现在速度在**起跳这一刻**定死，之后飞行中只按 `x = x0 + vx0·t` 推进，
+        #   落点由它**算出来**；`handle_jump` 只读不问。
+        #   取值口径全在 `_lock_jump_velocity` 里（单一真源），这里只负责落位。
+        # ★ 用 `getattr` 兜底：本项目老回归桩只代理当年存在的方法，
+        #   新增的链上方法它们没有（第156轮栽过一次，这是同款防法）。
+        _locker = getattr(self, '_lock_jump_velocity', None)
+        if _locker is not None:
+            self._jump_vx0, self._jump_vy0, self._jump_dur0 = _locker()
+        else:
+            self._jump_vx0 = None
+            self._jump_vy0 = None
+            self._jump_dur0 = None
         return True
+
+    def _lock_jump_velocity(self):
+        u"""起跳瞬间定死这一跳的弹道初速度 → `(vx0, vy0, T)`；失败给 `(None, None, None)`。
+
+        两档口径（用户第166轮裁定「近跳豁免助跑」）
+        ------------------------------------------
+        · **助跑起跳**（`_runup_ready`）⇒ 用**实测峰值速度**：真跑出来多少就多少。
+          助跑距离本来就是 `L = v_need²/(2a)` 反算的 ⇒ 冲到起跳点时末速
+          `sqrt(2aL) == v_need`，于是落点差≈0，`JUMP_SNAP_PX` 兜浮点/峰值差。
+          若实测比需要的快（还在冲刺、没进减速档）⇒ 就**冲过头**，
+          那是真物理，**不**在这里偷偷削回 `v_need`（削回去又变成"距离当输入"）。
+        · **近跳豁免**（未助跑）⇒ 沿用 `v_need = |dx|/T`：闸门已经保证
+          `v_need ≤ _max_run_px_s()`（他的走路/配置上限）⇒ 这一段与改动前**逐值相同**，
+          动作节奏零变化（用户口径：近跳不强制助跑）。
+
+        `vx0` 带符号（与屏幕 X 一致）；`dx == 0` 时**恒为 0**（`motion2d` 推论1：
+        原地起跳绝不横移）。`T` 与 `vy0` 同一时刻定 → 落地 `x = x0 + vx0·T` 才是自洽的。
+        """
+        try:
+            _T0 = float(getattr(self, 'jump_duration', 0) or 0) or 1.0
+            _g0 = float(getattr(self, 'gravity', 500.0) or 500.0)
+            _dx0 = float(self.jump_target_pos.x() - self.jump_start_pos.x())
+            _dy0 = float(self.jump_target_pos.y() - self.jump_start_pos.y())
+            _v_need = abs(_dx0) / _T0
+            _meas = max(float(getattr(self, '_last_move_speed_px_s', 0.0) or 0.0),
+                        float(getattr(self, '_runup_best_px_s', 0.0) or 0.0))
+            if getattr(self, '_runup_ready', False) and _meas > 0.0:
+                try:
+                    _cap0 = float(RUNUP_SPEED_MAX) * float(self._motion_eff()['run'])
+                except Exception:                     # noqa: BLE001
+                    _cap0 = float(RUNUP_SPEED_MAX)
+                _v_lock = min(_meas, _cap0)           # 真跑出来的速度
+            else:
+                _v_lock = _v_need                     # 近跳豁免：与改动前逐值相同
+            _vx0 = ((1.0 if _dx0 >= 0 else -1.0) * _v_lock) if abs(_dx0) > 0 else 0.0
+            _vy0 = (_dy0 - 0.5 * _g0 * _T0 * _T0) / _T0
+            return _vx0, _vy0, _T0
+        except Exception as e:                        # noqa: BLE001
+            # 锁存失败 ⇒ 全给 None，`handle_jump` 退回旧的"按目标反推"分支
+            # （宁可回到改动前的行为，也不要带着半截状态飞出去）
+            _log.debug("[起跳] 速度锁存失败（退回旧口径）: %s", e)
+            return None, None, None
 
     def start_falling(self, fall_velocity=0, is_thrown=False, reason=None):
         # 开始重力掉落，实现"建楼"要求：没有支撑，就必须往下掉
@@ -12331,8 +12407,19 @@ class RalseiPet(QMainWindow):
         delta_x = self.jump_target_pos.x() - self.jump_start_pos.x()
         delta_y = self.jump_target_pos.y() - self.jump_start_pos.y()
         
-        # 计算水平速度：匀速运动
-        vx = delta_x / self.jump_duration
+        # 计算水平速度
+        # ★★★ 第166轮（D1 修复）：**读锁存值，不再按目标反推**。
+        #   旧写法 `vx = delta_x / self.jump_duration` 让"横向速度"由目标位置决定
+        #   ⇒ 站定起跳也能横移（`motion2d` 推论1 说这物理上不可能），
+        #   而且这个值**不受任何速度上限约束**（外部入口直接调 start_jump 时更明显）。
+        #   现在起跳那刻就定死了（`start_jump` 里锁存），飞行中只按它推进。
+        #   `None` = 没走 `start_jump` 的入口 / 锁存失败 / 老回归桩
+        #   ⇒ 退回旧口径，行为与改动前完全一致（桩没新增属性也不会崩）。
+        _vx0 = getattr(self, '_jump_vx0', None)
+        if _vx0 is None:
+            vx = delta_x / self.jump_duration
+        else:
+            vx = float(_vx0)
         
         # 计算初始垂直速度：保证**精确落在** jump_target_pos
         g = self.gravity
@@ -12349,7 +12436,14 @@ class RalseiPet(QMainWindow):
         #   改为屏幕坐标下的正确形式，`vy0` **负 = 初速朝上**（与 `handle_fall` 的
         #   `_vy0` 同一约定）：此时 y(T) == y0 + Δy **恰好成立**，不再需要魔数，
         #   也不再需要末帧吸附来“补”落点。
-        vy0 = (delta_y - 0.5 * g * self.jump_duration * self.jump_duration) / self.jump_duration
+        # ★ 第166轮：竖直初速同样优先用锁存值（`start_jump` 里与 `_jump_dur0` 一起定的）。
+        #   公式与下面那句**完全一致**（`y(T) == y0 + Δy` 恒成立），锁存只是为了
+        #   "飞行中 `jump_target_pos` 被别处改掉时，弹道不会跟着变"。
+        _vy0 = getattr(self, '_jump_vy0', None)
+        if _vy0 is None:
+            vy0 = (delta_y - 0.5 * g * self.jump_duration * self.jump_duration) / self.jump_duration
+        else:
+            vy0 = float(_vy0)
         
         # 计算当前时间的位置
         x = self.jump_start_pos.x() + vx * elapsed
@@ -12405,15 +12499,63 @@ class RalseiPet(QMainWindow):
         
         # 确保跳跃结束时准确到达目标位置
         if jump_progress >= 1.0:
-            # 跳跃完成，确保正确落到目标位置
+            # 跳跃完成，结算落点。
+            # ★★★ 第166轮（D1 修复）：落点由**锁存的横向速度**算出来，不再强写目标。
+            #   旧写法这里两句直接 `x = jump_target_pos.x()` —— 于是 ②里明明已经
+            #   按速度算出了弹道，末帧又被"目标"覆盖回去 ⇒ 无论速度多少都落得准，
+            #   等于把"距离是结果"这件事**又抹掉了**。现在：
+            #     · 差 ≤ `JUMP_SNAP_PX` ⇒ 吸附（兜住末帧/浮点/`_runup_best_px_s` 峰值差）；
+            #     · 差更大 ⇒ 落点就是落点（冲过头是物理结果，不是误差）。
             x = self.jump_target_pos.x()
             y = self.jump_target_pos.y()
+            _vx_land = getattr(self, '_jump_vx0', None)
+            _miss_px = 0.0
+            if _vx_land is not None:
+                _T_land = float(getattr(self, '_jump_dur0', None) or self.jump_duration)
+                _x_calc = self.jump_start_pos.x() + float(_vx_land) * _T_land
+                _miss_px = _x_calc - self.jump_target_pos.x()
+                x = self.jump_target_pos.x() if abs(_miss_px) <= JUMP_SNAP_PX else _x_calc
             # ★ 第93轮修复（P1-6）：落地位置**在这里一次夹紧**。
             #   原来此处不夹，夹取被留到函数末尾（`_clamp_pos_to_desktop()` + 第二次
             #   `move()`）⇒ 落地帧位置被**写两遍**：夹紧一旦生效就把宠物从落点挪开，
             #   而此时 `spatial_pos["z"]` / `_apply_pet_z_order()` 已按"落点"结算过，
             #   层级与坐标自相矛盾（典型"改一处漏一处"隐患）。夹在此处 = 只有一份真值。
             x, y = self._clamp_pos_to_desktop(x, y)
+
+            # 确保Ralsei可见，并把位置**写这一处**（落地帧不许写两遍，见上一段）
+            # ★ 第166轮：位置必须在落空判定**之前**写 —— `start_falling()` 读的
+            #   `self.pos()` 就是坠落起点，先写位置才能"从落点掉下去"。
+            self.show()
+            self.move(int(x), int(y))
+
+            # ★★★ 第166轮：落空了怎么办。两档，都**不**偷偷拉回目标：
+            #   · 落点仍在目标层的可见区域内 ⇒ 就地落（"他跳偏了但还站得住"）；
+            #   · 出去了 ⇒ 真重力掉下去（2.5D：走出平台边缘就是掉）。
+            #   ⚠️ 不在这里枚举"会不会落在别的楼板"——那会引入第二套落点归属真源，
+            #      而且观感上是"跳错窗口"。交给重力链路，落地后自然重新枚举楼层。
+            if abs(_miss_px) > JUMP_SNAP_PX:
+                _inside = False
+                _fm_land = getattr(self, 'floor_manager', None)
+                _tf_land = getattr(self, 'jump_target_floor', None)
+                if _fm_land is not None and _tf_land is not None:
+                    try:
+                        _inside = bool(_fm_land.floor_visible_contains(
+                            _tf_land, QPoint(int(x), int(y))))
+                    except Exception as e:            # noqa: BLE001
+                        _log.debug("[落地] 落点可见区域校验异常（按落空处理）: %s", e)
+                        _inside = False
+                _log.debug("[落地] 偏离目标 %.1fpx（起跳锁存 vx=%s）⇒ %s",
+                           _miss_px, _vx_land, '就地落' if _inside else '掉下去')
+                if not _inside:
+                    self.is_jumping = False
+                    self._jump_anim_override = None
+                    self._hop_mode = False
+                    self._jump_vx0 = None
+                    self._jump_vy0 = None
+                    self._jump_dur0 = None
+                    # `start_falling` 自带"正在跳就跳过"的守卫 ⇒ 必须先撤起跳标记
+                    self.start_falling()
+                    return
 
             # ===== 落地收口（第十四轮）："落到某一层楼"必须当场结算 =====
             # 原来这里只更新了 `current_window`（历史遗留的裸缓存），**没更新
@@ -12426,12 +12568,6 @@ class RalseiPet(QMainWindow):
                 self.current_platform_z = landed_floor.get('platform_height', 0)
             # current_window 降级为派生缓存，统一由楼层刷新（与走路/坠落同一条路）
             self._sync_window_cache_from_floor(landed_floor)
-
-            # 确保Ralsei可见
-            self.show()
-
-            # 移动到新位置
-            self.move(int(x), int(y))
 
             # 更新Z轴坐标为目标Z坐标
             self.spatial_pos["z"] = self.jump_target_z
@@ -12446,6 +12582,11 @@ class RalseiPet(QMainWindow):
             self.is_jumping = False
             # 清掉"跨度大用攀爬素材"的覆盖标记，避免残留到下一次跳跃
             self._jump_anim_override = None
+            # ★ 第166轮：这次跳跃的弹道锁存到此失效 —— 不清的话，下一次**不走
+            #   `start_jump`** 的跳（如惊讶小跳）会拿着上次的 `_jump_vx0` 横移出去。
+            self._jump_vx0 = None
+            self._jump_vy0 = None
+            self._jump_dur0 = None
             # ★ 第164轮：惊讶小跳落地，撤掉"跳过楼层穿透判定"的标记。
             #   不撤的话，下一次**跨层跳跃**会继承它 ⇒ 穿透检查被静默关掉
             #   （"改一处漏一处"那类）：必须在落地这一处收干净。
@@ -13531,6 +13672,12 @@ class RalseiPet(QMainWindow):
         self.jump_start_pos = self.pos()
         # ★ 原地：目标点就是起点 ⇒ `handle_jump` 里 `vx = delta_x / T = 0`
         self.jump_target_pos = QPoint(self.pos().x(), self.pos().y())
+        # ★ 第166轮：原地小跳的横向初速**显式**写 0 —— 不能靠"上一次跳跃留下的
+        #   锁存值"，那条路会让"被吓一跳"变成横向平移（本函数不走 `start_jump`）。
+        #   竖直留着 `None` ⇒ `handle_jump` 按 `(Δy − 0.5gT²)/T` 自己算，与原来一致。
+        self._jump_vx0 = 0.0
+        self._jump_vy0 = None
+        self._jump_dur0 = float(duration)
         self.jump_duration = duration
         self.jump_start_spatial = self.spatial_pos.copy()
         self.jump_target_z = self.spatial_pos.get('z', 0)

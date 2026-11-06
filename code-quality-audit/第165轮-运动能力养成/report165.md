@@ -262,11 +262,21 @@ python code-quality-audit\regress\run_all.py
 * **D1**（第164轮遗留）：`main.py:12058` 仍是 `vx = delta_x / jump_duration`，未修。
   准确的收口状态是「D5/D4/D3 已修、R1 已落地、D2 撤销、**只剩 D1**」。
 
-### 本轮新发现的一条观察（不改，只登记）
+### 本轮新发现的一条观察 —— ★★★ 第166轮**更正：这条结论是错的**
 
-`_max_run_px_s()` 里 `_base = max_speed / dt`。默认配置 `max_speed=15` ⇒ `_base ≈ 454px/s`，
+> **更正（2026-11-06，第166轮）**：下面这段用了**代码 fallback** 的 `max_speed=15`，
+> 而真实配置 `ralsei_pet/config.json` 是 `movement.max_speed = 8.0`（`speed=5.0 / min=3.0`）。
+> 按 `8.0 / 0.033` 算 `_base ≈ **242.4px/s**`，**低于** `RUNUP_SPEED_MAX = 320`
+> ⇒ **助跑上限是生效的，不是惰性的**（只有 `run` 倍率把上限抬到 242.4 以上才需要真跑起来）。
+> 数值由 `第166轮-D1横速/_tools/probe166_d1.py` 从 `config.json` 直接读出来复算
+> （`probe166_full.py` A 段）。教训：**别拿代码里的 fallback 当"真实值"**，
+> 配置真值必须从配置文件读。原文保留在下面，仅作历史对照。
+
+`_max_run_px_s()` 里 `_base = max_speed / dt`。~~默认配置 `max_speed=15` ⇒ `_base ≈ 454px/s`，
 而 `RUNUP_SPEED_MAX = 320` ⇒ **`max(_base, min(_cap, _meas))` 恒取 `_base`**，
-也就是说在默认配置下"助跑上限"其实是**惰性**的（`run` 倍率要 >1.42 才开始起作用）。
+也就是说在默认配置下"助跑上限"其实是**惰性**的（`run` 倍率要 >1.42 才开始起作用）。~~
 它不算错（闸门更保守，物理上跳远失败会自己掉下来），但会让"助跑解锁冲刺"这个设计
-在默认配置下失效。**要不要把 `_base` 改用当前 `speed` 而非常量 `max_speed`，请用户划线** ——
+~~在默认配置下失效~~。**要不要把 `_base` 改用当前 `speed` 而非常量 `max_speed`，请用户划线** ——
 这属于第164轮契约（`check164 B` 段钉着 `v_max` 的算法），我不擅自动。
+（★ 第166轮探针另证：`self.speed` 是**每帧随机抽**的（`random.uniform`，按情绪取区间），
+拿它当门票会**抖**，所以这条路本来也不该走。）
