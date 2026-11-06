@@ -2,6 +2,7 @@
 
 > **全文在 `参考-契约与历轮（详版）.md`**（不注入）。留铁律+索引+裁定。
 > ⚠️ **别为凑上限削语义**·读文件**字节忠实**（`newline=''`，条款 §11）。❗❗**只许 Write/Edit**；**当日日志 append-only**（skill `agent-memory-compaction`）。
+> ★ **起手先读详版 §168 操作手册**（环境症状 / git push 做法 / 性能三铁律 / 回归处置）。
 ## 0. 铁律
 - ★★★ **动手前四步（2026-11-05 用户口径，优先于"我来拍板"）**：① 细节**只要可能不准就问**（一次一个，判断不了就当有歧义）；② **说出实现方案**（改哪个文件/什么办法/预期/风险/哪部分不做）；③ **等用户回一句"可以"再动手**（沉默≠默认）；④ 纯执行类（提交/跑回归/删文件）不问。★★★ **"没说＝按默认执行"≠免除这一问**（用户原话：「**要是我没说那等于默认，但这不意味着你可以不问哦**」）⇒ 影响行为的细节，即使不答、我按默认走，也**先摆出来问一句**。详见用户级 `MEMORY.md`。
 - 每轮改动即 **commit+push**；称呼"用户"；技术细节我拍板（**但必须先按上条声明**）；不可逆/对外动作先说影响面。
@@ -9,16 +10,10 @@
 - ❗**仓库根=`try - 副本`**（`ralsei_pet` 子目录）⇒**G2 cwd=仓库根**。远端见 `gitpush.py`。真机起＝`src/main.py`（单实例锁 `Global\RalseiPetMutex`；透明非置顶⇒**甩飞/抛物线只可离屏断言**）。
 - ★★★ **按键账本 API（84）**：`self.soul`=`SoulOverlay`⇒**只能 `release_all()`**；`soul.state`=`SoulState`⇒**只能 `clear_keys()`**。写错=静默 `AttributeError` 被吞（`check84 D5`）。
 - 改码前先跑 G2 `regress/run_all.py`（须**全 IDENTICAL**）；改断言/文案→`--only <suite> --update`。★★ **新增合法零依赖模块撞两闸**：`round5_smoke`（模块数）＋`scene_p0` **A6 白名单**。★ **只读优先、改动最小**；★"写了 N 个文件"须 `os.listdir` 查盘；★★ **回归不许依赖临时区/外部盘**；❗❗**改过核心文件必复检**（skill `core-file-recheck`）。★★★ **改两层登记前先查重复键**；★★ **老套件 BASE 可能硬编码⇒worktree 测错树**。
-## 1. 环境（§1/§18/§19/§21/§37/§65.2）
-- ⚠️ **Bash 常整体坏掉**（`ls/head/cat` 全 127）→ **一律 Python+Write/Read**。❗别从 Bash 调 PowerShell、**别内联 `python -c`**。Python 一律 **`C:\Python311\python.exe`**。❗❗❗ **未提交文件绝不能 `git checkout --`**（109）⇒改前先 commit/留备份。
-- ★★ **写入通道会整体失效**（~25min 自愈）：已有文件写/改/移全拒、**新建正常**⇒只产新文件+换名。❗❗**E: exFAT 已坏**⇒临时盘投 `D:\_tmp\`。❗❗**工具 exe 起不来→先换启动方式**（`DETACHED_PROCESS`，§115C）。
-- ❗❗**临时/备份绝不放工作区**（`git add -A` 记为删除）；**提交前必看 `git diff --cached --numstat`**。❗**清理守卫累计删（50）**：症状=**import 期被 SIGTERM、零输出**⇒**改名归档**。
-- ⭐⭐ **代理端口逐端口实测 CONNECT 再选**。⭐⭐ **编辑保持原 EOL**；中文路径⇒`git ls-files -z`+`surrogateescape`。
-- ★★★ **游戏文件+UTMT⇒详版 §87.10(a)/§76.2/§76.3**（`UndertaleModCli.exe` **只认 `load <data> -s <script.csx>`**·**stdout 须落文件**）。
-## 2. git push（skill `win-git-utf8-push`；§39.5/§37.13/§71.4/§101.13）
-- ★★ **一把跑完 = `…/第38轮-场景系统审查/_tools/gitpush.py <msgfile>`**。提交信息用 **Write 写 UTF-8+`git commit -F`**（`-m` 假成功）。⛔ **绝不循环重试 push**。★★ **`[0r]` 自证树/分支/refspec**（硬编码 `REPO`＋固定 `main` 曾假成功）。★★ 必带 `--refspec HEAD:local-N`。
-- ★ `--allow-del` **带数字**；超限先 `numstat` 归因。❗**核验命令自己会说谎**⇒`ls-remote` **独立构造**+3~5 重试+`rev-parse` 交叉验证＋**必带 CA**。
-- ★★ 两根因：TLS（**现走 schannel，openssl 已不通**）；凭据⇒直取 GCM。★★★ **GCM 路径随 PortableGit 升级失效**⇒"无凭据"实为 `FileNotFoundError`⇒先 `wincredman` 自证。
+## 1. 环境 ★★ **九坑速查：症状在此，处置全文见详版 §168.1**（起手必读）
+- Bash 全 127⇒用 Python（**别内联 `python -c`**、别从 Bash 调 PS；Python=`C:\Python311\python.exe`）｜写入通道**全拒但新建正常**⇒产新文件+换名｜**E: exFAT 坏**⇒`D:\_tmp\`｜exe 起不来⇒`DETACHED_PROCESS`｜**未提交禁 `git checkout --`**（109）｜**临时/备份禁放工作区**（`git add -A` 记成删除）⇒提交前看 `numstat`｜清理守卫累计删⇒**改名归档**｜代理**逐端口实测**｜**保持原 EOL**（中文路径 `ls-files -z`+`surrogateescape`）｜UTMT 见 §168.1 末。
+## 2. git push ★★ **全文详版 §168.2**（skill `win-git-utf8-push`）
+- 只用 `…/第38轮-场景系统审查/_tools/gitpush.py <msgfile>`（信息 Write 写 UTF-8+`git commit -F`）｜⛔**绝不循环重试**｜**必带 `--refspec HEAD:local-N`**（`HEAD:main` 必被拒：远端 main 停在第118轮 `c88292bf`，早已分叉）｜核验独立构造+多重试+`rev-parse` 交叉｜TLS 走 schannel｜凭据直取 GCM｜`--allow-del` 带数字。
 ## 3. 勿回退契约（13 组；**详版 §75.10**+§4.1–§4.12/§10/§23.9）
 ① `availableGeometry()` 只主屏⇒用 `_virtual_screen_rect()`；★ 首帧落点=`pick_corner_screen_work_area()`；② 建楼：`floor_visible_contains` 唯一判据·禁 `WindowStaysOnTopHint`·甩飞必 `_fall_reason=None`·先 `show()` 再调 z 序·⚠️ `climb_1_*`=朝右／`climb_0_*`=朝前；③ `data_store` 唯一入口（vault=`E:\RalseiMemory\`，迁移只复制）·裸脚本先建 `QApplication`；④ G2：`HERMETIC_IDS`·`save_baseline` 合并·新套件必 `print('[PASS] %s')` 字面量·判据名禁自带标记·置 `<轮次>/`⇒`ROOT=join(HERE,'..','..')`；⑤ ★★ 量桌宠/浮层**先声明 DPI 感知**；★★★ 透明分层窗口⇒"可见面积"失效⇒Win32 `IsWindowVisible`+内省对账；⑥ 场景全屏化（§107~§110）：限制轴 `<=`·`camera.scale=out_w/320`＋`scoped_size()`＋`ui_scale()`=√ 钳`[0.5,3.0]`·`resize(整屏)` 排 `set_plan` 后·UI 缩放幂等=基准快照+每次重算。
 **误报清单（勿改）**：`learn_new_skill`｜`_on_ai_reply`（已 `pyqtSignal`）｜`reset_special_states`｜`pet_interaction.py`（**零接线**）。
@@ -41,8 +36,7 @@
 - ★★★ 三款连通图（§117）：`conn115` 可信边｜`conn_inferred115` 候选｜`room_graph115` 分层。★★★ 「可信优先」实测被推翻⇒ 可信层＝锚点/校验，禁作裁剪条件。★★ 入口＝`room_area1` 非 `room_start`。★★ outertale 只能按 `original_room_id`。★★ UTY 禁改 `KINDS`，差异走 `subkind`。★★★ 可读物正文在 `textdata_*`，不在 `obj_readable_*`。★★★ "不符"≠证伪；房间下标序≠剧情序。
 - ★★★ 「灵魂视角」＝显示切换的唯一驱动（§109.5）：只有灵魂/我的视角移动才切显示；★★ NPC 自主移动不切显示但≠不存在。★★★ 欠账＝当前状态非历史（156/157）：写全量＋挂 system 尾；空账返 `''`；随差事同一本档落盘。★★★ 落盘时机＝状态跃迁那刻（158）：`assign`/`cancel` `force=True`、tick 只 `force=_structural`。★★★ 空白名字不算人（159）：`strip()` 后非空才收、绝不 strip 后使用；宿主两道在门控之前、机制层+`from_dict` 各两道。
 - ★★★ **可读物绑定（§117.16）**：键**按房间选**⇒粒度(房间,对象)、同房多实例**共享正文**；**未解不猜**。覆盖 ut 187/202·outertale 183/210·**uty 无**。**UT 空壳＝GMS2 结构**（§120）：数据在 `room.Layers`，`Backgrounds`/`Tiles` **恒空**；338/358 已烘图。
-## 8. 性能线 ★ 铁律⇒**动手前 Read §78.11**
-- ★★★ **三铁律**：冷热差 23~190 倍·`NUM_PARALLEL=1`⇒并发＝排队·`keep_alive` 必走原生 `/api/chat`（`ralsei:v4`）。
+## 8. 性能线 ★ **三铁律（全文详版 §168.3 / §78.11）**：冷热差 23~190 倍·`NUM_PARALLEL=1`⇒并发＝排队·`keep_alive` 必走原生 `/api/chat`（`ralsei:v4`）。
 ## 9. 用户口径（**优先于我的技术判断**）
 - **「prompt 尽量完整」**⇒提速只靠**缓存／后端／模型**（不许砍 prompt）。**「用 7B 就是要他贴合人物且不出 bug」**。**「结巴」**=**已达标**（可见 2%）。**「开机自启」＝选项非硬性**。★★ **工作方式**：「**测完了没问题后按你的计划来**」⇒ **测绿即连续推进**。★ **范围**：暗世界也做⇒**1,251 间**。
 - ★★★ **参考项目只参考、不许抄**（163 原话）⇒ 只**对照/取证**，**禁据此立项加功能**；运动类那批一律不加。缺陷照修，功能不加。
