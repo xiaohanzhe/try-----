@@ -101,7 +101,7 @@ EXPECT_W = 88
 EXPECT_ALREADY = 2
 EXPECT_LETTER = 72
 EXPECT_ANY = 16
-EXPECT_ROUTES = 1828
+EXPECT_ROUTES = 1930
 EXPECT_SCENES = 2166
 
 _n = {'p': 0, 'f': 0}
@@ -134,7 +134,13 @@ RAW = json.loads(io.open(ROUTES_P, encoding='utf-8', newline='').read())
 RL = RAW.get('routes') or []
 IDX = SS.load_index(SCENES)
 SCN = IDX.get('scenes') or {}
-W_RULES = [r for r in RL if (r.get('_original') or {}).get('via') in W_VIA]
+W_RULES = [r for r in RL
+           if (r.get('_original') or {}).get('via') in W_VIA
+           #: ★★★ 第169轮分账：本轮又落了 102 条**分支级** W 边（带 `batch: 169`）。
+           #:   它们是另一批证据（按分支解析，不是 `_room_graph` 的那 98 条），
+           #:   由 `check169` 管。这里必须排除，否则本套件的 88 条历史结论会被冲掉
+           #:   —— 「分账 ≠ 放宽」：过滤掉，但下方 A0 的分母要如实长到 1,930。
+           and not (r.get('_original') or {}).get('batch')]
 W_PAIRS = set((r.get('when_scene'), r.get('to')) for r in W_RULES)
 
 check(u'A0 分母：`load_index()` ok=True、场景数 == %d、路由 == %d 条、W 段非空'

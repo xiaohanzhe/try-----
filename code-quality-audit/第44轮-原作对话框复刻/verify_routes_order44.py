@@ -494,10 +494,14 @@ if have_rooms:
        % (len(_tbl_bad), _tbl_bad[:3]))
 
     _TBLW, _tblw_bad = _tbl_of('W', 7000, 7999)
-    ok(len(_TBLW) == 88 and not _tblw_bad,
-       'C1c2 ★★ 表驱动门（W，第168轮新增）段 == 88 条、priority 7000~7999、'
+    #: ★★ 第169轮：W 段 88 → **190** = 88（第168轮，graph 侧单分支边）
+    #:   + 102（第169轮，按分支解析补回的边）。两批同为 `when_door='W'`、同在 7000 段，
+    #:   靠 `_original.batch` 分账（168 无该字段 / 169 = 169）；逐条重推分别归
+    #:   `check168.B` 与 `check169.B`。
+    ok(len(_TBLW) == 190 and not _tblw_bad,
+       'C1c2 ★★ 表驱动门（W）段 == 190 条（第168轮 88 + 第169轮 102）、priority 7000~7999、'
        '`kind=delta_door_table`、`table` 为反编译名、两端原作品下标齐备（异常 %d: %s）—— '
-       '★逐条重推归 `第168轮/_tools/check168.py` 的 B 段'
+       '★逐条重推归 `check168.B` / `check169.B`'
        % (len(_tblw_bad), _tblw_bad[:3]))
 
     # ★★ C1b 第122轮：被 C1 排除的 ut 段**必须自证**（否则"排除"就成了没人管）。

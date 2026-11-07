@@ -33205,6 +33205,3157 @@
         "src_room_id": 80,
         "dst_room_id": 60
       }
+    },
+    {
+      "to": "ch1.card_castle.card_castle_1f",
+      "priority": 7088,
+      "reason": "原作连接：从 room_cc_elevator 的 W 门离开，落到 room_cc_1f（**分支级**：`obj_doorw_musfade` 的 `Alarm_2` 里 `if (room == 110)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch1.card_castle.cc_elevator",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerw",
+        "src_room_name": "room_cc_elevator",
+        "dst_room_name": "room_cc_1f",
+        "src_room_id": 110,
+        "dst_room_id": 114,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch1.card_castle.card_castle_5f",
+      "priority": 7089,
+      "reason": "原作连接：从 room_cc_elevator 的 W 门离开，落到 room_cc_5f（**分支级**：`obj_doorw_musfade` 的 `Alarm_2` 里 `if (room == 110)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch1.card_castle.cc_elevator",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerw",
+        "src_room_name": "room_cc_elevator",
+        "dst_room_name": "room_cc_5f",
+        "src_room_id": 110,
+        "dst_room_id": 123,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.hometown.alphysalley",
+      "priority": 7090,
+      "reason": "原作连接：从 room_town_mid 的 W 门（x=1740；本房该门共 3 扇，x=301/1082/1740，本分支按位置对应这一扇）离开，落到 room_alphysalley（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 27)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.hometown.town_mid",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_alphysalley",
+        "src_room_id": 27,
+        "dst_room_id": 43,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 1740,
+        "door_x_all": [
+          301,
+          1082,
+          1740
+        ],
+        "x_range": [
+          1730,
+          1840
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.light_world.lw_conbini",
+      "priority": 7091,
+      "reason": "原作连接：从 room_town_mid 的 W 门（x=1082；本房该门共 3 扇，x=301/1082/1740，本分支按位置对应这一扇）离开，落到 room_lw_conbini（**分支级**：`obj_doorw_musfade` 的 `Alarm_2` 里 `if (room == 27)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.hometown.town_mid",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerv",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_lw_conbini",
+        "src_room_id": 27,
+        "dst_room_id": 47,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 1082,
+        "door_x_all": [
+          301,
+          1082,
+          1740
+        ],
+        "x_range": [
+          1000,
+          1140
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.light_world.lw_icee_pizza",
+      "priority": 7092,
+      "reason": "原作连接：从 room_town_mid 的 W 门（x=301；本房该门共 3 扇，x=301/1082/1740，本分支按位置对应这一扇）离开，落到 room_lw_icee_pizza（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 27)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.hometown.town_mid",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_lw_icee_pizza",
+        "src_room_id": 27,
+        "dst_room_id": 48,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 301,
+        "door_x_all": [
+          301,
+          1082,
+          1740
+        ],
+        "x_range": [
+          290,
+          370
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.hometown.hospital_lobby",
+      "priority": 7093,
+      "reason": "原作连接：从 room_town_south 的 W 门（x=600；本房该门共 2 扇，x=240/600，本分支按位置对应这一扇）离开，落到 room_hospital_lobby（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 29)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.hometown.town_south",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_hospital_lobby",
+        "src_room_id": 29,
+        "dst_room_id": 34,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 600,
+        "door_x_all": [
+          240,
+          600
+        ],
+        "x_range": [
+          580,
+          660
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.light_world.lw_police",
+      "priority": 7094,
+      "reason": "原作连接：从 room_town_south 的 W 门（x=240；本房该门共 2 扇，x=240/600，本分支按位置对应这一扇）离开，落到 room_lw_police（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 29)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.hometown.town_south",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_lw_police",
+        "src_room_id": 29,
+        "dst_room_id": 46,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 240,
+        "door_x_all": [
+          240,
+          600
+        ],
+        "x_range": [
+          230,
+          280
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.light_world.lw_computer_lab",
+      "priority": 7095,
+      "reason": "原作连接：从 room_library 的 W 门离开，落到 room_lw_computer_lab（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 42)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.hometown.library",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_library",
+        "dst_room_name": "room_lw_computer_lab",
+        "src_room_id": 42,
+        "dst_room_id": 44,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          218
+        ],
+        "x_range": [
+          110,
+          150
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.light_world.lw_library_upstairs",
+      "priority": 7096,
+      "reason": "原作连接：从 room_library 的 W 门（x=218）离开，落到 room_lw_library_upstairs（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 42)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.hometown.library",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_library",
+        "dst_room_name": "room_lw_library_upstairs",
+        "src_room_id": 42,
+        "dst_room_id": 45,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 218,
+        "door_x_all": [
+          218
+        ],
+        "x_range": [
+          215,
+          230
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.hometown.town_south",
+      "priority": 7097,
+      "reason": "原作连接：从 room_lw_police 的 W 门（本房**无**该门实例；原作用运行时创建或直接调用，表里仍有这条连接）离开，落到 room_town_south（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 46)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.light_world.lw_police",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_lw_police",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 46,
+        "dst_room_id": 29,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": null,
+        "door_x_all": [],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.ralsei_room.dw_ralsei_castle_front",
+      "priority": 7098,
+      "reason": "原作连接：从 room_dw_ralsei_castle_1f 的 W 门（x=551；本房该门共 2 扇，x=551/857，本分支按位置对应这一扇）离开，落到 room_dw_ralsei_castle_front（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 67)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.ralsei_room.dw_ralsei_castle_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_ralsei_castle_1f",
+        "dst_room_name": "room_dw_ralsei_castle_front",
+        "src_room_id": 67,
+        "dst_room_id": 63,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 551,
+        "door_x_all": [
+          551,
+          857
+        ],
+        "x_range": [
+          550,
+          700
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.my_castle_town.dw_castle_dungeon",
+      "priority": 7099,
+      "reason": "原作连接：从 room_dw_ralsei_castle_1f 的 W 门（x=857；本房该门共 2 扇，x=551/857，本分支按位置对应这一扇）离开，落到 room_dw_castle_dungeon（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 67)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.ralsei_room.dw_ralsei_castle_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_1f",
+        "dst_room_name": "room_dw_castle_dungeon",
+        "src_room_id": 67,
+        "dst_room_id": 69,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 857,
+        "door_x_all": [
+          551,
+          857
+        ],
+        "x_range": [
+          840,
+          1000
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.my_castle_town.dw_castle_rooms_kris",
+      "priority": 7100,
+      "reason": "原作连接：从 room_dw_ralsei_castle_2f 的 W 门（x=255；本房该门共 3 扇，x=255/530/808，本分支按位置对应这一扇）离开，落到 room_dw_castle_rooms_kris（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 68)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.ralsei_room.dw_ralsei_castle_2f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_dw_ralsei_castle_2f",
+        "dst_room_name": "room_dw_castle_rooms_kris",
+        "src_room_id": 68,
+        "dst_room_id": 71,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 255,
+        "door_x_all": [
+          255,
+          530,
+          808
+        ],
+        "x_range": [
+          240,
+          340
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.my_castle_town.dw_castle_rooms_susie",
+      "priority": 7101,
+      "reason": "原作连接：从 room_dw_ralsei_castle_2f 的 W 门（x=530；本房该门共 3 扇，x=255/530/808，本分支按位置对应这一扇）离开，落到 room_dw_castle_rooms_susie（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 68)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.ralsei_room.dw_ralsei_castle_2f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_2f",
+        "dst_room_name": "room_dw_castle_rooms_susie",
+        "src_room_id": 68,
+        "dst_room_id": 72,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 530,
+        "door_x_all": [
+          255,
+          530,
+          808
+        ],
+        "x_range": [
+          520,
+          610
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.card_castle.cc_lancer",
+      "priority": 7102,
+      "reason": "原作连接：从 room_dw_ralsei_castle_2f 的 W 门（x=808；本房该门共 3 扇，x=255/530/808，本分支按位置对应这一扇）离开，落到 room_cc_lancer（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 68)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.ralsei_room.dw_ralsei_castle_2f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_ralsei_castle_2f",
+        "dst_room_name": "room_cc_lancer",
+        "src_room_id": 68,
+        "dst_room_id": 262,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 808,
+        "door_x_all": [
+          255,
+          530,
+          808
+        ],
+        "x_range": [
+          780,
+          860
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_teacup_1",
+      "priority": 7103,
+      "reason": "原作连接：从 room_dw_cyber_battle_maze_1 的 W 门（本房**无**该门实例；原作用运行时创建或直接调用，表里仍有这条连接）离开，落到 room_dw_cyber_teacup_1（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 79)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_battle_maze_1",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_cyber_battle_maze_1",
+        "dst_room_name": "room_dw_cyber_teacup_1",
+        "src_room_id": 79,
+        "dst_room_id": 255,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [],
+        "x_range": [
+          1200,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.cyber_field_music_shop",
+      "priority": 7104,
+      "reason": "原作连接：从 room_dw_cyber_musical_door 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_musical_shop（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 84)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_musical_door",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_cyber_musical_door",
+        "dst_room_name": "room_dw_cyber_musical_shop",
+        "src_room_id": 84,
+        "dst_room_id": 89,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+      "priority": 7105,
+      "reason": "原作连接：从 room_dw_cyber_musical_door 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_post_music_boss_slide（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 84)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_musical_door",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_cyber_musical_door",
+        "dst_room_name": "room_dw_cyber_post_music_boss_slide",
+        "src_room_id": 84,
+        "dst_room_id": 96,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_maze_fireworks",
+      "priority": 7106,
+      "reason": "原作连接：从 room_dw_cyber_maze_virokun 的 W 门（本房 2 扇，x=240/640；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_maze_fireworks（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 85)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_maze_virokun",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_cyber_maze_virokun",
+        "dst_room_name": "room_dw_cyber_maze_fireworks",
+        "src_room_id": 85,
+        "dst_room_id": 92,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          240,
+          640
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_maze_tasque",
+      "priority": 7107,
+      "reason": "原作连接：从 room_dw_cyber_maze_virokun 的 W 门（本房 2 扇，x=240/640；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_maze_tasque（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 85)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_maze_virokun",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_cyber_maze_virokun",
+        "dst_room_name": "room_dw_cyber_maze_tasque",
+        "src_room_id": 85,
+        "dst_room_id": 93,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          240,
+          640
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_musical_door",
+      "priority": 7108,
+      "reason": "原作连接：从 room_dw_cyber_musical_shop 的 W 门（本房 2 扇，x=320/620；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_musical_door（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 89)` 之后各自指定 `entrance=21`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.cyber_field_music_shop",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_cyber_musical_shop",
+        "dst_room_name": "room_dw_cyber_musical_door",
+        "src_room_id": 89,
+        "dst_room_id": 84,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          320,
+          620
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+      "priority": 7109,
+      "reason": "原作连接：从 room_dw_cyber_musical_shop 的 W 门（本房 2 扇，x=320/620；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_maze_queenscreen（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 89)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.cyber_field_music_shop",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_cyber_musical_shop",
+        "dst_room_name": "room_dw_cyber_maze_queenscreen",
+        "src_room_id": 89,
+        "dst_room_id": 94,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          320,
+          620
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_maze_virokun",
+      "priority": 7110,
+      "reason": "原作连接：从 room_dw_cyber_maze_tasque 的 W 门（x=280）离开，落到 room_dw_cyber_maze_virokun（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 93)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_maze_tasque",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_cyber_maze_tasque",
+        "dst_room_name": "room_dw_cyber_maze_virokun",
+        "src_room_id": 93,
+        "dst_room_id": 85,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 280,
+        "door_x_all": [
+          280
+        ],
+        "x_range": [
+          180,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_battle_maze_2",
+      "priority": 7111,
+      "reason": "原作连接：从 room_dw_cyber_maze_tasque 的 W 门离开，落到 room_dw_cyber_battle_maze_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 93)` 之后各自指定 `entrance=21`；**目标房没有该字母的落点**（原作如此：`entrance=21` 指向房内不存在的 marker），按原作照收）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_maze_tasque",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": null,
+        "src_room_name": "room_dw_cyber_maze_tasque",
+        "dst_room_name": "room_dw_cyber_battle_maze_2",
+        "src_room_id": 93,
+        "dst_room_id": 87,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          280
+        ],
+        "x_range": [
+          1000,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_battle_maze_2",
+      "priority": 7112,
+      "reason": "原作连接：从 room_dw_cyber_maze_queenscreen 的 W 门离开，落到 room_dw_cyber_battle_maze_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 94)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_cyber_maze_queenscreen",
+        "dst_room_name": "room_dw_cyber_battle_maze_2",
+        "src_room_id": 94,
+        "dst_room_id": 87,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          0
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.cyber_field_music_shop",
+      "priority": 7113,
+      "reason": "原作连接：从 room_dw_cyber_maze_queenscreen 的 W 门离开，落到 room_dw_cyber_musical_shop（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 94)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_cyber_maze_queenscreen",
+        "dst_room_name": "room_dw_cyber_musical_shop",
+        "src_room_id": 94,
+        "dst_room_id": 89,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          0
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_musical_door",
+      "priority": 7114,
+      "reason": "原作连接：从 room_dw_cyber_post_music_boss_slide 的 W 门（本房 2 扇，x=160/2880；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_musical_door（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 96)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_cyber_post_music_boss_slide",
+        "dst_room_name": "room_dw_cyber_musical_door",
+        "src_room_id": 96,
+        "dst_room_id": 84,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          160,
+          2880
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_music_final",
+      "priority": 7115,
+      "reason": "原作连接：从 room_dw_cyber_post_music_boss_slide 的 W 门（本房 2 扇，x=160/2880；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_music_final（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 96)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_cyber_post_music_boss_slide",
+        "dst_room_name": "room_dw_cyber_music_final",
+        "src_room_id": 96,
+        "dst_room_id": 88,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          160,
+          2880
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_battle_maze_2",
+      "priority": 7116,
+      "reason": "原作连接：从 room_dw_cyber_maze_rhythm 的 W 门（本房 2 扇，x=269/271；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_battle_maze_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 101)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_maze_rhythm",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_cyber_maze_rhythm",
+        "dst_room_name": "room_dw_cyber_battle_maze_2",
+        "src_room_id": 101,
+        "dst_room_id": 87,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          269,
+          271
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+      "priority": 7117,
+      "reason": "原作连接：从 room_dw_cyber_maze_rhythm 的 W 门（本房 2 扇，x=269/271；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_maze_queenscreen（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 101)` 之后各自指定 `entrance=20`；**目标房没有该字母的落点**（原作如此：`entrance=20` 指向房内不存在的 marker），按原作照收）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_maze_rhythm",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": null,
+        "src_room_name": "room_dw_cyber_maze_rhythm",
+        "dst_room_name": "room_dw_cyber_maze_queenscreen",
+        "src_room_id": 101,
+        "dst_room_id": 94,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          269,
+          271
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_susie_ralsei_fun_1",
+      "priority": 7118,
+      "reason": "原作连接：从 room_dw_city_big_1 的 W 门（x=760；本房该门共 2 扇，x=0/760，本分支按位置对应这一扇）离开，落到 room_dw_city_susie_ralsei_fun_1（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 117)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_big_1",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_big_1",
+        "dst_room_name": "room_dw_city_susie_ralsei_fun_1",
+        "src_room_id": 117,
+        "dst_room_id": 137,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 760,
+        "door_x_all": [
+          0,
+          760
+        ],
+        "x_range": [
+          720,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_treasure",
+      "priority": 7119,
+      "reason": "原作连接：从 room_dw_city_big_1 的 W 门（x=760；本房该门共 2 扇，x=0/760，本分支按位置对应这一扇）离开，落到 room_dw_city_treasure（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 117)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_big_1",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_city_big_1",
+        "dst_room_name": "room_dw_city_treasure",
+        "src_room_id": 117,
+        "dst_room_id": 139,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 760,
+        "door_x_all": [
+          0,
+          760
+        ],
+        "x_range": [
+          10,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_mirrorfriend",
+      "priority": 7120,
+      "reason": "原作连接：从 room_dw_city_traffic_2 的 W 门（本房**无**该门实例；原作用运行时创建或直接调用，表里仍有这条连接）离开，落到 room_dw_city_mirrorfriend（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 118)` 之后各自指定 `entrance=23`；**目标房没有该字母的落点**（原作如此：`entrance=23` 指向房内不存在的 marker），按原作照收）。",
+      "when_scene": "ch2.cyber_city.dw_city_traffic_2",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": null,
+        "src_room_name": "room_dw_city_traffic_2",
+        "dst_room_name": "room_dw_city_mirrorfriend",
+        "src_room_id": 118,
+        "dst_room_id": 138,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_dog_traffic",
+      "priority": 7121,
+      "reason": "原作连接：从 room_dw_city_traffic_3 的 W 门离开，落到 room_dw_city_dog_traffic（**分支级**：`obj_doorw_musfade` 的 `Alarm_2` 里 `if (room == 123)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_traffic_3",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_traffic_3",
+        "dst_room_name": "room_dw_city_dog_traffic",
+        "src_room_id": 123,
+        "dst_room_id": 140,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          0
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_man",
+      "priority": 7122,
+      "reason": "原作连接：从 room_dw_city_traffic_3 的 W 门离开，落到 room_dw_city_man（**分支级**：`obj_doorw_musfade` 的 `Alarm_2` 里 `if (room == 123)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_traffic_3",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_traffic_3",
+        "dst_room_name": "room_dw_city_man",
+        "src_room_id": 123,
+        "dst_room_id": 141,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          0
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_moss",
+      "priority": 7123,
+      "reason": "原作连接：从 room_dw_city_traffic_3 的 W 门离开，落到 room_dw_city_moss（**分支级**：`obj_doorw_musfade` 的 `Alarm_2` 里 `if (room == 123)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_traffic_3",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_traffic_3",
+        "dst_room_name": "room_dw_city_moss",
+        "src_room_id": 123,
+        "dst_room_id": 142,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          0
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_traffic_4",
+      "priority": 7124,
+      "reason": "原作连接：从 room_dw_city_berdly 的 W 门离开，落到 room_dw_city_traffic_4（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 128)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.cyber_city_alleyway_2",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_dw_city_berdly",
+        "dst_room_name": "room_dw_city_traffic_4",
+        "src_room_id": 128,
+        "dst_room_id": 129,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": null,
+        "door_x_all": [
+          940
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_city.cyber_city_alleyway_2",
+      "priority": 7125,
+      "reason": "原作连接：从 room_dw_city_traffic_4 的 W 门（本房 3 扇，x=0/3151/4580；**分支对应哪一扇未解出**）离开，落到 room_dw_city_berdly（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 129)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_traffic_4",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_dw_city_traffic_4",
+        "dst_room_name": "room_dw_city_berdly",
+        "src_room_id": 129,
+        "dst_room_id": 128,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          3151,
+          4580
+        ],
+        "x_range": [
+          50,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_monologue",
+      "priority": 7126,
+      "reason": "原作连接：从 room_dw_city_traffic_4 的 W 门（x=4580；本房该门共 3 扇，x=0/3151/4580，本分支按位置对应这一扇）离开，落到 room_dw_city_monologue（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 129)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_traffic_4",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_traffic_4",
+        "dst_room_name": "room_dw_city_monologue",
+        "src_room_id": 129,
+        "dst_room_id": 131,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 4580,
+        "door_x_all": [
+          0,
+          3151,
+          4580
+        ],
+        "x_range": [
+          4500,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "priority": 7127,
+      "reason": "原作连接：从 room_dw_city_mansion_front 的 W 门（本房**无**该门实例；原作用运行时创建或直接调用，表里仍有这条连接）离开，落到 room_dw_mansion_entrance（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 136)` 之后各自指定 `entrance=22`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_mansion_front",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_city_mansion_front",
+        "dst_room_name": "room_dw_mansion_entrance",
+        "src_room_id": 136,
+        "dst_room_id": 157,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": null,
+        "door_x_all": [],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_big_2",
+      "priority": 7128,
+      "reason": "原作连接：从 room_dw_city_mirrorfriend 的 W 门离开，落到 room_dw_city_big_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 138)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_mirrorfriend",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_mirrorfriend",
+        "dst_room_name": "room_dw_city_big_2",
+        "src_room_id": 138,
+        "dst_room_id": 119,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          240
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_krisroom",
+      "priority": 7129,
+      "reason": "原作连接：从 room_dw_mansion_lightner_hallway 的 W 门（本房 2 扇，x=508/1940；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_krisroom（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 152)` 之后各自指定 `entrance=19`；目标房含 `obj_markers` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markers",
+        "src_room_name": "room_dw_mansion_lightner_hallway",
+        "dst_room_name": "room_dw_mansion_krisroom",
+        "src_room_id": 152,
+        "dst_room_id": 150,
+        "entrance": 19,
+        "branch_letter": "S",
+        "door_x": null,
+        "door_x_all": [
+          508,
+          1940
+        ],
+        "x_range": [
+          210,
+          280
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_susieroom",
+      "priority": 7130,
+      "reason": "原作连接：从 room_dw_mansion_lightner_hallway 的 W 门（x=508；本房该门共 2 扇，x=508/1940，本分支按位置对应这一扇）离开，落到 room_dw_mansion_susieroom（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 152)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_lightner_hallway",
+        "dst_room_name": "room_dw_mansion_susieroom",
+        "src_room_id": 152,
+        "dst_room_id": 151,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 508,
+        "door_x_all": [
+          508,
+          1940
+        ],
+        "x_range": [
+          490,
+          590
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+      "priority": 7131,
+      "reason": "原作连接：从 room_dw_mansion_lightner_hallway 的 W 门（x=1940；本房该门共 2 扇，x=508/1940，本分支按位置对应这一扇）离开，落到 room_dw_mansion_darkbulb_1（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 152)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_mansion_lightner_hallway",
+        "dst_room_name": "room_dw_mansion_darkbulb_1",
+        "src_room_id": 152,
+        "dst_room_id": 153,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": 1940,
+        "door_x_all": [
+          508,
+          1940
+        ],
+        "x_range": [
+          1900,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+      "priority": 7132,
+      "reason": "原作连接：从 room_dw_mansion_darkbulb_1 的 W 门（x=620；本房该门共 2 扇，x=0/620，本分支按位置对应这一扇）离开，落到 room_dw_mansion_lightner_hallway（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 153)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_mansion_darkbulb_1",
+        "dst_room_name": "room_dw_mansion_lightner_hallway",
+        "src_room_id": 153,
+        "dst_room_id": 152,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": 620,
+        "door_x_all": [
+          0,
+          620
+        ],
+        "x_range": [
+          10,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+      "priority": 7133,
+      "reason": "原作连接：从 room_dw_mansion_darkbulb_1 的 W 门（x=620；本房该门共 2 扇，x=0/620，本分支按位置对应这一扇）离开，落到 room_dw_mansion_darkbulb_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 153)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_darkbulb_1",
+        "dst_room_name": "room_dw_mansion_darkbulb_2",
+        "src_room_id": 153,
+        "dst_room_id": 154,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 620,
+        "door_x_all": [
+          0,
+          620
+        ],
+        "x_range": [
+          600,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_dining_a",
+      "priority": 7134,
+      "reason": "原作连接：从 room_dw_mansion_darkbulb_1 的 W 门（本房 2 扇，x=0/620；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_dining_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 153)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_darkbulb_1",
+        "dst_room_name": "room_dw_mansion_dining_a",
+        "src_room_id": 153,
+        "dst_room_id": 156,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          620
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+      "priority": 7135,
+      "reason": "原作连接：从 room_dw_mansion_darkbulb_2 的 W 门（x=620；本房该门共 2 扇，x=0/620，本分支按位置对应这一扇）离开，落到 room_dw_mansion_darkbulb_1（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 154)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_darkbulb_2",
+        "dst_room_name": "room_dw_mansion_darkbulb_1",
+        "src_room_id": 154,
+        "dst_room_id": 153,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 620,
+        "door_x_all": [
+          0,
+          620
+        ],
+        "x_range": [
+          10,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+      "priority": 7136,
+      "reason": "原作连接：从 room_dw_mansion_darkbulb_2 的 W 门（x=620；本房该门共 2 扇，x=0/620，本分支按位置对应这一扇）离开，落到 room_dw_mansion_darkbulb_3（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 154)` 之后各自指定 `entrance=19`；目标房含 `obj_markers` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markers",
+        "src_room_name": "room_dw_mansion_darkbulb_2",
+        "dst_room_name": "room_dw_mansion_darkbulb_3",
+        "src_room_id": 154,
+        "dst_room_id": 155,
+        "entrance": 19,
+        "branch_letter": "S",
+        "door_x": 620,
+        "door_x_all": [
+          0,
+          620
+        ],
+        "x_range": [
+          600,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+      "priority": 7137,
+      "reason": "原作连接：从 room_dw_mansion_darkbulb_3 的 W 门（x=620；本房该门共 2 扇，x=0/620，本分支按位置对应这一扇）离开，落到 room_dw_mansion_darkbulb_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 155)` 之后各自指定 `entrance=19`；目标房含 `obj_markers` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markers",
+        "src_room_name": "room_dw_mansion_darkbulb_3",
+        "dst_room_name": "room_dw_mansion_darkbulb_2",
+        "src_room_id": 155,
+        "dst_room_id": 154,
+        "entrance": 19,
+        "branch_letter": "S",
+        "door_x": 620,
+        "door_x_all": [
+          0,
+          620
+        ],
+        "x_range": [
+          10,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_dining_a",
+      "priority": 7138,
+      "reason": "原作连接：从 room_dw_mansion_darkbulb_3 的 W 门（x=620；本房该门共 2 扇，x=0/620，本分支按位置对应这一扇）离开，落到 room_dw_mansion_dining_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 155)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_darkbulb_3",
+        "dst_room_name": "room_dw_mansion_dining_a",
+        "src_room_id": 155,
+        "dst_room_id": 156,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 620,
+        "door_x_all": [
+          0,
+          620
+        ],
+        "x_range": [
+          600,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+      "priority": 7139,
+      "reason": "原作连接：从 room_dw_mansion_dining_a 的 W 门离开，落到 room_dw_mansion_darkbulb_1（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 156)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_dining_a",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_dining_a",
+        "dst_room_name": "room_dw_mansion_darkbulb_1",
+        "src_room_id": 156,
+        "dst_room_id": 153,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          0
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+      "priority": 7140,
+      "reason": "原作连接：从 room_dw_mansion_dining_a 的 W 门离开，落到 room_dw_mansion_darkbulb_3（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 156)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_dining_a",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_dining_a",
+        "dst_room_name": "room_dw_mansion_darkbulb_3",
+        "src_room_id": 156,
+        "dst_room_id": 155,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          0
+        ],
+        "x_range": [
+          10,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+      "priority": 7141,
+      "reason": "原作连接：从 room_dw_mansion_entrance 的 W 门离开，落到 room_dw_mansion_east_1f_secret（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 157)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_mansion_entrance",
+        "dst_room_name": "room_dw_mansion_east_1f_secret",
+        "src_room_id": 157,
+        "dst_room_id": 164,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          170
+        ],
+        "x_range": [
+          800,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_shortcut",
+      "priority": 7142,
+      "reason": "原作连接：从 room_dw_mansion_entrance 的 W 门离开，落到 room_dw_mansion_east_2f_shortcut（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 157)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_entrance",
+        "dst_room_name": "room_dw_mansion_east_2f_shortcut",
+        "src_room_id": 157,
+        "dst_room_id": 182,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          170
+        ],
+        "x_range": [
+          620,
+          630
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_3f",
+      "priority": 7143,
+      "reason": "原作连接：从 room_dw_mansion_entrance 的 W 门离开，落到 room_dw_mansion_east_3f（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 157)` 之后各自指定 `entrance=19`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_entrance",
+        "dst_room_name": "room_dw_mansion_east_3f",
+        "src_room_id": 157,
+        "dst_room_id": 187,
+        "entrance": 19,
+        "branch_letter": "S",
+        "door_x": null,
+        "door_x_all": [
+          170
+        ],
+        "x_range": [
+          730,
+          750
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "priority": 7144,
+      "reason": "原作连接：从 room_dw_mansion_east_1f_secret 的 W 门（x=970）离开，落到 room_dw_mansion_entrance（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 164)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_mansion_east_1f_secret",
+        "dst_room_name": "room_dw_mansion_entrance",
+        "src_room_id": 164,
+        "dst_room_id": 157,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": 970,
+        "door_x_all": [
+          970
+        ],
+        "x_range": [
+          10,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_traffic",
+      "priority": 7145,
+      "reason": "原作连接：从 room_dw_mansion_east_teacup 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_traffic（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 165)` 之后各自指定 `entrance=24`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_east_teacup",
+        "dst_room_name": "room_dw_mansion_traffic",
+        "src_room_id": 165,
+        "dst_room_id": 162,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_a",
+      "priority": 7146,
+      "reason": "原作连接：从 room_dw_mansion_east_teacup 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_2f_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 165)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_east_teacup",
+        "dst_room_name": "room_dw_mansion_east_2f_a",
+        "src_room_id": 165,
+        "dst_room_id": 180,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_d",
+      "priority": 7147,
+      "reason": "原作连接：从 room_dw_mansion_east_teacup_2 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_2f_d（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 168)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup_2",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_east_teacup_2",
+        "dst_room_name": "room_dw_mansion_east_2f_d",
+        "src_room_id": 168,
+        "dst_room_id": 186,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_3f",
+      "priority": 7148,
+      "reason": "原作连接：从 room_dw_mansion_east_teacup_2 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_3f（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 168)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup_2",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_dw_mansion_east_teacup_2",
+        "dst_room_name": "room_dw_mansion_east_3f",
+        "src_room_id": 168,
+        "dst_room_id": 187,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_east",
+      "priority": 7149,
+      "reason": "原作连接：从 room_dw_mansion_b_central 的 W 门离开，落到 room_dw_mansion_b_east（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 171)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_basement",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_b_central",
+        "dst_room_name": "room_dw_mansion_b_east",
+        "src_room_id": 171,
+        "dst_room_id": 176,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          1900
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_east_transformed",
+      "priority": 7150,
+      "reason": "原作连接：从 room_dw_mansion_b_central 的 W 门离开，落到 room_dw_mansion_b_east_transformed（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 171)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_basement",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_b_central",
+        "dst_room_name": "room_dw_mansion_b_east_transformed",
+        "src_room_id": 171,
+        "dst_room_id": 179,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          1900
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_west_1f_a",
+      "priority": 7151,
+      "reason": "原作连接：从 room_dw_mansion_b_west_1f 的 W 门（x=1429；本房该门共 3 扇，x=235/863/1429，本分支按位置对应这一扇）离开，落到 room_dw_mansion_b_west_1f_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 172)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_west_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_dw_mansion_b_west_1f",
+        "dst_room_name": "room_dw_mansion_b_west_1f_a",
+        "src_room_id": 172,
+        "dst_room_id": 173,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 1429,
+        "door_x_all": [
+          235,
+          863,
+          1429
+        ],
+        "x_range": [
+          1400,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_west_1f_b",
+      "priority": 7152,
+      "reason": "原作连接：从 room_dw_mansion_b_west_1f 的 W 门（本房 3 扇，x=235/863/1429；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_b_west_1f_b（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 172)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_west_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_b_west_1f",
+        "dst_room_name": "room_dw_mansion_b_west_1f_b",
+        "src_room_id": 172,
+        "dst_room_id": 174,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          235,
+          863,
+          1429
+        ],
+        "x_range": [
+          800,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_west_2f",
+      "priority": 7153,
+      "reason": "原作连接：从 room_dw_mansion_b_west_1f 的 W 门（本房 3 扇，x=235/863/1429；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_b_west_2f（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 172)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_west_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_b_west_1f",
+        "dst_room_name": "room_dw_mansion_b_west_2f",
+        "src_room_id": 172,
+        "dst_room_id": 175,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          235,
+          863,
+          1429
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_basement",
+      "priority": 7154,
+      "reason": "原作连接：从 room_dw_mansion_b_east 的 W 门（本房 3 扇，x=0/120/1120；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_b_central（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 176)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_east",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_b_east",
+        "dst_room_name": "room_dw_mansion_b_central",
+        "src_room_id": 176,
+        "dst_room_id": 171,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          120,
+          1120
+        ],
+        "x_range": [
+          10,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_east_a",
+      "priority": 7155,
+      "reason": "原作连接：从 room_dw_mansion_b_east 的 W 门（x=120；本房该门共 3 扇，x=0/120/1120，本分支按位置对应这一扇）离开，落到 room_dw_mansion_b_east_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 176)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_east",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_dw_mansion_b_east",
+        "dst_room_name": "room_dw_mansion_b_east_a",
+        "src_room_id": 176,
+        "dst_room_id": 177,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 120,
+        "door_x_all": [
+          0,
+          120,
+          1120
+        ],
+        "x_range": [
+          80,
+          150
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_east_b",
+      "priority": 7156,
+      "reason": "原作连接：从 room_dw_mansion_b_east 的 W 门（x=1120；本房该门共 3 扇，x=0/120/1120，本分支按位置对应这一扇）离开，落到 room_dw_mansion_b_east_b（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 176)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_east",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_b_east",
+        "dst_room_name": "room_dw_mansion_b_east_b",
+        "src_room_id": 176,
+        "dst_room_id": 178,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 1120,
+        "door_x_all": [
+          0,
+          120,
+          1120
+        ],
+        "x_range": [
+          1000,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_east",
+      "priority": 7157,
+      "reason": "原作连接：从 room_dw_mansion_b_east_a 的 W 门离开，落到 room_dw_mansion_b_east（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 177)` 之后各自指定 `entrance=22`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_east_a",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_b_east_a",
+        "dst_room_name": "room_dw_mansion_b_east",
+        "src_room_id": 177,
+        "dst_room_id": 176,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": null,
+        "door_x_all": [
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_east_transformed",
+      "priority": 7158,
+      "reason": "原作连接：从 room_dw_mansion_b_east_a 的 W 门离开，落到 room_dw_mansion_b_east_transformed（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 177)` 之后各自指定 `entrance=22`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_east_a",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_b_east_a",
+        "dst_room_name": "room_dw_mansion_b_east_transformed",
+        "src_room_id": 177,
+        "dst_room_id": 179,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": null,
+        "door_x_all": [
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_basement",
+      "priority": 7159,
+      "reason": "原作连接：从 room_dw_mansion_b_east_transformed 的 W 门（本房 2 扇，x=0/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_b_central（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 179)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_east_transformed",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_b_east_transformed",
+        "dst_room_name": "room_dw_mansion_b_central",
+        "src_room_id": 179,
+        "dst_room_id": 171,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_east_a",
+      "priority": 7160,
+      "reason": "原作连接：从 room_dw_mansion_b_east_transformed 的 W 门（本房 2 扇，x=0/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_b_east_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 179)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_east_transformed",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_dw_mansion_b_east_transformed",
+        "dst_room_name": "room_dw_mansion_b_east_a",
+        "src_room_id": 179,
+        "dst_room_id": 177,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          280
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_kitchen",
+      "priority": 7161,
+      "reason": "原作连接：从 room_dw_mansion_east_2f_transformed_new 的 W 门（本房 2 扇，x=642/1000；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_kitchen（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 181)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_dw_mansion_east_2f_transformed_new",
+        "dst_room_name": "room_dw_mansion_kitchen",
+        "src_room_id": 181,
+        "dst_room_id": 183,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": null,
+        "door_x_all": [
+          642,
+          1000
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_dining3",
+      "priority": 7162,
+      "reason": "原作连接：从 room_dw_mansion_east_2f_transformed_new 的 W 门（本房 2 扇，x=642/1000；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_dining3（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 181)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_east_2f_transformed_new",
+        "dst_room_name": "room_dw_mansion_dining3",
+        "src_room_id": 181,
+        "dst_room_id": 208,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          642,
+          1000
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "priority": 7163,
+      "reason": "原作连接：从 room_dw_mansion_east_2f_shortcut 的 W 门（本房**无**该门实例；原作用运行时创建或直接调用，表里仍有这条连接）离开，落到 room_dw_mansion_entrance（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 182)` 之后各自指定 `entrance=20`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_shortcut",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_east_2f_shortcut",
+        "dst_room_name": "room_dw_mansion_entrance",
+        "src_room_id": 182,
+        "dst_room_id": 157,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+      "priority": 7164,
+      "reason": "原作连接：从 room_dw_mansion_east_2f_c 的 W 门（本房 4 扇，x=0/360/1560/2540；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_2f_c_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 184)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_c",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_east_2f_c",
+        "dst_room_name": "room_dw_mansion_east_2f_c_a",
+        "src_room_id": 184,
+        "dst_room_id": 185,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          360,
+          1560,
+          2540
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_d",
+      "priority": 7165,
+      "reason": "原作连接：从 room_dw_mansion_east_2f_c 的 W 门（本房 4 扇，x=0/360/1560/2540；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_2f_d（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 184)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_c",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_east_2f_c",
+        "dst_room_name": "room_dw_mansion_east_2f_d",
+        "src_room_id": 184,
+        "dst_room_id": 186,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          360,
+          1560,
+          2540
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_dininghall",
+      "priority": 7166,
+      "reason": "原作连接：从 room_dw_mansion_east_2f_c 的 W 门（本房 4 扇，x=0/360/1560/2540；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_dininghall（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 184)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_c",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_east_2f_c",
+        "dst_room_name": "room_dw_mansion_dininghall",
+        "src_room_id": 184,
+        "dst_room_id": 209,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          360,
+          1560,
+          2540
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_c_b",
+      "priority": 7167,
+      "reason": "原作连接：从 room_dw_mansion_east_2f_c 的 W 门（本房 4 扇，x=0/360/1560/2540；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_2f_c_b（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 184)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_c",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_east_2f_c",
+        "dst_room_name": "room_dw_mansion_east_2f_c_b",
+        "src_room_id": 184,
+        "dst_room_id": 212,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          360,
+          1560,
+          2540
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_c",
+      "priority": 7168,
+      "reason": "原作连接：从 room_dw_mansion_east_2f_c_a 的 W 门（本房 2 扇，x=280/1560；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_2f_c（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 185)` 之后各自指定 `entrance=23`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_east_2f_c_a",
+        "dst_room_name": "room_dw_mansion_east_2f_c",
+        "src_room_id": 185,
+        "dst_room_id": 184,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          1560
+        ],
+        "x_range": [
+          260,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_teacup_2",
+      "priority": 7169,
+      "reason": "原作连接：从 room_dw_mansion_east_2f_d 的 W 门离开，落到 room_dw_mansion_east_teacup_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 186)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_d",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_east_2f_d",
+        "dst_room_name": "room_dw_mansion_east_teacup_2",
+        "src_room_id": 186,
+        "dst_room_id": 168,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          1780
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_c",
+      "priority": 7170,
+      "reason": "原作连接：从 room_dw_mansion_east_2f_d 的 W 门（x=1780）离开，落到 room_dw_mansion_east_2f_c（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 186)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_d",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_east_2f_d",
+        "dst_room_name": "room_dw_mansion_east_2f_c",
+        "src_room_id": 186,
+        "dst_room_id": 184,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 1780,
+        "door_x_all": [
+          1780
+        ],
+        "x_range": [
+          1200,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "priority": 7171,
+      "reason": "原作连接：从 room_dw_mansion_east_3f 的 W 门（本房 3 扇，x=0/944/1260；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_entrance（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 187)` 之后各自指定 `entrance=19`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_3f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_east_3f",
+        "dst_room_name": "room_dw_mansion_entrance",
+        "src_room_id": 187,
+        "dst_room_id": 157,
+        "entrance": 19,
+        "branch_letter": "S",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          944,
+          1260
+        ],
+        "x_range": [
+          220,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_teacup_2",
+      "priority": 7172,
+      "reason": "原作连接：从 room_dw_mansion_east_3f 的 W 门（本房 3 扇，x=0/944/1260；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_teacup_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 187)` 之后各自指定 `entrance=22`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_3f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_east_3f",
+        "dst_room_name": "room_dw_mansion_east_teacup_2",
+        "src_room_id": 187,
+        "dst_room_id": 168,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          944,
+          1260
+        ],
+        "x_range": [
+          220,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_3f_projection",
+      "priority": 7173,
+      "reason": "原作连接：从 room_dw_mansion_east_3f 的 W 门（本房 3 扇，x=0/944/1260；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_3f_projection（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 187)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_3f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_mansion_east_3f",
+        "dst_room_name": "room_dw_mansion_east_3f_projection",
+        "src_room_id": 187,
+        "dst_room_id": 188,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          944,
+          1260
+        ],
+        "x_range": [
+          10,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_3f_toilet",
+      "priority": 7174,
+      "reason": "原作连接：从 room_dw_mansion_east_3f 的 W 门（本房 3 扇，x=0/944/1260；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_3f_toilet（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 187)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_3f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_east_3f",
+        "dst_room_name": "room_dw_mansion_east_3f_toilet",
+        "src_room_id": 187,
+        "dst_room_id": 189,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          944,
+          1260
+        ],
+        "x_range": [
+          870,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_acid_tunnel",
+      "priority": 7175,
+      "reason": "原作连接：从 room_dw_mansion_east_3f 的 W 门（x=1260；本房该门共 3 扇，x=0/944/1260，本分支按位置对应这一扇）离开，落到 room_dw_mansion_acid_tunnel（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 187)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_3f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_east_3f",
+        "dst_room_name": "room_dw_mansion_acid_tunnel",
+        "src_room_id": 187,
+        "dst_room_id": 190,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 1260,
+        "door_x_all": [
+          0,
+          944,
+          1260
+        ],
+        "x_range": [
+          1250,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_4f_b",
+      "priority": 7176,
+      "reason": "原作连接：从 room_dw_mansion_east_3f 的 W 门（本房 3 扇，x=0/944/1260；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_4f_b（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 187)` 之后各自指定 `entrance=20`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.queen_s_mansion_3f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_east_3f",
+        "dst_room_name": "room_dw_mansion_east_4f_b",
+        "src_room_id": 187,
+        "dst_room_id": 194,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          944,
+          1260
+        ],
+        "x_range": [
+          500,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_3f",
+      "priority": 7177,
+      "reason": "原作连接：从 room_dw_mansion_east_4f_b 的 W 门（本房**无**该门实例；原作用运行时创建或直接调用，表里仍有这条连接）离开，落到 room_dw_mansion_east_3f（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 194)` 之后各自指定 `entrance=20`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_4f_b",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_east_4f_b",
+        "dst_room_name": "room_dw_mansion_east_3f",
+        "src_room_id": 194,
+        "dst_room_id": 187,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": null,
+        "door_x_all": [],
+        "x_range": [
+          200,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_noelle_room",
+      "priority": 7178,
+      "reason": "原作连接：从 room_dw_mansion_east_4f_b 的 W 门（本房**无**该门实例；原作用运行时创建或直接调用，表里仍有这条连接）离开，落到 room_dw_mansion_noelle_room（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 194)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_4f_b",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_east_4f_b",
+        "dst_room_name": "room_dw_mansion_noelle_room",
+        "src_room_id": 194,
+        "dst_room_id": 203,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [],
+        "x_range": [
+          500,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_acid_tunnel_puzzle_entrance",
+      "priority": 7179,
+      "reason": "原作连接：从 room_dw_mansion_bridges 的 W 门（本房 4 扇，x=280/560/1440/1620；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_acid_tunnel_puzzle_entrance（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 204)` 之后各自指定 `entrance=24`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_bridges",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_bridges",
+        "dst_room_name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+        "src_room_id": 204,
+        "dst_room_id": 191,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          560,
+          1440,
+          1620
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_bridges_funny",
+      "priority": 7180,
+      "reason": "原作连接：从 room_dw_mansion_bridges 的 W 门（本房 4 扇，x=280/560/1440/1620；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_bridges_funny（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 204)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_bridges",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_bridges",
+        "dst_room_name": "room_dw_mansion_bridges_funny",
+        "src_room_id": 204,
+        "dst_room_id": 205,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          560,
+          1440,
+          1620
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_mouselottery",
+      "priority": 7181,
+      "reason": "原作连接：从 room_dw_mansion_bridges 的 W 门（本房 4 扇，x=280/560/1440/1620；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_mouseLottery（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 204)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_bridges",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_bridges",
+        "dst_room_name": "room_dw_mansion_mouseLottery",
+        "src_room_id": 204,
+        "dst_room_id": 206,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          560,
+          1440,
+          1620
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_hands",
+      "priority": 7182,
+      "reason": "原作连接：从 room_dw_mansion_bridges 的 W 门（本房 4 扇，x=280/560/1440/1620；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_hands（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 204)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_bridges",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_bridges",
+        "dst_room_name": "room_dw_mansion_hands",
+        "src_room_id": 204,
+        "dst_room_id": 207,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          280,
+          560,
+          1440,
+          1620
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+      "priority": 7183,
+      "reason": "原作连接：从 room_dw_mansion_dining3 的 W 门（本房 2 扇，x=600/680；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_2f_transformed_new（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 208)` 之后各自指定 `entrance=21`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_dining3",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_dining3",
+        "dst_room_name": "room_dw_mansion_east_2f_transformed_new",
+        "src_room_id": 208,
+        "dst_room_id": 181,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          600,
+          680
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_dininghall",
+      "priority": 7184,
+      "reason": "原作连接：从 room_dw_mansion_dining3 的 W 门（本房 2 扇，x=600/680；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_dininghall（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 208)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_dining3",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_mansion_dining3",
+        "dst_room_name": "room_dw_mansion_dininghall",
+        "src_room_id": 208,
+        "dst_room_id": 209,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          600,
+          680
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_c",
+      "priority": 7185,
+      "reason": "原作连接：从 room_dw_mansion_dininghall 的 W 门（本房 3 扇，x=0/280/620；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_2f_c（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 209)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_dininghall",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_mansion_dininghall",
+        "dst_room_name": "room_dw_mansion_east_2f_c",
+        "src_room_id": 209,
+        "dst_room_id": 184,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          280,
+          620
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_dining3",
+      "priority": 7186,
+      "reason": "原作连接：从 room_dw_mansion_dininghall 的 W 门（本房 3 扇，x=0/280/620；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_dining3（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 209)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_dininghall",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_mansion_dininghall",
+        "dst_room_name": "room_dw_mansion_dining3",
+        "src_room_id": 209,
+        "dst_room_id": 208,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          280,
+          620
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_dining_storage",
+      "priority": 7187,
+      "reason": "原作连接：从 room_dw_mansion_dininghall 的 W 门（本房 3 扇，x=0/280/620；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_dining_storage（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 209)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_dininghall",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_mansion_dininghall",
+        "dst_room_name": "room_dw_mansion_dining_storage",
+        "src_room_id": 209,
+        "dst_room_id": 210,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          0,
+          280,
+          620
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_battle_maze_1",
+      "priority": 7188,
+      "reason": "原作连接：从 room_dw_cyber_teacup_1 的 W 门离开，落到 room_dw_cyber_battle_maze_1（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 255)` 之后各自指定 `entrance=21`；**目标房没有该字母的落点**（原作如此：`entrance=21` 指向房内不存在的 marker），按原作照收）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_teacup_1",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": null,
+        "src_room_name": "room_dw_cyber_teacup_1",
+        "dst_room_name": "room_dw_cyber_battle_maze_1",
+        "src_room_id": 255,
+        "dst_room_id": 79,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": null,
+        "door_x_all": [
+          -16
+        ],
+        "x_range": [
+          10,
+          null
+        ],
+        "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_musical_door",
+      "priority": 7189,
+      "reason": "原作连接：从 room_dw_cyber_virovirokun_fight 的 W 门（本房**无**该门实例；原作用运行时创建或直接调用，表里仍有这条连接）离开，落到 room_dw_cyber_musical_door（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 259)` 之后各自指定 `entrance=23`；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_virovirokun_fight",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_cyber_virovirokun_fight",
+        "dst_room_name": "room_dw_cyber_musical_door",
+        "src_room_id": 259,
+        "dst_room_id": 84,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": null,
+        "door_x_all": [],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
     }
   ],
   "_fallback": {

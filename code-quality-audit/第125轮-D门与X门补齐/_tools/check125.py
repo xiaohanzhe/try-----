@@ -89,7 +89,11 @@ EXPECT_REFUSED_W = 98
 #: ★ 第168轮：产品里 W 门规则的条数。
 #:   独立重推（不读生成器任何决策字段）在 `check168.B`；
 #:   这里只钉数量——两处分工不同，**不许**拿这里当"证据已验证"。
-EXPECT_W_IN_PROD = 88
+#: ★★ 第169轮：W 从 88 → **190** = 88（第168轮，graph 侧单分支边）
+#:   + 102（第169轮，按分支解析补回；`_original.batch = 169`）。
+#:   分账：第168轮那 88 条由 `check168` 守，第169轮那 102 条由 `check169` 守，
+#:   本条只守"两批加起来对得上"。
+EXPECT_W_IN_PROD = 190
 #: 各章「有出边的场景数」—— 第124轮实测基线（**只增不减**）
 DENSITY_124 = {'ch1': 105, 'ch2': 127, 'ch3': 23, 'ch4': 22, 'ch5': 20}
 #: ★ 证据侧唯一允许的 3 条 `no_marker` 例外（如实不写）。
@@ -458,12 +462,13 @@ _w_in_prod = _w_rows(RL)
 #:   那正是第125轮 `(场景,目标)` vs 三元的同一个坑（报告 §5 第 4 条）。
 _w_pairs = set((str(r.get('when_scene')), str(r.get('to'))) for r in RL
                if str((r.get('_original') or {}).get('via') or '') in W_DOOR)
-check(u'D1 ★★★ 产品路由表里 W 门规则**恰好 %d 条**（第168轮补收；原口径是"一条都没有"）'
+check(u'D1 ★★★ 产品路由表里 W 门规则**恰好 %d 条**'
+      u'（第168轮 88 + 第169轮 102；原口径是"一条都没有"）'
       % EXPECT_W_IN_PROD,
       len(_w_in_prod) == EXPECT_W_IN_PROD and len(_w_pairs) == EXPECT_W_IN_PROD,
       u'实测 %d 条 / (场景,目标) 去重 %d' % (len(_w_in_prod), len(_w_pairs)))
 
-# 收的 88 条必须全落在 Deltarune 五章 —— 不许蹭到 desktop/oneshot/ut/outertale/uty
+# 收的 190 条必须全落在 Deltarune 五章 —— 不许蹭到 desktop/oneshot/ut/outertale/uty
 _w_bad_ch = sorted(set(str(r.get('when_scene')) for r in RL
                        if str((r.get('_original') or {}).get('via') or '') in W_DOOR
                        and not str(r.get('when_scene') or '').startswith(

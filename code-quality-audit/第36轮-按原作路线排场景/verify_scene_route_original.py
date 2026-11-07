@@ -479,7 +479,17 @@ def _table_self_ok(r):
     if not (isinstance(t, str) and t.startswith('gml_Object_') and '_Alarm_' in t):
         return False
     L = o.get('door_letter')
-    if not (isinstance(L, str) and L and _marker_ok(o.get('marker'), L)):
+    #: ★★★ 第169轮：`batch=169` 的规则是**分支级**的 —— 落点由**该分支的 `entrance`
+    #:   字母**决定，不是门字母。同一扇 `obj_doorW` 的不同分支可以分别落到
+    #:   S/T/U/V/W/X（ch2 的 `obj_doorW_Alarm_2` 145 次赋值全落 19~24）。
+    #:   ⇒ 校验必须换成 `branch_letter`，否则 71 条正确规则会被判"不自洽"。
+    #:   `marker is None`＝「目标房没有这个字母的落点（原作如此）」，
+    #:   存在性自证交给 `第169轮/_tools/check169.py` 的 C1/C2，这里只认标记。
+    _BL = o.get('branch_letter') if o.get('batch') == 169 else None
+    if _BL:
+        if o.get('marker') is not None and not _marker_ok(o.get('marker'), _BL):
+            return False
+    elif not (isinstance(L, str) and L and _marker_ok(o.get('marker'), L)):
         return False
     if r.get('when_door') != L:
         return False

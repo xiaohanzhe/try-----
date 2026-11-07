@@ -1,0 +1,2996 @@
+{
+ "note": "第169轮 · W 门分支级解析（含 x 区间）",
+ "chapters": {
+  "ch1": [
+   {
+    "src": 13,
+    "dst": 18,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 16,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     600
+    ],
+    "x_hit": null,
+    "src_name": "room_town_south",
+    "dst_name": "room_hospital_lobby"
+   },
+   {
+    "src": 18,
+    "dst": 13,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 24,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     140
+    ],
+    "x_hit": null,
+    "src_name": "room_hospital_lobby",
+    "dst_name": "room_town_south"
+   },
+   {
+    "src": 11,
+    "dst": 27,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 32,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     1740
+    ],
+    "x_hit": null,
+    "src_name": "room_town_mid",
+    "dst_name": "room_alphysalley"
+   },
+   {
+    "src": 27,
+    "dst": 11,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 40,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     120
+    ],
+    "x_hit": null,
+    "src_name": "room_alphysalley",
+    "dst_name": "room_town_mid"
+   },
+   {
+    "src": 9,
+    "dst": 10,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 48,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_town_north",
+    "dst_name": "room_beach"
+   },
+   {
+    "src": 10,
+    "dst": 9,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 56,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_beach",
+    "dst_name": "room_town_north"
+   },
+   {
+    "src": 114,
+    "dst": 110,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 16,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     1058
+    ],
+    "x_hit": null,
+    "src_name": "room_cc_1f",
+    "dst_name": "room_cc_elevator"
+   },
+   {
+    "src": 123,
+    "dst": 110,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 31,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_cc_5f",
+    "dst_name": "room_cc_elevator"
+   },
+   {
+    "src": 110,
+    "dst": 114,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 50,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_cc_elevator",
+    "dst_name": "room_cc_1f"
+   },
+   {
+    "src": 110,
+    "dst": 123,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 60,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_cc_elevator",
+    "dst_name": "room_cc_5f"
+   },
+   {
+    "src": 104,
+    "dst": 113,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 68,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     240
+    ],
+    "x_hit": null,
+    "src_name": "room_forest_castlefront",
+    "dst_name": "room_cc_entrance"
+   },
+   {
+    "src": 113,
+    "dst": 104,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 76,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     240
+    ],
+    "x_hit": null,
+    "src_name": "room_cc_entrance",
+    "dst_name": "room_forest_castlefront"
+   }
+  ],
+  "ch2": [
+   {
+    "src": 34,
+    "dst": 29,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 20,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     140
+    ],
+    "x_hit": null,
+    "src_name": "room_hospital_lobby",
+    "dst_name": "room_town_south"
+   },
+   {
+    "src": 43,
+    "dst": 27,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 28,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     120
+    ],
+    "x_hit": null,
+    "src_name": "room_alphysalley",
+    "dst_name": "room_town_mid"
+   },
+   {
+    "src": 25,
+    "dst": 26,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 36,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_town_north",
+    "dst_name": "room_beach"
+   },
+   {
+    "src": 26,
+    "dst": 25,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 44,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_beach",
+    "dst_name": "room_town_north"
+   },
+   {
+    "src": 27,
+    "dst": 48,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 64,
+    "xlo": 290,
+    "xhi": 370,
+    "door_x": [
+     301,
+     1082,
+     1740
+    ],
+    "x_hit": [
+     301
+    ],
+    "src_name": "room_town_mid",
+    "dst_name": "room_lw_icee_pizza"
+   },
+   {
+    "src": 27,
+    "dst": 43,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 80,
+    "xlo": 1730,
+    "xhi": 1840,
+    "door_x": [
+     301,
+     1082,
+     1740
+    ],
+    "x_hit": [
+     1740
+    ],
+    "src_name": "room_town_mid",
+    "dst_name": "room_alphysalley"
+   },
+   {
+    "src": 48,
+    "dst": 27,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 90,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     124
+    ],
+    "x_hit": null,
+    "src_name": "room_lw_icee_pizza",
+    "dst_name": "room_town_mid"
+   },
+   {
+    "src": 29,
+    "dst": 46,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 110,
+    "xlo": 230,
+    "xhi": 280,
+    "door_x": [
+     240,
+     600
+    ],
+    "x_hit": [
+     240
+    ],
+    "src_name": "room_town_south",
+    "dst_name": "room_lw_police"
+   },
+   {
+    "src": 29,
+    "dst": 34,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 126,
+    "xlo": 580,
+    "xhi": 660,
+    "door_x": [
+     240,
+     600
+    ],
+    "x_hit": [
+     600
+    ],
+    "src_name": "room_town_south",
+    "dst_name": "room_hospital_lobby"
+   },
+   {
+    "src": 46,
+    "dst": 29,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 136,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_lw_police",
+    "dst_name": "room_town_south"
+   },
+   {
+    "src": 58,
+    "dst": 56,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 144,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     -10
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_castle_east_door",
+    "dst_name": "room_castle_tutorial"
+   },
+   {
+    "src": 56,
+    "dst": 58,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 152,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     1390
+    ],
+    "x_hit": null,
+    "src_name": "room_castle_tutorial",
+    "dst_name": "room_dw_castle_east_door"
+   },
+   {
+    "src": 63,
+    "dst": 67,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 162,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     462
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_ralsei_castle_front",
+    "dst_name": "room_dw_ralsei_castle_1f"
+   },
+   {
+    "src": 67,
+    "dst": 69,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 182,
+    "xlo": 840,
+    "xhi": 1000,
+    "door_x": [
+     551,
+     857
+    ],
+    "x_hit": [
+     857
+    ],
+    "src_name": "room_dw_ralsei_castle_1f",
+    "dst_name": "room_dw_castle_dungeon"
+   },
+   {
+    "src": 67,
+    "dst": 63,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 198,
+    "xlo": 550,
+    "xhi": 700,
+    "door_x": [
+     551,
+     857
+    ],
+    "x_hit": [
+     551
+    ],
+    "src_name": "room_dw_ralsei_castle_1f",
+    "dst_name": "room_dw_ralsei_castle_front"
+   },
+   {
+    "src": 68,
+    "dst": 71,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 218,
+    "xlo": 240,
+    "xhi": 340,
+    "door_x": [
+     255,
+     530,
+     808
+    ],
+    "x_hit": [
+     255
+    ],
+    "src_name": "room_dw_ralsei_castle_2f",
+    "dst_name": "room_dw_castle_rooms_kris"
+   },
+   {
+    "src": 68,
+    "dst": 72,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 234,
+    "xlo": 520,
+    "xhi": 610,
+    "door_x": [
+     255,
+     530,
+     808
+    ],
+    "x_hit": [
+     530
+    ],
+    "src_name": "room_dw_ralsei_castle_2f",
+    "dst_name": "room_dw_castle_rooms_susie"
+   },
+   {
+    "src": 68,
+    "dst": 262,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 250,
+    "xlo": 780,
+    "xhi": 860,
+    "door_x": [
+     255,
+     530,
+     808
+    ],
+    "x_hit": [
+     808
+    ],
+    "src_name": "room_dw_ralsei_castle_2f",
+    "dst_name": "room_cc_lancer"
+   },
+   {
+    "src": 255,
+    "dst": 79,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 264,
+    "xlo": 10,
+    "xhi": null,
+    "door_x": [
+     -16
+    ],
+    "x_hit": [],
+    "src_name": "room_dw_cyber_teacup_1",
+    "dst_name": "room_dw_cyber_battle_maze_1"
+   },
+   {
+    "src": 79,
+    "dst": 255,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 278,
+    "xlo": 1200,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": [],
+    "src_name": "room_dw_cyber_battle_maze_1",
+    "dst_name": "room_dw_cyber_teacup_1"
+   },
+   {
+    "src": 84,
+    "dst": 89,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 292,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280,
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_musical_door",
+    "dst_name": "room_dw_cyber_musical_shop"
+   },
+   {
+    "src": 84,
+    "dst": 96,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 302,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280,
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_musical_door",
+    "dst_name": "room_dw_cyber_post_music_boss_slide"
+   },
+   {
+    "src": 102,
+    "dst": 84,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 312,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     275
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_escalator_slide",
+    "dst_name": "room_dw_cyber_musical_door"
+   },
+   {
+    "src": 87,
+    "dst": 97,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 322,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     480
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_battle_maze_2",
+    "dst_name": "room_dw_cyber_keyboard_puzzle_3"
+   },
+   {
+    "src": 97,
+    "dst": 87,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 332,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_keyboard_puzzle_3",
+    "dst_name": "room_dw_cyber_battle_maze_2"
+   },
+   {
+    "src": 101,
+    "dst": 87,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 346,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     269,
+     271
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_maze_rhythm",
+    "dst_name": "room_dw_cyber_battle_maze_2"
+   },
+   {
+    "src": 101,
+    "dst": 94,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 356,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     269,
+     271
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_maze_rhythm",
+    "dst_name": "room_dw_cyber_maze_queenscreen"
+   },
+   {
+    "src": 94,
+    "dst": 89,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 370,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_maze_queenscreen",
+    "dst_name": "room_dw_cyber_musical_shop"
+   },
+   {
+    "src": 94,
+    "dst": 87,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 380,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_maze_queenscreen",
+    "dst_name": "room_dw_cyber_battle_maze_2"
+   },
+   {
+    "src": 93,
+    "dst": 85,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 398,
+    "xlo": 180,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": [
+     280
+    ],
+    "src_name": "room_dw_cyber_maze_tasque",
+    "dst_name": "room_dw_cyber_maze_virokun"
+   },
+   {
+    "src": 93,
+    "dst": 87,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 408,
+    "xlo": 1000,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": [],
+    "src_name": "room_dw_cyber_maze_tasque",
+    "dst_name": "room_dw_cyber_battle_maze_2"
+   },
+   {
+    "src": 93,
+    "dst": 87,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 418,
+    "xlo": 1400,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": [],
+    "src_name": "room_dw_cyber_maze_tasque",
+    "dst_name": "room_dw_cyber_battle_maze_2"
+   },
+   {
+    "src": 85,
+    "dst": 93,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 432,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     240,
+     640
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_maze_virokun",
+    "dst_name": "room_dw_cyber_maze_tasque"
+   },
+   {
+    "src": 85,
+    "dst": 92,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 442,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     240,
+     640
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_maze_virokun",
+    "dst_name": "room_dw_cyber_maze_fireworks"
+   },
+   {
+    "src": 92,
+    "dst": 85,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 452,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_maze_fireworks",
+    "dst_name": "room_dw_cyber_maze_virokun"
+   },
+   {
+    "src": 89,
+    "dst": 94,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 466,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     320,
+     620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_musical_shop",
+    "dst_name": "room_dw_cyber_maze_queenscreen"
+   },
+   {
+    "src": 89,
+    "dst": 84,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 476,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     320,
+     620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_musical_shop",
+    "dst_name": "room_dw_cyber_musical_door"
+   },
+   {
+    "src": 71,
+    "dst": 68,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 486,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_castle_rooms_kris",
+    "dst_name": "room_dw_ralsei_castle_2f"
+   },
+   {
+    "src": 72,
+    "dst": 68,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 496,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     257
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_castle_rooms_susie",
+    "dst_name": "room_dw_ralsei_castle_2f"
+   },
+   {
+    "src": 262,
+    "dst": 68,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 506,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     269
+    ],
+    "x_hit": null,
+    "src_name": "room_cc_lancer",
+    "dst_name": "room_dw_ralsei_castle_2f"
+   },
+   {
+    "src": 69,
+    "dst": 67,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 516,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     110
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_castle_dungeon",
+    "dst_name": "room_dw_ralsei_castle_1f"
+   },
+   {
+    "src": 139,
+    "dst": 117,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 526,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_treasure",
+    "dst_name": "room_dw_city_big_1"
+   },
+   {
+    "src": 117,
+    "dst": 139,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 540,
+    "xlo": 10,
+    "xhi": null,
+    "door_x": [
+     0,
+     760
+    ],
+    "x_hit": [
+     760
+    ],
+    "src_name": "room_dw_city_big_1",
+    "dst_name": "room_dw_city_treasure"
+   },
+   {
+    "src": 117,
+    "dst": 137,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 550,
+    "xlo": 720,
+    "xhi": null,
+    "door_x": [
+     0,
+     760
+    ],
+    "x_hit": [
+     760
+    ],
+    "src_name": "room_dw_city_big_1",
+    "dst_name": "room_dw_city_susie_ralsei_fun_1"
+   },
+   {
+    "src": 119,
+    "dst": 138,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 560,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     720
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_big_2",
+    "dst_name": "room_dw_city_mirrorfriend"
+   },
+   {
+    "src": 118,
+    "dst": 138,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 570,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_dw_city_traffic_2",
+    "dst_name": "room_dw_city_mirrorfriend"
+   },
+   {
+    "src": 137,
+    "dst": 117,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 580,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_susie_ralsei_fun_1",
+    "dst_name": "room_dw_city_big_1"
+   },
+   {
+    "src": 138,
+    "dst": 119,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 594,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     240
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_mirrorfriend",
+    "dst_name": "room_dw_city_big_2"
+   },
+   {
+    "src": 122,
+    "dst": 123,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 608,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_dw_city_big_3",
+    "dst_name": "room_dw_city_traffic_3"
+   },
+   {
+    "src": 123,
+    "dst": 122,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 628,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_traffic_3",
+    "dst_name": "room_dw_city_big_3"
+   },
+   {
+    "src": 142,
+    "dst": 123,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 638,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_moss",
+    "dst_name": "room_dw_city_traffic_3"
+   },
+   {
+    "src": 140,
+    "dst": 123,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 648,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     160
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_dog_traffic",
+    "dst_name": "room_dw_city_traffic_3"
+   },
+   {
+    "src": 129,
+    "dst": 131,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 662,
+    "xlo": 4500,
+    "xhi": null,
+    "door_x": [
+     0,
+     3151,
+     4580
+    ],
+    "x_hit": [
+     4580
+    ],
+    "src_name": "room_dw_city_traffic_4",
+    "dst_name": "room_dw_city_monologue"
+   },
+   {
+    "src": 129,
+    "dst": 128,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 672,
+    "xlo": 50,
+    "xhi": null,
+    "door_x": [
+     0,
+     3151,
+     4580
+    ],
+    "x_hit": [
+     3151,
+     4580
+    ],
+    "src_name": "room_dw_city_traffic_4",
+    "dst_name": "room_dw_city_berdly"
+   },
+   {
+    "src": 130,
+    "dst": 129,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 682,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     1000
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_spamton_alley",
+    "dst_name": "room_dw_city_traffic_4"
+   },
+   {
+    "src": 131,
+    "dst": 129,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 692,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_monologue",
+    "dst_name": "room_dw_city_traffic_4"
+   },
+   {
+    "src": 136,
+    "dst": 157,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 702,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_dw_city_mansion_front",
+    "dst_name": "room_dw_mansion_entrance"
+   },
+   {
+    "src": 152,
+    "dst": 150,
+    "entrance": 19,
+    "letter": "S",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 722,
+    "xlo": 210,
+    "xhi": 280,
+    "door_x": [
+     508,
+     1940
+    ],
+    "x_hit": [],
+    "src_name": "room_dw_mansion_lightner_hallway",
+    "dst_name": "room_dw_mansion_krisroom"
+   },
+   {
+    "src": 152,
+    "dst": 151,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 738,
+    "xlo": 490,
+    "xhi": 590,
+    "door_x": [
+     508,
+     1940
+    ],
+    "x_hit": [
+     508
+    ],
+    "src_name": "room_dw_mansion_lightner_hallway",
+    "dst_name": "room_dw_mansion_susieroom"
+   },
+   {
+    "src": 152,
+    "dst": 153,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 748,
+    "xlo": 1900,
+    "xhi": null,
+    "door_x": [
+     508,
+     1940
+    ],
+    "x_hit": [
+     1940
+    ],
+    "src_name": "room_dw_mansion_lightner_hallway",
+    "dst_name": "room_dw_mansion_darkbulb_1"
+   },
+   {
+    "src": 151,
+    "dst": 152,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 758,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_susieroom",
+    "dst_name": "room_dw_mansion_lightner_hallway"
+   },
+   {
+    "src": 150,
+    "dst": 152,
+    "entrance": 19,
+    "letter": "S",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 768,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_krisroom",
+    "dst_name": "room_dw_mansion_lightner_hallway"
+   },
+   {
+    "src": 153,
+    "dst": 152,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 782,
+    "xlo": 10,
+    "xhi": null,
+    "door_x": [
+     0,
+     620
+    ],
+    "x_hit": [
+     620
+    ],
+    "src_name": "room_dw_mansion_darkbulb_1",
+    "dst_name": "room_dw_mansion_lightner_hallway"
+   },
+   {
+    "src": 153,
+    "dst": 154,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 796,
+    "xlo": 600,
+    "xhi": null,
+    "door_x": [
+     0,
+     620
+    ],
+    "x_hit": [
+     620
+    ],
+    "src_name": "room_dw_mansion_darkbulb_1",
+    "dst_name": "room_dw_mansion_darkbulb_2"
+   },
+   {
+    "src": 153,
+    "dst": 156,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 803,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_darkbulb_1",
+    "dst_name": "room_dw_mansion_dining_a"
+   },
+   {
+    "src": 154,
+    "dst": 153,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 817,
+    "xlo": 10,
+    "xhi": null,
+    "door_x": [
+     0,
+     620
+    ],
+    "x_hit": [
+     620
+    ],
+    "src_name": "room_dw_mansion_darkbulb_2",
+    "dst_name": "room_dw_mansion_darkbulb_1"
+   },
+   {
+    "src": 154,
+    "dst": 155,
+    "entrance": 19,
+    "letter": "S",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 827,
+    "xlo": 600,
+    "xhi": null,
+    "door_x": [
+     0,
+     620
+    ],
+    "x_hit": [
+     620
+    ],
+    "src_name": "room_dw_mansion_darkbulb_2",
+    "dst_name": "room_dw_mansion_darkbulb_3"
+   },
+   {
+    "src": 155,
+    "dst": 154,
+    "entrance": 19,
+    "letter": "S",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 841,
+    "xlo": 10,
+    "xhi": null,
+    "door_x": [
+     0,
+     620
+    ],
+    "x_hit": [
+     620
+    ],
+    "src_name": "room_dw_mansion_darkbulb_3",
+    "dst_name": "room_dw_mansion_darkbulb_2"
+   },
+   {
+    "src": 155,
+    "dst": 156,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 851,
+    "xlo": 600,
+    "xhi": null,
+    "door_x": [
+     0,
+     620
+    ],
+    "x_hit": [
+     620
+    ],
+    "src_name": "room_dw_mansion_darkbulb_3",
+    "dst_name": "room_dw_mansion_dining_a"
+   },
+   {
+    "src": 156,
+    "dst": 155,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 869,
+    "xlo": 10,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": [],
+    "src_name": "room_dw_mansion_dining_a",
+    "dst_name": "room_dw_mansion_darkbulb_3"
+   },
+   {
+    "src": 156,
+    "dst": 153,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 874,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_dining_a",
+    "dst_name": "room_dw_mansion_darkbulb_1"
+   },
+   {
+    "src": 182,
+    "dst": 157,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 884,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_shortcut",
+    "dst_name": "room_dw_mansion_entrance"
+   },
+   {
+    "src": 157,
+    "dst": 182,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 912,
+    "xlo": 620,
+    "xhi": 630,
+    "door_x": [
+     170
+    ],
+    "x_hit": [],
+    "src_name": "room_dw_mansion_entrance",
+    "dst_name": "room_dw_mansion_east_2f_shortcut"
+   },
+   {
+    "src": 157,
+    "dst": 187,
+    "entrance": 19,
+    "letter": "S",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 936,
+    "xlo": 730,
+    "xhi": 750,
+    "door_x": [
+     170
+    ],
+    "x_hit": [],
+    "src_name": "room_dw_mansion_entrance",
+    "dst_name": "room_dw_mansion_east_3f"
+   },
+   {
+    "src": 157,
+    "dst": 164,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 952,
+    "xlo": 800,
+    "xhi": null,
+    "door_x": [
+     170
+    ],
+    "x_hit": [],
+    "src_name": "room_dw_mansion_entrance",
+    "dst_name": "room_dw_mansion_east_1f_secret"
+   },
+   {
+    "src": 217,
+    "dst": 157,
+    "entrance": 19,
+    "letter": "S",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 962,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     350
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_4f_a",
+    "dst_name": "room_dw_mansion_entrance"
+   },
+   {
+    "src": 181,
+    "dst": 183,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 976,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     642,
+     1000
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_transformed_new",
+    "dst_name": "room_dw_mansion_kitchen"
+   },
+   {
+    "src": 181,
+    "dst": 208,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 986,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     642,
+     1000
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_transformed_new",
+    "dst_name": "room_dw_mansion_dining3"
+   },
+   {
+    "src": 164,
+    "dst": 157,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1000,
+    "xlo": 10,
+    "xhi": null,
+    "door_x": [
+     970
+    ],
+    "x_hit": [
+     970
+    ],
+    "src_name": "room_dw_mansion_east_1f_secret",
+    "dst_name": "room_dw_mansion_entrance"
+   },
+   {
+    "src": 171,
+    "dst": 176,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1016,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     1900
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_central",
+    "dst_name": "room_dw_mansion_b_east"
+   },
+   {
+    "src": 171,
+    "dst": 179,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1023,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     1900
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_central",
+    "dst_name": "room_dw_mansion_b_east_transformed"
+   },
+   {
+    "src": 176,
+    "dst": 171,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1037,
+    "xlo": 10,
+    "xhi": null,
+    "door_x": [
+     0,
+     120,
+     1120
+    ],
+    "x_hit": [
+     120,
+     1120
+    ],
+    "src_name": "room_dw_mansion_b_east",
+    "dst_name": "room_dw_mansion_b_central"
+   },
+   {
+    "src": 176,
+    "dst": 177,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1053,
+    "xlo": 80,
+    "xhi": 150,
+    "door_x": [
+     0,
+     120,
+     1120
+    ],
+    "x_hit": [
+     120
+    ],
+    "src_name": "room_dw_mansion_b_east",
+    "dst_name": "room_dw_mansion_b_east_a"
+   },
+   {
+    "src": 176,
+    "dst": 178,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1063,
+    "xlo": 1000,
+    "xhi": null,
+    "door_x": [
+     0,
+     120,
+     1120
+    ],
+    "x_hit": [
+     1120
+    ],
+    "src_name": "room_dw_mansion_b_east",
+    "dst_name": "room_dw_mansion_b_east_b"
+   },
+   {
+    "src": 177,
+    "dst": 176,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1079,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_east_a",
+    "dst_name": "room_dw_mansion_b_east"
+   },
+   {
+    "src": 177,
+    "dst": 179,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1084,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_east_a",
+    "dst_name": "room_dw_mansion_b_east_transformed"
+   },
+   {
+    "src": 178,
+    "dst": 176,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1094,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_east_b",
+    "dst_name": "room_dw_mansion_b_east"
+   },
+   {
+    "src": 179,
+    "dst": 177,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1108,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_east_transformed",
+    "dst_name": "room_dw_mansion_b_east_a"
+   },
+   {
+    "src": 179,
+    "dst": 171,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1115,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_east_transformed",
+    "dst_name": "room_dw_mansion_b_central"
+   },
+   {
+    "src": 172,
+    "dst": 175,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1129,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     235,
+     863,
+     1429
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_west_1f",
+    "dst_name": "room_dw_mansion_b_west_2f"
+   },
+   {
+    "src": 172,
+    "dst": 174,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1139,
+    "xlo": 800,
+    "xhi": null,
+    "door_x": [
+     235,
+     863,
+     1429
+    ],
+    "x_hit": [
+     863,
+     1429
+    ],
+    "src_name": "room_dw_mansion_b_west_1f",
+    "dst_name": "room_dw_mansion_b_west_1f_b"
+   },
+   {
+    "src": 172,
+    "dst": 173,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1149,
+    "xlo": 1400,
+    "xhi": null,
+    "door_x": [
+     235,
+     863,
+     1429
+    ],
+    "x_hit": [
+     1429
+    ],
+    "src_name": "room_dw_mansion_b_west_1f",
+    "dst_name": "room_dw_mansion_b_west_1f_a"
+   },
+   {
+    "src": 175,
+    "dst": 172,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1159,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     2280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_west_2f",
+    "dst_name": "room_dw_mansion_b_west_1f"
+   },
+   {
+    "src": 173,
+    "dst": 172,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1169,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     320
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_west_1f_a",
+    "dst_name": "room_dw_mansion_b_west_1f"
+   },
+   {
+    "src": 174,
+    "dst": 172,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1179,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     320
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_west_1f_b",
+    "dst_name": "room_dw_mansion_b_west_1f"
+   },
+   {
+    "src": 186,
+    "dst": 184,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1193,
+    "xlo": 1200,
+    "xhi": null,
+    "door_x": [
+     1780
+    ],
+    "x_hit": [
+     1780
+    ],
+    "src_name": "room_dw_mansion_east_2f_d",
+    "dst_name": "room_dw_mansion_east_2f_c"
+   },
+   {
+    "src": 186,
+    "dst": 168,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1200,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     1780
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_d",
+    "dst_name": "room_dw_mansion_east_teacup_2"
+   },
+   {
+    "src": 184,
+    "dst": 186,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1214,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     360,
+     1560,
+     2540
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_c",
+    "dst_name": "room_dw_mansion_east_2f_d"
+   },
+   {
+    "src": 184,
+    "dst": 185,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1224,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     360,
+     1560,
+     2540
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_c",
+    "dst_name": "room_dw_mansion_east_2f_c_a"
+   },
+   {
+    "src": 184,
+    "dst": 185,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1234,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     360,
+     1560,
+     2540
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_c",
+    "dst_name": "room_dw_mansion_east_2f_c_a"
+   },
+   {
+    "src": 184,
+    "dst": 212,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1244,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     360,
+     1560,
+     2540
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_c",
+    "dst_name": "room_dw_mansion_east_2f_c_b"
+   },
+   {
+    "src": 184,
+    "dst": 209,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1254,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     360,
+     1560,
+     2540
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_c",
+    "dst_name": "room_dw_mansion_dininghall"
+   },
+   {
+    "src": 183,
+    "dst": 181,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1264,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     960
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_kitchen",
+    "dst_name": "room_dw_mansion_east_2f_transformed_new"
+   },
+   {
+    "src": 185,
+    "dst": 184,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1278,
+    "xlo": 260,
+    "xhi": null,
+    "door_x": [
+     280,
+     1560
+    ],
+    "x_hit": [
+     280,
+     1560
+    ],
+    "src_name": "room_dw_mansion_east_2f_c_a",
+    "dst_name": "room_dw_mansion_east_2f_c"
+   },
+   {
+    "src": 185,
+    "dst": 184,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1288,
+    "xlo": 1540,
+    "xhi": null,
+    "door_x": [
+     280,
+     1560
+    ],
+    "x_hit": [
+     1560
+    ],
+    "src_name": "room_dw_mansion_east_2f_c_a",
+    "dst_name": "room_dw_mansion_east_2f_c"
+   },
+   {
+    "src": 212,
+    "dst": 184,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1298,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     661
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_c_b",
+    "dst_name": "room_dw_mansion_east_2f_c"
+   },
+   {
+    "src": 189,
+    "dst": 187,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1308,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_3f_toilet",
+    "dst_name": "room_dw_mansion_east_3f"
+   },
+   {
+    "src": 188,
+    "dst": 187,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1318,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_3f_projection",
+    "dst_name": "room_dw_mansion_east_3f"
+   },
+   {
+    "src": 187,
+    "dst": 188,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1332,
+    "xlo": 10,
+    "xhi": null,
+    "door_x": [
+     0,
+     944,
+     1260
+    ],
+    "x_hit": [
+     944,
+     1260
+    ],
+    "src_name": "room_dw_mansion_east_3f",
+    "dst_name": "room_dw_mansion_east_3f_projection"
+   },
+   {
+    "src": 187,
+    "dst": 157,
+    "entrance": 19,
+    "letter": "S",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1348,
+    "xlo": 220,
+    "xhi": null,
+    "door_x": [
+     0,
+     944,
+     1260
+    ],
+    "x_hit": [
+     944,
+     1260
+    ],
+    "src_name": "room_dw_mansion_east_3f",
+    "dst_name": "room_dw_mansion_entrance"
+   },
+   {
+    "src": 187,
+    "dst": 168,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1364,
+    "xlo": 220,
+    "xhi": null,
+    "door_x": [
+     0,
+     944,
+     1260
+    ],
+    "x_hit": [
+     944,
+     1260
+    ],
+    "src_name": "room_dw_mansion_east_3f",
+    "dst_name": "room_dw_mansion_east_teacup_2"
+   },
+   {
+    "src": 187,
+    "dst": 194,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1374,
+    "xlo": 500,
+    "xhi": null,
+    "door_x": [
+     0,
+     944,
+     1260
+    ],
+    "x_hit": [
+     944,
+     1260
+    ],
+    "src_name": "room_dw_mansion_east_3f",
+    "dst_name": "room_dw_mansion_east_4f_b"
+   },
+   {
+    "src": 187,
+    "dst": 189,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1384,
+    "xlo": 870,
+    "xhi": null,
+    "door_x": [
+     0,
+     944,
+     1260
+    ],
+    "x_hit": [
+     944,
+     1260
+    ],
+    "src_name": "room_dw_mansion_east_3f",
+    "dst_name": "room_dw_mansion_east_3f_toilet"
+   },
+   {
+    "src": 187,
+    "dst": 190,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1394,
+    "xlo": 1250,
+    "xhi": null,
+    "door_x": [
+     0,
+     944,
+     1260
+    ],
+    "x_hit": [
+     1260
+    ],
+    "src_name": "room_dw_mansion_east_3f",
+    "dst_name": "room_dw_mansion_acid_tunnel"
+   },
+   {
+    "src": 168,
+    "dst": 186,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1408,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280,
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_teacup_2",
+    "dst_name": "room_dw_mansion_east_2f_d"
+   },
+   {
+    "src": 168,
+    "dst": 187,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1415,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280,
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_teacup_2",
+    "dst_name": "room_dw_mansion_east_3f"
+   },
+   {
+    "src": 190,
+    "dst": 187,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1425,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_acid_tunnel",
+    "dst_name": "room_dw_mansion_east_3f"
+   },
+   {
+    "src": 191,
+    "dst": 204,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1435,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+    "dst_name": "room_dw_mansion_bridges"
+   },
+   {
+    "src": 42,
+    "dst": 44,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1455,
+    "xlo": 110,
+    "xhi": 150,
+    "door_x": [
+     218
+    ],
+    "x_hit": [],
+    "src_name": "room_library",
+    "dst_name": "room_lw_computer_lab"
+   },
+   {
+    "src": 42,
+    "dst": 45,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1471,
+    "xlo": 215,
+    "xhi": 230,
+    "door_x": [
+     218
+    ],
+    "x_hit": [
+     218
+    ],
+    "src_name": "room_library",
+    "dst_name": "room_lw_library_upstairs"
+   },
+   {
+    "src": 45,
+    "dst": 42,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1481,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     213
+    ],
+    "x_hit": null,
+    "src_name": "room_lw_library_upstairs",
+    "dst_name": "room_library"
+   },
+   {
+    "src": 44,
+    "dst": 42,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1491,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     130
+    ],
+    "x_hit": null,
+    "src_name": "room_lw_computer_lab",
+    "dst_name": "room_library"
+   },
+   {
+    "src": 259,
+    "dst": 84,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1501,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_virovirokun_fight",
+    "dst_name": "room_dw_cyber_musical_door"
+   },
+   {
+    "src": 162,
+    "dst": 165,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1511,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     198
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_traffic",
+    "dst_name": "room_dw_mansion_east_teacup"
+   },
+   {
+    "src": 180,
+    "dst": 165,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1521,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     1720
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_2f_a",
+    "dst_name": "room_dw_mansion_east_teacup"
+   },
+   {
+    "src": 165,
+    "dst": 162,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1535,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280,
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_teacup",
+    "dst_name": "room_dw_mansion_traffic"
+   },
+   {
+    "src": 165,
+    "dst": 180,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1542,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280,
+     280
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_teacup",
+    "dst_name": "room_dw_mansion_east_2f_a"
+   },
+   {
+    "src": 128,
+    "dst": 127,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1556,
+    "xlo": 0,
+    "xhi": null,
+    "door_x": [
+     940
+    ],
+    "x_hit": [
+     940
+    ],
+    "src_name": "room_dw_city_berdly",
+    "dst_name": "room_dw_city_poppup"
+   },
+   {
+    "src": 128,
+    "dst": 129,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1563,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     940
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_berdly",
+    "dst_name": "room_dw_city_traffic_4"
+   },
+   {
+    "src": 127,
+    "dst": 128,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1573,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_dw_city_poppup",
+    "dst_name": "room_dw_city_berdly"
+   },
+   {
+    "src": 96,
+    "dst": 84,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1587,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     160,
+     2880
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_post_music_boss_slide",
+    "dst_name": "room_dw_cyber_musical_door"
+   },
+   {
+    "src": 96,
+    "dst": 88,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1597,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     160,
+     2880
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_post_music_boss_slide",
+    "dst_name": "room_dw_cyber_music_final"
+   },
+   {
+    "src": 88,
+    "dst": 96,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1607,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     2160
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_music_final",
+    "dst_name": "room_dw_cyber_post_music_boss_slide"
+   },
+   {
+    "src": 90,
+    "dst": 95,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1617,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     240
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_teacup_final",
+    "dst_name": "room_dw_cyber_viro_ring"
+   },
+   {
+    "src": 205,
+    "dst": 204,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1627,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_bridges_funny",
+    "dst_name": "room_dw_mansion_bridges"
+   },
+   {
+    "src": 206,
+    "dst": 204,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1637,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     320
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_mouseLottery",
+    "dst_name": "room_dw_mansion_bridges"
+   },
+   {
+    "src": 207,
+    "dst": 204,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1647,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     292
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_hands",
+    "dst_name": "room_dw_mansion_bridges"
+   },
+   {
+    "src": 204,
+    "dst": 191,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1661,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280,
+     560,
+     1440,
+     1620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_bridges",
+    "dst_name": "room_dw_mansion_acid_tunnel_puzzle_entrance"
+   },
+   {
+    "src": 204,
+    "dst": 205,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1671,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280,
+     560,
+     1440,
+     1620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_bridges",
+    "dst_name": "room_dw_mansion_bridges_funny"
+   },
+   {
+    "src": 204,
+    "dst": 206,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1681,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280,
+     560,
+     1440,
+     1620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_bridges",
+    "dst_name": "room_dw_mansion_mouseLottery"
+   },
+   {
+    "src": 204,
+    "dst": 207,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1691,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     280,
+     560,
+     1440,
+     1620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_bridges",
+    "dst_name": "room_dw_mansion_hands"
+   },
+   {
+    "src": 208,
+    "dst": 209,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1705,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     600,
+     680
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_dining3",
+    "dst_name": "room_dw_mansion_dininghall"
+   },
+   {
+    "src": 208,
+    "dst": 181,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1715,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     600,
+     680
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_dining3",
+    "dst_name": "room_dw_mansion_east_2f_transformed_new"
+   },
+   {
+    "src": 194,
+    "dst": 187,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1729,
+    "xlo": 200,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": [],
+    "src_name": "room_dw_mansion_east_4f_b",
+    "dst_name": "room_dw_mansion_east_3f"
+   },
+   {
+    "src": 194,
+    "dst": 203,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1739,
+    "xlo": 500,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": [],
+    "src_name": "room_dw_mansion_east_4f_b",
+    "dst_name": "room_dw_mansion_noelle_room"
+   },
+   {
+    "src": 203,
+    "dst": 194,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1749,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     230
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_noelle_room",
+    "dst_name": "room_dw_mansion_east_4f_b"
+   },
+   {
+    "src": 209,
+    "dst": 210,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1763,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     280,
+     620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_dininghall",
+    "dst_name": "room_dw_mansion_dining_storage"
+   },
+   {
+    "src": 209,
+    "dst": 184,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1773,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     280,
+     620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_dininghall",
+    "dst_name": "room_dw_mansion_east_2f_c"
+   },
+   {
+    "src": 209,
+    "dst": 208,
+    "entrance": 21,
+    "letter": "U",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1783,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     280,
+     620
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_dininghall",
+    "dst_name": "room_dw_mansion_dining3"
+   },
+   {
+    "src": 95,
+    "dst": 90,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1793,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     400
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_cyber_viro_ring",
+    "dst_name": "room_dw_cyber_teacup_final"
+   },
+   {
+    "src": 210,
+    "dst": 209,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorW_Alarm_2",
+    "ins": 1803,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_dining_storage",
+    "dst_name": "room_dw_mansion_dininghall"
+   },
+   {
+    "src": 27,
+    "dst": 47,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 32,
+    "xlo": 1000,
+    "xhi": 1140,
+    "door_x": [
+     301,
+     1082,
+     1740
+    ],
+    "x_hit": [
+     1082
+    ],
+    "src_name": "room_town_mid",
+    "dst_name": "room_lw_conbini"
+   },
+   {
+    "src": 47,
+    "dst": 27,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 42,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     348
+    ],
+    "x_hit": null,
+    "src_name": "room_lw_conbini",
+    "dst_name": "room_town_mid"
+   },
+   {
+    "src": 123,
+    "dst": 140,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 64,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_traffic_3",
+    "dst_name": "room_dw_city_dog_traffic"
+   },
+   {
+    "src": 123,
+    "dst": 141,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 97,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_traffic_3",
+    "dst_name": "room_dw_city_man"
+   },
+   {
+    "src": 123,
+    "dst": 142,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 102,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_traffic_3",
+    "dst_name": "room_dw_city_moss"
+   },
+   {
+    "src": 129,
+    "dst": 130,
+    "entrance": 23,
+    "letter": "W",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 112,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     0,
+     3151,
+     4580
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_traffic_4",
+    "dst_name": "room_dw_city_spamton_alley"
+   },
+   {
+    "src": 141,
+    "dst": 123,
+    "entrance": 24,
+    "letter": "X",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 122,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     1800
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_city_man",
+    "dst_name": "room_dw_city_traffic_3"
+   },
+   {
+    "src": 157,
+    "dst": 231,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 132,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     170
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_entrance",
+    "dst_name": "room_shop_ch2_swatch"
+   },
+   {
+    "src": 46,
+    "dst": 29,
+    "entrance": 22,
+    "letter": "V",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 142,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_lw_police",
+    "dst_name": "room_town_south"
+   },
+   {
+    "src": 169,
+    "dst": 164,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 152,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     187
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_b_entrance",
+    "dst_name": "room_dw_mansion_east_1f_secret"
+   },
+   {
+    "src": 164,
+    "dst": 169,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 162,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     970
+    ],
+    "x_hit": null,
+    "src_name": "room_dw_mansion_east_1f_secret",
+    "dst_name": "room_dw_mansion_b_entrance"
+   },
+   {
+    "src": 108,
+    "dst": 232,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 170,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [],
+    "x_hit": null,
+    "src_name": "room_dw_city_spamton_shop_exterior",
+    "dst_name": "room_shop_ch2_spamton"
+   },
+   {
+    "src": 56,
+    "dst": 230,
+    "entrance": 20,
+    "letter": "T",
+    "code": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "ins": 178,
+    "xlo": null,
+    "xhi": null,
+    "door_x": [
+     1390
+    ],
+    "x_hit": null,
+    "src_name": "room_castle_tutorial",
+    "dst_name": "room_shop_ch2_music"
+   }
+  ]
+ }
+}

@@ -23,7 +23,11 @@ EV = os.path.join(ROUND, '_evidence')
 CH = [('ch1', 'conn42b.json', 'inst42.json'),
       ('ch2', 'ch2_conn42b.json', 'ch2_inst42.json')]
 WCODE = ('gml_Object_obj_doorW_Alarm_2', 'gml_Object_obj_doorw_musfade_Alarm_2')
-ANY = ('obj_markerany', 'obj_markerany40px')
+#: ★★★ 这里必须写**后缀**（`ds` 存的是 `MRK.match(o).group(1).lower()`）。
+#:   v1 写的是完整对象名（`obj_markerany`），与后缀集求交**恒为空** ⇒
+#:   「通用 Any 落点」29 条被误判成 MISS，ch2 命中率假跌到 73.2%
+#:   （修正后 90.9%）。这是「判据恒假」的又一例：口径不一致的常量。
+ANY = ('any', 'any40px')
 
 _T1 = "\x3a True"
 _t1 = "\x3a true"
@@ -81,14 +85,18 @@ for ch, cf, inf in CH:
             c['LETTER'] += 1
         elif ds & set(ANY):
             c['ANY'] += 1
-        elif L and ('x' == L) and 'x' in ds:
-            c['LETTER'] += 1
+        elif not ds:
+            c['NOMARKER'] += 1
+            bad.append((r['src'], t, r['letter'], r['entrance'], sorted(ds),
+                        rn[r['src']] if r['src'] < N else '', rn[t] if t < N else ''))
         else:
             c['MISS'] += 1
             bad.append((r['src'], t, r['letter'], r['entrance'], sorted(ds),
                         rn[r['src']] if r['src'] < N else '', rn[t] if t < N else ''))
     tot = sum(c.values())
-    print(u'  落点：%r  命中率 %.1f%%' % (dict(c), 100.0 * (tot - c['MISS']) / tot if tot else 0))
+    print(u'  落点：%r  命中率 %.1f%%（零 marker 的 %d 条单列，不算"字母不符"）'
+          % (dict(c), 100.0 * (tot - c['MISS'] - c['NOMARKER']) / tot if tot else 0,
+             c['NOMARKER']))
     for b in bad:
         print(u'     MISS %3d → %-3d 字=%s ent=%-3s dstM=%-28r %s → %s'
               % (b[0], b[1], b[2], b[3], b[4], (b[5] or '')[:30], (b[6] or '')[:30]))
