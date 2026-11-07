@@ -512,7 +512,10 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
             #   （`obj_door_ruins13` 这种），于是查表这一步根本不会被调用 ⇒ 1,299 个
             #   门实例一个都建不出来，而且**连日志都没有**（最后那个分支也要求
             #   `letter`）。现在两路都查：对象级（`when_src`）优先，其次字母级。
-            tgt = route_for_door(routes, sid, letter, src=src)
+            #   ★★ 第170轮：把**这扇门实例的坐标**传下去 —— 同场景多扇同字母门
+            #      （如 `town_mid` 的三扇 W 门）靠它各去各处；单门场景不传也无所谓，
+            #      `_pick_by_pos` 要求候选 ≥2 才会生效。
+            tgt = route_for_door(routes, sid, letter, src=src, pos=o.get('pos'))
             # ★★★ 第111轮 #47：Niko 的家 = 永远进不去的彩蛋（须在普通分支之前判）。
             #   ★ 与普通门同款契约：**前置条件缺一不可，缺了就不建**（不造假门）。
             #     彩蛋门的"前置条件"是 `on_egg` —— 没它就没法执行三连确认，
@@ -733,7 +736,64 @@ def door_letter_of(src):
     return None
 
 
-def route_for_door(routes, scene_id, letter, src=None):
+def _rule_door_axis(r):
+    """这条规则声明的门坐标是哪一轴、值多少 → `('x', 301)`；声明不了 → `None`。
+
+    ★ 轴优先看 `_original.axis`（第170轮起显式记）。第168/169轮的规则没有这个字段，
+      但它们的 `door_x` 记的就是**那扇门实例的真实 x**（第170轮已逐条与
+      `ch2_inst42.json` 的原作实例坐标对过账，11/11 一致）—— 所以缺 `axis` 时按 x 处理。
+    ★ 必须 `isinstance(v, int)`：JSON 里可能是 `null`，而 `0` 也是合法坐标，
+      用 `if v:` 会把 x=0 那扇门（`darkbulb_*` / `city_big_1` 都有一扇在 x=0）当成"没记"。
+    """
+    o = r.get('_original') if isinstance(r, dict) else None
+    if not isinstance(o, dict):
+        return None
+    if o.get('axis') == 'y':
+        v = o.get('door_y')
+        return ('y', v) if isinstance(v, int) else None
+    v = o.get('door_x')
+    return ('x', v) if isinstance(v, int) else None
+
+
+def _pick_by_pos(items, scene_id, letter_ok, pos):
+    """按**门实例坐标**在候选规则里挑唯一一条；挑不出唯一 → `None`（交回旧口径）。
+
+    ★★★ 三个前提，缺一不生效
+    ------------------------
+      ① 该 (场景, 字母) 有 **≥2** 条候选 —— 只有一条时本来就不存在"走哪扇"的问题；
+      ② 给了这扇门的坐标（`pos`）；
+      ③ 按坐标**恰好命中 1 条**。
+
+    命中 0 条（这扇门原作没给它单独规则，如 `dw_city_traffic_4` 第三扇 x=3151）
+    或 ≥2 条（两条规则记了同一坐标 ⇒ 原作那层条件我还没解出来，如
+    `dw_mansion_darkbulb_1` 的 7132/7133 都在 x=620）**一律返回 `None`**，
+    退回"priority 最小"的老口径 —— **宁可不改，也不靠猜换一条路走**。
+    """
+    if not pos:
+        return None
+    try:
+        x, y = pos[0], pos[1]
+    except (TypeError, IndexError, KeyError):
+        return None
+    cands = [r for r in items if isinstance(r, dict)
+             and r.get('when_scene') == scene_id and letter_ok(r)]
+    if len(cands) < 2:
+        return None
+    hits = []
+    for r in cands:
+        k = _rule_door_axis(r)
+        if not k:
+            continue
+        if k[0] == 'x' and x is not None and k[1] == x:
+            hits.append(r)
+        elif k[0] == 'y' and y is not None and k[1] == y:
+            hits.append(r)
+    if len(hits) != 1:
+        return None
+    return hits[0].get('to')
+
+
+def route_for_door(routes, scene_id, letter, src=None, pos=None):
     """在路由表里找「从 `scene_id` 的这扇门出去」→ 目标 scene_id；没有 → `None`。
 
     :param routes: `scene_routing.load_routes()` 的结果（`{'routes': [...]}`）或路线列表。
@@ -752,6 +812,21 @@ def route_for_door(routes, scene_id, letter, src=None):
     ★ 两路的**互斥**很关键：字母那一路必须**跳过带 `when_src` 的条目**。
       否则一条对象级规则（`when_door` 为空）会匹配任意字母 —— 那等于让
       "到下一间"的规则去顶替"走 B 门"的规则，静默走错房间。
+
+    ★★★ 第170轮为什么要多一路 `pos`（"一房多出口"）
+    ------------------------------------------------
+    原作里同一间房可以有**好几扇 W 门**，去向各不相同，靠 `if (x > 1730 && x < 1840)`
+    这类**位置条件**分流。而 `door_letter_of('obj_doorW')` 对它们一律返回 `'W'`
+    ⇒ 只按 (场景, 字母) 查，同一间房的几扇门会**全去同一条规则**指向的房间。
+    实测受影响 **11 个场景**，最典型的是 `ch2.hometown.town_mid`：三扇 W 门在
+    x=301/1082/1740，本来是三个不同去处。
+
+    修法是**只加一层消歧**，不是换一套查找逻辑：规则里记了门的坐标
+    （`door_x` / `door_y`），门实例也有坐标，两边对上就认这条；
+    **对不上就退回老口径** ⇒ 单门场景、无坐标规则的行为逐字不变。
+
+    ★ `pos` 是这扇门**实例**的 `[x, y]`（来自场景 `objects[i].pos`）。
+      不给就是老行为，所以老的调用方不改也不会出问题。
     """
     if isinstance(routes, dict):
         items = routes.get('routes') or []
@@ -779,8 +854,16 @@ def route_for_door(routes, scene_id, letter, src=None):
     # ② 字母级（原有语义）：**跳过带 when_src 的条目**（它们是对象级，不许被字母复用）
     if not letter:
         return None
-    return _pick(lambda r: not r.get('when_src')
-                 and (not r.get('when_door') or r.get('when_door') == letter))
+
+    def _letter_ok(r):
+        return (not r.get('when_src')
+                and (not r.get('when_door') or r.get('when_door') == letter))
+
+    # ③ 实例级消歧（第170轮）：只在"同场景同字母多候选 + 给了门坐标"时插一层
+    got = _pick_by_pos(items, scene_id, _letter_ok, pos)
+    if got:
+        return got
+    return _pick(_letter_ok)
 
 
 #: ★ 门 / 暗之泉通向哪（保留旧名，避免破坏既有引用）。

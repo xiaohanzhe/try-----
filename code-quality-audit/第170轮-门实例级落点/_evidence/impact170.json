@@ -1,0 +1,107 @@
+{
+ "new_rule_impact": [
+  {
+   "i": 0,
+   "priority": 7190,
+   "scene": "ch2.cyber_field.dw_cyber_maze_fireworks",
+   "to": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "before": null,
+   "after": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "changed": true,
+   "same_as_before": false
+  },
+  {
+   "i": 1,
+   "priority": 7191,
+   "scene": "ch2.cyber_city.dw_city_big_2",
+   "to": "ch2.cyber_city.dw_city_mirrorfriend",
+   "before": null,
+   "after": "ch2.cyber_city.dw_city_mirrorfriend",
+   "changed": true,
+   "same_as_before": false
+  },
+  {
+   "i": 2,
+   "priority": 7192,
+   "scene": "ch2.cyber_city.dw_city_traffic_4",
+   "to": "ch2.cyber_city.dw_city_spamton_alley",
+   "before": "ch2.cyber_city.cyber_city_alleyway_2",
+   "after": "ch2.cyber_city.cyber_city_alleyway_2",
+   "changed": false,
+   "same_as_before": false
+  },
+  {
+   "i": 3,
+   "priority": 7193,
+   "scene": "ch2.cyber_city.dw_city_spamton_alley",
+   "to": "ch2.cyber_city.dw_city_traffic_4",
+   "before": null,
+   "after": "ch2.cyber_city.dw_city_traffic_4",
+   "changed": true,
+   "same_as_before": false
+  },
+  {
+   "i": 4,
+   "priority": 7194,
+   "scene": "ch2.cyber_city.dw_city_dog_traffic",
+   "to": "ch2.cyber_city.dw_city_traffic_3",
+   "before": null,
+   "after": "ch2.cyber_city.dw_city_traffic_3",
+   "changed": true,
+   "same_as_before": false
+  },
+  {
+   "i": 5,
+   "priority": 7195,
+   "scene": "ch2.cyber_city.dw_city_man",
+   "to": "ch2.cyber_city.dw_city_traffic_3",
+   "before": null,
+   "after": "ch2.cyber_city.dw_city_traffic_3",
+   "changed": true,
+   "same_as_before": false
+  },
+  {
+   "i": 6,
+   "priority": 7196,
+   "scene": "ch2.cyber_city.dw_city_moss",
+   "to": "ch2.cyber_city.dw_city_traffic_3",
+   "before": null,
+   "after": "ch2.cyber_city.dw_city_traffic_3",
+   "changed": true,
+   "same_as_before": false
+  },
+  {
+   "i": 7,
+   "priority": 7197,
+   "scene": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+   "to": "ch2.queens_mansion.dw_mansion_b_entrance",
+   "before": "ch2.queens_mansion.queen_s_mansion_entrance",
+   "after": "ch2.queens_mansion.queen_s_mansion_entrance",
+   "changed": false,
+   "same_as_before": false
+  },
+  {
+   "i": 8,
+   "priority": 7198,
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "to": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+   "before": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+   "after": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+   "changed": false,
+   "same_as_before": true
+  }
+ ],
+ "changed": 6,
+ "axis": {
+  "x": 5,
+  "y": 12
+ },
+ "ent_dist": {
+  "19": 2,
+  "20": 12,
+  "21": 1,
+  "22": 10,
+  "23": 45,
+  "24": 18
+ }
+}

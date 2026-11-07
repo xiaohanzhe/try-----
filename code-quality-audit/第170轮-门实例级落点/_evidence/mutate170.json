@@ -1,0 +1,99 @@
+{
+ "rows": [
+  {
+   "id": "M1_range_flip_back",
+   "expect": "B2",
+   "got": [
+    "B2"
+   ],
+   "red": true,
+   "hit": [
+    7119,
+    "x_range [None,10] -> [10,None]"
+   ],
+   "pass": true
+  },
+  {
+   "id": "M2_drop_entrance",
+   "expect": "B1",
+   "got": [
+    "B1"
+   ],
+   "red": true,
+   "hit": [
+    7088,
+    "entrance 23 -> None"
+   ],
+   "pass": true
+  },
+  {
+   "id": "M3_drop_new_rule",
+   "expect": "A1",
+   "got": [
+    "A0",
+    "A1",
+    "A3",
+    "B3",
+    "B4",
+    "D3"
+   ],
+   "red": true,
+   "hit": [
+    7190,
+    "删掉这条新增规则"
+   ],
+   "pass": true
+  },
+  {
+   "id": "M4_wrong_door_x",
+   "expect": "C7",
+   "got": [
+    "C7"
+   ],
+   "red": true,
+   "hit": [
+    7092,
+    "door_x 301 -> 999"
+   ],
+   "pass": true
+  },
+  {
+   "id": "M5_lax_pick",
+   "expect": "C4",
+   "got": [
+    "C4"
+   ],
+   "red": true,
+   "hit": "    if len(hits) != 1:",
+   "pass": true
+  },
+  {
+   "id": "M6_drop_pos",
+   "expect": "C3",
+   "got": [
+    "C1",
+    "C3"
+   ],
+   "red": true,
+   "hit": "    got = _pick_by_pos(items, scene_id, _let",
+   "pass": true
+  },
+  {
+   "id": "M7_axis_y_as_x",
+   "expect": "C3",
+   "got": [
+    "B3",
+    "C3"
+   ],
+   "red": true,
+   "hit": [
+    7104,
+    280,
+    0
+   ],
+   "pass": true
+  }
+ ],
+ "ok": 7,
+ "total": 7
+}

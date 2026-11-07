@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "meta": {
-    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。\n★ 第123轮：ut 段由 243 条增到 525 条（+282）。新增的都是**位移机制**门：`obj_doorB`/`obj_doorBmusicfade` = `room_previous(room)`（−1）、`obj_doorC`/`obj_doorCmusicfade` = `room_next(room_next(room))`（+2）、`obj_doorD`/`obj_doorDmusicfade` = 双 `room_previous`（−2）、`obj_doorAmusicfade`/`obj_papdoor` = +1 —— 全部来自 `Alarm_2` 的反编译原文，与 Deltarune 的「A+1 / B−1 / C+2」同一套约定。条件分支点名的房间（如 `obj_doorA` 的 `castle_prebarrier`，按 `global.flag[7]` 分叉）**不套位移**、如实留空。生成器 `code-quality-audit/第123轮-补齐ut门证据/_tools/gen_routes123.py`。★ 第125轮：Deltarune 五章新增 **139** 条（D 门 56 / X 门 83，priority 5000~5138）。此前只有 A(+1)/B(−1)/C(+2)，`obj_doorD` 与 `obj_doorX` 被第44轮以\"证据不足\"拒收。本轮把两种门补齐，并**先独立验证**再写：D 的位移 = −2（第42轮 Alarm 反编译，与第123轮 ut 的 `obj_doorD` 同型），X 走表驱动（读 `Alarm_2` 的 `{房间→目标}`）；两者都要求**目标房含 `obj_marker<同字母>`**（D 71/74、X 94/94 命中）。★ **W 门不收**：`obj_markerw` 仅 60.2%、`obj_markerX` 84.3%，无一套到 100%，\"证据不足不猜\"这条纪律照旧。D 的 3 个例外全落在 backup/test 房，如实不写。生成器 `code-quality-audit/第125轮-D门与X门补齐/_tools/gen_routes125.py`。★ 第126轮：outertale 新增 **209** 条门路由（`ot_door_guard` 93 / `ot_door_shift` 116，priority 6000~6208）。此前 outertale **0 条**（\"看得到、走不通\"）。来源＝第115轮 `conn_ut.json` 的原始 op（301 条 goto）+ `inst_full.tsv` 的实例分布；`guard` = `if (room == N) room_goto(M)`，且**该门对象真摆在 N 这间房**（实例互证）；`shift` = `room_goto_next()`，按实例房 r → r+1（第123轮 ut 同型）。**不写**：无条件 `room_goto(M)`（src 未知，28 条）、守卫与实例打架（24 条）、两端未登记（54 条）、同(场景,对象)按坐标分叉的多目标（1 组）、`obj_mainchara`（走到屏幕边缘换房，另一层机制）。同时把同一组边写进 `_room_graph.json` 的 `chapters.outertale`（逐门寻路读那张图）。生成器 `code-quality-audit/第126轮-门型收口/_tools/gen_routes126.py`。★ 第168轮：Deltarune 五章新增 **88** 条 **W 门**（priority 7000~7087）。此前 W 一条都没写（第125轮以「`obj_markerw` 60.2% / `obj_markerX` 84.3%，无一套到 100%」拒收）。★ 本轮查明**当年两次都量错了对象**：产品里 marker 对象名是**小写** `obj_markerw`（sprite 是专属的 `spr_markerW`，与 A~F 同族），而 `obj_markerX` 是**字母 X 的**出生点（`spr_markerX`），不是通用兜底；真通用是 `obj_markerAny`（`spr_markerAny`）。机制侧同一次反汇编：`obj_doorW_Alarm_2` 的骨架与 A/B/C/D/X **逐句同形**（先给 `entrance` 赋值 → `instance_create` → 一串 `if (room == N) room_goto(M)`）。★ `entrance` **不是每类门的常量**：ch1 的 W 门只有 1 个分支（23），ch2 的 W 门有 145 次赋值、值域 19~24（= S/T/U/V/W/X 的字母序）⇒ 它是**每个分支各自指定落点字母**，所以判据不建立在它的具体数值上。落点自证按同一把尺重算：**同字母 72 条 + 通用 `obj_markerAny` 16 条 = 88 / 97 = 92.8%**，落在已收五类的 91.2%~96.7% 区间内。**拒收 7 条**（目标房只有 `obj_markerX` 1 条 / 只有别的字母 5 条 / 零 marker 的商店房 1 条），逐条见 report168.md。生成器 `code-quality-audit/第168轮-W门补齐/_tools/gen_routes168.py`。",
+    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。\n★ 第123轮：ut 段由 243 条增到 525 条（+282）。新增的都是**位移机制**门：`obj_doorB`/`obj_doorBmusicfade` = `room_previous(room)`（−1）、`obj_doorC`/`obj_doorCmusicfade` = `room_next(room_next(room))`（+2）、`obj_doorD`/`obj_doorDmusicfade` = 双 `room_previous`（−2）、`obj_doorAmusicfade`/`obj_papdoor` = +1 —— 全部来自 `Alarm_2` 的反编译原文，与 Deltarune 的「A+1 / B−1 / C+2」同一套约定。条件分支点名的房间（如 `obj_doorA` 的 `castle_prebarrier`，按 `global.flag[7]` 分叉）**不套位移**、如实留空。生成器 `code-quality-audit/第123轮-补齐ut门证据/_tools/gen_routes123.py`。★ 第125轮：Deltarune 五章新增 **139** 条（D 门 56 / X 门 83，priority 5000~5138）。此前只有 A(+1)/B(−1)/C(+2)，`obj_doorD` 与 `obj_doorX` 被第44轮以\"证据不足\"拒收。本轮把两种门补齐，并**先独立验证**再写：D 的位移 = −2（第42轮 Alarm 反编译，与第123轮 ut 的 `obj_doorD` 同型），X 走表驱动（读 `Alarm_2` 的 `{房间→目标}`）；两者都要求**目标房含 `obj_marker<同字母>`**（D 71/74、X 94/94 命中）。★ **W 门不收**：`obj_markerw` 仅 60.2%、`obj_markerX` 84.3%，无一套到 100%，\"证据不足不猜\"这条纪律照旧。D 的 3 个例外全落在 backup/test 房，如实不写。生成器 `code-quality-audit/第125轮-D门与X门补齐/_tools/gen_routes125.py`。★ 第126轮：outertale 新增 **209** 条门路由（`ot_door_guard` 93 / `ot_door_shift` 116，priority 6000~6208）。此前 outertale **0 条**（\"看得到、走不通\"）。来源＝第115轮 `conn_ut.json` 的原始 op（301 条 goto）+ `inst_full.tsv` 的实例分布；`guard` = `if (room == N) room_goto(M)`，且**该门对象真摆在 N 这间房**（实例互证）；`shift` = `room_goto_next()`，按实例房 r → r+1（第123轮 ut 同型）。**不写**：无条件 `room_goto(M)`（src 未知，28 条）、守卫与实例打架（24 条）、两端未登记（54 条）、同(场景,对象)按坐标分叉的多目标（1 组）、`obj_mainchara`（走到屏幕边缘换房，另一层机制）。同时把同一组边写进 `_room_graph.json` 的 `chapters.outertale`（逐门寻路读那张图）。生成器 `code-quality-audit/第126轮-门型收口/_tools/gen_routes126.py`。★ 第168轮：Deltarune 五章新增 **88** 条 **W 门**（priority 7000~7087）。此前 W 一条都没写（第125轮以「`obj_markerw` 60.2% / `obj_markerX` 84.3%，无一套到 100%」拒收）。★ 本轮查明**当年两次都量错了对象**：产品里 marker 对象名是**小写** `obj_markerw`（sprite 是专属的 `spr_markerW`，与 A~F 同族），而 `obj_markerX` 是**字母 X 的**出生点（`spr_markerX`），不是通用兜底；真通用是 `obj_markerAny`（`spr_markerAny`）。机制侧同一次反汇编：`obj_doorW_Alarm_2` 的骨架与 A/B/C/D/X **逐句同形**（先给 `entrance` 赋值 → `instance_create` → 一串 `if (room == N) room_goto(M)`）。★ `entrance` **不是每类门的常量**：ch1 的 W 门只有 1 个分支（23），ch2 的 W 门有 145 次赋值、值域 19~24（= S/T/U/V/W/X 的字母序）⇒ 它是**每个分支各自指定落点字母**，所以判据不建立在它的具体数值上。落点自证按同一把尺重算：**同字母 72 条 + 通用 `obj_markerAny` 16 条 = 88 / 97 = 92.8%**，落在已收五类的 91.2%~96.7% 区间内。**拒收 7 条**（目标房只有 `obj_markerX` 1 条 / 只有别的字母 5 条 / 零 marker 的商店房 1 条），逐条见 report168.md。生成器 `code-quality-audit/第168轮-W门补齐/_tools/gen_routes168.py`。★ 第170轮：**按分支对账落点，并校正第169轮的元数据**。① `entrance` 从 102 条补到 **190/190**（+88，逐条来自 `obj_doorW_Alarm_2` / `obj_doorw_musfade_Alarm_2` 的 `global.entrance = N`）。② 区间按源码校正 **27** 条：其中 **11 条方向反了**（源码 `x < 10`，表里记成 `[10, None]` 即 `x > 10` —— 单边条件时 lo/hi 写反），另 16 条表里是 `[None, None]` 而源码有值；y 轴分支改用独立的 `y_range`（`x_range` 保持 `[None, None]` 不动，因为它本来就没有 x 条件）。③ 门实例坐标 **17** 条：`door_x` **5** 条 + `door_y` **12** 条 —— `dw_cyber_maze_rhythm` 两扇门 x 只差 2px（269/271）、y 是 2593/1，`dw_cyber_musical_door` / `dw_mansion_east_teacup(_2)` 两扇门 x **完全相同**，**拿 x 区分会把上下门判反**，所以这 12 条一律写 `door_y` 并加 `axis: \"y\"`。④ 新增 **6** 条（priority 7190~7195）：只补\"表里真的没有这条边\"的；原本还有 2 条候选与既有 (场景,目标) 完全重复 ⇒ **不加**（加了就是冗余条目，会同时弄脏 `check124 D2` 的同门重复与 `check169` 的覆盖桶）。其中 6 条让原本\"查不到 ⇒ 不建门\"的门活过来。⑤ **不猜**的地方：混轴条件（`x > 800 && y > 670`）源码解不出单一区间 ⇒ 保持原样；同一 `(房, 对象, 目标)` 有 2 条分支 ⇒ 匹配不到唯一 ⇒ 不动；`entrance` 在同一条边上不唯一（3 条）⇒ 不补。逐条见 `code-quality-audit/第170轮-门实例级落点/_evidence/applied170.json`。生成器 `code-quality-audit/第170轮-门实例级落点/_tools/apply170.py`。",
     "how_it_works": [
       "1. 控制器把当前语境打包成 context（scene_id / mood / event / keywords）。",
       "2. scene_routing.match() 按 priority 升序挑第一条匹配规则。",
@@ -31550,7 +31550,8 @@
         "src_room_name": "room_town_mid",
         "dst_room_name": "room_alphysalley",
         "src_room_id": 11,
-        "dst_room_id": 27
+        "dst_room_id": 27,
+        "entrance": 23
       }
     },
     {
@@ -31569,7 +31570,8 @@
         "src_room_name": "room_town_south",
         "dst_room_name": "room_hospital_lobby",
         "src_room_id": 13,
-        "dst_room_id": 18
+        "dst_room_id": 18,
+        "entrance": 23
       }
     },
     {
@@ -31588,7 +31590,8 @@
         "src_room_name": "room_hospital_lobby",
         "dst_room_name": "room_town_south",
         "src_room_id": 18,
-        "dst_room_id": 13
+        "dst_room_id": 13,
+        "entrance": 23
       }
     },
     {
@@ -31607,7 +31610,8 @@
         "src_room_name": "room_alphysalley",
         "dst_room_name": "room_town_mid",
         "src_room_id": 27,
-        "dst_room_id": 11
+        "dst_room_id": 11,
+        "entrance": 23
       }
     },
     {
@@ -31626,7 +31630,8 @@
         "src_room_name": "room_forest_castlefront",
         "dst_room_name": "room_cc_entrance",
         "src_room_id": 104,
-        "dst_room_id": 113
+        "dst_room_id": 113,
+        "entrance": 23
       }
     },
     {
@@ -31645,7 +31650,8 @@
         "src_room_name": "room_cc_entrance",
         "dst_room_name": "room_forest_castlefront",
         "src_room_id": 113,
-        "dst_room_id": 104
+        "dst_room_id": 104,
+        "entrance": 23
       }
     },
     {
@@ -31664,7 +31670,8 @@
         "src_room_name": "纸牌城堡·一层",
         "dst_room_name": "room_cc_elevator",
         "src_room_id": 114,
-        "dst_room_id": 110
+        "dst_room_id": 110,
+        "entrance": 23
       }
     },
     {
@@ -31683,7 +31690,8 @@
         "src_room_name": "纸牌城堡·五层",
         "dst_room_name": "room_cc_elevator",
         "src_room_id": 123,
-        "dst_room_id": 110
+        "dst_room_id": 110,
+        "entrance": 23
       }
     },
     {
@@ -31702,7 +31710,8 @@
         "src_room_name": "room_hospital_lobby",
         "dst_room_name": "room_town_south",
         "src_room_id": 34,
-        "dst_room_id": 29
+        "dst_room_id": 29,
+        "entrance": 23
       }
     },
     {
@@ -31721,7 +31730,8 @@
         "src_room_name": "room_alphysalley",
         "dst_room_name": "room_town_mid",
         "src_room_id": 43,
-        "dst_room_id": 27
+        "dst_room_id": 27,
+        "entrance": 23
       }
     },
     {
@@ -31740,7 +31750,8 @@
         "src_room_name": "room_lw_computer_lab",
         "dst_room_name": "room_library",
         "src_room_id": 44,
-        "dst_room_id": 42
+        "dst_room_id": 42,
+        "entrance": 23
       }
     },
     {
@@ -31759,7 +31770,8 @@
         "src_room_name": "room_lw_library_upstairs",
         "dst_room_name": "room_library",
         "src_room_id": 45,
-        "dst_room_id": 42
+        "dst_room_id": 42,
+        "entrance": 20
       }
     },
     {
@@ -31778,7 +31790,8 @@
         "src_room_name": "room_lw_conbini",
         "dst_room_name": "room_town_mid",
         "src_room_id": 47,
-        "dst_room_id": 27
+        "dst_room_id": 27,
+        "entrance": 22
       }
     },
     {
@@ -31797,7 +31810,8 @@
         "src_room_name": "room_lw_icee_pizza",
         "dst_room_name": "room_town_mid",
         "src_room_id": 48,
-        "dst_room_id": 27
+        "dst_room_id": 27,
+        "entrance": 20
       }
     },
     {
@@ -31816,7 +31830,8 @@
         "src_room_name": "room_castle_tutorial",
         "dst_room_name": "room_dw_castle_east_door",
         "src_room_id": 56,
-        "dst_room_id": 58
+        "dst_room_id": 58,
+        "entrance": 23
       }
     },
     {
@@ -31835,7 +31850,8 @@
         "src_room_name": "room_dw_castle_east_door",
         "dst_room_name": "room_castle_tutorial",
         "src_room_id": 58,
-        "dst_room_id": 56
+        "dst_room_id": 56,
+        "entrance": 23
       }
     },
     {
@@ -31854,7 +31870,8 @@
         "src_room_name": "room_dw_ralsei_castle_front",
         "dst_room_name": "room_dw_ralsei_castle_1f",
         "src_room_id": 63,
-        "dst_room_id": 67
+        "dst_room_id": 67,
+        "entrance": 24
       }
     },
     {
@@ -31873,7 +31890,8 @@
         "src_room_name": "room_dw_castle_dungeon",
         "dst_room_name": "room_dw_ralsei_castle_1f",
         "src_room_id": 69,
-        "dst_room_id": 67
+        "dst_room_id": 67,
+        "entrance": 23
       }
     },
     {
@@ -31892,7 +31910,8 @@
         "src_room_name": "room_dw_castle_rooms_kris",
         "dst_room_name": "room_dw_ralsei_castle_2f",
         "src_room_id": 71,
-        "dst_room_id": 68
+        "dst_room_id": 68,
+        "entrance": 22
       }
     },
     {
@@ -31911,7 +31930,8 @@
         "src_room_name": "room_dw_castle_rooms_susie",
         "dst_room_name": "room_dw_ralsei_castle_2f",
         "src_room_id": 72,
-        "dst_room_id": 68
+        "dst_room_id": 68,
+        "entrance": 23
       }
     },
     {
@@ -31930,7 +31950,8 @@
         "src_room_name": "room_dw_cyber_battle_maze_2",
         "dst_room_name": "room_dw_cyber_keyboard_puzzle_3",
         "src_room_id": 87,
-        "dst_room_id": 97
+        "dst_room_id": 97,
+        "entrance": 23
       }
     },
     {
@@ -31949,7 +31970,8 @@
         "src_room_name": "room_dw_cyber_music_final",
         "dst_room_name": "room_dw_cyber_post_music_boss_slide",
         "src_room_id": 88,
-        "dst_room_id": 96
+        "dst_room_id": 96,
+        "entrance": 23
       }
     },
     {
@@ -31968,7 +31990,8 @@
         "src_room_name": "room_dw_cyber_teacup_final",
         "dst_room_name": "room_dw_cyber_viro_ring",
         "src_room_id": 90,
-        "dst_room_id": 95
+        "dst_room_id": 95,
+        "entrance": 24
       }
     },
     {
@@ -31987,7 +32010,8 @@
         "src_room_name": "room_dw_cyber_viro_ring",
         "dst_room_name": "room_dw_cyber_teacup_final",
         "src_room_id": 95,
-        "dst_room_id": 90
+        "dst_room_id": 90,
+        "entrance": 23
       }
     },
     {
@@ -32006,7 +32030,8 @@
         "src_room_name": "room_dw_cyber_keyboard_puzzle_3",
         "dst_room_name": "room_dw_cyber_battle_maze_2",
         "src_room_id": 97,
-        "dst_room_id": 87
+        "dst_room_id": 87,
+        "entrance": 23
       }
     },
     {
@@ -32025,7 +32050,8 @@
         "src_room_name": "room_dw_cyber_escalator_slide",
         "dst_room_name": "room_dw_cyber_musical_door",
         "src_room_id": 102,
-        "dst_room_id": 84
+        "dst_room_id": 84,
+        "entrance": 20
       }
     },
     {
@@ -32044,7 +32070,8 @@
         "src_room_name": "room_dw_city_monologue",
         "dst_room_name": "room_dw_city_traffic_4",
         "src_room_id": 131,
-        "dst_room_id": 129
+        "dst_room_id": 129,
+        "entrance": 24
       }
     },
     {
@@ -32063,7 +32090,8 @@
         "src_room_name": "room_dw_city_susie_ralsei_fun_1",
         "dst_room_name": "room_dw_city_big_1",
         "src_room_id": 137,
-        "dst_room_id": 117
+        "dst_room_id": 117,
+        "entrance": 24
       }
     },
     {
@@ -32082,7 +32110,8 @@
         "src_room_name": "room_dw_city_treasure",
         "dst_room_name": "room_dw_city_big_1",
         "src_room_id": 139,
-        "dst_room_id": 117
+        "dst_room_id": 117,
+        "entrance": 23
       }
     },
     {
@@ -32101,7 +32130,8 @@
         "src_room_name": "room_dw_mansion_krisroom",
         "dst_room_name": "女王宅邸·客殿",
         "src_room_id": 150,
-        "dst_room_id": 152
+        "dst_room_id": 152,
+        "entrance": 19
       }
     },
     {
@@ -32120,7 +32150,8 @@
         "src_room_name": "room_dw_mansion_susieroom",
         "dst_room_name": "女王宅邸·客殿",
         "src_room_id": 151,
-        "dst_room_id": 152
+        "dst_room_id": 152,
+        "entrance": 20
       }
     },
     {
@@ -32139,7 +32170,8 @@
         "src_room_name": "room_dw_mansion_traffic",
         "dst_room_name": "room_dw_mansion_east_teacup",
         "src_room_id": 162,
-        "dst_room_id": 165
+        "dst_room_id": 165,
+        "entrance": 24
       }
     },
     {
@@ -32158,7 +32190,8 @@
         "src_room_name": "room_dw_mansion_b_entrance",
         "dst_room_name": "room_dw_mansion_east_1f_secret",
         "src_room_id": 169,
-        "dst_room_id": 164
+        "dst_room_id": 164,
+        "entrance": 20
       }
     },
     {
@@ -32177,7 +32210,8 @@
         "src_room_name": "room_dw_mansion_b_west_1f_a",
         "dst_room_name": "room_dw_mansion_b_west_1f",
         "src_room_id": 173,
-        "dst_room_id": 172
+        "dst_room_id": 172,
+        "entrance": 22
       }
     },
     {
@@ -32196,7 +32230,8 @@
         "src_room_name": "room_dw_mansion_b_west_1f_b",
         "dst_room_name": "room_dw_mansion_b_west_1f",
         "src_room_id": 174,
-        "dst_room_id": 172
+        "dst_room_id": 172,
+        "entrance": 23
       }
     },
     {
@@ -32215,7 +32250,8 @@
         "src_room_name": "room_dw_mansion_b_west_2f",
         "dst_room_name": "room_dw_mansion_b_west_1f",
         "src_room_id": 175,
-        "dst_room_id": 172
+        "dst_room_id": 172,
+        "entrance": 24
       }
     },
     {
@@ -32234,7 +32270,8 @@
         "src_room_name": "room_dw_mansion_b_east_b",
         "dst_room_name": "room_dw_mansion_b_east",
         "src_room_id": 178,
-        "dst_room_id": 176
+        "dst_room_id": 176,
+        "entrance": 23
       }
     },
     {
@@ -32253,7 +32290,8 @@
         "src_room_name": "room_dw_mansion_east_2f_a",
         "dst_room_name": "room_dw_mansion_east_teacup",
         "src_room_id": 180,
-        "dst_room_id": 165
+        "dst_room_id": 165,
+        "entrance": 23
       }
     },
     {
@@ -32272,7 +32310,8 @@
         "src_room_name": "room_dw_mansion_kitchen",
         "dst_room_name": "room_dw_mansion_east_2f_transformed_new",
         "src_room_id": 183,
-        "dst_room_id": 181
+        "dst_room_id": 181,
+        "entrance": 22
       }
     },
     {
@@ -32291,7 +32330,8 @@
         "src_room_name": "room_dw_mansion_east_3f_projection",
         "dst_room_name": "女王宅邸·三层",
         "src_room_id": 188,
-        "dst_room_id": 187
+        "dst_room_id": 187,
+        "entrance": 21
       }
     },
     {
@@ -32310,7 +32350,8 @@
         "src_room_name": "room_dw_mansion_east_3f_toilet",
         "dst_room_name": "女王宅邸·三层",
         "src_room_id": 189,
-        "dst_room_id": 187
+        "dst_room_id": 187,
+        "entrance": 23
       }
     },
     {
@@ -32329,7 +32370,8 @@
         "src_room_name": "room_dw_mansion_acid_tunnel",
         "dst_room_name": "女王宅邸·三层",
         "src_room_id": 190,
-        "dst_room_id": 187
+        "dst_room_id": 187,
+        "entrance": 24
       }
     },
     {
@@ -32348,7 +32390,8 @@
         "src_room_name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
         "dst_room_name": "room_dw_mansion_bridges",
         "src_room_id": 191,
-        "dst_room_id": 204
+        "dst_room_id": 204,
+        "entrance": 24
       }
     },
     {
@@ -32367,7 +32410,8 @@
         "src_room_name": "room_dw_mansion_noelle_room",
         "dst_room_name": "room_dw_mansion_east_4f_b",
         "src_room_id": 203,
-        "dst_room_id": 194
+        "dst_room_id": 194,
+        "entrance": 24
       }
     },
     {
@@ -32386,7 +32430,8 @@
         "src_room_name": "room_dw_mansion_bridges_funny",
         "dst_room_name": "room_dw_mansion_bridges",
         "src_room_id": 205,
-        "dst_room_id": 204
+        "dst_room_id": 204,
+        "entrance": 23
       }
     },
     {
@@ -32405,7 +32450,8 @@
         "src_room_name": "room_dw_mansion_mouseLottery",
         "dst_room_name": "room_dw_mansion_bridges",
         "src_room_id": 206,
-        "dst_room_id": 204
+        "dst_room_id": 204,
+        "entrance": 22
       }
     },
     {
@@ -32424,7 +32470,8 @@
         "src_room_name": "room_dw_mansion_hands",
         "dst_room_name": "room_dw_mansion_bridges",
         "src_room_id": 207,
-        "dst_room_id": 204
+        "dst_room_id": 204,
+        "entrance": 20
       }
     },
     {
@@ -32443,7 +32490,8 @@
         "src_room_name": "room_dw_mansion_dining_storage",
         "dst_room_name": "room_dw_mansion_dininghall",
         "src_room_id": 210,
-        "dst_room_id": 209
+        "dst_room_id": 209,
+        "entrance": 24
       }
     },
     {
@@ -32462,7 +32510,8 @@
         "src_room_name": "room_dw_mansion_east_2f_c_b",
         "dst_room_name": "room_dw_mansion_east_2f_c",
         "src_room_id": 212,
-        "dst_room_id": 184
+        "dst_room_id": 184,
+        "entrance": 24
       }
     },
     {
@@ -32481,7 +32530,8 @@
         "src_room_name": "room_dw_mansion_east_4f_a",
         "dst_room_name": "女王宅邸·入口",
         "src_room_id": 217,
-        "dst_room_id": 157
+        "dst_room_id": 157,
+        "entrance": 19
       }
     },
     {
@@ -32500,7 +32550,8 @@
         "src_room_name": "room_cc_lancer",
         "dst_room_name": "room_dw_ralsei_castle_2f",
         "src_room_id": 262,
-        "dst_room_id": 68
+        "dst_room_id": 68,
+        "entrance": 24
       }
     },
     {
@@ -32519,7 +32570,8 @@
         "src_room_name": "room_hospital_lobby",
         "dst_room_name": "room_town_south",
         "src_room_id": 31,
-        "dst_room_id": 26
+        "dst_room_id": 26,
+        "entrance": 23
       }
     },
     {
@@ -32538,7 +32590,8 @@
         "src_room_name": "room_alphysalley",
         "dst_room_name": "room_town_mid",
         "src_room_id": 40,
-        "dst_room_id": 24
+        "dst_room_id": 24,
+        "entrance": 23
       }
     },
     {
@@ -32557,7 +32610,8 @@
         "src_room_name": "room_lw_computer_lab",
         "dst_room_name": "room_library",
         "src_room_id": 41,
-        "dst_room_id": 39
+        "dst_room_id": 39,
+        "entrance": 23
       }
     },
     {
@@ -32576,7 +32630,8 @@
         "src_room_name": "room_lw_library_upstairs",
         "dst_room_name": "room_library",
         "src_room_id": 42,
-        "dst_room_id": 39
+        "dst_room_id": 39,
+        "entrance": 20
       }
     },
     {
@@ -32595,7 +32650,8 @@
         "src_room_name": "room_lw_conbini",
         "dst_room_name": "room_town_mid",
         "src_room_id": 44,
-        "dst_room_id": 24
+        "dst_room_id": 24,
+        "entrance": 22
       }
     },
     {
@@ -32614,7 +32670,8 @@
         "src_room_name": "room_lw_icee_pizza",
         "dst_room_name": "room_town_mid",
         "src_room_id": 45,
-        "dst_room_id": 24
+        "dst_room_id": 24,
+        "entrance": 20
       }
     },
     {
@@ -32633,7 +32690,8 @@
         "src_room_name": "room_castle_tutorial",
         "dst_room_name": "room_dw_castle_east_door",
         "src_room_id": 52,
-        "dst_room_id": 53
+        "dst_room_id": 53,
+        "entrance": 23
       }
     },
     {
@@ -32652,7 +32710,8 @@
         "src_room_name": "room_dw_castle_east_door",
         "dst_room_name": "room_castle_tutorial",
         "src_room_id": 53,
-        "dst_room_id": 52
+        "dst_room_id": 52,
+        "entrance": 23
       }
     },
     {
@@ -32671,7 +32730,8 @@
         "src_room_name": "room_dw_ralsei_castle_front",
         "dst_room_name": "room_dw_ralsei_castle_1f",
         "src_room_id": 57,
-        "dst_room_id": 61
+        "dst_room_id": 61,
+        "entrance": 24
       }
     },
     {
@@ -32690,7 +32750,8 @@
         "src_room_name": "room_dw_castle_dungeon",
         "dst_room_name": "room_dw_ralsei_castle_1f",
         "src_room_id": 63,
-        "dst_room_id": 61
+        "dst_room_id": 61,
+        "entrance": 23
       }
     },
     {
@@ -32709,7 +32770,8 @@
         "src_room_name": "room_dw_castle_rooms_kris",
         "dst_room_name": "room_dw_ralsei_castle_2f",
         "src_room_id": 64,
-        "dst_room_id": 62
+        "dst_room_id": 62,
+        "entrance": 22
       }
     },
     {
@@ -32728,7 +32790,8 @@
         "src_room_name": "room_dw_castle_rooms_susie",
         "dst_room_name": "room_dw_ralsei_castle_2f",
         "src_room_id": 65,
-        "dst_room_id": 62
+        "dst_room_id": 62,
+        "entrance": 23
       }
     },
     {
@@ -32747,7 +32810,8 @@
         "src_room_name": "room_cc_lancer",
         "dst_room_name": "room_dw_ralsei_castle_2f",
         "src_room_id": 80,
-        "dst_room_id": 62
+        "dst_room_id": 62,
+        "entrance": 24
       }
     },
     {
@@ -32766,7 +32830,8 @@
         "src_room_name": "room_hospital_lobby",
         "dst_room_name": "room_town_south",
         "src_room_id": 31,
-        "dst_room_id": 26
+        "dst_room_id": 26,
+        "entrance": 23
       }
     },
     {
@@ -32785,7 +32850,8 @@
         "src_room_name": "room_alphysalley",
         "dst_room_name": "家乡",
         "src_room_id": 40,
-        "dst_room_id": 24
+        "dst_room_id": 24,
+        "entrance": 23
       }
     },
     {
@@ -32804,7 +32870,8 @@
         "src_room_name": "room_lw_computer_lab",
         "dst_room_name": "room_library",
         "src_room_id": 41,
-        "dst_room_id": 39
+        "dst_room_id": 39,
+        "entrance": 23
       }
     },
     {
@@ -32823,7 +32890,8 @@
         "src_room_name": "room_lw_library_upstairs",
         "dst_room_name": "room_library",
         "src_room_id": 42,
-        "dst_room_id": 39
+        "dst_room_id": 39,
+        "entrance": 20
       }
     },
     {
@@ -32842,7 +32910,8 @@
         "src_room_name": "room_lw_conbini",
         "dst_room_name": "家乡",
         "src_room_id": 44,
-        "dst_room_id": 24
+        "dst_room_id": 24,
+        "entrance": 22
       }
     },
     {
@@ -32861,7 +32930,8 @@
         "src_room_name": "room_lw_icee_pizza",
         "dst_room_name": "家乡",
         "src_room_id": 45,
-        "dst_room_id": 24
+        "dst_room_id": 24,
+        "entrance": 20
       }
     },
     {
@@ -32880,7 +32950,8 @@
         "src_room_name": "room_castle_tutorial",
         "dst_room_name": "room_dw_castle_east_door",
         "src_room_id": 61,
-        "dst_room_id": 62
+        "dst_room_id": 62,
+        "entrance": 23
       }
     },
     {
@@ -32899,7 +32970,8 @@
         "src_room_name": "room_dw_castle_east_door",
         "dst_room_name": "room_castle_tutorial",
         "src_room_id": 62,
-        "dst_room_id": 61
+        "dst_room_id": 61,
+        "entrance": 23
       }
     },
     {
@@ -32918,7 +32990,8 @@
         "src_room_name": "room_dw_ralsei_castle_front",
         "dst_room_name": "room_dw_ralsei_castle_1f",
         "src_room_id": 66,
-        "dst_room_id": 70
+        "dst_room_id": 70,
+        "entrance": 24
       }
     },
     {
@@ -32937,7 +33010,8 @@
         "src_room_name": "room_dw_castle_dungeon",
         "dst_room_name": "room_dw_ralsei_castle_1f",
         "src_room_id": 72,
-        "dst_room_id": 70
+        "dst_room_id": 70,
+        "entrance": 23
       }
     },
     {
@@ -32956,7 +33030,8 @@
         "src_room_name": "room_cc_lancer",
         "dst_room_name": "room_dw_ralsei_castle_2f",
         "src_room_id": 89,
-        "dst_room_id": 71
+        "dst_room_id": 71,
+        "entrance": 24
       }
     },
     {
@@ -32975,7 +33050,8 @@
         "src_room_name": "room_hospital_lobby",
         "dst_room_name": "家乡",
         "src_room_id": 29,
-        "dst_room_id": 24
+        "dst_room_id": 24,
+        "entrance": 23
       }
     },
     {
@@ -32994,7 +33070,8 @@
         "src_room_name": "room_alphysalley",
         "dst_room_name": "room_town_mid",
         "src_room_id": 38,
-        "dst_room_id": 22
+        "dst_room_id": 22,
+        "entrance": 23
       }
     },
     {
@@ -33013,7 +33090,8 @@
         "src_room_name": "room_lw_computer_lab",
         "dst_room_name": "room_library",
         "src_room_id": 39,
-        "dst_room_id": 37
+        "dst_room_id": 37,
+        "entrance": 23
       }
     },
     {
@@ -33032,7 +33110,8 @@
         "src_room_name": "room_lw_library_upstairs",
         "dst_room_name": "room_library",
         "src_room_id": 40,
-        "dst_room_id": 37
+        "dst_room_id": 37,
+        "entrance": 20
       }
     },
     {
@@ -33051,7 +33130,8 @@
         "src_room_name": "room_lw_conbini",
         "dst_room_name": "room_town_mid",
         "src_room_id": 42,
-        "dst_room_id": 22
+        "dst_room_id": 22,
+        "entrance": 22
       }
     },
     {
@@ -33070,7 +33150,8 @@
         "src_room_name": "room_lw_icee_pizza",
         "dst_room_name": "room_town_mid",
         "src_room_id": 43,
-        "dst_room_id": 22
+        "dst_room_id": 22,
+        "entrance": 20
       }
     },
     {
@@ -33089,7 +33170,8 @@
         "src_room_name": "room_castle_tutorial",
         "dst_room_name": "room_dw_castle_east_door",
         "src_room_id": 50,
-        "dst_room_id": 51
+        "dst_room_id": 51,
+        "entrance": 23
       }
     },
     {
@@ -33108,7 +33190,8 @@
         "src_room_name": "room_dw_castle_east_door",
         "dst_room_name": "room_castle_tutorial",
         "src_room_id": 51,
-        "dst_room_id": 50
+        "dst_room_id": 50,
+        "entrance": 23
       }
     },
     {
@@ -33127,7 +33210,8 @@
         "src_room_name": "room_dw_ralsei_castle_front",
         "dst_room_name": "room_dw_ralsei_castle_1f",
         "src_room_id": 55,
-        "dst_room_id": 59
+        "dst_room_id": 59,
+        "entrance": 24
       }
     },
     {
@@ -33146,7 +33230,8 @@
         "src_room_name": "room_dw_castle_dungeon",
         "dst_room_name": "room_dw_ralsei_castle_1f",
         "src_room_id": 62,
-        "dst_room_id": 59
+        "dst_room_id": 59,
+        "entrance": 23
       }
     },
     {
@@ -33165,7 +33250,8 @@
         "src_room_name": "room_dw_castle_rooms_kris",
         "dst_room_name": "room_dw_ralsei_castle_2f",
         "src_room_id": 63,
-        "dst_room_id": 60
+        "dst_room_id": 60,
+        "entrance": 22
       }
     },
     {
@@ -33184,7 +33270,8 @@
         "src_room_name": "room_dw_castle_rooms_susie",
         "dst_room_name": "room_dw_ralsei_castle_2f",
         "src_room_id": 64,
-        "dst_room_id": 60
+        "dst_room_id": 60,
+        "entrance": 23
       }
     },
     {
@@ -33203,7 +33290,8 @@
         "src_room_name": "room_cc_lancer",
         "dst_room_name": "room_dw_ralsei_castle_2f",
         "src_room_id": 80,
-        "dst_room_id": 60
+        "dst_room_id": 60,
+        "entrance": 24
       }
     },
     {
@@ -33692,8 +33780,8 @@
         "door_x": null,
         "door_x_all": [],
         "x_range": [
-          1200,
-          null
+          null,
+          1200
         ],
         "batch": 169
       }
@@ -33701,7 +33789,7 @@
     {
       "to": "ch2.cyber_field.cyber_field_music_shop",
       "priority": 7104,
-      "reason": "原作连接：从 room_dw_cyber_musical_door 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_musical_shop（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 84)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_cyber_musical_door 的 W 门（(x=280, y=0)；本房该门共 1 扇，(x,y)=(280,0)/(280,460)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_cyber_musical_shop（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 84)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
       "when_scene": "ch2.cyber_field.dw_cyber_musical_door",
       "when_door": "W",
       "_original": {
@@ -33717,22 +33805,31 @@
         "dst_room_id": 89,
         "entrance": 21,
         "branch_letter": "U",
-        "door_x": null,
+        "door_x": 280,
         "door_x_all": [
-          280,
           280
         ],
         "x_range": [
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          null,
+          60
+        ],
+        "y_incl": [
+          null,
+          false
+        ],
+        "axis": "y",
+        "door_y": 0
       }
     },
     {
       "to": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
       "priority": 7105,
-      "reason": "原作连接：从 room_dw_cyber_musical_door 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_post_music_boss_slide（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 84)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_cyber_musical_door 的 W 门（(x=280, y=460)；本房该门共 1 扇，(x,y)=(280,0)/(280,460)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_cyber_post_music_boss_slide（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 84)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
       "when_scene": "ch2.cyber_field.dw_cyber_musical_door",
       "when_door": "W",
       "_original": {
@@ -33748,22 +33845,31 @@
         "dst_room_id": 96,
         "entrance": 20,
         "branch_letter": "T",
-        "door_x": null,
+        "door_x": 280,
         "door_x_all": [
-          280,
           280
         ],
         "x_range": [
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          400,
+          null
+        ],
+        "y_incl": [
+          false,
+          null
+        ],
+        "axis": "y",
+        "door_y": 460
       }
     },
     {
       "to": "ch2.cyber_field.dw_cyber_maze_fireworks",
       "priority": 7106,
-      "reason": "原作连接：从 room_dw_cyber_maze_virokun 的 W 门（本房 2 扇，x=240/640；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_maze_fireworks（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 85)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_cyber_maze_virokun 的 W 门（(x=240, y=0)；本房该门共 2 扇，(x,y)=(240,0)/(640,540)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_cyber_maze_fireworks（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 85)` 之后各自指定 `entrance=21`；目标房含 `obj_markeru` 作为出生点）。",
       "when_scene": "ch2.cyber_field.dw_cyber_maze_virokun",
       "when_door": "W",
       "_original": {
@@ -33779,7 +33885,7 @@
         "dst_room_id": 92,
         "entrance": 21,
         "branch_letter": "U",
-        "door_x": null,
+        "door_x": 240,
         "door_x_all": [
           240,
           640
@@ -33788,13 +33894,23 @@
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          null,
+          50
+        ],
+        "y_incl": [
+          null,
+          false
+        ],
+        "axis": "y",
+        "door_y": 0
       }
     },
     {
       "to": "ch2.cyber_field.dw_cyber_maze_tasque",
       "priority": 7107,
-      "reason": "原作连接：从 room_dw_cyber_maze_virokun 的 W 门（本房 2 扇，x=240/640；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_maze_tasque（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 85)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_cyber_maze_virokun 的 W 门（(x=640, y=540)；本房该门共 2 扇，(x,y)=(240,0)/(640,540)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_cyber_maze_tasque（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 85)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
       "when_scene": "ch2.cyber_field.dw_cyber_maze_virokun",
       "when_door": "W",
       "_original": {
@@ -33810,7 +33926,7 @@
         "dst_room_id": 93,
         "entrance": 20,
         "branch_letter": "T",
-        "door_x": null,
+        "door_x": 640,
         "door_x_all": [
           240,
           640
@@ -33819,7 +33935,17 @@
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          430,
+          null
+        ],
+        "y_incl": [
+          false,
+          null
+        ],
+        "axis": "y",
+        "door_y": 540
       }
     },
     {
@@ -34069,7 +34195,7 @@
     {
       "to": "ch2.cyber_field.dw_cyber_battle_maze_2",
       "priority": 7116,
-      "reason": "原作连接：从 room_dw_cyber_maze_rhythm 的 W 门（本房 2 扇，x=269/271；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_battle_maze_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 101)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_cyber_maze_rhythm 的 W 门（(x=269, y=2593)；本房该门共 2 扇，(x,y)=(271,1)/(269,2593)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_cyber_battle_maze_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 101)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
       "when_scene": "ch2.cyber_field.dw_cyber_maze_rhythm",
       "when_door": "W",
       "_original": {
@@ -34085,7 +34211,7 @@
         "dst_room_id": 87,
         "entrance": 23,
         "branch_letter": "W",
-        "door_x": null,
+        "door_x": 269,
         "door_x_all": [
           269,
           271
@@ -34094,13 +34220,23 @@
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          900,
+          null
+        ],
+        "y_incl": [
+          false,
+          null
+        ],
+        "axis": "y",
+        "door_y": 2593
       }
     },
     {
       "to": "ch2.cyber_field.dw_cyber_maze_queenscreen",
       "priority": 7117,
-      "reason": "原作连接：从 room_dw_cyber_maze_rhythm 的 W 门（本房 2 扇，x=269/271；**分支对应哪一扇未解出**）离开，落到 room_dw_cyber_maze_queenscreen（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 101)` 之后各自指定 `entrance=20`；**目标房没有该字母的落点**（原作如此：`entrance=20` 指向房内不存在的 marker），按原作照收）。",
+      "reason": "原作连接：从 room_dw_cyber_maze_rhythm 的 W 门（(x=271, y=1)；本房该门共 2 扇，(x,y)=(271,1)/(269,2593)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_cyber_maze_queenscreen（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 101)` 之后各自指定 `entrance=20`；**目标房没有该字母的落点**（原作如此：`entrance=20` 指向房内不存在的 marker），按原作照收）。",
       "when_scene": "ch2.cyber_field.dw_cyber_maze_rhythm",
       "when_door": "W",
       "_original": {
@@ -34116,7 +34252,7 @@
         "dst_room_id": 94,
         "entrance": 20,
         "branch_letter": "T",
-        "door_x": null,
+        "door_x": 271,
         "door_x_all": [
           269,
           271
@@ -34125,7 +34261,17 @@
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          null,
+          10
+        ],
+        "y_incl": [
+          null,
+          false
+        ],
+        "axis": "y",
+        "door_y": 1
       }
     },
     {
@@ -34162,7 +34308,7 @@
     {
       "to": "ch2.cyber_city.dw_city_treasure",
       "priority": 7119,
-      "reason": "原作连接：从 room_dw_city_big_1 的 W 门（x=760；本房该门共 2 扇，x=0/760，本分支按位置对应这一扇）离开，落到 room_dw_city_treasure（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 117)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_city_big_1 的 W 门（x=0；本房该门共 2 扇，x=0/760，本分支按位置对应这一扇（第170轮：由 GML 的 x 条件与门实例坐标定死））离开，落到 room_dw_city_treasure（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 117)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
       "when_scene": "ch2.cyber_city.dw_city_big_1",
       "when_door": "W",
       "_original": {
@@ -34178,16 +34324,18 @@
         "dst_room_id": 139,
         "entrance": 23,
         "branch_letter": "W",
-        "door_x": 760,
+        "door_x": 0,
         "door_x_all": [
           0,
           760
         ],
         "x_range": [
-          10,
-          null
+          null,
+          10
         ],
-        "batch": 169
+        "batch": 169,
+        "axis": "x",
+        "door_y": 640
       }
     },
     {
@@ -34332,7 +34480,7 @@
           940
         ],
         "x_range": [
-          null,
+          0,
           null
         ],
         "batch": 169
@@ -34341,7 +34489,7 @@
     {
       "to": "ch2.cyber_city.cyber_city_alleyway_2",
       "priority": 7125,
-      "reason": "原作连接：从 room_dw_city_traffic_4 的 W 门（本房 3 扇，x=0/3151/4580；**分支对应哪一扇未解出**）离开，落到 room_dw_city_berdly（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 129)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_city_traffic_4 的 W 门（x=0；本房该门共 2 扇，x=0/4580，本分支按位置对应这一扇（第170轮：由 GML 的 x 条件与门实例坐标定死））离开，落到 room_dw_city_berdly（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 129)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
       "when_scene": "ch2.cyber_city.dw_city_traffic_4",
       "when_door": "W",
       "_original": {
@@ -34357,17 +34505,18 @@
         "dst_room_id": 128,
         "entrance": 22,
         "branch_letter": "V",
-        "door_x": null,
+        "door_x": 0,
         "door_x_all": [
           0,
-          3151,
           4580
         ],
         "x_range": [
-          50,
-          null
+          null,
+          50
         ],
-        "batch": 169
+        "batch": 169,
+        "axis": "x",
+        "door_y": 120
       }
     },
     {
@@ -34578,8 +34727,8 @@
           620
         ],
         "x_range": [
-          10,
-          null
+          null,
+          10
         ],
         "batch": 169
       }
@@ -34640,7 +34789,7 @@
           620
         ],
         "x_range": [
-          null,
+          600,
           null
         ],
         "batch": 169
@@ -34649,7 +34798,7 @@
     {
       "to": "ch2.queens_mansion.dw_mansion_darkbulb_1",
       "priority": 7135,
-      "reason": "原作连接：从 room_dw_mansion_darkbulb_2 的 W 门（x=620；本房该门共 2 扇，x=0/620，本分支按位置对应这一扇）离开，落到 room_dw_mansion_darkbulb_1（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 154)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_mansion_darkbulb_2 的 W 门（x=0；本房该门共 2 扇，x=0/620，本分支按位置对应这一扇（第170轮：由 GML 的 x 条件与门实例坐标定死））离开，落到 room_dw_mansion_darkbulb_1（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 154)` 之后各自指定 `entrance=20`；目标房含 `obj_markert` 作为出生点）。",
       "when_scene": "ch2.queens_mansion.dw_mansion_darkbulb_2",
       "when_door": "W",
       "_original": {
@@ -34665,16 +34814,18 @@
         "dst_room_id": 153,
         "entrance": 20,
         "branch_letter": "T",
-        "door_x": 620,
+        "door_x": 0,
         "door_x_all": [
           0,
           620
         ],
         "x_range": [
-          10,
-          null
+          null,
+          10
         ],
-        "batch": 169
+        "batch": 169,
+        "axis": "x",
+        "door_y": 240
       }
     },
     {
@@ -34711,7 +34862,7 @@
     {
       "to": "ch2.queens_mansion.dw_mansion_darkbulb_2",
       "priority": 7137,
-      "reason": "原作连接：从 room_dw_mansion_darkbulb_3 的 W 门（x=620；本房该门共 2 扇，x=0/620，本分支按位置对应这一扇）离开，落到 room_dw_mansion_darkbulb_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 155)` 之后各自指定 `entrance=19`；目标房含 `obj_markers` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_mansion_darkbulb_3 的 W 门（x=0；本房该门共 2 扇，x=0/620，本分支按位置对应这一扇（第170轮：由 GML 的 x 条件与门实例坐标定死））离开，落到 room_dw_mansion_darkbulb_2（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 155)` 之后各自指定 `entrance=19`；目标房含 `obj_markers` 作为出生点）。",
       "when_scene": "ch2.queens_mansion.dw_mansion_darkbulb_3",
       "when_door": "W",
       "_original": {
@@ -34727,16 +34878,18 @@
         "dst_room_id": 154,
         "entrance": 19,
         "branch_letter": "S",
-        "door_x": 620,
+        "door_x": 0,
         "door_x_all": [
           0,
           620
         ],
         "x_range": [
-          10,
-          null
+          null,
+          10
         ],
-        "batch": 169
+        "batch": 169,
+        "axis": "x",
+        "door_y": 240
       }
     },
     {
@@ -34795,7 +34948,7 @@
         ],
         "x_range": [
           null,
-          null
+          10
         ],
         "batch": 169
       }
@@ -34824,8 +34977,8 @@
           0
         ],
         "x_range": [
-          10,
-          null
+          null,
+          10
         ],
         "batch": 169
       }
@@ -34944,8 +35097,8 @@
           970
         ],
         "x_range": [
-          10,
-          null
+          null,
+          10
         ],
         "batch": 169
       }
@@ -34953,7 +35106,7 @@
     {
       "to": "ch2.queens_mansion.dw_mansion_traffic",
       "priority": 7145,
-      "reason": "原作连接：从 room_dw_mansion_east_teacup 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_traffic（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 165)` 之后各自指定 `entrance=24`；目标房含 `obj_markerAny` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_mansion_east_teacup 的 W 门（(x=280, y=4780)；本房该门共 1 扇，(x,y)=(280,4780)/(280,1516)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_mansion_traffic（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 165)` 之后各自指定 `entrance=24`；目标房含 `obj_markerAny` 作为出生点）。",
       "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup",
       "when_door": "W",
       "_original": {
@@ -34969,22 +35122,31 @@
         "dst_room_id": 162,
         "entrance": 24,
         "branch_letter": "X",
-        "door_x": null,
+        "door_x": 280,
         "door_x_all": [
-          280,
           280
         ],
         "x_range": [
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          4700,
+          null
+        ],
+        "y_incl": [
+          false,
+          null
+        ],
+        "axis": "y",
+        "door_y": 4780
       }
     },
     {
       "to": "ch2.queens_mansion.dw_mansion_east_2f_a",
       "priority": 7146,
-      "reason": "原作连接：从 room_dw_mansion_east_teacup 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_2f_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 165)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_mansion_east_teacup 的 W 门（(x=280, y=1516)；本房该门共 1 扇，(x,y)=(280,4780)/(280,1516)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_mansion_east_2f_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 165)` 之后各自指定 `entrance=23`；目标房含 `obj_markerw` 作为出生点）。",
       "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup",
       "when_door": "W",
       "_original": {
@@ -35000,22 +35162,31 @@
         "dst_room_id": 180,
         "entrance": 23,
         "branch_letter": "W",
-        "door_x": null,
+        "door_x": 280,
         "door_x_all": [
-          280,
           280
         ],
         "x_range": [
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          null,
+          4700
+        ],
+        "y_incl": [
+          null,
+          true
+        ],
+        "axis": "y",
+        "door_y": 1516
       }
     },
     {
       "to": "ch2.queens_mansion.dw_mansion_east_2f_d",
       "priority": 7147,
-      "reason": "原作连接：从 room_dw_mansion_east_teacup_2 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_2f_d（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 168)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_mansion_east_teacup_2 的 W 门（(x=280, y=4780)；本房该门共 1 扇，(x,y)=(280,1356)/(280,4780)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_mansion_east_2f_d（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 168)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
       "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup_2",
       "when_door": "W",
       "_original": {
@@ -35031,22 +35202,31 @@
         "dst_room_id": 186,
         "entrance": 24,
         "branch_letter": "X",
-        "door_x": null,
+        "door_x": 280,
         "door_x_all": [
-          280,
           280
         ],
         "x_range": [
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          4600,
+          null
+        ],
+        "y_incl": [
+          false,
+          null
+        ],
+        "axis": "y",
+        "door_y": 4780
       }
     },
     {
       "to": "ch2.queens_mansion.queen_s_mansion_3f",
       "priority": 7148,
-      "reason": "原作连接：从 room_dw_mansion_east_teacup_2 的 W 门（本房 2 扇，x=280/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_east_3f（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 168)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_mansion_east_teacup_2 的 W 门（(x=280, y=1356)；本房该门共 1 扇，(x,y)=(280,1356)/(280,4780)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_mansion_east_3f（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 168)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
       "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup_2",
       "when_door": "W",
       "_original": {
@@ -35062,16 +35242,25 @@
         "dst_room_id": 187,
         "entrance": 22,
         "branch_letter": "V",
-        "door_x": null,
+        "door_x": 280,
         "door_x_all": [
-          280,
           280
         ],
         "x_range": [
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          null,
+          4600
+        ],
+        "y_incl": [
+          null,
+          true
+        ],
+        "axis": "y",
+        "door_y": 1356
       }
     },
     {
@@ -35233,7 +35422,7 @@
     {
       "to": "ch2.queens_mansion.queen_s_mansion_basement",
       "priority": 7154,
-      "reason": "原作连接：从 room_dw_mansion_b_east 的 W 门（本房 3 扇，x=0/120/1120；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_b_central（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 176)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_mansion_b_east 的 W 门（x=0；本房该门共 3 扇，x=0/120/1120，本分支按位置对应这一扇（第170轮：由 GML 的 x 条件与门实例坐标定死））离开，落到 room_dw_mansion_b_central（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 176)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
       "when_scene": "ch2.queens_mansion.dw_mansion_b_east",
       "when_door": "W",
       "_original": {
@@ -35249,17 +35438,19 @@
         "dst_room_id": 171,
         "entrance": 24,
         "branch_letter": "X",
-        "door_x": null,
+        "door_x": 0,
         "door_x_all": [
           0,
           120,
           1120
         ],
         "x_range": [
-          10,
-          null
+          null,
+          10
         ],
-        "batch": 169
+        "batch": 169,
+        "axis": "x",
+        "door_y": 800
       }
     },
     {
@@ -35389,7 +35580,7 @@
     {
       "to": "ch2.queens_mansion.queen_s_mansion_basement",
       "priority": 7159,
-      "reason": "原作连接：从 room_dw_mansion_b_east_transformed 的 W 门（本房 2 扇，x=0/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_b_central（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 179)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_mansion_b_east_transformed 的 W 门（(x=0, y=800)；本房该门共 2 扇，(x,y)=(0,800)/(280,156)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_mansion_b_central（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 179)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
       "when_scene": "ch2.queens_mansion.dw_mansion_b_east_transformed",
       "when_door": "W",
       "_original": {
@@ -35405,7 +35596,7 @@
         "dst_room_id": 171,
         "entrance": 24,
         "branch_letter": "X",
-        "door_x": null,
+        "door_x": 0,
         "door_x_all": [
           0,
           280
@@ -35414,13 +35605,23 @@
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          200,
+          null
+        ],
+        "y_incl": [
+          true,
+          null
+        ],
+        "axis": "y",
+        "door_y": 800
       }
     },
     {
       "to": "ch2.queens_mansion.dw_mansion_b_east_a",
       "priority": 7160,
-      "reason": "原作连接：从 room_dw_mansion_b_east_transformed 的 W 门（本房 2 扇，x=0/280；**分支对应哪一扇未解出**）离开，落到 room_dw_mansion_b_east_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 179)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
+      "reason": "原作连接：从 room_dw_mansion_b_east_transformed 的 W 门（(x=280, y=156)；本房该门共 2 扇，(x,y)=(0,800)/(280,156)，本分支按**上下**位置对应这一扇（第170轮：由 GML 的 y 条件与门实例坐标定死））离开，落到 room_dw_mansion_b_east_a（**分支级**：`obj_doorW` 的 `Alarm_2` 里 `if (room == 179)` 之后各自指定 `entrance=22`；目标房含 `obj_markerv` 作为出生点）。",
       "when_scene": "ch2.queens_mansion.dw_mansion_b_east_transformed",
       "when_door": "W",
       "_original": {
@@ -35436,7 +35637,7 @@
         "dst_room_id": 177,
         "entrance": 22,
         "branch_letter": "V",
-        "door_x": null,
+        "door_x": 280,
         "door_x_all": [
           0,
           280
@@ -35445,7 +35646,17 @@
           null,
           null
         ],
-        "batch": 169
+        "batch": 169,
+        "y_range": [
+          null,
+          200
+        ],
+        "y_incl": [
+          null,
+          false
+        ],
+        "axis": "y",
+        "door_y": 156
       }
     },
     {
@@ -35726,7 +35937,7 @@
         ],
         "x_range": [
           null,
-          null
+          1200
         ],
         "batch": 169
       }
@@ -35851,8 +36062,8 @@
           1260
         ],
         "x_range": [
-          10,
-          null
+          null,
+          10
         ],
         "batch": 169
       }
@@ -36323,8 +36534,8 @@
           -16
         ],
         "x_range": [
-          10,
-          null
+          null,
+          10
         ],
         "batch": 169
       }
@@ -36355,6 +36566,168 @@
           null
         ],
         "batch": 169
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_maze_virokun",
+      "priority": 7190,
+      "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_cyber_maze_fireworks 的 `obj_doorW` 离开，落到 room_dw_cyber_maze_virokun（`if (room == 92)` 分支 `无位置条件`，`entrance=21`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_maze_fireworks",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markeru",
+        "src_room_name": "room_dw_cyber_maze_fireworks",
+        "dst_room_name": "room_dw_cyber_maze_virokun",
+        "src_room_id": 92,
+        "dst_room_id": 85,
+        "entrance": 21,
+        "branch_letter": "U",
+        "door_x": 280,
+        "door_y": 460,
+        "door_x_all": [
+          280
+        ],
+        "batch": 170
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_mirrorfriend",
+      "priority": 7191,
+      "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_city_big_2 的 `obj_doorW` 离开，落到 room_dw_city_mirrorfriend（`if (room == 119)` 分支 `无位置条件`，`entrance=24`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch2.cyber_city.dw_city_big_2",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_big_2",
+        "dst_room_name": "room_dw_city_mirrorfriend",
+        "src_room_id": 119,
+        "dst_room_id": 138,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 720,
+        "door_y": 0,
+        "door_x_all": [
+          720
+        ],
+        "batch": 170
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_traffic_3",
+      "priority": 7192,
+      "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_city_dog_traffic 的 `obj_doorW` 离开，落到 room_dw_city_traffic_3（`if (room == 140)` 分支 `无位置条件`，`entrance=24`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch2.cyber_city.dw_city_dog_traffic",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_dog_traffic",
+        "dst_room_name": "room_dw_city_traffic_3",
+        "src_room_id": 140,
+        "dst_room_id": 123,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 160,
+        "door_y": 460,
+        "door_x_all": [
+          160
+        ],
+        "batch": 170
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_traffic_3",
+      "priority": 7193,
+      "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_city_man 的 `obj_doorW` 离开，落到 room_dw_city_traffic_3（`if (room == 141)` 分支 `无位置条件`，`entrance=24`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch2.cyber_city.dw_city_man",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_man",
+        "dst_room_name": "room_dw_city_traffic_3",
+        "src_room_id": 141,
+        "dst_room_id": 123,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 1800,
+        "door_y": 460,
+        "door_x_all": [
+          1800
+        ],
+        "batch": 170
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_traffic_3",
+      "priority": 7194,
+      "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_city_moss 的 `obj_doorW` 离开，落到 room_dw_city_traffic_3（`if (room == 142)` 分支 `无位置条件`，`entrance=24`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch2.cyber_city.dw_city_moss",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_moss",
+        "dst_room_name": "room_dw_city_traffic_3",
+        "src_room_id": 142,
+        "dst_room_id": 123,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 620,
+        "door_y": 200,
+        "door_x_all": [
+          620
+        ],
+        "batch": 170
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_entrance",
+      "priority": 7195,
+      "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_mansion_east_1f_secret 的 `obj_doorW` 离开，落到 room_dw_mansion_b_entrance（`if (room == 164)` 分支 `无位置条件`，`entrance=20`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markert",
+        "src_room_name": "room_dw_mansion_east_1f_secret",
+        "dst_room_name": "room_dw_mansion_b_entrance",
+        "src_room_id": 164,
+        "dst_room_id": 169,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 970,
+        "door_y": 190,
+        "door_x_all": [
+          970
+        ],
+        "batch": 170
       }
     }
   ],

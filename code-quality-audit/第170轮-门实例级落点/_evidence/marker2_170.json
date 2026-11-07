@@ -1,0 +1,79 @@
+{
+ "marker_ok": true,
+ "marker_bad": [],
+ "new_markers": [
+  {
+   "sid_s": "ch2.cyber_field.dw_cyber_maze_fireworks",
+   "sid_t": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "dst_room": "room_dw_cyber_maze_virokun",
+   "ent": 21,
+   "branch_letter": "U",
+   "marker": "obj_markeru"
+  },
+  {
+   "sid_s": "ch2.cyber_city.dw_city_big_2",
+   "sid_t": "ch2.cyber_city.dw_city_mirrorfriend",
+   "dst_room": "room_dw_city_mirrorfriend",
+   "ent": 24,
+   "branch_letter": "X",
+   "marker": "obj_markerX"
+  },
+  {
+   "sid_s": "ch2.cyber_city.dw_city_traffic_4",
+   "sid_t": "ch2.cyber_city.dw_city_spamton_alley",
+   "dst_room": "room_dw_city_spamton_alley",
+   "ent": 23,
+   "branch_letter": "W",
+   "marker": "obj_markerw"
+  },
+  {
+   "sid_s": "ch2.cyber_city.dw_city_spamton_alley",
+   "sid_t": "ch2.cyber_city.dw_city_traffic_4",
+   "dst_room": "room_dw_city_traffic_4",
+   "ent": 23,
+   "branch_letter": "W",
+   "marker": "obj_markerw"
+  },
+  {
+   "sid_s": "ch2.cyber_city.dw_city_dog_traffic",
+   "sid_t": "ch2.cyber_city.dw_city_traffic_3",
+   "dst_room": "room_dw_city_traffic_3",
+   "ent": 24,
+   "branch_letter": "X",
+   "marker": "obj_markerX"
+  },
+  {
+   "sid_s": "ch2.cyber_city.dw_city_man",
+   "sid_t": "ch2.cyber_city.dw_city_traffic_3",
+   "dst_room": "room_dw_city_traffic_3",
+   "ent": 24,
+   "branch_letter": "X",
+   "marker": "obj_markerX"
+  },
+  {
+   "sid_s": "ch2.cyber_city.dw_city_moss",
+   "sid_t": "ch2.cyber_city.dw_city_traffic_3",
+   "dst_room": "room_dw_city_traffic_3",
+   "ent": 24,
+   "branch_letter": "X",
+   "marker": "obj_markerX"
+  },
+  {
+   "sid_s": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+   "sid_t": "ch2.queens_mansion.dw_mansion_b_entrance",
+   "dst_room": "room_dw_mansion_b_entrance",
+   "ent": 20,
+   "branch_letter": "T",
+   "marker": "obj_markert"
+  },
+  {
+   "sid_s": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "sid_t": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+   "dst_room": "room_dw_mansion_east_2f_c_a",
+   "ent": 23,
+   "branch_letter": "W",
+   "marker": "obj_markerw"
+  }
+ ],
+ "coord_mismatch": []
+}

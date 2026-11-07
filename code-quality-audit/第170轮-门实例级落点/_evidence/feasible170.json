@@ -1,0 +1,1951 @@
+{
+ "stat": {
+  "STATE": 15,
+  "BROKEN": 16,
+  "FULL": 23
+ },
+ "rows": [
+  {
+   "tag": "STATE",
+   "ch": "ch1",
+   "obj": "obj_doorw_musfade",
+   "room": "room_cc_elevator",
+   "sid": "ch1.card_castle.cc_elevator",
+   "n_branch": 2,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 114,
+     "kind": "state",
+     "cond": "global.flag[239] == 1",
+     "hit": null
+    },
+    {
+     "to": 123,
+     "kind": "state",
+     "cond": "global.flag[239] == 2",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_city_berdly",
+   "sid": null,
+   "n_branch": 2,
+   "n_inst": 0,
+   "detail": [
+    {
+     "to": 127,
+     "kind": "pos",
+     "cond": "x < 0",
+     "axis": "x",
+     "lo": null,
+     "hi": 0,
+     "hit": []
+    },
+    {
+     "to": 129,
+     "kind": "pos",
+     "cond": "!(x < 0)",
+     "axis": "x",
+     "lo": 0,
+     "hi": null,
+     "hit": []
+    }
+   ],
+   "ok1": false,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_city_big_1",
+   "sid": "ch2.cyber_city.dw_city_big_1",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 139,
+     "kind": "pos",
+     "cond": "x < 10",
+     "axis": "x",
+     "lo": null,
+     "hi": 10,
+     "hit": [
+      2
+     ]
+    },
+    {
+     "to": 137,
+     "kind": "pos",
+     "cond": "x > 720",
+     "axis": "x",
+     "lo": 720,
+     "hi": null,
+     "hit": [
+      1
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_city_traffic_4",
+   "sid": "ch2.cyber_city.dw_city_traffic_4",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 131,
+     "kind": "pos",
+     "cond": "x > 4500",
+     "axis": "x",
+     "lo": 4500,
+     "hi": null,
+     "hit": [
+      2
+     ]
+    },
+    {
+     "to": 128,
+     "kind": "pos",
+     "cond": "x < 50",
+     "axis": "x",
+     "lo": null,
+     "hi": 50,
+     "hit": [
+      4
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_cyber_maze_queenscreen",
+   "sid": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+   "n_branch": 2,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 89,
+     "kind": "state",
+     "cond": "extflag == \"to_room_dw_cyber_musical_shop\"",
+     "hit": null
+    },
+    {
+     "to": 87,
+     "kind": "state",
+     "cond": "extflag == \"to_room_dw_cyber_maze_rhythm\"",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_cyber_maze_rhythm",
+   "sid": "ch2.cyber_field.dw_cyber_maze_rhythm",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 87,
+     "kind": "pos",
+     "cond": "y > 900",
+     "axis": "y",
+     "lo": 900,
+     "hi": null,
+     "hit": [
+      1
+     ]
+    },
+    {
+     "to": 94,
+     "kind": "pos",
+     "cond": "y < 10",
+     "axis": "y",
+     "lo": null,
+     "hi": 10,
+     "hit": [
+      0
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_cyber_maze_tasque",
+   "sid": "ch2.cyber_field.dw_cyber_maze_tasque",
+   "n_branch": 3,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 85,
+     "kind": "pos_state",
+     "cond": "extdestination == \"room_dw_cyber_maze_tasque to room_dw_cyber_maze_virokun\" && x > 180",
+     "axis": "x",
+     "lo": 180,
+     "hi": null,
+     "hit": [
+      2
+     ]
+    },
+    {
+     "to": 87,
+     "kind": "pos",
+     "cond": "x > 1000",
+     "axis": "x",
+     "lo": 1000,
+     "hi": null,
+     "hit": []
+    },
+    {
+     "to": 87,
+     "kind": "pos",
+     "cond": "x > 1400",
+     "axis": "x",
+     "lo": 1400,
+     "hi": null,
+     "hit": []
+    }
+   ],
+   "ok1": false,
+   "ok2": true,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_cyber_maze_virokun",
+   "sid": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 93,
+     "kind": "pos",
+     "cond": "y > 430",
+     "axis": "y",
+     "lo": 430,
+     "hi": null,
+     "hit": [
+      4
+     ]
+    },
+    {
+     "to": 92,
+     "kind": "pos",
+     "cond": "y < 50",
+     "axis": "y",
+     "lo": null,
+     "hi": 50,
+     "hit": [
+      1
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_cyber_musical_door",
+   "sid": "ch2.cyber_field.dw_cyber_musical_door",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 89,
+     "kind": "pos",
+     "cond": "y < 60",
+     "axis": "y",
+     "lo": null,
+     "hi": 60,
+     "hit": [
+      5
+     ]
+    },
+    {
+     "to": 96,
+     "kind": "pos",
+     "cond": "y > 400",
+     "axis": "y",
+     "lo": 400,
+     "hi": null,
+     "hit": [
+      6
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_cyber_musical_shop",
+   "sid": null,
+   "n_branch": 2,
+   "n_inst": 0,
+   "detail": [
+    {
+     "to": 94,
+     "kind": "state",
+     "cond": "extflag == \"to_room_dw_cyber_maze_queenscreen\"",
+     "hit": null
+    },
+    {
+     "to": 84,
+     "kind": "state",
+     "cond": "extflag != \"to_room_dw_cyber_maze_queenscreen\"",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_cyber_post_music_boss_slide",
+   "sid": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 84,
+     "kind": "state",
+     "cond": "extflag == \"leftExit\"",
+     "hit": null
+    },
+    {
+     "to": 88,
+     "kind": "state",
+     "cond": "extflag == \"rightExit\"",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_b_central",
+   "sid": null,
+   "n_branch": 2,
+   "n_inst": 0,
+   "detail": [
+    {
+     "to": 176,
+     "kind": "state",
+     "cond": "global.flag[309] < 9",
+     "hit": null
+    },
+    {
+     "to": 179,
+     "kind": "state",
+     "cond": "!(global.flag[309] < 9)",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_b_east",
+   "sid": "ch2.queens_mansion.dw_mansion_b_east",
+   "n_branch": 3,
+   "n_inst": 3,
+   "detail": [
+    {
+     "to": 171,
+     "kind": "pos",
+     "cond": "x < 10",
+     "axis": "x",
+     "lo": null,
+     "hi": 10,
+     "hit": [
+      0
+     ]
+    },
+    {
+     "to": 177,
+     "kind": "pos",
+     "cond": "x > 80 && x < 150",
+     "axis": "x",
+     "lo": 80,
+     "hi": 150,
+     "hit": [
+      3
+     ]
+    },
+    {
+     "to": 178,
+     "kind": "pos",
+     "cond": "x > 1000",
+     "axis": "x",
+     "lo": 1000,
+     "hi": null,
+     "hit": [
+      2
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_b_east_a",
+   "sid": "ch2.queens_mansion.dw_mansion_b_east_a",
+   "n_branch": 2,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 176,
+     "kind": "state",
+     "cond": "global.flag[309] < 8",
+     "hit": null
+    },
+    {
+     "to": 179,
+     "kind": "state",
+     "cond": "!(global.flag[309] < 8)",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_b_east_transformed",
+   "sid": "ch2.queens_mansion.dw_mansion_b_east_transformed",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 177,
+     "kind": "pos",
+     "cond": "y < 200",
+     "axis": "y",
+     "lo": null,
+     "hi": 200,
+     "hit": [
+      3
+     ]
+    },
+    {
+     "to": 171,
+     "kind": "pos",
+     "cond": "!(y < 200)",
+     "axis": "y",
+     "lo": 200,
+     "hi": null,
+     "hit": [
+      1
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_b_west_1f",
+   "sid": "ch2.queens_mansion.dw_mansion_b_west_1f",
+   "n_branch": 3,
+   "n_inst": 3,
+   "detail": [
+    {
+     "to": 175,
+     "kind": "state",
+     "cond": "extflag == \"gotoroom_dw_mansion_b_west_2f\"",
+     "hit": null
+    },
+    {
+     "to": 174,
+     "kind": "pos",
+     "cond": "x > 800",
+     "axis": "x",
+     "lo": 800,
+     "hi": null,
+     "hit": [
+      1,
+      2
+     ]
+    },
+    {
+     "to": 173,
+     "kind": "pos",
+     "cond": "x > 1400",
+     "axis": "x",
+     "lo": 1400,
+     "hi": null,
+     "hit": [
+      2
+     ]
+    }
+   ],
+   "ok1": false,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_bridges",
+   "sid": "ch2.queens_mansion.dw_mansion_bridges",
+   "n_branch": 4,
+   "n_inst": 4,
+   "detail": [
+    {
+     "to": 191,
+     "kind": "state",
+     "cond": "extflag == \"back\"",
+     "hit": null
+    },
+    {
+     "to": 205,
+     "kind": "state",
+     "cond": "extflag == \"funny\"",
+     "hit": null
+    },
+    {
+     "to": 206,
+     "kind": "state",
+     "cond": "extflag == \"next\"",
+     "hit": null
+    },
+    {
+     "to": 207,
+     "kind": "state",
+     "cond": "extflag == \"hands\"",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": true
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_darkbulb_1",
+   "sid": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+   "n_branch": 3,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 152,
+     "kind": "pos",
+     "cond": "x < 10",
+     "axis": "x",
+     "lo": null,
+     "hi": 10,
+     "hit": [
+      1
+     ]
+    },
+    {
+     "to": 154,
+     "kind": "pos_state",
+     "cond": "x > 600 && global.plot < 120",
+     "axis": "x",
+     "lo": 600,
+     "hi": null,
+     "hit": [
+      2
+     ]
+    },
+    {
+     "to": 156,
+     "kind": "pos_state",
+     "cond": "x > 600 && !(global.plot < 120)",
+     "axis": "x",
+     "lo": 600,
+     "hi": null,
+     "hit": [
+      2
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_darkbulb_2",
+   "sid": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 153,
+     "kind": "pos",
+     "cond": "x < 10",
+     "axis": "x",
+     "lo": null,
+     "hi": 10,
+     "hit": [
+      1
+     ]
+    },
+    {
+     "to": 155,
+     "kind": "pos",
+     "cond": "x > 600",
+     "axis": "x",
+     "lo": 600,
+     "hi": null,
+     "hit": [
+      2
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_darkbulb_3",
+   "sid": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 154,
+     "kind": "pos",
+     "cond": "x < 10",
+     "axis": "x",
+     "lo": null,
+     "hi": 10,
+     "hit": [
+      1
+     ]
+    },
+    {
+     "to": 156,
+     "kind": "pos",
+     "cond": "x > 600",
+     "axis": "x",
+     "lo": 600,
+     "hi": null,
+     "hit": [
+      2
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_dining3",
+   "sid": "ch2.queens_mansion.dw_mansion_dining3",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 209,
+     "kind": "state",
+     "cond": "extflag == \"top\"",
+     "hit": null
+    },
+    {
+     "to": 181,
+     "kind": "state",
+     "cond": "extflag == \"bottom\"",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": true
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_dining_a",
+   "sid": "ch2.queens_mansion.dw_mansion_dining_a",
+   "n_branch": 2,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 155,
+     "kind": "pos_state",
+     "cond": "x < 10 && global.plot < 120",
+     "axis": "x",
+     "lo": null,
+     "hi": 10,
+     "hit": [
+      0
+     ]
+    },
+    {
+     "to": 153,
+     "kind": "pos_state",
+     "cond": "x < 10 && !(global.plot < 120)",
+     "axis": "x",
+     "lo": null,
+     "hi": 10,
+     "hit": [
+      0
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_dininghall",
+   "sid": "ch2.queens_mansion.dw_mansion_dininghall",
+   "n_branch": 3,
+   "n_inst": 3,
+   "detail": [
+    {
+     "to": 210,
+     "kind": "state",
+     "cond": "extflag == \"topright\"",
+     "hit": null
+    },
+    {
+     "to": 184,
+     "kind": "state",
+     "cond": "extflag == \"topleft\"",
+     "hit": null
+    },
+    {
+     "to": 208,
+     "kind": "state",
+     "cond": "extflag == \"bottom\"",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_east_2f_c",
+   "sid": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "n_branch": 5,
+   "n_inst": 4,
+   "detail": [
+    {
+     "to": 186,
+     "kind": "state",
+     "cond": "extflag == \"farleft\"",
+     "hit": null
+    },
+    {
+     "to": 185,
+     "kind": "state",
+     "cond": "extflag == \"topleft\"",
+     "hit": null
+    },
+    {
+     "to": 185,
+     "kind": "state",
+     "cond": "extflag == \"topright\"",
+     "hit": null
+    },
+    {
+     "to": 212,
+     "kind": "state",
+     "cond": "extflag == \"bottom\"",
+     "hit": null
+    },
+    {
+     "to": 209,
+     "kind": "state",
+     "cond": "extflag == \"farright\"",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_east_2f_c_a",
+   "sid": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 184,
+     "kind": "pos",
+     "cond": "x > 260",
+     "axis": "x",
+     "lo": 260,
+     "hi": null,
+     "hit": [
+      0,
+      2
+     ]
+    },
+    {
+     "to": 184,
+     "kind": "pos",
+     "cond": "x > 1540",
+     "axis": "x",
+     "lo": 1540,
+     "hi": null,
+     "hit": [
+      2
+     ]
+    }
+   ],
+   "ok1": false,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_east_2f_d",
+   "sid": "ch2.queens_mansion.dw_mansion_east_2f_d",
+   "n_branch": 2,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 184,
+     "kind": "pos",
+     "cond": "x > 1200",
+     "axis": "x",
+     "lo": 1200,
+     "hi": null,
+     "hit": [
+      0
+     ]
+    },
+    {
+     "to": 168,
+     "kind": "pos",
+     "cond": "!(x > 1200)",
+     "axis": "x",
+     "lo": null,
+     "hi": 1200,
+     "hit": []
+    }
+   ],
+   "ok1": false,
+   "ok2": true,
+   "ok3": false
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_east_2f_transformed_new",
+   "sid": "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 183,
+     "kind": "state",
+     "cond": "extflag == \"topleft\"",
+     "hit": null
+    },
+    {
+     "to": 208,
+     "kind": "state",
+     "cond": "extflag == \"topright\"",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_east_3f",
+   "sid": null,
+   "n_branch": 6,
+   "n_inst": 0,
+   "detail": [
+    {
+     "to": 188,
+     "kind": "pos",
+     "cond": "x < 10",
+     "axis": "x",
+     "lo": null,
+     "hi": 10,
+     "hit": []
+    },
+    {
+     "to": 157,
+     "kind": "state",
+     "cond": "x > 220 && y < 200",
+     "hit": null
+    },
+    {
+     "to": 168,
+     "kind": "state",
+     "cond": "x > 220 && y >= 440",
+     "hit": null
+    },
+    {
+     "to": 194,
+     "kind": "pos",
+     "cond": "x > 500",
+     "axis": "x",
+     "lo": 500,
+     "hi": null,
+     "hit": []
+    },
+    {
+     "to": 189,
+     "kind": "pos",
+     "cond": "x > 870",
+     "axis": "x",
+     "lo": 870,
+     "hi": null,
+     "hit": []
+    },
+    {
+     "to": 190,
+     "kind": "pos",
+     "cond": "x > 1250",
+     "axis": "x",
+     "lo": 1250,
+     "hi": null,
+     "hit": []
+    }
+   ],
+   "ok1": false,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_east_4f_b",
+   "sid": "ch2.queens_mansion.dw_mansion_east_4f_b",
+   "n_branch": 2,
+   "n_inst": 0,
+   "detail": [
+    {
+     "to": 187,
+     "kind": "pos",
+     "cond": "x > 200",
+     "axis": "x",
+     "lo": 200,
+     "hi": null,
+     "hit": []
+    },
+    {
+     "to": 203,
+     "kind": "pos",
+     "cond": "x > 500",
+     "axis": "x",
+     "lo": 500,
+     "hi": null,
+     "hit": []
+    }
+   ],
+   "ok1": false,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_east_teacup",
+   "sid": "ch2.queens_mansion.dw_mansion_east_teacup",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 162,
+     "kind": "pos",
+     "cond": "y > 4700",
+     "axis": "y",
+     "lo": 4700,
+     "hi": null,
+     "hit": [
+      0
+     ]
+    },
+    {
+     "to": 180,
+     "kind": "pos",
+     "cond": "!(y > 4700)",
+     "axis": "y",
+     "lo": null,
+     "hi": 4700,
+     "hit": [
+      2
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_east_teacup_2",
+   "sid": "ch2.queens_mansion.dw_mansion_east_teacup_2",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 186,
+     "kind": "pos",
+     "cond": "y > 4600",
+     "axis": "y",
+     "lo": 4600,
+     "hi": null,
+     "hit": [
+      1
+     ]
+    },
+    {
+     "to": 187,
+     "kind": "pos",
+     "cond": "!(y > 4600)",
+     "axis": "y",
+     "lo": null,
+     "hi": 4600,
+     "hit": [
+      0
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_entrance",
+   "sid": null,
+   "n_branch": 3,
+   "n_inst": 0,
+   "detail": [
+    {
+     "to": 182,
+     "kind": "state",
+     "cond": "x > 620 && x < 630 && y > 450 && y < 470",
+     "hit": null
+    },
+    {
+     "to": 187,
+     "kind": "state",
+     "cond": "x > 730 && x < 750 && y > 450 && y < 470",
+     "hit": null
+    },
+    {
+     "to": 164,
+     "kind": "state",
+     "cond": "x > 800 && y > 670",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_mansion_lightner_hallway",
+   "sid": null,
+   "n_branch": 3,
+   "n_inst": 0,
+   "detail": [
+    {
+     "to": 150,
+     "kind": "pos",
+     "cond": "x > 210 && x < 280",
+     "axis": "x",
+     "lo": 210,
+     "hi": 280,
+     "hit": []
+    },
+    {
+     "to": 151,
+     "kind": "pos",
+     "cond": "x > 490 && x < 590",
+     "axis": "x",
+     "lo": 490,
+     "hi": 590,
+     "hit": []
+    },
+    {
+     "to": 153,
+     "kind": "pos",
+     "cond": "x > 1900",
+     "axis": "x",
+     "lo": 1900,
+     "hi": null,
+     "hit": []
+    }
+   ],
+   "ok1": false,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_ralsei_castle_1f",
+   "sid": "ch2.ralsei_room.dw_ralsei_castle_1f",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 69,
+     "kind": "pos",
+     "cond": "x > 840 && x < 1000",
+     "axis": "x",
+     "lo": 840,
+     "hi": 1000,
+     "hit": [
+      3
+     ]
+    },
+    {
+     "to": 63,
+     "kind": "pos",
+     "cond": "x > 550 && x < 700",
+     "axis": "x",
+     "lo": 550,
+     "hi": 700,
+     "hit": [
+      4
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_dw_ralsei_castle_2f",
+   "sid": "ch2.ralsei_room.dw_ralsei_castle_2f",
+   "n_branch": 3,
+   "n_inst": 3,
+   "detail": [
+    {
+     "to": 71,
+     "kind": "pos",
+     "cond": "x > 240 && x < 340",
+     "axis": "x",
+     "lo": 240,
+     "hi": 340,
+     "hit": [
+      4
+     ]
+    },
+    {
+     "to": 72,
+     "kind": "pos",
+     "cond": "x > 520 && x < 610",
+     "axis": "x",
+     "lo": 520,
+     "hi": 610,
+     "hit": [
+      5
+     ]
+    },
+    {
+     "to": 262,
+     "kind": "pos",
+     "cond": "x > 780 && x < 860",
+     "axis": "x",
+     "lo": 780,
+     "hi": 860,
+     "hit": [
+      6
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_library",
+   "sid": "ch2.hometown.library",
+   "n_branch": 2,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 44,
+     "kind": "pos",
+     "cond": "x > 110 && x < 150",
+     "axis": "x",
+     "lo": 110,
+     "hi": 150,
+     "hit": []
+    },
+    {
+     "to": 45,
+     "kind": "pos",
+     "cond": "x > 215 && x < 230",
+     "axis": "x",
+     "lo": 215,
+     "hi": 230,
+     "hit": [
+      11
+     ]
+    }
+   ],
+   "ok1": false,
+   "ok2": true,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_town_mid",
+   "sid": "ch2.hometown.town_mid",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 48,
+     "kind": "pos",
+     "cond": "x > 290 && x < 370",
+     "axis": "x",
+     "lo": 290,
+     "hi": 370,
+     "hit": [
+      14
+     ]
+    },
+    {
+     "to": 43,
+     "kind": "pos",
+     "cond": "x > 1730 && x < 1840",
+     "axis": "x",
+     "lo": 1730,
+     "hi": 1840,
+     "hit": [
+      8
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch2",
+   "obj": "obj_doorW",
+   "room": "room_town_south",
+   "sid": "ch2.hometown.town_south",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 46,
+     "kind": "pos",
+     "cond": "x > 230 && x < 280",
+     "axis": "x",
+     "lo": 230,
+     "hi": 280,
+     "hit": [
+      15
+     ]
+    },
+    {
+     "to": 34,
+     "kind": "pos",
+     "cond": "x > 580 && x < 660",
+     "axis": "x",
+     "lo": 580,
+     "hi": 660,
+     "hit": [
+      7
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "STATE",
+   "ch": "ch2",
+   "obj": "obj_doorw_musfade",
+   "room": "room_dw_city_traffic_3",
+   "sid": "ch2.cyber_city.dw_city_traffic_3",
+   "n_branch": 3,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 140,
+     "kind": "state",
+     "cond": "global.flag[917] == 0 && scr_sideb_get_phase() == 0",
+     "hit": null
+    },
+    {
+     "to": 141,
+     "kind": "state",
+     "cond": "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && man_room",
+     "hit": null
+    },
+    {
+     "to": 142,
+     "kind": "state",
+     "cond": "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && !(man_room)",
+     "hit": null
+    }
+   ],
+   "ok1": true,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch3",
+   "obj": "obj_doorW",
+   "room": "room_dw_ralsei_castle_1f",
+   "sid": "ch3.ralsei_room.dw_ralsei_castle_1f",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 63,
+     "kind": "pos",
+     "cond": "x > 840 && x < 1000",
+     "axis": "x",
+     "lo": 840,
+     "hi": 1000,
+     "hit": [
+      3
+     ]
+    },
+    {
+     "to": 57,
+     "kind": "pos",
+     "cond": "x > 550 && x < 700",
+     "axis": "x",
+     "lo": 550,
+     "hi": 700,
+     "hit": [
+      4
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch3",
+   "obj": "obj_doorW",
+   "room": "room_dw_ralsei_castle_2f",
+   "sid": "ch3.ralsei_room.dw_ralsei_castle_2f",
+   "n_branch": 3,
+   "n_inst": 3,
+   "detail": [
+    {
+     "to": 64,
+     "kind": "pos",
+     "cond": "x > 240 && x < 340",
+     "axis": "x",
+     "lo": 240,
+     "hi": 340,
+     "hit": [
+      4
+     ]
+    },
+    {
+     "to": 65,
+     "kind": "pos",
+     "cond": "x > 520 && x < 610",
+     "axis": "x",
+     "lo": 520,
+     "hi": 610,
+     "hit": [
+      5
+     ]
+    },
+    {
+     "to": 80,
+     "kind": "pos",
+     "cond": "x > 780 && x < 860",
+     "axis": "x",
+     "lo": 780,
+     "hi": 860,
+     "hit": [
+      6
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch3",
+   "obj": "obj_doorW",
+   "room": "room_library",
+   "sid": "ch3.hometown.library",
+   "n_branch": 2,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 41,
+     "kind": "pos",
+     "cond": "x > 110 && x < 150",
+     "axis": "x",
+     "lo": 110,
+     "hi": 150,
+     "hit": []
+    },
+    {
+     "to": 42,
+     "kind": "pos",
+     "cond": "x > 215 && x < 230",
+     "axis": "x",
+     "lo": 215,
+     "hi": 230,
+     "hit": [
+      11
+     ]
+    }
+   ],
+   "ok1": false,
+   "ok2": true,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch3",
+   "obj": "obj_doorW",
+   "room": "room_town_mid",
+   "sid": "ch3.hometown.town_mid",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 45,
+     "kind": "pos",
+     "cond": "x > 290 && x < 370",
+     "axis": "x",
+     "lo": 290,
+     "hi": 370,
+     "hit": [
+      14
+     ]
+    },
+    {
+     "to": 40,
+     "kind": "pos",
+     "cond": "x > 1730 && x < 1840",
+     "axis": "x",
+     "lo": 1730,
+     "hi": 1840,
+     "hit": [
+      8
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch3",
+   "obj": "obj_doorW",
+   "room": "room_town_south",
+   "sid": "ch3.hometown.town_south",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 43,
+     "kind": "pos",
+     "cond": "x > 230 && x < 280",
+     "axis": "x",
+     "lo": 230,
+     "hi": 280,
+     "hit": [
+      15
+     ]
+    },
+    {
+     "to": 31,
+     "kind": "pos",
+     "cond": "x > 580 && x < 660",
+     "axis": "x",
+     "lo": 580,
+     "hi": 660,
+     "hit": [
+      7
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch4",
+   "obj": "obj_doorW",
+   "room": "room_dw_ralsei_castle_1f",
+   "sid": "ch4.ralsei_room.dw_ralsei_castle_1f",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 72,
+     "kind": "pos",
+     "cond": "x > 840 && x < 1000",
+     "axis": "x",
+     "lo": 840,
+     "hi": 1000,
+     "hit": [
+      3
+     ]
+    },
+    {
+     "to": 66,
+     "kind": "pos",
+     "cond": "x > 550 && x < 700",
+     "axis": "x",
+     "lo": 550,
+     "hi": 700,
+     "hit": [
+      4
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch4",
+   "obj": "obj_doorW",
+   "room": "room_dw_ralsei_castle_2f",
+   "sid": "ch4.ralsei_room.dw_ralsei_castle_2f",
+   "n_branch": 3,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 73,
+     "kind": "pos",
+     "cond": "x > 240 && x < 340",
+     "axis": "x",
+     "lo": 240,
+     "hi": 340,
+     "hit": []
+    },
+    {
+     "to": 74,
+     "kind": "pos",
+     "cond": "x > 520 && x < 610",
+     "axis": "x",
+     "lo": 520,
+     "hi": 610,
+     "hit": []
+    },
+    {
+     "to": 89,
+     "kind": "pos",
+     "cond": "x > 780 && x < 860",
+     "axis": "x",
+     "lo": 780,
+     "hi": 860,
+     "hit": [
+      2
+     ]
+    }
+   ],
+   "ok1": false,
+   "ok2": true,
+   "ok3": false
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch4",
+   "obj": "obj_doorW",
+   "room": "room_library",
+   "sid": "ch4.hometown.library",
+   "n_branch": 2,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 41,
+     "kind": "pos",
+     "cond": "x > 110 && x < 150",
+     "axis": "x",
+     "lo": 110,
+     "hi": 150,
+     "hit": []
+    },
+    {
+     "to": 42,
+     "kind": "pos",
+     "cond": "x > 215 && x < 230",
+     "axis": "x",
+     "lo": 215,
+     "hi": 230,
+     "hit": [
+      11
+     ]
+    }
+   ],
+   "ok1": false,
+   "ok2": true,
+   "ok3": false
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch4",
+   "obj": "obj_doorW",
+   "room": "room_town_mid",
+   "sid": null,
+   "n_branch": 2,
+   "n_inst": 0,
+   "detail": [
+    {
+     "to": 45,
+     "kind": "pos",
+     "cond": "x > 290 && x < 370",
+     "axis": "x",
+     "lo": 290,
+     "hi": 370,
+     "hit": []
+    },
+    {
+     "to": 40,
+     "kind": "pos",
+     "cond": "x > 1730 && x < 1840",
+     "axis": "x",
+     "lo": 1730,
+     "hi": 1840,
+     "hit": []
+    }
+   ],
+   "ok1": false,
+   "ok2": false,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch4",
+   "obj": "obj_doorW",
+   "room": "room_town_south",
+   "sid": "ch4.hometown.town_south",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 43,
+     "kind": "pos",
+     "cond": "x > 230 && x < 280",
+     "axis": "x",
+     "lo": 230,
+     "hi": 280,
+     "hit": [
+      15
+     ]
+    },
+    {
+     "to": 31,
+     "kind": "pos",
+     "cond": "x > 580 && x < 660",
+     "axis": "x",
+     "lo": 580,
+     "hi": 660,
+     "hit": [
+      7
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch5",
+   "obj": "obj_doorW",
+   "room": "room_dw_ralsei_castle_1f",
+   "sid": "ch5.ralsei_room.dw_ralsei_castle_1f",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 62,
+     "kind": "pos",
+     "cond": "x > 840 && x < 1000",
+     "axis": "x",
+     "lo": 840,
+     "hi": 1000,
+     "hit": [
+      3
+     ]
+    },
+    {
+     "to": 55,
+     "kind": "pos",
+     "cond": "x > 550 && x < 700",
+     "axis": "x",
+     "lo": 550,
+     "hi": 700,
+     "hit": [
+      4
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch5",
+   "obj": "obj_doorW",
+   "room": "room_dw_ralsei_castle_2f",
+   "sid": "ch5.ralsei_room.dw_ralsei_castle_2f",
+   "n_branch": 3,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 63,
+     "kind": "pos",
+     "cond": "x > 240 && x < 340",
+     "axis": "x",
+     "lo": 240,
+     "hi": 340,
+     "hit": [
+      0
+     ]
+    },
+    {
+     "to": 64,
+     "kind": "pos",
+     "cond": "x > 520 && x < 610",
+     "axis": "x",
+     "lo": 520,
+     "hi": 610,
+     "hit": [
+      1
+     ]
+    },
+    {
+     "to": 80,
+     "kind": "pos",
+     "cond": "x > 780 && x < 860",
+     "axis": "x",
+     "lo": 780,
+     "hi": 860,
+     "hit": []
+    }
+   ],
+   "ok1": false,
+   "ok2": true,
+   "ok3": false
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch5",
+   "obj": "obj_doorW",
+   "room": "room_library",
+   "sid": "ch5.hometown.library",
+   "n_branch": 2,
+   "n_inst": 1,
+   "detail": [
+    {
+     "to": 39,
+     "kind": "pos",
+     "cond": "x > 110 && x < 150",
+     "axis": "x",
+     "lo": 110,
+     "hi": 150,
+     "hit": []
+    },
+    {
+     "to": 40,
+     "kind": "pos",
+     "cond": "x > 215 && x < 230",
+     "axis": "x",
+     "lo": 215,
+     "hi": 230,
+     "hit": [
+      11
+     ]
+    }
+   ],
+   "ok1": false,
+   "ok2": true,
+   "ok3": false
+  },
+  {
+   "tag": "FULL",
+   "ch": "ch5",
+   "obj": "obj_doorW",
+   "room": "room_town_mid",
+   "sid": "ch5.hometown.town_mid",
+   "n_branch": 2,
+   "n_inst": 2,
+   "detail": [
+    {
+     "to": 43,
+     "kind": "pos",
+     "cond": "x > 290 && x < 370",
+     "axis": "x",
+     "lo": 290,
+     "hi": 370,
+     "hit": [
+      10
+     ]
+    },
+    {
+     "to": 38,
+     "kind": "pos",
+     "cond": "x > 1730 && x < 1840",
+     "axis": "x",
+     "lo": 1730,
+     "hi": 1840,
+     "hit": [
+      8
+     ]
+    }
+   ],
+   "ok1": true,
+   "ok2": true,
+   "ok3": true
+  },
+  {
+   "tag": "BROKEN",
+   "ch": "ch5",
+   "obj": "obj_doorW",
+   "room": "room_town_south",
+   "sid": null,
+   "n_branch": 2,
+   "n_inst": 0,
+   "detail": [
+    {
+     "to": 41,
+     "kind": "pos",
+     "cond": "x > 230 && x < 280",
+     "axis": "x",
+     "lo": 230,
+     "hi": 280,
+     "hit": []
+    },
+    {
+     "to": 29,
+     "kind": "pos",
+     "cond": "x > 580 && x < 660",
+     "axis": "x",
+     "lo": 580,
+     "hi": 660,
+     "hit": []
+    }
+   ],
+   "ok1": false,
+   "ok2": false,
+   "ok3": false
+  }
+ ]
+}

@@ -1,0 +1,708 @@
+{
+ "rows": [
+  {
+   "chapter": "ch1",
+   "scene": "ch1.card_castle.cc_elevator",
+   "room": "room_cc_elevator",
+   "n_rules": 2,
+   "gml_kind": "other",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorw_musfade"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch1.card_castle.card_castle_1f",
+    "ch1.card_castle.card_castle_5f"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.cyber_city.dw_city_big_1",
+   "room": "room_dw_city_big_1",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 2,
+   "tops": [
+    "ch2.cyber_city.dw_city_susie_ralsei_fun_1",
+    "ch2.cyber_city.dw_city_treasure"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.cyber_city.dw_city_traffic_3",
+   "room": "room_dw_city_traffic_3",
+   "n_rules": 3,
+   "gml_kind": "both",
+   "gml_branches": 3,
+   "objs": [
+    "obj_doorW",
+    "obj_doorw_musfade"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.cyber_city.dw_city_dog_traffic",
+    "ch2.cyber_city.dw_city_man",
+    "ch2.cyber_city.dw_city_moss"
+   ],
+   "axes": [
+    "y"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.cyber_city.dw_city_traffic_4",
+   "room": "room_dw_city_traffic_4",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 1,
+   "tops": [
+    "ch2.cyber_city.cyber_city_alleyway_2",
+    "ch2.cyber_city.dw_city_monologue"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.cyber_field.cyber_field_music_shop",
+   "room": "room_dw_cyber_musical_shop",
+   "n_rules": 2,
+   "gml_kind": "other",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.cyber_field.dw_cyber_musical_door",
+    "ch2.cyber_field.dw_cyber_maze_queenscreen"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+   "room": "room_dw_cyber_maze_queenscreen",
+   "n_rules": 2,
+   "gml_kind": "other",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.cyber_field.dw_cyber_battle_maze_2",
+    "ch2.cyber_field.cyber_field_music_shop"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.cyber_field.dw_cyber_maze_rhythm",
+   "room": "room_dw_cyber_maze_rhythm",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.cyber_field.dw_cyber_battle_maze_2",
+    "ch2.cyber_field.dw_cyber_maze_queenscreen"
+   ],
+   "axes": [
+    "y"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.cyber_field.dw_cyber_maze_tasque",
+   "room": "room_dw_cyber_maze_tasque",
+   "n_rules": 2,
+   "gml_kind": "mixed",
+   "gml_branches": 3,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 1,
+   "tops": [
+    "ch2.cyber_field.dw_cyber_maze_virokun",
+    "ch2.cyber_field.dw_cyber_battle_maze_2"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "room": "room_dw_cyber_maze_virokun",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.cyber_field.dw_cyber_maze_fireworks",
+    "ch2.cyber_field.dw_cyber_maze_tasque"
+   ],
+   "axes": [
+    "y"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.cyber_field.dw_cyber_musical_door",
+   "room": "room_dw_cyber_musical_door",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.cyber_field.cyber_field_music_shop",
+    "ch2.cyber_field.dw_cyber_post_music_boss_slide"
+   ],
+   "axes": [
+    "y"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+   "room": "room_dw_cyber_post_music_boss_slide",
+   "n_rules": 2,
+   "gml_kind": "other",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.cyber_field.dw_cyber_musical_door",
+    "ch2.cyber_field.dw_cyber_music_final"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.hometown.library",
+   "room": "room_library",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 1,
+   "tops": [
+    "ch2.light_world.lw_computer_lab",
+    "ch2.light_world.lw_library_upstairs"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.hometown.town_mid",
+   "room": "room_town_mid",
+   "n_rules": 3,
+   "gml_kind": "both",
+   "gml_branches": 3,
+   "objs": [
+    "obj_doorW",
+    "obj_doorw_musfade"
+   ],
+   "has_door_x": 3,
+   "tops": [
+    "ch2.hometown.alphysalley",
+    "ch2.light_world.lw_conbini",
+    "ch2.light_world.lw_icee_pizza"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.hometown.town_south",
+   "room": "room_town_south",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 2,
+   "tops": [
+    "ch2.hometown.hospital_lobby",
+    "ch2.light_world.lw_police"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_b_east",
+   "room": "room_dw_mansion_b_east",
+   "n_rules": 3,
+   "gml_kind": "pos",
+   "gml_branches": 3,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 2,
+   "tops": [
+    "ch2.queens_mansion.queen_s_mansion_basement",
+    "ch2.queens_mansion.dw_mansion_b_east_a",
+    "ch2.queens_mansion.dw_mansion_b_east_b"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_b_east_a",
+   "room": "room_dw_mansion_b_east_a",
+   "n_rules": 2,
+   "gml_kind": "other",
+   "gml_branches": 1,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_b_east",
+    "ch2.queens_mansion.dw_mansion_b_east_transformed"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_b_east_transformed",
+   "room": "room_dw_mansion_b_east_transformed",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 1,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.queen_s_mansion_basement",
+    "ch2.queens_mansion.dw_mansion_b_east_a"
+   ],
+   "axes": [
+    "y"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_b_west_1f",
+   "room": "room_dw_mansion_b_west_1f",
+   "n_rules": 3,
+   "gml_kind": "mixed",
+   "gml_branches": 3,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 1,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_b_west_1f_a",
+    "ch2.queens_mansion.dw_mansion_b_west_1f_b",
+    "ch2.queens_mansion.dw_mansion_b_west_2f"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_bridges",
+   "room": "room_dw_mansion_bridges",
+   "n_rules": 4,
+   "gml_kind": "other",
+   "gml_branches": 4,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_acid_tunnel_puzzle_entrance",
+    "ch2.queens_mansion.dw_mansion_bridges_funny",
+    "ch2.queens_mansion.dw_mansion_mouselottery",
+    "ch2.queens_mansion.dw_mansion_hands"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+   "room": "room_dw_mansion_darkbulb_1",
+   "n_rules": 3,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 2,
+   "tops": [
+    "ch2.queens_mansion.queen_s_mansion_guest_hall",
+    "ch2.queens_mansion.dw_mansion_darkbulb_2",
+    "ch2.queens_mansion.dw_mansion_dining_a"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+   "room": "room_dw_mansion_darkbulb_2",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 2,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_darkbulb_1",
+    "ch2.queens_mansion.dw_mansion_darkbulb_3"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+   "room": "room_dw_mansion_darkbulb_3",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 2,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_darkbulb_2",
+    "ch2.queens_mansion.dw_mansion_dining_a"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_dining3",
+   "room": "room_dw_mansion_dining3",
+   "n_rules": 2,
+   "gml_kind": "other",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+    "ch2.queens_mansion.dw_mansion_dininghall"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_dining_a",
+   "room": "room_dw_mansion_dining_a",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 1,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_darkbulb_1",
+    "ch2.queens_mansion.dw_mansion_darkbulb_3"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_dininghall",
+   "room": "room_dw_mansion_dininghall",
+   "n_rules": 3,
+   "gml_kind": "other",
+   "gml_branches": 3,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_east_2f_c",
+    "ch2.queens_mansion.dw_mansion_dining3",
+    "ch2.queens_mansion.dw_mansion_dining_storage"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "room": "room_dw_mansion_east_2f_c",
+   "n_rules": 4,
+   "gml_kind": "other",
+   "gml_branches": 5,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+    "ch2.queens_mansion.dw_mansion_east_2f_d",
+    "ch2.queens_mansion.dw_mansion_dininghall",
+    "ch2.queens_mansion.dw_mansion_east_2f_c_b"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_d",
+   "room": "room_dw_mansion_east_2f_d",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 1,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 1,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_east_teacup_2",
+    "ch2.queens_mansion.dw_mansion_east_2f_c"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+   "room": "room_dw_mansion_east_2f_transformed_new",
+   "n_rules": 2,
+   "gml_kind": "other",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_kitchen",
+    "ch2.queens_mansion.dw_mansion_dining3"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_east_4f_b",
+   "room": "room_dw_mansion_east_4f_b",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.queen_s_mansion_3f",
+    "ch2.queens_mansion.dw_mansion_noelle_room"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_east_teacup",
+   "room": "room_dw_mansion_east_teacup",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 1,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_traffic",
+    "ch2.queens_mansion.dw_mansion_east_2f_a"
+   ],
+   "axes": [
+    "y"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.dw_mansion_east_teacup_2",
+   "room": "room_dw_mansion_east_teacup_2",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 1,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_east_2f_d",
+    "ch2.queens_mansion.queen_s_mansion_3f"
+   ],
+   "axes": [
+    "y"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.queen_s_mansion_3f",
+   "room": "room_dw_mansion_east_3f",
+   "n_rules": 6,
+   "gml_kind": "mixed",
+   "gml_branches": 6,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 1,
+   "tops": [
+    "ch2.queens_mansion.queen_s_mansion_entrance",
+    "ch2.queens_mansion.dw_mansion_east_teacup_2",
+    "ch2.queens_mansion.dw_mansion_east_3f_projection",
+    "ch2.queens_mansion.dw_mansion_east_3f_toilet",
+    "ch2.queens_mansion.dw_mansion_acid_tunnel",
+    "ch2.queens_mansion.dw_mansion_east_4f_b"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.queen_s_mansion_basement",
+   "room": "room_dw_mansion_b_central",
+   "n_rules": 2,
+   "gml_kind": "other",
+   "gml_branches": 1,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_b_east",
+    "ch2.queens_mansion.dw_mansion_b_east_transformed"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.queen_s_mansion_entrance",
+   "room": "room_dw_mansion_entrance",
+   "n_rules": 3,
+   "gml_kind": "other",
+   "gml_branches": 3,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 0,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_east_1f_secret",
+    "ch2.queens_mansion.dw_mansion_east_2f_shortcut",
+    "ch2.queens_mansion.queen_s_mansion_3f"
+   ],
+   "axes": []
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+   "room": "room_dw_mansion_lightner_hallway",
+   "n_rules": 3,
+   "gml_kind": "pos",
+   "gml_branches": 3,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 2,
+   "tops": [
+    "ch2.queens_mansion.dw_mansion_krisroom",
+    "ch2.queens_mansion.dw_mansion_susieroom",
+    "ch2.queens_mansion.dw_mansion_darkbulb_1"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.ralsei_room.dw_ralsei_castle_1f",
+   "room": "room_dw_ralsei_castle_1f",
+   "n_rules": 2,
+   "gml_kind": "pos",
+   "gml_branches": 2,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 2,
+   "tops": [
+    "ch2.ralsei_room.dw_ralsei_castle_front",
+    "ch2.my_castle_town.dw_castle_dungeon"
+   ],
+   "axes": [
+    "x"
+   ]
+  },
+  {
+   "chapter": "ch2",
+   "scene": "ch2.ralsei_room.dw_ralsei_castle_2f",
+   "room": "room_dw_ralsei_castle_2f",
+   "n_rules": 3,
+   "gml_kind": "pos",
+   "gml_branches": 3,
+   "objs": [
+    "obj_doorW"
+   ],
+   "has_door_x": 3,
+   "tops": [
+    "ch2.my_castle_town.dw_castle_rooms_kris",
+    "ch2.my_castle_town.dw_castle_rooms_susie",
+    "ch2.card_castle.cc_lancer"
+   ],
+   "axes": [
+    "x"
+   ]
+  }
+ ],
+ "kind_count": {
+  "other": 12,
+  "pos": 20,
+  "both": 2,
+  "mixed": 3
+ }
+}

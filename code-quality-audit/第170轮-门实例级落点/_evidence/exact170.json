@@ -1,0 +1,117 @@
+{
+ "bad": [
+  {
+   "scene": "ch2.cyber_city.dw_city_traffic_4",
+   "letter": "W",
+   "priority": 7125,
+   "door_x": null,
+   "xs": [
+    4580,
+    0,
+    3151
+   ],
+   "to": "ch2.cyber_city.cyber_city_alleyway_2",
+   "why": "not_in_instances"
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_b_west_1f",
+   "letter": "W",
+   "priority": 7152,
+   "door_x": null,
+   "xs": [
+    235,
+    863,
+    1429
+   ],
+   "to": "ch2.queens_mansion.dw_mansion_b_west_1f_b",
+   "why": "not_in_instances"
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_b_west_1f",
+   "letter": "W",
+   "priority": 7153,
+   "door_x": null,
+   "xs": [
+    235,
+    863,
+    1429
+   ],
+   "to": "ch2.queens_mansion.dw_mansion_b_west_2f",
+   "why": "not_in_instances"
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_b_east",
+   "letter": "W",
+   "priority": 7154,
+   "door_x": null,
+   "xs": [
+    0,
+    1120,
+    120
+   ],
+   "to": "ch2.queens_mansion.queen_s_mansion_basement",
+   "why": "not_in_instances"
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_big_1",
+   "letter": "W",
+   "priority": 7119,
+   "door_x": 760,
+   "xs": [
+    760,
+    0
+   ],
+   "to": "ch2.cyber_city.dw_city_treasure",
+   "why": "dup"
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+   "letter": "W",
+   "priority": 7133,
+   "door_x": 620,
+   "xs": [
+    0,
+    620
+   ],
+   "to": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+   "why": "dup"
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+   "letter": "W",
+   "priority": 7134,
+   "door_x": null,
+   "xs": [
+    0,
+    620
+   ],
+   "to": "ch2.queens_mansion.dw_mansion_dining_a",
+   "why": "not_in_instances"
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+   "letter": "W",
+   "priority": 7136,
+   "door_x": 620,
+   "xs": [
+    0,
+    620
+   ],
+   "to": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+   "why": "dup"
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+   "letter": "W",
+   "priority": 7138,
+   "door_x": 620,
+   "xs": [
+    0,
+    620
+   ],
+   "to": "ch2.queens_mansion.dw_mansion_dining_a",
+   "why": "dup"
+  }
+ ],
+ "ok": false
+}

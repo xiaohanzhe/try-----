@@ -1,0 +1,119 @@
+{
+ "rows": [
+  {
+   "scene": "ch2.cyber_field.dw_cyber_maze_fireworks",
+   "to": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "n_doorW": 1,
+   "safe": true,
+   "pos": [
+    [
+     280,
+     460
+    ]
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_big_2",
+   "to": "ch2.cyber_city.dw_city_mirrorfriend",
+   "n_doorW": 1,
+   "safe": true,
+   "pos": [
+    [
+     720,
+     0
+    ]
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_traffic_4",
+   "to": "ch2.cyber_city.dw_city_spamton_alley",
+   "n_doorW": 2,
+   "safe": false,
+   "pos": [
+    [
+     4580,
+     320
+    ],
+    [
+     0,
+     120
+    ]
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_spamton_alley",
+   "to": "ch2.cyber_city.dw_city_traffic_4",
+   "n_doorW": 1,
+   "safe": true,
+   "pos": [
+    [
+     1000,
+     0
+    ]
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_dog_traffic",
+   "to": "ch2.cyber_city.dw_city_traffic_3",
+   "n_doorW": 1,
+   "safe": true,
+   "pos": [
+    [
+     160,
+     460
+    ]
+   ]
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_man",
+   "to": "ch2.cyber_city.dw_city_traffic_3",
+   "n_doorW": 0,
+   "safe": false,
+   "pos": []
+  },
+  {
+   "scene": "ch2.cyber_city.dw_city_moss",
+   "to": "ch2.cyber_city.dw_city_traffic_3",
+   "n_doorW": 1,
+   "safe": true,
+   "pos": [
+    [
+     620,
+     200
+    ]
+   ]
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+   "to": "ch2.queens_mansion.dw_mansion_b_entrance",
+   "n_doorW": 0,
+   "safe": false,
+   "pos": []
+  },
+  {
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "to": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+   "n_doorW": 4,
+   "safe": false,
+   "pos": [
+    [
+     2540,
+     240
+    ],
+    [
+     1560,
+     156
+    ],
+    [
+     360,
+     156
+    ],
+    [
+     0,
+     240
+    ]
+   ]
+  }
+ ],
+ "safe": 5
+}

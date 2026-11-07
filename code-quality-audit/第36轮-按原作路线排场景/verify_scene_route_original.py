@@ -485,7 +485,12 @@ def _table_self_ok(r):
     #:   ⇒ 校验必须换成 `branch_letter`，否则 71 条正确规则会被判"不自洽"。
     #:   `marker is None`＝「目标房没有这个字母的落点（原作如此）」，
     #:   存在性自证交给 `第169轮/_tools/check169.py` 的 C1/C2，这里只认标记。
-    _BL = o.get('branch_letter') if o.get('batch') == 169 else None
+    #: ★★★ 第170轮：原来这里写死 `o.get('batch') == 169`，于是**同一机制**的第170轮
+    #:   那批（`batch=170`，同样是分支级、同样按 `entrance` 落点）掉进了"字母级"那一支，
+    #:   7 条被误判"不自洽"（目标房含 `obj_markerX`/`obj_markeru`，而门字母是 `W`）。
+    #:   **判据不许绑轮次号** —— 改成按**字段存在性**判定：有 `branch_letter` 就是分支级，
+    #:   与哪一轮无关（老规则本来就没有这个字段，所以不会误放行）。
+    _BL = o.get('branch_letter')
     if _BL:
         if o.get('marker') is not None and not _marker_ok(o.get('marker'), _BL):
             return False

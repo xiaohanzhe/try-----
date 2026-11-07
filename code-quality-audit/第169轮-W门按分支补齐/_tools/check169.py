@@ -50,7 +50,7 @@ MARK_OK = ('obj_markers', 'obj_markert', 'obj_markeru', 'obj_markerv',
            'obj_markerw', 'obj_markerX', 'obj_markerAny', 'obj_markerAny40px')
 #: 钉死：应落 102 条、priority 7088~7189、全表 1,930 条
 EXPECT_N = 102
-EXPECT_ROUTES = 1930
+EXPECT_ROUTES = 1936
 EXPECT_SCENES = 2166
 EXPECT_PRIO_END = 7189
 #: 守恒账：176 条原始分支 = 60（第168轮已收）+ 116；116 = 2 未登记 + 8 已有别的门 + 4 重复 + 102

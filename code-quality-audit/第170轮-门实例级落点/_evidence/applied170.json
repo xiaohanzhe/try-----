@@ -1,0 +1,493 @@
+{
+ "stat": {
+  "ent_fill": 88,
+  "range_same": 31,
+  "range_flip": 11,
+  "range_set": 16,
+  "door_set": 17,
+  "reason_rewrote": 17,
+  "new_dup_pair": 3,
+  "new_rules": 6
+ },
+ "skipped": [
+  {
+   "kind": "ent",
+   "why": "gml_ent_ambiguous[21, 22]",
+   "prio": 7111,
+   "scene": "ch2.cyber_field.dw_cyber_maze_tasque"
+  },
+  {
+   "kind": "ent",
+   "why": "gml_ent_ambiguous[22, 23]",
+   "prio": 7164,
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_c"
+  },
+  {
+   "kind": "ent",
+   "why": "gml_ent_ambiguous[22, 23]",
+   "prio": 7168,
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_c_a"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7088,
+   "cond": "global.flag[239] == 1"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7089,
+   "cond": "global.flag[239] == 2"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7097,
+   "cond": null
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7108,
+   "cond": "extflag != \"to_room_dw_cyber_maze_queenscreen\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7109,
+   "cond": "extflag == \"to_room_dw_cyber_maze_queenscreen\""
+  },
+  {
+   "kind": "range",
+   "why": "branch_2",
+   "prio": 7111,
+   "key": [
+    "ch2",
+    "room_dw_cyber_maze_tasque",
+    "obj_doorW",
+    87
+   ]
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7112,
+   "cond": "extflag == \"to_room_dw_cyber_maze_rhythm\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7113,
+   "cond": "extflag == \"to_room_dw_cyber_musical_shop\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7114,
+   "cond": "extflag == \"leftExit\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7115,
+   "cond": "extflag == \"rightExit\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7120,
+   "cond": null
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7121,
+   "cond": "global.flag[917] == 0 && scr_sideb_get_phase() == 0"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7122,
+   "cond": "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && man_room"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7123,
+   "cond": "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && !(man_room)"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7127,
+   "cond": null
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7128,
+   "cond": "extflag == \"big2\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7141,
+   "cond": "x > 800 && y > 670"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7142,
+   "cond": "x > 620 && x < 630 && y > 450 && y < 470"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7143,
+   "cond": "x > 730 && x < 750 && y > 450 && y < 470"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7149,
+   "cond": "global.flag[309] < 9"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7150,
+   "cond": "!(global.flag[309] < 9)"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7153,
+   "cond": "extflag == \"gotoroom_dw_mansion_b_west_2f\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7157,
+   "cond": "global.flag[309] < 8"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7158,
+   "cond": "!(global.flag[309] < 8)"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7161,
+   "cond": "extflag == \"topleft\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7162,
+   "cond": "extflag == \"topright\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7163,
+   "cond": null
+  },
+  {
+   "kind": "range",
+   "why": "branch_2",
+   "prio": 7164,
+   "key": [
+    "ch2",
+    "room_dw_mansion_east_2f_c",
+    "obj_doorW",
+    185
+   ]
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7165,
+   "cond": "extflag == \"farleft\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7166,
+   "cond": "extflag == \"farright\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7167,
+   "cond": "extflag == \"bottom\""
+  },
+  {
+   "kind": "range",
+   "why": "branch_2",
+   "prio": 7168,
+   "key": [
+    "ch2",
+    "room_dw_mansion_east_2f_c_a",
+    "obj_doorW",
+    184
+   ]
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7171,
+   "cond": "x > 220 && y < 200"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7172,
+   "cond": "x > 220 && y >= 440"
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7179,
+   "cond": "extflag == \"back\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7180,
+   "cond": "extflag == \"funny\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7181,
+   "cond": "extflag == \"next\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7182,
+   "cond": "extflag == \"hands\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7183,
+   "cond": "extflag == \"bottom\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7184,
+   "cond": "extflag == \"top\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7185,
+   "cond": "extflag == \"topleft\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7186,
+   "cond": "extflag == \"bottom\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7187,
+   "cond": "extflag == \"topright\""
+  },
+  {
+   "kind": "range",
+   "why": "gml_no_range",
+   "prio": 7189,
+   "cond": null
+  },
+  {
+   "kind": "new_rule",
+   "why": "pair_exists",
+   "scene": "ch2.cyber_city.dw_city_traffic_4",
+   "to": "ch2.cyber_city.dw_city_spamton_alley"
+  },
+  {
+   "kind": "new_rule",
+   "why": "pair_exists",
+   "scene": "ch2.cyber_city.dw_city_spamton_alley",
+   "to": "ch2.cyber_city.dw_city_traffic_4"
+  },
+  {
+   "kind": "new_rule",
+   "why": "pair_exists",
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "to": "ch2.queens_mansion.dw_mansion_east_2f_c_a"
+  }
+ ],
+ "new_rules": [
+  {
+   "to": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "priority": 7190,
+   "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_cyber_maze_fireworks 的 `obj_doorW` 离开，落到 room_dw_cyber_maze_virokun（`if (room == 92)` 分支 `无位置条件`，`entrance=21`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+   "when_scene": "ch2.cyber_field.dw_cyber_maze_fireworks",
+   "when_door": "W",
+   "_original": {
+    "chapter": "ch2",
+    "door_letter": "W",
+    "kind": "delta_door_table",
+    "table": "gml_Object_obj_doorW_Alarm_2",
+    "via": "obj_doorW",
+    "marker": "obj_markeru",
+    "src_room_name": "room_dw_cyber_maze_fireworks",
+    "dst_room_name": "room_dw_cyber_maze_virokun",
+    "src_room_id": 92,
+    "dst_room_id": 85,
+    "entrance": 21,
+    "branch_letter": "U",
+    "door_x": 280,
+    "door_y": 460,
+    "door_x_all": [
+     280
+    ],
+    "batch": 170
+   }
+  },
+  {
+   "to": "ch2.cyber_city.dw_city_mirrorfriend",
+   "priority": 7191,
+   "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_city_big_2 的 `obj_doorW` 离开，落到 room_dw_city_mirrorfriend（`if (room == 119)` 分支 `无位置条件`，`entrance=24`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+   "when_scene": "ch2.cyber_city.dw_city_big_2",
+   "when_door": "W",
+   "_original": {
+    "chapter": "ch2",
+    "door_letter": "W",
+    "kind": "delta_door_table",
+    "table": "gml_Object_obj_doorW_Alarm_2",
+    "via": "obj_doorW",
+    "marker": "obj_markerX",
+    "src_room_name": "room_dw_city_big_2",
+    "dst_room_name": "room_dw_city_mirrorfriend",
+    "src_room_id": 119,
+    "dst_room_id": 138,
+    "entrance": 24,
+    "branch_letter": "X",
+    "door_x": 720,
+    "door_y": 0,
+    "door_x_all": [
+     720
+    ],
+    "batch": 170
+   }
+  },
+  {
+   "to": "ch2.cyber_city.dw_city_traffic_3",
+   "priority": 7192,
+   "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_city_dog_traffic 的 `obj_doorW` 离开，落到 room_dw_city_traffic_3（`if (room == 140)` 分支 `无位置条件`，`entrance=24`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+   "when_scene": "ch2.cyber_city.dw_city_dog_traffic",
+   "when_door": "W",
+   "_original": {
+    "chapter": "ch2",
+    "door_letter": "W",
+    "kind": "delta_door_table",
+    "table": "gml_Object_obj_doorW_Alarm_2",
+    "via": "obj_doorW",
+    "marker": "obj_markerX",
+    "src_room_name": "room_dw_city_dog_traffic",
+    "dst_room_name": "room_dw_city_traffic_3",
+    "src_room_id": 140,
+    "dst_room_id": 123,
+    "entrance": 24,
+    "branch_letter": "X",
+    "door_x": 160,
+    "door_y": 460,
+    "door_x_all": [
+     160
+    ],
+    "batch": 170
+   }
+  },
+  {
+   "to": "ch2.cyber_city.dw_city_traffic_3",
+   "priority": 7193,
+   "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_city_man 的 `obj_doorW` 离开，落到 room_dw_city_traffic_3（`if (room == 141)` 分支 `无位置条件`，`entrance=24`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+   "when_scene": "ch2.cyber_city.dw_city_man",
+   "when_door": "W",
+   "_original": {
+    "chapter": "ch2",
+    "door_letter": "W",
+    "kind": "delta_door_table",
+    "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "via": "obj_doorw_musfade",
+    "marker": "obj_markerX",
+    "src_room_name": "room_dw_city_man",
+    "dst_room_name": "room_dw_city_traffic_3",
+    "src_room_id": 141,
+    "dst_room_id": 123,
+    "entrance": 24,
+    "branch_letter": "X",
+    "door_x": 1800,
+    "door_y": 460,
+    "door_x_all": [
+     1800
+    ],
+    "batch": 170
+   }
+  },
+  {
+   "to": "ch2.cyber_city.dw_city_traffic_3",
+   "priority": 7194,
+   "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_city_moss 的 `obj_doorW` 离开，落到 room_dw_city_traffic_3（`if (room == 142)` 分支 `无位置条件`，`entrance=24`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+   "when_scene": "ch2.cyber_city.dw_city_moss",
+   "when_door": "W",
+   "_original": {
+    "chapter": "ch2",
+    "door_letter": "W",
+    "kind": "delta_door_table",
+    "table": "gml_Object_obj_doorW_Alarm_2",
+    "via": "obj_doorW",
+    "marker": "obj_markerX",
+    "src_room_name": "room_dw_city_moss",
+    "dst_room_name": "room_dw_city_traffic_3",
+    "src_room_id": 142,
+    "dst_room_id": 123,
+    "entrance": 24,
+    "branch_letter": "X",
+    "door_x": 620,
+    "door_y": 200,
+    "door_x_all": [
+     620
+    ],
+    "batch": 170
+   }
+  },
+  {
+   "to": "ch2.queens_mansion.dw_mansion_b_entrance",
+   "priority": 7195,
+   "reason": "原作连接（**分支级**，第170轮按 GML 源码补）：从 room_dw_mansion_east_1f_secret 的 `obj_doorW` 离开，落到 room_dw_mansion_b_entrance（`if (room == 164)` 分支 `无位置条件`，`entrance=20`）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+   "when_scene": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+   "when_door": "W",
+   "_original": {
+    "chapter": "ch2",
+    "door_letter": "W",
+    "kind": "delta_door_table",
+    "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "via": "obj_doorw_musfade",
+    "marker": "obj_markert",
+    "src_room_name": "room_dw_mansion_east_1f_secret",
+    "dst_room_name": "room_dw_mansion_b_entrance",
+    "src_room_id": 164,
+    "dst_room_id": 169,
+    "entrance": 20,
+    "branch_letter": "T",
+    "door_x": 970,
+    "door_y": 190,
+    "door_x_all": [
+     970
+    ],
+    "batch": 170
+   }
+  }
+ ]
+}

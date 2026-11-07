@@ -1,0 +1,5607 @@
+{
+ "note": "第170轮 · W 门 GML 源码解析（房间 → 分支）",
+ "chapters": {
+  "ch1": {
+   "obj_doorW": {
+    "gml": "gml_Object_obj_doorW_Alarm_2",
+    "rooms": {
+     "room_town_south": {
+      "room_id": 13,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_hospital_lobby",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 18
+       }
+      ],
+      "body_digest": "room_goto(room_hospital_lobby);"
+     },
+     "room_hospital_lobby": {
+      "room_id": 18,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 13
+       }
+      ],
+      "body_digest": "room_goto(room_town_south);"
+     },
+     "room_town_mid": {
+      "room_id": 11,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_alphysalley",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 27
+       }
+      ],
+      "body_digest": "room_goto(room_alphysalley);"
+     },
+     "room_alphysalley": {
+      "room_id": 27,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 11
+       }
+      ],
+      "body_digest": "room_goto(room_town_mid);"
+     },
+     "room_town_north": {
+      "room_id": 9,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_beach",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 10
+       }
+      ],
+      "body_digest": "room_goto(room_beach);"
+     },
+     "room_beach": {
+      "room_id": 10,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_north",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 9
+       }
+      ],
+      "body_digest": "room_goto(room_town_north);"
+     }
+    }
+   },
+   "obj_doorw_musfade": {
+    "gml": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "rooms": {
+     "room_cc_1f": {
+      "room_id": 114,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_cc_elevator",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 110
+       }
+      ],
+      "body_digest": "room_goto(room_cc_elevator);\n    global.flag[239] = 1;"
+     },
+     "room_cc_5f": {
+      "room_id": 123,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_cc_elevator",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 110
+       }
+      ],
+      "body_digest": "room_goto(room_cc_elevator);\n    global.flag[239] = 2;"
+     },
+     "room_cc_elevator": {
+      "room_id": 110,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "global.flag[239] == 1",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_cc_1f",
+        "pos_conds": [],
+        "state_conds": [
+         "global.flag[239] == 1"
+        ],
+        "to_id": 114
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "global.flag[239] == 2",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_cc_5f",
+        "pos_conds": [],
+        "state_conds": [
+         "global.flag[239] == 2"
+        ],
+        "to_id": 123
+       }
+      ],
+      "body_digest": "if (global.flag[239] == 1)\n    {\n        room_goto(room_cc_1f);\n    }\n    if (global.flag[239] == 2)\n    {\n        room_"
+     },
+     "room_forest_castlefront": {
+      "room_id": 104,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_cc_entrance",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 113
+       }
+      ],
+      "body_digest": "room_goto(room_cc_entrance);"
+     },
+     "room_cc_entrance": {
+      "room_id": 113,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_forest_castlefront",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 104
+       }
+      ],
+      "body_digest": "room_goto(room_forest_castlefront);"
+     }
+    }
+   }
+  },
+  "ch2": {
+   "obj_doorW": {
+    "gml": "gml_Object_obj_doorW_Alarm_2",
+    "rooms": {
+     "room_hospital_lobby": {
+      "room_id": 34,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 29
+       }
+      ],
+      "body_digest": "room_goto(room_town_south);"
+     },
+     "room_alphysalley": {
+      "room_id": 43,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 27
+       }
+      ],
+      "body_digest": "room_goto(room_town_mid);"
+     },
+     "room_town_north": {
+      "room_id": 25,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_beach",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 26
+       }
+      ],
+      "body_digest": "room_goto(room_beach);"
+     },
+     "room_beach": {
+      "room_id": 26,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_north",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 25
+       }
+      ],
+      "body_digest": "room_goto(room_town_north);"
+     },
+     "room_town_mid": {
+      "room_id": 27,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 290 && x < 370",
+        "lo": 290,
+        "lo_incl": false,
+        "hi": 370,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_lw_icee_pizza",
+        "pos_conds": [
+         "x > 290 && x < 370"
+        ],
+        "state_conds": [],
+        "to_id": 48
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1730 && x < 1840",
+        "lo": 1730,
+        "lo_incl": false,
+        "hi": 1840,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_alphysalley",
+        "pos_conds": [
+         "x > 1730 && x < 1840"
+        ],
+        "state_conds": [],
+        "to_id": 43
+       }
+      ],
+      "body_digest": "if (x > 290 && x < 370)\n    {\n        global.entrance = 20;\n        room_goto(room_lw_icee_pizza);\n    }\n    if (x > 173"
+     },
+     "room_lw_icee_pizza": {
+      "room_id": 48,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 27
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_town_mid);"
+     },
+     "room_town_south": {
+      "room_id": 29,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 230 && x < 280",
+        "lo": 230,
+        "lo_incl": false,
+        "hi": 280,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_lw_police",
+        "pos_conds": [
+         "x > 230 && x < 280"
+        ],
+        "state_conds": [],
+        "to_id": 46
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 580 && x < 660",
+        "lo": 580,
+        "lo_incl": false,
+        "hi": 660,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_hospital_lobby",
+        "pos_conds": [
+         "x > 580 && x < 660"
+        ],
+        "state_conds": [],
+        "to_id": 34
+       }
+      ],
+      "body_digest": "if (x > 230 && x < 280)\n    {\n        global.entrance = 22;\n        room_goto(room_lw_police);\n    }\n    if (x > 580 && "
+     },
+     "room_lw_police": {
+      "room_id": 46,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 29
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_south);"
+     },
+     "room_dw_castle_east_door": {
+      "room_id": 58,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_castle_tutorial",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 56
+       }
+      ],
+      "body_digest": "room_goto(room_castle_tutorial);"
+     },
+     "room_castle_tutorial": {
+      "room_id": 56,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_castle_east_door",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 58
+       }
+      ],
+      "body_digest": "room_goto(room_dw_castle_east_door);"
+     },
+     "room_dw_ralsei_castle_front": {
+      "room_id": 63,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 67
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_ralsei_castle_1f);"
+     },
+     "room_dw_ralsei_castle_1f": {
+      "room_id": 67,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 840 && x < 1000",
+        "lo": 840,
+        "lo_incl": false,
+        "hi": 1000,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_castle_dungeon",
+        "pos_conds": [
+         "x > 840 && x < 1000"
+        ],
+        "state_conds": [],
+        "to_id": 69
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 550 && x < 700",
+        "lo": 550,
+        "lo_incl": false,
+        "hi": 700,
+        "hi_incl": false,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_front",
+        "pos_conds": [
+         "x > 550 && x < 700"
+        ],
+        "state_conds": [],
+        "to_id": 63
+       }
+      ],
+      "body_digest": "if (x > 840 && x < 1000)\n    {\n        global.entrance = 23;\n        room_goto(room_dw_castle_dungeon);\n    }\n    if (x "
+     },
+     "room_dw_ralsei_castle_2f": {
+      "room_id": 68,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 240 && x < 340",
+        "lo": 240,
+        "lo_incl": false,
+        "hi": 340,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_dw_castle_rooms_kris",
+        "pos_conds": [
+         "x > 240 && x < 340"
+        ],
+        "state_conds": [],
+        "to_id": 71
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 520 && x < 610",
+        "lo": 520,
+        "lo_incl": false,
+        "hi": 610,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_castle_rooms_susie",
+        "pos_conds": [
+         "x > 520 && x < 610"
+        ],
+        "state_conds": [],
+        "to_id": 72
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 780 && x < 860",
+        "lo": 780,
+        "lo_incl": false,
+        "hi": 860,
+        "hi_incl": false,
+        "ent": 24,
+        "to": "room_cc_lancer",
+        "pos_conds": [
+         "x > 780 && x < 860"
+        ],
+        "state_conds": [],
+        "to_id": 262
+       }
+      ],
+      "body_digest": "if (x > 240 && x < 340)\n    {\n        global.entrance = 22;\n        room_goto(room_dw_castle_rooms_kris);\n    }\n    if ("
+     },
+     "room_dw_cyber_teacup_1": {
+      "room_id": 255,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 10",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 21,
+        "to": "room_dw_cyber_battle_maze_1",
+        "pos_conds": [
+         "x < 10"
+        ],
+        "state_conds": [],
+        "to_id": 79
+       }
+      ],
+      "body_digest": "if (x < 10)\n    {\n        global.entrance = 21;\n        room_goto(room_dw_cyber_battle_maze_1);\n    }"
+     },
+     "room_dw_cyber_battle_maze_1": {
+      "room_id": 79,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 1200",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 1200,
+        "hi_incl": false,
+        "ent": 21,
+        "to": "room_dw_cyber_teacup_1",
+        "pos_conds": [
+         "x < 1200"
+        ],
+        "state_conds": [],
+        "to_id": 255
+       }
+      ],
+      "body_digest": "if (x < 1200)\n    {\n        global.entrance = 21;\n        room_goto(room_dw_cyber_teacup_1);\n    }"
+     },
+     "room_dw_cyber_musical_door": {
+      "room_id": 84,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "y < 60",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 60,
+        "hi_incl": false,
+        "ent": 21,
+        "to": "room_dw_cyber_musical_shop",
+        "pos_conds": [
+         "y < 60"
+        ],
+        "state_conds": [],
+        "to_id": 89
+       },
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "y > 400",
+        "lo": 400,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_cyber_post_music_boss_slide",
+        "pos_conds": [
+         "y > 400"
+        ],
+        "state_conds": [],
+        "to_id": 96
+       }
+      ],
+      "body_digest": "if (y < 60)\n    {\n        global.entrance = 21;\n        room_goto(room_dw_cyber_musical_shop);\n    }\n    if (y > 400)\n  "
+     },
+     "room_dw_cyber_escalator_slide": {
+      "room_id": 102,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_cyber_musical_door",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 84
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_dw_cyber_musical_door);"
+     },
+     "room_dw_cyber_battle_maze_2": {
+      "room_id": 87,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_cyber_keyboard_puzzle_3",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 97
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_cyber_keyboard_puzzle_3);"
+     },
+     "room_dw_cyber_keyboard_puzzle_3": {
+      "room_id": 97,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_cyber_battle_maze_2",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 87
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_cyber_battle_maze_2);"
+     },
+     "room_dw_cyber_maze_rhythm": {
+      "room_id": 101,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "y > 900",
+        "lo": 900,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_cyber_battle_maze_2",
+        "pos_conds": [
+         "y > 900"
+        ],
+        "state_conds": [],
+        "to_id": 87
+       },
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "y < 10",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_dw_cyber_maze_queenscreen",
+        "pos_conds": [
+         "y < 10"
+        ],
+        "state_conds": [],
+        "to_id": 94
+       }
+      ],
+      "body_digest": "if (y > 900)\n    {\n        global.entrance = 23;\n        room_goto(room_dw_cyber_battle_maze_2);\n    }\n    if (y < 10)\n "
+     },
+     "room_dw_cyber_maze_queenscreen": {
+      "room_id": 94,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"to_room_dw_cyber_musical_shop\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_cyber_musical_shop",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"to_room_dw_cyber_musical_shop\""
+        ],
+        "to_id": 89
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"to_room_dw_cyber_maze_rhythm\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_cyber_battle_maze_2",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"to_room_dw_cyber_maze_rhythm\""
+        ],
+        "to_id": 87
+       }
+      ],
+      "body_digest": "if (extflag == \"to_room_dw_cyber_musical_shop\")\n    {\n        global.entrance = 20;\n        room_goto(room_dw_cyber_musi"
+     },
+     "room_dw_cyber_maze_tasque": {
+      "room_id": 93,
+      "kind": "mixed",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos_state",
+        "axis": "x",
+        "cond": "extdestination == \"room_dw_cyber_maze_tasque to room_dw_cyber_maze_virokun\" && x > 180",
+        "lo": 180,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_cyber_maze_virokun",
+        "pos_conds": [
+         "x > 180"
+        ],
+        "state_conds": [
+         "extdestination == \"room_dw_cyber_maze_tasque to room_dw_cyber_maze_virokun\""
+        ],
+        "to_id": 85
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1000",
+        "lo": 1000,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_cyber_battle_maze_2",
+        "pos_conds": [
+         "x > 1000"
+        ],
+        "state_conds": [],
+        "to_id": 87
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1400",
+        "lo": 1400,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_cyber_battle_maze_2",
+        "pos_conds": [
+         "x > 1400"
+        ],
+        "state_conds": [],
+        "to_id": 87
+       }
+      ],
+      "body_digest": "if (extdestination == \"room_dw_cyber_maze_tasque to room_dw_cyber_maze_virokun\")\n    {\n        if (x > 180)\n        {\n  "
+     },
+     "room_dw_cyber_maze_virokun": {
+      "room_id": 85,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "y > 430",
+        "lo": 430,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_cyber_maze_tasque",
+        "pos_conds": [
+         "y > 430"
+        ],
+        "state_conds": [],
+        "to_id": 93
+       },
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "y < 50",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 50,
+        "hi_incl": false,
+        "ent": 21,
+        "to": "room_dw_cyber_maze_fireworks",
+        "pos_conds": [
+         "y < 50"
+        ],
+        "state_conds": [],
+        "to_id": 92
+       }
+      ],
+      "body_digest": "if (y > 430)\n    {\n        global.entrance = 20;\n        room_goto(room_dw_cyber_maze_tasque);\n    }\n    if (y < 50)\n   "
+     },
+     "room_dw_cyber_maze_fireworks": {
+      "room_id": 92,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_cyber_maze_virokun",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 85
+       }
+      ],
+      "body_digest": "global.entrance = 21;\n    room_goto(room_dw_cyber_maze_virokun);"
+     },
+     "room_dw_cyber_musical_shop": {
+      "room_id": 89,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"to_room_dw_cyber_maze_queenscreen\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_cyber_maze_queenscreen",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"to_room_dw_cyber_maze_queenscreen\""
+        ],
+        "to_id": 94
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag != \"to_room_dw_cyber_maze_queenscreen\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_cyber_musical_door",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag != \"to_room_dw_cyber_maze_queenscreen\""
+        ],
+        "to_id": 84
+       }
+      ],
+      "body_digest": "if (extflag == \"to_room_dw_cyber_maze_queenscreen\")\n    {\n        global.entrance = 21;\n        room_goto(room_dw_cyber_"
+     },
+     "room_dw_castle_rooms_kris": {
+      "room_id": 71,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 68
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_dw_castle_rooms_susie": {
+      "room_id": 72,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 68
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_cc_lancer": {
+      "room_id": 262,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 68
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_dw_castle_dungeon": {
+      "room_id": 69,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_ralsei_castle_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 67
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_ralsei_castle_1f);"
+     },
+     "room_dw_city_treasure": {
+      "room_id": 139,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_city_big_1",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 117
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_city_big_1);"
+     },
+     "room_dw_city_big_1": {
+      "room_id": 117,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 10",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_city_treasure",
+        "pos_conds": [
+         "x < 10"
+        ],
+        "state_conds": [],
+        "to_id": 139
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 720",
+        "lo": 720,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_susie_ralsei_fun_1",
+        "pos_conds": [
+         "x > 720"
+        ],
+        "state_conds": [],
+        "to_id": 137
+       }
+      ],
+      "body_digest": "if (x < 10)\n    {\n        global.entrance = 23;\n        room_goto(room_dw_city_treasure);\n    }\n    if (x > 720)\n    {\n "
+     },
+     "room_dw_city_big_2": {
+      "room_id": 119,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_mirrorfriend",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 138
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_city_mirrorfriend);"
+     },
+     "room_dw_city_traffic_2": {
+      "room_id": 118,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_city_mirrorfriend",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 138
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_city_mirrorfriend);"
+     },
+     "room_dw_city_susie_ralsei_fun_1": {
+      "room_id": 137,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_big_1",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 117
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_city_big_1);"
+     },
+     "room_dw_city_mirrorfriend": {
+      "room_id": 138,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"big2\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_big_2",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"big2\""
+        ],
+        "to_id": 119
+       }
+      ],
+      "body_digest": "if (extflag == \"big2\")\n    {\n        global.entrance = 24;\n        room_goto(room_dw_city_big_2);\n    }"
+     },
+     "room_dw_city_big_3": {
+      "room_id": 122,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == 0",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_city_traffic_3",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == 0"
+        ],
+        "to_id": 123
+       }
+      ],
+      "body_digest": "if (extflag == 0)\n    {\n        global.entrance = 23;\n        room_goto(room_dw_city_traffic_3);\n    }\n    if (extflag ="
+     },
+     "room_dw_city_traffic_3": {
+      "room_id": 123,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "y < 900",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 900,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_city_big_3",
+        "pos_conds": [
+         "y < 900"
+        ],
+        "state_conds": [],
+        "to_id": 122
+       }
+      ],
+      "body_digest": "if (y < 900)\n    {\n        global.entrance = 23;\n        room_goto(room_dw_city_big_3);\n    }"
+     },
+     "room_dw_city_moss": {
+      "room_id": 142,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_traffic_3",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 123
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_city_traffic_3);"
+     },
+     "room_dw_city_dog_traffic": {
+      "room_id": 140,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_traffic_3",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 123
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_city_traffic_3);"
+     },
+     "room_dw_city_traffic_4": {
+      "room_id": 129,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 4500",
+        "lo": 4500,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_monologue",
+        "pos_conds": [
+         "x > 4500"
+        ],
+        "state_conds": [],
+        "to_id": 131
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 50",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 50,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_dw_city_berdly",
+        "pos_conds": [
+         "x < 50"
+        ],
+        "state_conds": [],
+        "to_id": 128
+       }
+      ],
+      "body_digest": "if (x > 4500)\n    {\n        global.entrance = 24;\n        room_goto(room_dw_city_monologue);\n    }\n    if (x < 50)\n    {"
+     },
+     "room_dw_city_spamton_alley": {
+      "room_id": 130,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_city_traffic_4",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 129
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_city_traffic_4);"
+     },
+     "room_dw_city_monologue": {
+      "room_id": 131,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_traffic_4",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 129
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_city_traffic_4);"
+     },
+     "room_dw_city_mansion_front": {
+      "room_id": 136,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_entrance",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 157
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_dw_mansion_entrance);"
+     },
+     "room_dw_mansion_lightner_hallway": {
+      "room_id": 152,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 210 && x < 280",
+        "lo": 210,
+        "lo_incl": false,
+        "hi": 280,
+        "hi_incl": false,
+        "ent": 19,
+        "to": "room_dw_mansion_krisroom",
+        "pos_conds": [
+         "x > 210 && x < 280"
+        ],
+        "state_conds": [],
+        "to_id": 150
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 490 && x < 590",
+        "lo": 490,
+        "lo_incl": false,
+        "hi": 590,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_dw_mansion_susieroom",
+        "pos_conds": [
+         "x > 490 && x < 590"
+        ],
+        "state_conds": [],
+        "to_id": 151
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1900",
+        "lo": 1900,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_mansion_darkbulb_1",
+        "pos_conds": [
+         "x > 1900"
+        ],
+        "state_conds": [],
+        "to_id": 153
+       }
+      ],
+      "body_digest": "if (x > 210 && x < 280)\n    {\n        global.entrance = 19;\n        room_goto(room_dw_mansion_krisroom);\n    }\n    if (x"
+     },
+     "room_dw_mansion_susieroom": {
+      "room_id": 151,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_lightner_hallway",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 152
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_dw_mansion_lightner_hallway);"
+     },
+     "room_dw_mansion_krisroom": {
+      "room_id": 150,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 19,
+        "to": "room_dw_mansion_lightner_hallway",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 152
+       }
+      ],
+      "body_digest": "global.entrance = 19;\n    room_goto(room_dw_mansion_lightner_hallway);"
+     },
+     "room_dw_mansion_darkbulb_1": {
+      "room_id": 153,
+      "kind": "mixed",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 10",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 21,
+        "to": "room_dw_mansion_lightner_hallway",
+        "pos_conds": [
+         "x < 10"
+        ],
+        "state_conds": [],
+        "to_id": 152
+       },
+       {
+        "kind": "pos_state",
+        "axis": "x",
+        "cond": "x > 600 && global.plot < 120",
+        "lo": 600,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_darkbulb_2",
+        "pos_conds": [
+         "x > 600"
+        ],
+        "state_conds": [
+         "global.plot < 120"
+        ],
+        "to_id": 154
+       },
+       {
+        "kind": "pos_state",
+        "axis": "x",
+        "cond": "x > 600 && !(global.plot < 120)",
+        "lo": 600,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_dining_a",
+        "pos_conds": [
+         "x > 600"
+        ],
+        "state_conds": [
+         "!(global.plot < 120)"
+        ],
+        "to_id": 156
+       }
+      ],
+      "body_digest": "if (x < 10)\n    {\n        global.entrance = 21;\n        room_goto(room_dw_mansion_lightner_hallway);\n    }\n    if (x > 6"
+     },
+     "room_dw_mansion_darkbulb_2": {
+      "room_id": 154,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 10",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_dw_mansion_darkbulb_1",
+        "pos_conds": [
+         "x < 10"
+        ],
+        "state_conds": [],
+        "to_id": 153
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 600",
+        "lo": 600,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 19,
+        "to": "room_dw_mansion_darkbulb_3",
+        "pos_conds": [
+         "x > 600"
+        ],
+        "state_conds": [],
+        "to_id": 155
+       }
+      ],
+      "body_digest": "if (x < 10)\n    {\n        global.entrance = 20;\n        room_goto(room_dw_mansion_darkbulb_1);\n    }\n    if (x > 600)\n  "
+     },
+     "room_dw_mansion_darkbulb_3": {
+      "room_id": 155,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 10",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 19,
+        "to": "room_dw_mansion_darkbulb_2",
+        "pos_conds": [
+         "x < 10"
+        ],
+        "state_conds": [],
+        "to_id": 154
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 600",
+        "lo": 600,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_dining_a",
+        "pos_conds": [
+         "x > 600"
+        ],
+        "state_conds": [],
+        "to_id": 156
+       }
+      ],
+      "body_digest": "if (x < 10)\n    {\n        global.entrance = 19;\n        room_goto(room_dw_mansion_darkbulb_2);\n    }\n    if (x > 600)\n  "
+     },
+     "room_dw_mansion_dining_a": {
+      "room_id": 156,
+      "kind": "mixed",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos_state",
+        "axis": "x",
+        "cond": "x < 10 && global.plot < 120",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_dw_mansion_darkbulb_3",
+        "pos_conds": [
+         "x < 10"
+        ],
+        "state_conds": [
+         "global.plot < 120"
+        ],
+        "to_id": 155
+       },
+       {
+        "kind": "pos_state",
+        "axis": "x",
+        "cond": "x < 10 && !(global.plot < 120)",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_dw_mansion_darkbulb_1",
+        "pos_conds": [
+         "x < 10"
+        ],
+        "state_conds": [
+         "!(global.plot < 120)"
+        ],
+        "to_id": 153
+       }
+      ],
+      "body_digest": "if (x < 10)\n    {\n        global.entrance = 20;\n        if (global.plot < 120)\n        {\n            room_goto(room_dw_m"
+     },
+     "room_dw_mansion_east_2f_shortcut": {
+      "room_id": 182,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_entrance",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 157
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_dw_mansion_entrance);"
+     },
+     "room_dw_mansion_entrance": {
+      "room_id": 157,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "x > 620 && x < 630 && y > 450 && y < 470",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_east_2f_shortcut",
+        "pos_conds": [],
+        "state_conds": [
+         "x > 620 && x < 630 && y > 450 && y < 470"
+        ],
+        "to_id": 182
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "x > 730 && x < 750 && y > 450 && y < 470",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 19,
+        "to": "room_dw_mansion_east_3f",
+        "pos_conds": [],
+        "state_conds": [
+         "x > 730 && x < 750 && y > 450 && y < 470"
+        ],
+        "to_id": 187
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "x > 800 && y > 670",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_mansion_east_1f_secret",
+        "pos_conds": [],
+        "state_conds": [
+         "x > 800 && y > 670"
+        ],
+        "to_id": 164
+       }
+      ],
+      "body_digest": "if (x > 620 && x < 630 && y > 450 && y < 470)\n    {\n        global.entrance = 20;\n        room_goto(room_dw_mansion_east"
+     },
+     "room_dw_mansion_east_4f_a": {
+      "room_id": 217,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 19,
+        "to": "room_dw_mansion_entrance",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 157
+       }
+      ],
+      "body_digest": "global.entrance = 19;\n    room_goto(room_dw_mansion_entrance);"
+     },
+     "room_dw_mansion_east_2f_transformed_new": {
+      "room_id": 181,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"topleft\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_kitchen",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"topleft\""
+        ],
+        "to_id": 183
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"topright\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_dining3",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"topright\""
+        ],
+        "to_id": 208
+       }
+      ],
+      "body_digest": "if (extflag == \"topleft\")\n    {\n        global.entrance = 22;\n        room_goto(room_dw_mansion_kitchen);\n    }\n    if ("
+     },
+     "room_dw_mansion_east_1f_secret": {
+      "room_id": 164,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 10",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 21,
+        "to": "room_dw_mansion_entrance",
+        "pos_conds": [
+         "x < 10"
+        ],
+        "state_conds": [],
+        "to_id": 157
+       }
+      ],
+      "body_digest": "if (x < 10)\n    {\n        global.entrance = 21;\n        room_goto(room_dw_mansion_entrance);\n    }"
+     },
+     "room_dw_mansion_b_central": {
+      "room_id": 171,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "global.flag[309] < 9",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_b_east",
+        "pos_conds": [],
+        "state_conds": [
+         "global.flag[309] < 9"
+        ],
+        "to_id": 176
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "!(global.flag[309] < 9)",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_b_east_transformed",
+        "pos_conds": [],
+        "state_conds": [
+         "!(global.flag[309] < 9)"
+        ],
+        "to_id": 179
+       }
+      ],
+      "body_digest": "if (global.flag[309] < 9)\n    {\n        global.entrance = 24;\n        room_goto(room_dw_mansion_b_east);\n    }\n    else\n"
+     },
+     "room_dw_mansion_b_east": {
+      "room_id": 176,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 10",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 24,
+        "to": "room_dw_mansion_b_central",
+        "pos_conds": [
+         "x < 10"
+        ],
+        "state_conds": [],
+        "to_id": 171
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 80 && x < 150",
+        "lo": 80,
+        "lo_incl": false,
+        "hi": 150,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_dw_mansion_b_east_a",
+        "pos_conds": [
+         "x > 80 && x < 150"
+        ],
+        "state_conds": [],
+        "to_id": 177
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1000",
+        "lo": 1000,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_b_east_b",
+        "pos_conds": [
+         "x > 1000"
+        ],
+        "state_conds": [],
+        "to_id": 178
+       }
+      ],
+      "body_digest": "if (x < 10)\n    {\n        global.entrance = 24;\n        room_goto(room_dw_mansion_b_central);\n    }\n    if (x > 80 && x "
+     },
+     "room_dw_mansion_b_east_a": {
+      "room_id": 177,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "global.flag[309] < 8",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_b_east",
+        "pos_conds": [],
+        "state_conds": [
+         "global.flag[309] < 8"
+        ],
+        "to_id": 176
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "!(global.flag[309] < 8)",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_b_east_transformed",
+        "pos_conds": [],
+        "state_conds": [
+         "!(global.flag[309] < 8)"
+        ],
+        "to_id": 179
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    if (global.flag[309] < 8)\n    {\n        room_goto(room_dw_mansion_b_east);\n    }\n    else\n    "
+     },
+     "room_dw_mansion_b_east_b": {
+      "room_id": 178,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_b_east",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 176
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_mansion_b_east);"
+     },
+     "room_dw_mansion_b_east_transformed": {
+      "room_id": 179,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "y < 200",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 200,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_dw_mansion_b_east_a",
+        "pos_conds": [
+         "y < 200"
+        ],
+        "state_conds": [],
+        "to_id": 177
+       },
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "!(y < 200)",
+        "lo": 200,
+        "lo_incl": true,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_b_central",
+        "pos_conds": [
+         "!(y < 200)"
+        ],
+        "state_conds": [],
+        "to_id": 171
+       }
+      ],
+      "body_digest": "if (y < 200)\n    {\n        global.entrance = 22;\n        room_goto(room_dw_mansion_b_east_a);\n    }\n    else\n    {\n     "
+     },
+     "room_dw_mansion_b_west_1f": {
+      "room_id": 172,
+      "kind": "mixed",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"gotoroom_dw_mansion_b_west_2f\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_b_west_2f",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"gotoroom_dw_mansion_b_west_2f\""
+        ],
+        "to_id": 175
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 800",
+        "lo": 800,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_b_west_1f_b",
+        "pos_conds": [
+         "x > 800"
+        ],
+        "state_conds": [],
+        "to_id": 174
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1400",
+        "lo": 1400,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_b_west_1f_a",
+        "pos_conds": [
+         "x > 1400"
+        ],
+        "state_conds": [],
+        "to_id": 173
+       }
+      ],
+      "body_digest": "if (extflag == \"gotoroom_dw_mansion_b_west_2f\")\n    {\n        global.entrance = 24;\n        room_goto(room_dw_mansion_b_"
+     },
+     "room_dw_mansion_b_west_2f": {
+      "room_id": 175,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_b_west_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 172
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_mansion_b_west_1f);"
+     },
+     "room_dw_mansion_b_west_1f_a": {
+      "room_id": 173,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_b_west_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 172
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_dw_mansion_b_west_1f);"
+     },
+     "room_dw_mansion_b_west_1f_b": {
+      "room_id": 174,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_b_west_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 172
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_mansion_b_west_1f);"
+     },
+     "room_dw_mansion_east_2f_d": {
+      "room_id": 186,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1200",
+        "lo": 1200,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_east_2f_c",
+        "pos_conds": [
+         "x > 1200"
+        ],
+        "state_conds": [],
+        "to_id": 184
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "!(x > 1200)",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 1200,
+        "hi_incl": true,
+        "ent": 24,
+        "to": "room_dw_mansion_east_teacup_2",
+        "pos_conds": [
+         "!(x > 1200)"
+        ],
+        "state_conds": [],
+        "to_id": 168
+       }
+      ],
+      "body_digest": "if (x > 1200)\n    {\n        global.entrance = 20;\n        room_goto(room_dw_mansion_east_2f_c);\n    }\n    else\n    {\n   "
+     },
+     "room_dw_mansion_east_2f_c": {
+      "room_id": 184,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"farleft\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_east_2f_d",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"farleft\""
+        ],
+        "to_id": 186
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"topleft\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_east_2f_c_a",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"topleft\""
+        ],
+        "to_id": 185
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"topright\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_east_2f_c_a",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"topright\""
+        ],
+        "to_id": 185
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"bottom\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_east_2f_c_b",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"bottom\""
+        ],
+        "to_id": 212
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"farright\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_dininghall",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"farright\""
+        ],
+        "to_id": 209
+       }
+      ],
+      "body_digest": "if (extflag == \"farleft\")\n    {\n        global.entrance = 20;\n        room_goto(room_dw_mansion_east_2f_d);\n    }\n    if"
+     },
+     "room_dw_mansion_kitchen": {
+      "room_id": 183,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_east_2f_transformed_new",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 181
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_dw_mansion_east_2f_transformed_new);"
+     },
+     "room_dw_mansion_east_2f_c_a": {
+      "room_id": 185,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 260",
+        "lo": 260,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_east_2f_c",
+        "pos_conds": [
+         "x > 260"
+        ],
+        "state_conds": [],
+        "to_id": 184
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1540",
+        "lo": 1540,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_east_2f_c",
+        "pos_conds": [
+         "x > 1540"
+        ],
+        "state_conds": [],
+        "to_id": 184
+       }
+      ],
+      "body_digest": "if (x > 260)\n    {\n        global.entrance = 23;\n        room_goto(room_dw_mansion_east_2f_c);\n    }\n    if (x > 1540)\n "
+     },
+     "room_dw_mansion_east_2f_c_b": {
+      "room_id": 212,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_east_2f_c",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 184
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_mansion_east_2f_c);"
+     },
+     "room_dw_mansion_east_3f_toilet": {
+      "room_id": 189,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_east_3f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 187
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_mansion_east_3f);"
+     },
+     "room_dw_mansion_east_3f_projection": {
+      "room_id": 188,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_mansion_east_3f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 187
+       }
+      ],
+      "body_digest": "global.entrance = 21;\n    room_goto(room_dw_mansion_east_3f);"
+     },
+     "room_dw_mansion_east_3f": {
+      "room_id": 187,
+      "kind": "mixed",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 10",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 10,
+        "hi_incl": false,
+        "ent": 21,
+        "to": "room_dw_mansion_east_3f_projection",
+        "pos_conds": [
+         "x < 10"
+        ],
+        "state_conds": [],
+        "to_id": 188
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "x > 220 && y < 200",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 19,
+        "to": "room_dw_mansion_entrance",
+        "pos_conds": [],
+        "state_conds": [
+         "x > 220 && y < 200"
+        ],
+        "to_id": 157
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "x > 220 && y >= 440",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_east_teacup_2",
+        "pos_conds": [],
+        "state_conds": [
+         "x > 220 && y >= 440"
+        ],
+        "to_id": 168
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 500",
+        "lo": 500,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_east_4f_b",
+        "pos_conds": [
+         "x > 500"
+        ],
+        "state_conds": [],
+        "to_id": 194
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 870",
+        "lo": 870,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_east_3f_toilet",
+        "pos_conds": [
+         "x > 870"
+        ],
+        "state_conds": [],
+        "to_id": 189
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1250",
+        "lo": 1250,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_acid_tunnel",
+        "pos_conds": [
+         "x > 1250"
+        ],
+        "state_conds": [],
+        "to_id": 190
+       }
+      ],
+      "body_digest": "if (x < 10)\n    {\n        global.entrance = 21;\n        room_goto(room_dw_mansion_east_3f_projection);\n    }\n    if (x >"
+     },
+     "room_dw_mansion_east_teacup_2": {
+      "room_id": 168,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "y > 4600",
+        "lo": 4600,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_east_2f_d",
+        "pos_conds": [
+         "y > 4600"
+        ],
+        "state_conds": [],
+        "to_id": 186
+       },
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "!(y > 4600)",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 4600,
+        "hi_incl": true,
+        "ent": 22,
+        "to": "room_dw_mansion_east_3f",
+        "pos_conds": [
+         "!(y > 4600)"
+        ],
+        "state_conds": [],
+        "to_id": 187
+       }
+      ],
+      "body_digest": "if (y > 4600)\n    {\n        global.entrance = 24;\n        room_goto(room_dw_mansion_east_2f_d);\n    }\n    else\n    {\n   "
+     },
+     "room_dw_mansion_acid_tunnel": {
+      "room_id": 190,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_east_3f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 187
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_mansion_east_3f);"
+     },
+     "room_dw_mansion_acid_tunnel_puzzle_entrance": {
+      "room_id": 191,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_bridges",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 204
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_mansion_bridges);"
+     },
+     "room_library": {
+      "room_id": 42,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 110 && x < 150",
+        "lo": 110,
+        "lo_incl": false,
+        "hi": 150,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_lw_computer_lab",
+        "pos_conds": [
+         "x > 110 && x < 150"
+        ],
+        "state_conds": [],
+        "to_id": 44
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 215 && x < 230",
+        "lo": 215,
+        "lo_incl": false,
+        "hi": 230,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_lw_library_upstairs",
+        "pos_conds": [
+         "x > 215 && x < 230"
+        ],
+        "state_conds": [],
+        "to_id": 45
+       }
+      ],
+      "body_digest": "if (x > 110 && x < 150)\n    {\n        global.entrance = 23;\n        room_goto(room_lw_computer_lab);\n    }\n    if (x > 2"
+     },
+     "room_lw_library_upstairs": {
+      "room_id": 45,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_library",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 42
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_library);"
+     },
+     "room_lw_computer_lab": {
+      "room_id": 44,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_library",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 42
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_library);"
+     },
+     "room_dw_cyber_virovirokun_fight": {
+      "room_id": 259,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_cyber_musical_door",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 84
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_cyber_musical_door);"
+     },
+     "room_dw_mansion_traffic": {
+      "room_id": 162,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_east_teacup",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 165
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_mansion_east_teacup);"
+     },
+     "room_dw_mansion_east_2f_a": {
+      "room_id": 180,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_east_teacup",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 165
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_mansion_east_teacup);"
+     },
+     "room_dw_mansion_east_teacup": {
+      "room_id": 165,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "y > 4700",
+        "lo": 4700,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_traffic",
+        "pos_conds": [
+         "y > 4700"
+        ],
+        "state_conds": [],
+        "to_id": 162
+       },
+       {
+        "kind": "pos",
+        "axis": "y",
+        "cond": "!(y > 4700)",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 4700,
+        "hi_incl": true,
+        "ent": 23,
+        "to": "room_dw_mansion_east_2f_a",
+        "pos_conds": [
+         "!(y > 4700)"
+        ],
+        "state_conds": [],
+        "to_id": 180
+       }
+      ],
+      "body_digest": "if (y > 4700)\n    {\n        global.entrance = 24;\n        room_goto(room_dw_mansion_traffic);\n    }\n    else\n    {\n     "
+     },
+     "room_dw_city_berdly": {
+      "room_id": 128,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x < 0",
+        "lo": null,
+        "lo_incl": null,
+        "hi": 0,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_city_poppup",
+        "pos_conds": [
+         "x < 0"
+        ],
+        "state_conds": [],
+        "to_id": 127
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "!(x < 0)",
+        "lo": 0,
+        "lo_incl": true,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_city_traffic_4",
+        "pos_conds": [
+         "!(x < 0)"
+        ],
+        "state_conds": [],
+        "to_id": 129
+       }
+      ],
+      "body_digest": "if (x < 0)\n    {\n        global.entrance = 23;\n        room_goto(room_dw_city_poppup);\n    }\n    else\n    {\n        glob"
+     },
+     "room_dw_city_poppup": {
+      "room_id": 127,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_city_berdly",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 128
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_city_berdly);"
+     },
+     "room_dw_cyber_post_music_boss_slide": {
+      "room_id": 96,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"leftExit\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_cyber_musical_door",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"leftExit\""
+        ],
+        "to_id": 84
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"rightExit\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_cyber_music_final",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"rightExit\""
+        ],
+        "to_id": 88
+       }
+      ],
+      "body_digest": "if (extflag == \"leftExit\")\n    {\n        global.entrance = 20;\n        room_goto(room_dw_cyber_musical_door);\n    }\n    "
+     },
+     "room_dw_cyber_music_final": {
+      "room_id": 88,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_cyber_post_music_boss_slide",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 96
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_cyber_post_music_boss_slide);"
+     },
+     "room_dw_cyber_teacup_final": {
+      "room_id": 90,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_cyber_viro_ring",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 95
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_cyber_viro_ring);"
+     },
+     "room_dw_mansion_bridges_funny": {
+      "room_id": 205,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_mansion_bridges",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 204
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_mansion_bridges);"
+     },
+     "room_dw_mansion_mouseLottery": {
+      "room_id": 206,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_mansion_bridges",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 204
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_dw_mansion_bridges);"
+     },
+     "room_dw_mansion_hands": {
+      "room_id": 207,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_bridges",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 204
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_dw_mansion_bridges);"
+     },
+     "room_dw_mansion_bridges": {
+      "room_id": 204,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"back\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"back\""
+        ],
+        "to_id": 191
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"funny\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_bridges_funny",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"funny\""
+        ],
+        "to_id": 205
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"next\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_mouseLottery",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"next\""
+        ],
+        "to_id": 206
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"hands\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_hands",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"hands\""
+        ],
+        "to_id": 207
+       }
+      ],
+      "body_digest": "if (extflag == \"back\")\n    {\n        global.entrance = 24;\n        room_goto(room_dw_mansion_acid_tunnel_puzzle_entrance"
+     },
+     "room_dw_mansion_dining3": {
+      "room_id": 208,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"top\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_mansion_dininghall",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"top\""
+        ],
+        "to_id": 209
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"bottom\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_mansion_east_2f_transformed_new",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"bottom\""
+        ],
+        "to_id": 181
+       }
+      ],
+      "body_digest": "if (extflag == \"top\")\n    {\n        global.entrance = 21;\n        room_goto(room_dw_mansion_dininghall);\n    }\n    if (e"
+     },
+     "room_dw_mansion_east_4f_b": {
+      "room_id": 194,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 200",
+        "lo": 200,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_east_3f",
+        "pos_conds": [
+         "x > 200"
+        ],
+        "state_conds": [],
+        "to_id": 187
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 500",
+        "lo": 500,
+        "lo_incl": false,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_noelle_room",
+        "pos_conds": [
+         "x > 500"
+        ],
+        "state_conds": [],
+        "to_id": 203
+       }
+      ],
+      "body_digest": "if (x > 200)\n    {\n        global.entrance = 20;\n        room_goto(room_dw_mansion_east_3f);\n    }\n    if (x > 500)\n    "
+     },
+     "room_dw_mansion_noelle_room": {
+      "room_id": 203,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_east_4f_b",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 194
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_mansion_east_4f_b);"
+     },
+     "room_dw_mansion_dininghall": {
+      "room_id": 209,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"topright\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_dining_storage",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"topright\""
+        ],
+        "to_id": 210
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"topleft\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_mansion_east_2f_c",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"topleft\""
+        ],
+        "to_id": 184
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "extflag == \"bottom\"",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 21,
+        "to": "room_dw_mansion_dining3",
+        "pos_conds": [],
+        "state_conds": [
+         "extflag == \"bottom\""
+        ],
+        "to_id": 208
+       }
+      ],
+      "body_digest": "if (extflag == \"topright\")\n    {\n        global.entrance = 24;\n        room_goto(room_dw_mansion_dining_storage);\n    }\n"
+     },
+     "room_dw_cyber_viro_ring": {
+      "room_id": 95,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_cyber_teacup_final",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 90
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_cyber_teacup_final);"
+     },
+     "room_dw_mansion_dining_storage": {
+      "room_id": 210,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_mansion_dininghall",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 209
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_mansion_dininghall);"
+     }
+    }
+   },
+   "obj_doorw_musfade": {
+    "gml": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "rooms": {
+     "room_town_mid": {
+      "room_id": 27,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1000 && x < 1140",
+        "lo": 1000,
+        "lo_incl": false,
+        "hi": 1140,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_lw_conbini",
+        "pos_conds": [
+         "x > 1000 && x < 1140"
+        ],
+        "state_conds": [],
+        "to_id": 47
+       }
+      ],
+      "body_digest": "if (x > 1000 && x < 1140)\n    {\n        global.entrance = 22;\n        room_goto(room_lw_conbini);\n    }"
+     },
+     "room_lw_conbini": {
+      "room_id": 47,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 27
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_mid);"
+     },
+     "room_dw_city_traffic_3": {
+      "room_id": 123,
+      "kind": "state",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "global.flag[917] == 0 && scr_sideb_get_phase() == 0",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_dog_traffic",
+        "pos_conds": [],
+        "state_conds": [
+         "global.flag[917] == 0 && scr_sideb_get_phase() == 0"
+        ],
+        "to_id": 140
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && man_room",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_man",
+        "pos_conds": [],
+        "state_conds": [
+         "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0)",
+         "man_room"
+        ],
+        "to_id": 141
+       },
+       {
+        "kind": "state",
+        "axis": null,
+        "cond": "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && !(man_room)",
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_moss",
+        "pos_conds": [],
+        "state_conds": [
+         "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0)",
+         "!(man_room)"
+        ],
+        "to_id": 142
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    if (global.flag[917] == 0 && scr_sideb_get_phase() == 0)\n    {\n        room_goto(room_dw_city_"
+     },
+     "room_dw_city_traffic_4": {
+      "room_id": 129,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_city_spamton_alley",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 130
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_city_spamton_alley);"
+     },
+     "room_dw_city_man": {
+      "room_id": 141,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_city_traffic_3",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 123
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_city_traffic_3);"
+     },
+     "room_dw_mansion_entrance": {
+      "room_id": 157,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_shop_ch2_swatch",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 231
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_shop_ch2_swatch);"
+     },
+     "room_lw_police": {
+      "room_id": 46,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 29
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_south);"
+     },
+     "room_dw_mansion_b_entrance": {
+      "room_id": 169,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_east_1f_secret",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 164
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_dw_mansion_east_1f_secret);"
+     },
+     "room_dw_mansion_east_1f_secret": {
+      "room_id": 164,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_dw_mansion_b_entrance",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 169
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_dw_mansion_b_entrance);"
+     },
+     "room_dw_city_spamton_shop_exterior": {
+      "room_id": 108,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_shop_ch2_spamton",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 232
+       }
+      ],
+      "body_digest": "room_goto(room_shop_ch2_spamton);"
+     },
+     "room_castle_tutorial": {
+      "room_id": 56,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_shop_ch2_music",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 230
+       }
+      ],
+      "body_digest": "room_goto(room_shop_ch2_music);"
+     }
+    }
+   }
+  },
+  "ch3": {
+   "obj_doorW": {
+    "gml": "gml_Object_obj_doorW_Alarm_2",
+    "rooms": {
+     "room_hospital_lobby": {
+      "room_id": 31,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 26
+       }
+      ],
+      "body_digest": "room_goto(room_town_south);"
+     },
+     "room_alphysalley": {
+      "room_id": 40,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 24
+       }
+      ],
+      "body_digest": "room_goto(room_town_mid);"
+     },
+     "room_town_north": {
+      "room_id": 22,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_beach",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 23
+       }
+      ],
+      "body_digest": "room_goto(room_beach);"
+     },
+     "room_beach": {
+      "room_id": 23,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_north",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 22
+       }
+      ],
+      "body_digest": "room_goto(room_town_north);"
+     },
+     "room_town_mid": {
+      "room_id": 24,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 290 && x < 370",
+        "lo": 290,
+        "lo_incl": false,
+        "hi": 370,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_lw_icee_pizza",
+        "pos_conds": [
+         "x > 290 && x < 370"
+        ],
+        "state_conds": [],
+        "to_id": 45
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1730 && x < 1840",
+        "lo": 1730,
+        "lo_incl": false,
+        "hi": 1840,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_alphysalley",
+        "pos_conds": [
+         "x > 1730 && x < 1840"
+        ],
+        "state_conds": [],
+        "to_id": 40
+       }
+      ],
+      "body_digest": "if (x > 290 && x < 370)\n    {\n        global.entrance = 20;\n        room_goto(room_lw_icee_pizza);\n    }\n    if (x > 173"
+     },
+     "room_lw_icee_pizza": {
+      "room_id": 45,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 24
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_town_mid);"
+     },
+     "room_town_south": {
+      "room_id": 26,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 230 && x < 280",
+        "lo": 230,
+        "lo_incl": false,
+        "hi": 280,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_lw_police",
+        "pos_conds": [
+         "x > 230 && x < 280"
+        ],
+        "state_conds": [],
+        "to_id": 43
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 580 && x < 660",
+        "lo": 580,
+        "lo_incl": false,
+        "hi": 660,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_hospital_lobby",
+        "pos_conds": [
+         "x > 580 && x < 660"
+        ],
+        "state_conds": [],
+        "to_id": 31
+       }
+      ],
+      "body_digest": "if (x > 230 && x < 280)\n    {\n        global.entrance = 22;\n        room_goto(room_lw_police);\n    }\n    if (x > 580 && "
+     },
+     "room_lw_police": {
+      "room_id": 43,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 26
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_south);"
+     },
+     "room_dw_castle_east_door": {
+      "room_id": 53,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_castle_tutorial",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 52
+       }
+      ],
+      "body_digest": "room_goto(room_castle_tutorial);"
+     },
+     "room_castle_tutorial": {
+      "room_id": 52,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_castle_east_door",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 53
+       }
+      ],
+      "body_digest": "room_goto(room_dw_castle_east_door);"
+     },
+     "room_dw_ralsei_castle_front": {
+      "room_id": 57,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 61
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_ralsei_castle_1f);"
+     },
+     "room_dw_ralsei_castle_1f": {
+      "room_id": 61,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 840 && x < 1000",
+        "lo": 840,
+        "lo_incl": false,
+        "hi": 1000,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_castle_dungeon",
+        "pos_conds": [
+         "x > 840 && x < 1000"
+        ],
+        "state_conds": [],
+        "to_id": 63
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 550 && x < 700",
+        "lo": 550,
+        "lo_incl": false,
+        "hi": 700,
+        "hi_incl": false,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_front",
+        "pos_conds": [
+         "x > 550 && x < 700"
+        ],
+        "state_conds": [],
+        "to_id": 57
+       }
+      ],
+      "body_digest": "if (x > 840 && x < 1000)\n    {\n        global.entrance = 23;\n        room_goto(room_dw_castle_dungeon);\n    }\n    if (x "
+     },
+     "room_dw_ralsei_castle_2f": {
+      "room_id": 62,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 240 && x < 340",
+        "lo": 240,
+        "lo_incl": false,
+        "hi": 340,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_dw_castle_rooms_kris",
+        "pos_conds": [
+         "x > 240 && x < 340"
+        ],
+        "state_conds": [],
+        "to_id": 64
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 520 && x < 610",
+        "lo": 520,
+        "lo_incl": false,
+        "hi": 610,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_castle_rooms_susie",
+        "pos_conds": [
+         "x > 520 && x < 610"
+        ],
+        "state_conds": [],
+        "to_id": 65
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 780 && x < 860",
+        "lo": 780,
+        "lo_incl": false,
+        "hi": 860,
+        "hi_incl": false,
+        "ent": 24,
+        "to": "room_cc_lancer",
+        "pos_conds": [
+         "x > 780 && x < 860"
+        ],
+        "state_conds": [],
+        "to_id": 80
+       }
+      ],
+      "body_digest": "if (x > 240 && x < 340)\n    {\n        global.entrance = 22;\n        room_goto(room_dw_castle_rooms_kris);\n    }\n    if ("
+     },
+     "room_dw_castle_rooms_kris": {
+      "room_id": 64,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 62
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_dw_castle_rooms_susie": {
+      "room_id": 65,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 62
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_cc_lancer": {
+      "room_id": 80,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 62
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_dw_castle_dungeon": {
+      "room_id": 63,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_ralsei_castle_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 61
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_ralsei_castle_1f);"
+     },
+     "room_library": {
+      "room_id": 39,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 110 && x < 150",
+        "lo": 110,
+        "lo_incl": false,
+        "hi": 150,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_lw_computer_lab",
+        "pos_conds": [
+         "x > 110 && x < 150"
+        ],
+        "state_conds": [],
+        "to_id": 41
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 215 && x < 230",
+        "lo": 215,
+        "lo_incl": false,
+        "hi": 230,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_lw_library_upstairs",
+        "pos_conds": [
+         "x > 215 && x < 230"
+        ],
+        "state_conds": [],
+        "to_id": 42
+       }
+      ],
+      "body_digest": "if (x > 110 && x < 150)\n    {\n        global.entrance = 23;\n        room_goto(room_lw_computer_lab);\n    }\n    if (x > 2"
+     },
+     "room_lw_library_upstairs": {
+      "room_id": 42,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_library",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 39
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_library);"
+     },
+     "room_lw_computer_lab": {
+      "room_id": 41,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_library",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 39
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_library);"
+     }
+    }
+   },
+   "obj_doorw_musfade": {
+    "gml": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "rooms": {
+     "room_town_mid": {
+      "room_id": 24,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1000 && x < 1140",
+        "lo": 1000,
+        "lo_incl": false,
+        "hi": 1140,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_lw_conbini",
+        "pos_conds": [
+         "x > 1000 && x < 1140"
+        ],
+        "state_conds": [],
+        "to_id": 44
+       }
+      ],
+      "body_digest": "if (x > 1000 && x < 1140)\n    {\n        global.entrance = 22;\n        room_goto(room_lw_conbini);\n    }"
+     },
+     "room_lw_conbini": {
+      "room_id": 44,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 24
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_mid);"
+     },
+     "room_lw_police": {
+      "room_id": 43,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 26
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_south);"
+     },
+     "room_castle_tutorial": {
+      "room_id": 52,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_shop_music",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 70
+       }
+      ],
+      "body_digest": "room_goto(room_shop_music);"
+     }
+    }
+   }
+  },
+  "ch4": {
+   "obj_doorW": {
+    "gml": "gml_Object_obj_doorW_Alarm_2",
+    "rooms": {
+     "room_hospital_lobby": {
+      "room_id": 31,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 26
+       }
+      ],
+      "body_digest": "room_goto(room_town_south);"
+     },
+     "room_alphysalley": {
+      "room_id": 40,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 24
+       }
+      ],
+      "body_digest": "room_goto(room_town_mid);"
+     },
+     "room_town_north": {
+      "room_id": 22,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_beach",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 23
+       }
+      ],
+      "body_digest": "room_goto(room_beach);"
+     },
+     "room_beach": {
+      "room_id": 23,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_north",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 22
+       }
+      ],
+      "body_digest": "room_goto(room_town_north);"
+     },
+     "room_town_mid": {
+      "room_id": 24,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 290 && x < 370",
+        "lo": 290,
+        "lo_incl": false,
+        "hi": 370,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_lw_icee_pizza",
+        "pos_conds": [
+         "x > 290 && x < 370"
+        ],
+        "state_conds": [],
+        "to_id": 45
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1730 && x < 1840",
+        "lo": 1730,
+        "lo_incl": false,
+        "hi": 1840,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_alphysalley",
+        "pos_conds": [
+         "x > 1730 && x < 1840"
+        ],
+        "state_conds": [],
+        "to_id": 40
+       }
+      ],
+      "body_digest": "if (x > 290 && x < 370)\n    {\n        global.entrance = 20;\n        room_goto(room_lw_icee_pizza);\n    }\n    if (x > 173"
+     },
+     "room_lw_icee_pizza": {
+      "room_id": 45,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 24
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_town_mid);"
+     },
+     "room_town_south": {
+      "room_id": 26,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 230 && x < 280",
+        "lo": 230,
+        "lo_incl": false,
+        "hi": 280,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_lw_police",
+        "pos_conds": [
+         "x > 230 && x < 280"
+        ],
+        "state_conds": [],
+        "to_id": 43
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 580 && x < 660",
+        "lo": 580,
+        "lo_incl": false,
+        "hi": 660,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_hospital_lobby",
+        "pos_conds": [
+         "x > 580 && x < 660"
+        ],
+        "state_conds": [],
+        "to_id": 31
+       }
+      ],
+      "body_digest": "if (x > 230 && x < 280)\n    {\n        global.entrance = 22;\n        room_goto(room_lw_police);\n    }\n    if (x > 580 && "
+     },
+     "room_lw_police": {
+      "room_id": 43,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 26
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_south);"
+     },
+     "room_dw_castle_east_door": {
+      "room_id": 62,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_castle_tutorial",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 61
+       }
+      ],
+      "body_digest": "room_goto(room_castle_tutorial);"
+     },
+     "room_castle_tutorial": {
+      "room_id": 61,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_castle_east_door",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 62
+       }
+      ],
+      "body_digest": "room_goto(room_dw_castle_east_door);"
+     },
+     "room_dw_ralsei_castle_front": {
+      "room_id": 66,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 70
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_ralsei_castle_1f);"
+     },
+     "room_dw_ralsei_castle_1f": {
+      "room_id": 70,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 840 && x < 1000",
+        "lo": 840,
+        "lo_incl": false,
+        "hi": 1000,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_castle_dungeon",
+        "pos_conds": [
+         "x > 840 && x < 1000"
+        ],
+        "state_conds": [],
+        "to_id": 72
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 550 && x < 700",
+        "lo": 550,
+        "lo_incl": false,
+        "hi": 700,
+        "hi_incl": false,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_front",
+        "pos_conds": [
+         "x > 550 && x < 700"
+        ],
+        "state_conds": [],
+        "to_id": 66
+       }
+      ],
+      "body_digest": "if (x > 840 && x < 1000)\n    {\n        global.entrance = 23;\n        room_goto(room_dw_castle_dungeon);\n    }\n    if (x "
+     },
+     "room_dw_ralsei_castle_2f": {
+      "room_id": 71,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 240 && x < 340",
+        "lo": 240,
+        "lo_incl": false,
+        "hi": 340,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_dw_castle_rooms_kris",
+        "pos_conds": [
+         "x > 240 && x < 340"
+        ],
+        "state_conds": [],
+        "to_id": 73
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 520 && x < 610",
+        "lo": 520,
+        "lo_incl": false,
+        "hi": 610,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_castle_rooms_susie",
+        "pos_conds": [
+         "x > 520 && x < 610"
+        ],
+        "state_conds": [],
+        "to_id": 74
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 780 && x < 860",
+        "lo": 780,
+        "lo_incl": false,
+        "hi": 860,
+        "hi_incl": false,
+        "ent": 24,
+        "to": "room_cc_lancer",
+        "pos_conds": [
+         "x > 780 && x < 860"
+        ],
+        "state_conds": [],
+        "to_id": 89
+       }
+      ],
+      "body_digest": "if (x > 240 && x < 340)\n    {\n        global.entrance = 22;\n        room_goto(room_dw_castle_rooms_kris);\n    }\n    if ("
+     },
+     "room_dw_castle_rooms_kris": {
+      "room_id": 73,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 71
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_dw_castle_rooms_susie": {
+      "room_id": 74,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 71
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_cc_lancer": {
+      "room_id": 89,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 71
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_dw_castle_dungeon": {
+      "room_id": 72,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_ralsei_castle_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 70
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_ralsei_castle_1f);"
+     },
+     "room_library": {
+      "room_id": 39,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 110 && x < 150",
+        "lo": 110,
+        "lo_incl": false,
+        "hi": 150,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_lw_computer_lab",
+        "pos_conds": [
+         "x > 110 && x < 150"
+        ],
+        "state_conds": [],
+        "to_id": 41
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 215 && x < 230",
+        "lo": 215,
+        "lo_incl": false,
+        "hi": 230,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_lw_library_upstairs",
+        "pos_conds": [
+         "x > 215 && x < 230"
+        ],
+        "state_conds": [],
+        "to_id": 42
+       }
+      ],
+      "body_digest": "if (x > 110 && x < 150)\n    {\n        global.entrance = 23;\n        room_goto(room_lw_computer_lab);\n    }\n    if (x > 2"
+     },
+     "room_lw_library_upstairs": {
+      "room_id": 42,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_library",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 39
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_library);"
+     },
+     "room_lw_computer_lab": {
+      "room_id": 41,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_library",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 39
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_library);"
+     }
+    }
+   },
+   "obj_doorw_musfade": {
+    "gml": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "rooms": {
+     "room_town_mid": {
+      "room_id": 24,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1000 && x < 1140",
+        "lo": 1000,
+        "lo_incl": false,
+        "hi": 1140,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_lw_conbini",
+        "pos_conds": [
+         "x > 1000 && x < 1140"
+        ],
+        "state_conds": [],
+        "to_id": 44
+       }
+      ],
+      "body_digest": "if (x > 1000 && x < 1140)\n    {\n        global.entrance = 22;\n        room_goto(room_lw_conbini);\n    }"
+     },
+     "room_lw_conbini": {
+      "room_id": 44,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 24
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_mid);"
+     },
+     "room_lw_police": {
+      "room_id": 43,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 26
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_south);"
+     },
+     "room_castle_tutorial": {
+      "room_id": 61,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_shop_music",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 79
+       }
+      ],
+      "body_digest": "room_goto(room_shop_music);"
+     }
+    }
+   }
+  },
+  "ch5": {
+   "obj_doorW": {
+    "gml": "gml_Object_obj_doorW_Alarm_2",
+    "rooms": {
+     "room_hospital_lobby": {
+      "room_id": 29,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 24
+       }
+      ],
+      "body_digest": "room_goto(room_town_south);"
+     },
+     "room_alphysalley": {
+      "room_id": 38,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 22
+       }
+      ],
+      "body_digest": "room_goto(room_town_mid);"
+     },
+     "room_town_north": {
+      "room_id": 20,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_beach",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 21
+       }
+      ],
+      "body_digest": "room_goto(room_beach);"
+     },
+     "room_beach": {
+      "room_id": 21,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_town_north",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 20
+       }
+      ],
+      "body_digest": "room_goto(room_town_north);"
+     },
+     "room_town_mid": {
+      "room_id": 22,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 290 && x < 370",
+        "lo": 290,
+        "lo_incl": false,
+        "hi": 370,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_lw_icee_pizza",
+        "pos_conds": [
+         "x > 290 && x < 370"
+        ],
+        "state_conds": [],
+        "to_id": 43
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1730 && x < 1840",
+        "lo": 1730,
+        "lo_incl": false,
+        "hi": 1840,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_alphysalley",
+        "pos_conds": [
+         "x > 1730 && x < 1840"
+        ],
+        "state_conds": [],
+        "to_id": 38
+       }
+      ],
+      "body_digest": "if (x > 290 && x < 370)\n    {\n        global.entrance = 20;\n        room_goto(room_lw_icee_pizza);\n    }\n    if (x > 173"
+     },
+     "room_lw_icee_pizza": {
+      "room_id": 43,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 22
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_town_mid);"
+     },
+     "room_town_south": {
+      "room_id": 24,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 230 && x < 280",
+        "lo": 230,
+        "lo_incl": false,
+        "hi": 280,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_lw_police",
+        "pos_conds": [
+         "x > 230 && x < 280"
+        ],
+        "state_conds": [],
+        "to_id": 41
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 580 && x < 660",
+        "lo": 580,
+        "lo_incl": false,
+        "hi": 660,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_hospital_lobby",
+        "pos_conds": [
+         "x > 580 && x < 660"
+        ],
+        "state_conds": [],
+        "to_id": 29
+       }
+      ],
+      "body_digest": "if (x > 230 && x < 280)\n    {\n        global.entrance = 22;\n        room_goto(room_lw_police);\n    }\n    if (x > 580 && "
+     },
+     "room_lw_police": {
+      "room_id": 41,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 24
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_south);"
+     },
+     "room_dw_castle_east_door": {
+      "room_id": 51,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_castle_tutorial",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 50
+       }
+      ],
+      "body_digest": "room_goto(room_castle_tutorial);"
+     },
+     "room_castle_tutorial": {
+      "room_id": 50,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_castle_east_door",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 51
+       }
+      ],
+      "body_digest": "room_goto(room_dw_castle_east_door);"
+     },
+     "room_dw_ralsei_castle_front": {
+      "room_id": 55,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 59
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_ralsei_castle_1f);"
+     },
+     "room_dw_ralsei_castle_1f": {
+      "room_id": 59,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 840 && x < 1000",
+        "lo": 840,
+        "lo_incl": false,
+        "hi": 1000,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_castle_dungeon",
+        "pos_conds": [
+         "x > 840 && x < 1000"
+        ],
+        "state_conds": [],
+        "to_id": 62
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 550 && x < 700",
+        "lo": 550,
+        "lo_incl": false,
+        "hi": 700,
+        "hi_incl": false,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_front",
+        "pos_conds": [
+         "x > 550 && x < 700"
+        ],
+        "state_conds": [],
+        "to_id": 55
+       }
+      ],
+      "body_digest": "if (x > 840 && x < 1000)\n    {\n        global.entrance = 23;\n        room_goto(room_dw_castle_dungeon);\n    }\n    if (x "
+     },
+     "room_dw_ralsei_castle_2f": {
+      "room_id": 60,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 240 && x < 340",
+        "lo": 240,
+        "lo_incl": false,
+        "hi": 340,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_dw_castle_rooms_kris",
+        "pos_conds": [
+         "x > 240 && x < 340"
+        ],
+        "state_conds": [],
+        "to_id": 63
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 520 && x < 610",
+        "lo": 520,
+        "lo_incl": false,
+        "hi": 610,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_dw_castle_rooms_susie",
+        "pos_conds": [
+         "x > 520 && x < 610"
+        ],
+        "state_conds": [],
+        "to_id": 64
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 780 && x < 860",
+        "lo": 780,
+        "lo_incl": false,
+        "hi": 860,
+        "hi_incl": false,
+        "ent": 24,
+        "to": "room_cc_lancer",
+        "pos_conds": [
+         "x > 780 && x < 860"
+        ],
+        "state_conds": [],
+        "to_id": 80
+       }
+      ],
+      "body_digest": "if (x > 240 && x < 340)\n    {\n        global.entrance = 22;\n        room_goto(room_dw_castle_rooms_kris);\n    }\n    if ("
+     },
+     "room_dw_castle_rooms_kris": {
+      "room_id": 63,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 60
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_dw_castle_rooms_susie": {
+      "room_id": 64,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 60
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_cc_lancer": {
+      "room_id": 80,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 24,
+        "to": "room_dw_ralsei_castle_2f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 60
+       }
+      ],
+      "body_digest": "global.entrance = 24;\n    room_goto(room_dw_ralsei_castle_2f);"
+     },
+     "room_dw_castle_dungeon": {
+      "room_id": 62,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_dw_ralsei_castle_1f",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 59
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_dw_ralsei_castle_1f);"
+     },
+     "room_library": {
+      "room_id": 37,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 110 && x < 150",
+        "lo": 110,
+        "lo_incl": false,
+        "hi": 150,
+        "hi_incl": false,
+        "ent": 23,
+        "to": "room_lw_computer_lab",
+        "pos_conds": [
+         "x > 110 && x < 150"
+        ],
+        "state_conds": [],
+        "to_id": 39
+       },
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 215 && x < 230",
+        "lo": 215,
+        "lo_incl": false,
+        "hi": 230,
+        "hi_incl": false,
+        "ent": 20,
+        "to": "room_lw_library_upstairs",
+        "pos_conds": [
+         "x > 215 && x < 230"
+        ],
+        "state_conds": [],
+        "to_id": 40
+       }
+      ],
+      "body_digest": "if (x > 110 && x < 150)\n    {\n        global.entrance = 23;\n        room_goto(room_lw_computer_lab);\n    }\n    if (x > 2"
+     },
+     "room_lw_library_upstairs": {
+      "room_id": 40,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 20,
+        "to": "room_library",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 37
+       }
+      ],
+      "body_digest": "global.entrance = 20;\n    room_goto(room_library);"
+     },
+     "room_lw_computer_lab": {
+      "room_id": 39,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_library",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 37
+       }
+      ],
+      "body_digest": "global.entrance = 23;\n    room_goto(room_library);"
+     }
+    }
+   },
+   "obj_doorw_musfade": {
+    "gml": "gml_Object_obj_doorw_musfade_Alarm_2",
+    "rooms": {
+     "room_town_mid": {
+      "room_id": 22,
+      "kind": "pos",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "pos",
+        "axis": "x",
+        "cond": "x > 1000 && x < 1140",
+        "lo": 1000,
+        "lo_incl": false,
+        "hi": 1140,
+        "hi_incl": false,
+        "ent": 22,
+        "to": "room_lw_conbini",
+        "pos_conds": [
+         "x > 1000 && x < 1140"
+        ],
+        "state_conds": [],
+        "to_id": 42
+       }
+      ],
+      "body_digest": "if (x > 1000 && x < 1140)\n    {\n        global.entrance = 22;\n        room_goto(room_lw_conbini);\n    }"
+     },
+     "room_lw_conbini": {
+      "room_id": 42,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_mid",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 22
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_mid);"
+     },
+     "room_lw_police": {
+      "room_id": 41,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 22,
+        "to": "room_town_south",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 24
+       }
+      ],
+      "body_digest": "global.entrance = 22;\n    room_goto(room_town_south);"
+     },
+     "room_castle_tutorial": {
+      "room_id": 50,
+      "kind": "uncond",
+      "default_entrance": 23,
+      "branches": [
+       {
+        "kind": "uncond",
+        "axis": null,
+        "cond": null,
+        "lo": null,
+        "lo_incl": null,
+        "hi": null,
+        "hi_incl": null,
+        "ent": 23,
+        "to": "room_shop_music",
+        "pos_conds": [],
+        "state_conds": [],
+        "to_id": 70
+       }
+      ],
+      "body_digest": "room_goto(room_shop_music);"
+     }
+    }
+   }
+  }
+ }
+}

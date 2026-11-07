@@ -1,0 +1,1711 @@
+{
+ "stat": {
+  "door_x_add": 17,
+  "door_x_same": 15,
+  "ent_fill": 88,
+  "ent_fix": 0,
+  "new_rules": 9,
+  "left": 51
+ },
+ "door_x_add": [
+  {
+   "priority": 7119,
+   "scene": "ch2.cyber_city.dw_city_big_1",
+   "src_room_id": 117,
+   "room": "room_dw_city_big_1",
+   "via": "obj_doorW",
+   "dst": "ch2.cyber_city.dw_city_treasure",
+   "cond": "x < 10",
+   "axis": "x",
+   "x": 0,
+   "y": 640,
+   "inst_index": 2,
+   "old_door_x": 760,
+   "old_door_y": null
+  },
+  {
+   "priority": 7125,
+   "scene": "ch2.cyber_city.dw_city_traffic_4",
+   "src_room_id": 129,
+   "room": "room_dw_city_traffic_4",
+   "via": "obj_doorW",
+   "dst": "ch2.cyber_city.cyber_city_alleyway_2",
+   "cond": "x < 50",
+   "axis": "x",
+   "x": 0,
+   "y": 120,
+   "inst_index": 4,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7116,
+   "scene": "ch2.cyber_field.dw_cyber_maze_rhythm",
+   "src_room_id": 101,
+   "room": "room_dw_cyber_maze_rhythm",
+   "via": "obj_doorW",
+   "dst": "ch2.cyber_field.dw_cyber_battle_maze_2",
+   "cond": "y > 900",
+   "axis": "y",
+   "x": 269,
+   "y": 2593,
+   "inst_index": 1,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7117,
+   "scene": "ch2.cyber_field.dw_cyber_maze_rhythm",
+   "src_room_id": 101,
+   "room": "room_dw_cyber_maze_rhythm",
+   "via": "obj_doorW",
+   "dst": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+   "cond": "y < 10",
+   "axis": "y",
+   "x": 271,
+   "y": 1,
+   "inst_index": 0,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7107,
+   "scene": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "src_room_id": 85,
+   "room": "room_dw_cyber_maze_virokun",
+   "via": "obj_doorW",
+   "dst": "ch2.cyber_field.dw_cyber_maze_tasque",
+   "cond": "y > 430",
+   "axis": "y",
+   "x": 640,
+   "y": 540,
+   "inst_index": 4,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7106,
+   "scene": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "src_room_id": 85,
+   "room": "room_dw_cyber_maze_virokun",
+   "via": "obj_doorW",
+   "dst": "ch2.cyber_field.dw_cyber_maze_fireworks",
+   "cond": "y < 50",
+   "axis": "y",
+   "x": 240,
+   "y": 0,
+   "inst_index": 1,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7104,
+   "scene": "ch2.cyber_field.dw_cyber_musical_door",
+   "src_room_id": 84,
+   "room": "room_dw_cyber_musical_door",
+   "via": "obj_doorW",
+   "dst": "ch2.cyber_field.cyber_field_music_shop",
+   "cond": "y < 60",
+   "axis": "y",
+   "x": 280,
+   "y": 0,
+   "inst_index": 5,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7105,
+   "scene": "ch2.cyber_field.dw_cyber_musical_door",
+   "src_room_id": 84,
+   "room": "room_dw_cyber_musical_door",
+   "via": "obj_doorW",
+   "dst": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+   "cond": "y > 400",
+   "axis": "y",
+   "x": 280,
+   "y": 460,
+   "inst_index": 6,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7154,
+   "scene": "ch2.queens_mansion.dw_mansion_b_east",
+   "src_room_id": 176,
+   "room": "room_dw_mansion_b_east",
+   "via": "obj_doorW",
+   "dst": "ch2.queens_mansion.queen_s_mansion_basement",
+   "cond": "x < 10",
+   "axis": "x",
+   "x": 0,
+   "y": 800,
+   "inst_index": 0,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7160,
+   "scene": "ch2.queens_mansion.dw_mansion_b_east_transformed",
+   "src_room_id": 179,
+   "room": "room_dw_mansion_b_east_transformed",
+   "via": "obj_doorW",
+   "dst": "ch2.queens_mansion.dw_mansion_b_east_a",
+   "cond": "y < 200",
+   "axis": "y",
+   "x": 280,
+   "y": 156,
+   "inst_index": 3,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7159,
+   "scene": "ch2.queens_mansion.dw_mansion_b_east_transformed",
+   "src_room_id": 179,
+   "room": "room_dw_mansion_b_east_transformed",
+   "via": "obj_doorW",
+   "dst": "ch2.queens_mansion.queen_s_mansion_basement",
+   "cond": "!(y < 200)",
+   "axis": "y",
+   "x": 0,
+   "y": 800,
+   "inst_index": 1,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7135,
+   "scene": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+   "src_room_id": 154,
+   "room": "room_dw_mansion_darkbulb_2",
+   "via": "obj_doorW",
+   "dst": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+   "cond": "x < 10",
+   "axis": "x",
+   "x": 0,
+   "y": 240,
+   "inst_index": 1,
+   "old_door_x": 620,
+   "old_door_y": null
+  },
+  {
+   "priority": 7137,
+   "scene": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+   "src_room_id": 155,
+   "room": "room_dw_mansion_darkbulb_3",
+   "via": "obj_doorW",
+   "dst": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+   "cond": "x < 10",
+   "axis": "x",
+   "x": 0,
+   "y": 240,
+   "inst_index": 1,
+   "old_door_x": 620,
+   "old_door_y": null
+  },
+  {
+   "priority": 7145,
+   "scene": "ch2.queens_mansion.dw_mansion_east_teacup",
+   "src_room_id": 165,
+   "room": "room_dw_mansion_east_teacup",
+   "via": "obj_doorW",
+   "dst": "ch2.queens_mansion.dw_mansion_traffic",
+   "cond": "y > 4700",
+   "axis": "y",
+   "x": 280,
+   "y": 4780,
+   "inst_index": 0,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7146,
+   "scene": "ch2.queens_mansion.dw_mansion_east_teacup",
+   "src_room_id": 165,
+   "room": "room_dw_mansion_east_teacup",
+   "via": "obj_doorW",
+   "dst": "ch2.queens_mansion.dw_mansion_east_2f_a",
+   "cond": "!(y > 4700)",
+   "axis": "y",
+   "x": 280,
+   "y": 1516,
+   "inst_index": 2,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7147,
+   "scene": "ch2.queens_mansion.dw_mansion_east_teacup_2",
+   "src_room_id": 168,
+   "room": "room_dw_mansion_east_teacup_2",
+   "via": "obj_doorW",
+   "dst": "ch2.queens_mansion.dw_mansion_east_2f_d",
+   "cond": "y > 4600",
+   "axis": "y",
+   "x": 280,
+   "y": 4780,
+   "inst_index": 1,
+   "old_door_x": null,
+   "old_door_y": null
+  },
+  {
+   "priority": 7148,
+   "scene": "ch2.queens_mansion.dw_mansion_east_teacup_2",
+   "src_room_id": 168,
+   "room": "room_dw_mansion_east_teacup_2",
+   "via": "obj_doorW",
+   "dst": "ch2.queens_mansion.queen_s_mansion_3f",
+   "cond": "!(y > 4600)",
+   "axis": "y",
+   "x": 280,
+   "y": 1356,
+   "inst_index": 0,
+   "old_door_x": null,
+   "old_door_y": null
+  }
+ ],
+ "ent_fill": [
+  {
+   "priority": 7000,
+   "scene": "ch1.hometown.town_mid",
+   "dst": "ch1.hometown.alphysalley",
+   "ent": 23
+  },
+  {
+   "priority": 7001,
+   "scene": "ch1.hometown.town_south",
+   "dst": "ch1.hometown.hospital_lobby",
+   "ent": 23
+  },
+  {
+   "priority": 7002,
+   "scene": "ch1.hometown.hospital_lobby",
+   "dst": "ch1.hometown.town_south",
+   "ent": 23
+  },
+  {
+   "priority": 7003,
+   "scene": "ch1.hometown.alphysalley",
+   "dst": "ch1.hometown.town_mid",
+   "ent": 23
+  },
+  {
+   "priority": 7004,
+   "scene": "ch1.forest.forest_castlefront",
+   "dst": "ch1.card_castle.cc_entrance",
+   "ent": 23
+  },
+  {
+   "priority": 7005,
+   "scene": "ch1.card_castle.cc_entrance",
+   "dst": "ch1.forest.forest_castlefront",
+   "ent": 23
+  },
+  {
+   "priority": 7006,
+   "scene": "ch1.card_castle.card_castle_1f",
+   "dst": "ch1.card_castle.cc_elevator",
+   "ent": 23
+  },
+  {
+   "priority": 7007,
+   "scene": "ch1.card_castle.card_castle_5f",
+   "dst": "ch1.card_castle.cc_elevator",
+   "ent": 23
+  },
+  {
+   "priority": 7008,
+   "scene": "ch2.hometown.hospital_lobby",
+   "dst": "ch2.hometown.town_south",
+   "ent": 23
+  },
+  {
+   "priority": 7009,
+   "scene": "ch2.hometown.alphysalley",
+   "dst": "ch2.hometown.town_mid",
+   "ent": 23
+  },
+  {
+   "priority": 7010,
+   "scene": "ch2.light_world.lw_computer_lab",
+   "dst": "ch2.hometown.library",
+   "ent": 23
+  },
+  {
+   "priority": 7011,
+   "scene": "ch2.light_world.lw_library_upstairs",
+   "dst": "ch2.hometown.library",
+   "ent": 20
+  },
+  {
+   "priority": 7012,
+   "scene": "ch2.light_world.lw_conbini",
+   "dst": "ch2.hometown.town_mid",
+   "ent": 22
+  },
+  {
+   "priority": 7013,
+   "scene": "ch2.light_world.lw_icee_pizza",
+   "dst": "ch2.hometown.town_mid",
+   "ent": 20
+  },
+  {
+   "priority": 7014,
+   "scene": "ch2.castle_town.castle_tutorial",
+   "dst": "ch2.my_castle_town.dw_castle_east_door",
+   "ent": 23
+  },
+  {
+   "priority": 7015,
+   "scene": "ch2.my_castle_town.dw_castle_east_door",
+   "dst": "ch2.castle_town.castle_tutorial",
+   "ent": 23
+  },
+  {
+   "priority": 7016,
+   "scene": "ch2.ralsei_room.dw_ralsei_castle_front",
+   "dst": "ch2.ralsei_room.dw_ralsei_castle_1f",
+   "ent": 24
+  },
+  {
+   "priority": 7017,
+   "scene": "ch2.my_castle_town.dw_castle_dungeon",
+   "dst": "ch2.ralsei_room.dw_ralsei_castle_1f",
+   "ent": 23
+  },
+  {
+   "priority": 7018,
+   "scene": "ch2.my_castle_town.dw_castle_rooms_kris",
+   "dst": "ch2.ralsei_room.dw_ralsei_castle_2f",
+   "ent": 22
+  },
+  {
+   "priority": 7019,
+   "scene": "ch2.my_castle_town.dw_castle_rooms_susie",
+   "dst": "ch2.ralsei_room.dw_ralsei_castle_2f",
+   "ent": 23
+  },
+  {
+   "priority": 7020,
+   "scene": "ch2.cyber_field.dw_cyber_battle_maze_2",
+   "dst": "ch2.cyber_field.dw_cyber_keyboard_puzzle_3",
+   "ent": 23
+  },
+  {
+   "priority": 7021,
+   "scene": "ch2.cyber_field.dw_cyber_music_final",
+   "dst": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+   "ent": 23
+  },
+  {
+   "priority": 7022,
+   "scene": "ch2.cyber_field.dw_cyber_teacup_final",
+   "dst": "ch2.cyber_field.dw_cyber_viro_ring",
+   "ent": 24
+  },
+  {
+   "priority": 7023,
+   "scene": "ch2.cyber_field.dw_cyber_viro_ring",
+   "dst": "ch2.cyber_field.dw_cyber_teacup_final",
+   "ent": 23
+  },
+  {
+   "priority": 7024,
+   "scene": "ch2.cyber_field.dw_cyber_keyboard_puzzle_3",
+   "dst": "ch2.cyber_field.dw_cyber_battle_maze_2",
+   "ent": 23
+  },
+  {
+   "priority": 7025,
+   "scene": "ch2.cyber_field.dw_cyber_escalator_slide",
+   "dst": "ch2.cyber_field.dw_cyber_musical_door",
+   "ent": 20
+  },
+  {
+   "priority": 7026,
+   "scene": "ch2.cyber_city.dw_city_monologue",
+   "dst": "ch2.cyber_city.dw_city_traffic_4",
+   "ent": 24
+  },
+  {
+   "priority": 7027,
+   "scene": "ch2.cyber_city.dw_city_susie_ralsei_fun_1",
+   "dst": "ch2.cyber_city.dw_city_big_1",
+   "ent": 24
+  },
+  {
+   "priority": 7028,
+   "scene": "ch2.cyber_city.dw_city_treasure",
+   "dst": "ch2.cyber_city.dw_city_big_1",
+   "ent": 23
+  },
+  {
+   "priority": 7029,
+   "scene": "ch2.queens_mansion.dw_mansion_krisroom",
+   "dst": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+   "ent": 19
+  },
+  {
+   "priority": 7030,
+   "scene": "ch2.queens_mansion.dw_mansion_susieroom",
+   "dst": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+   "ent": 20
+  },
+  {
+   "priority": 7031,
+   "scene": "ch2.queens_mansion.dw_mansion_traffic",
+   "dst": "ch2.queens_mansion.dw_mansion_east_teacup",
+   "ent": 24
+  },
+  {
+   "priority": 7032,
+   "scene": "ch2.queens_mansion.dw_mansion_b_entrance",
+   "dst": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+   "ent": 20
+  },
+  {
+   "priority": 7033,
+   "scene": "ch2.queens_mansion.dw_mansion_b_west_1f_a",
+   "dst": "ch2.queens_mansion.dw_mansion_b_west_1f",
+   "ent": 22
+  },
+  {
+   "priority": 7034,
+   "scene": "ch2.queens_mansion.dw_mansion_b_west_1f_b",
+   "dst": "ch2.queens_mansion.dw_mansion_b_west_1f",
+   "ent": 23
+  },
+  {
+   "priority": 7035,
+   "scene": "ch2.queens_mansion.dw_mansion_b_west_2f",
+   "dst": "ch2.queens_mansion.dw_mansion_b_west_1f",
+   "ent": 24
+  },
+  {
+   "priority": 7036,
+   "scene": "ch2.queens_mansion.dw_mansion_b_east_b",
+   "dst": "ch2.queens_mansion.dw_mansion_b_east",
+   "ent": 23
+  },
+  {
+   "priority": 7037,
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_a",
+   "dst": "ch2.queens_mansion.dw_mansion_east_teacup",
+   "ent": 23
+  },
+  {
+   "priority": 7038,
+   "scene": "ch2.queens_mansion.dw_mansion_kitchen",
+   "dst": "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+   "ent": 22
+  },
+  {
+   "priority": 7039,
+   "scene": "ch2.queens_mansion.dw_mansion_east_3f_projection",
+   "dst": "ch2.queens_mansion.queen_s_mansion_3f",
+   "ent": 21
+  },
+  {
+   "priority": 7040,
+   "scene": "ch2.queens_mansion.dw_mansion_east_3f_toilet",
+   "dst": "ch2.queens_mansion.queen_s_mansion_3f",
+   "ent": 23
+  },
+  {
+   "priority": 7041,
+   "scene": "ch2.queens_mansion.dw_mansion_acid_tunnel",
+   "dst": "ch2.queens_mansion.queen_s_mansion_3f",
+   "ent": 24
+  },
+  {
+   "priority": 7042,
+   "scene": "ch2.queens_mansion.dw_mansion_acid_tunnel_puzzle_entrance",
+   "dst": "ch2.queens_mansion.dw_mansion_bridges",
+   "ent": 24
+  },
+  {
+   "priority": 7043,
+   "scene": "ch2.queens_mansion.dw_mansion_noelle_room",
+   "dst": "ch2.queens_mansion.dw_mansion_east_4f_b",
+   "ent": 24
+  },
+  {
+   "priority": 7044,
+   "scene": "ch2.queens_mansion.dw_mansion_bridges_funny",
+   "dst": "ch2.queens_mansion.dw_mansion_bridges",
+   "ent": 23
+  },
+  {
+   "priority": 7045,
+   "scene": "ch2.queens_mansion.dw_mansion_mouselottery",
+   "dst": "ch2.queens_mansion.dw_mansion_bridges",
+   "ent": 22
+  },
+  {
+   "priority": 7046,
+   "scene": "ch2.queens_mansion.dw_mansion_hands",
+   "dst": "ch2.queens_mansion.dw_mansion_bridges",
+   "ent": 20
+  },
+  {
+   "priority": 7047,
+   "scene": "ch2.queens_mansion.dw_mansion_dining_storage",
+   "dst": "ch2.queens_mansion.dw_mansion_dininghall",
+   "ent": 24
+  },
+  {
+   "priority": 7048,
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_c_b",
+   "dst": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "ent": 24
+  },
+  {
+   "priority": 7049,
+   "scene": "ch2.queens_mansion.dw_mansion_east_4f_a",
+   "dst": "ch2.queens_mansion.queen_s_mansion_entrance",
+   "ent": 19
+  },
+  {
+   "priority": 7050,
+   "scene": "ch2.card_castle.cc_lancer",
+   "dst": "ch2.ralsei_room.dw_ralsei_castle_2f",
+   "ent": 24
+  },
+  {
+   "priority": 7051,
+   "scene": "ch3.hometown.hospital_lobby",
+   "dst": "ch3.hometown.town_south",
+   "ent": 23
+  },
+  {
+   "priority": 7052,
+   "scene": "ch3.hometown.alphysalley",
+   "dst": "ch3.hometown.town_mid",
+   "ent": 23
+  },
+  {
+   "priority": 7053,
+   "scene": "ch3.light_world.lw_computer_lab",
+   "dst": "ch3.hometown.library",
+   "ent": 23
+  },
+  {
+   "priority": 7054,
+   "scene": "ch3.light_world.lw_library_upstairs",
+   "dst": "ch3.hometown.library",
+   "ent": 20
+  },
+  {
+   "priority": 7055,
+   "scene": "ch3.light_world.lw_conbini",
+   "dst": "ch3.hometown.town_mid",
+   "ent": 22
+  },
+  {
+   "priority": 7056,
+   "scene": "ch3.light_world.lw_icee_pizza",
+   "dst": "ch3.hometown.town_mid",
+   "ent": 20
+  },
+  {
+   "priority": 7057,
+   "scene": "ch3.castle_town.castle_tutorial",
+   "dst": "ch3.my_castle_town.dw_castle_east_door",
+   "ent": 23
+  },
+  {
+   "priority": 7058,
+   "scene": "ch3.my_castle_town.dw_castle_east_door",
+   "dst": "ch3.castle_town.castle_tutorial",
+   "ent": 23
+  },
+  {
+   "priority": 7059,
+   "scene": "ch3.ralsei_room.dw_ralsei_castle_front",
+   "dst": "ch3.ralsei_room.dw_ralsei_castle_1f",
+   "ent": 24
+  },
+  {
+   "priority": 7060,
+   "scene": "ch3.my_castle_town.dw_castle_dungeon",
+   "dst": "ch3.ralsei_room.dw_ralsei_castle_1f",
+   "ent": 23
+  },
+  {
+   "priority": 7061,
+   "scene": "ch3.my_castle_town.dw_castle_rooms_kris",
+   "dst": "ch3.ralsei_room.dw_ralsei_castle_2f",
+   "ent": 22
+  },
+  {
+   "priority": 7062,
+   "scene": "ch3.my_castle_town.dw_castle_rooms_susie",
+   "dst": "ch3.ralsei_room.dw_ralsei_castle_2f",
+   "ent": 23
+  },
+  {
+   "priority": 7063,
+   "scene": "ch3.card_castle.cc_lancer",
+   "dst": "ch3.ralsei_room.dw_ralsei_castle_2f",
+   "ent": 24
+  },
+  {
+   "priority": 7064,
+   "scene": "ch4.hometown.hospital_lobby",
+   "dst": "ch4.hometown.town_south",
+   "ent": 23
+  },
+  {
+   "priority": 7065,
+   "scene": "ch4.hometown.alphysalley",
+   "dst": "ch4.hometown.hometown",
+   "ent": 23
+  },
+  {
+   "priority": 7066,
+   "scene": "ch4.light_world.lw_computer_lab",
+   "dst": "ch4.hometown.library",
+   "ent": 23
+  },
+  {
+   "priority": 7067,
+   "scene": "ch4.light_world.lw_library_upstairs",
+   "dst": "ch4.hometown.library",
+   "ent": 20
+  },
+  {
+   "priority": 7068,
+   "scene": "ch4.light_world.lw_conbini",
+   "dst": "ch4.hometown.hometown",
+   "ent": 22
+  },
+  {
+   "priority": 7069,
+   "scene": "ch4.light_world.lw_icee_pizza",
+   "dst": "ch4.hometown.hometown",
+   "ent": 20
+  },
+  {
+   "priority": 7070,
+   "scene": "ch4.castle_town.castle_tutorial",
+   "dst": "ch4.my_castle_town.dw_castle_east_door",
+   "ent": 23
+  },
+  {
+   "priority": 7071,
+   "scene": "ch4.my_castle_town.dw_castle_east_door",
+   "dst": "ch4.castle_town.castle_tutorial",
+   "ent": 23
+  },
+  {
+   "priority": 7072,
+   "scene": "ch4.ralsei_room.dw_ralsei_castle_front",
+   "dst": "ch4.ralsei_room.dw_ralsei_castle_1f",
+   "ent": 24
+  },
+  {
+   "priority": 7073,
+   "scene": "ch4.my_castle_town.dw_castle_dungeon",
+   "dst": "ch4.ralsei_room.dw_ralsei_castle_1f",
+   "ent": 23
+  },
+  {
+   "priority": 7074,
+   "scene": "ch4.card_castle.cc_lancer",
+   "dst": "ch4.ralsei_room.dw_ralsei_castle_2f",
+   "ent": 24
+  },
+  {
+   "priority": 7075,
+   "scene": "ch5.hometown.hospital_lobby",
+   "dst": "ch5.hometown.hometown",
+   "ent": 23
+  },
+  {
+   "priority": 7076,
+   "scene": "ch5.hometown.alphysalley",
+   "dst": "ch5.hometown.town_mid",
+   "ent": 23
+  },
+  {
+   "priority": 7077,
+   "scene": "ch5.light_world.lw_computer_lab",
+   "dst": "ch5.hometown.library",
+   "ent": 23
+  },
+  {
+   "priority": 7078,
+   "scene": "ch5.light_world.lw_library_upstairs",
+   "dst": "ch5.hometown.library",
+   "ent": 20
+  },
+  {
+   "priority": 7079,
+   "scene": "ch5.light_world.lw_conbini",
+   "dst": "ch5.hometown.town_mid",
+   "ent": 22
+  },
+  {
+   "priority": 7080,
+   "scene": "ch5.light_world.lw_icee_pizza",
+   "dst": "ch5.hometown.town_mid",
+   "ent": 20
+  },
+  {
+   "priority": 7081,
+   "scene": "ch5.castle_town.castle_tutorial",
+   "dst": "ch5.my_castle_town.dw_castle_east_door",
+   "ent": 23
+  },
+  {
+   "priority": 7082,
+   "scene": "ch5.my_castle_town.dw_castle_east_door",
+   "dst": "ch5.castle_town.castle_tutorial",
+   "ent": 23
+  },
+  {
+   "priority": 7083,
+   "scene": "ch5.ralsei_room.dw_ralsei_castle_front",
+   "dst": "ch5.ralsei_room.dw_ralsei_castle_1f",
+   "ent": 24
+  },
+  {
+   "priority": 7084,
+   "scene": "ch5.my_castle_town.dw_castle_dungeon",
+   "dst": "ch5.ralsei_room.dw_ralsei_castle_1f",
+   "ent": 23
+  },
+  {
+   "priority": 7085,
+   "scene": "ch5.my_castle_town.dw_castle_rooms_kris",
+   "dst": "ch5.ralsei_room.dw_ralsei_castle_2f",
+   "ent": 22
+  },
+  {
+   "priority": 7086,
+   "scene": "ch5.my_castle_town.dw_castle_rooms_susie",
+   "dst": "ch5.ralsei_room.dw_ralsei_castle_2f",
+   "ent": 23
+  },
+  {
+   "priority": 7087,
+   "scene": "ch5.card_castle.cc_lancer",
+   "dst": "ch5.ralsei_room.dw_ralsei_castle_2f",
+   "ent": 24
+  }
+ ],
+ "ent_fix": [],
+ "new_rules": [
+  {
+   "ch": "ch2",
+   "src_room": 92,
+   "sid_s": "ch2.cyber_field.dw_cyber_maze_fireworks",
+   "via": "obj_doorW",
+   "dst": 85,
+   "sid_t": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "kind": "uncond",
+   "axis": null,
+   "lo": null,
+   "hi": null,
+   "ent": 21,
+   "cond": null,
+   "pos_hit": null,
+   "why": [],
+   "ok": true
+  },
+  {
+   "ch": "ch2",
+   "src_room": 119,
+   "sid_s": "ch2.cyber_city.dw_city_big_2",
+   "via": "obj_doorW",
+   "dst": 138,
+   "sid_t": "ch2.cyber_city.dw_city_mirrorfriend",
+   "kind": "uncond",
+   "axis": null,
+   "lo": null,
+   "hi": null,
+   "ent": 24,
+   "cond": null,
+   "pos_hit": null,
+   "why": [],
+   "ok": true
+  },
+  {
+   "ch": "ch2",
+   "src_room": 129,
+   "sid_s": "ch2.cyber_city.dw_city_traffic_4",
+   "via": "obj_doorw_musfade",
+   "dst": 130,
+   "sid_t": "ch2.cyber_city.dw_city_spamton_alley",
+   "kind": "uncond",
+   "axis": null,
+   "lo": null,
+   "hi": null,
+   "ent": 23,
+   "cond": null,
+   "pos_hit": null,
+   "why": [],
+   "ok": true
+  },
+  {
+   "ch": "ch2",
+   "src_room": 130,
+   "sid_s": "ch2.cyber_city.dw_city_spamton_alley",
+   "via": "obj_doorW",
+   "dst": 129,
+   "sid_t": "ch2.cyber_city.dw_city_traffic_4",
+   "kind": "uncond",
+   "axis": null,
+   "lo": null,
+   "hi": null,
+   "ent": 23,
+   "cond": null,
+   "pos_hit": null,
+   "why": [],
+   "ok": true
+  },
+  {
+   "ch": "ch2",
+   "src_room": 140,
+   "sid_s": "ch2.cyber_city.dw_city_dog_traffic",
+   "via": "obj_doorW",
+   "dst": 123,
+   "sid_t": "ch2.cyber_city.dw_city_traffic_3",
+   "kind": "uncond",
+   "axis": null,
+   "lo": null,
+   "hi": null,
+   "ent": 24,
+   "cond": null,
+   "pos_hit": null,
+   "why": [],
+   "ok": true
+  },
+  {
+   "ch": "ch2",
+   "src_room": 141,
+   "sid_s": "ch2.cyber_city.dw_city_man",
+   "via": "obj_doorw_musfade",
+   "dst": 123,
+   "sid_t": "ch2.cyber_city.dw_city_traffic_3",
+   "kind": "uncond",
+   "axis": null,
+   "lo": null,
+   "hi": null,
+   "ent": 24,
+   "cond": null,
+   "pos_hit": null,
+   "why": [],
+   "ok": true
+  },
+  {
+   "ch": "ch2",
+   "src_room": 142,
+   "sid_s": "ch2.cyber_city.dw_city_moss",
+   "via": "obj_doorW",
+   "dst": 123,
+   "sid_t": "ch2.cyber_city.dw_city_traffic_3",
+   "kind": "uncond",
+   "axis": null,
+   "lo": null,
+   "hi": null,
+   "ent": 24,
+   "cond": null,
+   "pos_hit": null,
+   "why": [],
+   "ok": true
+  },
+  {
+   "ch": "ch2",
+   "src_room": 164,
+   "sid_s": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+   "via": "obj_doorw_musfade",
+   "dst": 169,
+   "sid_t": "ch2.queens_mansion.dw_mansion_b_entrance",
+   "kind": "uncond",
+   "axis": null,
+   "lo": null,
+   "hi": null,
+   "ent": 20,
+   "cond": null,
+   "pos_hit": null,
+   "why": [],
+   "ok": true
+  },
+  {
+   "ch": "ch2",
+   "src_room": 184,
+   "sid_s": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "via": "obj_doorW",
+   "dst": 185,
+   "sid_t": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+   "kind": "state",
+   "axis": null,
+   "lo": null,
+   "hi": null,
+   "ent": 23,
+   "cond": "extflag == \"topleft\"",
+   "pos_hit": null,
+   "why": [],
+   "ok": true
+  }
+ ],
+ "left": [
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch1",
+   "room": "room_cc_elevator",
+   "sid": "ch1.card_castle.cc_elevator",
+   "detail": [
+    {
+     "cond": "global.flag[239] == 1",
+     "hit": null
+    },
+    {
+     "cond": "global.flag[239] == 2",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch2",
+   "room": "room_dw_city_berdly",
+   "sid": null,
+   "detail": [
+    {
+     "cond": "x < 0",
+     "hit": []
+    },
+    {
+     "cond": "!(x < 0)",
+     "hit": []
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_cyber_maze_queenscreen",
+   "sid": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+   "detail": [
+    {
+     "cond": "extflag == \"to_room_dw_cyber_musical_shop\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"to_room_dw_cyber_maze_rhythm\"",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch2",
+   "room": "room_dw_cyber_maze_tasque",
+   "sid": "ch2.cyber_field.dw_cyber_maze_tasque",
+   "detail": [
+    {
+     "cond": "extdestination == \"room_dw_cyber_maze_tasque to room_dw_cyber_maze_virokun\" && x > 180",
+     "hit": [
+      2
+     ]
+    },
+    {
+     "cond": "x > 1000",
+     "hit": []
+    },
+    {
+     "cond": "x > 1400",
+     "hit": []
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_cyber_musical_shop",
+   "sid": null,
+   "detail": [
+    {
+     "cond": "extflag == \"to_room_dw_cyber_maze_queenscreen\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag != \"to_room_dw_cyber_maze_queenscreen\"",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_cyber_post_music_boss_slide",
+   "sid": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+   "detail": [
+    {
+     "cond": "extflag == \"leftExit\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"rightExit\"",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_mansion_b_central",
+   "sid": null,
+   "detail": [
+    {
+     "cond": "global.flag[309] < 9",
+     "hit": null
+    },
+    {
+     "cond": "!(global.flag[309] < 9)",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_mansion_b_east_a",
+   "sid": "ch2.queens_mansion.dw_mansion_b_east_a",
+   "detail": [
+    {
+     "cond": "global.flag[309] < 8",
+     "hit": null
+    },
+    {
+     "cond": "!(global.flag[309] < 8)",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_mansion_b_west_1f",
+   "sid": "ch2.queens_mansion.dw_mansion_b_west_1f",
+   "detail": [
+    {
+     "cond": "extflag == \"gotoroom_dw_mansion_b_west_2f\"",
+     "hit": null
+    },
+    {
+     "cond": "x > 800",
+     "hit": [
+      1,
+      2
+     ]
+    },
+    {
+     "cond": "x > 1400",
+     "hit": [
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_mansion_bridges",
+   "sid": "ch2.queens_mansion.dw_mansion_bridges",
+   "detail": [
+    {
+     "cond": "extflag == \"back\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"funny\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"next\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"hands\"",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch2",
+   "room": "room_dw_mansion_darkbulb_1",
+   "sid": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+   "detail": [
+    {
+     "cond": "x < 10",
+     "hit": [
+      1
+     ]
+    },
+    {
+     "cond": "x > 600 && global.plot < 120",
+     "hit": [
+      2
+     ]
+    },
+    {
+     "cond": "x > 600 && !(global.plot < 120)",
+     "hit": [
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_mansion_dining3",
+   "sid": "ch2.queens_mansion.dw_mansion_dining3",
+   "detail": [
+    {
+     "cond": "extflag == \"top\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"bottom\"",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch2",
+   "room": "room_dw_mansion_dining_a",
+   "sid": "ch2.queens_mansion.dw_mansion_dining_a",
+   "detail": [
+    {
+     "cond": "x < 10 && global.plot < 120",
+     "hit": [
+      0
+     ]
+    },
+    {
+     "cond": "x < 10 && !(global.plot < 120)",
+     "hit": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_mansion_dininghall",
+   "sid": "ch2.queens_mansion.dw_mansion_dininghall",
+   "detail": [
+    {
+     "cond": "extflag == \"topright\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"topleft\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"bottom\"",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_mansion_east_2f_c",
+   "sid": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "detail": [
+    {
+     "cond": "extflag == \"farleft\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"topleft\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"topright\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"bottom\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"farright\"",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch2",
+   "room": "room_dw_mansion_east_2f_c_a",
+   "sid": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+   "detail": [
+    {
+     "cond": "x > 260",
+     "hit": [
+      0,
+      2
+     ]
+    },
+    {
+     "cond": "x > 1540",
+     "hit": [
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch2",
+   "room": "room_dw_mansion_east_2f_d",
+   "sid": "ch2.queens_mansion.dw_mansion_east_2f_d",
+   "detail": [
+    {
+     "cond": "x > 1200",
+     "hit": [
+      0
+     ]
+    },
+    {
+     "cond": "!(x > 1200)",
+     "hit": []
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_mansion_east_2f_transformed_new",
+   "sid": "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+   "detail": [
+    {
+     "cond": "extflag == \"topleft\"",
+     "hit": null
+    },
+    {
+     "cond": "extflag == \"topright\"",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_mansion_east_3f",
+   "sid": null,
+   "detail": [
+    {
+     "cond": "x < 10",
+     "hit": []
+    },
+    {
+     "cond": "x > 220 && y < 200",
+     "hit": null
+    },
+    {
+     "cond": "x > 220 && y >= 440",
+     "hit": null
+    },
+    {
+     "cond": "x > 500",
+     "hit": []
+    },
+    {
+     "cond": "x > 870",
+     "hit": []
+    },
+    {
+     "cond": "x > 1250",
+     "hit": []
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch2",
+   "room": "room_dw_mansion_east_4f_b",
+   "sid": "ch2.queens_mansion.dw_mansion_east_4f_b",
+   "detail": [
+    {
+     "cond": "x > 200",
+     "hit": []
+    },
+    {
+     "cond": "x > 500",
+     "hit": []
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_mansion_entrance",
+   "sid": null,
+   "detail": [
+    {
+     "cond": "x > 620 && x < 630 && y > 450 && y < 470",
+     "hit": null
+    },
+    {
+     "cond": "x > 730 && x < 750 && y > 450 && y < 470",
+     "hit": null
+    },
+    {
+     "cond": "x > 800 && y > 670",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch2",
+   "room": "room_dw_mansion_lightner_hallway",
+   "sid": null,
+   "detail": [
+    {
+     "cond": "x > 210 && x < 280",
+     "hit": []
+    },
+    {
+     "cond": "x > 490 && x < 590",
+     "hit": []
+    },
+    {
+     "cond": "x > 1900",
+     "hit": []
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch2",
+   "room": "room_library",
+   "sid": "ch2.hometown.library",
+   "detail": [
+    {
+     "cond": "x > 110 && x < 150",
+     "hit": []
+    },
+    {
+     "cond": "x > 215 && x < 230",
+     "hit": [
+      11
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "STATE",
+   "ch": "ch2",
+   "room": "room_dw_city_traffic_3",
+   "sid": "ch2.cyber_city.dw_city_traffic_3",
+   "detail": [
+    {
+     "cond": "global.flag[917] == 0 && scr_sideb_get_phase() == 0",
+     "hit": null
+    },
+    {
+     "cond": "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && man_room",
+     "hit": null
+    },
+    {
+     "cond": "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && !(man_room)",
+     "hit": null
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_63",
+   "room": "room_dw_ralsei_castle_1f",
+   "cond": "x > 840 && x < 1000"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_57",
+   "room": "room_dw_ralsei_castle_1f",
+   "cond": "x > 550 && x < 700"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_64",
+   "room": "room_dw_ralsei_castle_2f",
+   "cond": "x > 240 && x < 340"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_65",
+   "room": "room_dw_ralsei_castle_2f",
+   "cond": "x > 520 && x < 610"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_80",
+   "room": "room_dw_ralsei_castle_2f",
+   "cond": "x > 780 && x < 860"
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch3",
+   "room": "room_library",
+   "sid": "ch3.hometown.library",
+   "detail": [
+    {
+     "cond": "x > 110 && x < 150",
+     "hit": []
+    },
+    {
+     "cond": "x > 215 && x < 230",
+     "hit": [
+      11
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_45",
+   "room": "room_town_mid",
+   "cond": "x > 290 && x < 370"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_40",
+   "room": "room_town_mid",
+   "cond": "x > 1730 && x < 1840"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_43",
+   "room": "room_town_south",
+   "cond": "x > 230 && x < 280"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_31",
+   "room": "room_town_south",
+   "cond": "x > 580 && x < 660"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_72",
+   "room": "room_dw_ralsei_castle_1f",
+   "cond": "x > 840 && x < 1000"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_66",
+   "room": "room_dw_ralsei_castle_1f",
+   "cond": "x > 550 && x < 700"
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch4",
+   "room": "room_dw_ralsei_castle_2f",
+   "sid": "ch4.ralsei_room.dw_ralsei_castle_2f",
+   "detail": [
+    {
+     "cond": "x > 240 && x < 340",
+     "hit": []
+    },
+    {
+     "cond": "x > 520 && x < 610",
+     "hit": []
+    },
+    {
+     "cond": "x > 780 && x < 860",
+     "hit": [
+      2
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch4",
+   "room": "room_library",
+   "sid": "ch4.hometown.library",
+   "detail": [
+    {
+     "cond": "x > 110 && x < 150",
+     "hit": []
+    },
+    {
+     "cond": "x > 215 && x < 230",
+     "hit": [
+      11
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch4",
+   "room": "room_town_mid",
+   "sid": null,
+   "detail": [
+    {
+     "cond": "x > 290 && x < 370",
+     "hit": []
+    },
+    {
+     "cond": "x > 1730 && x < 1840",
+     "hit": []
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_43",
+   "room": "room_town_south",
+   "cond": "x > 230 && x < 280"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_31",
+   "room": "room_town_south",
+   "cond": "x > 580 && x < 660"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_62",
+   "room": "room_dw_ralsei_castle_1f",
+   "cond": "x > 840 && x < 1000"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_55",
+   "room": "room_dw_ralsei_castle_1f",
+   "cond": "x > 550 && x < 700"
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch5",
+   "room": "room_dw_ralsei_castle_2f",
+   "sid": "ch5.ralsei_room.dw_ralsei_castle_2f",
+   "detail": [
+    {
+     "cond": "x > 240 && x < 340",
+     "hit": [
+      0
+     ]
+    },
+    {
+     "cond": "x > 520 && x < 610",
+     "hit": [
+      1
+     ]
+    },
+    {
+     "cond": "x > 780 && x < 860",
+     "hit": []
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch5",
+   "room": "room_library",
+   "sid": "ch5.hometown.library",
+   "detail": [
+    {
+     "cond": "x > 110 && x < 150",
+     "hit": []
+    },
+    {
+     "cond": "x > 215 && x < 230",
+     "hit": [
+      11
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_43",
+   "room": "room_town_mid",
+   "cond": "x > 290 && x < 370"
+  },
+  {
+   "kind": "door_x",
+   "why": "rules_0_for_dst_38",
+   "room": "room_town_mid",
+   "cond": "x > 1730 && x < 1840"
+  },
+  {
+   "kind": "door_x",
+   "why": "BROKEN",
+   "ch": "ch5",
+   "room": "room_town_south",
+   "sid": null,
+   "detail": [
+    {
+     "cond": "x > 230 && x < 280",
+     "hit": []
+    },
+    {
+     "cond": "x > 580 && x < 660",
+     "hit": []
+    }
+   ]
+  }
+ ],
+ "ent_left": [
+  {
+   "priority": 7111,
+   "why": "gml_ent_ambiguous[21, 22]",
+   "scene": "ch2.cyber_field.dw_cyber_maze_tasque"
+  },
+  {
+   "priority": 7164,
+   "why": "gml_ent_ambiguous[22, 23]",
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_c"
+  },
+  {
+   "priority": 7168,
+   "why": "gml_ent_ambiguous[22, 23]",
+   "scene": "ch2.queens_mansion.dw_mansion_east_2f_c_a"
+  }
+ ]
+}

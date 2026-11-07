@@ -1,0 +1,133 @@
+{
+ "ok": 94,
+ "flipped": [],
+ "other": [
+  {
+   "key": [
+    "ch2",
+    "room_dw_mansion_entrance",
+    "obj_doorW",
+    164
+   ],
+   "priority": 7141,
+   "tbl": [
+    800,
+    null
+   ],
+   "src": [
+    null,
+    null
+   ],
+   "cond": "x > 800 && y > 670",
+   "axis": null
+  },
+  {
+   "key": [
+    "ch2",
+    "room_dw_mansion_entrance",
+    "obj_doorW",
+    182
+   ],
+   "priority": 7142,
+   "tbl": [
+    620,
+    630
+   ],
+   "src": [
+    null,
+    null
+   ],
+   "cond": "x > 620 && x < 630 && y > 450 && y < 470",
+   "axis": null
+  },
+  {
+   "key": [
+    "ch2",
+    "room_dw_mansion_entrance",
+    "obj_doorW",
+    187
+   ],
+   "priority": 7143,
+   "tbl": [
+    730,
+    750
+   ],
+   "src": [
+    null,
+    null
+   ],
+   "cond": "x > 730 && x < 750 && y > 450 && y < 470",
+   "axis": null
+  },
+  {
+   "key": [
+    "ch2",
+    "room_dw_mansion_east_3f",
+    "obj_doorW",
+    157
+   ],
+   "priority": 7171,
+   "tbl": [
+    220,
+    null
+   ],
+   "src": [
+    null,
+    null
+   ],
+   "cond": "x > 220 && y < 200",
+   "axis": null
+  },
+  {
+   "key": [
+    "ch2",
+    "room_dw_mansion_east_3f",
+    "obj_doorW",
+    168
+   ],
+   "priority": 7172,
+   "tbl": [
+    220,
+    null
+   ],
+   "src": [
+    null,
+    null
+   ],
+   "cond": "x > 220 && y >= 440",
+   "axis": null
+  }
+ ],
+ "unmatched": [
+  {
+   "key": [
+    "ch2",
+    "room_dw_cyber_maze_tasque",
+    "obj_doorW",
+    87
+   ],
+   "n": 2,
+   "priority": 7111
+  },
+  {
+   "key": [
+    "ch2",
+    "room_dw_mansion_east_2f_c",
+    "obj_doorW",
+    185
+   ],
+   "n": 2,
+   "priority": 7164
+  },
+  {
+   "key": [
+    "ch2",
+    "room_dw_mansion_east_2f_c_a",
+    "obj_doorW",
+    184
+   ],
+   "n": 2,
+   "priority": 7168
+  }
+ ]
+}

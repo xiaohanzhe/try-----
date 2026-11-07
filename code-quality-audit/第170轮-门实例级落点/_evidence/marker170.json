@@ -1,0 +1,657 @@
+{
+ "ok": false,
+ "bad": [
+  {
+   "src": "room_cc_elevator",
+   "dst": "room_cc_1f",
+   "sid_d": "ch1.card_castle.card_castle_1f",
+   "letter": "W",
+   "expected": "obj_markerw",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_cc_elevator",
+   "dst": "room_cc_5f",
+   "sid_d": "ch1.card_castle.card_castle_5f",
+   "letter": "W",
+   "expected": "obj_markerw",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_town_mid",
+   "dst": "room_lw_conbini",
+   "sid_d": "ch2.light_world.lw_conbini",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_town_mid",
+   "dst": "room_lw_icee_pizza",
+   "sid_d": "ch2.light_world.lw_icee_pizza",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_town_south",
+   "dst": "room_lw_police",
+   "sid_d": "ch2.light_world.lw_police",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_library",
+   "dst": "room_lw_library_upstairs",
+   "sid_d": "ch2.light_world.lw_library_upstairs",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_lw_police",
+   "dst": "room_town_south",
+   "sid_d": "ch2.hometown.town_south",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": "obj_markerX",
+   "markers": [
+    "obj_markerX",
+    "obj_markerw",
+    "obj_markerB",
+    "obj_markerD",
+    "obj_markerC"
+   ]
+  },
+  {
+   "src": "room_dw_ralsei_castle_2f",
+   "dst": "room_dw_castle_rooms_kris",
+   "sid_d": "ch2.my_castle_town.dw_castle_rooms_kris",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_cyber_battle_maze_1",
+   "dst": "room_dw_cyber_teacup_1",
+   "sid_d": "ch2.cyber_field.dw_cyber_teacup_1",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": null,
+   "markers": [
+    "obj_markerA",
+    "obj_markerB"
+   ]
+  },
+  {
+   "src": "room_dw_cyber_musical_door",
+   "dst": "room_dw_cyber_musical_shop",
+   "sid_d": "ch2.cyber_field.cyber_field_music_shop",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_cyber_musical_door",
+   "dst": "room_dw_cyber_post_music_boss_slide",
+   "sid_d": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": "obj_markerw",
+   "markers": [
+    "obj_markerw"
+   ]
+  },
+  {
+   "src": "room_dw_cyber_maze_virokun",
+   "dst": "room_dw_cyber_maze_fireworks",
+   "sid_d": "ch2.cyber_field.dw_cyber_maze_fireworks",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_cyber_maze_virokun",
+   "dst": "room_dw_cyber_maze_tasque",
+   "sid_d": "ch2.cyber_field.dw_cyber_maze_tasque",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_cyber_musical_shop",
+   "dst": "room_dw_cyber_musical_door",
+   "sid_d": "ch2.cyber_field.dw_cyber_musical_door",
+   "letter": "U",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": [
+    "obj_markerA",
+    "obj_markerB"
+   ]
+  },
+  {
+   "src": "room_dw_cyber_musical_shop",
+   "dst": "room_dw_cyber_maze_queenscreen",
+   "sid_d": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": "obj_markerB",
+   "markers": [
+    "obj_markerB"
+   ]
+  },
+  {
+   "src": "room_dw_cyber_maze_tasque",
+   "dst": "room_dw_cyber_maze_virokun",
+   "sid_d": "ch2.cyber_field.dw_cyber_maze_virokun",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": [
+    "obj_markerA",
+    "obj_markerB",
+    "obj_markerD"
+   ]
+  },
+  {
+   "src": "room_dw_cyber_maze_queenscreen",
+   "dst": "room_dw_cyber_musical_shop",
+   "sid_d": "ch2.cyber_field.cyber_field_music_shop",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_cyber_post_music_boss_slide",
+   "dst": "room_dw_cyber_musical_door",
+   "sid_d": "ch2.cyber_field.dw_cyber_musical_door",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": [
+    "obj_markerA",
+    "obj_markerB"
+   ]
+  },
+  {
+   "src": "room_dw_cyber_post_music_boss_slide",
+   "dst": "room_dw_cyber_music_final",
+   "sid_d": "ch2.cyber_field.dw_cyber_music_final",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": "obj_markerA",
+   "markers": [
+    "obj_markerA"
+   ]
+  },
+  {
+   "src": "room_dw_cyber_maze_rhythm",
+   "dst": "room_dw_cyber_maze_queenscreen",
+   "sid_d": "ch2.cyber_field.dw_cyber_maze_queenscreen",
+   "letter": "T",
+   "expected": null,
+   "got": "obj_markerB",
+   "markers": [
+    "obj_markerB"
+   ]
+  },
+  {
+   "src": "room_dw_city_traffic_2",
+   "dst": "room_dw_city_mirrorfriend",
+   "sid_d": "ch2.cyber_city.dw_city_mirrorfriend",
+   "letter": "W",
+   "expected": null,
+   "got": "obj_markerX",
+   "markers": [
+    "obj_markerX"
+   ]
+  },
+  {
+   "src": "room_dw_city_berdly",
+   "dst": "room_dw_city_traffic_4",
+   "sid_d": "ch2.cyber_city.dw_city_traffic_4",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": "obj_markerX",
+   "markers": [
+    "obj_markerB",
+    "obj_markerw",
+    "obj_markerX"
+   ]
+  },
+  {
+   "src": "room_dw_city_traffic_4",
+   "dst": "room_dw_city_berdly",
+   "sid_d": "ch2.cyber_city.cyber_city_alleyway_2",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_city_mansion_front",
+   "dst": "room_dw_mansion_entrance",
+   "sid_d": "ch2.queens_mansion.queen_s_mansion_entrance",
+   "letter": "V",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_lightner_hallway",
+   "dst": "room_dw_mansion_krisroom",
+   "sid_d": "ch2.queens_mansion.dw_mansion_krisroom",
+   "letter": "S",
+   "expected": "obj_markers",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_lightner_hallway",
+   "dst": "room_dw_mansion_susieroom",
+   "sid_d": "ch2.queens_mansion.dw_mansion_susieroom",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_lightner_hallway",
+   "dst": "room_dw_mansion_darkbulb_1",
+   "sid_d": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_darkbulb_1",
+   "dst": "room_dw_mansion_lightner_hallway",
+   "sid_d": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_darkbulb_1",
+   "dst": "room_dw_mansion_darkbulb_2",
+   "sid_d": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_darkbulb_1",
+   "dst": "room_dw_mansion_dining_a",
+   "sid_d": "ch2.queens_mansion.dw_mansion_dining_a",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": "obj_markerB",
+   "markers": [
+    "obj_markerB"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_darkbulb_2",
+   "dst": "room_dw_mansion_darkbulb_1",
+   "sid_d": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_darkbulb_2",
+   "dst": "room_dw_mansion_darkbulb_3",
+   "sid_d": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+   "letter": "S",
+   "expected": "obj_markers",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_darkbulb_3",
+   "dst": "room_dw_mansion_darkbulb_2",
+   "sid_d": "ch2.queens_mansion.dw_mansion_darkbulb_2",
+   "letter": "S",
+   "expected": "obj_markers",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_darkbulb_3",
+   "dst": "room_dw_mansion_dining_a",
+   "sid_d": "ch2.queens_mansion.dw_mansion_dining_a",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": "obj_markerB",
+   "markers": [
+    "obj_markerB"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_dining_a",
+   "dst": "room_dw_mansion_darkbulb_1",
+   "sid_d": "ch2.queens_mansion.dw_mansion_darkbulb_1",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_dining_a",
+   "dst": "room_dw_mansion_darkbulb_3",
+   "sid_d": "ch2.queens_mansion.dw_mansion_darkbulb_3",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_entrance",
+   "dst": "room_dw_mansion_east_1f_secret",
+   "sid_d": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_entrance",
+   "dst": "room_dw_mansion_east_2f_shortcut",
+   "sid_d": "ch2.queens_mansion.dw_mansion_east_2f_shortcut",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": "obj_markerA",
+   "markers": [
+    "obj_markerA"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_entrance",
+   "dst": "room_dw_mansion_east_3f",
+   "sid_d": "ch2.queens_mansion.queen_s_mansion_3f",
+   "letter": "S",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_east_1f_secret",
+   "dst": "room_dw_mansion_entrance",
+   "sid_d": "ch2.queens_mansion.queen_s_mansion_entrance",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_east_teacup",
+   "dst": "room_dw_mansion_traffic",
+   "sid_d": "ch2.queens_mansion.dw_mansion_traffic",
+   "letter": "X",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": [
+    "obj_markerA",
+    "obj_markerB"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_east_teacup_2",
+   "dst": "room_dw_mansion_east_3f",
+   "sid_d": "ch2.queens_mansion.queen_s_mansion_3f",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_b_west_1f",
+   "dst": "room_dw_mansion_b_west_1f_a",
+   "sid_d": "ch2.queens_mansion.dw_mansion_b_west_1f_a",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_b_east",
+   "dst": "room_dw_mansion_b_central",
+   "sid_d": "ch2.queens_mansion.queen_s_mansion_basement",
+   "letter": "X",
+   "expected": "obj_markerX",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_b_east",
+   "dst": "room_dw_mansion_b_east_a",
+   "sid_d": "ch2.queens_mansion.dw_mansion_b_east_a",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_b_east_a",
+   "dst": "room_dw_mansion_b_east",
+   "sid_d": "ch2.queens_mansion.dw_mansion_b_east",
+   "letter": "V",
+   "expected": "obj_markerAny",
+   "got": "obj_markerX",
+   "markers": [
+    "obj_markerX"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_b_east_a",
+   "dst": "room_dw_mansion_b_east_transformed",
+   "sid_d": "ch2.queens_mansion.dw_mansion_b_east_transformed",
+   "letter": "V",
+   "expected": "obj_markerAny",
+   "got": "obj_markerX",
+   "markers": [
+    "obj_markerX"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_b_east_transformed",
+   "dst": "room_dw_mansion_b_central",
+   "sid_d": "ch2.queens_mansion.queen_s_mansion_basement",
+   "letter": "X",
+   "expected": "obj_markerX",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_b_east_transformed",
+   "dst": "room_dw_mansion_b_east_a",
+   "sid_d": "ch2.queens_mansion.dw_mansion_b_east_a",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_east_2f_transformed_new",
+   "dst": "room_dw_mansion_kitchen",
+   "sid_d": "ch2.queens_mansion.dw_mansion_kitchen",
+   "letter": "V",
+   "expected": "obj_markerv",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_east_2f_shortcut",
+   "dst": "room_dw_mansion_entrance",
+   "sid_d": "ch2.queens_mansion.queen_s_mansion_entrance",
+   "letter": "T",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_east_2f_c",
+   "dst": "room_dw_mansion_east_2f_d",
+   "sid_d": "ch2.queens_mansion.dw_mansion_east_2f_d",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": "obj_markerX",
+   "markers": [
+    "obj_markerX"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_east_2f_c_a",
+   "dst": "room_dw_mansion_east_2f_c",
+   "sid_d": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "letter": "W",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_east_2f_d",
+   "dst": "room_dw_mansion_east_2f_c",
+   "sid_d": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "letter": "T",
+   "expected": "obj_markert",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_east_3f",
+   "dst": "room_dw_mansion_entrance",
+   "sid_d": "ch2.queens_mansion.queen_s_mansion_entrance",
+   "letter": "S",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_east_3f",
+   "dst": "room_dw_mansion_east_teacup_2",
+   "sid_d": "ch2.queens_mansion.dw_mansion_east_teacup_2",
+   "letter": "V",
+   "expected": "obj_markerAny",
+   "got": "obj_markerX",
+   "markers": [
+    "obj_markerX"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_east_3f",
+   "dst": "room_dw_mansion_east_3f_projection",
+   "sid_d": "ch2.queens_mansion.dw_mansion_east_3f_projection",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_east_3f",
+   "dst": "room_dw_mansion_east_4f_b",
+   "sid_d": "ch2.queens_mansion.dw_mansion_east_4f_b",
+   "letter": "T",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": [
+    "obj_markerA",
+    "obj_markerB"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_east_4f_b",
+   "dst": "room_dw_mansion_east_3f",
+   "sid_d": "ch2.queens_mansion.queen_s_mansion_3f",
+   "letter": "T",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_bridges",
+   "dst": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+   "sid_d": "ch2.queens_mansion.dw_mansion_acid_tunnel_puzzle_entrance",
+   "letter": "X",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": [
+    "obj_markerB",
+    "obj_markerA"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_dining3",
+   "dst": "room_dw_mansion_east_2f_transformed_new",
+   "sid_d": "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+   "letter": "U",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": [
+    "obj_markerA",
+    "obj_markerB"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_dining3",
+   "dst": "room_dw_mansion_dininghall",
+   "sid_d": "ch2.queens_mansion.dw_mansion_dininghall",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": "obj_markerX",
+   "markers": [
+    "obj_markerX",
+    "obj_markerw"
+   ]
+  },
+  {
+   "src": "room_dw_mansion_dininghall",
+   "dst": "room_dw_mansion_east_2f_c",
+   "sid_d": "ch2.queens_mansion.dw_mansion_east_2f_c",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": null,
+   "markers": []
+  },
+  {
+   "src": "room_dw_mansion_dininghall",
+   "dst": "room_dw_mansion_dining3",
+   "sid_d": "ch2.queens_mansion.dw_mansion_dining3",
+   "letter": "U",
+   "expected": "obj_markeru",
+   "got": "obj_markerX",
+   "markers": [
+    "obj_markerX"
+   ]
+  },
+  {
+   "src": "room_dw_cyber_virovirokun_fight",
+   "dst": "room_dw_cyber_musical_door",
+   "sid_d": "ch2.cyber_field.dw_cyber_musical_door",
+   "letter": "W",
+   "expected": "obj_markerAny",
+   "got": null,
+   "markers": [
+    "obj_markerA",
+    "obj_markerB"
+   ]
+  }
+ ]
+}
