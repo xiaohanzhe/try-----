@@ -126,18 +126,48 @@ ok(len(multi) > 100,
 #     为 None）—— 它们的分流依据是"哪个对象"，不是字母，塞进字母序比较会直接
 #     在 `sorted()` 上炸（`None < str`）。⇒ 本判据只看**字母级**规则；
 #     对象级的顺序不变量由 `第122轮/_tools/check122.py` 守（按 when_src 升序）。
+# ★★★ 第168轮：判据**收窄到「同段内」**，并用 B2c 把跨段例外**点名成账**。
+#   为什么必须收窄：第168轮给五章补了 88 条 **W 门**（priority 7000+）。
+#   字母序里 W=23，介于 D=4 与 X=24 之间；而段位上 5000（D/X）< 7000（W）
+#   ⇒ 同一场景里「字母升」与「priority 升」无法同时成立（实测：3 个场景含 D、
+#   6 个含 X）。段位放哪儿都救不了 —— 因为它是两个不同维度。
+#   ★ 这**不是放宽**：段内仍要求逐条升序；跨段违例必须**恰好等于**
+#     「同场景同时含 W 与 D/X」的场景集（B2c），多一个都红。
 bad = []
 for k, v in multi.items():
     v_letter = [r for r in v if isinstance(r.get('when_door'), str) and r.get('when_door')]
     if len(v_letter) < 2:
         continue
-    v2 = sorted(v_letter, key=lambda r: r.get('priority'))
-    letters = [r.get('when_door') for r in v2]
-    if letters != sorted(letters):
-        bad.append((k, letters))
+    _segs = collections.defaultdict(list)
+    for r in v_letter:
+        _segs[(r.get('priority') or 0) // 1000].append(r)
+    for _sg, _vv in _segs.items():
+        if len(_vv) < 2:
+            continue
+        letters = [x.get('when_door') for x in sorted(_vv, key=lambda r: r.get('priority'))]
+        if letters != sorted(letters):
+            bad.append((k, _sg, letters))
 ok(not bad,
-   'B2 ★同场景内「字母序 == priority 序」（0 例外；实测 %d 个多出口场景）'
+   'B2 ★同场景、**同段内**「字母序 == priority 序」（0 例外；'
+   '实测 %d 个多出口场景；第168轮起按 priority//1000 分段）'
    % len(multi))
+
+# B2c ★★ 跨段违例点名成账：只允许 W 与 D/X 同存的场景（字母与段位不同维度）
+_cross = []
+for k, v in multi.items():
+    v_letter = [r for r in v if isinstance(r.get('when_door'), str) and r.get('when_door')]
+    if len(v_letter) < 2:
+        continue
+    _ls = [x.get('when_door') for x in sorted(v_letter, key=lambda r: r.get('priority'))]
+    if _ls == sorted(_ls):
+        continue
+    _set = set(_ls)
+    if not ('W' in _set and (_set & set('DX'))):
+        _cross.append((k, _ls))
+ok(not _cross,
+   'B2c ★★ 跨段违例**只**出现在「同场景同时含 W 与 D/X」的场景'
+   '（其余跨段违例 %d 个）'
+   % len(_cross))
 
 # B2b 负控制：用旧写法（全局取模）**必须能复现**至少一个违例
 #      —— 证明 B2 有鉴别力，不是恒真。
@@ -440,22 +470,35 @@ if have_rooms:
     #   两条：条数与段位（83 条、priority 5000+、`kind == 'delta_door_table'`、
     #   `table` 是反编译名），以及"两端都可从 `by_room` 反查到原作品下标"。
     #   逐条落点的独立重推在 `check125.B2`（另一套实现，读 `conn42b` 的查表）。
-    _TBL = [r for r in RL
-            if _orig_of(r).get('kind') == 'delta_door_table'
-            and r.get('when_scene') not in _ORIGIN_WORKS
-            and not str(r.get('when_scene') or '').startswith('ut.')]
-    _tbl_bad = [r.get('to') for r in _TBL
-                if r.get('when_door') != 'X'
-                or not str(_orig_of(r).get('table') or '').startswith('gml_Object_')
-                or not isinstance(_orig_of(r).get('src_room_id'), int)
-                or not isinstance(_orig_of(r).get('dst_room_id'), int)
-                or isinstance(r.get('priority'), int) is False
-                or r['priority'] < 5000]
+    # ★★★ 第168轮：同一个 `kind` 现在装两段 —— X（5000~）与 W（7000~）
+    #   ⇒ **拆成两段各自点名**，不许混在一起数。
+    def _tbl_of(letter, lo, hi):
+        rows = [r for r in RL
+                if _orig_of(r).get('kind') == 'delta_door_table'
+                and r.get('when_door') == letter
+                and r.get('when_scene') not in _ORIGIN_WORKS
+                and not str(r.get('when_scene') or '').startswith('ut.')]
+        bad = [r.get('to') for r in rows
+               if not str(_orig_of(r).get('table') or '').startswith('gml_Object_')
+               or not isinstance(_orig_of(r).get('src_room_id'), int)
+               or not isinstance(_orig_of(r).get('dst_room_id'), int)
+               or not isinstance(r.get('priority'), int)
+               or r['priority'] < lo or r['priority'] > hi]
+        return rows, bad
+
+    _TBL, _tbl_bad = _tbl_of('X', 5000, 5999)
     ok(len(_TBL) == 83 and not _tbl_bad,
-       'C1c ★★ 表驱动门（X）段 == 83 条、priority 5000+、`kind=delta_door_table`、'
+       'C1c ★★ 表驱动门（X）段 == 83 条、priority 5000~5999、`kind=delta_door_table`、'
        '`table` 为反编译名、两端原作品下标齐备（异常 %d: %s）—— '
        '★它**不在** C1 的论域里，逐条重推归 `check125.B2`'
        % (len(_tbl_bad), _tbl_bad[:3]))
+
+    _TBLW, _tblw_bad = _tbl_of('W', 7000, 7999)
+    ok(len(_TBLW) == 88 and not _tblw_bad,
+       'C1c2 ★★ 表驱动门（W，第168轮新增）段 == 88 条、priority 7000~7999、'
+       '`kind=delta_door_table`、`table` 为反编译名、两端原作品下标齐备（异常 %d: %s）—— '
+       '★逐条重推归 `第168轮/_tools/check168.py` 的 B 段'
+       % (len(_tblw_bad), _tblw_bad[:3]))
 
     # ★★ C1b 第122轮：被 C1 排除的 ut 段**必须自证**（否则"排除"就成了没人管）。
     #   三条：① 条数钉死（第122轮 243 → 第123轮 **525**）；② 两端都必须是 ut 已登记

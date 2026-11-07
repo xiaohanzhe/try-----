@@ -17,11 +17,15 @@ ch1~ch5 共有 **782** 条边，而产品 `_routes.json` 只转出 **443** 条 �
     组  有目标的实例  命中 marker   命中率
     D(−2)     74          71       95.9%
     X(表)     94          94      100.0%
-    W         97           0        0.0%（marker 实为小写 `obj_markerw`：60.2%；
-                                      换成 `obj_markerX` 84.3% ⇒ 两套都到不了 100%）
+    W         97          74       76.3%（同字母 `obj_markerw` —— **小写**；
+                                      +16 条只有通用 `obj_markerAny` ⇒ 90/97 = 92.8%）
+         ↑ 第125轮当时拿大写 `obj_markerW` 比 ⇒ 0%；拿 `obj_markerX` 比 ⇒ 84.3%，
+           两次都量错了对象（X 有专属 `spr_markerX`，是字母 X 的出生点，不是通用兜底）
 
-⇒ 收 D 与 X，**W 仍不收**（"证据不足不猜"这条纪律照旧）。
-⇒ 追加 **139 条**（D 56 / X 83，priority 5000~5138）。
+⇒ 收 D 与 X，**W 也收**（第168轮：`obj_doorW_Alarm_2` 骨架与 X 逐句同形，
+  同一把尺 92.8%；⚠️ `entrance` 是**每分支**的落点字母、不是每类门的常量）
+⇒ 追加 **139 条**（D 56 / X 83，priority 5000~5138）；
+  W 的 88 条由第168轮另起一段（priority 7000~7087），见 D 段。
 
 ## 本套件守什么（零 Qt / 零网络 / 零外部盘 —— 只读仓库内证据与资产）
 
@@ -78,8 +82,14 @@ EXPECT_X = 83
 EXPECT_BY_CH = {'ch1': 46, 'ch2': 26, 'ch3': 24, 'ch4': 21, 'ch5': 22}
 #: 证据侧边总数（ch1~ch5 合计）
 EXPECT_EDGES = 782
-#: ★ 拒收的 W 门边数（证据里真有这么多，故"产品 0 条"不是空集恒真）
+#: ★ 证据侧的 W 门边数。第168轮起不再"拒收全类"：
+#:   98 = 88 收 + 7 拒收 + 1 重复实例 + 2 已由别的门提供同一目标。
+#:   保留这个数是为了让 D2 仍然是"证据里真有"，不是空集恒真。
 EXPECT_REFUSED_W = 98
+#: ★ 第168轮：产品里 W 门规则的条数。
+#:   独立重推（不读生成器任何决策字段）在 `check168.B`；
+#:   这里只钉数量——两处分工不同，**不许**拿这里当"证据已验证"。
+EXPECT_W_IN_PROD = 88
 #: 各章「有出边的场景数」—— 第124轮实测基线（**只增不减**）
 DENSITY_124 = {'ch1': 105, 'ch2': 127, 'ch3': 23, 'ch4': 22, 'ch5': 20}
 #: ★ 证据侧唯一允许的 3 条 `no_marker` 例外（如实不写）。
@@ -422,32 +432,57 @@ _order = sorted(range(len(NEW)),
 _decl_bad = [NEW[i]['priority'] for i, j in enumerate(_order) if i != j]
 check(u'C4 新段声明序 == 按 (章, 源下标, 字母, 目标) 排序 & priority 递增（回绕 %d 处）'
       % len(_decl_bad), not _decl_bad, u'%r' % (_decl_bad[:4],))
-
 # ===========================================================================
 print(u'')
-print(u'== D. 拒收纪律：W 门一条都不许进表 ==')
+print(u'== D. W 门的账：第168轮补收之后（原"一条都不许进表"已作废）==')
 # ===========================================================================
+#: ★★★ 第168轮改口径。原因**不是放宽**，是第125轮量错了对象：
+#:   产品里 W 门的出生点对象是**小写** `obj_markerw`（UTMT 实测它的
+#:   sprite 是专属的 `spr_markerW`，与 A~F 同族）；第125轮拿
+#:   `'obj_marker' + 'W'`（大写）去比 ⇒ 恒 0%；又拿 `obj_markerX` 当通用兜底
+#:   ⇒ 84.3%——而 X 有专属 `spr_markerX`，它是**字母 X 的**出生点；
+#:   真通用是 `obj_markerAny`（`spr_markerAny`）。同一把尺重算：
+#:   W = 74 同字母 + 16 通用 = **90/97 = 92.8%**，落在已收五类区间内。
+#:   ⇒ 第168轮收了 88 条（`第168轮-W门补齐/`），本段从现在起守"数量对得上"。
+
+
 def _w_rows(rows):
-    u"""W 门规则的"漏网清单"（纯谓词：真表与合成坏输入**共用一份实现**）。"""
+    u"""W 门规则清单（纯谓词：真表与合成坏输入**共用一份实现**）。"""
     return sorted(str(r.get('to')) for r in rows
                   if str((r.get('_original') or {}).get('via') or '') in W_DOOR)
 
 
 _w_in_prod = _w_rows(RL)
-check(u'D1 ★★★ 产品路由表里**一条 W 门规则都没有**（本轮明确拒收）',
-      not _w_in_prod, u'混入 %d: %r' % (len(_w_in_prod), _w_in_prod[:3]))
+#: ★ 去重键是 **(场景, 目标)**，不是 (目标)：同一目标被**不同场景**的 W 门指向
+#:   是原作事实（88 条只落在 55 个不同目标上）—— 按 `to` 去重会把它们判成冗余，
+#:   那正是第125轮 `(场景,目标)` vs 三元的同一个坑（报告 §5 第 4 条）。
+_w_pairs = set((str(r.get('when_scene')), str(r.get('to'))) for r in RL
+               if str((r.get('_original') or {}).get('via') or '') in W_DOOR)
+check(u'D1 ★★★ 产品路由表里 W 门规则**恰好 %d 条**（第168轮补收；原口径是"一条都没有"）'
+      % EXPECT_W_IN_PROD,
+      len(_w_in_prod) == EXPECT_W_IN_PROD and len(_w_pairs) == EXPECT_W_IN_PROD,
+      u'实测 %d 条 / (场景,目标) 去重 %d' % (len(_w_in_prod), len(_w_pairs)))
 
-check(u'D2 ★★★ 但证据里**确有 %d 条** W 门边（所以 D1 不是空集恒真 —— '
-      u'数据在、是主动不写）' % EXPECT_REFUSED_W,
+# 收的 88 条必须全落在 Deltarune 五章 —— 不许蹭到 desktop/oneshot/ut/outertale/uty
+_w_bad_ch = sorted(set(str(r.get('when_scene')) for r in RL
+                       if str((r.get('_original') or {}).get('via') or '') in W_DOOR
+                       and not str(r.get('when_scene') or '').startswith(
+                           ('ch1.', 'ch2.', 'ch3.', 'ch4.', 'ch5.'))))
+check(u'D1b W 门规则只落在 ch1~ch5（不碰 desktop / oneshot / ut / outertale / uty）',
+      not _w_bad_ch and bool(_w_in_prod), u'越界 %r' % (_w_bad_ch[:4],))
+
+check(u'D2 ★★★ 证据里确有 %d 条 W 门边 ⇒ 98 = 88 收 + 7 拒收 + 1 重复 + 2 已存在'
+      % EXPECT_REFUSED_W,
       STAT['refused_W'] == EXPECT_REFUSED_W,
       u'实测 %d' % STAT['refused_W'])
 
-# --- 负控制：把一条 W 边喂进同一份判据 ⇒ 必须抓出来（证明 D1 有鉴别力） ---
+# --- 负控制：同一份谓词必须能把"偶装成 W"与"偶装成 X"分开 ---
 _fake_w = {'to': 'ch1.x.y', '_original': {'via': 'obj_doorW'}}
 check(u'D3 负控制：同一份判据喂一条 `via=obj_doorW` 的假规则 ⇒ 抓出 1 条（D1 有鉴别力）',
       _w_rows([_fake_w]) == ['ch1.x.y'] and _w_rows([]) == []
       and _w_rows([{'to': 'ch1.a.b', '_original': {'via': 'obj_doorX'}}]) == [],
       u'got=%r' % (_w_rows([_fake_w]),))
+
 
 # ===========================================================================
 print(u'')

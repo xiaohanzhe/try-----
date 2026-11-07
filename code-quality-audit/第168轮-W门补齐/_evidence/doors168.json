@@ -1,0 +1,187 @@
+{
+ "note": "第168轮 UTMT 取证收敛。源文件 probe168_ch1.txt / probe168_ch2.txt 由 _tools/probe168.csx 生成；本文件由 _tools/make_evidence168.py 收敛，判据 check168.E 直接读这份。",
+ "chapters": {
+  "ch1": {
+   "marker_objects": {
+    "obj_marker": "",
+    "obj_marker2": "",
+    "obj_markerA": "spr_markerA",
+    "obj_markerB": "spr_markerB",
+    "obj_markerC": "spr_markerC",
+    "obj_markerD": "spr_markerD",
+    "obj_markerE": "spr_markerE",
+    "obj_markerF": "spr_markerF",
+    "obj_markerr": "spr_markerX",
+    "obj_markers": "spr_markerX",
+    "obj_markert": "spr_markerX",
+    "obj_markeru": "spr_markerX",
+    "obj_markerv": "spr_markerX",
+    "obj_markerw": "spr_markerW",
+    "obj_markerX": "spr_markerX"
+   },
+   "door_entrance": {
+    "gml_Object_obj_doorA_Alarm_2": {
+     "entrance": 1,
+     "room_guard_cmp": 0,
+     "ins": 12
+    },
+    "gml_Object_obj_doorA_musfade_Alarm_2": {
+     "entrance": 1,
+     "room_guard_cmp": 0,
+     "ins": 12
+    },
+    "gml_Object_obj_doorB_Alarm_2": {
+     "entrance": 2,
+     "room_guard_cmp": 0,
+     "ins": 17
+    },
+    "gml_Object_obj_doorB_musfade_Alarm_2": {
+     "entrance": 2,
+     "room_guard_cmp": 0,
+     "ins": 12
+    },
+    "gml_Object_obj_doorC_Alarm_2": {
+     "entrance": 4,
+     "room_guard_cmp": 0,
+     "ins": 15
+    },
+    "gml_Object_obj_doorC_musfade_Alarm_2": {
+     "entrance": 4,
+     "room_guard_cmp": 0,
+     "ins": 15
+    },
+    "gml_Object_obj_doorD_Alarm_2": {
+     "entrance": 5,
+     "room_guard_cmp": 0,
+     "ins": 15
+    },
+    "gml_Object_obj_doorD_musfade_Alarm_2": {
+     "entrance": 5,
+     "room_guard_cmp": 0,
+     "ins": 15
+    },
+    "gml_Object_obj_doorX_Alarm_2": {
+     "entrance": 24,
+     "room_guard_cmp": 0,
+     "ins": 283
+    },
+    "gml_Object_obj_doorX_musfade_Alarm_2": {
+     "entrance": 24,
+     "room_guard_cmp": 0,
+     "ins": 222
+    },
+    "gml_Object_obj_doorW_Alarm_2": {
+     "entrance": 23,
+     "room_guard_cmp": 0,
+     "ins": 58
+    },
+    "gml_Object_obj_doorw_musfade_Alarm_2": {
+     "entrance": 23,
+     "room_guard_cmp": 0,
+     "ins": 78
+    }
+   },
+   "door_codes": [
+    "gml_Object_obj_doorW_Alarm_2",
+    "gml_Object_obj_doorW_Create_0",
+    "gml_Object_obj_doorW_Other_19",
+    "gml_Object_obj_doorw_musfade_Alarm_2",
+    "gml_Object_obj_doorw_musfade_Alarm_3",
+    "gml_Object_obj_doorw_musfade_Create_0",
+    "gml_Object_obj_doorw_musfade_Other_19"
+   ]
+  },
+  "ch2": {
+   "marker_objects": {
+    "obj_marker": "",
+    "obj_marker2": "",
+    "obj_markerAny": "spr_markerAny",
+    "obj_markerA": "spr_markerA",
+    "obj_markerB": "spr_markerB",
+    "obj_markerC": "spr_markerC",
+    "obj_markerD": "spr_markerD",
+    "obj_markerE": "spr_markerE",
+    "obj_markerF": "spr_markerF",
+    "obj_markerr": "spr_markerR",
+    "obj_markers": "spr_markerS",
+    "obj_markert": "spr_markerT",
+    "obj_markeru": "spr_markerU",
+    "obj_markerv": "spr_markerV",
+    "obj_markerw": "spr_markerW",
+    "obj_markerX": "spr_markerX",
+    "obj_markercup": ""
+   },
+   "door_entrance": {
+    "gml_Object_obj_doorA_Alarm_2": {
+     "entrance": 1,
+     "room_guard_cmp": 0,
+     "ins": 16
+    },
+    "gml_Object_obj_doorA_musfade_Alarm_2": {
+     "entrance": 1,
+     "room_guard_cmp": 0,
+     "ins": 16
+    },
+    "gml_Object_obj_doorB_Alarm_2": {
+     "entrance": 2,
+     "room_guard_cmp": 0,
+     "ins": 21
+    },
+    "gml_Object_obj_doorB_musfade_Alarm_2": {
+     "entrance": 2,
+     "room_guard_cmp": 0,
+     "ins": 16
+    },
+    "gml_Object_obj_doorC_Alarm_2": {
+     "entrance": 3,
+     "room_guard_cmp": 0,
+     "ins": 19
+    },
+    "gml_Object_obj_doorC_musfade_Alarm_2": {
+     "entrance": 3,
+     "room_guard_cmp": 0,
+     "ins": 19
+    },
+    "gml_Object_obj_doorD_Alarm_2": {
+     "entrance": 4,
+     "room_guard_cmp": 0,
+     "ins": 19
+    },
+    "gml_Object_obj_doorD_musfade_Alarm_2": {
+     "entrance": 4,
+     "room_guard_cmp": 0,
+     "ins": 19
+    },
+    "gml_Object_obj_doorX_Alarm_2": {
+     "entrance": 23,
+     "room_guard_cmp": 0,
+     "ins": 256
+    },
+    "gml_Object_obj_doorX_musfade_Alarm_2": {
+     "entrance": 24,
+     "room_guard_cmp": 0,
+     "ins": 82
+    },
+    "gml_Object_obj_doorW_Alarm_2": {
+     "entrance": 24,
+     "room_guard_cmp": 0,
+     "ins": 1805
+    },
+    "gml_Object_obj_doorw_musfade_Alarm_2": {
+     "entrance": 20,
+     "room_guard_cmp": 0,
+     "ins": 180
+    }
+   },
+   "door_codes": [
+    "gml_Object_obj_doorW_Alarm_2",
+    "gml_Object_obj_doorW_Create_0",
+    "gml_Object_obj_doorW_Other_19",
+    "gml_Object_obj_doorw_musfade_Alarm_2",
+    "gml_Object_obj_doorw_musfade_Alarm_3",
+    "gml_Object_obj_doorw_musfade_Create_0",
+    "gml_Object_obj_doorw_musfade_Other_19"
+   ]
+  }
+ }
+}

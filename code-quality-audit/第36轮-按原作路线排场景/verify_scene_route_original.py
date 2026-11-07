@@ -360,10 +360,21 @@ _KIND_UT_SHIFT = 'ut_door_shift'
 # ★★★ 第125轮：第五种机制 —— **表驱动门** `obj_doorX`。
 #   它不按下标位移，而是在 `Alarm_2` 里 `if (room == X) room_goto(<查表的 Y>)`，
 #   表长这样 `{源房间 → 目标房间}`。第44轮以"需读对象代码"为由拒收；本轮读了，
-#   并用 marker 判据独立验证：X 命中 **94/94 = 100%**（W 门只有 60.2%/84.3%，
-#   故 W 仍不收）。自洽条件（五条，全部可独立复核）：
+#   并用 marker 判据独立验证：X 命中 **94/94 = 100%**。
+#   ★ **第168轮补 W**：第125轮写在这里的「W 门只有 60.2%/84.3%，故 W 仍不收」
+#     已被推翻 —— 那是**量错了对象**（拿大写 `obj_markerW` 去比小写的
+#     `obj_markerw`；又拿 `obj_markerX` 当通用兜底，而 X 有专属 `spr_markerX`）。
+#     用同一把尺重算，W = 74 同字母 + 16 通用 = **90/97 = 92.8%**，落在已收
+#     五类（91.2%~96.7%）区间内。`obj_doorW_Alarm_2` 的**骨架**与 X 逐句同形
+#     （`entrance` 赋值 → `instance_create` → 一串 `if (room == N) room_goto(M)`）。
+#     ⚠️ 但 `entrance` **不是每类门的常量**：ch1 的 W 门只有 1 个分支（=23），
+#     ch2 的 W 门有 **145 次**赋值、值域 19~24（= S/T/U/V/W/X 的字母序）
+#     ⇒ 它是"每个分支各自指定落点字母"，**判据不许建在它的具体数值上**。
+#     ⇒ W 门 88 条已入表（第168轮，`kind` 仍是本类）。
+#   自洽条件（五条，全部可独立复核）：
 #     ① `table` 是反编译函数名（`gml_Object_*_Alarm_*`）—— 说得出读的是哪段代码；
-#     ② `marker` == `obj_marker` + `door_letter` —— 落点自证方式必须与字母一致；
+#     ② `marker` 配得上 `door_letter` —— 同字母（**大小写不敏感**，W 的出生点
+#        真名是小写 `obj_markerw`）或通用出生点 `obj_markerAny`（见 `_marker_ok`）；
 #     ③ 两端房名非空且不同（同房间不算一次出门）；
 #     ④ `src/dst_room_id` 是 int 且不同（表驱动**不保证** dst == src + 常数，
 #        所以这里**不**断言差值是固定值 —— 那正是它与位移门的区别）；
@@ -425,6 +436,37 @@ _n_table = 0
 _n_ot = 0
 
 
+#: ★ 通用出生点（`sprite` 自证：`spr_markerAny`，与任何字母的 sprite 都不同）。
+#: 第168轮 UTMT 实测：`obj_markerX` 的 sprite 是 `spr_markerX`，那是**字母 X 的**
+#: 出生点，**不是**通用兜底 —— 别把它塞进来。
+_MARKER_ANY = ('obj_markerAny', 'obj_markerAny40px')
+
+
+def _marker_ok(mk, L):
+    u"""`_original.marker` 是否配得上字母 `L`（`_table_self_ok` 的第 ② 条）。
+
+    ★★★ 第168轮为什么不再做严格字符串相等
+    -------------------------------------
+    原来是 `mk == 'obj_marker' + L`。这对 A/B/C/D/E/F/X 都对，唯独对 W 错：
+    原作里 W 门的出生点对象叫 **小写** `obj_markerw`（sprite 是专属的
+    `spr_markerW`，与 A~F 同族），而门对象本身叫大写 `obj_doorW` ——
+    Toby 手写时大小写不一致。第125轮正是拿 `'obj_marker' + 'W'` 去比，
+    于是 W 门的落点自证恒为 0%，门型被整类拒收。
+
+    ⇒ 现在两条都认：
+      ① 同字母（**大小写不敏感**）—— 专属出生点；
+      ② 通用出生点 `obj_markerAny` / `obj_markerAny40px` —— 有些房间没画专属
+         字母，只摆了通用点（A/B/D 各 1~8 条、W 16 条，实测同现象，不是 W 独有）。
+    ⚠️ 本函数**不读证据**，只做"数据自己说不说得通"的自洽；证据侧的独立重推
+       在 `check168.py`（`B` 段），两边分工不许混。
+    """
+    if not isinstance(mk, str):
+        return False
+    if mk in _MARKER_ANY:
+        return True
+    return mk.lower() == ('obj_marker' + L).lower()
+
+
 def _table_self_ok(r):
     u"""表驱动门规则的 `_original` 自洽判定（**纯函数**，供正/负控制复用）。
 
@@ -437,7 +479,7 @@ def _table_self_ok(r):
     if not (isinstance(t, str) and t.startswith('gml_Object_') and '_Alarm_' in t):
         return False
     L = o.get('door_letter')
-    if not (isinstance(L, str) and L and o.get('marker') == 'obj_marker' + L):
+    if not (isinstance(L, str) and L and _marker_ok(o.get('marker'), L)):
         return False
     if r.get('when_door') != L:
         return False
@@ -637,8 +679,18 @@ check('C3a3 负控制：自环的 oneshot_transfer 会被 C3 的新分支判红�
 #     ③ 规则的 `when_door` 与 `_original.door_letter` 不一致 ⇒ 红
 #     ④ 两端同名（自环）⇒ 红
 #     ⑤ `via` 不是门对象名 ⇒ 红
-check('C3a7 ★ C3 的 X 门表驱动分支确有样本（%d 条 kind=%s）' % (_n_table, _KIND_TABLE),
-      _n_table > 0, '样本 %d 条' % _n_table)
+#   ★ 第168轮：`kind=delta_door_table` 现在装**两类门** —— X（83）+ W（88）= 171。
+#     本判据只问"这个分支有没有样本"，所以改成把两类**分开报数**（否则描述里写
+#     "X 门 171 条"就是错的）；具体条数由第44轮 C1c / C1c2 与 `check125.D1` /
+#     `第168轮/_tools/check168.py` 各自点名。
+_TBL_XN = sum(1 for r in (routes.get('routes') or [])
+              if (r.get('_original') or {}).get('kind') == _KIND_TABLE
+              and r.get('when_scene') not in _ORIGIN
+              and (r.get('_original') or {}).get('door_letter') == 'X')
+_TBL_WN = _n_table - _TBL_XN
+check('C3a7 ★ C3 的**表驱动门**分支确有样本（%d 条 kind=%s：X %d / W %d）'
+      % (_n_table, _KIND_TABLE, _TBL_XN, _TBL_WN),
+      _n_table > 0 and _TBL_XN > 0, '样本 %d 条' % _n_table)
 
 
 def _tb(**kw):
@@ -676,7 +728,12 @@ _D_WRONG = {'to': 'ch1.x.room_a', 'when_scene': 'ch1.x.room_b', 'when_door': 'D'
             '_original': {'door_letter': 'D', 'room_delta': 2}}
 _D_NOFIT = {'to': 'ch1.x.room_a', 'when_scene': 'ch1.x.room_b', 'when_door': 'W',
             '_original': {'door_letter': 'W', 'room_delta': 2}}
-check('C3a9 正/负控制：D 门 −2 通过、+2（第44轮的错误先验）判红、W 门（证据不足）判红',
+#   ★ 第168轮改口径（只改措辞，断言一字未动）：W 门**不再是"证据不足"** —— 本轮已按
+#     表驱动机制补收 88 条（`check125.D1` / `check168.B` 守）。它在这里被判红的原因是
+#     **机制不同**：W 的落点由 `Alarm_2` 查表决定，**没有 `room_delta` 可言**，
+#     把它写成位移边就是把"查表"当成"固定位移"（与 X 门同一条理由）。
+check('C3a9 正/负控制：D 门 −2 通过、+2（第44轮的错误先验）判红、'
+      'W 门写成位移边判红（W 是表驱动，没有位移可言）',
       _delta_bad(_D_POS) is None and _delta_bad(_D_WRONG) and _delta_bad(_D_NOFIT),
       repr((_delta_bad(_D_POS), _delta_bad(_D_WRONG), _delta_bad(_D_NOFIT))))
 _D_N = sum(1 for r in (routes.get('routes') or [])
@@ -699,7 +756,9 @@ check('C3a10 ★ D 门确有样本（%d 条，第125轮新增）' % _D_N, _D_N >
 #     那些边用的是哪些字母"，不带字母的边压根不在它的论域里。
 #     ⚠️ 光筛掉会留下**空集恒真**的洞 ⇒ 配 C3b1 非空闸（门字母边必须真有样本）。
 #   ★★★ 第125轮：两处更新。
-#     ① **允许集加 D**（−2 已实证，见 `_DOOR_DELTA` 注释）；E/F/W/Y 依旧不许。
+#     ① **允许集加 D**（−2 已实证，见 `_DOOR_DELTA` 注释）；E/F/W/Y 依旧不许 ——
+#        ★ 第168轮补一句：W 的"不许"只指**位移段**（它没有位移可言）；W 门本身
+#        本轮已按 `kind=delta_door_table` 正规收编 88 条，靠下面第 ② 条自然排除。
 #     ② **`delta_door_table` 也要排除** —— X 门的字母不是"位移字母"，它没有
 #        `room_delta` 可言（落点由 `Alarm_2` 的查表决定），不属于 C3b 的论域。
 #        不排除就会把 'X' 算进来而误报（**判据要跟着机制分类走，不是跟着字母走**）。

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "meta": {
-    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。\n★ 第123轮：ut 段由 243 条增到 525 条（+282）。新增的都是**位移机制**门：`obj_doorB`/`obj_doorBmusicfade` = `room_previous(room)`（−1）、`obj_doorC`/`obj_doorCmusicfade` = `room_next(room_next(room))`（+2）、`obj_doorD`/`obj_doorDmusicfade` = 双 `room_previous`（−2）、`obj_doorAmusicfade`/`obj_papdoor` = +1 —— 全部来自 `Alarm_2` 的反编译原文，与 Deltarune 的「A+1 / B−1 / C+2」同一套约定。条件分支点名的房间（如 `obj_doorA` 的 `castle_prebarrier`，按 `global.flag[7]` 分叉）**不套位移**、如实留空。生成器 `code-quality-audit/第123轮-补齐ut门证据/_tools/gen_routes123.py`。★ 第125轮：Deltarune 五章新增 **139** 条（D 门 56 / X 门 83，priority 5000~5138）。此前只有 A(+1)/B(−1)/C(+2)，`obj_doorD` 与 `obj_doorX` 被第44轮以\"证据不足\"拒收。本轮把两种门补齐，并**先独立验证**再写：D 的位移 = −2（第42轮 Alarm 反编译，与第123轮 ut 的 `obj_doorD` 同型），X 走表驱动（读 `Alarm_2` 的 `{房间→目标}`）；两者都要求**目标房含 `obj_marker<同字母>`**（D 71/74、X 94/94 命中）。★ **W 门不收**：`obj_markerw` 仅 60.2%、`obj_markerX` 84.3%，无一套到 100%，\"证据不足不猜\"这条纪律照旧。D 的 3 个例外全落在 backup/test 房，如实不写。生成器 `code-quality-audit/第125轮-D门与X门补齐/_tools/gen_routes125.py`。★ 第126轮：outertale 新增 **209** 条门路由（`ot_door_guard` 93 / `ot_door_shift` 116，priority 6000~6208）。此前 outertale **0 条**（\"看得到、走不通\"）。来源＝第115轮 `conn_ut.json` 的原始 op（301 条 goto）+ `inst_full.tsv` 的实例分布；`guard` = `if (room == N) room_goto(M)`，且**该门对象真摆在 N 这间房**（实例互证）；`shift` = `room_goto_next()`，按实例房 r → r+1（第123轮 ut 同型）。**不写**：无条件 `room_goto(M)`（src 未知，28 条）、守卫与实例打架（24 条）、两端未登记（54 条）、同(场景,对象)按坐标分叉的多目标（1 组）、`obj_mainchara`（走到屏幕边缘换房，另一层机制）。同时把同一组边写进 `_room_graph.json` 的 `chapters.outertale`（逐门寻路读那张图）。生成器 `code-quality-audit/第126轮-门型收口/_tools/gen_routes126.py`。",
+    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。\n★ 第123轮：ut 段由 243 条增到 525 条（+282）。新增的都是**位移机制**门：`obj_doorB`/`obj_doorBmusicfade` = `room_previous(room)`（−1）、`obj_doorC`/`obj_doorCmusicfade` = `room_next(room_next(room))`（+2）、`obj_doorD`/`obj_doorDmusicfade` = 双 `room_previous`（−2）、`obj_doorAmusicfade`/`obj_papdoor` = +1 —— 全部来自 `Alarm_2` 的反编译原文，与 Deltarune 的「A+1 / B−1 / C+2」同一套约定。条件分支点名的房间（如 `obj_doorA` 的 `castle_prebarrier`，按 `global.flag[7]` 分叉）**不套位移**、如实留空。生成器 `code-quality-audit/第123轮-补齐ut门证据/_tools/gen_routes123.py`。★ 第125轮：Deltarune 五章新增 **139** 条（D 门 56 / X 门 83，priority 5000~5138）。此前只有 A(+1)/B(−1)/C(+2)，`obj_doorD` 与 `obj_doorX` 被第44轮以\"证据不足\"拒收。本轮把两种门补齐，并**先独立验证**再写：D 的位移 = −2（第42轮 Alarm 反编译，与第123轮 ut 的 `obj_doorD` 同型），X 走表驱动（读 `Alarm_2` 的 `{房间→目标}`）；两者都要求**目标房含 `obj_marker<同字母>`**（D 71/74、X 94/94 命中）。★ **W 门不收**：`obj_markerw` 仅 60.2%、`obj_markerX` 84.3%，无一套到 100%，\"证据不足不猜\"这条纪律照旧。D 的 3 个例外全落在 backup/test 房，如实不写。生成器 `code-quality-audit/第125轮-D门与X门补齐/_tools/gen_routes125.py`。★ 第126轮：outertale 新增 **209** 条门路由（`ot_door_guard` 93 / `ot_door_shift` 116，priority 6000~6208）。此前 outertale **0 条**（\"看得到、走不通\"）。来源＝第115轮 `conn_ut.json` 的原始 op（301 条 goto）+ `inst_full.tsv` 的实例分布；`guard` = `if (room == N) room_goto(M)`，且**该门对象真摆在 N 这间房**（实例互证）；`shift` = `room_goto_next()`，按实例房 r → r+1（第123轮 ut 同型）。**不写**：无条件 `room_goto(M)`（src 未知，28 条）、守卫与实例打架（24 条）、两端未登记（54 条）、同(场景,对象)按坐标分叉的多目标（1 组）、`obj_mainchara`（走到屏幕边缘换房，另一层机制）。同时把同一组边写进 `_room_graph.json` 的 `chapters.outertale`（逐门寻路读那张图）。生成器 `code-quality-audit/第126轮-门型收口/_tools/gen_routes126.py`。★ 第168轮：Deltarune 五章新增 **88** 条 **W 门**（priority 7000~7087）。此前 W 一条都没写（第125轮以「`obj_markerw` 60.2% / `obj_markerX` 84.3%，无一套到 100%」拒收）。★ 本轮查明**当年两次都量错了对象**：产品里 marker 对象名是**小写** `obj_markerw`（sprite 是专属的 `spr_markerW`，与 A~F 同族），而 `obj_markerX` 是**字母 X 的**出生点（`spr_markerX`），不是通用兜底；真通用是 `obj_markerAny`（`spr_markerAny`）。机制侧同一次反汇编：`obj_doorW_Alarm_2` 的骨架与 A/B/C/D/X **逐句同形**（先给 `entrance` 赋值 → `instance_create` → 一串 `if (room == N) room_goto(M)`）。★ `entrance` **不是每类门的常量**：ch1 的 W 门只有 1 个分支（23），ch2 的 W 门有 145 次赋值、值域 19~24（= S/T/U/V/W/X 的字母序）⇒ 它是**每个分支各自指定落点字母**，所以判据不建立在它的具体数值上。落点自证按同一把尺重算：**同字母 72 条 + 通用 `obj_markerAny` 16 条 = 88 / 97 = 92.8%**，落在已收五类的 91.2%~96.7% 区间内。**拒收 7 条**（目标房只有 `obj_markerX` 1 条 / 只有别的字母 5 条 / 零 marker 的商店房 1 条），逐条见 report168.md。生成器 `code-quality-audit/第168轮-W门补齐/_tools/gen_routes168.py`。",
     "how_it_works": [
       "1. 控制器把当前语境打包成 context（scene_id / mood / event / keywords）。",
       "2. scene_routing.match() 按 priority 升序挑第一条匹配规则。",
@@ -31532,6 +31532,1678 @@
         "dst_room_name": "a_lab_virt",
         "src_room_id": 242,
         "dst_room_id": 141
+      }
+    },
+    {
+      "to": "ch1.hometown.alphysalley",
+      "priority": 7000,
+      "reason": "原作连接：从 家乡·town_mid 的 W 门离开，落到 家乡·alphysalley（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 11) room_goto(27)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch1.hometown.town_mid",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_alphysalley",
+        "src_room_id": 11,
+        "dst_room_id": 27
+      }
+    },
+    {
+      "to": "ch1.hometown.hospital_lobby",
+      "priority": 7001,
+      "reason": "原作连接：从 家乡·town_south 的 W 门离开，落到 家乡·hospital_lobby（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 13) room_goto(18)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch1.hometown.town_south",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_hospital_lobby",
+        "src_room_id": 13,
+        "dst_room_id": 18
+      }
+    },
+    {
+      "to": "ch1.hometown.town_south",
+      "priority": 7002,
+      "reason": "原作连接：从 家乡·hospital_lobby 的 W 门离开，落到 家乡·town_south（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 18) room_goto(13)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch1.hometown.hospital_lobby",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_hospital_lobby",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 18,
+        "dst_room_id": 13
+      }
+    },
+    {
+      "to": "ch1.hometown.town_mid",
+      "priority": 7003,
+      "reason": "原作连接：从 家乡·alphysalley 的 W 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 27) room_goto(11)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch1.hometown.alphysalley",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_alphysalley",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 27,
+        "dst_room_id": 11
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_entrance",
+      "priority": 7004,
+      "reason": "原作连接：从 猩红森林·castlefront 的 W 门离开，落到 纸牌城堡·entrance（**表驱动**：`obj_doorw_musfade` 的 `Alarm_2` 里`if (room == 104) room_goto(113)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch1.forest.forest_castlefront",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerw",
+        "src_room_name": "room_forest_castlefront",
+        "dst_room_name": "room_cc_entrance",
+        "src_room_id": 104,
+        "dst_room_id": 113
+      }
+    },
+    {
+      "to": "ch1.forest.forest_castlefront",
+      "priority": 7005,
+      "reason": "原作连接：从 纸牌城堡·entrance 的 W 门离开，落到 猩红森林·castlefront（**表驱动**：`obj_doorw_musfade` 的 `Alarm_2` 里`if (room == 113) room_goto(104)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch1.card_castle.cc_entrance",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerw",
+        "src_room_name": "room_cc_entrance",
+        "dst_room_name": "room_forest_castlefront",
+        "src_room_id": 113,
+        "dst_room_id": 104
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_elevator",
+      "priority": 7006,
+      "reason": "原作连接：从 纸牌城堡·一层 的 W 门离开，落到 纸牌城堡·elevator（**表驱动**：`obj_doorw_musfade` 的 `Alarm_2` 里`if (room == 114) room_goto(110)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch1.card_castle.card_castle_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerw",
+        "src_room_name": "纸牌城堡·一层",
+        "dst_room_name": "room_cc_elevator",
+        "src_room_id": 114,
+        "dst_room_id": 110
+      }
+    },
+    {
+      "to": "ch1.card_castle.cc_elevator",
+      "priority": 7007,
+      "reason": "原作连接：从 纸牌城堡·五层 的 W 门离开，落到 纸牌城堡·elevator（**表驱动**：`obj_doorw_musfade` 的 `Alarm_2` 里`if (room == 123) room_goto(110)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch1.card_castle.card_castle_5f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch1",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerw",
+        "src_room_name": "纸牌城堡·五层",
+        "dst_room_name": "room_cc_elevator",
+        "src_room_id": 123,
+        "dst_room_id": 110
+      }
+    },
+    {
+      "to": "ch2.hometown.town_south",
+      "priority": 7008,
+      "reason": "原作连接：从 家乡·hospital_lobby 的 W 门离开，落到 家乡·town_south（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 34) room_goto(29)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.hometown.hospital_lobby",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_hospital_lobby",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 34,
+        "dst_room_id": 29
+      }
+    },
+    {
+      "to": "ch2.hometown.town_mid",
+      "priority": 7009,
+      "reason": "原作连接：从 家乡·alphysalley 的 W 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 43) room_goto(27)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.hometown.alphysalley",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_alphysalley",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 43,
+        "dst_room_id": 27
+      }
+    },
+    {
+      "to": "ch2.hometown.library",
+      "priority": 7010,
+      "reason": "原作连接：从 光世界·computer_lab 的 W 门离开，落到 家乡·library（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 44) room_goto(42)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.light_world.lw_computer_lab",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_computer_lab",
+        "dst_room_name": "room_library",
+        "src_room_id": 44,
+        "dst_room_id": 42
+      }
+    },
+    {
+      "to": "ch2.hometown.library",
+      "priority": 7011,
+      "reason": "原作连接：从 光世界·library_upstairs 的 W 门离开，落到 家乡·library（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 45) room_goto(42)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.light_world.lw_library_upstairs",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_library_upstairs",
+        "dst_room_name": "room_library",
+        "src_room_id": 45,
+        "dst_room_id": 42
+      }
+    },
+    {
+      "to": "ch2.hometown.town_mid",
+      "priority": 7012,
+      "reason": "原作连接：从 光世界·conbini 的 W 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorw_musfade` 的 `Alarm_2` 里`if (room == 47) room_goto(27)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.light_world.lw_conbini",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_conbini",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 47,
+        "dst_room_id": 27
+      }
+    },
+    {
+      "to": "ch2.hometown.town_mid",
+      "priority": 7013,
+      "reason": "原作连接：从 光世界·icee_pizza 的 W 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 48) room_goto(27)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.light_world.lw_icee_pizza",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_icee_pizza",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 48,
+        "dst_room_id": 27
+      }
+    },
+    {
+      "to": "ch2.my_castle_town.dw_castle_east_door",
+      "priority": 7014,
+      "reason": "原作连接：从 城堡镇·tutorial 的 W 门离开，落到 我的城堡镇·east_door（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 56) room_goto(58)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.castle_town.castle_tutorial",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_castle_tutorial",
+        "dst_room_name": "room_dw_castle_east_door",
+        "src_room_id": 56,
+        "dst_room_id": 58
+      }
+    },
+    {
+      "to": "ch2.castle_town.castle_tutorial",
+      "priority": 7015,
+      "reason": "原作连接：从 我的城堡镇·east_door 的 W 门离开，落到 城堡镇·tutorial（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 58) room_goto(56)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.my_castle_town.dw_castle_east_door",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_east_door",
+        "dst_room_name": "room_castle_tutorial",
+        "src_room_id": 58,
+        "dst_room_id": 56
+      }
+    },
+    {
+      "to": "ch2.ralsei_room.dw_ralsei_castle_1f",
+      "priority": 7016,
+      "reason": "原作连接：从 拉尔赛的城堡·castle_front 的 W 门离开，落到 拉尔赛的城堡·castle_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 63) room_goto(67)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.ralsei_room.dw_ralsei_castle_front",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_front",
+        "dst_room_name": "room_dw_ralsei_castle_1f",
+        "src_room_id": 63,
+        "dst_room_id": 67
+      }
+    },
+    {
+      "to": "ch2.ralsei_room.dw_ralsei_castle_1f",
+      "priority": 7017,
+      "reason": "原作连接：从 我的城堡镇·dungeon 的 W 门离开，落到 拉尔赛的城堡·castle_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 69) room_goto(67)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.my_castle_town.dw_castle_dungeon",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_dungeon",
+        "dst_room_name": "room_dw_ralsei_castle_1f",
+        "src_room_id": 69,
+        "dst_room_id": 67
+      }
+    },
+    {
+      "to": "ch2.ralsei_room.dw_ralsei_castle_2f",
+      "priority": 7018,
+      "reason": "原作连接：从 我的城堡镇·rooms_kris 的 W 门离开，落到 拉尔赛的城堡·castle_2f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 71) room_goto(68)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.my_castle_town.dw_castle_rooms_kris",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_rooms_kris",
+        "dst_room_name": "room_dw_ralsei_castle_2f",
+        "src_room_id": 71,
+        "dst_room_id": 68
+      }
+    },
+    {
+      "to": "ch2.ralsei_room.dw_ralsei_castle_2f",
+      "priority": 7019,
+      "reason": "原作连接：从 我的城堡镇·rooms_susie 的 W 门离开，落到 拉尔赛的城堡·castle_2f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 72) room_goto(68)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.my_castle_town.dw_castle_rooms_susie",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_rooms_susie",
+        "dst_room_name": "room_dw_ralsei_castle_2f",
+        "src_room_id": 72,
+        "dst_room_id": 68
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_keyboard_puzzle_3",
+      "priority": 7020,
+      "reason": "原作连接：从 赛博原野·battle_maze_2 的 W 门离开，落到 赛博原野·keyboard_puzzle_3（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 87) room_goto(97)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_battle_maze_2",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_cyber_battle_maze_2",
+        "dst_room_name": "room_dw_cyber_keyboard_puzzle_3",
+        "src_room_id": 87,
+        "dst_room_id": 97
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_post_music_boss_slide",
+      "priority": 7021,
+      "reason": "原作连接：从 赛博原野·music_final 的 W 门离开，落到 赛博原野·post_music_boss_slide（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 88) room_goto(96)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_music_final",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_cyber_music_final",
+        "dst_room_name": "room_dw_cyber_post_music_boss_slide",
+        "src_room_id": 88,
+        "dst_room_id": 96
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_viro_ring",
+      "priority": 7022,
+      "reason": "原作连接：从 赛博原野·teacup_final 的 W 门离开，落到 赛博原野·viro_ring（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 90) room_goto(95)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_teacup_final",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_cyber_teacup_final",
+        "dst_room_name": "room_dw_cyber_viro_ring",
+        "src_room_id": 90,
+        "dst_room_id": 95
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_teacup_final",
+      "priority": 7023,
+      "reason": "原作连接：从 赛博原野·viro_ring 的 W 门离开，落到 赛博原野·teacup_final（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 95) room_goto(90)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_viro_ring",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_cyber_viro_ring",
+        "dst_room_name": "room_dw_cyber_teacup_final",
+        "src_room_id": 95,
+        "dst_room_id": 90
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_battle_maze_2",
+      "priority": 7024,
+      "reason": "原作连接：从 赛博原野·keyboard_puzzle_3 的 W 门离开，落到 赛博原野·battle_maze_2（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 97) room_goto(87)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_keyboard_puzzle_3",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_cyber_keyboard_puzzle_3",
+        "dst_room_name": "room_dw_cyber_battle_maze_2",
+        "src_room_id": 97,
+        "dst_room_id": 87
+      }
+    },
+    {
+      "to": "ch2.cyber_field.dw_cyber_musical_door",
+      "priority": 7025,
+      "reason": "原作连接：从 赛博原野·escalator_slide 的 W 门离开，落到 赛博原野·musical_door（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 102) room_goto(84)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.cyber_field.dw_cyber_escalator_slide",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_cyber_escalator_slide",
+        "dst_room_name": "room_dw_cyber_musical_door",
+        "src_room_id": 102,
+        "dst_room_id": 84
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_traffic_4",
+      "priority": 7026,
+      "reason": "原作连接：从 赛博都市·monologue 的 W 门离开，落到 赛博都市·traffic_4（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 131) room_goto(129)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_monologue",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_city_monologue",
+        "dst_room_name": "room_dw_city_traffic_4",
+        "src_room_id": 131,
+        "dst_room_id": 129
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_big_1",
+      "priority": 7027,
+      "reason": "原作连接：从 赛博都市·susie_ralsei_fun_1 的 W 门离开，落到 赛博都市·big_1（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 137) room_goto(117)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_susie_ralsei_fun_1",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_city_susie_ralsei_fun_1",
+        "dst_room_name": "room_dw_city_big_1",
+        "src_room_id": 137,
+        "dst_room_id": 117
+      }
+    },
+    {
+      "to": "ch2.cyber_city.dw_city_big_1",
+      "priority": 7028,
+      "reason": "原作连接：从 赛博都市·treasure 的 W 门离开，落到 赛博都市·big_1（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 139) room_goto(117)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_treasure",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_city_treasure",
+        "dst_room_name": "room_dw_city_big_1",
+        "src_room_id": 139,
+        "dst_room_id": 117
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+      "priority": 7029,
+      "reason": "原作连接：从 女王宅邸·krisroom 的 W 门离开，落到 女王宅邸·客殿（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 150) room_goto(152)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_krisroom",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_krisroom",
+        "dst_room_name": "女王宅邸·客殿",
+        "src_room_id": 150,
+        "dst_room_id": 152
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_guest_hall",
+      "priority": 7030,
+      "reason": "原作连接：从 女王宅邸·susieroom 的 W 门离开，落到 女王宅邸·客殿（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 151) room_goto(152)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_susieroom",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_susieroom",
+        "dst_room_name": "女王宅邸·客殿",
+        "src_room_id": 151,
+        "dst_room_id": 152
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_teacup",
+      "priority": 7031,
+      "reason": "原作连接：从 女王宅邸·traffic 的 W 门离开，落到 女王宅邸·east_teacup（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 162) room_goto(165)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_traffic",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_traffic",
+        "dst_room_name": "room_dw_mansion_east_teacup",
+        "src_room_id": 162,
+        "dst_room_id": 165
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+      "priority": 7032,
+      "reason": "原作连接：从 女王宅邸·b_entrance 的 W 门离开，落到 女王宅邸·east_1f_secret（**表驱动**：`obj_doorw_musfade` 的 `Alarm_2` 里`if (room == 169) room_goto(164)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_entrance",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_b_entrance",
+        "dst_room_name": "room_dw_mansion_east_1f_secret",
+        "src_room_id": 169,
+        "dst_room_id": 164
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_west_1f",
+      "priority": 7033,
+      "reason": "原作连接：从 女王宅邸·b_west_1f_a 的 W 门离开，落到 女王宅邸·b_west_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 173) room_goto(172)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_west_1f_a",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_b_west_1f_a",
+        "dst_room_name": "room_dw_mansion_b_west_1f",
+        "src_room_id": 173,
+        "dst_room_id": 172
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_west_1f",
+      "priority": 7034,
+      "reason": "原作连接：从 女王宅邸·b_west_1f_b 的 W 门离开，落到 女王宅邸·b_west_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 174) room_goto(172)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_west_1f_b",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_b_west_1f_b",
+        "dst_room_name": "room_dw_mansion_b_west_1f",
+        "src_room_id": 174,
+        "dst_room_id": 172
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_west_1f",
+      "priority": 7035,
+      "reason": "原作连接：从 女王宅邸·b_west_2f 的 W 门离开，落到 女王宅邸·b_west_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 175) room_goto(172)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_west_2f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_b_west_2f",
+        "dst_room_name": "room_dw_mansion_b_west_1f",
+        "src_room_id": 175,
+        "dst_room_id": 172
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_b_east",
+      "priority": 7036,
+      "reason": "原作连接：从 女王宅邸·b_east_b 的 W 门离开，落到 女王宅邸·b_east（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 178) room_goto(176)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_b_east_b",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_b_east_b",
+        "dst_room_name": "room_dw_mansion_b_east",
+        "src_room_id": 178,
+        "dst_room_id": 176
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_teacup",
+      "priority": 7037,
+      "reason": "原作连接：从 女王宅邸·east_2f_a 的 W 门离开，落到 女王宅邸·east_teacup（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 180) room_goto(165)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_a",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_east_2f_a",
+        "dst_room_name": "room_dw_mansion_east_teacup",
+        "src_room_id": 180,
+        "dst_room_id": 165
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+      "priority": 7038,
+      "reason": "原作连接：从 女王宅邸·kitchen 的 W 门离开，落到 女王宅邸·east_2f_transformed_new（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 183) room_goto(181)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_kitchen",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_kitchen",
+        "dst_room_name": "room_dw_mansion_east_2f_transformed_new",
+        "src_room_id": 183,
+        "dst_room_id": 181
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_3f",
+      "priority": 7039,
+      "reason": "原作连接：从 女王宅邸·east_3f_projection 的 W 门离开，落到 女王宅邸·三层（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 188) room_goto(187)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_3f_projection",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_east_3f_projection",
+        "dst_room_name": "女王宅邸·三层",
+        "src_room_id": 188,
+        "dst_room_id": 187
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_3f",
+      "priority": 7040,
+      "reason": "原作连接：从 女王宅邸·east_3f_toilet 的 W 门离开，落到 女王宅邸·三层（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 189) room_goto(187)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_3f_toilet",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_east_3f_toilet",
+        "dst_room_name": "女王宅邸·三层",
+        "src_room_id": 189,
+        "dst_room_id": 187
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_3f",
+      "priority": 7041,
+      "reason": "原作连接：从 女王宅邸·acid_tunnel 的 W 门离开，落到 女王宅邸·三层（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 190) room_goto(187)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_acid_tunnel",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_acid_tunnel",
+        "dst_room_name": "女王宅邸·三层",
+        "src_room_id": 190,
+        "dst_room_id": 187
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_bridges",
+      "priority": 7042,
+      "reason": "原作连接：从 女王宅邸·acid_tunnel_puzzle_entrance 的 W 门离开，落到 女王宅邸·bridges（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 191) room_goto(204)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_acid_tunnel_puzzle_entrance",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_acid_tunnel_puzzle_entrance",
+        "dst_room_name": "room_dw_mansion_bridges",
+        "src_room_id": 191,
+        "dst_room_id": 204
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_4f_b",
+      "priority": 7043,
+      "reason": "原作连接：从 女王宅邸·noelle_room 的 W 门离开，落到 女王宅邸·east_4f_b（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 203) room_goto(194)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_noelle_room",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_noelle_room",
+        "dst_room_name": "room_dw_mansion_east_4f_b",
+        "src_room_id": 203,
+        "dst_room_id": 194
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_bridges",
+      "priority": 7044,
+      "reason": "原作连接：从 女王宅邸·bridges_funny 的 W 门离开，落到 女王宅邸·bridges（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 205) room_goto(204)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_bridges_funny",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_bridges_funny",
+        "dst_room_name": "room_dw_mansion_bridges",
+        "src_room_id": 205,
+        "dst_room_id": 204
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_bridges",
+      "priority": 7045,
+      "reason": "原作连接：从 女王宅邸·mouseLottery 的 W 门离开，落到 女王宅邸·bridges（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 206) room_goto(204)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_mouselottery",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_mouseLottery",
+        "dst_room_name": "room_dw_mansion_bridges",
+        "src_room_id": 206,
+        "dst_room_id": 204
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_bridges",
+      "priority": 7046,
+      "reason": "原作连接：从 女王宅邸·hands 的 W 门离开，落到 女王宅邸·bridges（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 207) room_goto(204)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_hands",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_hands",
+        "dst_room_name": "room_dw_mansion_bridges",
+        "src_room_id": 207,
+        "dst_room_id": 204
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_dininghall",
+      "priority": 7047,
+      "reason": "原作连接：从 女王宅邸·dining_storage 的 W 门离开，落到 女王宅邸·dininghall（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 210) room_goto(209)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_dining_storage",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_mansion_dining_storage",
+        "dst_room_name": "room_dw_mansion_dininghall",
+        "src_room_id": 210,
+        "dst_room_id": 209
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_c",
+      "priority": 7048,
+      "reason": "原作连接：从 女王宅邸·east_2f_c_b 的 W 门离开，落到 女王宅邸·east_2f_c（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 212) room_goto(184)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_c_b",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_east_2f_c_b",
+        "dst_room_name": "room_dw_mansion_east_2f_c",
+        "src_room_id": 212,
+        "dst_room_id": 184
+      }
+    },
+    {
+      "to": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "priority": 7049,
+      "reason": "原作连接：从 女王宅邸·east_4f_a 的 W 门离开，落到 女王宅邸·入口（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 217) room_goto(157)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch2.queens_mansion.dw_mansion_east_4f_a",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_dw_mansion_east_4f_a",
+        "dst_room_name": "女王宅邸·入口",
+        "src_room_id": 217,
+        "dst_room_id": 157
+      }
+    },
+    {
+      "to": "ch2.ralsei_room.dw_ralsei_castle_2f",
+      "priority": 7050,
+      "reason": "原作连接：从 纸牌城堡·lancer 的 W 门离开，落到 拉尔赛的城堡·castle_2f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 262) room_goto(68)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch2.card_castle.cc_lancer",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_cc_lancer",
+        "dst_room_name": "room_dw_ralsei_castle_2f",
+        "src_room_id": 262,
+        "dst_room_id": 68
+      }
+    },
+    {
+      "to": "ch3.hometown.town_south",
+      "priority": 7051,
+      "reason": "原作连接：从 家乡·hospital_lobby 的 W 门离开，落到 家乡·town_south（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 31) room_goto(26)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.hometown.hospital_lobby",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_hospital_lobby",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 31,
+        "dst_room_id": 26
+      }
+    },
+    {
+      "to": "ch3.hometown.town_mid",
+      "priority": 7052,
+      "reason": "原作连接：从 家乡·alphysalley 的 W 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 40) room_goto(24)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.hometown.alphysalley",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_alphysalley",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 40,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch3.hometown.library",
+      "priority": 7053,
+      "reason": "原作连接：从 光世界·computer_lab 的 W 门离开，落到 家乡·library（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 41) room_goto(39)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.light_world.lw_computer_lab",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_computer_lab",
+        "dst_room_name": "room_library",
+        "src_room_id": 41,
+        "dst_room_id": 39
+      }
+    },
+    {
+      "to": "ch3.hometown.library",
+      "priority": 7054,
+      "reason": "原作连接：从 光世界·library_upstairs 的 W 门离开，落到 家乡·library（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 42) room_goto(39)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.light_world.lw_library_upstairs",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_library_upstairs",
+        "dst_room_name": "room_library",
+        "src_room_id": 42,
+        "dst_room_id": 39
+      }
+    },
+    {
+      "to": "ch3.hometown.town_mid",
+      "priority": 7055,
+      "reason": "原作连接：从 光世界·conbini 的 W 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorw_musfade` 的 `Alarm_2` 里`if (room == 44) room_goto(24)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.light_world.lw_conbini",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_conbini",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 44,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch3.hometown.town_mid",
+      "priority": 7056,
+      "reason": "原作连接：从 光世界·icee_pizza 的 W 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 45) room_goto(24)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.light_world.lw_icee_pizza",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_icee_pizza",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 45,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch3.my_castle_town.dw_castle_east_door",
+      "priority": 7057,
+      "reason": "原作连接：从 城堡镇·tutorial 的 W 门离开，落到 我的城堡镇·east_door（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 52) room_goto(53)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.castle_town.castle_tutorial",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_castle_tutorial",
+        "dst_room_name": "room_dw_castle_east_door",
+        "src_room_id": 52,
+        "dst_room_id": 53
+      }
+    },
+    {
+      "to": "ch3.castle_town.castle_tutorial",
+      "priority": 7058,
+      "reason": "原作连接：从 我的城堡镇·east_door 的 W 门离开，落到 城堡镇·tutorial（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 53) room_goto(52)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.my_castle_town.dw_castle_east_door",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_east_door",
+        "dst_room_name": "room_castle_tutorial",
+        "src_room_id": 53,
+        "dst_room_id": 52
+      }
+    },
+    {
+      "to": "ch3.ralsei_room.dw_ralsei_castle_1f",
+      "priority": 7059,
+      "reason": "原作连接：从 拉尔赛的城堡·castle_front 的 W 门离开，落到 拉尔赛的城堡·castle_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 57) room_goto(61)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.ralsei_room.dw_ralsei_castle_front",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_front",
+        "dst_room_name": "room_dw_ralsei_castle_1f",
+        "src_room_id": 57,
+        "dst_room_id": 61
+      }
+    },
+    {
+      "to": "ch3.ralsei_room.dw_ralsei_castle_1f",
+      "priority": 7060,
+      "reason": "原作连接：从 我的城堡镇·dungeon 的 W 门离开，落到 拉尔赛的城堡·castle_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 63) room_goto(61)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.my_castle_town.dw_castle_dungeon",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_dungeon",
+        "dst_room_name": "room_dw_ralsei_castle_1f",
+        "src_room_id": 63,
+        "dst_room_id": 61
+      }
+    },
+    {
+      "to": "ch3.ralsei_room.dw_ralsei_castle_2f",
+      "priority": 7061,
+      "reason": "原作连接：从 我的城堡镇·rooms_kris 的 W 门离开，落到 拉尔赛的城堡·castle_2f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 64) room_goto(62)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.my_castle_town.dw_castle_rooms_kris",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_rooms_kris",
+        "dst_room_name": "room_dw_ralsei_castle_2f",
+        "src_room_id": 64,
+        "dst_room_id": 62
+      }
+    },
+    {
+      "to": "ch3.ralsei_room.dw_ralsei_castle_2f",
+      "priority": 7062,
+      "reason": "原作连接：从 我的城堡镇·rooms_susie 的 W 门离开，落到 拉尔赛的城堡·castle_2f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 65) room_goto(62)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.my_castle_town.dw_castle_rooms_susie",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_rooms_susie",
+        "dst_room_name": "room_dw_ralsei_castle_2f",
+        "src_room_id": 65,
+        "dst_room_id": 62
+      }
+    },
+    {
+      "to": "ch3.ralsei_room.dw_ralsei_castle_2f",
+      "priority": 7063,
+      "reason": "原作连接：从 纸牌城堡·lancer 的 W 门离开，落到 拉尔赛的城堡·castle_2f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 80) room_goto(62)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch3.card_castle.cc_lancer",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_cc_lancer",
+        "dst_room_name": "room_dw_ralsei_castle_2f",
+        "src_room_id": 80,
+        "dst_room_id": 62
+      }
+    },
+    {
+      "to": "ch4.hometown.town_south",
+      "priority": 7064,
+      "reason": "原作连接：从 家乡·hospital_lobby 的 W 门离开，落到 家乡·town_south（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 31) room_goto(26)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch4.hometown.hospital_lobby",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_hospital_lobby",
+        "dst_room_name": "room_town_south",
+        "src_room_id": 31,
+        "dst_room_id": 26
+      }
+    },
+    {
+      "to": "ch4.hometown.hometown",
+      "priority": 7065,
+      "reason": "原作连接：从 家乡·alphysalley 的 W 门离开，落到 家乡（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 40) room_goto(24)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch4.hometown.alphysalley",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_alphysalley",
+        "dst_room_name": "家乡",
+        "src_room_id": 40,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch4.hometown.library",
+      "priority": 7066,
+      "reason": "原作连接：从 光世界·computer_lab 的 W 门离开，落到 家乡·library（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 41) room_goto(39)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch4.light_world.lw_computer_lab",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_computer_lab",
+        "dst_room_name": "room_library",
+        "src_room_id": 41,
+        "dst_room_id": 39
+      }
+    },
+    {
+      "to": "ch4.hometown.library",
+      "priority": 7067,
+      "reason": "原作连接：从 光世界·library_upstairs 的 W 门离开，落到 家乡·library（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 42) room_goto(39)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch4.light_world.lw_library_upstairs",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_library_upstairs",
+        "dst_room_name": "room_library",
+        "src_room_id": 42,
+        "dst_room_id": 39
+      }
+    },
+    {
+      "to": "ch4.hometown.hometown",
+      "priority": 7068,
+      "reason": "原作连接：从 光世界·conbini 的 W 门离开，落到 家乡（**表驱动**：`obj_doorw_musfade` 的 `Alarm_2` 里`if (room == 44) room_goto(24)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch4.light_world.lw_conbini",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_conbini",
+        "dst_room_name": "家乡",
+        "src_room_id": 44,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch4.hometown.hometown",
+      "priority": 7069,
+      "reason": "原作连接：从 光世界·icee_pizza 的 W 门离开，落到 家乡（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 45) room_goto(24)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch4.light_world.lw_icee_pizza",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_icee_pizza",
+        "dst_room_name": "家乡",
+        "src_room_id": 45,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch4.my_castle_town.dw_castle_east_door",
+      "priority": 7070,
+      "reason": "原作连接：从 城堡镇·tutorial 的 W 门离开，落到 我的城堡镇·east_door（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 61) room_goto(62)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch4.castle_town.castle_tutorial",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_castle_tutorial",
+        "dst_room_name": "room_dw_castle_east_door",
+        "src_room_id": 61,
+        "dst_room_id": 62
+      }
+    },
+    {
+      "to": "ch4.castle_town.castle_tutorial",
+      "priority": 7071,
+      "reason": "原作连接：从 我的城堡镇·east_door 的 W 门离开，落到 城堡镇·tutorial（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 62) room_goto(61)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch4.my_castle_town.dw_castle_east_door",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_east_door",
+        "dst_room_name": "room_castle_tutorial",
+        "src_room_id": 62,
+        "dst_room_id": 61
+      }
+    },
+    {
+      "to": "ch4.ralsei_room.dw_ralsei_castle_1f",
+      "priority": 7072,
+      "reason": "原作连接：从 拉尔赛的城堡·castle_front 的 W 门离开，落到 拉尔赛的城堡·castle_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 66) room_goto(70)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch4.ralsei_room.dw_ralsei_castle_front",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_front",
+        "dst_room_name": "room_dw_ralsei_castle_1f",
+        "src_room_id": 66,
+        "dst_room_id": 70
+      }
+    },
+    {
+      "to": "ch4.ralsei_room.dw_ralsei_castle_1f",
+      "priority": 7073,
+      "reason": "原作连接：从 我的城堡镇·dungeon 的 W 门离开，落到 拉尔赛的城堡·castle_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 72) room_goto(70)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch4.my_castle_town.dw_castle_dungeon",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_dungeon",
+        "dst_room_name": "room_dw_ralsei_castle_1f",
+        "src_room_id": 72,
+        "dst_room_id": 70
+      }
+    },
+    {
+      "to": "ch4.ralsei_room.dw_ralsei_castle_2f",
+      "priority": 7074,
+      "reason": "原作连接：从 纸牌城堡·lancer 的 W 门离开，落到 拉尔赛的城堡·castle_2f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 89) room_goto(71)`，不是固定位移；目标房含 `obj_markerAny` 作为出生点）。",
+      "when_scene": "ch4.card_castle.cc_lancer",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerAny",
+        "src_room_name": "room_cc_lancer",
+        "dst_room_name": "room_dw_ralsei_castle_2f",
+        "src_room_id": 89,
+        "dst_room_id": 71
+      }
+    },
+    {
+      "to": "ch5.hometown.hometown",
+      "priority": 7075,
+      "reason": "原作连接：从 家乡·hospital_lobby 的 W 门离开，落到 家乡（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 29) room_goto(24)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.hometown.hospital_lobby",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_hospital_lobby",
+        "dst_room_name": "家乡",
+        "src_room_id": 29,
+        "dst_room_id": 24
+      }
+    },
+    {
+      "to": "ch5.hometown.town_mid",
+      "priority": 7076,
+      "reason": "原作连接：从 家乡·alphysalley 的 W 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 38) room_goto(22)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.hometown.alphysalley",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_alphysalley",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 38,
+        "dst_room_id": 22
+      }
+    },
+    {
+      "to": "ch5.hometown.library",
+      "priority": 7077,
+      "reason": "原作连接：从 光世界·computer_lab 的 W 门离开，落到 家乡·library（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 39) room_goto(37)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.light_world.lw_computer_lab",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_computer_lab",
+        "dst_room_name": "room_library",
+        "src_room_id": 39,
+        "dst_room_id": 37
+      }
+    },
+    {
+      "to": "ch5.hometown.library",
+      "priority": 7078,
+      "reason": "原作连接：从 光世界·library_upstairs 的 W 门离开，落到 家乡·library（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 40) room_goto(37)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.light_world.lw_library_upstairs",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_library_upstairs",
+        "dst_room_name": "room_library",
+        "src_room_id": 40,
+        "dst_room_id": 37
+      }
+    },
+    {
+      "to": "ch5.hometown.town_mid",
+      "priority": 7079,
+      "reason": "原作连接：从 光世界·conbini 的 W 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorw_musfade` 的 `Alarm_2` 里`if (room == 42) room_goto(22)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.light_world.lw_conbini",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_conbini",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 42,
+        "dst_room_id": 22
+      }
+    },
+    {
+      "to": "ch5.hometown.town_mid",
+      "priority": 7080,
+      "reason": "原作连接：从 光世界·icee_pizza 的 W 门离开，落到 家乡·town_mid（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 43) room_goto(22)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.light_world.lw_icee_pizza",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_lw_icee_pizza",
+        "dst_room_name": "room_town_mid",
+        "src_room_id": 43,
+        "dst_room_id": 22
+      }
+    },
+    {
+      "to": "ch5.my_castle_town.dw_castle_east_door",
+      "priority": 7081,
+      "reason": "原作连接：从 城堡镇·tutorial 的 W 门离开，落到 我的城堡镇·east_door（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 50) room_goto(51)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.castle_town.castle_tutorial",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_castle_tutorial",
+        "dst_room_name": "room_dw_castle_east_door",
+        "src_room_id": 50,
+        "dst_room_id": 51
+      }
+    },
+    {
+      "to": "ch5.castle_town.castle_tutorial",
+      "priority": 7082,
+      "reason": "原作连接：从 我的城堡镇·east_door 的 W 门离开，落到 城堡镇·tutorial（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 51) room_goto(50)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.my_castle_town.dw_castle_east_door",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_east_door",
+        "dst_room_name": "room_castle_tutorial",
+        "src_room_id": 51,
+        "dst_room_id": 50
+      }
+    },
+    {
+      "to": "ch5.ralsei_room.dw_ralsei_castle_1f",
+      "priority": 7083,
+      "reason": "原作连接：从 拉尔赛的城堡·castle_front 的 W 门离开，落到 拉尔赛的城堡·castle_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 55) room_goto(59)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.ralsei_room.dw_ralsei_castle_front",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_front",
+        "dst_room_name": "room_dw_ralsei_castle_1f",
+        "src_room_id": 55,
+        "dst_room_id": 59
+      }
+    },
+    {
+      "to": "ch5.ralsei_room.dw_ralsei_castle_1f",
+      "priority": 7084,
+      "reason": "原作连接：从 我的城堡镇·dungeon 的 W 门离开，落到 拉尔赛的城堡·castle_1f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 62) room_goto(59)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.my_castle_town.dw_castle_dungeon",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_dungeon",
+        "dst_room_name": "room_dw_ralsei_castle_1f",
+        "src_room_id": 62,
+        "dst_room_id": 59
+      }
+    },
+    {
+      "to": "ch5.ralsei_room.dw_ralsei_castle_2f",
+      "priority": 7085,
+      "reason": "原作连接：从 我的城堡镇·rooms_kris 的 W 门离开，落到 拉尔赛的城堡·castle_2f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 63) room_goto(60)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.my_castle_town.dw_castle_rooms_kris",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_rooms_kris",
+        "dst_room_name": "room_dw_ralsei_castle_2f",
+        "src_room_id": 63,
+        "dst_room_id": 60
+      }
+    },
+    {
+      "to": "ch5.ralsei_room.dw_ralsei_castle_2f",
+      "priority": 7086,
+      "reason": "原作连接：从 我的城堡镇·rooms_susie 的 W 门离开，落到 拉尔赛的城堡·castle_2f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 64) room_goto(60)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.my_castle_town.dw_castle_rooms_susie",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_castle_rooms_susie",
+        "dst_room_name": "room_dw_ralsei_castle_2f",
+        "src_room_id": 64,
+        "dst_room_id": 60
+      }
+    },
+    {
+      "to": "ch5.ralsei_room.dw_ralsei_castle_2f",
+      "priority": 7087,
+      "reason": "原作连接：从 纸牌城堡·lancer 的 W 门离开，落到 拉尔赛的城堡·castle_2f（**表驱动**：`obj_doorW` 的 `Alarm_2` 里`if (room == 80) room_goto(60)`，不是固定位移；目标房含 `obj_markerw` 作为出生点）。",
+      "when_scene": "ch5.card_castle.cc_lancer",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_cc_lancer",
+        "dst_room_name": "room_dw_ralsei_castle_2f",
+        "src_room_id": 80,
+        "dst_room_id": 60
       }
     }
   ],

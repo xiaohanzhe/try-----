@@ -1,0 +1,338 @@
+source=D:\_utmt_tmp\ch1_data.win
+
+========== [A] obj_marker* / obj_door* 对象定义 ==========
+  obj_marker                 sprite=                           parent=                     depth=0 vis=True events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_marker2                sprite=                           parent=                     depth=0 vis=True events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markerA                sprite=spr_markerA                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markerB                sprite=spr_markerB                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markerC                sprite=spr_markerC                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markerD                sprite=spr_markerD                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markerE                sprite=spr_markerE                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markerF                sprite=spr_markerF                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markerr                sprite=spr_markerX                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markers                sprite=spr_markerX                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markert                sprite=spr_markerX                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markeru                sprite=spr_markerX                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markerv                sprite=spr_markerX                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markerw                sprite=spr_markerW                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_markerX                sprite=spr_markerX                parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  obj_heartmarker            sprite=spr_diamondbullet_form     parent=                     depth=0 vis=False events=[?,?,?,?,?,?,?,?,?,?,?,?,?,?,?]
+  (marker 对象共 16 个)
+
+========== [B] code 名含 marker / entrance ==========
+
+### gml_GlobalScript_scr_marker   ins=27
+      0  B              Double    Double    
+      1  PushI          Int16     Double    86
+      2  Conv           Int32     Variable  
+      3  Push           Variable  Double    VAR=argument1
+      4  Push           Variable  Double    VAR=argument0
+      5  Call           Int32     Double    FN=gml_Script_instance_create
+      6  Pop            Variable  Variable  VAR=thismarker
+      7  Push           Variable  Double    VAR=thismarker
+      8  PushI          Int16     Double    -9
+      9  PushEnv        Double    Double    0
+     10  Push           Variable  Double    VAR=argument2
+     11  Pop            Variable  Variable  VAR=sprite_index
+     12  PushI          Int16     Double    0
+     13  Pop            Variable  Int32     VAR=image_speed
+     14  PopEnv         Int16     Int16     
+     15  Push           Variable  Double    VAR=thismarker
+     16  Ret            Variable  Double    
+     17  Exit           Int32     Double    
+     18  Push           Int32     Double    FN=gml_Script_scr_marker
+     19  Conv           Int32     Variable  
+     20  PushI          Int16     Double    -1
+     21  Conv           Int32     Variable  
+     22  Call           Int32     Double    FN=method
+     23  Dup            Variable  Double    
+     24  PushI          Int16     Double    -1
+     25  Pop            Variable  Variable  VAR=scr_marker
+     26  Popz           Variable  Double    
+
+### gml_GlobalScript_scr_dark_marker   ins=31
+      0  B              Double    Double    
+      1  PushI          Int16     Double    86
+      2  Conv           Int32     Variable  
+      3  Push           Variable  Double    VAR=argument1
+      4  Push           Variable  Double    VAR=argument0
+      5  Call           Int32     Double    FN=gml_Script_instance_create
+      6  Pop            Variable  Variable  VAR=thismarker
+      7  Push           Variable  Double    VAR=thismarker
+      8  PushI          Int16     Double    -9
+      9  PushEnv        Double    Double    0
+     10  Push           Variable  Double    VAR=argument2
+     11  Pop            Variable  Variable  VAR=sprite_index
+     12  PushI          Int16     Double    0
+     13  Pop            Variable  Int32     VAR=image_speed
+     14  PushI          Int16     Double    2
+     15  Pop            Variable  Int32     VAR=image_xscale
+     16  PushI          Int16     Double    2
+     17  Pop            Variable  Int32     VAR=image_yscale
+     18  PopEnv         Int16     Int16     
+     19  Push           Variable  Double    VAR=thismarker
+     20  Ret            Variable  Double    
+     21  Exit           Int32     Double    
+     22  Push           Int32     Double    FN=gml_Script_scr_dark_marker
+     23  Conv           Int32     Variable  
+     24  PushI          Int16     Double    -1
+     25  Conv           Int32     Variable  
+     26  Call           Int32     Double    FN=method
+     27  Dup            Variable  Double    
+     28  PushI          Int16     Double    -1
+     29  Pop            Variable  Variable  VAR=scr_dark_marker
+     30  Popz           Variable  Double    
+
+### gml_Object_obj_doorw_musfade_Create_0   ins=2
+      0  PushI          Int16     Double    0
+      1  Pop            Variable  Int32     VAR=touched
+
+### gml_Object_obj_doorw_musfade_Alarm_3   ins=5
+      0  PushI          Int16     Double    -5
+      1  PushI          Int16     Double    0
+      2  Push           Variable  Double    VAR=currentsong
+      3  Call           Int32     Double    FN=gml_Script_snd_free
+      4  Popz           Variable  Double    
+
+### gml_Object_obj_doorw_musfade_Alarm_2   ins=78
+      0  PushI          Int16     Double    23
+      1  Pop            Variable  Int32     VAR=entrance
+      2  PushI          Int16     Double    145
+      3  Conv           Int32     Variable  
+      4  PushI          Int16     Double    0
+      5  Conv           Int32     Variable  
+      6  PushI          Int16     Double    0
+      7  Conv           Int32     Variable  
+      8  Call           Int32     Double    FN=gml_Script_instance_create
+      9  Popz           Variable  Double    
+     10  PushBltn       Variable  Double    VAR=room
+     11  PushI          Int16     Double    114
+     12  Cmp            Int32     Variable  
+     13  Bf             Double    Double    
+     14  PushI          Int16     Double    110
+     15  Conv           Int32     Variable  
+     16  Call           Int32     Double    FN=room_goto
+     17  Popz           Variable  Double    
+     18  Push           Int32     Double    231188
+     19  Break          Int16     Double    
+     20  PushI          Int16     Double    1
+     21  Conv           Int32     Variable  
+     22  PushI          Int16     Double    -5
+     23  PushI          Int16     Double    239
+     24  Pop            Variable  Variable  VAR=flag
+     25  PushBltn       Variable  Double    VAR=room
+     26  PushI          Int16     Double    123
+     27  Cmp            Int32     Variable  
+     28  Bf             Double    Double    
+     29  PushI          Int16     Double    110
+     30  Conv           Int32     Variable  
+     31  Call           Int32     Double    FN=room_goto
+     32  Popz           Variable  Double    
+     33  PushI          Int16     Double    2
+     34  Conv           Int32     Variable  
+     35  PushI          Int16     Double    -5
+     36  PushI          Int16     Double    239
+     37  Pop            Variable  Variable  VAR=flag
+     38  PushBltn       Variable  Double    VAR=room
+     39  PushI          Int16     Double    110
+     40  Cmp            Int32     Variable  
+     41  Bf             Double    Double    
+     42  PushI          Int16     Double    -5
+     43  PushI          Int16     Double    239
+     44  Push           Variable  Double    VAR=flag
+     45  PushI          Int16     Double    1
+     46  Cmp            Int32     Variable  
+     47  Bf             Double    Double    
+     48  PushI          Int16     Double    114
+     49  Conv           Int32     Variable  
+     50  Call           Int32     Double    FN=room_goto
+     51  Popz           Variable  Double    
+     52  PushI          Int16     Double    -5
+     53  PushI          Int16     Double    239
+     54  Push           Variable  Double    VAR=flag
+     55  PushI          Int16     Double    2
+     56  Cmp            Int32     Variable  
+     57  Bf             Double    Double    
+     58  PushI          Int16     Double    123
+     59  Conv           Int32     Variable  
+     60  Call           Int32     Double    FN=room_goto
+     61  Popz           Variable  Double    
+     62  PushBltn       Variable  Double    VAR=room
+     63  PushI          Int16     Double    104
+     64  Cmp            Int32     Variable  
+     65  Bf             Double    Double    
+     66  PushI          Int16     Double    113
+     67  Conv           Int32     Variable  
+     68  Call           Int32     Double    FN=room_goto
+     69  Popz           Variable  Double    
+     70  PushBltn       Variable  Double    VAR=room
+     71  PushI          Int16     Double    113
+     72  Cmp            Int32     Variable  
+     73  Bf             Double    Double    
+     74  PushI          Int16     Double    104
+     75  Conv           Int32     Variable  
+     76  Call           Int32     Double    FN=room_goto
+     77  Popz           Variable  Double    
+
+### gml_Object_obj_doorw_musfade_Other_19   ins=37
+      0  PushI          Int16     Double    3
+      1  Pop            Variable  Int32     VAR=interact
+      2  PushI          Int16     Double    14
+      3  Conv           Int32     Variable  
+      4  PushI          Int16     Double    0
+      5  Conv           Int32     Variable  
+      6  PushI          Int16     Double    -5
+      7  PushI          Int16     Double    1
+      8  Push           Variable  Double    VAR=currentsong
+      9  Call           Int32     Double    FN=gml_Script_mus_volume
+     10  Popz           Variable  Double    
+     11  PushI          Int16     Double    143
+     12  Conv           Int32     Variable  
+     13  PushI          Int16     Double    0
+     14  Conv           Int32     Variable  
+     15  PushI          Int16     Double    0
+     16  Conv           Int32     Variable  
+     17  Call           Int32     Double    FN=gml_Script_instance_create
+     18  Popz           Variable  Double    
+     19  Push           Variable  Double    VAR=touched
+     20  PushI          Int16     Double    0
+     21  Cmp            Int32     Variable  
+     22  Bf             Double    Double    
+     23  Push           Int32     Double    68121
+     24  Break          Int16     Double    
+     25  PushI          Int16     Double    15
+     26  Conv           Int32     Variable  
+     27  PushI          Int16     Double    -1
+     28  PushI          Int16     Double    2
+     29  Pop            Variable  Variable  VAR=alarm
+     30  PushI          Int16     Double    14
+     31  Conv           Int32     Variable  
+     32  PushI          Int16     Double    -1
+     33  PushI          Int16     Double    3
+     34  Pop            Variable  Variable  VAR=alarm
+     35  PushI          Int16     Double    1
+     36  Pop            Variable  Int32     VAR=touched
+
+### gml_Object_obj_doorW_Create_0   ins=2
+      0  PushI          Int16     Double    0
+      1  Pop            Variable  Int32     VAR=touched
+
+### gml_Object_obj_doorW_Alarm_2   ins=58
+      0  PushI          Int16     Double    23
+      1  Pop            Variable  Int32     VAR=entrance
+      2  PushI          Int16     Double    145
+      3  Conv           Int32     Variable  
+      4  PushI          Int16     Double    0
+      5  Conv           Int32     Variable  
+      6  PushI          Int16     Double    0
+      7  Conv           Int32     Variable  
+      8  Call           Int32     Double    FN=gml_Script_instance_create
+      9  Popz           Variable  Double    
+     10  PushBltn       Variable  Double    VAR=room
+     11  PushI          Int16     Double    13
+     12  Cmp            Int32     Variable  
+     13  Bf             Double    Double    
+     14  PushI          Int16     Double    18
+     15  Conv           Int32     Variable  
+     16  Call           Int32     Double    FN=room_goto
+     17  Popz           Variable  Double    
+     18  PushBltn       Variable  Double    VAR=room
+     19  PushI          Int16     Double    18
+     20  Cmp            Int32     Variable  
+     21  Bf             Double    Double    
+     22  PushI          Int16     Double    13
+     23  Conv           Int32     Variable  
+     24  Call           Int32     Double    FN=room_goto
+     25  Popz           Variable  Double    
+     26  PushBltn       Variable  Double    VAR=room
+     27  PushI          Int16     Double    11
+     28  Cmp            Int32     Variable  
+     29  Bf             Double    Double    
+     30  PushI          Int16     Double    27
+     31  Conv           Int32     Variable  
+     32  Call           Int32     Double    FN=room_goto
+     33  Popz           Variable  Double    
+     34  PushBltn       Variable  Double    VAR=room
+     35  PushI          Int16     Double    27
+     36  Cmp            Int32     Variable  
+     37  Bf             Double    Double    
+     38  PushI          Int16     Double    11
+     39  Conv           Int32     Variable  
+     40  Call           Int32     Double    FN=room_goto
+     41  Popz           Variable  Double    
+     42  PushBltn       Variable  Double    VAR=room
+     43  PushI          Int16     Double    9
+     44  Cmp            Int32     Variable  
+     45  Bf             Double    Double    
+     46  PushI          Int16     Double    10
+     47  Conv           Int32     Variable  
+     48  Call           Int32     Double    FN=room_goto
+     49  Popz           Variable  Double    
+     50  PushBltn       Variable  Double    VAR=room
+     51  PushI          Int16     Double    10
+     52  Cmp            Int32     Variable  
+     53  Bf             Double    Double    
+     54  PushI          Int16     Double    9
+     55  Conv           Int32     Variable  
+     56  Call           Int32     Double    FN=room_goto
+     57  Popz           Variable  Double    
+
+### gml_Object_obj_doorW_Other_19   ins=23
+      0  PushI          Int16     Double    3
+      1  Pop            Variable  Int32     VAR=interact
+      2  PushI          Int16     Double    143
+      3  Conv           Int32     Variable  
+      4  PushI          Int16     Double    0
+      5  Conv           Int32     Variable  
+      6  PushI          Int16     Double    0
+      7  Conv           Int32     Variable  
+      8  Call           Int32     Double    FN=gml_Script_instance_create
+      9  Popz           Variable  Double    
+     10  Push           Variable  Double    VAR=touched
+     11  PushI          Int16     Double    0
+     12  Cmp            Int32     Variable  
+     13  Bf             Double    Double    
+     14  Push           Int32     Double    68121
+     15  Break          Int16     Double    
+     16  PushI          Int16     Double    8
+     17  Conv           Int32     Variable  
+     18  PushI          Int16     Double    -1
+     19  PushI          Int16     Double    2
+     20  Pop            Variable  Variable  VAR=alarm
+     21  PushI          Int16     Double    1
+     22  Pop            Variable  Int32     VAR=touched
+  (命中 code 9 段)
+
+========== [C] room creation code（ch1 门房 9/10/11/13/18/27）==========
+
+--- room #9 room_town_north
+    (无 creation code)
+
+--- room #10 room_beach
+    (无 creation code)
+
+--- room #11 room_town_mid
+    (无 creation code)
+
+--- room #13 room_town_south
+    (无 creation code)
+
+--- room #18 room_hospital_lobby
+    (无 creation code)
+
+--- room #27 room_alphysalley
+    (无 creation code)
+
+========== [D] door Alarm_2 的 entrance / 守卫条数 ==========
+  gml_Object_obj_doorA_Alarm_2                   entrance=1     room_guard_cmp=0     ins=12
+  gml_Object_obj_doorA_musfade_Alarm_2           entrance=1     room_guard_cmp=0     ins=12
+  gml_Object_obj_doorB_Alarm_2                   entrance=2     room_guard_cmp=0     ins=17
+  gml_Object_obj_doorB_musfade_Alarm_2           entrance=2     room_guard_cmp=0     ins=12
+  gml_Object_obj_doorC_Alarm_2                   entrance=4     room_guard_cmp=0     ins=15
+  gml_Object_obj_doorC_musfade_Alarm_2           entrance=4     room_guard_cmp=0     ins=15
+  gml_Object_obj_doorD_Alarm_2                   entrance=5     room_guard_cmp=0     ins=15
+  gml_Object_obj_doorD_musfade_Alarm_2           entrance=5     room_guard_cmp=0     ins=15
+  gml_Object_obj_doorX_Alarm_2                   entrance=24    room_guard_cmp=0     ins=283
+  gml_Object_obj_doorX_musfade_Alarm_2           entrance=24    room_guard_cmp=0     ins=222
+  gml_Object_obj_doorW_Alarm_2                   entrance=23    room_guard_cmp=0     ins=58
+  gml_Object_obj_doorw_musfade_Alarm_2           entrance=23    room_guard_cmp=0     ins=78

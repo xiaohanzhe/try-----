@@ -62,8 +62,10 @@ from modules import scene_system as SS       # noqa: E402
 
 EXPECT_SCENES = 2166
 #: ★ 第126轮：1,531 → **1,740**（outertale 补了 209 条门路由，priority 6000~6208）。
-#:   桌面 4 门的落点与可达账**不受影响**（outertale 没有桌面门），B 段仍是 215。
-EXPECT_ROUTES = 1740
+#: ★ 第168轮：1,740 → **1,828**（Deltarune 五章补了 88 条 **W 门**，
+#:   priority 7000~7087）。桌面 4 门的落点与可达账**不受影响**（W 段只落在
+#:   ch1~ch5 的场景上，桌面门仍是 A/B/C/D）⇒ B 段 215 一个数没动。
+EXPECT_ROUTES = 1828
 
 #: 字母 → (世界, 落点 scene_id)。**唯一真源**，与 `check89._A_DOOR_WORLD` 同口径。
 DOOR_WANT = {
@@ -104,7 +106,9 @@ DENSITY_MIN = {
 #:   —— 同门重复才是冗余，不同门同目标原作里本来就有。
 #: ★ 第126轮：1,526 → **1,735**（outertale 那 209 条全是新产品唯一边；
 #:   重复组仍是 5 组 —— 新段一条重复都没有，见 check126.C3）。
-EXPECT_UNIQUE_EDGES = 1735
+#: ★ 第168轮：1,735 → **1,823**（W 门 88 条全是新产品唯一边；重复组仍是 5 组，
+#:   新段一条重复都没有 —— 生成器已按 "同场景同字母只一条" 挡重。）
+EXPECT_UNIQUE_EDGES = 1823
 EXPECT_DUP_EDGES = 5
 
 _n = {'p': 0, 'f': 0}
