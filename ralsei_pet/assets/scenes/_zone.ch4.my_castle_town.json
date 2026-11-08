@@ -134,7 +134,12 @@
    "bg": "bg/ch4_my_castle_town_dw_castle_cafe.png",
    "bg_source": "room.bg_layer",
    "bg_asset": "bg_dw_castle_cafe",
-   "objects": []
+   "objects": [
+    {
+     "pos": [696, 469],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.my_castle_town.dw_castle_dojo": {
    "name": "我的城堡镇·dojo",
@@ -218,6 +223,10 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [280, 461],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -253,6 +262,10 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [257, 465],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -270,6 +283,10 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [257, 455],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -281,7 +298,12 @@
    "bg": "bg/ch4_my_castle_town_dw_castle_rooms_queen.png",
    "bg_source": "room.bg_layer",
    "bg_asset": "bg_dw_castle_queen_room",
-   "objects": []
+   "objects": [
+    {
+     "pos": [257, 455],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.my_castle_town.dw_castle_rooms_tenna": {
    "name": "我的城堡镇·rooms_tenna",
@@ -290,7 +312,12 @@
    "original_room_id": 168,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [258, 465],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.my_castle_town.dw_castle_rooms_kris_susie": {
    "name": "我的城堡镇·rooms_kris_susie",
@@ -300,7 +327,16 @@
    "bg": "bg/ch4_my_castle_town_dw_castle_rooms_kris_susie.png",
    "bg_source": "room.bg_layer",
    "bg_asset": "bg_dw_kris_susie_room",
-   "objects": []
+   "objects": [
+    {
+     "pos": [237, 472],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [570, 472],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.my_castle_town.dw_castle_tv_rhythm": {
    "name": "我的城堡镇·tv_rhythm",
@@ -309,7 +345,12 @@
    "original_room_id": 297,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [920, 480],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.my_castle_town.dw_castle_tv_zone_battle": {
    "name": "我的城堡镇·tv_zone_battle",
@@ -318,7 +359,12 @@
    "original_room_id": 324,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 480],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.my_castle_town.dw_castle_tv_zone_minigame": {
    "name": "我的城堡镇·tv_zone_minigame",
@@ -327,7 +373,12 @@
    "original_room_id": 325,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 480],
+     "src": "obj_doorAny"
+    }
+   ]
   }
  }
 }

@@ -135,6 +135,18 @@
      "sprite": "objs/spr_doorB_0.png",
      "src": "obj_doorB",
      "depth": 100
+    },
+    {
+     "pos": [247, 233],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [522, 234],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1059, 221],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -145,7 +157,24 @@
    "original_room_id": 154,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1840, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [436, 241],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1554, 241],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1276, 242],
+     "src": "obj_doorAny"
+    }
+   ]
   }
  }
 }

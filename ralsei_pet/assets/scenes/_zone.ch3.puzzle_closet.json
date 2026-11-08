@@ -12,7 +12,16 @@
    "original_room_id": 170,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [159, 304],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [940, 332],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.puzzle_closet.dw_puzzlecloset_2": {
    "name": "谜题柜·puzzlecloset_2",
@@ -21,7 +30,16 @@
    "original_room_id": 171,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [159, 344],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1254, 374],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.puzzle_closet.dw_puzzlecloset_0": {
    "name": "谜题柜·puzzlecloset_0",
@@ -36,6 +54,14 @@
      "sprite": "objs/spr_event_0.png",
      "src": "obj_dw_ch3_puzzlecloset0_introsequence",
      "depth": 0
+    },
+    {
+     "pos": [191, 274],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1424, 240],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -59,6 +85,14 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [187, 315],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1254, 374],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -75,6 +109,14 @@
      "sprite": "objs/spr_event_0.png",
      "src": "obj_room_puzzle_closet_1a",
      "depth": 0
+    },
+    {
+     "pos": [174, 283],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1076, 312],
+     "src": "obj_doorAny"
     }
    ]
   }

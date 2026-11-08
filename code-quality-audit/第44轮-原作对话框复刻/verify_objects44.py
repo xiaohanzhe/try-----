@@ -113,6 +113,43 @@ def _desktop_doors():
 DESKTOP_DOORS = _desktop_doors()
 EXPECT_TOTAL = EXPECT_TOTAL_ORIGINAL + DESKTOP_DOORS
 
+# ★★★ 第173轮：`obj_doorAny` 物化（+705 条）—— 期望值**现算**，不写死。
+#   为什么会有这一批：`gen_objects44.object()` 的规矩是「查不到 sprite 帧 ⇒ 返回 None」，
+#   而 `spr_doorAny` 的 PNG 从没被导出到 `objs/`（`spr_doorA..F` 都有，就缺它）
+#   ⇒ 881 条 Any 实例被静默跳过，第172轮补的 798 条门边**零消费方**。
+#   第173轮按「幂等追加」补进了场景（不重跑生成器，避免冲掉 68/117 轮的增量），
+#   字段只有 `{pos, src, depth}`（**无 sprite**：原作 visible=false，永不绘制）。
+#   判据这边**自己从第42轮普查重算**该补多少条，而不是抄生成器/注入器自报数。
+E42 = os.path.join(ROOT, 'code-quality-audit', '第42轮-原作拓扑取证', '_evidence')
+INST42 = {'ch1': 'inst42.json', 'ch2': 'ch2_inst42.json', 'ch3': 'ch3_inst42.json',
+          'ch4': 'ch4_inst42.json', 'ch5': 'ch5_inst42.json'}
+ANY_SRC = 'obj_doorAny'
+#: ★ 第173轮：**按原作本就不可见**、因此故意不写 `sprite` 的物件名。
+#   理由见 `inject173.py` 的 docstring：`obj_doorAny` 是 `visible=false` 的触发器，
+#   `is_drawable_object()` 靠 `_obj_visible.json` 的 hidden 名单把它滤掉
+#   ⇒ 它永远不绘制，给它写一个指向不存在文件的 sprite 才是假话。
+#   ⇒ A3「sprite 非空 str」对这批要有**记账式豁免**（不是静默放行，见 A3b）。
+INVISIBLE_SRCS = frozenset([ANY_SRC])
+
+
+def _is_hidden_exempt(o):
+    """这一条是否属于「按原作本就不可见、故意不写 sprite」的豁免。
+
+    ★ 三个条件缺一不可，否则"没 sprite"会变成万能豁免：
+      ① `src` 在 `INVISIBLE_SRCS` 白名单里（不是随便什么名字）；
+      ② 确实没有 sprite（有 sprite 就不需要豁免，正常走 A4）；
+      ③ `pos` 仍是合法 2×int（不可见 ≠ 可以不写坐标）。
+    ★ 抽成独立函数是为了让 A3b 能**直接喂合成数据**做正/负控制
+      （判据不能只对真数据绿，还要对"该报红的"报红）。
+    """
+    if not isinstance(o, dict) or o.get('src') not in INVISIBLE_SRCS:
+        return False
+    if isinstance(o.get('sprite'), str) and o['sprite'].strip():
+        return False
+    pos = o.get('pos')
+    return (isinstance(pos, (list, tuple)) and len(pos) == 2
+            and all(isinstance(v, int) for v in pos))
+
 RE_ZONE = re.compile(r'^_zone\.(ch\d+)\.')
 
 # ★★★ 第103轮：本锁**只管 Deltarune 命名空间**（素材在 `objs/`）。
@@ -171,6 +208,8 @@ def load(p):
 
 
 def main():
+    # ★ 第173轮：Any 门期望值提前算好 —— A3b（不可见豁免的**记账**）与 C2/C3 都要用。
+    ANY_EXPECT = _count_any_expected()
     print('== A 结构不变量 ==')
     obj_files = set(os.listdir(OBJS)) if os.path.isdir(OBJS) else set()
     ok(len(obj_files) >= 25, 'A1 objs/ 素材目录存在且有 %d 个文件' % len(obj_files))
@@ -239,6 +278,7 @@ def main():
     zone_with_obj = 0
     file_with_obj = 0
     bad_shape = []
+    invisible_exempt = []      # ★ 第173轮：按原装作不可见、故意无 sprite 的条目
     missing_sprite = []
     stale_comment = []
 
@@ -263,7 +303,10 @@ def main():
                     and all(isinstance(v, int) for v in pos)):
                 bad_shape.append((label, 'pos', o))
             if not (isinstance(spr, str) and spr.strip()):
-                bad_shape.append((label, 'sprite', o))
+                if _is_hidden_exempt(o):
+                    invisible_exempt.append((label, o.get('src')))
+                else:
+                    bad_shape.append((label, 'sprite', o))
             else:
                 fn = os.path.basename(spr)
                 if fn not in obj_files:
@@ -294,11 +337,25 @@ def main():
         if isinstance(cm, dict) and 'why_objects_is_empty' in cm:
             stale_comment.append(f)
 
-    ok(not bad_shape, 'A3 所有 object 形状合法（pos=2×int / sprite=非空 str）坏=%d'
-       % len(bad_shape))
+    ok(not bad_shape, 'A3 所有 object 形状合法（pos=2×int / sprite=非空 str，'
+       '★除 A3b 记账的不可见类外）坏=%d 豁免=%d'
+       % (len(bad_shape), len(invisible_exempt)))
     if bad_shape:
         for b in bad_shape[:5]:
             print('       坏样本: %r' % (b,))
+    # ★★★ A3b：豁免**必须记账**——数目要等于独立重算的 Any 门期望值。
+    #   否则"豁免"就是一块黑布：写错一个白名单名字，就能把一批没 sprite 的垃圾
+    #   静默放过去而 A3 照样绿。这里要求 豁免数 == 期望数，两边各自独立算。
+    ok(len(invisible_exempt) == ANY_EXPECT,
+       'A3b ★★ 不可见豁免**有账**：实际豁免 %d == 独立重算 %d（`obj_doorAny` 按原作'
+       ' visible=false，永不绘制 ⇒ 故意不写 sprite）'
+       % (len(invisible_exempt), ANY_EXPECT))
+    ok(_is_hidden_exempt({'pos': [0, 0], 'src': ANY_SRC})
+       and not _is_hidden_exempt({'pos': [0, 0], 'src': 'obj_doorA'})
+       and not _is_hidden_exempt({'pos': [0, 0], 'src': ANY_SRC, 'sprite': 'spr_doorA_0.png'})
+       and not _is_hidden_exempt({'pos': 'oops', 'src': ANY_SRC}),
+       'A3c 正/负控制：`_is_hidden_exempt` 认 {pos,src=obj_doorAny}；'
+       '**不认** obj_doorA / 有 sprite 的 / pos 非法的 —— 豁免不是万能通行证')
     ok(not missing_sprite, 'A4 所有 sprite（Deltarune 命名空间）指向 objs/ 下真实文件 缺=%d'
        % len(missing_sprite))
     if missing_sprite:
@@ -354,13 +411,16 @@ def main():
     ok(not miss_src and not miss_tbl,
        'C0 数据源在位：第68轮普查 缺=%s / 按章对象表 缺=%s'
        % (miss_src or '无', miss_tbl or '无'))
-    ok(scenes_with_obj == EXPECT_ZONE_WITH_OBJ + EXPECT_FILE_WITH_OBJ,
-       'C1 带 objects 的场景数 == %d（分片 %d + 独立 %d）实际=%d'
-       % (EXPECT_ZONE_WITH_OBJ + EXPECT_FILE_WITH_OBJ, EXPECT_ZONE_WITH_OBJ,
-          EXPECT_FILE_WITH_OBJ, scenes_with_obj))
-    ok(len(all_objs) == EXPECT_TOTAL,
-       'C2 ★守恒：objects 总条数 == 原作 %d + 桌面世界门 %d = %d 实际=%d'
-       % (EXPECT_TOTAL_ORIGINAL, DESKTOP_DOORS, EXPECT_TOTAL, len(all_objs)))
+    # ★ 第173轮：C1 的分母从「616」改成**历史段冻结 + 新段只增不减**。
+    #   Any 门补进来以后，一批原本 `objects: []` 的场景变"有 objects"了
+    #   ⇒ 616 这个数作为**上界断言**已经过时（不是回归，是判据写死了会增长的绝对数）。
+    ok(scenes_with_obj >= EXPECT_ZONE_WITH_OBJ + EXPECT_FILE_WITH_OBJ,
+       'C1 带 objects 的场景数 >= %d（第68轮口径；第173轮 Any 门会让更多场景变"有"）实际=%d'
+       % (EXPECT_ZONE_WITH_OBJ + EXPECT_FILE_WITH_OBJ, scenes_with_obj))
+    ok(len(all_objs) == EXPECT_TOTAL + ANY_EXPECT,
+       'C2 ★守恒：objects 总条数 == 原作 %d + 桌面世界门 %d + Any 门 %d = %d 实际=%d'
+       % (EXPECT_TOTAL_ORIGINAL, DESKTOP_DOORS, ANY_EXPECT,
+          EXPECT_TOTAL + ANY_EXPECT, len(all_objs)))
 
     # C3 独立重算：从**第68轮普查 + 按章对象表 + objs/** 三个真源重算期望值，
     #    必须与场景里的一致。这是"判据不依赖生成器自报"的关键 —— 判据自己算一遍。
@@ -369,10 +429,10 @@ def main():
     #      两边都要动才自洽：只改常量不改重算会让 C3 报红（鉴别力正确）。
     #    ★★ 第99轮：`DESKTOP_DOORS` 改为从 `desktop.json` **现读** ⇒
     #      语义 = 「原作重算 + 桌面实际声明 == 产品总数」，加门不用再改这里。
-    expect = _recount_expected(obj_files) + DESKTOP_DOORS
+    expect = _recount_expected(obj_files) + DESKTOP_DOORS + ANY_EXPECT
     ok(expect > 0 and expect == len(all_objs),
-       'C3 ★判据独立重算（第68轮普查×按章对象表×objs 三源 + desktop %d 扇门）== 实得 独立算=%d 实得=%d'
-       % (DESKTOP_DOORS, expect, len(all_objs)))
+       'C3 ★判据独立重算（第68轮普查×按章对象表×objs 三源 + desktop %d 扇门 + Any %d）== 实得 独立算=%d 实得=%d'
+       % (DESKTOP_DOORS, ANY_EXPECT, expect, len(all_objs)))
 
     print('')
     print('== D 负控制（证明判据有鉴别力）==')
@@ -487,6 +547,30 @@ def _recount_expected(obj_files):
             spr = objmaps.get(ch, {}).get(nm)
             if spr and spr in spr_keys:
                 n += 1
+    return n
+
+
+def _count_any_expected():
+    """第173轮：**独立重算**该补多少条 `obj_doorAny`（不读场景产物、不读注入器自报）。
+
+    规则与注入器等价但独立实现：
+      · 源 = 第42轮**实例普查**（`inst42` 系，注入器也用这份）；
+      · 只算**已登记场景**的房间（未登记房间没有载体，补不进去）；
+      · 同房间内按 `(x, y)` 去重（同一坐标重复摆两扇＝一条）；
+      · ★ 已登记房间**保留重复**（一个房间登记成两个场景 ⇒ 两份），与生成器口径一致。
+    """
+    inst = {ch: _load_inst_rooms(os.path.join(E42, fn)) for ch, fn in INST42.items()}
+    n = 0
+    for ch, rid in _registered_scene_rooms():
+        seen = set()
+        for it in (inst.get(ch, {}).get(rid) or []):
+            if it.get('obj') != ANY_SRC:
+                continue
+            x, y = it.get('x'), it.get('y')
+            if not isinstance(x, int) or not isinstance(y, int):
+                continue
+            seen.add((x, y))
+        n += len(seen)
     return n
 
 

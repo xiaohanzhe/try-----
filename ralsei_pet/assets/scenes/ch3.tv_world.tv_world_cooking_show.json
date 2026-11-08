@@ -15,7 +15,16 @@
     "weather": null,
     "particles": null
   },
-  "objects": [],
+  "objects": [
+    {
+      "pos": [2080, 320],
+      "src": "obj_doorAny"
+    },
+    {
+      "pos": [-40, 320],
+      "src": "obj_doorAny"
+    }
+  ],
   "anchors": {},
   "transition": null,
   "_comment": {

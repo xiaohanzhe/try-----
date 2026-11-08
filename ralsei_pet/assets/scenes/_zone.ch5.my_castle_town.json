@@ -115,7 +115,12 @@
    "bg": "bg/ch5_my_castle_town_dw_castle_cafe.png",
    "bg_source": "room.bg_layer",
    "bg_asset": "bg_dw_castle_cafe",
-   "objects": []
+   "objects": [
+    {
+     "pos": [696, 469],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.my_castle_town.dw_castle_dojo": {
    "name": "我的城堡镇·dojo",
@@ -136,6 +141,10 @@
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
      "depth": 100
+    },
+    {
+     "pos": [280, 457],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -215,6 +224,10 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [257, 455],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -225,7 +238,12 @@
    "original_room_id": 113,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1240, 480],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.my_castle_town.dw_castle_church_entrance": {
    "name": "我的城堡镇·church_entrance",
@@ -240,6 +258,14 @@
      "sprite": "objs/spr_eventsmall_0.png",
      "src": "obj_dw_castle_church_entrance",
      "depth": 0
+    },
+    {
+     "pos": [200, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [600, 216],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -250,7 +276,12 @@
    "original_room_id": 115,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [920, 3834],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.my_castle_town.dw_castle_music": {
    "name": "我的城堡镇·music",
@@ -259,7 +290,12 @@
    "original_room_id": 209,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [263, 471],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.my_castle_town.dw_castle_tv_mike": {
    "name": "我的城堡镇·tv_mike",
@@ -268,7 +304,16 @@
    "original_room_id": 213,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [240, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [280, 160],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.my_castle_town.dw_castle_tv_kikky": {
    "name": "我的城堡镇·tv_kikky",
@@ -277,7 +322,12 @@
    "original_room_id": 238,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [240, 474],
+     "src": "obj_doorAny"
+    }
+   ]
   }
  }
 }

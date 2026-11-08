@@ -84,6 +84,10 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [634, 344],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -208,7 +212,12 @@
    "original_room_id": 150,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [640, 360],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.board_world.board_3b": {
    "name": "冒险棋盘·3b",

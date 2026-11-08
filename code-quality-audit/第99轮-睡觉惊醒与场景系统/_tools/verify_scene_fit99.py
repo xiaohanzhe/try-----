@@ -449,7 +449,11 @@ _HIDDEN_SRC_SEEN = (
     'obj_ch2_room_city_savepoint', 'obj_ch2_room_cyber_shop',
     'obj_ch2_room_mansion_entrance', 'obj_ch2_room_spamton_shop_exterior',
     'obj_ch2_scene21_puzzle_entrance', 'obj_church_entrance',
-    'obj_darkwakeevent', 'obj_doorA', 'obj_doorA_musfade', 'obj_doorB',
+    'obj_darkwakeevent', 'obj_doorA', 'obj_doorA_musfade',
+    # ★ 第173轮：`obj_doorAny` 物化进场景后，它也成为"出现在场景数据里且被过滤"
+    #   的一员（它本来就在 901 隐形名单里，只是此前场景里一条实例都没有，
+    #   所以没被 `seen` 采到）。46 → **47**。
+    'obj_doorAny', 'obj_doorB',
     'obj_doorB_musfade', 'obj_doorC', 'obj_doorC_musfade', 'obj_doorD',
     'obj_doorD_musfade', 'obj_doorE', 'obj_doorF', 'obj_doorW', 'obj_doorX',
     'obj_doorX_musfade', 'obj_doorw_musfade', 'obj_dw_church_staircase',
@@ -700,7 +704,7 @@ def sec_g():
        % (d_tot, o_tot))
     ok(0.6 <= d_hid / max(1, d_tot) <= 0.95,
        'G24 被过滤比例在 60%%~95%%（金标 85.5%%；过低=漏过滤，过高=误杀）实际=%.1f%%'
-       ' —— ★★ 分母**只数 `objs/` 命名空间**：那 46 个隐形触发器名全属 Deltarune，'
+       ' —— ★★ 分母**只数 `objs/` 命名空间**：那批隐形触发器名全属 Deltarune，'
        '把 OneShot 的 7,804 条并进来会让比例变成 %.1f%% 的**假异常**'
        % (100.0 * d_hid / max(1, d_tot), 100.0 * hid / max(1, tot)))
     ok(o_hid == 0,
@@ -718,17 +722,39 @@ def sec_g():
         with open(_utf, 'r', encoding='utf-8') as fh:
             _ut_ids = set((json.load(fh).get('scenes') or {}))
     _stray_none = sorted(none_sids - _ut_ids)
+    # ★★★ 第173轮：`(sprite=None)` 多了一个**合法**来源 —— `obj_doorAny`（820 条）。
+    #   原作里它是 `visible=false` 的交互触发器，第173轮把它物化进场景时
+    #   **故意不写 sprite**（给它写一个指向不存在文件的 sprite 才是假话：
+    #   `objs/` 里根本没有 `spr_doorAny_0.png`，这正是它此前一条都没被生成的原因）。
+    #   ⇒ 判据从"只允许 ut"放宽成"只允许 ut 或 `obj_doorAny`"，并把条数**钉死**：
+    #     1655（ut） + 820（Any） = 2475。
+    #   ★ 放宽必须配账：`_none_other` 要求除这两个来源外**一个都不许有**，
+    #     否则"没 sprite"就变成万能通行证。
+    _n_any_none = 0
+    _none_other = []
+    for _sid, _sc in loaded.items():
+        for _o in (getattr(_sc, 'objects', None) or []):
+            if not isinstance(_o, dict) or _o.get('sprite') is not None:
+                continue
+            _src = _o.get('src')
+            if not isinstance(_src, str) or not _src:
+                continue
+            if _src == 'obj_doorAny':
+                _n_any_none += 1
+            elif _sid not in _ut_ids:
+                _none_other.append((_sid, _src))
     # ★★★ 第123轮：970 → **1655**（第121轮的 422 条可交互物 + 第122/123轮的 1,233 扇门）。
-    ok(not oth and _n_none == 1655 and not _stray_none and bool(_ut_ids),
+    ok(not oth and _n_none == 1655 + 820 and _n_any_none == 820
+       and not _none_other and bool(_ut_ids),
        'G24c `sprite` 只有三种合法形态：`objs/` / `oneshot_cells/` / **None**'
-       '（ut 那 %d 条 = 第121轮的 422 条可交互物 + 第122/123轮的 1,233 扇门，'
-       '画面都已在背景里，不重复绘制）；'
-       '其他命名空间 %s / None 条数 %d / 落在非 ut 场景的 %s'
-       % (1655, oth[:3], _n_none, _stray_none[:3]))
+       '（None = ut 那 %d 条 ＋ 第173轮 `obj_doorAny` 那 %d 条，两者都"画面在别处 /'
+       '本就不可见"，不重复绘制）；'
+       '其他命名空间 %s / None 条数 %d（期望 %d） / 落在非 ut 且非 Any 的 %s'
+       % (1655, _n_any_none, oth[:3], _n_none, 1655 + 820, _none_other[:3]))
     _diff = sorted(seen ^ set(_HIDDEN_SRC_SEEN))
     ok(_diff == [],
-       'G25 过滤面 **恰好**是那 46 个触发器名（多/少都报红；差异=%s）'
-       % _diff[:8])
+       'G25 过滤面 **恰好**是那 %d 个触发器名（多/少都报红；差异=%s）'
+       % (len(_HIDDEN_SRC_SEEN), _diff[:8]))
 
     # ---- G 两份实现的对账闸（刻意重复 ⇒ 靠这里抓不一致）----
     mism = 0

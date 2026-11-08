@@ -72,6 +72,26 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [795, 498],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [420, 340],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [320, 340],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [360, 480],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [540, 480],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -82,7 +102,12 @@
    "original_room_id": 50,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 240],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.noelles_house.lw_noellehouse_keyroom": {
    "name": "诺艾尔家·noellehouse_keyroom",
@@ -91,7 +116,12 @@
    "original_room_id": 51,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 230],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.noelles_house.lw_noellehouse_noelle": {
    "name": "诺艾尔家·noellehouse_noelle",
@@ -100,7 +130,12 @@
    "original_room_id": 52,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [207, 236],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.noelles_house.lw_noellehouse_dess": {
    "name": "诺艾尔家·noellehouse_dess",
@@ -157,6 +192,10 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [122, 234],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -167,7 +206,12 @@
    "original_room_id": 54,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [135, 236],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.noelles_house.lw_noellehouse_vents_west": {
    "name": "诺艾尔家·noellehouse_vents_west",

@@ -175,6 +175,10 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [-9, 104],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -353,6 +357,10 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 0
+    },
+    {
+     "pos": [353, 129],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -405,6 +413,14 @@
      "sprite": "objs/spr_markerC_0.png",
      "src": "obj_markerC",
      "depth": 0
+    },
+    {
+     "pos": [379, 630],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [280, 280],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -485,6 +501,10 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [117, -9],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -1270,6 +1290,10 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [412, 413],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -1473,7 +1497,16 @@
    "original_room_id": 107,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [956, 376],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [300, 209],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.hometown.town_krisyard_dark": {
    "name": "家乡·town_krisyard_dark",

@@ -12,7 +12,16 @@
    "original_room_id": 118,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-20, 587],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1394, 600],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_video": {
    "name": "希望之园·video",
@@ -30,7 +39,16 @@
    "original_room_id": 121,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1994, 1040],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [366, 280],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_hospital": {
    "name": "希望之园·hospital",
@@ -57,6 +75,10 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 100
+    },
+    {
+     "pos": [40, 10],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -67,7 +89,12 @@
    "original_room_id": 124,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1080, 10],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_shearydodge": {
    "name": "希望之园·shearydodge",
@@ -89,6 +116,22 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [560, 2794],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [560, 1570],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 2080],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1154, 2440],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -112,6 +155,10 @@
       "frame_ms": 33.3,
       "src": "original"
      }
+    },
+    {
+     "pos": [446, 1960],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -122,7 +169,16 @@
    "original_room_id": 127,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [220, 978],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [220, 298],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_riverchest": {
    "name": "希望之园·riverchest",
@@ -150,6 +206,10 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [634, 680],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -160,7 +220,12 @@
    "original_room_id": 130,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [240, 714],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_mushrooms": {
    "name": "希望之园·mushrooms",
@@ -182,6 +247,14 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [-74, 1000],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [880, 290],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -192,7 +265,12 @@
    "original_room_id": 132,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 1200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_starwalkerdash": {
    "name": "希望之园·starwalkerdash",
@@ -201,7 +279,12 @@
    "original_room_id": 134,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [160, 474],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_hardpressureplates": {
    "name": "希望之园·hardpressureplates",
@@ -210,7 +293,20 @@
    "original_room_id": 135,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 160],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1720, 78],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1994, 180],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_aqua": {
    "name": "希望之园·aqua",
@@ -219,7 +315,16 @@
    "original_room_id": 136,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 1034],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [280, 96],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_finalplatforming": {
    "name": "希望之园·finalplatforming",
@@ -228,7 +333,16 @@
    "original_room_id": 137,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [634, 1784],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 5240],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_finalplatforming_right": {
    "name": "希望之园·finalplatforming_right",
@@ -259,6 +373,14 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [1640, 2314],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1390, 498],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -269,7 +391,16 @@
    "original_room_id": 140,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [440, 960],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_aquashrine": {
    "name": "希望之园·aquashrine",
@@ -296,7 +427,12 @@
    "original_room_id": 145,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 240],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_newdash": {
    "name": "希望之园·newdash",
@@ -318,6 +454,14 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [-34, 520],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1554, 280],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -328,7 +472,20 @@
    "original_room_id": 147,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 1120],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1714, 720],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1120, 250],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_aquatransition": {
    "name": "希望之园·aquatransition",
@@ -337,7 +494,36 @@
    "original_room_id": 149,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [440, 960],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [240, 10],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [920, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [880, 10],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1560, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1520, 10],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.garden.dw_garden_aquahole_left": {
    "name": "希望之园·aquahole_left",
@@ -382,6 +568,18 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [280, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [2720, 10],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [3000, 474],
+     "src": "obj_doorAny"
     }
    ]
   },

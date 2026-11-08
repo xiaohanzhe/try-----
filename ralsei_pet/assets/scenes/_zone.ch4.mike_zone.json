@@ -75,7 +75,16 @@
    "original_room_id": 321,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [240, 480],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1560, 240],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch4.mike_zone.dw_castle_tv_zone_3": {
    "name": "麦克地带·castle_tv_3",
@@ -84,7 +93,12 @@
    "original_room_id": 323,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 240],
+     "src": "obj_doorAny"
+    }
+   ]
   }
  }
 }

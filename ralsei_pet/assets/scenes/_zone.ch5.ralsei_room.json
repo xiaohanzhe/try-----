@@ -135,6 +135,10 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 100
+    },
+    {
+     "pos": [781, 240],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -145,7 +149,24 @@
    "original_room_id": 61,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1840, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [436, 241],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1554, 241],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1276, 242],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.ralsei_room.dw_ralsei_castle_basketball": {
    "name": "拉尔赛的城堡·castle_basketball",
@@ -154,7 +175,16 @@
    "original_room_id": 116,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [554, 470],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1232, 470],
+     "src": "obj_doorAny"
+    }
+   ]
   }
  }
 }

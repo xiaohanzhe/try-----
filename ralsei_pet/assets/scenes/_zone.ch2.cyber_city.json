@@ -1038,6 +1038,14 @@
      "sprite": "objs/spr_doorA_0.png",
      "src": "obj_doorA_musfade",
      "depth": 100
+    },
+    {
+     "pos": [1400, 620],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [5080, 440],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -1285,7 +1293,16 @@
    "original_room_id": 135,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [2780, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [0, 320],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch2.cyber_city.dw_city_mansion_front": {
    "name": "赛博都市·mansion_front",

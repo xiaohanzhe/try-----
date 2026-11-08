@@ -12,7 +12,12 @@
    "original_room_id": 95,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [640, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_tv_closet": {
    "name": "电视世界·closet",
@@ -21,7 +26,12 @@
    "original_room_id": 142,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_interstitial": {
    "name": "电视世界·interstitial",
@@ -30,7 +40,16 @@
    "original_room_id": 147,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [633, 199],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-32, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_rouxls_lanina": {
    "name": "电视世界·rouxls_lanina",
@@ -39,7 +58,16 @@
    "original_room_id": 151,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-32, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [632, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_template": {
    "name": "电视世界·template",
@@ -48,7 +76,12 @@
    "original_room_id": 152,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-120, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_rouxls_boss": {
    "name": "电视世界·rouxls_boss",
@@ -57,7 +90,12 @@
    "original_room_id": 153,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-32, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_cheaterpippins": {
    "name": "电视世界·cheaterpippins",
@@ -66,7 +104,20 @@
    "original_room_id": 154,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [872, 320],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [720, 152],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 320],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_idcardpuzzle": {
    "name": "电视世界·idcardpuzzle",
@@ -75,7 +126,12 @@
    "original_room_id": 155,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-32, 320],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_intro": {
    "name": "电视世界·intro",
@@ -84,7 +140,20 @@
    "original_room_id": 156,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [632, 320],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [280, 472],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 320],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_zapper_a": {
    "name": "电视世界·zapper_a",
@@ -93,7 +162,16 @@
    "original_room_id": 157,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-32, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [200, 192],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_rabbick_a": {
    "name": "电视世界·rabbick_a",
@@ -108,6 +186,14 @@
      "sprite": "objs/spr_npc_sign_0.png",
      "src": "obj_npc_sign",
      "depth": 0
+    },
+    {
+     "pos": [-34, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [604, 160],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -118,7 +204,12 @@
    "original_room_id": 159,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1240, 474],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_cooltrashy": {
    "name": "电视世界·cooltrashy",
@@ -140,6 +231,18 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [200, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1840, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 280],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -163,6 +266,10 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [40, -36],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -173,7 +280,16 @@
    "original_room_id": 162,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 554],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [280, 154],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_sadshadowguys": {
    "name": "电视世界·sadshadowguys",
@@ -247,6 +363,18 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [280, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1114, 336],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [960, 225],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -257,7 +385,20 @@
    "original_room_id": 164,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 280],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [2754, 280],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1320, 178],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_preview": {
    "name": "电视世界·teevie_preview",
@@ -279,6 +420,14 @@
       "frame_ms": 33.3,
       "src": "original"
      }
+    },
+    {
+     "pos": [530, 150],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1080, 954],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -295,6 +444,22 @@
      "sprite": "objs/spr_event_0.png",
      "src": "obj_room_backstage_shop",
      "depth": 0
+    },
+    {
+     "pos": [714, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [260, 154],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [280, 474],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -318,6 +483,10 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [714, 240],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -328,7 +497,28 @@
    "original_room_id": 180,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1840, 114],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 200],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [920, 1194],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [2274, 1040],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 720],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_jail2": {
    "name": "电视世界·jail2",
@@ -337,7 +527,16 @@
    "original_room_id": 181,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [874, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 240],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_zapper_d": {
    "name": "电视世界·zapper_d",
@@ -346,7 +545,12 @@
    "original_room_id": 182,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [634, 240],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_extrapuzzle": {
    "name": "电视世界·extrapuzzle",
@@ -355,7 +559,16 @@
    "original_room_id": 183,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [794, 280],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 240],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_bibliox": {
    "name": "电视世界·bibliox",
@@ -364,7 +577,12 @@
    "original_room_id": 184,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 280],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_zapper_a_old": {
    "name": "电视世界·zapper_a_old",
@@ -373,7 +591,20 @@
    "original_room_id": 191,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [632, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-32, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [280, 136],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_large_01": {
    "name": "电视世界·teevie_large_01",
@@ -395,6 +626,18 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [-40, 480],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1840, 10],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1720, 1474],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -405,7 +648,20 @@
    "original_room_id": 197,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [960, -40],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1474, 1080],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 1080],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_cowboy_zone_01_intro": {
    "name": "电视世界·teevie_cowboy_zone_01_intro",
@@ -414,7 +670,16 @@
    "original_room_id": 198,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 200],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [640, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_cowboy_zone_01_after": {
    "name": "电视世界·teevie_cowboy_zone_01_after",
@@ -423,7 +688,16 @@
    "original_room_id": 199,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 200],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [640, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_watercooler": {
    "name": "电视世界·teevie_watercooler",
@@ -432,7 +706,12 @@
    "original_room_id": 200,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 474],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_susiezilla": {
    "name": "电视世界·teevie_susiezilla",
@@ -441,7 +720,16 @@
    "original_room_id": 201,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 200],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1914, 300],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_cowboy_zone_02_intro": {
    "name": "电视世界·teevie_cowboy_zone_02_intro",
@@ -450,7 +738,16 @@
    "original_room_id": 202,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 200],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [640, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_cowboy_zone_02_after": {
    "name": "电视世界·teevie_cowboy_zone_02_after",
@@ -459,7 +756,16 @@
    "original_room_id": 203,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 200],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [640, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_shadow_guys": {
    "name": "电视世界·teevie_shadow_guys",
@@ -663,6 +969,22 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [-40, 320],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [2120, 320],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1840, 258],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [160, 258],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -673,7 +995,16 @@
    "original_room_id": 205,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 320],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1280, 240],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_stealth": {
    "name": "电视世界·teevie_stealth",
@@ -682,7 +1013,24 @@
    "original_room_id": 206,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 200],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [2560, 680],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [320, -40],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [840, -40],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_failure_cage": {
    "name": "电视世界·teevie_failure_cage",
@@ -691,7 +1039,12 @@
    "original_room_id": 207,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 480],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_maze_points": {
    "name": "电视世界·teevie_maze_points",
@@ -700,7 +1053,12 @@
    "original_room_id": 209,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [640, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_maze_chef": {
    "name": "电视世界·teevie_maze_chef",
@@ -709,7 +1067,12 @@
    "original_room_id": 210,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_maze_final": {
    "name": "电视世界·teevie_maze_final",
@@ -718,7 +1081,12 @@
    "original_room_id": 211,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, -40],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_maze": {
    "name": "电视世界·teevie_maze",
@@ -727,7 +1095,28 @@
    "original_room_id": 212,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 600],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [720, 1354],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1474, 440],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1680, 1360],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [634, 1600],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_cutscene_final": {
    "name": "电视世界·teevie_cutscene_final",
@@ -736,7 +1125,16 @@
    "original_room_id": 214,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 200],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [640, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_ribbick": {
    "name": "电视世界·teevie_ribbick",
@@ -745,7 +1143,12 @@
    "original_room_id": 215,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [240, 480],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_preview_south": {
    "name": "电视世界·teevie_preview_south",
@@ -754,7 +1157,12 @@
    "original_room_id": 216,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, -40],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_b3bs_camerareminder": {
    "name": "电视世界·camerareminder",
@@ -763,7 +1171,12 @@
    "original_room_id": 217,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [634, 320],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_sams": {
    "name": "电视世界·teevie_sams",
@@ -772,7 +1185,12 @@
    "original_room_id": 219,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 480],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_bonus_zone": {
    "name": "电视世界·teevie_bonus_zone",
@@ -781,7 +1199,16 @@
    "original_room_id": 220,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1920, 120],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [160, 480],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_audiencepits": {
    "name": "电视世界·teevie_audiencepits",
@@ -790,7 +1217,16 @@
    "original_room_id": 221,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 200],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [2560, 680],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_lightmaze": {
    "name": "电视世界·teevie_lightmaze",
@@ -822,7 +1258,24 @@
    "original_room_id": 224,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 320],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [3280, 800],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [560, 960],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [2600, 1080],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_ribbicks_a": {
    "name": "电视世界·teevie_ribbicks_a",
@@ -831,7 +1284,16 @@
    "original_room_id": 231,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1354, 240],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_ribbicks_b": {
    "name": "电视世界·teevie_ribbicks_b",
@@ -840,7 +1302,16 @@
    "original_room_id": 232,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1034, 640],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 200],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_susiebridge": {
    "name": "电视世界·teevie_susiebridge",
@@ -862,6 +1333,10 @@
       "frame_ms": 33.3,
       "src": "default_30fps"
      }
+    },
+    {
+     "pos": [794, 280],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -872,7 +1347,16 @@
    "original_room_id": 234,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1514, 880],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 240],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_stealth_d": {
    "name": "电视世界·teevie_stealth_d",
@@ -881,7 +1365,16 @@
    "original_room_id": 235,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [6314, 280],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_dust": {
    "name": "电视世界·teevie_dust",
@@ -890,7 +1383,20 @@
    "original_room_id": 236,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 200],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [2920, 12],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [3240, 600],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_world.dw_teevie_dust_south": {
    "name": "电视世界·teevie_dust_south",
@@ -899,7 +1405,16 @@
    "original_room_id": 237,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [360, 474],
+     "src": "obj_doorAny"
+    }
+   ]
   }
  }
 }

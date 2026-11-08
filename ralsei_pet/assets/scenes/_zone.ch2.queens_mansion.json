@@ -469,6 +469,10 @@
      "sprite": "objs/spr_doorW_0.png",
      "src": "obj_doorw_musfade",
      "depth": 100
+    },
+    {
+     "pos": [0, 320],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -507,7 +511,16 @@
    "original_room_id": 166,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [280, 676],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [280, 4780],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch2.queens_mansion.dw_mansion_east_teacup_3": {
    "name": "女王宅邸·east_teacup_3",
@@ -1069,6 +1082,10 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 100
+    },
+    {
+     "pos": [228, 116],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -1169,6 +1186,10 @@
      "sprite": "objs/spr_markerX_0.png",
      "src": "obj_markerX",
      "depth": 100
+    },
+    {
+     "pos": [280, 0],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -1355,6 +1376,14 @@
      "sprite": "objs/spr_markerB_0.png",
      "src": "obj_markerB",
      "depth": 100
+    },
+    {
+     "pos": [269, 193],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [548, 234],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -1418,6 +1447,10 @@
      "sprite": "objs/spr_markerB_0.png",
      "src": "obj_markerB",
      "depth": 100
+    },
+    {
+     "pos": [2543, 256],
+     "src": "obj_doorAny"
     }
    ]
   },

@@ -148,6 +148,10 @@
      "sprite": "objs/spr_interactable_0.png",
      "src": "obj_readable_room1",
      "depth": 0
+    },
+    {
+     "pos": [125, 233],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -287,7 +291,12 @@
    "original_room_id": 102,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [160, 230],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.light_world.lw_church_entrance": {
    "name": "光世界·church_entrance",
@@ -303,6 +312,22 @@
      "sprite": "objs/spr_event_0.png",
      "src": "obj_church_entrance",
      "depth": 0
+    },
+    {
+     "pos": [280, 240],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [420, 93],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [180, 93],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [300, 74],
+     "src": "obj_doorAny"
     }
    ]
   },
@@ -313,7 +338,12 @@
    "original_room_id": 104,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [360, 620],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch5.light_world.lw_church_office": {
    "name": "光世界·church_office",
@@ -322,7 +352,12 @@
    "original_room_id": 105,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [140, 234],
+     "src": "obj_doorAny"
+    }
+   ]
   }
  }
 }

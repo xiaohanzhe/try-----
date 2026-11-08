@@ -57,7 +57,12 @@
    "original_room_id": 108,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1400, 160],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_backstage.shadowmantle_movementexample": {
    "name": "电视世界后台·shadowmantle_movementExample",
@@ -102,7 +107,12 @@
    "original_room_id": 131,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [630, 221],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_backstage.shootout": {
    "name": "电视世界后台·shootout",
@@ -121,7 +131,20 @@
    "original_room_id": 139,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [626, 474],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [189, 150],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [200, 341],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_backstage.dw_console_room": {
    "name": "电视世界后台·console_room",
@@ -131,7 +154,16 @@
    "bg": "bg/ch3_tv_backstage_dw_console_room.png",
    "bg_source": "room.bg_layer",
    "bg_asset": "bg_console_room",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-31, 357],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [449, 471],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_backstage.dw_susiezilla": {
    "name": "电视世界后台·dw_susiezilla",
@@ -149,7 +181,16 @@
    "original_room_id": 167,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [240, 913],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [261, 149],
+     "src": "obj_doorAny"
+    }
+   ]
   },
   "ch3.tv_backstage.dw_chef": {
    "name": "电视世界后台·chef",
@@ -203,7 +244,24 @@
    "original_room_id": 244,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [840, 480],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [1120, 280],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [240, 40],
+     "src": "obj_doorAny"
+    },
+    {
+     "pos": [240, 474],
+     "src": "obj_doorAny"
+    }
+   ]
   }
  }
 }
