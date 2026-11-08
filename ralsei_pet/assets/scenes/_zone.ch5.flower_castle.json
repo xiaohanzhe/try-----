@@ -30,6 +30,10 @@
     {
      "pos": [680, 498],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [2560, 1000],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -226,6 +230,10 @@
     {
      "pos": [5120, 3594],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [5600, 3000],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -290,7 +298,12 @@
    "original_room_id": 192,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 2600],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.flower_castle.dw_fcastle_shinobeetle_3d": {
    "name": "花之城堡·fcastle_shinobeetle_3d",
@@ -438,6 +451,10 @@
     {
      "pos": [760, 3194],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [-40, 2760],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -452,6 +469,14 @@
     {
      "pos": [206, 1800],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [1600, 2880],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [1600, 2320],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -470,6 +495,10 @@
     {
      "pos": [2480, 458],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [-40, 2160],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -621,7 +650,12 @@
    "original_room_id": 212,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1160, 800],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.flower_castle.dw_fcastle_zenlooker": {
    "name": "花之城堡·fcastle_zenlooker",
@@ -657,7 +691,12 @@
    "original_room_id": 215,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-40, 200],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.flower_castle.dw_post_flowery_battle": {
    "name": "花之城堡·post_flowery_battle",
@@ -929,7 +968,16 @@
    "original_room_id": 228,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [40, 3840],
+     "src": "obj_doorAnyVert"
+    },
+    {
+     "pos": [600, 320],
+     "src": "obj_doorAnyVert"
+    }
+   ]
   },
   "ch5.flower_castle.dw_fcastle_top_pinkdoor": {
    "name": "花之城堡·fcastle_top_pinkdoor",
@@ -1179,6 +1227,14 @@
     {
      "pos": [-34, 5720],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [840, 2600],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [-40, 2600],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -1189,7 +1245,20 @@
    "original_room_id": 242,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [6600, 840],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [3160, 1320],
+     "src": "obj_doorAnyVert"
+    },
+    {
+     "pos": [240, 440],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.flower_castle.dw_fcastle_asgore": {
    "name": "花之城堡·fcastle_asgore",
@@ -1211,6 +1280,10 @@
     {
      "pos": [2440, 578],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [-40, 600],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },

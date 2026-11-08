@@ -311,9 +311,14 @@ _pairs = set((r.get('when_scene'), r.get('to')) for r in RL)
 #: ★ 第172轮：唯一 1956 → **2754**（+798），重复组仍是 5。
 #:   改写成「唯一边只增不减 + 重复组数守恒」—— 这是结构性不变量，
 #:   不随轮次增长；写死 `== 1956` 到了 172 就变成"判据过时"（171 自己踩过的坑）。
-check(u'E1 ★★ 唯一边只增不减（%d ≥ 1956）、重复组仍恰好 5（没引入同门重复）'
-      % (len(_pairs),),
-      len(_pairs) >= 1956 and len(RL) - len(_pairs) == 5,
+check(u'E1 ★★ 唯一边只增不减（%d ≥ 1956）、重复 %d == 5 + 第174轮变体别名 %d'
+      u'（没引入**别的**来源的重复）'
+      % (len(_pairs), len(RL) - len(_pairs),
+         len([r for r in RL if r.get('when_src') in ('obj_doorAnyHorz',
+                                                     'obj_doorAnyVert')])),
+      len(_pairs) >= 1956
+      and len(RL) - len(_pairs) == 5 + len([r for r in RL if r.get('when_src') in
+                                           ('obj_doorAnyHorz', 'obj_doorAnyVert')]),
       u'unique=%d routes=%d dup=%d' % (len(_pairs), len(RL), len(RL) - len(_pairs)))
 
 check(u'E2 ★★★ 反回滚：路由总数 ≥ %d、W 规则 ≥ %d（改动只增不减）'

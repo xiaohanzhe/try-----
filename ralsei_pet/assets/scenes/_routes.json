@@ -58654,6 +58654,1425 @@
         ],
         "batch": 172
       }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_twirlflowerwind",
+      "priority": 8100,
+      "reason": "原作 GML：room_dw_cliff_bonuscombat 的 `obj_doorAnyHorz` 实例（x=-40, y=640）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_bonuscombat_21_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_twirlflowerwind ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_twirlflowerwind。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_bonuscombat",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_bonuscombat_21_PreCreate",
+        "src_room_name": "room_dw_cliff_bonuscombat",
+        "dst_room_name": "room_dw_cliff_twirlflowerwind",
+        "src_room_id": 170,
+        "dst_room_id": 174,
+        "door_x": -40,
+        "door_y": 640,
+        "door_x_all": [
+          -40,
+          200
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_twirlflowerwind",
+      "priority": 8101,
+      "reason": "原作 GML：room_dw_cliff_bonuscombat 的 `obj_doorAnyHorz` 实例（x=200, y=1360）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_bonuscombat_3_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_twirlflowerwind ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_twirlflowerwind。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_bonuscombat",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_bonuscombat_3_PreCreate",
+        "src_room_name": "room_dw_cliff_bonuscombat",
+        "dst_room_name": "room_dw_cliff_twirlflowerwind",
+        "src_room_id": 170,
+        "dst_room_id": 174,
+        "door_x": 200,
+        "door_y": 1360,
+        "door_x_all": [
+          -40,
+          200
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_twirlflowerplatforming",
+      "priority": 8102,
+      "reason": "原作 GML：room_dw_cliff_dash_runner 的 `obj_doorAnyHorz` 实例（x=-40, y=-200）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_dash_runner_10_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_twirlflowerplatforming ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_twirlflowerplatforming。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_dash_runner",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_dash_runner_10_PreCreate",
+        "src_room_name": "room_dw_cliff_dash_runner",
+        "dst_room_name": "room_dw_cliff_twirlflowerplatforming",
+        "src_room_id": 159,
+        "dst_room_id": 171,
+        "door_x": -40,
+        "door_y": -200,
+        "door_x_all": [
+          -40,
+          10000
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_verticalwind",
+      "priority": 8103,
+      "reason": "原作 GML：room_dw_cliff_eastcliff 的 `obj_doorAnyHorz` 实例（x=-20, y=1440）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_eastcliff_9_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_verticalwind ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_verticalwind。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_eastcliff",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_eastcliff_9_PreCreate",
+        "src_room_name": "room_dw_cliff_eastcliff",
+        "dst_room_name": "room_dw_cliff_verticalwind",
+        "src_room_id": 169,
+        "dst_room_id": 166,
+        "door_x": -20,
+        "door_y": 1440,
+        "door_x_all": [
+          -40,
+          -20
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_shicave",
+      "priority": 8104,
+      "reason": "原作 GML：room_dw_cliff_eastcliff 的 `obj_doorAnyHorz` 实例（x=-40, y=2440）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_eastcliff_10_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_shicave ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_shicave。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_eastcliff",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_eastcliff_10_PreCreate",
+        "src_room_name": "room_dw_cliff_eastcliff",
+        "dst_room_name": "room_dw_cliff_shicave",
+        "src_room_id": 169,
+        "dst_room_id": 165,
+        "door_x": -40,
+        "door_y": 2440,
+        "door_x_all": [
+          -40,
+          -20
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_verticalwind",
+      "priority": 8105,
+      "reason": "原作 GML：room_dw_cliff_finaldash 的 `obj_doorAnyHorz` 实例（x=9762, y=722）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_finaldash_6_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_verticalwind ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_verticalwind。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_finaldash",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_finaldash_6_PreCreate",
+        "src_room_name": "room_dw_cliff_finaldash",
+        "dst_room_name": "room_dw_cliff_verticalwind",
+        "src_room_id": 163,
+        "dst_room_id": 166,
+        "door_x": 9762,
+        "door_y": 722,
+        "door_x_all": [
+          -80,
+          320,
+          1400,
+          1900,
+          6880,
+          9762
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_eastcliff",
+      "priority": 8106,
+      "reason": "原作 GML：room_dw_cliff_shicave 的 `obj_doorAnyHorz` 实例（x=1080, y=120）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_shicave_7_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_eastcliff ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_eastcliff。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_shicave",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_shicave_7_PreCreate",
+        "src_room_name": "room_dw_cliff_shicave",
+        "dst_room_name": "room_dw_cliff_eastcliff",
+        "src_room_id": 165,
+        "dst_room_id": 169,
+        "door_x": 1080,
+        "door_y": 120,
+        "door_x_all": [
+          1080
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_dash_runner",
+      "priority": 8107,
+      "reason": "原作 GML：room_dw_cliff_twirlflowerplatforming 的 `obj_doorAnyHorz` 实例（x=3800, y=600）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_twirlflowerplatforming_7_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_dash_runner ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_dash_runner。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_twirlflowerplatforming",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_twirlflowerplatforming_7_PreCreate",
+        "src_room_name": "room_dw_cliff_twirlflowerplatforming",
+        "dst_room_name": "room_dw_cliff_dash_runner",
+        "src_room_id": 171,
+        "dst_room_id": 159,
+        "door_x": 3800,
+        "door_y": 600,
+        "door_x_all": [
+          -34,
+          1840,
+          3800
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_bonuscombat",
+      "priority": 8108,
+      "reason": "原作 GML：room_dw_cliff_twirlflowerwind 的 `obj_doorAnyHorz` 实例（x=2480, y=160）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_twirlflowerwind_75_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_bonuscombat ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_bonuscombat。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_twirlflowerwind",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_twirlflowerwind_75_PreCreate",
+        "src_room_name": "room_dw_cliff_twirlflowerwind",
+        "dst_room_name": "room_dw_cliff_bonuscombat",
+        "src_room_id": 174,
+        "dst_room_id": 170,
+        "door_x": 2480,
+        "door_y": 160,
+        "axis": "y",
+        "door_x_all": [
+          -34,
+          2480
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_bonuscombat",
+      "priority": 8109,
+      "reason": "原作 GML：room_dw_cliff_twirlflowerwind 的 `obj_doorAnyHorz` 实例（x=2480, y=1240）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_twirlflowerwind_38_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_bonuscombat ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_bonuscombat。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_twirlflowerwind",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_twirlflowerwind_38_PreCreate",
+        "src_room_name": "room_dw_cliff_twirlflowerwind",
+        "dst_room_name": "room_dw_cliff_bonuscombat",
+        "src_room_id": 174,
+        "dst_room_id": 170,
+        "door_x": 2480,
+        "door_y": 1240,
+        "axis": "y",
+        "door_x_all": [
+          -34,
+          2480
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_finaldash",
+      "priority": 8110,
+      "reason": "原作 GML：room_dw_cliff_verticalwind 的 `obj_doorAnyHorz` 实例（x=-40, y=8520）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_verticalwind_4_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_finaldash ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_finaldash。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_verticalwind",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_verticalwind_4_PreCreate",
+        "src_room_name": "room_dw_cliff_verticalwind",
+        "dst_room_name": "room_dw_cliff_finaldash",
+        "src_room_id": 166,
+        "dst_room_id": 163,
+        "door_x": -40,
+        "door_y": 8520,
+        "door_x_all": [
+          -80,
+          -40,
+          640
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_eastcliff",
+      "priority": 8111,
+      "reason": "原作 GML：room_dw_cliff_verticalwind 的 `obj_doorAnyHorz` 实例（x=640, y=8640）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_verticalwind_8_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_eastcliff ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_eastcliff。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_verticalwind",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_cliff_verticalwind_8_PreCreate",
+        "src_room_name": "room_dw_cliff_verticalwind",
+        "dst_room_name": "room_dw_cliff_eastcliff",
+        "src_room_id": 166,
+        "dst_room_id": 169,
+        "door_x": 640,
+        "door_y": 8640,
+        "door_x_all": [
+          -80,
+          -40,
+          640
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_top_challenge",
+      "priority": 8112,
+      "reason": "原作 GML：room_dogplatforming 的 `obj_doorAnyHorz` 实例（x=2560, y=1000）在自己的**实例创建代码** `gml_RoomCC_room_dogplatforming_9_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_challenge ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_challenge。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dogplatforming",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dogplatforming_9_PreCreate",
+        "src_room_name": "room_dogplatforming",
+        "dst_room_name": "room_dw_fcastle_top_challenge",
+        "src_room_id": 175,
+        "dst_room_id": 242,
+        "door_x": 2560,
+        "door_y": 1000,
+        "door_x_all": [
+          680,
+          2560
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_dangerous_platforming",
+      "priority": 8113,
+      "reason": "原作 GML：room_dw_fcastle_bounce_3 的 `obj_doorAnyHorz` 实例（x=-40, y=2600）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_bounce_3_22_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_dangerous_platforming ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_dangerous_platforming。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_bounce_3",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_bounce_3_22_PreCreate",
+        "src_room_name": "room_dw_fcastle_bounce_3",
+        "dst_room_name": "room_dw_fcastle_dangerous_platforming",
+        "src_room_id": 192,
+        "dst_room_id": 186,
+        "door_x": -40,
+        "door_y": 2600,
+        "door_x_all": [
+          -40
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_bounce_3",
+      "priority": 8114,
+      "reason": "原作 GML：room_dw_fcastle_dangerous_platforming 的 `obj_doorAnyHorz` 实例（x=5600, y=3000）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_dangerous_platforming_51_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_bounce_3 ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_bounce_3。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_dangerous_platforming",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_dangerous_platforming_51_PreCreate",
+        "src_room_name": "room_dw_fcastle_dangerous_platforming",
+        "dst_room_name": "room_dw_fcastle_bounce_3",
+        "src_room_id": 186,
+        "dst_room_id": 192,
+        "door_x": 5600,
+        "door_y": 3000,
+        "door_x_all": [
+          -34,
+          5120,
+          5600
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_trainroom",
+      "priority": 8115,
+      "reason": "原作 GML：room_dw_fcastle_gloves_tower 的 `obj_doorAnyHorz` 实例（x=1600, y=2320）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_gloves_tower_34_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_trainroom ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_trainroom。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_gloves_tower",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_gloves_tower_34_PreCreate",
+        "src_room_name": "room_dw_fcastle_gloves_tower",
+        "dst_room_name": "room_dw_fcastle_trainroom",
+        "src_room_id": 201,
+        "dst_room_id": 215,
+        "door_x": 1600,
+        "door_y": 2320,
+        "axis": "y",
+        "door_x_all": [
+          206,
+          1600
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_orange_puppet_introduction",
+      "priority": 8116,
+      "reason": "原作 GML：room_dw_fcastle_gloves_tower 的 `obj_doorAnyHorz` 实例（x=1600, y=2880）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_gloves_tower_10_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_orange_puppet_introduction ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_orange_puppet_introduction。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_gloves_tower",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_gloves_tower_10_PreCreate",
+        "src_room_name": "room_dw_fcastle_gloves_tower",
+        "dst_room_name": "room_dw_fcastle_orange_puppet_introduction",
+        "src_room_id": 201,
+        "dst_room_id": 200,
+        "door_x": 1600,
+        "door_y": 2880,
+        "axis": "y",
+        "door_x_all": [
+          206,
+          1600
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_sidepuzzle",
+      "priority": 8117,
+      "reason": "原作 GML：room_dw_fcastle_obscured_bullets 的 `obj_doorAnyHorz` 实例（x=-40, y=2160）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_obscured_bullets_13_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_sidepuzzle ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_sidepuzzle。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_obscured_bullets",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_obscured_bullets_13_PreCreate",
+        "src_room_name": "room_dw_fcastle_obscured_bullets",
+        "dst_room_name": "room_dw_fcastle_sidepuzzle",
+        "src_room_id": 203,
+        "dst_room_id": 212,
+        "door_x": -40,
+        "door_y": 2160,
+        "door_x_all": [
+          -40,
+          1200,
+          2480
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_top_ascent",
+      "priority": 8118,
+      "reason": "原作 GML：room_dw_fcastle_orange_gauntlet 的 `obj_doorAnyHorz` 实例（x=-40, y=600）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_orange_gauntlet_36_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_ascent ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_ascent。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_orange_gauntlet",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_orange_gauntlet_36_PreCreate",
+        "src_room_name": "room_dw_fcastle_orange_gauntlet",
+        "dst_room_name": "room_dw_fcastle_top_ascent",
+        "src_room_id": 244,
+        "dst_room_id": 241,
+        "door_x": -40,
+        "door_y": 600,
+        "door_x_all": [
+          -40,
+          2440
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_gloves_tower",
+      "priority": 8119,
+      "reason": "原作 GML：room_dw_fcastle_orange_puppet_introduction 的 `obj_doorAnyHorz` 实例（x=-40, y=2760）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_orange_puppet_introduction_7_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_gloves_tower ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_gloves_tower。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_orange_puppet_introduction",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_orange_puppet_introduction_7_PreCreate",
+        "src_room_name": "room_dw_fcastle_orange_puppet_introduction",
+        "dst_room_name": "room_dw_fcastle_gloves_tower",
+        "src_room_id": 200,
+        "dst_room_id": 201,
+        "door_x": -40,
+        "door_y": 2760,
+        "door_x_all": [
+          -40,
+          760
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_obscured_bullets",
+      "priority": 8120,
+      "reason": "原作 GML：room_dw_fcastle_sidepuzzle 的 `obj_doorAnyHorz` 实例（x=1160, y=800）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_sidepuzzle_5_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_obscured_bullets ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_obscured_bullets。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_sidepuzzle",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_sidepuzzle_5_PreCreate",
+        "src_room_name": "room_dw_fcastle_sidepuzzle",
+        "dst_room_name": "room_dw_fcastle_obscured_bullets",
+        "src_room_id": 212,
+        "dst_room_id": 203,
+        "door_x": 1160,
+        "door_y": 800,
+        "door_x_all": [
+          1160
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_top_challenge",
+      "priority": 8121,
+      "reason": "原作 GML：room_dw_fcastle_top_ascent 的 `obj_doorAnyHorz` 实例（x=-40, y=2600）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_top_ascent_46_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_challenge ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_challenge。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_top_ascent",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_top_ascent_46_PreCreate",
+        "src_room_name": "room_dw_fcastle_top_ascent",
+        "dst_room_name": "room_dw_fcastle_top_challenge",
+        "src_room_id": 241,
+        "dst_room_id": 242,
+        "door_x": -40,
+        "door_y": 2600,
+        "door_x_all": [
+          -40,
+          -34,
+          840
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_orange_gauntlet",
+      "priority": 8122,
+      "reason": "原作 GML：room_dw_fcastle_top_ascent 的 `obj_doorAnyHorz` 实例（x=840, y=2600）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_top_ascent_43_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_orange_gauntlet ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_orange_gauntlet。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_top_ascent",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_top_ascent_43_PreCreate",
+        "src_room_name": "room_dw_fcastle_top_ascent",
+        "dst_room_name": "room_dw_fcastle_orange_gauntlet",
+        "src_room_id": 241,
+        "dst_room_id": 244,
+        "door_x": 840,
+        "door_y": 2600,
+        "door_x_all": [
+          -40,
+          -34,
+          840
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dogplatforming",
+      "priority": 8123,
+      "reason": "原作 GML：room_dw_fcastle_top_challenge 的 `obj_doorAnyHorz` 实例（x=240, y=440）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_top_challenge_80_PreCreate` 里把 `doorRoom` 写死成 room_dogplatforming ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dogplatforming。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_top_challenge",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_top_challenge_80_PreCreate",
+        "src_room_name": "room_dw_fcastle_top_challenge",
+        "dst_room_name": "room_dogplatforming",
+        "src_room_id": 242,
+        "dst_room_id": 175,
+        "door_x": 240,
+        "door_y": 440,
+        "door_x_all": [
+          240,
+          3160,
+          6600
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_top_ascent",
+      "priority": 8124,
+      "reason": "原作 GML：room_dw_fcastle_top_challenge 的 `obj_doorAnyHorz` 实例（x=6600, y=840）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_top_challenge_2_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_ascent ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_ascent。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_top_challenge",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_top_challenge_2_PreCreate",
+        "src_room_name": "room_dw_fcastle_top_challenge",
+        "dst_room_name": "room_dw_fcastle_top_ascent",
+        "src_room_id": 242,
+        "dst_room_id": 241,
+        "door_x": 6600,
+        "door_y": 840,
+        "door_x_all": [
+          240,
+          3160,
+          6600
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_gloves_tower",
+      "priority": 8125,
+      "reason": "原作 GML：room_dw_fcastle_trainroom 的 `obj_doorAnyHorz` 实例（x=-40, y=200）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_trainroom_13_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_gloves_tower ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_gloves_tower。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_trainroom",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_fcastle_trainroom_13_PreCreate",
+        "src_room_name": "room_dw_fcastle_trainroom",
+        "dst_room_name": "room_dw_fcastle_gloves_tower",
+        "src_room_id": 215,
+        "dst_room_id": 201,
+        "door_x": -40,
+        "door_y": 200,
+        "door_x_all": [
+          -40
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_finalplatforming",
+      "priority": 8126,
+      "reason": "原作 GML：room_dw_garden_aquadash_plat 的 `obj_doorAnyHorz` 实例（x=6400, y=-320）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_aquadash_plat_5_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_finalplatforming ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_finalplatforming。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_aquadash_plat",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_aquadash_plat_5_PreCreate",
+        "src_room_name": "room_dw_garden_aquadash_plat",
+        "dst_room_name": "room_dw_garden_finalplatforming",
+        "src_room_id": 153,
+        "dst_room_id": 137,
+        "door_x": 6400,
+        "door_y": -320,
+        "door_x_all": [
+          6400
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.garden_shrine",
+      "priority": 8127,
+      "reason": "原作 GML：room_dw_garden_aquahole_left 的 `obj_doorAnyHorz` 实例（x=640, y=-200）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_aquahole_left_6_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquahole ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.garden_shrine。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_aquahole_left",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_aquahole_left_6_PreCreate",
+        "src_room_name": "room_dw_garden_aquahole_left",
+        "dst_room_name": "room_dw_garden_aquahole",
+        "src_room_id": 151,
+        "dst_room_id": 141,
+        "door_x": 640,
+        "door_y": -200,
+        "door_x_all": [
+          634,
+          640
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.garden_shrine",
+      "priority": 8128,
+      "reason": "原作 GML：room_dw_garden_aquahole_left 的 `obj_doorAnyHorz` 实例（x=634, y=-40）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_aquahole_left_0_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquahole ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.garden_shrine。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_aquahole_left",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_aquahole_left_0_PreCreate",
+        "src_room_name": "room_dw_garden_aquahole_left",
+        "dst_room_name": "room_dw_garden_aquahole",
+        "src_room_id": 151,
+        "dst_room_id": 141,
+        "door_x": 634,
+        "door_y": -40,
+        "door_x_all": [
+          634,
+          640
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_aquashrine",
+      "priority": 8129,
+      "reason": "原作 GML：room_dw_garden_aquaplatforming 的 `obj_doorAnyHorz` 实例（x=-34, y=-240）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_aquaplatforming_29_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquashrine ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquashrine。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_aquaplatforming",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_aquaplatforming_29_PreCreate",
+        "src_room_name": "room_dw_garden_aquaplatforming",
+        "dst_room_name": "room_dw_garden_aquashrine",
+        "src_room_id": 143,
+        "dst_room_id": 142,
+        "door_x": -34,
+        "door_y": -240,
+        "door_x_all": [
+          -34
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.garden_shrine",
+      "priority": 8130,
+      "reason": "原作 GML：room_dw_garden_aquashrine 的 `obj_doorAnyHorz` 实例（x=-34, y=0）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_aquashrine_0_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquahole ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.garden_shrine。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_aquashrine",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_aquashrine_0_PreCreate",
+        "src_room_name": "room_dw_garden_aquashrine",
+        "dst_room_name": "room_dw_garden_aquahole",
+        "src_room_id": 142,
+        "dst_room_id": 141,
+        "door_x": -34,
+        "door_y": 0,
+        "door_x_all": [
+          -34,
+          634
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_aquaplatforming",
+      "priority": 8131,
+      "reason": "原作 GML：room_dw_garden_aquashrine 的 `obj_doorAnyHorz` 实例（x=634, y=0）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_aquashrine_7_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquaplatforming ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquaplatforming。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_aquashrine",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_aquashrine_7_PreCreate",
+        "src_room_name": "room_dw_garden_aquashrine",
+        "dst_room_name": "room_dw_garden_aquaplatforming",
+        "src_room_id": 142,
+        "dst_room_id": 143,
+        "door_x": 634,
+        "door_y": 0,
+        "door_x_all": [
+          -34,
+          634
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_aquadash_plat",
+      "priority": 8132,
+      "reason": "原作 GML：room_dw_garden_finalplatforming 的 `obj_doorAnyHorz` 实例（x=-40, y=2120）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_finalplatforming_56_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquadash_plat ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquadash_plat。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_finalplatforming",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_finalplatforming_56_PreCreate",
+        "src_room_name": "room_dw_garden_finalplatforming",
+        "dst_room_name": "room_dw_garden_aquadash_plat",
+        "src_room_id": 137,
+        "dst_room_id": 153,
+        "door_x": -40,
+        "door_y": 2120,
+        "axis": "y",
+        "door_x_all": [
+          -40,
+          -34,
+          634,
+          640
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_finalplatforming_right",
+      "priority": 8133,
+      "reason": "原作 GML：room_dw_garden_finalplatforming 的 `obj_doorAnyHorz` 实例（x=640, y=2120）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_finalplatforming_57_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_finalplatforming_right ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_finalplatforming_right。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_finalplatforming",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_finalplatforming_57_PreCreate",
+        "src_room_name": "room_dw_garden_finalplatforming",
+        "dst_room_name": "room_dw_garden_finalplatforming_right",
+        "src_room_id": 137,
+        "dst_room_id": 138,
+        "door_x": 640,
+        "door_y": 2120,
+        "door_x_all": [
+          -40,
+          -34,
+          634,
+          640
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_aquadash_plat",
+      "priority": 8134,
+      "reason": "原作 GML：room_dw_garden_finalplatforming 的 `obj_doorAnyHorz` 实例（x=-40, y=3760）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_finalplatforming_47_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquadash_plat ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquadash_plat。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_finalplatforming",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_finalplatforming_47_PreCreate",
+        "src_room_name": "room_dw_garden_finalplatforming",
+        "dst_room_name": "room_dw_garden_aquadash_plat",
+        "src_room_id": 137,
+        "dst_room_id": 153,
+        "door_x": -40,
+        "door_y": 3760,
+        "axis": "y",
+        "door_x_all": [
+          -40,
+          -34,
+          634,
+          640
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_finalplatforming_right",
+      "priority": 8135,
+      "reason": "原作 GML：room_dw_garden_finalplatforming 的 `obj_doorAnyHorz` 实例（x=634, y=3800）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_finalplatforming_18_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_finalplatforming_right ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_finalplatforming_right。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_finalplatforming",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_finalplatforming_18_PreCreate",
+        "src_room_name": "room_dw_garden_finalplatforming",
+        "dst_room_name": "room_dw_garden_finalplatforming_right",
+        "src_room_id": 137,
+        "dst_room_id": 138,
+        "door_x": 634,
+        "door_y": 3800,
+        "axis": "y",
+        "door_x_all": [
+          -40,
+          -34,
+          634,
+          640
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_finalplatforming",
+      "priority": 8136,
+      "reason": "原作 GML：room_dw_garden_finalplatforming_right 的 `obj_doorAnyHorz` 实例（x=-34, y=2360）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_finalplatforming_right_1_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_finalplatforming ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_finalplatforming。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_finalplatforming_right",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_finalplatforming_right_1_PreCreate",
+        "src_room_name": "room_dw_garden_finalplatforming_right",
+        "dst_room_name": "room_dw_garden_finalplatforming",
+        "src_room_id": 138,
+        "dst_room_id": 137,
+        "door_x": -34,
+        "door_y": 2360,
+        "door_x_all": [
+          -34
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_platshortcut",
+      "priority": 8137,
+      "reason": "原作 GML：room_dw_garden_hopschef 的 `obj_doorAnyHorz` 实例（x=1674, y=1480）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_hopschef_1_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_platshortcut ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_platshortcut。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_hopschef",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_hopschef_1_PreCreate",
+        "src_room_name": "room_dw_garden_hopschef",
+        "dst_room_name": "room_dw_garden_platshortcut",
+        "src_room_id": 126,
+        "dst_room_id": 127,
+        "door_x": 1674,
+        "door_y": 1480,
+        "door_x_all": [
+          446,
+          1674
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_hopschef",
+      "priority": 8138,
+      "reason": "原作 GML：room_dw_garden_platshortcut 的 `obj_doorAnyHorz` 实例（x=-34, y=760）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_platshortcut_37_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_hopschef ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_hopschef。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.dw_garden_platshortcut",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_platshortcut_37_PreCreate",
+        "src_room_name": "room_dw_garden_platshortcut",
+        "dst_room_name": "room_dw_garden_hopschef",
+        "src_room_id": 127,
+        "dst_room_id": 126,
+        "door_x": -34,
+        "door_y": 760,
+        "door_x_all": [
+          -34,
+          220
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_aquahole_left",
+      "priority": 8139,
+      "reason": "原作 GML：room_dw_garden_aquahole 的 `obj_doorAnyHorz` 实例（x=-40, y=760）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_aquahole_19_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquahole_left ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquahole_left。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.garden_shrine",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_aquahole_19_PreCreate",
+        "src_room_name": "room_dw_garden_aquahole",
+        "dst_room_name": "room_dw_garden_aquahole_left",
+        "src_room_id": 141,
+        "dst_room_id": 151,
+        "door_x": -40,
+        "door_y": 760,
+        "door_x_all": [
+          -40,
+          -34,
+          634
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_aquashrine",
+      "priority": 8140,
+      "reason": "原作 GML：room_dw_garden_aquahole 的 `obj_doorAnyHorz` 实例（x=634, y=760）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_aquahole_0_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquashrine ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquashrine。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.garden_shrine",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_aquahole_0_PreCreate",
+        "src_room_name": "room_dw_garden_aquahole",
+        "dst_room_name": "room_dw_garden_aquashrine",
+        "src_room_id": 141,
+        "dst_room_id": 142,
+        "door_x": 634,
+        "door_y": 760,
+        "door_x_all": [
+          -40,
+          -34,
+          634
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.garden.dw_garden_aquahole_left",
+      "priority": 8141,
+      "reason": "原作 GML：room_dw_garden_aquahole 的 `obj_doorAnyHorz` 实例（x=-34, y=1480）在自己的**实例创建代码** `gml_RoomCC_room_dw_garden_aquahole_18_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquahole_left ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquahole_left。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyHorz` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 x 相对 xstart 偏移 ±40（按房间左右半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.garden.garden_shrine",
+      "when_door": null,
+      "when_src": "obj_doorAnyHorz",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyHorz",
+        "precreate": "gml_RoomCC_room_dw_garden_aquahole_18_PreCreate",
+        "src_room_name": "room_dw_garden_aquahole",
+        "dst_room_name": "room_dw_garden_aquahole_left",
+        "src_room_id": 141,
+        "dst_room_id": 151,
+        "door_x": -34,
+        "door_y": 1480,
+        "door_x_all": [
+          -40,
+          -34,
+          634
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_seth_miniboss",
+      "priority": 8142,
+      "reason": "原作 GML：room_dw_cliff_dash_runner 的 `obj_doorAnyVert` 实例（x=10000, y=480）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_dash_runner_7_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_seth_miniboss ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_seth_miniboss。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyVert` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 y 相对 ystart 偏移 ±40（按房间上下半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_dash_runner",
+      "when_door": null,
+      "when_src": "obj_doorAnyVert",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyVert",
+        "precreate": "gml_RoomCC_room_dw_cliff_dash_runner_7_PreCreate",
+        "src_room_name": "room_dw_cliff_dash_runner",
+        "dst_room_name": "room_dw_cliff_seth_miniboss",
+        "src_room_id": 159,
+        "dst_room_id": 160,
+        "door_x": 10000,
+        "door_y": 480,
+        "door_x_all": [
+          -40,
+          10000
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_shicave",
+      "priority": 8143,
+      "reason": "原作 GML：room_dw_cliff_finaldash 的 `obj_doorAnyVert` 实例（x=1900, y=930）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_finaldash_14_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_shicave ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_shicave。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyVert` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 y 相对 ystart 偏移 ±40（按房间上下半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_finaldash",
+      "when_door": null,
+      "when_src": "obj_doorAnyVert",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyVert",
+        "precreate": "gml_RoomCC_room_dw_cliff_finaldash_14_PreCreate",
+        "src_room_name": "room_dw_cliff_finaldash",
+        "dst_room_name": "room_dw_cliff_shicave",
+        "src_room_id": 163,
+        "dst_room_id": 165,
+        "door_x": 1900,
+        "door_y": 930,
+        "door_x_all": [
+          -80,
+          320,
+          1400,
+          1900,
+          6880,
+          9762
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_shicave",
+      "priority": 8144,
+      "reason": "原作 GML：room_dw_cliff_finaldash 的 `obj_doorAnyVert` 实例（x=6880, y=1200）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_finaldash_56_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_shicave ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_shicave。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyVert` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 y 相对 ystart 偏移 ±40（按房间上下半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_finaldash",
+      "when_door": null,
+      "when_src": "obj_doorAnyVert",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyVert",
+        "precreate": "gml_RoomCC_room_dw_cliff_finaldash_56_PreCreate",
+        "src_room_name": "room_dw_cliff_finaldash",
+        "dst_room_name": "room_dw_cliff_shicave",
+        "src_room_id": 163,
+        "dst_room_id": 165,
+        "door_x": 6880,
+        "door_y": 1200,
+        "door_x_all": [
+          -80,
+          320,
+          1400,
+          1900,
+          6880,
+          9762
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_shicave",
+      "priority": 8145,
+      "reason": "原作 GML：room_dw_cliff_finaldash 的 `obj_doorAnyVert` 实例（x=-80, y=1230）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_finaldash_17_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_shicave ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_shicave。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyVert` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 y 相对 ystart 偏移 ±40（按房间上下半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_finaldash",
+      "when_door": null,
+      "when_src": "obj_doorAnyVert",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyVert",
+        "precreate": "gml_RoomCC_room_dw_cliff_finaldash_17_PreCreate",
+        "src_room_name": "room_dw_cliff_finaldash",
+        "dst_room_name": "room_dw_cliff_shicave",
+        "src_room_id": 163,
+        "dst_room_id": 165,
+        "door_x": -80,
+        "door_y": 1230,
+        "door_x_all": [
+          -80,
+          320,
+          1400,
+          1900,
+          6880,
+          9762
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.dw_cliff_shicave",
+      "priority": 8146,
+      "reason": "原作 GML：room_dw_cliff_finaldash 的 `obj_doorAnyVert` 实例（x=1400, y=1230）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_finaldash_16_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_shicave ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_shicave。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyVert` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 y 相对 ystart 偏移 ±40（按房间上下半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_finaldash",
+      "when_door": null,
+      "when_src": "obj_doorAnyVert",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyVert",
+        "precreate": "gml_RoomCC_room_dw_cliff_finaldash_16_PreCreate",
+        "src_room_name": "room_dw_cliff_finaldash",
+        "dst_room_name": "room_dw_cliff_shicave",
+        "src_room_id": 163,
+        "dst_room_id": 165,
+        "door_x": 1400,
+        "door_y": 1230,
+        "door_x_all": [
+          -80,
+          320,
+          1400,
+          1900,
+          6880,
+          9762
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.cliffs.cliffs_below_castle",
+      "priority": 8147,
+      "reason": "原作 GML：room_dw_cliff_verticalwind 的 `obj_doorAnyVert` 实例（x=-80, y=-40）在自己的**实例创建代码** `gml_RoomCC_room_dw_cliff_verticalwind_2_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_verticalwind_post ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.cliffs.cliffs_below_castle。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyVert` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 y 相对 ystart 偏移 ±40（按房间上下半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.cliffs.dw_cliff_verticalwind",
+      "when_door": null,
+      "when_src": "obj_doorAnyVert",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyVert",
+        "precreate": "gml_RoomCC_room_dw_cliff_verticalwind_2_PreCreate",
+        "src_room_name": "room_dw_cliff_verticalwind",
+        "dst_room_name": "room_dw_cliff_verticalwind_post",
+        "src_room_id": 166,
+        "dst_room_id": 167,
+        "door_x": -80,
+        "door_y": -40,
+        "door_x_all": [
+          -80,
+          -40,
+          640
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_top_descent",
+      "priority": 8148,
+      "reason": "原作 GML：room_dw_fcastle_top_challenge 的 `obj_doorAnyVert` 实例（x=3160, y=1320）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_top_challenge_74_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_descent ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_descent。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyVert` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 y 相对 ystart 偏移 ±40（按房间上下半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_top_challenge",
+      "when_door": null,
+      "when_src": "obj_doorAnyVert",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyVert",
+        "precreate": "gml_RoomCC_room_dw_fcastle_top_challenge_74_PreCreate",
+        "src_room_name": "room_dw_fcastle_top_challenge",
+        "dst_room_name": "room_dw_fcastle_top_descent",
+        "src_room_id": 242,
+        "dst_room_id": 228,
+        "door_x": 3160,
+        "door_y": 1320,
+        "door_x_all": [
+          240,
+          3160,
+          6600
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_top_challenge",
+      "priority": 8149,
+      "reason": "原作 GML：room_dw_fcastle_top_descent 的 `obj_doorAnyVert` 实例（x=600, y=320）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_top_descent_20_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_challenge ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_challenge。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyVert` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 y 相对 ystart 偏移 ±40（按房间上下半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_top_descent",
+      "when_door": null,
+      "when_src": "obj_doorAnyVert",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyVert",
+        "precreate": "gml_RoomCC_room_dw_fcastle_top_descent_20_PreCreate",
+        "src_room_name": "room_dw_fcastle_top_descent",
+        "dst_room_name": "room_dw_fcastle_top_challenge",
+        "src_room_id": 228,
+        "dst_room_id": 242,
+        "door_x": 600,
+        "door_y": 320,
+        "door_x_all": [
+          40,
+          600
+        ],
+        "batch": 174
+      }
+    },
+    {
+      "to": "ch5.flower_castle.dw_fcastle_top_pinkdoor",
+      "priority": 8150,
+      "reason": "原作 GML：room_dw_fcastle_top_descent 的 `obj_doorAnyVert` 实例（x=40, y=3840）在自己的**实例创建代码** `gml_RoomCC_room_dw_fcastle_top_descent_19_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_pinkdoor ⇒ 继承来的 `Other_19`（碰到玩家）置 `alarm[2]=8`、父对象 `Alarm_2` 执行 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_pinkdoor。（第174轮按实例补；此前 `_routes.json` 里一条 `obj_doorAnyVert` 边都没有 ⇒ 这些房间在产品里**没有任何出口**。★ 该对象 `Step_1` 玩家乘平台时 y 相对 ystart 偏移 ±40（按房间上下半区），因此本轮记录的是 `xstart/ystart` 原值。）",
+      "when_scene": "ch5.flower_castle.dw_fcastle_top_descent",
+      "when_door": null,
+      "when_src": "obj_doorAnyVert",
+      "_original": {
+        "chapter": "ch5",
+        "kind": "delta_door_any_variant",
+        "table": "gml_Object_obj_doorAny_Alarm_2",
+        "own_event": "Step_1",
+        "via": "obj_doorAnyVert",
+        "precreate": "gml_RoomCC_room_dw_fcastle_top_descent_19_PreCreate",
+        "src_room_name": "room_dw_fcastle_top_descent",
+        "dst_room_name": "room_dw_fcastle_top_pinkdoor",
+        "src_room_id": 228,
+        "dst_room_id": 229,
+        "door_x": 40,
+        "door_y": 3840,
+        "door_x_all": [
+          40,
+          600
+        ],
+        "batch": 174
+      }
     }
   ],
   "_fallback": {

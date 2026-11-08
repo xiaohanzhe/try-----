@@ -124,12 +124,20 @@ E42 = os.path.join(ROOT, 'code-quality-audit', '第42轮-原作拓扑取证', '_
 INST42 = {'ch1': 'inst42.json', 'ch2': 'ch2_inst42.json', 'ch3': 'ch3_inst42.json',
           'ch4': 'ch4_inst42.json', 'ch5': 'ch5_inst42.json'}
 ANY_SRC = 'obj_doorAny'
+#: ★★ 第174轮：`doorany` **家族**共四个对象，其中三个有实例、全部 `visible=false`：
+#     `obj_doorAny` 830 / `obj_doorAnyHorz` 42 / `obj_doorAnyVert` 9
+#     （第四个 `obj_doorAnyModespecific` 只在对象表里，五章零实例）。
+#   第173轮只补了 `obj_doorAny`（820 条），第174轮补了另外两个变体（51 条）
+#   ⇒ 豁免白名单与期望值都得按**家族**算，否则 A3 会对这 51 条报假红。
+#   ★ 但白名单仍要**逐个列名**（不许写成"名字里带 doorAny 就算"）：子串规则会把
+#     将来任何 `obj_doorAnyXXX` 自动洗白，那是万能豁免。
+ANY_FAMILY = (ANY_SRC, 'obj_doorAnyHorz', 'obj_doorAnyVert')
 #: ★ 第173轮：**按原作本就不可见**、因此故意不写 `sprite` 的物件名。
 #   理由见 `inject173.py` 的 docstring：`obj_doorAny` 是 `visible=false` 的触发器，
 #   `is_drawable_object()` 靠 `_obj_visible.json` 的 hidden 名单把它滤掉
 #   ⇒ 它永远不绘制，给它写一个指向不存在文件的 sprite 才是假话。
 #   ⇒ A3「sprite 非空 str」对这批要有**记账式豁免**（不是静默放行，见 A3b）。
-INVISIBLE_SRCS = frozenset([ANY_SRC])
+INVISIBLE_SRCS = frozenset(ANY_FAMILY)
 
 
 def _is_hidden_exempt(o):
@@ -347,15 +355,20 @@ def main():
     #   否则"豁免"就是一块黑布：写错一个白名单名字，就能把一批没 sprite 的垃圾
     #   静默放过去而 A3 照样绿。这里要求 豁免数 == 期望数，两边各自独立算。
     ok(len(invisible_exempt) == ANY_EXPECT,
-       'A3b ★★ 不可见豁免**有账**：实际豁免 %d == 独立重算 %d（`obj_doorAny` 按原作'
-       ' visible=false，永不绘制 ⇒ 故意不写 sprite）'
+       'A3b ★★ 不可见豁免**有账**：实际豁免 %d == 独立重算 %d（doorany 家族'
+       ' `obj_doorAny` 830 + `Horz` 42 + `Vert` 9 按原作 visible=false，永不绘制'
+       ' ⇒ 故意不写 sprite）'
        % (len(invisible_exempt), ANY_EXPECT))
     ok(_is_hidden_exempt({'pos': [0, 0], 'src': ANY_SRC})
+       and _is_hidden_exempt({'pos': [0, 0], 'src': 'obj_doorAnyHorz'})
+       and _is_hidden_exempt({'pos': [0, 0], 'src': 'obj_doorAnyVert'})
+       and not _is_hidden_exempt({'pos': [0, 0], 'src': 'obj_doorAnyModespecific'})
        and not _is_hidden_exempt({'pos': [0, 0], 'src': 'obj_doorA'})
        and not _is_hidden_exempt({'pos': [0, 0], 'src': ANY_SRC, 'sprite': 'spr_doorA_0.png'})
        and not _is_hidden_exempt({'pos': 'oops', 'src': ANY_SRC}),
-       'A3c 正/负控制：`_is_hidden_exempt` 认 {pos,src=obj_doorAny}；'
-       '**不认** obj_doorA / 有 sprite 的 / pos 非法的 —— 豁免不是万能通行证')
+       'A3c 正/负控制：`_is_hidden_exempt` 认三个有实例的变体；'
+       '**不认**零实例的 `obj_doorAnyModespecific` / `obj_doorA` / 有 sprite 的 / pos 非法的'
+       ' —— 白名单是逐个列名，不是"名字里带 doorAny"')
     ok(not missing_sprite, 'A4 所有 sprite（Deltarune 命名空间）指向 objs/ 下真实文件 缺=%d'
        % len(missing_sprite))
     if missing_sprite:
@@ -551,20 +564,22 @@ def _recount_expected(obj_files):
 
 
 def _count_any_expected():
-    """第173轮：**独立重算**该补多少条 `obj_doorAny`（不读场景产物、不读注入器自报）。
+    """第173/174轮：**独立重算**该补多少条 doorany 家族实例（不读场景产物、不读注入器自报）。
 
     规则与注入器等价但独立实现：
       · 源 = 第42轮**实例普查**（`inst42` 系，注入器也用这份）；
       · 只算**已登记场景**的房间（未登记房间没有载体，补不进去）；
       · 同房间内按 `(x, y)` 去重（同一坐标重复摆两扇＝一条）；
       · ★ 已登记房间**保留重复**（一个房间登记成两个场景 ⇒ 两份），与生成器口径一致。
+      · ★★ 第174轮：判据从"单个 `obj_doorAny`"扩到**家族**（`ANY_FAMILY`）——
+        实测 820 + 51 = **871**。扩展必须同时扩 A3b 的账，否则豁免就没有上限。
     """
     inst = {ch: _load_inst_rooms(os.path.join(E42, fn)) for ch, fn in INST42.items()}
     n = 0
     for ch, rid in _registered_scene_rooms():
         seen = set()
         for it in (inst.get(ch, {}).get(rid) or []):
-            if it.get('obj') != ANY_SRC:
+            if it.get('obj') not in ANY_FAMILY:
                 continue
             x, y = it.get('x'), it.get('y')
             if not isinstance(x, int) or not isinstance(y, int):

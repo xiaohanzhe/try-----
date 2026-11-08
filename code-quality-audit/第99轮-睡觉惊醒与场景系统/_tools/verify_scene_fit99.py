@@ -453,7 +453,9 @@ _HIDDEN_SRC_SEEN = (
     # ★ 第173轮：`obj_doorAny` 物化进场景后，它也成为"出现在场景数据里且被过滤"
     #   的一员（它本来就在 901 隐形名单里，只是此前场景里一条实例都没有，
     #   所以没被 `seen` 采到）。46 → **47**。
-    'obj_doorAny', 'obj_doorB',
+    # ★ 第174轮：另外两个变体 `obj_doorAnyHorz` / `obj_doorAnyVert` 也物化了
+    #   （51 扇，仅 ch5）。47 → **49**。
+    'obj_doorAny', 'obj_doorAnyHorz', 'obj_doorAnyVert', 'obj_doorB',
     'obj_doorB_musfade', 'obj_doorC', 'obj_doorC_musfade', 'obj_doorD',
     'obj_doorD_musfade', 'obj_doorE', 'obj_doorF', 'obj_doorW', 'obj_doorX',
     'obj_doorX_musfade', 'obj_doorw_musfade', 'obj_dw_church_staircase',
@@ -730,6 +732,10 @@ def sec_g():
     #     1655（ut） + 820（Any） = 2475。
     #   ★ 放宽必须配账：`_none_other` 要求除这两个来源外**一个都不许有**，
     #     否则"没 sprite"就变成万能通行证。
+    # ★★ 第174轮：又多了两个变体（`obj_doorAnyHorz` 42 + `obj_doorAnyVert` 9 = 51）
+    #   ⇒ 1655 + 820 + 51 = **2526**。判据从"等于某个名字"改成"属于**家族**"，
+    #   但家族是**逐个列名**的元组（不许写成子串匹配，那是万能通行证）。
+    _ANY_FAM = ('obj_doorAny', 'obj_doorAnyHorz', 'obj_doorAnyVert')
     _n_any_none = 0
     _none_other = []
     for _sid, _sc in loaded.items():
@@ -739,18 +745,18 @@ def sec_g():
             _src = _o.get('src')
             if not isinstance(_src, str) or not _src:
                 continue
-            if _src == 'obj_doorAny':
+            if _src in _ANY_FAM:
                 _n_any_none += 1
             elif _sid not in _ut_ids:
                 _none_other.append((_sid, _src))
     # ★★★ 第123轮：970 → **1655**（第121轮的 422 条可交互物 + 第122/123轮的 1,233 扇门）。
-    ok(not oth and _n_none == 1655 + 820 and _n_any_none == 820
+    ok(not oth and _n_none == 1655 + 871 and _n_any_none == 871
        and not _none_other and bool(_ut_ids),
        'G24c `sprite` 只有三种合法形态：`objs/` / `oneshot_cells/` / **None**'
-       '（None = ut 那 %d 条 ＋ 第173轮 `obj_doorAny` 那 %d 条，两者都"画面在别处 /'
+       '（None = ut 那 %d 条 ＋ doorany 家族那 %d 条，两者都"画面在别处 /'
        '本就不可见"，不重复绘制）；'
-       '其他命名空间 %s / None 条数 %d（期望 %d） / 落在非 ut 且非 Any 的 %s'
-       % (1655, _n_any_none, oth[:3], _n_none, 1655 + 820, _none_other[:3]))
+       '其他命名空间 %s / None 条数 %d（期望 %d） / 落在非 ut 且非 doorany 的 %s'
+       % (1655, _n_any_none, oth[:3], _n_none, 1655 + 871, _none_other[:3]))
     _diff = sorted(seen ^ set(_HIDDEN_SRC_SEEN))
     ok(_diff == [],
        'G25 过滤面 **恰好**是那 %d 个触发器名（多/少都报红；差异=%s）'

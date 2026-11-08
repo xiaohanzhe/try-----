@@ -407,6 +407,15 @@ _OT_KINDS = (_KIND_OT_GUARD, _KIND_OT_SHIFT)
 _KIND_DOOR_ANY = 'delta_door_any'
 _ANY_VIA = 'obj_doorAny'
 _ANY_TABLE = 'gml_Object_obj_doorAny_Alarm_2'
+#: ★★ 第174轮：doorany 家族还有两个**有实例**的变体（`obj_doorAnyHorz` 42 /
+#:   `obj_doorAnyVert` 9，仅 ch5）。机制**同族**：目标照样写在每实例的
+#:   `PreCreate` 的 `doorRoom` 里；差别只有两点 ——
+#:     ① 它们**自身没有 `Alarm_2`**，`room_goto(doorRoom)` 来自父对象
+#:        `gml_Object_obj_doorAny_Alarm_2`（所以 `table` 仍写这张父表，属实）；
+#:     ② 各自多一个 `Step_1`：玩家在平台上时把 x/y 相对 `xstart/ystart` 挪 ±40。
+#:   ⇒ 自洽条件与 `obj_doorAny` 完全同构，只是 `via` / `when_src` 换成自己的名字。
+_KIND_DOOR_ANY_VAR = 'delta_door_any_variant'
+_ANY_VAR_SRC = ('obj_doorAnyHorz', 'obj_doorAnyVert')
 _UT_SHIFT_HOW = {
     'room_next(room)': 1,
     'room_previous(room)': -1,
@@ -459,17 +468,21 @@ def _any_self_ok(r):
          但要求两种表示法**口径一致**：`(s == d) == (si == di)`；
       ⑤ 门实例坐标 `door_x` / `door_y` 必须是 int —— `_pick_by_pos` 靠它消歧，
          缺了这条边就是白落的（宁可不落，也不落一条挑不出来的）；
-      ⑥ 对象级口径：`when_src == 'obj_doorAny'` 且 `when_door is None`
-         （Any 门没有字母，也不许被字母级规则复用）。
+     ⑥ 对象级口径：`when_src == o['via']` 且 `when_door is None`
+        （Any 门没有字母，也不许被字母级规则复用）。
+    ★★ 第174轮：`kind == 'delta_door_any_variant'`（`obj_doorAnyHorz/Vert`）走
+    **同一套**六条 —— 机制同族（目标在每实例 `PreCreate` 的 `doorRoom` 里），
+    只是 `via` 换成自己的名字、`table` 仍指向父对象那张 `Alarm_2`（它们自己没有）。
     """
     o = r.get('_original')
     if not isinstance(o, dict):
         return False
-    if o.get('kind') != _KIND_DOOR_ANY:
+    if o.get('kind') not in (_KIND_DOOR_ANY, _KIND_DOOR_ANY_VAR):
         return False
     if o.get('chapter') not in ('ch1', 'ch2', 'ch3', 'ch4', 'ch5'):
         return False
-    if o.get('via') != _ANY_VIA or o.get('table') != _ANY_TABLE:
+    via_o = o.get('via')
+    if via_o not in (_ANY_VIA,) + _ANY_VAR_SRC or o.get('table') != _ANY_TABLE:
         return False
     p = o.get('precreate')
     if not isinstance(p, str):
@@ -487,7 +500,7 @@ def _any_self_ok(r):
         return False
     if not (isinstance(o.get('door_x'), int) and isinstance(o.get('door_y'), int)):
         return False
-    return r.get('when_src') == _ANY_VIA and r.get('when_door') is None
+    return r.get('when_src') == via_o and r.get('when_door') is None
 
 
 _struct_bad = []
@@ -496,6 +509,7 @@ _n_ut = 0
 _n_table = 0
 _n_ot = 0
 _n_any = 0
+_n_any_var = 0
 
 
 #: ★ 通用出生点（`sprite` 自证：`spr_markerAny`，与任何字母的 sprite 都不同）。
@@ -643,10 +657,13 @@ for _r in (routes.get('routes') or []):
         if not _ot_self_ok(_r):
             _struct_bad.append('%s(outertale %s 不自洽)' % (_r.get('to'), _o.get('kind')))
         continue
-    if _o.get('kind') == _KIND_DOOR_ANY:
-        _n_any += 1
+    if _o.get('kind') in (_KIND_DOOR_ANY, _KIND_DOOR_ANY_VAR):
+        if _o.get('kind') == _KIND_DOOR_ANY:
+            _n_any += 1
+        else:
+            _n_any_var += 1
         if not _any_self_ok(_r):
-            _struct_bad.append('%s(Any 门每实例目标不自洽)' % _r.get('to'))
+            _struct_bad.append('%s(doorany 家族每实例目标不自洽)' % _r.get('to'))
         continue
     _why = _delta_bad(_r)
     if _why:

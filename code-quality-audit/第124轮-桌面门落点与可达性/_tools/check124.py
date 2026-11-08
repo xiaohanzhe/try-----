@@ -117,8 +117,16 @@ DENSITY_MIN = {
 #:   —— 那 3 条"与既有 (场景,目标) 完全重复"的候选**有意不落**，重复组数才没变。
 #: ★ 第172轮：`obj_doorAny` 补了 798 条 ⇒ 唯一边 1956 → **2754**（路由 2759，仍是 5 组）。
 #:   本轮重复剔除 14 + 批内重复 34，边界一条都没混进来。
+#: ★★ 第174轮：`obj_doorAnyHorz/Vert` 补了 51 条 ⇒ 路由 2759 → **2810**。
+#:   **重复组从 5 涨到 5 + 51 = 56** —— 这不是"造冗余"，而是本轮**有意**的：
+#:   那 51 条是**对象级别名边**（同一扇原作门在第172轮被错标成 `obj_doorAny`，
+#:   目标对早已存在），一条实例一条边才能让 `_pick_by_pos` 按坐标挑出唯一。
+#:   ⇒ 期望值改成**结构性**的：`5 + 本轮变体边条数`，任何**别的**来源多出来的
+#:   重复都会让 D2 报红（不是把数字调大就完事）。
 EXPECT_UNIQUE_EDGES = 2754
 EXPECT_DUP_EDGES = 5
+#: doorany 家族里第174轮新落的那两个变体（它们的边**允许**与既有 (场景,目标) 重复）
+VAR_SRC = ('obj_doorAnyHorz', 'obj_doorAnyVert')
 
 _n = {'p': 0, 'f': 0}
 _failed = []
@@ -375,8 +383,20 @@ _uniq = sum(len(v) for v in OUT.values())
 
 
 def _door_id(r):
-    u"""一条路由的"门标识"：字母门用 `when_door`，对象级门（ut）用 `when_src`。"""
-    return str(r.get('when_door') or r.get('when_src') or '')
+    u"""一条路由的"门标识"：字母门用 `when_door`，对象级门（ut）用 `when_src`。
+
+    ★★ 第174轮补：**同一个门对象可以有多扇实例**（`obj_doorAnyHorz` 一房两三扇，
+    各去各处/或同去一处）⇒ 光靠 `when_src` 会把它们认成"同一扇门重复"。
+    规则里记了门坐标时（`_original.door_x/door_y`）就把它并进门标识 ——
+    **两个不同坐标 = 两扇不同的门**。没记坐标时退回老口径（合成输入的负控制
+    正是靠这一条：没有坐标、`when_door` 又相同 ⇒ 仍然判"同门重复"）。
+    """
+    o = r.get('_original') or {}
+    base = str(r.get('when_door') or r.get('when_src') or '')
+    dx, dy = o.get('door_x'), o.get('door_y')
+    if isinstance(dx, int) and isinstance(dy, int):
+        return '%s@%d,%d' % (base, dx, dy)
+    return base
 
 
 def _same_door_groups(rows):
@@ -392,13 +412,17 @@ def _same_door_groups(rows):
 
 
 _same_door = _same_door_groups(RL)
-check(u'D2 ★★ 边数守恒：唯一边 %d + %d 条合法重复 == 路由 %d 条；且每个重复组内的'
-      u'**门标识两两不同**（同房间不同门同目标 = 合法；同门重复 = 冗余）'
-      % (EXPECT_UNIQUE_EDGES, EXPECT_DUP_EDGES, EXPECT_ROUTES),
-      _uniq >= EXPECT_UNIQUE_EDGES and len(RL) - _uniq == EXPECT_DUP_EDGES
+#: ★★ 第174轮：允许的重复条数 = 历史上那 5 条 + 本轮**变体别名边**的条数。
+#:   不是"把 5 调成 56"，而是"只认这一种来源" —— 别处冒出重复照样红。
+_n_var_edges = len([q for q in RL if q.get('when_src') in VAR_SRC])
+_expect_dup = EXPECT_DUP_EDGES + _n_var_edges
+check(u'D2 ★★ 边数守恒：唯一边 %d >= %d、重复 %d == %d（历史 5 + 第174轮变体别名 %d）；'
+      u'且每个重复组内的**门标识两两不同**（同房间不同门同目标 = 合法；同门重复 = 冗余）'
+      % (EXPECT_UNIQUE_EDGES, EXPECT_UNIQUE_EDGES, _expect_dup, _expect_dup, _n_var_edges),
+      _uniq >= EXPECT_UNIQUE_EDGES and len(RL) - _uniq == _expect_dup
       and not _same_door,
-      u'unique=%d routes=%d dup=%d 同门重复=%r'
-      % (_uniq, len(RL), len(RL) - _uniq, _same_door[:3]))
+      u'unique=%d routes=%d dup=%d（期望 %d） 同门重复=%r'
+      % (_uniq, len(RL), len(RL) - _uniq, _expect_dup, _same_door[:3]))
 check(u'D2b 正/负控制：`_same_door_groups` 对真表返回空、对"同门重复"的合成输入报出 1 组'
       u'（证明 D2 不是"条数对上就绿"）',
       _same_door_groups([]) == []

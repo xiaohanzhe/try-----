@@ -67,6 +67,11 @@ EXPECT_MULTI_SCENES = 242           # 同场景两扇以上 Any 边（会走消�
 EXPECT_ONLY_ANY_SCENES = 425        # 有 Any 边的场景数
 EXPECT_SELF_LOOP = 1                # 原作 room_goto 回自身（迷宫回路）
 EXPECT_DUP_GROUPS = 5               # 全表既有合法重复组数（第123/125轮那 5 组）
+#: ★★ 第174轮：`obj_doorAnyHorz/Vert` 落了 51 条**对象级别名边**（同一扇原作门
+#:   在本轮之前被错标成 `obj_doorAny`，目标对早已存在）⇒ 它们**有意**与既有
+#:   (场景,目标) 重复。判据因此改成结构性的：允许的重复组 = 5 + 变体边覆盖的组数，
+#:   **别的来源**再冒出重复照样红（不是把 5 调成 47 就完事）。
+VAR_SRC = ('obj_doorAnyHorz', 'obj_doorAnyVert')
 #: ★ 历史段**冻结**（这些数一旦变了就是有人动了老数据）
 FROZEN_BATCH = {169: 102, 170: 6, 171: 25}
 KIND = 'delta_door_any'
@@ -187,14 +192,19 @@ _grp_rows = collections.defaultdict(list)
 for _r in RL:
     _grp_rows[(_r.get('when_scene'), _r.get('to'))].append(_r)
 _multi_scenes = dict((k, v) for k, v in MULTI.items() if len(v) >= 2)
-check(u'A5 分母闸：多候选场景 >= %d、有 Any 边的场景 >= %d、全表重复组恰好 %d'
-      % (EXPECT_MULTI_SCENES, EXPECT_ONLY_ANY_SCENES, EXPECT_DUP_GROUPS),
+_n_var_pairs = len(set((r.get('when_scene'), r.get('to')) for r in RL
+                       if r.get('when_src') in VAR_SRC))
+check(u'A5 分母闸：多候选场景 >= %d、有 Any 边的场景 >= %d、全表重复组 == %d'
+      u'（历史 5 + 第174轮变体别名 %d）'
+      % (EXPECT_MULTI_SCENES, EXPECT_ONLY_ANY_SCENES,
+         EXPECT_DUP_GROUPS + _n_var_pairs, _n_var_pairs),
       len(_multi_scenes) >= EXPECT_MULTI_SCENES
       and len(MULTI) >= EXPECT_ONLY_ANY_SCENES
-      and sum(1 for v in _grp.values() if v > 1) == EXPECT_DUP_GROUPS,
-      u'multi=%d scenes=%d dupgroups=%d'
+      and sum(1 for v in _grp.values() if v > 1) == EXPECT_DUP_GROUPS + _n_var_pairs,
+      u'multi=%d scenes=%d dupgroups=%d（期望 %d）'
       % (len(_multi_scenes), len(MULTI),
-         sum(1 for v in _grp.values() if v > 1)))
+         sum(1 for v in _grp.values() if v > 1),
+         EXPECT_DUP_GROUPS + _n_var_pairs))
 
 _tot = ANALYZE['total']
 check(u'A6 证据自洽：五类裁决之和 == rows == %d；`src_unmapped` == %d'
@@ -359,13 +369,17 @@ check(u'C4 ★★ 给一个**不存在的坐标** ⇒ 与不给坐标完全一�
 
 #: ★★★ 零影响证明：非 Any 的 `(场景, when_src)` 组里，候选**最多 1 条**
 #:   ⇒ `_pick_by_pos` 必然返 None（它的第 ① 个前提就是"候选 >= 2"）。
+#: ★★ 第174轮：`obj_doorAnyHorz/Vert` **也是** doorany 家族（它们就要靠多候选 +
+#:   坐标消歧才走得对，`check174` 有 11 个场景真在分流）⇒ 这里必须把它们一起排除，
+#:   否则本条的"零影响"会把**本轮有意引入**的消歧当成回归。
+_SKIP_SRC = (VIA,) + VAR_SRC + ('obj_doorAnyModespecific',)
 _src_grp = collections.defaultdict(list)
 for r in RL:
     s = r.get('when_src')
-    if s and s != VIA:
+    if s and s not in _SKIP_SRC:
         _src_grp[(r.get('when_scene'), s)].append(r)
 _hot = [(k, len(v)) for k, v in _src_grp.items() if len(v) >= 2]
-check(u'C5 ★★★ 非 Any 的对象级分组（%d 个）**没有一个**候选 >= 2'
+check(u'C5 ★★★ 非 doorany 家族的对象级分组（%d 个）**没有一个**候选 >= 2'
       u' ⇒ 对象级消歧对既有规则永不触发（这就是"零影响"的证明）'
       % len(_src_grp),
       len(_src_grp) >= 400 and not _hot,
@@ -461,7 +475,10 @@ print(u'E 段  覆盖率（404 个死胡同逐场景点名）')
 print('=' * 70)
 
 _only = ANALYZE['only_any_src']
-_old_from = set(r.get('when_scene') for r in OTHERS)
+#: ★★ 第174轮：`OTHERS` 现在会把变体别名边也算进"别处已有的出边" ⇒ 口径必须是
+#:   "**除 doorany 家族以外**的出边"，否则那 29 个场景会被误判成"本来就有出口"。
+_old_from = set(r.get('when_scene') for r in OTHERS
+                if r.get('when_src') not in _SKIP_SRC)
 _new_from = set(MULTI)
 _still = [s for s in _only if s not in _new_from]
 _got = [s for s in _only if s in _new_from]

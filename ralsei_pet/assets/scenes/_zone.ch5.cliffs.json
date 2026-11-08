@@ -98,7 +98,16 @@
    "original_room_id": 159,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [10000, 480],
+     "src": "obj_doorAnyVert"
+    },
+    {
+     "pos": [-40, -200],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.cliffs.dw_cliff_seth_miniboss": {
    "name": "崖边·cliff_seth_miniboss",
@@ -273,6 +282,26 @@
     {
      "pos": [320, 754],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [9762, 722],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [1900, 930],
+     "src": "obj_doorAnyVert"
+    },
+    {
+     "pos": [1400, 1230],
+     "src": "obj_doorAnyVert"
+    },
+    {
+     "pos": [-80, 1230],
+     "src": "obj_doorAnyVert"
+    },
+    {
+     "pos": [6880, 1200],
+     "src": "obj_doorAnyVert"
     }
    ]
   },
@@ -310,7 +339,12 @@
    "original_room_id": 165,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [1080, 120],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.cliffs.dw_cliff_verticalwind": {
    "name": "崖边·cliff_verticalwind",
@@ -319,7 +353,20 @@
    "original_room_id": 166,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-80, -40],
+     "src": "obj_doorAnyVert"
+    },
+    {
+     "pos": [-40, 8520],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [640, 8640],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.cliffs.dw_cliff_netskieclimb_behind": {
    "name": "崖边·cliff_netskieclimb_behind",
@@ -342,7 +389,16 @@
    "original_room_id": 169,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-20, 1440],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [-40, 2440],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.cliffs.dw_cliff_bonuscombat": {
    "name": "崖边·cliff_bonuscombat",
@@ -351,7 +407,16 @@
    "original_room_id": 170,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [200, 1360],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [-40, 640],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.cliffs.dw_cliff_twirlflowerplatforming": {
    "name": "崖边·cliff_twirlflowerplatforming",
@@ -368,6 +433,10 @@
     {
      "pos": [1840, 418],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [3800, 600],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -418,6 +487,14 @@
     {
      "pos": [-34, 1120],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [2480, 1240],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [2480, 160],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },

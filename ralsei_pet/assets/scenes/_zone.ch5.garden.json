@@ -159,6 +159,10 @@
     {
      "pos": [446, 1960],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [1674, 1480],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -177,6 +181,10 @@
     {
      "pos": [220, 298],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [-34, 760],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -341,6 +349,22 @@
     {
      "pos": [-34, 5240],
      "src": "obj_doorAny"
+    },
+    {
+     "pos": [634, 3800],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [-40, 3760],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [-40, 2120],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [640, 2120],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -351,7 +375,12 @@
    "original_room_id": 138,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 2360],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.garden.dw_garden_wateringcan_aqua": {
    "name": "希望之园·wateringcan_aqua",
@@ -409,7 +438,16 @@
    "original_room_id": 142,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, 0],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [634, 0],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.garden.dw_garden_aquaplatforming": {
    "name": "希望之园·aquaplatforming",
@@ -418,7 +456,12 @@
    "original_room_id": 143,
    "bg": null,
    "bg_source": "none",
-   "objects": []
+   "objects": [
+    {
+     "pos": [-34, -240],
+     "src": "obj_doorAnyHorz"
+    }
+   ]
   },
   "ch5.garden.dw_garden_susiechase": {
    "name": "希望之园·susiechase",
@@ -545,6 +588,14 @@
       "frame_ms": 33.3,
       "src": "original"
      }
+    },
+    {
+     "pos": [634, -40],
+     "src": "obj_doorAnyHorz"
+    },
+    {
+     "pos": [640, -200],
+     "src": "obj_doorAnyHorz"
     }
    ]
   },
@@ -603,6 +654,10 @@
       "frame_ms": 33.3,
       "src": "original"
      }
+    },
+    {
+     "pos": [6400, -320],
+     "src": "obj_doorAnyHorz"
     }
    ]
   }
