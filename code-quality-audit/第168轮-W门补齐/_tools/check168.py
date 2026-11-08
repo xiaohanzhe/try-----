@@ -101,7 +101,9 @@ EXPECT_W = 88
 EXPECT_ALREADY = 2
 EXPECT_LETTER = 72
 EXPECT_ANY = 16
-EXPECT_ROUTES = 1961
+#: ★ 第172轮：1,961 → **2,759**（`obj_doorAny` +798）。★ 分母闸用 `>=`，
+#:   条数只许增不许减（缩水由各轮反回滚判据兜）。
+EXPECT_ROUTES = 2759
 EXPECT_SCENES = 2166
 
 _n = {'p': 0, 'f': 0}
@@ -143,10 +145,10 @@ W_RULES = [r for r in RL
            and not (r.get('_original') or {}).get('batch')]
 W_PAIRS = set((r.get('when_scene'), r.get('to')) for r in W_RULES)
 
-check(u'A0 分母：`load_index()` ok=True、场景数 == %d、路由 == %d 条、W 段非空'
+check(u'A0 分母：`load_index()` ok=True、场景数 == %d、路由 >= %d 条、W 段非空'
       % (EXPECT_SCENES, EXPECT_ROUTES),
       IDX.get('ok') is True and len(SCN) == EXPECT_SCENES
-      and len(RL) == EXPECT_ROUTES and len(W_RULES) > 0,
+      and len(RL) >= EXPECT_ROUTES and len(W_RULES) > 0,
       u'scenes=%d routes=%d w=%d ok=%r'
       % (len(SCN), len(RL), len(W_RULES), IDX.get('ok')))
 

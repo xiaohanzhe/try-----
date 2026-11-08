@@ -760,14 +760,27 @@ def _pick_by_pos(items, scene_id, letter_ok, pos):
 
     ★★★ 三个前提，缺一不生效
     ------------------------
-      ① 该 (场景, 字母) 有 **≥2** 条候选 —— 只有一条时本来就不存在"走哪扇"的问题；
+      ① 该 (场景, 谓词) 有 **≥2** 条候选 —— 只有一条时本来就不存在"走哪扇"的问题；
       ② 给了这扇门的坐标（`pos`）；
       ③ 按坐标**恰好命中 1 条**。
+
+    ★ `letter_ok` 是个**谓词**，字母级传 `_letter_ok`、对象级（第172轮）传
+      `lambda r: r.get('when_src') == src` —— 同一套消歧，两路共用，不各写一份。
 
     命中 0 条（这扇门原作没给它单独规则，如 `dw_city_traffic_4` 第三扇 x=3151）
     或 ≥2 条（两条规则记了同一坐标 ⇒ 原作那层条件我还没解出来，如
     `dw_mansion_darkbulb_1` 的 7132/7133 都在 x=620）**一律返回 `None`**，
     退回"priority 最小"的老口径 —— **宁可不改，也不靠猜换一条路走**。
+
+    ★★★ 第172轮第二拍：单轴挑不出唯一时，退一步用 **(x, y) 两个坐标都要对上**
+    ---------------------------------------------------------------------
+    有些房间的门是**网格**摆的 —— 最典型 `ch5.flower_castle.dw_fcastle_foyer`：
+    x ∈ {-34, 954} × y ∈ {960, 1240}，四扇门四条不同的路。
+    **任何单轴都分不开**（x=-34 有两扇、y=1240 也有两扇）⇒ 第一拍必然拿到 2 条命中
+    ⇒ 退回 priority 最小 ⇒ 四扇门里三扇走错房间。
+    所以第一拍挑不出唯一时再走第二拍：**两个坐标都记了的规则**里，
+    `(door_x, door_y)` 与门实例**完全相等**的那条才算命中，恰好 1 条才认。
+    ★ 只在第一拍失败时启用 ⇒ 原来能唯一解开的**一个都没变**（实测只多认 6 条 / 3 个房）。
     """
     if not pos:
         return None
@@ -788,9 +801,23 @@ def _pick_by_pos(items, scene_id, letter_ok, pos):
             hits.append(r)
         elif k[0] == 'y' and y is not None and k[1] == y:
             hits.append(r)
-    if len(hits) != 1:
-        return None
-    return hits[0].get('to')
+    if len(hits) == 1:
+        return hits[0].get('to')
+    # ★★★ 第172轮第二拍：单轴挑不出唯一 ⇒ 用 (x, y) 两个坐标一起对（见文档）。
+    #   两个坐标都得是整数才参与；恰好 1 条才认，否则照旧返回 None。
+    if x is not None and y is not None:
+        both = []
+        for r in cands:
+            o = r.get('_original')
+            if not isinstance(o, dict):
+                continue
+            if o.get('door_x') == x and o.get('door_y') == y \
+                    and isinstance(o.get('door_x'), int) \
+                    and isinstance(o.get('door_y'), int):
+                both.append(r)
+        if len(both) == 1:
+            return both[0].get('to')
+    return None
 
 
 def route_for_door(routes, scene_id, letter, src=None, pos=None):
@@ -827,6 +854,15 @@ def route_for_door(routes, scene_id, letter, src=None, pos=None):
 
     ★ `pos` 是这扇门**实例**的 `[x, y]`（来自场景 `objects[i].pos`）。
       不给就是老行为，所以老的调用方不改也不会出问题。
+
+    ★★★ 第172轮：`pos` 这层消歧**从字母级扩到对象级**
+    ------------------------------------------------
+    原作里**同一个门对象的多个实例**可以各去各处 —— 最典型是 `obj_doorAny`
+    （无字母，目标写在每个实例的创建代码 `gml_RoomCC_<房>_<实例>_PreCreate`）。
+    五章共 881 扇，一间房里两扇的门目标是不同的 ⇒ 只按 `when_src` 查会全去同一间。
+    所以对象级这一路也先过一次 `_pick_by_pos`，挑不出唯一才落回"priority 最小"。
+    ★ 影响面实测为零：843 个 `(场景, when_src)` 组合中候选 ≥2 条的只有 242 个、
+      且**全部**是 `obj_doorAny` ⇒ 既有 1,961 条逐字不变。
     """
     if isinstance(routes, dict):
         items = routes.get('routes') or []
@@ -848,6 +884,18 @@ def route_for_door(routes, scene_id, letter, src=None, pos=None):
 
     # ① 对象级（精确）：只认 `when_src == src` 的条目，与 `when_door` 无关
     if isinstance(src, str) and src:
+        # ★★★ 第172轮：对象级也要按门实例坐标消歧。
+        #   原作里**同一个门对象的多个实例**可以各去各处 —— 最典型的是 `obj_doorAny`
+        #   （它没有字母，目标写在自己那份**实例创建代码** `gml_RoomCC_<房>_<实例>_PreCreate`
+        #   的 `doorRoom = room_xxx` 里，五章共 881 扇）⇒ 一间房里两扇 Any 门
+        #   走到这里会拿到同一个 `src`，只按 `when_src` 查就必然全去同一条规则。
+        #   ★ 影响面已实测为零：全表 843 个 `(场景, when_src)` 组合里，候选 ≥2 条的
+        #     **只有 242 个、且全部是 `obj_doorAny`** ⇒ 本行对既有 1,961 条逐字不变；
+        #     候选只有 1 条 / 没给 `pos` / 坐标挑不出唯一 ⇒ `_pick_by_pos` 返 `None`
+        #     ⇒ 原样落到下面那行老口径。**宁可不改，也不靠猜换一条路走。**
+        got = _pick_by_pos(items, scene_id, lambda r: r.get('when_src') == src, pos)
+        if got:
+            return got
         got = _pick(lambda r: r.get('when_src') == src)
         if got:
             return got

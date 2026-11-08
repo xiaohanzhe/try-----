@@ -65,7 +65,10 @@ EXPECT_SCENES = 2166
 #: ★ 第168轮：1,740 → **1,828**（Deltarune 五章补了 88 条 **W 门**，
 #:   priority 7000~7087）。桌面 4 门的落点与可达账**不受影响**（W 段只落在
 #:   ch1~ch5 的场景上，桌面门仍是 A/B/C/D）⇒ B 段 215 一个数没动。
-EXPECT_ROUTES = 1961
+#: ★ 第172轮：1,961 → **2,759**（`obj_doorAny` 按每实例创建代码补了 798 条，
+#:   priority 7300~8097）。★ 本判据是**分母闸**（防空集恒真），不是"条数钉死"
+#:   ⇒ 断言改成 `>=`：新轮次只许往上加，不许缩水（缩水由 D 段反回滚兜）。
+EXPECT_ROUTES = 2759
 
 #: 字母 → (世界, 落点 scene_id)。**唯一真源**，与 `check89._A_DOOR_WORLD` 同口径。
 DOOR_WANT = {
@@ -112,7 +115,9 @@ DENSITY_MIN = {
 #: ★ 第170轮：门实例级落点补了 6 条 ⇒ 唯一边 1925 → **1931**（路由 1936，仍是 5 组）
 #: ★ 第171轮：按逐房间实例表补了 25 条 ⇒ 唯一边 1931 → **1956**（路由 1961，仍是 5 组）
 #:   —— 那 3 条"与既有 (场景,目标) 完全重复"的候选**有意不落**，重复组数才没变。
-EXPECT_UNIQUE_EDGES = 1956
+#: ★ 第172轮：`obj_doorAny` 补了 798 条 ⇒ 唯一边 1956 → **2754**（路由 2759，仍是 5 组）。
+#:   本轮重复剔除 14 + 批内重复 34，边界一条都没混进来。
+EXPECT_UNIQUE_EDGES = 2754
 EXPECT_DUP_EDGES = 5
 
 _n = {'p': 0, 'f': 0}
@@ -186,7 +191,7 @@ print(u'== A. 桌面 4 门的落点 ==')
 check(u'A0 分母：`load_index()` ok=True 且场景数 == %d、路由 == %d 条'
       u'（防空集恒真：场景数为 0 时后面"全都是 0"的判据会假绿）'
       % (EXPECT_SCENES, EXPECT_ROUTES),
-      IDX.get('ok') is True and len(SC) == EXPECT_SCENES and len(RL) == EXPECT_ROUTES,
+      IDX.get('ok') is True and len(SC) == EXPECT_SCENES and len(RL) >= EXPECT_ROUTES,
       u'scenes=%d routes=%d ok=%r' % (len(SC), len(RL), IDX.get('ok')))
 
 TGT = desk_targets()
@@ -390,7 +395,7 @@ _same_door = _same_door_groups(RL)
 check(u'D2 ★★ 边数守恒：唯一边 %d + %d 条合法重复 == 路由 %d 条；且每个重复组内的'
       u'**门标识两两不同**（同房间不同门同目标 = 合法；同门重复 = 冗余）'
       % (EXPECT_UNIQUE_EDGES, EXPECT_DUP_EDGES, EXPECT_ROUTES),
-      _uniq == EXPECT_UNIQUE_EDGES and len(RL) - _uniq == EXPECT_DUP_EDGES
+      _uniq >= EXPECT_UNIQUE_EDGES and len(RL) - _uniq == EXPECT_DUP_EDGES
       and not _same_door,
       u'unique=%d routes=%d dup=%d 同门重复=%r'
       % (_uniq, len(RL), len(RL) - _uniq, _same_door[:3]))

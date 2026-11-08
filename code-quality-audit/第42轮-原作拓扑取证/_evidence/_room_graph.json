@@ -11,7 +11,7 @@
    "obj_doorF": "room_previous x3 => index - 3",
    "obj_doorX[_musfade]": "表驱动双向跳转（建筑入口）",
    "obj_doorW[ obj_doorw_musfade]": "表驱动双向跳转（建筑入口）",
-   "obj_doorAny": "无任何代码 —— 纯占位标记，不参与换房间",
+   "obj_doorAny": "★★★ 更正（第172轮取证）：原结论「无任何代码 —— 纯占位标记，不参与换房间」**是错的**。真实机制＝目标不在对象代码里，而写在**每个实例的创建代码** `gml_RoomCC_<房>_<实例号>_PreCreate`（内容 `doorRoom = room_xxx;`），再由共用的 `Alarm_2` 执行 `room_goto(doorRoom)`。误判根因：只读了对象的 5 条事件代码（PreCreate_0/Create_0/Alarm_2/Other_19/Step_0），没读实例级 PreCreateCode；且 `instance.CreationCode` 恒 null，真字段是 `PreCreateCode`。实测五章共 881 扇（ch1 0 / ch2 27 / ch3 190 / ch4 366 / ch5 298），可静态解出 853 扇，折算 798 条新边。⇒ 本图的 1,411 条边里 **Any 门贡献 0 条**，属系统性盲区而非原作无此边。取证：code-quality-audit/第172轮-Any门接线/",
    "obj_markerA..X": "落点：从对应 door 进入本房间时玩家的落点坐标"
   },
   "caveat": "边只覆盖「门对象驱动」的换房间。过场对象（obj_carcutscene / obj_krisroom / obj_insidEclosetcutscene / DEVICE_CONTACT 等）的 room_goto 属剧情转场，未计入连接图。",

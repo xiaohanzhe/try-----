@@ -174,8 +174,8 @@ PROD = set(edge_key(r) for r in NEW)
 print(u'')
 print(u'== A. 段位与分母（防空集恒真） ==')
 # ===========================================================================
-check(u'A0 分母：`load_index()` ok=True、场景数 == 2166、路由 == 1961 条、新段非空',
-      IDX.get('ok') is True and len(SC) == 2166 and len(RL) == 1961 and len(NEW) > 0,
+check(u'A0 分母：`load_index()` ok=True、场景数 == 2166、路由 >= 2759 条、新段非空',
+      IDX.get('ok') is True and len(SC) == 2166 and len(RL) >= 2759 and len(NEW) > 0,
       u'scenes=%d routes=%d new=%d ok=%r'
       % (len(SC), len(RL), len(NEW), IDX.get('ok')))
 

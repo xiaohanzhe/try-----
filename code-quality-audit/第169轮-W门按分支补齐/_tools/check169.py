@@ -50,7 +50,8 @@ MARK_OK = ('obj_markers', 'obj_markert', 'obj_markeru', 'obj_markerv',
            'obj_markerw', 'obj_markerX', 'obj_markerAny', 'obj_markerAny40px')
 #: 钉死：应落 102 条、priority 7088~7189、全表 1,930 条
 EXPECT_N = 102
-EXPECT_ROUTES = 1961
+#: ★ 第172轮：1,961 → **2,759**（`obj_doorAny` +798）。★ 分母闸用 `>=`。
+EXPECT_ROUTES = 2759
 EXPECT_SCENES = 2166
 EXPECT_PRIO_END = 7189
 #: 守恒账：176 条原始分支 = 60（第168轮已收）+ 116；116 = 2 未登记 + 8 已有别的门 + 4 重复 + 102
@@ -98,10 +99,10 @@ SCN = IDX.get('scenes') or {}
 MINE = [r for r in RL if (r.get('_original') or {}).get('batch') == BATCH]
 PAIRS = set((r.get('when_scene'), r.get('to')) for r in MINE)
 
-check(u'A0 分母：`load_index()` ok=True、场景数 == %d、路由 == %d 条、本轮段非空'
+check(u'A0 分母：`load_index()` ok=True、场景数 == %d、路由 >= %d 条、本轮段非空'
       % (EXPECT_SCENES, EXPECT_ROUTES),
       IDX.get('ok') is True and len(SCN) == EXPECT_SCENES
-      and len(RL) == EXPECT_ROUTES and len(MINE) > 0,
+      and len(RL) >= EXPECT_ROUTES and len(MINE) > 0,
       u'scenes=%d routes=%d mine=%d ok=%r'
       % (len(SCN), len(RL), len(MINE), IDX.get('ok')))
 

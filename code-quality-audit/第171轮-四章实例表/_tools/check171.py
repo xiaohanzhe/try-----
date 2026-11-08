@@ -46,7 +46,8 @@ for _p in (PKG, os.path.join(PKG, 'modules')):
 from modules.item_interact import route_for_door, door_letter_of  # noqa: E402
 
 #: 钉死（改了数据就必须同步改这里，改不动说明改动没生效）
-EXPECT_ROUTES = 1961
+#: ★ 第172轮：1,961 → **2,759**（`obj_doorAny` +798）。★ 分母闸用 `>=`。
+EXPECT_ROUTES = 2759
 EXPECT_W_RULES = 221                # 196（168/169/170）+ 25（171）
 EXPECT_BATCH171 = 25
 EXPECT_PRIO = list(range(7200, 7225))
@@ -102,9 +103,9 @@ for ch in CHS:
                 mk_names[(ch, r['name'])][o.lower()] = o
 
 print(u'== A. 段位与分母 ==')
-check(u'A1 分母：路由 %d 条、W 规则 %d 条，且都不为 0（防空集恒真）'
+check(u'A1 分母：路由 >= %d 条、W 规则 == %d 条，且都不为 0（防空集恒真）'
       % (EXPECT_ROUTES, EXPECT_W_RULES),
-      len(RL) == EXPECT_ROUTES and len(W) == EXPECT_W_RULES,
+      len(RL) >= EXPECT_ROUTES and len(W) == EXPECT_W_RULES,
       u'routes=%d W=%d' % (len(RL), len(W)))
 
 prios = sorted(r['priority'] for r in NEW)
@@ -307,9 +308,12 @@ _pairs = set((r.get('when_scene'), r.get('to')) for r in RL)
 #: 基线里本来就有 **5 组** "同房间不同门、同目标" 的合法重复（第123/125轮那 5 条），
 #: 所以 唯一边 = 路由数 − 5，不是"等于路由数"。本轮的净增必须**一条不重复**：
 #: 唯一 1931 → 1956（+25），重复组仍是 5。
-check(u'E1 ★★ 净增 25 条全是新边：唯一 %d（=1931+25）、重复组仍是 5（没引入同门重复）'
+#: ★ 第172轮：唯一 1956 → **2754**（+798），重复组仍是 5。
+#:   改写成「唯一边只增不减 + 重复组数守恒」—— 这是结构性不变量，
+#:   不随轮次增长；写死 `== 1956` 到了 172 就变成"判据过时"（171 自己踩过的坑）。
+check(u'E1 ★★ 唯一边只增不减（%d ≥ 1956）、重复组仍恰好 5（没引入同门重复）'
       % (len(_pairs),),
-      len(_pairs) == 1956 and len(RL) - len(_pairs) == 5,
+      len(_pairs) >= 1956 and len(RL) - len(_pairs) == 5,
       u'unique=%d routes=%d dup=%d' % (len(_pairs), len(RL), len(RL) - len(_pairs)))
 
 check(u'E2 ★★★ 反回滚：路由总数 ≥ %d、W 规则 ≥ %d（改动只增不减）'

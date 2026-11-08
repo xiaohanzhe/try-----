@@ -1,0 +1,35 @@
+{
+"source": "D:\\E盘备份_20261028\\Download\\_tmp\\drw\\chapter2_windows\\data.win",
+"sample_props": [
+  {"room": "room_cutscene_tester", "props": [{"name": "X", "type": "RuntimePropertyInfo", "value": "200"}, {"name": "Y", "type": "RuntimePropertyInfo", "value": "80"}, {"name": "ObjectDefinition", "type": "RuntimePropertyInfo", "value": "obj_doorAny (UndertaleGameObject) name=obj_doorAny"}, {"name": "InstanceID", "type": "RuntimePropertyInfo", "value": "100035"}, {"name": "CreationCode", "type": "RuntimePropertyInfo", "value": "null"}, {"name": "ScaleX", "type": "RuntimePropertyInfo", "value": "3"}, {"name": "ScaleY", "type": "RuntimePropertyInfo", "value": "3"}, {"name": "Color", "type": "RuntimePropertyInfo", "value": "4294967295"}, {"name": "Rotation", "type": "RuntimePropertyInfo", "value": "0"}, {"name": "PreCreateCode", "type": "RuntimePropertyInfo", "value": "gml_RoomCC_room_cutscene_tester_5_PreCreate (UndertaleCode) name=gml_RoomCC_room_cutscene_tester_5_PreCreate"}, {"name": "ImageSpeed", "type": "RuntimePropertyInfo", "value": "1"}, {"name": "ImageIndex", "type": "RuntimePropertyInfo", "value": "0"}, {"name": "Nonexistent", "type": "RuntimePropertyInfo", "value": "False"}, {"name": "WrappedImageIndex", "type": "RuntimePropertyInfo", "value": "0"}, {"name": "OppositeRotation", "type": "RuntimePropertyInfo", "value": "360"}, {"name": "SpriteXOffset", "type": "RuntimePropertyInfo", "value": "0"}, {"name": "SpriteYOffset", "type": "RuntimePropertyInfo", "value": "0"}, {"name": "XOffset", "type": "RuntimePropertyInfo", "value": "200"}, {"name": "YOffset", "type": "RuntimePropertyInfo", "value": "80"}]}
+],
+"n_roomcc": 1064,
+"n_roomcc_ok": 1064,
+"n_roomcc_fail": 0,
+"n_roomcc_door": 23,
+"roomcc": [
+  {"code": "gml_RoomCC_room_cutscene_tester_5_PreCreate", "lines": "doorRoom = room_krishallway;"},
+  {"code": "gml_RoomCC_room_town_school_0_PreCreate", "lines": "doorRoom = room_schoollobby;"},
+  {"code": "gml_RoomCC_room_lw_police_0_PreCreate", "lines": "doorRoom = room_town_south;"},
+  {"code": "gml_RoomCC_room_schoollobby_2_PreCreate", "lines": "doorRoom = room_town_school;"},
+  {"code": "gml_RoomCC_room_dw_cyber_teacup_final_10_PreCreate", "lines": "doorRoom = room_dw_cyber_viro_ring;"},
+  {"code": "gml_RoomCC_room_dw_city_poppup_3_PreCreate", "lines": "doorRoom = room_dw_city_berdly;"},
+  {"code": "gml_RoomCC_room_dw_city_poppup_4_PreCreate", "lines": "doorRoom = room_dw_city_mansion_front;"},
+  {"code": "gml_RoomCC_room_dw_city_berdly_0_PreCreate", "lines": "doorRoom = room_dw_city_poppup;"},
+  {"code": "gml_RoomCC_room_dw_mansion_entrance_3_PreCreate", "lines": "doorRoom = room_dw_mansion_east_1f_secret;"},
+  {"code": "gml_RoomCC_room_dw_mansion_entrance_4_PreCreate", "lines": "doorRoom = room_dw_mansion_east_2f_shortcut;"},
+  {"code": "gml_RoomCC_room_dw_mansion_entrance_5_PreCreate", "lines": "doorRoom = room_dw_mansion_east_3f;"},
+  {"code": "gml_RoomCC_room_dw_mansion_east_1f_secret_1_PreCreate", "lines": "doorRoom = room_dw_mansion_entrance;"},
+  {"code": "gml_RoomCC_room_dw_mansion_east_teacup_4_6_PreCreate", "lines": "doorRoom = room_dw_mansion_east_3f;"},
+  {"code": "gml_RoomCC_room_dw_mansion_east_teacup_4_7_PreCreate", "lines": "doorRoom = room_dw_mansion_east_2f_d;"},
+  {"code": "gml_RoomCC_room_dw_mansion_east_2f_shortcut_0_PreCreate", "lines": "doorRoom = room_dw_mansion_entrance;"},
+  {"code": "gml_RoomCC_room_dw_mansion_east_2f_d_2_PreCreate", "lines": "doorRoom = room_dw_mansion_east_teacup_4;"},
+  {"code": "gml_RoomCC_room_dw_mansion_east_3f_0_PreCreate", "lines": "doorRoom = room_dw_mansion_east_teacup_4;"},
+  {"code": "gml_RoomCC_room_dw_mansion_east_3f_1_PreCreate", "lines": "doorRoom = room_dw_mansion_entrance;"},
+  {"code": "gml_RoomCC_room_dw_mansion_east_3f_2_PreCreate", "lines": "doorRoom = room_dw_mansion_east_4f_b;"},
+  {"code": "gml_RoomCC_room_dw_mansion_east_4f_b_0_PreCreate", "lines": "doorRoom = room_dw_mansion_east_3f;"},
+  {"code": "gml_RoomCC_room_dw_mansion_east_4f_b_1_PreCreate", "lines": "doorRoom = room_dw_mansion_noelle_room;"},
+  {"code": "gml_RoomCC_room_dw_mansion_top_0_PreCreate", "lines": "doorRoom = room_dw_mansion_prefountain;"},
+  {"code": "gml_RoomCC_room_dw_mansion_prefountain_0_PreCreate", "lines": "doorRoom = room_dw_mansion_top;"}
+]
+}

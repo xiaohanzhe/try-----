@@ -48,8 +48,8 @@ for _p in (PKG, os.path.join(PKG, 'modules')):
 from modules.item_interact import (route_for_door, _pick_by_pos,  # noqa: E402
                                    _rule_door_axis, door_letter_of)
 
-#: 钉死
-EXPECT_ROUTES = 1961
+#: ★ 第172轮：1,961 → **2,759**（`obj_doorAny` 按每实例创建代码 +798）。★ 分母闸用 `>=`。
+EXPECT_ROUTES = 2759
 EXPECT_BATCH170 = 6
 EXPECT_PRIO = list(range(7190, 7196))
 EXPECT_W_RULES = 221                 # 190（168/169）+ 6（170）+ 25（171）
@@ -113,9 +113,9 @@ OBJS = load_scene_objects()
 W_RULES = [r for r in RL if (r.get('_original') or {}).get('via') in W_VIA]
 MINE = [r for r in RL if (r.get('_original') or {}).get('batch') == 170]
 
-check(u'A0 分母：场景对象表非空、路由 == %d 条、W 规则 == %d 条、本轮段非空'
+check(u'A0 分母：场景对象表非空、路由 >= %d 条、W 规则 == %d 条、本轮段非空'
       % (EXPECT_ROUTES, EXPECT_W_RULES),
-      len(OBJS) > 1000 and len(RL) == EXPECT_ROUTES
+      len(OBJS) > 1000 and len(RL) >= EXPECT_ROUTES
       and len(W_RULES) == EXPECT_W_RULES and len(MINE) > 0,
       u'scenes=%d routes=%d W=%d mine=%d'
       % (len(OBJS), len(RL), len(W_RULES), len(MINE)))
@@ -328,11 +328,30 @@ for sid, objs in OBJS.items():
                 hits.append(r)
         #: ★ `_pick_by_pos` 要求候选 **≥2** 才生效；只有 1 条候选时它一定返 None，
         #:   所以这种门归到"退回老口径"那一档，不能算进"可唯一认领"。
+        #: ★★★ 第172轮：`_pick_by_pos` 多了**第二拍** —— 单轴挑不出唯一时，改用
+        #:   `(door_x, door_y)` 两个坐标一起对。所以"能不能唯一认领"的判定也要跟着多一拍，
+        #:   否则判据会拿**旧模型**去套新实现（本轮 C2 就这么假红 1 条：
+        #:   `dw_mansion_east_1f_secret` 的 [970,190]，两条规则都 x=970、只有一条记了 y=190
+        #:   ⇒ 旧模型判"多命中 ⇒ 该退回"，而正解恰恰是认领 7195 那条）。
+        #:   ★ 这不是"放宽判据来迁就改动"：C1/C2 的**语义**没变（能唯一认领就必须认对、
+        #:     认不出就必须逐字退回），变的只是"能不能认领"的定义 —— 而且新定义由
+        #:     C2b 用一条**具体真值**单独锁住，不靠这里自证。
         if len(cands) >= 2 and len(hits) == 1:
             _tested += 1
             if with_pos != hits[0].get('to'):
                 _viol.append((sid, lt, pos, with_pos, hits[0].get('to')))
         else:
+            _both = []
+            for r in cands:
+                o = r.get('_original') or {}
+                if (isinstance(o.get('door_x'), int) and isinstance(o.get('door_y'), int)
+                        and o.get('door_x') == pos[0] and o.get('door_y') == pos[1]):
+                    _both.append(r)
+            if len(cands) >= 2 and len(_both) == 1:
+                _tested += 1
+                if with_pos != _both[0].get('to'):
+                    _viol.append((sid, lt, pos, with_pos, _both[0].get('to')))
+                continue
             #: 挑不出唯一 ⇒ 必须**逐字回到老口径**（该 (场景,字母) 的 priority 最小者）
             _fb_tested += 1
             best = None
@@ -354,6 +373,26 @@ check(u'C1 ★★★ 可唯一认领的门，`route_for_door(pos=…)` 必须返
 
 check(u'C2 ★★★ 挑不出唯一的门，必须**逐字退回**「priority 最小」的老口径',
       not _fb_viol, u'违例=%d %r' % (len(_fb_viol), _fb_viol[:4]))
+
+#: ★★★ 第172轮：把"第二拍"钉死成一条**具体真值**，不让上面那段自证。
+#:   `dw_mansion_east_1f_secret` 两扇 W：7144 只有 x=970、7195 是 (970, **190**)。
+#:   旧口径下这扇 [970,190] 被判"多命中 ⇒ 退回"，落到 priority 最小的 7144
+#:   （`queen_s_mansion_entrance`）；而第170轮之所以记 7195 的 y=190，
+#:   就是要它去 `dw_mansion_b_entrance`。第二拍按 (x,y) 认领到 7195 ⇒ 走对了。
+_sec = [r for r in RL
+        if r.get('when_scene') == 'ch2.queens_mansion.dw_mansion_east_1f_secret'
+        and not r.get('when_src') and r.get('when_door') == 'W']
+_g2 = route_for_door(RAW, 'ch2.queens_mansion.dw_mansion_east_1f_secret', 'W',
+                     pos=[970, 190])
+_want2 = [r.get('to') for r in _sec
+          if (r.get('_original') or {}).get('door_x') == 970
+          and (r.get('_original') or {}).get('door_y') == 190]
+_fb2 = min(_sec, key=lambda r: r.get('priority')).get('to') if _sec else None
+check(u'C2b ★★★ 第二拍正控制：两扇门同 x、只有一扇记了 y ⇒ 必须认领**那一扇**'
+      u'（%r），而不是退回 priority 最小的 %r'
+      % (_want2[0] if _want2 else None, _fb2),
+      len(_want2) == 1 and _g2 == _want2[0] and _g2 != _fb2,
+      u'got=%r 应为=%r 老口径=%r' % (_g2, _want2[0] if _want2 else None, _fb2))
 
 #: ★ 只增不减的敏感度闸（不是快照）：每多一个场景，代表多一扇「光看字母分不出来、
 #:   必须靠坐标才认领得到」的门。答案对不对由 C1/C2/B3b 逐条判，这里只管"没缩水"。

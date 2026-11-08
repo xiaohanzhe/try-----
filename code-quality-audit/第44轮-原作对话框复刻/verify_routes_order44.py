@@ -239,13 +239,19 @@ def _has_split(r):
 
 
 _no_split = [r for r in RL if not _has_split(r)]
+#: 对象级规则数的**地板**（只增不减）：418（第126轮）→ 1,216（第172轮 +798）。
+_SRCED_FLOOR = 1216
 _lettered_n = sum(1 for r in RL
                   if isinstance(r.get('when_door'), str) and r.get('when_door'))
 _srced_n = sum(1 for r in RL
                if isinstance(r.get('when_src'), str) and r.get('when_src'))
-ok(not _no_split and _srced_n == 418,
+ok(not _no_split and _srced_n >= _SRCED_FLOOR,
    'B6 全部 %d 条规则都带分流依据（字母级 %d + 对象级 when_src %d；'
    '两样都没有的 %d）' % (len(RL), _lettered_n, _srced_n, len(_no_split)))
+#: ★ 第172轮：418 → **1,216**（`obj_doorAny` 的 798 条全是对象级 —— 它没有字母）。
+#:   ★ 这里原来写死 `_srced_n == 418`，而这是**会随轮次增长的数**，172 一加边就红。
+#:   真正的闸是上面那半句 `not _no_split`（每条都必须有分流依据）；
+#:   计数只是"防有人在别处偷偷造一批没依据的规则"，所以改成**只增不减的地板**。
 # ★ 第123轮：对象级 from **110 → 209**（第122轮的 110 条 + 第123轮新补的 99 条
 #   对象级位移门 —— `obj_doorAmusicfade` / `obj_doorDmusicfade` 这类不带字母的门）。
 #   字母级同期 1000 → 1183（122 的 133 + 123 的 183）。

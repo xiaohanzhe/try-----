@@ -32,6 +32,7 @@
 import io
 import json
 import os
+import re
 import sys
 
 _ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -395,6 +396,17 @@ _KIND_TABLE = 'delta_door_table'
 _KIND_OT_GUARD = 'ot_door_guard'
 _KIND_OT_SHIFT = 'ot_door_shift'
 _OT_KINDS = (_KIND_OT_GUARD, _KIND_OT_SHIFT)
+
+# ★★★ 第172轮：第八种机制 —— **`obj_doorAny`（每实例一个目标）**。
+#   它既不是位移门（A+1/B-1…），也不是 W/X 那种"对象级房间表"：
+#   目标写在**每个实例自己的创建代码** `gml_RoomCC_<房>_<实例号>_PreCreate` 里
+#   （`doorRoom = room_xxx;`），对象代码只有一份共用的 `Alarm_2`
+#   （`global.entrance = 1; event_user(7); instance_create(0,0,obj_persistentfadein);
+#     room_goto(doorRoom);`）。
+#   ⇒ 自洽条件见 `_any_self_ok()`。**这条机制第42轮曾被误记成"无任何代码"**。
+_KIND_DOOR_ANY = 'delta_door_any'
+_ANY_VIA = 'obj_doorAny'
+_ANY_TABLE = 'gml_Object_obj_doorAny_Alarm_2'
 _UT_SHIFT_HOW = {
     'room_next(room)': 1,
     'room_previous(room)': -1,
@@ -429,11 +441,61 @@ def _ut_self_ok(r):
     return False
 
 
+_ANY_RE = re.compile(r'^gml_RoomCC_(.+)_(\d+)_PreCreate$')
+
+
+def _any_self_ok(r):
+    u"""`obj_doorAny` 门规则的 `_original` 自洽判定（**纯函数**，第172轮）。
+
+    六条：
+      ① `chapter` 在 ch1~ch5，`via` == `obj_doorAny`，`table` 是该对象**唯一**的
+         那份 `Alarm_2`（所有实例共用 ⇒ 写别的就是编的）；
+      ② ★★ `precreate` 形如 `gml_RoomCC_<房名>_<实例号>_PreCreate`，且**嵌在里面的
+         房名必须等于 `src_room_name`** —— 这是两个字段**互相自证**：代码名是 UTMT
+         按「房间_实例号」机械生成的，编不出来（798/798 实测成立）；
+      ③ 两端房名非空、`src/dst_room_id` 都是 int；
+      ④ ★ **允许自环**（`src == dst`）：原作 `room_dw_churchb_prophecymaze` 两扇 Any
+         门都 `room_goto` 回自己（迷宫回路，1 条）。所以不套「s != d」，
+         但要求两种表示法**口径一致**：`(s == d) == (si == di)`；
+      ⑤ 门实例坐标 `door_x` / `door_y` 必须是 int —— `_pick_by_pos` 靠它消歧，
+         缺了这条边就是白落的（宁可不落，也不落一条挑不出来的）；
+      ⑥ 对象级口径：`when_src == 'obj_doorAny'` 且 `when_door is None`
+         （Any 门没有字母，也不许被字母级规则复用）。
+    """
+    o = r.get('_original')
+    if not isinstance(o, dict):
+        return False
+    if o.get('kind') != _KIND_DOOR_ANY:
+        return False
+    if o.get('chapter') not in ('ch1', 'ch2', 'ch3', 'ch4', 'ch5'):
+        return False
+    if o.get('via') != _ANY_VIA or o.get('table') != _ANY_TABLE:
+        return False
+    p = o.get('precreate')
+    if not isinstance(p, str):
+        return False
+    m = _ANY_RE.match(p)
+    if not m or m.group(1) != o.get('src_room_name'):
+        return False
+    s, d = o.get('src_room_name'), o.get('dst_room_name')
+    if not (isinstance(s, str) and s and isinstance(d, str) and d):
+        return False
+    si, di = o.get('src_room_id'), o.get('dst_room_id')
+    if not (isinstance(si, int) and isinstance(di, int)):
+        return False
+    if (s == d) != (si == di):
+        return False
+    if not (isinstance(o.get('door_x'), int) and isinstance(o.get('door_y'), int)):
+        return False
+    return r.get('when_src') == _ANY_VIA and r.get('when_door') is None
+
+
 _struct_bad = []
 _n_oneshot = 0
 _n_ut = 0
 _n_table = 0
 _n_ot = 0
+_n_any = 0
 
 
 #: ★ 通用出生点（`sprite` 自证：`spr_markerAny`，与任何字母的 sprite 都不同）。
@@ -581,16 +643,57 @@ for _r in (routes.get('routes') or []):
         if not _ot_self_ok(_r):
             _struct_bad.append('%s(outertale %s 不自洽)' % (_r.get('to'), _o.get('kind')))
         continue
+    if _o.get('kind') == _KIND_DOOR_ANY:
+        _n_any += 1
+        if not _any_self_ok(_r):
+            _struct_bad.append('%s(Any 门每实例目标不自洽)' % _r.get('to'))
+        continue
     _why = _delta_bad(_r)
     if _why:
         _struct_bad.append('%s(%s)' % (_r.get('to'), _why))
 check('C3 每条规则的 _original 自洽于**它声明的原作机制**'
       '（门位移 A+1/B-1/C+2/**D-2** ｜ OneShot 传送为两端不同的原作 map ｜ '
       'ut 门为 room_goto 取证 / room_goto_next ±1 / room_next·previous(room) 位移 ±1·±2 ｜ '
-      'X 门为 `Alarm_2` 表驱动 ｜ outertale 门为 guard 常量对 / `room_goto_next` +1；'
-      '排除 desktop 世界门）',
+      'X 门为 `Alarm_2` 表驱动 ｜ outertale 门为 guard 常量对 / `room_goto_next` +1 ｜ '
+      '`obj_doorAny` 为每实例 `PreCreate` 的 `doorRoom`（代码名嵌的房名必须等于源房，'
+      '允许 `room_goto` 回自身的迷宫回路；排除 desktop 世界门）',
       not _struct_bad,
       '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
+
+# C3a13 —— ★★★ 第172轮：`obj_doorAny` 分支**确实存在且被管到**（防空集恒真），
+#   并且它有鉴别力（正/负控制）。★ 少了这条，把所有 Any 规则删掉也能"绿"。
+check('C3a13 ★ C3 的 `obj_doorAny` 分支确有样本（%d 条，只增不减）' % (_n_any,),
+      _n_any >= 798,
+      '实测 %d' % (_n_any,))
+
+
+def _any(**kw):
+    o = {'kind': _KIND_DOOR_ANY, 'chapter': 'ch4', 'via': _ANY_VIA,
+         'table': _ANY_TABLE,
+         'precreate': 'gml_RoomCC_room_a_1_PreCreate',
+         'src_room_name': 'room_a', 'dst_room_name': 'room_b',
+         'src_room_id': 10, 'dst_room_id': 11, 'door_x': 280, 'door_y': 676}
+    o.update(kw)
+    return {'to': 'ch4.x.b', 'when_scene': 'ch4.x.a', 'when_door': None,
+            'when_src': _ANY_VIA, '_original': o}
+
+
+check('C3a14 正/负控制：`_any_self_ok` 对"合法 / 自环合法 / 代码名嵌的房名改成别的房 / '
+      '门坐标缺失 / 两端表示法打架 / 冒充字母级"六种输入各不相同',
+      _any_self_ok(_any()) is True
+      and _any_self_ok(_any(dst_room_name='room_a', dst_room_id=10)) is True
+      and _any_self_ok(_any(precreate='gml_RoomCC_room_z_1_PreCreate')) is False
+      and _any_self_ok(_any(door_x=None)) is False
+      and _any_self_ok(_any(src_room_name='room_a', dst_room_name='room_a',
+                            dst_room_id=11)) is False
+      and _any_self_ok(dict(_any(), when_door='W')) is False,
+      repr((_any_self_ok(_any()),
+            _any_self_ok(_any(dst_room_name='room_a', dst_room_id=10)),
+            _any_self_ok(_any(precreate='gml_RoomCC_room_z_1_PreCreate')),
+            _any_self_ok(_any(door_x=None)),
+            _any_self_ok(_any(src_room_name='room_a', dst_room_name='room_a',
+                              dst_room_id=11)),
+            _any_self_ok(dict(_any(), when_door='W')))))
 
 # C3a11 —— ★★★ 第126轮：outertale 分支**确实存在且被管到**（正控制）
 _n_ot_g = sum(1 for r in (routes.get('routes') or [])
