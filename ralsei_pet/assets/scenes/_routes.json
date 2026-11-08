@@ -36729,6 +36729,803 @@
         ],
         "batch": 170
       }
+    },
+    {
+      "to": "ch3.light_world.lw_icee_pizza",
+      "priority": 7200,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_town_mid 的 `obj_doorW` 离开，落到 room_lw_icee_pizza（`if (room == 24)` 分支 `x > 290 && x < 370`，`entrance=20`，门实例在 [301, 94]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.hometown.town_mid",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_lw_icee_pizza",
+        "src_room_id": 24,
+        "dst_room_id": 45,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 301,
+        "door_y": 94,
+        "door_x_all": [
+          301,
+          1740
+        ],
+        "x_range": [
+          290,
+          370
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch3.hometown.alphysalley",
+      "priority": 7201,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_town_mid 的 `obj_doorW` 离开，落到 room_alphysalley（`if (room == 24)` 分支 `x > 1730 && x < 1840`，`entrance=23`，门实例在 [1740, -10]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.hometown.town_mid",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_alphysalley",
+        "src_room_id": 24,
+        "dst_room_id": 40,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 1740,
+        "door_y": -10,
+        "door_x_all": [
+          301,
+          1740
+        ],
+        "x_range": [
+          1730,
+          1840
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch3.light_world.lw_conbini",
+      "priority": 7202,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_town_mid 的 `obj_doorw_musfade` 离开，落到 room_lw_conbini（`if (room == 24)` 分支 `x > 1000 && x < 1140`，`entrance=22`，门实例在 [1082, 77]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.hometown.town_mid",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerv",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_lw_conbini",
+        "src_room_id": 24,
+        "dst_room_id": 44,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 1082,
+        "door_y": 77,
+        "door_x_all": [
+          1082
+        ],
+        "x_range": [
+          1000,
+          1140
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch3.light_world.lw_police",
+      "priority": 7203,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_town_south 的 `obj_doorW` 离开，落到 room_lw_police（`if (room == 26)` 分支 `x > 230 && x < 280`，`entrance=22`，门实例在 [240, 79]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.hometown.town_south",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_lw_police",
+        "src_room_id": 26,
+        "dst_room_id": 43,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 240,
+        "door_y": 79,
+        "door_x_all": [
+          240,
+          600
+        ],
+        "x_range": [
+          230,
+          280
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch3.hometown.hospital_lobby",
+      "priority": 7204,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_town_south 的 `obj_doorW` 离开，落到 room_hospital_lobby（`if (room == 26)` 分支 `x > 580 && x < 660`，`entrance=23`，门实例在 [600, 80]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.hometown.town_south",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_hospital_lobby",
+        "src_room_id": 26,
+        "dst_room_id": 31,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 600,
+        "door_y": 80,
+        "door_x_all": [
+          240,
+          600
+        ],
+        "x_range": [
+          580,
+          660
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch3.light_world.lw_library_upstairs",
+      "priority": 7205,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_library 的 `obj_doorW` 离开，落到 room_lw_library_upstairs（`if (room == 39)` 分支 `x > 215 && x < 230`，`entrance=20`，门实例在 [218, 49]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.hometown.library",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_library",
+        "dst_room_name": "room_lw_library_upstairs",
+        "src_room_id": 39,
+        "dst_room_id": 42,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 218,
+        "door_y": 49,
+        "door_x_all": [
+          218
+        ],
+        "x_range": [
+          215,
+          230
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch3.my_castle_town.dw_castle_dungeon",
+      "priority": 7206,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_1f 的 `obj_doorW` 离开，落到 room_dw_castle_dungeon（`if (room == 61)` 分支 `x > 840 && x < 1000`，`entrance=23`，门实例在 [857, 241]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.ralsei_room.dw_ralsei_castle_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_1f",
+        "dst_room_name": "room_dw_castle_dungeon",
+        "src_room_id": 61,
+        "dst_room_id": 63,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 857,
+        "door_y": 241,
+        "door_x_all": [
+          551,
+          857
+        ],
+        "x_range": [
+          840,
+          1000
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch3.ralsei_room.dw_ralsei_castle_front",
+      "priority": 7207,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_1f 的 `obj_doorW` 离开，落到 room_dw_ralsei_castle_front（`if (room == 61)` 分支 `x > 550 && x < 700`，`entrance=24`，门实例在 [551, 459]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.ralsei_room.dw_ralsei_castle_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_ralsei_castle_1f",
+        "dst_room_name": "room_dw_ralsei_castle_front",
+        "src_room_id": 61,
+        "dst_room_id": 57,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 551,
+        "door_y": 459,
+        "door_x_all": [
+          551,
+          857
+        ],
+        "x_range": [
+          550,
+          700
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch3.my_castle_town.dw_castle_rooms_kris",
+      "priority": 7208,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_2f 的 `obj_doorW` 离开，落到 room_dw_castle_rooms_kris（`if (room == 62)` 分支 `x > 240 && x < 340`，`entrance=22`，门实例在 [255, 235]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.ralsei_room.dw_ralsei_castle_2f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_dw_ralsei_castle_2f",
+        "dst_room_name": "room_dw_castle_rooms_kris",
+        "src_room_id": 62,
+        "dst_room_id": 64,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 255,
+        "door_y": 235,
+        "door_x_all": [
+          255,
+          530,
+          808
+        ],
+        "x_range": [
+          240,
+          340
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch3.my_castle_town.dw_castle_rooms_susie",
+      "priority": 7209,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_2f 的 `obj_doorW` 离开，落到 room_dw_castle_rooms_susie（`if (room == 62)` 分支 `x > 520 && x < 610`，`entrance=23`，门实例在 [530, 234]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.ralsei_room.dw_ralsei_castle_2f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_2f",
+        "dst_room_name": "room_dw_castle_rooms_susie",
+        "src_room_id": 62,
+        "dst_room_id": 65,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 530,
+        "door_y": 234,
+        "door_x_all": [
+          255,
+          530,
+          808
+        ],
+        "x_range": [
+          520,
+          610
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch3.card_castle.cc_lancer",
+      "priority": 7210,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_2f 的 `obj_doorW` 离开，落到 room_cc_lancer（`if (room == 62)` 分支 `x > 780 && x < 860`，`entrance=24`，门实例在 [808, 229]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch3.ralsei_room.dw_ralsei_castle_2f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch3",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_ralsei_castle_2f",
+        "dst_room_name": "room_cc_lancer",
+        "src_room_id": 62,
+        "dst_room_id": 80,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 808,
+        "door_y": 229,
+        "door_x_all": [
+          255,
+          530,
+          808
+        ],
+        "x_range": [
+          780,
+          860
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch4.light_world.lw_police",
+      "priority": 7211,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_town_south 的 `obj_doorW` 离开，落到 room_lw_police（`if (room == 26)` 分支 `x > 230 && x < 280`，`entrance=22`，门实例在 [240, 79]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch4.hometown.town_south",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_lw_police",
+        "src_room_id": 26,
+        "dst_room_id": 43,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 240,
+        "door_y": 79,
+        "door_x_all": [
+          240,
+          600
+        ],
+        "x_range": [
+          230,
+          280
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch4.hometown.hospital_lobby",
+      "priority": 7212,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_town_south 的 `obj_doorW` 离开，落到 room_hospital_lobby（`if (room == 26)` 分支 `x > 580 && x < 660`，`entrance=23`，门实例在 [600, 80]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch4.hometown.town_south",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_town_south",
+        "dst_room_name": "room_hospital_lobby",
+        "src_room_id": 26,
+        "dst_room_id": 31,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 600,
+        "door_y": 80,
+        "door_x_all": [
+          240,
+          600
+        ],
+        "x_range": [
+          580,
+          660
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch4.light_world.lw_library_upstairs",
+      "priority": 7213,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_library 的 `obj_doorW` 离开，落到 room_lw_library_upstairs（`if (room == 39)` 分支 `x > 215 && x < 230`，`entrance=20`，门实例在 [218, 49]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch4.hometown.library",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_library",
+        "dst_room_name": "room_lw_library_upstairs",
+        "src_room_id": 39,
+        "dst_room_id": 42,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 218,
+        "door_y": 49,
+        "door_x_all": [
+          218
+        ],
+        "x_range": [
+          215,
+          230
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch4.my_castle_town.dw_castle_dungeon",
+      "priority": 7214,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_1f 的 `obj_doorW` 离开，落到 room_dw_castle_dungeon（`if (room == 70)` 分支 `x > 840 && x < 1000`，`entrance=23`，门实例在 [857, 241]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch4.ralsei_room.dw_ralsei_castle_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_1f",
+        "dst_room_name": "room_dw_castle_dungeon",
+        "src_room_id": 70,
+        "dst_room_id": 72,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 857,
+        "door_y": 241,
+        "door_x_all": [
+          551,
+          857
+        ],
+        "x_range": [
+          840,
+          1000
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch4.ralsei_room.dw_ralsei_castle_front",
+      "priority": 7215,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_1f 的 `obj_doorW` 离开，落到 room_dw_ralsei_castle_front（`if (room == 70)` 分支 `x > 550 && x < 700`，`entrance=24`，门实例在 [551, 459]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch4.ralsei_room.dw_ralsei_castle_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_ralsei_castle_1f",
+        "dst_room_name": "room_dw_ralsei_castle_front",
+        "src_room_id": 70,
+        "dst_room_id": 66,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 551,
+        "door_y": 459,
+        "door_x_all": [
+          551,
+          857
+        ],
+        "x_range": [
+          550,
+          700
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch4.card_castle.cc_lancer",
+      "priority": 7216,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_2f 的 `obj_doorW` 离开，落到 room_cc_lancer（`if (room == 71)` 分支 `x > 780 && x < 860`，`entrance=24`，门实例在 [808, 229]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch4.ralsei_room.dw_ralsei_castle_2f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch4",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_ralsei_castle_2f",
+        "dst_room_name": "room_cc_lancer",
+        "src_room_id": 71,
+        "dst_room_id": 89,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 808,
+        "door_y": 229,
+        "door_x_all": [
+          808
+        ],
+        "x_range": [
+          780,
+          860
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch5.light_world.lw_icee_pizza",
+      "priority": 7217,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_town_mid 的 `obj_doorW` 离开，落到 room_lw_icee_pizza（`if (room == 22)` 分支 `x > 290 && x < 370`，`entrance=20`，门实例在 [301, 94]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch5.hometown.town_mid",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_lw_icee_pizza",
+        "src_room_id": 22,
+        "dst_room_id": 43,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 301,
+        "door_y": 94,
+        "door_x_all": [
+          301,
+          1740
+        ],
+        "x_range": [
+          290,
+          370
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch5.hometown.alphysalley",
+      "priority": 7218,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_town_mid 的 `obj_doorW` 离开，落到 room_alphysalley（`if (room == 22)` 分支 `x > 1730 && x < 1840`，`entrance=23`，门实例在 [1740, -10]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch5.hometown.town_mid",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_alphysalley",
+        "src_room_id": 22,
+        "dst_room_id": 38,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 1740,
+        "door_y": -10,
+        "door_x_all": [
+          301,
+          1740
+        ],
+        "x_range": [
+          1730,
+          1840
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch5.light_world.lw_conbini",
+      "priority": 7219,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_town_mid 的 `obj_doorw_musfade` 离开，落到 room_lw_conbini（`if (room == 22)` 分支 `x > 1000 && x < 1140`，`entrance=22`，门实例在 [1082, 77]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch5.hometown.town_mid",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerv",
+        "src_room_name": "room_town_mid",
+        "dst_room_name": "room_lw_conbini",
+        "src_room_id": 22,
+        "dst_room_id": 42,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 1082,
+        "door_y": 77,
+        "door_x_all": [
+          1082
+        ],
+        "x_range": [
+          1000,
+          1140
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch5.light_world.lw_library_upstairs",
+      "priority": 7220,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_library 的 `obj_doorW` 离开，落到 room_lw_library_upstairs（`if (room == 37)` 分支 `x > 215 && x < 230`，`entrance=20`，门实例在 [218, 49]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch5.hometown.library",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markert",
+        "src_room_name": "room_library",
+        "dst_room_name": "room_lw_library_upstairs",
+        "src_room_id": 37,
+        "dst_room_id": 40,
+        "entrance": 20,
+        "branch_letter": "T",
+        "door_x": 218,
+        "door_y": 49,
+        "door_x_all": [
+          218
+        ],
+        "x_range": [
+          215,
+          230
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch5.my_castle_town.dw_castle_dungeon",
+      "priority": 7221,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_1f 的 `obj_doorW` 离开，落到 room_dw_castle_dungeon（`if (room == 59)` 分支 `x > 840 && x < 1000`，`entrance=23`，门实例在 [857, 241]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch5.ralsei_room.dw_ralsei_castle_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_1f",
+        "dst_room_name": "room_dw_castle_dungeon",
+        "src_room_id": 59,
+        "dst_room_id": 62,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 857,
+        "door_y": 241,
+        "door_x_all": [
+          551,
+          857
+        ],
+        "x_range": [
+          840,
+          1000
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch5.ralsei_room.dw_ralsei_castle_front",
+      "priority": 7222,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_1f 的 `obj_doorW` 离开，落到 room_dw_ralsei_castle_front（`if (room == 59)` 分支 `x > 550 && x < 700`，`entrance=24`，门实例在 [551, 459]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch5.ralsei_room.dw_ralsei_castle_1f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_ralsei_castle_1f",
+        "dst_room_name": "room_dw_ralsei_castle_front",
+        "src_room_id": 59,
+        "dst_room_id": 55,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": 551,
+        "door_y": 459,
+        "door_x_all": [
+          551,
+          857
+        ],
+        "x_range": [
+          550,
+          700
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch5.my_castle_town.dw_castle_rooms_kris",
+      "priority": 7223,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_2f 的 `obj_doorW` 离开，落到 room_dw_castle_rooms_kris（`if (room == 60)` 分支 `x > 240 && x < 340`，`entrance=22`，门实例在 [255, 235]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch5.ralsei_room.dw_ralsei_castle_2f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerv",
+        "src_room_name": "room_dw_ralsei_castle_2f",
+        "dst_room_name": "room_dw_castle_rooms_kris",
+        "src_room_id": 60,
+        "dst_room_id": 63,
+        "entrance": 22,
+        "branch_letter": "V",
+        "door_x": 255,
+        "door_y": 235,
+        "door_x_all": [
+          255,
+          530
+        ],
+        "x_range": [
+          240,
+          340
+        ],
+        "batch": 171
+      }
+    },
+    {
+      "to": "ch5.my_castle_town.dw_castle_rooms_susie",
+      "priority": 7224,
+      "reason": "原作连接（**分支级**，第171轮按「逐房间实例表」补）：从 room_dw_ralsei_castle_2f 的 `obj_doorW` 离开，落到 room_dw_castle_rooms_susie（`if (room == 60)` 分支 `x > 520 && x < 610`，`entrance=23`，门实例在 [530, 234]）。此前表里没有这条边 ⇒ 门查不到目标 ⇒ 不建门（按 E 没反应）。",
+      "when_scene": "ch5.ralsei_room.dw_ralsei_castle_2f",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch5",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorW_Alarm_2",
+        "via": "obj_doorW",
+        "marker": "obj_markerw",
+        "src_room_name": "room_dw_ralsei_castle_2f",
+        "dst_room_name": "room_dw_castle_rooms_susie",
+        "src_room_id": 60,
+        "dst_room_id": 64,
+        "entrance": 23,
+        "branch_letter": "W",
+        "door_x": 530,
+        "door_y": 234,
+        "door_x_all": [
+          255,
+          530
+        ],
+        "x_range": [
+          520,
+          610
+        ],
+        "batch": 171
+      }
     }
   ],
   "_fallback": {

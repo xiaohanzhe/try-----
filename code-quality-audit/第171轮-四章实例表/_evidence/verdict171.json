@@ -1,0 +1,2228 @@
+{
+  "stat": {
+    "R1_no_door": 22,
+    "R3_dst_unreg": 4,
+    "R2_pair_exists": 3,
+    "R3_src_unreg": 7,
+    "R6_ADD": 25,
+    "R5_hit_zero": 6
+  },
+  "rows": [
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doora', 'obj_doorc', 'obj_doord', 'obj_doorx']"
+      ],
+      "ch": "ch1",
+      "via": "obj_doorW",
+      "src_room": 9,
+      "src_room_name": "room_town_north",
+      "dst": 10,
+      "dst_room_name": "room_beach",
+      "sid_s": "ch1.hometown.town_north",
+      "sid_t": "ch1.hometown.beach",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markera"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorb']"
+      ],
+      "ch": "ch1",
+      "via": "obj_doorW",
+      "src_room": 10,
+      "src_room_name": "room_beach",
+      "dst": 9,
+      "dst_room_name": "room_town_north",
+      "sid_s": "ch1.hometown.beach",
+      "sid_t": "ch1.hometown.town_north",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doora', 'obj_doorc', 'obj_doord', 'obj_doorx']"
+      ],
+      "ch": "ch2",
+      "via": "obj_doorW",
+      "src_room": 25,
+      "src_room_name": "room_town_north",
+      "dst": 26,
+      "dst_room_name": "room_beach",
+      "sid_s": "ch2.hometown.town_north",
+      "sid_t": "ch2.hometown.beach",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markera"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorb']"
+      ],
+      "ch": "ch2",
+      "via": "obj_doorW",
+      "src_room": 26,
+      "src_room_name": "room_beach",
+      "dst": 25,
+      "dst_room_name": "room_town_north",
+      "sid_s": "ch2.hometown.beach",
+      "sid_t": "ch2.hometown.town_north",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorany']"
+      ],
+      "ch": "ch2",
+      "via": "obj_doorw_musfade",
+      "src_room": 46,
+      "src_room_name": "room_lw_police",
+      "dst": 29,
+      "dst_room_name": "room_town_south",
+      "sid_s": "ch2.light_world.lw_police",
+      "sid_t": "ch2.hometown.town_south",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 22,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerv",
+        "obj_markerw",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R3_dst_unreg",
+      "note": [],
+      "ch": "ch2",
+      "via": "obj_doorw_musfade",
+      "src_room": 56,
+      "src_room_name": "room_castle_tutorial",
+      "dst": 230,
+      "dst_room_name": "room_shop_ch2_music",
+      "sid_s": "ch2.castle_town.castle_tutorial",
+      "sid_t": null,
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 1,
+      "door_all": [
+        [
+          1390,
+          320
+        ]
+      ],
+      "match": null,
+      "via_fix": "obj_doorw",
+      "marker": []
+    },
+    {
+      "verdict": "R2_pair_exists",
+      "note": [],
+      "ch": "ch2",
+      "via": "obj_doorW",
+      "src_room": 93,
+      "src_room_name": "room_dw_cyber_maze_tasque",
+      "dst": 87,
+      "dst_room_name": "room_dw_cyber_battle_maze_2",
+      "sid_s": "ch2.cyber_field.dw_cyber_maze_tasque",
+      "sid_t": "ch2.cyber_field.dw_cyber_battle_maze_2",
+      "kind": "pos",
+      "cond": "x > 1000",
+      "ent": 21,
+      "n_inst": 1,
+      "door_all": [
+        [
+          280,
+          0
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doora']"
+      ],
+      "ch": "ch2",
+      "via": "obj_doorw_musfade",
+      "src_room": 108,
+      "src_room_name": "room_dw_city_spamton_shop_exterior",
+      "dst": 232,
+      "dst_room_name": "room_shop_ch2_spamton",
+      "sid_s": "ch2.cyber_city.dw_city_spamton_shop_exterior",
+      "sid_t": null,
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": []
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doora', 'obj_doorb_musfade']"
+      ],
+      "ch": "ch2",
+      "via": "obj_doorW",
+      "src_room": 122,
+      "src_room_name": "room_dw_city_big_3",
+      "dst": 123,
+      "dst_room_name": "room_dw_city_traffic_3",
+      "sid_s": "ch2.cyber_city.dw_city_big_3",
+      "sid_t": "ch2.cyber_city.dw_city_traffic_3",
+      "kind": "state",
+      "cond": "extflag == 0",
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markera",
+        "obj_markerb",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R2_pair_exists",
+      "note": [],
+      "ch": "ch2",
+      "via": "obj_doorW",
+      "src_room": 123,
+      "src_room_name": "room_dw_city_traffic_3",
+      "dst": 122,
+      "dst_room_name": "room_dw_city_big_3",
+      "sid_s": "ch2.cyber_city.dw_city_traffic_3",
+      "sid_t": "ch2.cyber_city.dw_city_big_3",
+      "kind": "pos",
+      "cond": "y < 900",
+      "ent": 23,
+      "n_inst": 1,
+      "door_all": [
+        [
+          0,
+          2080
+        ]
+      ],
+      "match": null,
+      "via_fix": "obj_doorw_musfade",
+      "marker": [
+        "obj_markerany",
+        "obj_markerb"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doora_musfade', 'obj_doorany', 'obj_doorb']"
+      ],
+      "ch": "ch2",
+      "via": "obj_doorW",
+      "src_room": 127,
+      "src_room_name": "room_dw_city_poppup",
+      "dst": 128,
+      "dst_room_name": "room_dw_city_berdly",
+      "sid_s": "ch2.cyber_city.dw_city_poppup",
+      "sid_t": null,
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markera",
+        "obj_markerv",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R3_src_unreg",
+      "note": [],
+      "ch": "ch2",
+      "via": "obj_doorW",
+      "src_room": 128,
+      "src_room_name": "room_dw_city_berdly",
+      "dst": 127,
+      "dst_room_name": "room_dw_city_poppup",
+      "sid_s": null,
+      "sid_t": "ch2.cyber_city.dw_city_poppup",
+      "kind": "pos",
+      "cond": "x < 0",
+      "ent": 23,
+      "n_inst": 1,
+      "door_all": [
+        [
+          940,
+          120
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markera",
+        "obj_markerb",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R3_src_unreg",
+      "note": [],
+      "ch": "ch2",
+      "via": "obj_doorw_musfade",
+      "src_room": 157,
+      "src_room_name": "room_dw_mansion_entrance",
+      "dst": 231,
+      "dst_room_name": "room_shop_ch2_swatch",
+      "sid_s": null,
+      "sid_t": null,
+      "kind": "uncond",
+      "cond": null,
+      "ent": 22,
+      "n_inst": 1,
+      "door_all": [
+        [
+          170,
+          443
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": []
+    },
+    {
+      "verdict": "R2_pair_exists",
+      "note": [],
+      "ch": "ch2",
+      "via": "obj_doorW",
+      "src_room": 185,
+      "src_room_name": "room_dw_mansion_east_2f_c_a",
+      "dst": 184,
+      "dst_room_name": "room_dw_mansion_east_2f_c",
+      "sid_s": "ch2.queens_mansion.dw_mansion_east_2f_c_a",
+      "sid_t": "ch2.queens_mansion.dw_mansion_east_2f_c",
+      "kind": "pos",
+      "cond": "x > 260",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          280,
+          460
+        ],
+        [
+          1560,
+          460
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerany",
+        "obj_markert",
+        "obj_markeru"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doora', 'obj_doorc', 'obj_doord', 'obj_doorx']"
+      ],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 22,
+      "src_room_name": "room_town_north",
+      "dst": 23,
+      "dst_room_name": "room_beach",
+      "sid_s": "ch3.hometown.town_north",
+      "sid_t": "ch3.hometown.beach",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markera"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorb']"
+      ],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 23,
+      "src_room_name": "room_beach",
+      "dst": 22,
+      "dst_room_name": "room_town_north",
+      "sid_s": "ch3.hometown.beach",
+      "sid_t": "ch3.hometown.town_north",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 24,
+      "src_room_name": "room_town_mid",
+      "dst": 45,
+      "dst_room_name": "room_lw_icee_pizza",
+      "sid_s": "ch3.hometown.town_mid",
+      "sid_t": "ch3.light_world.lw_icee_pizza",
+      "kind": "pos",
+      "cond": "x > 290 && x < 370",
+      "ent": 20,
+      "n_inst": 2,
+      "door_all": [
+        [
+          1740,
+          -10
+        ],
+        [
+          301,
+          94
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          301,
+          94
+        ],
+        "range": [
+          290,
+          370
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markert"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 24,
+      "src_room_name": "room_town_mid",
+      "dst": 40,
+      "dst_room_name": "room_alphysalley",
+      "sid_s": "ch3.hometown.town_mid",
+      "sid_t": "ch3.hometown.alphysalley",
+      "kind": "pos",
+      "cond": "x > 1730 && x < 1840",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          1740,
+          -10
+        ],
+        [
+          301,
+          94
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          1740,
+          -10
+        ],
+        "range": [
+          1730,
+          1840
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorw_musfade",
+      "src_room": 24,
+      "src_room_name": "room_town_mid",
+      "dst": 44,
+      "dst_room_name": "room_lw_conbini",
+      "sid_s": "ch3.hometown.town_mid",
+      "sid_t": "ch3.light_world.lw_conbini",
+      "kind": "pos",
+      "cond": "x > 1000 && x < 1140",
+      "ent": 22,
+      "n_inst": 1,
+      "door_all": [
+        [
+          1082,
+          77
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          1082,
+          77
+        ],
+        "range": [
+          1000,
+          1140
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerv"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 26,
+      "src_room_name": "room_town_south",
+      "dst": 43,
+      "dst_room_name": "room_lw_police",
+      "sid_s": "ch3.hometown.town_south",
+      "sid_t": "ch3.light_world.lw_police",
+      "kind": "pos",
+      "cond": "x > 230 && x < 280",
+      "ent": 22,
+      "n_inst": 2,
+      "door_all": [
+        [
+          600,
+          80
+        ],
+        [
+          240,
+          79
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          240,
+          79
+        ],
+        "range": [
+          230,
+          280
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerv"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 26,
+      "src_room_name": "room_town_south",
+      "dst": 31,
+      "dst_room_name": "room_hospital_lobby",
+      "sid_s": "ch3.hometown.town_south",
+      "sid_t": "ch3.hometown.hospital_lobby",
+      "kind": "pos",
+      "cond": "x > 580 && x < 660",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          600,
+          80
+        ],
+        [
+          240,
+          79
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          600,
+          80
+        ],
+        "range": [
+          580,
+          660
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R5_hit_zero",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 39,
+      "src_room_name": "room_library",
+      "dst": 41,
+      "dst_room_name": "room_lw_computer_lab",
+      "sid_s": "ch3.hometown.library",
+      "sid_t": "ch3.light_world.lw_computer_lab",
+      "kind": "pos",
+      "cond": "x > 110 && x < 150",
+      "ent": 23,
+      "n_inst": 1,
+      "door_all": [
+        [
+          218,
+          49
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 39,
+      "src_room_name": "room_library",
+      "dst": 42,
+      "dst_room_name": "room_lw_library_upstairs",
+      "sid_s": "ch3.hometown.library",
+      "sid_t": "ch3.light_world.lw_library_upstairs",
+      "kind": "pos",
+      "cond": "x > 215 && x < 230",
+      "ent": 20,
+      "n_inst": 1,
+      "door_all": [
+        [
+          218,
+          49
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          218,
+          49
+        ],
+        "range": [
+          215,
+          230
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markert"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorany']"
+      ],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 43,
+      "src_room_name": "room_lw_police",
+      "dst": 26,
+      "dst_room_name": "room_town_south",
+      "sid_s": "ch3.light_world.lw_police",
+      "sid_t": "ch3.hometown.town_south",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 22,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerv",
+        "obj_markerw",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorany']"
+      ],
+      "ch": "ch3",
+      "via": "obj_doorw_musfade",
+      "src_room": 43,
+      "src_room_name": "room_lw_police",
+      "dst": 26,
+      "dst_room_name": "room_town_south",
+      "sid_s": "ch3.light_world.lw_police",
+      "sid_t": "ch3.hometown.town_south",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 22,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerv",
+        "obj_markerw",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R3_dst_unreg",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorw_musfade",
+      "src_room": 52,
+      "src_room_name": "room_castle_tutorial",
+      "dst": 70,
+      "dst_room_name": "room_shop_music",
+      "sid_s": "ch3.castle_town.castle_tutorial",
+      "sid_t": null,
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 1,
+      "door_all": [
+        [
+          1390,
+          320
+        ]
+      ],
+      "match": null,
+      "via_fix": "obj_doorw",
+      "marker": []
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 61,
+      "src_room_name": "room_dw_ralsei_castle_1f",
+      "dst": 63,
+      "dst_room_name": "room_dw_castle_dungeon",
+      "sid_s": "ch3.ralsei_room.dw_ralsei_castle_1f",
+      "sid_t": "ch3.my_castle_town.dw_castle_dungeon",
+      "kind": "pos",
+      "cond": "x > 840 && x < 1000",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          857,
+          241
+        ],
+        [
+          551,
+          459
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          857,
+          241
+        ],
+        "range": [
+          840,
+          1000
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 61,
+      "src_room_name": "room_dw_ralsei_castle_1f",
+      "dst": 57,
+      "dst_room_name": "room_dw_ralsei_castle_front",
+      "sid_s": "ch3.ralsei_room.dw_ralsei_castle_1f",
+      "sid_t": "ch3.ralsei_room.dw_ralsei_castle_front",
+      "kind": "pos",
+      "cond": "x > 550 && x < 700",
+      "ent": 24,
+      "n_inst": 2,
+      "door_all": [
+        [
+          857,
+          241
+        ],
+        [
+          551,
+          459
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          551,
+          459
+        ],
+        "range": [
+          550,
+          700
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markera",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 62,
+      "src_room_name": "room_dw_ralsei_castle_2f",
+      "dst": 64,
+      "dst_room_name": "room_dw_castle_rooms_kris",
+      "sid_s": "ch3.ralsei_room.dw_ralsei_castle_2f",
+      "sid_t": "ch3.my_castle_town.dw_castle_rooms_kris",
+      "kind": "pos",
+      "cond": "x > 240 && x < 340",
+      "ent": 22,
+      "n_inst": 3,
+      "door_all": [
+        [
+          255,
+          235
+        ],
+        [
+          530,
+          234
+        ],
+        [
+          808,
+          229
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          255,
+          235
+        ],
+        "range": [
+          240,
+          340
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerv"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 62,
+      "src_room_name": "room_dw_ralsei_castle_2f",
+      "dst": 65,
+      "dst_room_name": "room_dw_castle_rooms_susie",
+      "sid_s": "ch3.ralsei_room.dw_ralsei_castle_2f",
+      "sid_t": "ch3.my_castle_town.dw_castle_rooms_susie",
+      "kind": "pos",
+      "cond": "x > 520 && x < 610",
+      "ent": 23,
+      "n_inst": 3,
+      "door_all": [
+        [
+          255,
+          235
+        ],
+        [
+          530,
+          234
+        ],
+        [
+          808,
+          229
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          530,
+          234
+        ],
+        "range": [
+          520,
+          610
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch3",
+      "via": "obj_doorW",
+      "src_room": 62,
+      "src_room_name": "room_dw_ralsei_castle_2f",
+      "dst": 80,
+      "dst_room_name": "room_cc_lancer",
+      "sid_s": "ch3.ralsei_room.dw_ralsei_castle_2f",
+      "sid_t": "ch3.card_castle.cc_lancer",
+      "kind": "pos",
+      "cond": "x > 780 && x < 860",
+      "ent": 24,
+      "n_inst": 3,
+      "door_all": [
+        [
+          255,
+          235
+        ],
+        [
+          530,
+          234
+        ],
+        [
+          808,
+          229
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          808,
+          229
+        ],
+        "range": [
+          780,
+          860
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doora', 'obj_doorany', 'obj_doorc', 'obj_doord', 'obj_doorx']"
+      ],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 22,
+      "src_room_name": "room_town_north",
+      "dst": 23,
+      "dst_room_name": "room_beach",
+      "sid_s": "ch4.hometown.town_north",
+      "sid_t": "ch4.hometown.beach",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markera"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorb']"
+      ],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 23,
+      "src_room_name": "room_beach",
+      "dst": 22,
+      "dst_room_name": "room_town_north",
+      "sid_s": "ch4.hometown.beach",
+      "sid_t": "ch4.hometown.town_north",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerany",
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R3_src_unreg",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 24,
+      "src_room_name": "room_town_mid",
+      "dst": 45,
+      "dst_room_name": "room_lw_icee_pizza",
+      "sid_s": null,
+      "sid_t": "ch4.light_world.lw_icee_pizza",
+      "kind": "pos",
+      "cond": "x > 290 && x < 370",
+      "ent": 20,
+      "n_inst": 2,
+      "door_all": [
+        [
+          1740,
+          -10
+        ],
+        [
+          301,
+          94
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markert"
+      ]
+    },
+    {
+      "verdict": "R3_src_unreg",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 24,
+      "src_room_name": "room_town_mid",
+      "dst": 40,
+      "dst_room_name": "room_alphysalley",
+      "sid_s": null,
+      "sid_t": "ch4.hometown.alphysalley",
+      "kind": "pos",
+      "cond": "x > 1730 && x < 1840",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          1740,
+          -10
+        ],
+        [
+          301,
+          94
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R3_src_unreg",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorw_musfade",
+      "src_room": 24,
+      "src_room_name": "room_town_mid",
+      "dst": 44,
+      "dst_room_name": "room_lw_conbini",
+      "sid_s": null,
+      "sid_t": "ch4.light_world.lw_conbini",
+      "kind": "pos",
+      "cond": "x > 1000 && x < 1140",
+      "ent": 22,
+      "n_inst": 1,
+      "door_all": [
+        [
+          1082,
+          77
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerv"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 26,
+      "src_room_name": "room_town_south",
+      "dst": 43,
+      "dst_room_name": "room_lw_police",
+      "sid_s": "ch4.hometown.town_south",
+      "sid_t": "ch4.light_world.lw_police",
+      "kind": "pos",
+      "cond": "x > 230 && x < 280",
+      "ent": 22,
+      "n_inst": 2,
+      "door_all": [
+        [
+          600,
+          80
+        ],
+        [
+          240,
+          79
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          240,
+          79
+        ],
+        "range": [
+          230,
+          280
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerv"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 26,
+      "src_room_name": "room_town_south",
+      "dst": 31,
+      "dst_room_name": "room_hospital_lobby",
+      "sid_s": "ch4.hometown.town_south",
+      "sid_t": "ch4.hometown.hospital_lobby",
+      "kind": "pos",
+      "cond": "x > 580 && x < 660",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          600,
+          80
+        ],
+        [
+          240,
+          79
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          600,
+          80
+        ],
+        "range": [
+          580,
+          660
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R5_hit_zero",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 39,
+      "src_room_name": "room_library",
+      "dst": 41,
+      "dst_room_name": "room_lw_computer_lab",
+      "sid_s": "ch4.hometown.library",
+      "sid_t": "ch4.light_world.lw_computer_lab",
+      "kind": "pos",
+      "cond": "x > 110 && x < 150",
+      "ent": 23,
+      "n_inst": 1,
+      "door_all": [
+        [
+          218,
+          49
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 39,
+      "src_room_name": "room_library",
+      "dst": 42,
+      "dst_room_name": "room_lw_library_upstairs",
+      "sid_s": "ch4.hometown.library",
+      "sid_t": "ch4.light_world.lw_library_upstairs",
+      "kind": "pos",
+      "cond": "x > 215 && x < 230",
+      "ent": 20,
+      "n_inst": 1,
+      "door_all": [
+        [
+          218,
+          49
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          218,
+          49
+        ],
+        "range": [
+          215,
+          230
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markert"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorany']"
+      ],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 43,
+      "src_room_name": "room_lw_police",
+      "dst": 26,
+      "dst_room_name": "room_town_south",
+      "sid_s": "ch4.light_world.lw_police",
+      "sid_t": "ch4.hometown.town_south",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 22,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerv",
+        "obj_markerw",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorany']"
+      ],
+      "ch": "ch4",
+      "via": "obj_doorw_musfade",
+      "src_room": 43,
+      "src_room_name": "room_lw_police",
+      "dst": 26,
+      "dst_room_name": "room_town_south",
+      "sid_s": "ch4.light_world.lw_police",
+      "sid_t": "ch4.hometown.town_south",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 22,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerv",
+        "obj_markerw",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R3_dst_unreg",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorw_musfade",
+      "src_room": 61,
+      "src_room_name": "room_castle_tutorial",
+      "dst": 79,
+      "dst_room_name": "room_shop_music",
+      "sid_s": "ch4.castle_town.castle_tutorial",
+      "sid_t": null,
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 1,
+      "door_all": [
+        [
+          1390,
+          320
+        ]
+      ],
+      "match": null,
+      "via_fix": "obj_doorw",
+      "marker": []
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 70,
+      "src_room_name": "room_dw_ralsei_castle_1f",
+      "dst": 72,
+      "dst_room_name": "room_dw_castle_dungeon",
+      "sid_s": "ch4.ralsei_room.dw_ralsei_castle_1f",
+      "sid_t": "ch4.my_castle_town.dw_castle_dungeon",
+      "kind": "pos",
+      "cond": "x > 840 && x < 1000",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          857,
+          241
+        ],
+        [
+          551,
+          459
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          857,
+          241
+        ],
+        "range": [
+          840,
+          1000
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 70,
+      "src_room_name": "room_dw_ralsei_castle_1f",
+      "dst": 66,
+      "dst_room_name": "room_dw_ralsei_castle_front",
+      "sid_s": "ch4.ralsei_room.dw_ralsei_castle_1f",
+      "sid_t": "ch4.ralsei_room.dw_ralsei_castle_front",
+      "kind": "pos",
+      "cond": "x > 550 && x < 700",
+      "ent": 24,
+      "n_inst": 2,
+      "door_all": [
+        [
+          857,
+          241
+        ],
+        [
+          551,
+          459
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          551,
+          459
+        ],
+        "range": [
+          550,
+          700
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markera",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R5_hit_zero",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 71,
+      "src_room_name": "room_dw_ralsei_castle_2f",
+      "dst": 73,
+      "dst_room_name": "room_dw_castle_rooms_kris",
+      "sid_s": "ch4.ralsei_room.dw_ralsei_castle_2f",
+      "sid_t": "ch4.my_castle_town.dw_castle_rooms_kris",
+      "kind": "pos",
+      "cond": "x > 240 && x < 340",
+      "ent": 22,
+      "n_inst": 1,
+      "door_all": [
+        [
+          808,
+          229
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerany"
+      ]
+    },
+    {
+      "verdict": "R5_hit_zero",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 71,
+      "src_room_name": "room_dw_ralsei_castle_2f",
+      "dst": 74,
+      "dst_room_name": "room_dw_castle_rooms_susie",
+      "sid_s": "ch4.ralsei_room.dw_ralsei_castle_2f",
+      "sid_t": "ch4.my_castle_town.dw_castle_rooms_susie",
+      "kind": "pos",
+      "cond": "x > 520 && x < 610",
+      "ent": 23,
+      "n_inst": 1,
+      "door_all": [
+        [
+          808,
+          229
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerany"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 71,
+      "src_room_name": "room_dw_ralsei_castle_2f",
+      "dst": 89,
+      "dst_room_name": "room_cc_lancer",
+      "sid_s": "ch4.ralsei_room.dw_ralsei_castle_2f",
+      "sid_t": "ch4.card_castle.cc_lancer",
+      "kind": "pos",
+      "cond": "x > 780 && x < 860",
+      "ent": 24,
+      "n_inst": 1,
+      "door_all": [
+        [
+          808,
+          229
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          808,
+          229
+        ],
+        "range": [
+          780,
+          860
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorany']"
+      ],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 73,
+      "src_room_name": "room_dw_castle_rooms_kris",
+      "dst": 71,
+      "dst_room_name": "room_dw_ralsei_castle_2f",
+      "sid_s": "ch4.my_castle_town.dw_castle_rooms_kris",
+      "sid_t": "ch4.ralsei_room.dw_ralsei_castle_2f",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 22,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markera",
+        "obj_markerany",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorany']"
+      ],
+      "ch": "ch4",
+      "via": "obj_doorW",
+      "src_room": 74,
+      "src_room_name": "room_dw_castle_rooms_susie",
+      "dst": 71,
+      "dst_room_name": "room_dw_ralsei_castle_2f",
+      "sid_s": "ch4.my_castle_town.dw_castle_rooms_susie",
+      "sid_t": "ch4.ralsei_room.dw_ralsei_castle_2f",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markera",
+        "obj_markerany",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doora', 'obj_doorany', 'obj_doorc', 'obj_doord', 'obj_doorx']"
+      ],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 20,
+      "src_room_name": "room_town_north",
+      "dst": 21,
+      "dst_room_name": "room_beach",
+      "sid_s": "ch5.hometown.town_north",
+      "sid_t": "ch5.hometown.beach",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markera"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorb']"
+      ],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 21,
+      "src_room_name": "room_beach",
+      "dst": 20,
+      "dst_room_name": "room_town_north",
+      "sid_s": "ch5.hometown.beach",
+      "sid_t": "ch5.hometown.town_north",
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerany",
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 22,
+      "src_room_name": "room_town_mid",
+      "dst": 43,
+      "dst_room_name": "room_lw_icee_pizza",
+      "sid_s": "ch5.hometown.town_mid",
+      "sid_t": "ch5.light_world.lw_icee_pizza",
+      "kind": "pos",
+      "cond": "x > 290 && x < 370",
+      "ent": 20,
+      "n_inst": 2,
+      "door_all": [
+        [
+          1740,
+          -10
+        ],
+        [
+          301,
+          94
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          301,
+          94
+        ],
+        "range": [
+          290,
+          370
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markert"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 22,
+      "src_room_name": "room_town_mid",
+      "dst": 38,
+      "dst_room_name": "room_alphysalley",
+      "sid_s": "ch5.hometown.town_mid",
+      "sid_t": "ch5.hometown.alphysalley",
+      "kind": "pos",
+      "cond": "x > 1730 && x < 1840",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          1740,
+          -10
+        ],
+        [
+          301,
+          94
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          1740,
+          -10
+        ],
+        "range": [
+          1730,
+          1840
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorw_musfade",
+      "src_room": 22,
+      "src_room_name": "room_town_mid",
+      "dst": 42,
+      "dst_room_name": "room_lw_conbini",
+      "sid_s": "ch5.hometown.town_mid",
+      "sid_t": "ch5.light_world.lw_conbini",
+      "kind": "pos",
+      "cond": "x > 1000 && x < 1140",
+      "ent": 22,
+      "n_inst": 1,
+      "door_all": [
+        [
+          1082,
+          77
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          1082,
+          77
+        ],
+        "range": [
+          1000,
+          1140
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerv"
+      ]
+    },
+    {
+      "verdict": "R3_src_unreg",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 24,
+      "src_room_name": "room_town_south",
+      "dst": 41,
+      "dst_room_name": "room_lw_police",
+      "sid_s": null,
+      "sid_t": "ch5.light_world.lw_police",
+      "kind": "pos",
+      "cond": "x > 230 && x < 280",
+      "ent": 22,
+      "n_inst": 2,
+      "door_all": [
+        [
+          600,
+          80
+        ],
+        [
+          240,
+          79
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerv"
+      ]
+    },
+    {
+      "verdict": "R3_src_unreg",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 24,
+      "src_room_name": "room_town_south",
+      "dst": 29,
+      "dst_room_name": "room_hospital_lobby",
+      "sid_s": null,
+      "sid_t": "ch5.hometown.hospital_lobby",
+      "kind": "pos",
+      "cond": "x > 580 && x < 660",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          600,
+          80
+        ],
+        [
+          240,
+          79
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R5_hit_zero",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 37,
+      "src_room_name": "room_library",
+      "dst": 39,
+      "dst_room_name": "room_lw_computer_lab",
+      "sid_s": "ch5.hometown.library",
+      "sid_t": "ch5.light_world.lw_computer_lab",
+      "kind": "pos",
+      "cond": "x > 110 && x < 150",
+      "ent": 23,
+      "n_inst": 1,
+      "door_all": [
+        [
+          218,
+          49
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 37,
+      "src_room_name": "room_library",
+      "dst": 40,
+      "dst_room_name": "room_lw_library_upstairs",
+      "sid_s": "ch5.hometown.library",
+      "sid_t": "ch5.light_world.lw_library_upstairs",
+      "kind": "pos",
+      "cond": "x > 215 && x < 230",
+      "ent": 20,
+      "n_inst": 1,
+      "door_all": [
+        [
+          218,
+          49
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          218,
+          49
+        ],
+        "range": [
+          215,
+          230
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markert"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorany']"
+      ],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 41,
+      "src_room_name": "room_lw_police",
+      "dst": 24,
+      "dst_room_name": "room_town_south",
+      "sid_s": "ch5.light_world.lw_police",
+      "sid_t": null,
+      "kind": "uncond",
+      "cond": null,
+      "ent": 22,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerv",
+        "obj_markerw",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R1_no_door",
+      "note": [
+        "房内门对象=['obj_doorany']"
+      ],
+      "ch": "ch5",
+      "via": "obj_doorw_musfade",
+      "src_room": 41,
+      "src_room_name": "room_lw_police",
+      "dst": 24,
+      "dst_room_name": "room_town_south",
+      "sid_s": "ch5.light_world.lw_police",
+      "sid_t": null,
+      "kind": "uncond",
+      "cond": null,
+      "ent": 22,
+      "n_inst": 0,
+      "door_all": [],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerb",
+        "obj_markerc",
+        "obj_markerd",
+        "obj_markerv",
+        "obj_markerw",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R3_dst_unreg",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorw_musfade",
+      "src_room": 50,
+      "src_room_name": "room_castle_tutorial",
+      "dst": 70,
+      "dst_room_name": "room_shop_music",
+      "sid_s": "ch5.castle_town.castle_tutorial",
+      "sid_t": null,
+      "kind": "uncond",
+      "cond": null,
+      "ent": 23,
+      "n_inst": 1,
+      "door_all": [
+        [
+          1390,
+          320
+        ]
+      ],
+      "match": null,
+      "via_fix": "obj_doorw",
+      "marker": []
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 59,
+      "src_room_name": "room_dw_ralsei_castle_1f",
+      "dst": 62,
+      "dst_room_name": "room_dw_castle_dungeon",
+      "sid_s": "ch5.ralsei_room.dw_ralsei_castle_1f",
+      "sid_t": "ch5.my_castle_town.dw_castle_dungeon",
+      "kind": "pos",
+      "cond": "x > 840 && x < 1000",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          857,
+          241
+        ],
+        [
+          551,
+          459
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          857,
+          241
+        ],
+        "range": [
+          840,
+          1000
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 59,
+      "src_room_name": "room_dw_ralsei_castle_1f",
+      "dst": 55,
+      "dst_room_name": "room_dw_ralsei_castle_front",
+      "sid_s": "ch5.ralsei_room.dw_ralsei_castle_1f",
+      "sid_t": "ch5.ralsei_room.dw_ralsei_castle_front",
+      "kind": "pos",
+      "cond": "x > 550 && x < 700",
+      "ent": 24,
+      "n_inst": 2,
+      "door_all": [
+        [
+          857,
+          241
+        ],
+        [
+          551,
+          459
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          551,
+          459
+        ],
+        "range": [
+          550,
+          700
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markera",
+        "obj_markerx"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 60,
+      "src_room_name": "room_dw_ralsei_castle_2f",
+      "dst": 63,
+      "dst_room_name": "room_dw_castle_rooms_kris",
+      "sid_s": "ch5.ralsei_room.dw_ralsei_castle_2f",
+      "sid_t": "ch5.my_castle_town.dw_castle_rooms_kris",
+      "kind": "pos",
+      "cond": "x > 240 && x < 340",
+      "ent": 22,
+      "n_inst": 2,
+      "door_all": [
+        [
+          255,
+          235
+        ],
+        [
+          530,
+          234
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          255,
+          235
+        ],
+        "range": [
+          240,
+          340
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerv"
+      ]
+    },
+    {
+      "verdict": "R6_ADD",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 60,
+      "src_room_name": "room_dw_ralsei_castle_2f",
+      "dst": 64,
+      "dst_room_name": "room_dw_castle_rooms_susie",
+      "sid_s": "ch5.ralsei_room.dw_ralsei_castle_2f",
+      "sid_t": "ch5.my_castle_town.dw_castle_rooms_susie",
+      "kind": "pos",
+      "cond": "x > 520 && x < 610",
+      "ent": 23,
+      "n_inst": 2,
+      "door_all": [
+        [
+          255,
+          235
+        ],
+        [
+          530,
+          234
+        ]
+      ],
+      "match": {
+        "axis": "x",
+        "door": [
+          530,
+          234
+        ],
+        "range": [
+          520,
+          610
+        ],
+        "lo_incl": false,
+        "hi_incl": false
+      },
+      "via_fix": null,
+      "marker": [
+        "obj_markerw"
+      ]
+    },
+    {
+      "verdict": "R5_hit_zero",
+      "note": [],
+      "ch": "ch5",
+      "via": "obj_doorW",
+      "src_room": 60,
+      "src_room_name": "room_dw_ralsei_castle_2f",
+      "dst": 80,
+      "dst_room_name": "room_cc_lancer",
+      "sid_s": "ch5.ralsei_room.dw_ralsei_castle_2f",
+      "sid_t": "ch5.card_castle.cc_lancer",
+      "kind": "pos",
+      "cond": "x > 780 && x < 860",
+      "ent": 24,
+      "n_inst": 2,
+      "door_all": [
+        [
+          255,
+          235
+        ],
+        [
+          530,
+          234
+        ]
+      ],
+      "match": null,
+      "via_fix": null,
+      "marker": [
+        "obj_markerx"
+      ]
+    }
+  ]
+}

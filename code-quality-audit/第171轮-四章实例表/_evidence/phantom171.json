@@ -1,0 +1,182 @@
+{
+  "stat": {
+    "via_absent": 8,
+    "via_variant": 4
+  },
+  "rows": [
+    {
+      "kind": "via_absent",
+      "ch": "ch2",
+      "room": "room_lw_police",
+      "via": "obj_doorW",
+      "sibling": null,
+      "to": "ch2.hometown.town_south",
+      "priority": 7097,
+      "batch": 169,
+      "doors_here": [
+        "obj_doorany"
+      ]
+    },
+    {
+      "kind": "via_absent",
+      "ch": "ch2",
+      "room": "room_dw_cyber_battle_maze_1",
+      "via": "obj_doorW",
+      "sibling": null,
+      "to": "ch2.cyber_field.dw_cyber_teacup_1",
+      "priority": 7103,
+      "batch": 169,
+      "doors_here": [
+        "obj_doora",
+        "obj_doorb"
+      ]
+    },
+    {
+      "kind": "via_absent",
+      "ch": "ch2",
+      "room": "room_dw_city_traffic_2",
+      "via": "obj_doorW",
+      "sibling": null,
+      "to": "ch2.cyber_city.dw_city_mirrorfriend",
+      "priority": 7120,
+      "batch": 169,
+      "doors_here": [
+        "obj_doora",
+        "obj_doorb"
+      ]
+    },
+    {
+      "kind": "via_absent",
+      "ch": "ch2",
+      "room": "room_dw_city_mansion_front",
+      "via": "obj_doorW",
+      "sibling": null,
+      "to": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "priority": 7127,
+      "batch": 169,
+      "doors_here": [
+        "obj_doorb"
+      ]
+    },
+    {
+      "kind": "via_variant",
+      "ch": "ch2",
+      "room": "room_dw_mansion_entrance",
+      "via": "obj_doorW",
+      "sibling": "obj_doorw_musfade",
+      "to": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+      "priority": 7141,
+      "batch": 169,
+      "doors_here": [
+        "obj_doora_musfade",
+        "obj_doorany",
+        "obj_doorb",
+        "obj_doorw_musfade"
+      ]
+    },
+    {
+      "kind": "via_variant",
+      "ch": "ch2",
+      "room": "room_dw_mansion_entrance",
+      "via": "obj_doorW",
+      "sibling": "obj_doorw_musfade",
+      "to": "ch2.queens_mansion.dw_mansion_east_2f_shortcut",
+      "priority": 7142,
+      "batch": 169,
+      "doors_here": [
+        "obj_doora_musfade",
+        "obj_doorany",
+        "obj_doorb",
+        "obj_doorw_musfade"
+      ]
+    },
+    {
+      "kind": "via_variant",
+      "ch": "ch2",
+      "room": "room_dw_mansion_entrance",
+      "via": "obj_doorW",
+      "sibling": "obj_doorw_musfade",
+      "to": "ch2.queens_mansion.queen_s_mansion_3f",
+      "priority": 7143,
+      "batch": 169,
+      "doors_here": [
+        "obj_doora_musfade",
+        "obj_doorany",
+        "obj_doorb",
+        "obj_doorw_musfade"
+      ]
+    },
+    {
+      "kind": "via_variant",
+      "ch": "ch2",
+      "room": "room_dw_mansion_east_1f_secret",
+      "via": "obj_doorW",
+      "sibling": "obj_doorw_musfade",
+      "to": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "priority": 7144,
+      "batch": 169,
+      "doors_here": [
+        "obj_doorany",
+        "obj_doorb",
+        "obj_doorw_musfade"
+      ]
+    },
+    {
+      "kind": "via_absent",
+      "ch": "ch2",
+      "room": "room_dw_mansion_east_2f_shortcut",
+      "via": "obj_doorW",
+      "sibling": null,
+      "to": "ch2.queens_mansion.queen_s_mansion_entrance",
+      "priority": 7163,
+      "batch": 169,
+      "doors_here": [
+        "obj_doorany",
+        "obj_doorb"
+      ]
+    },
+    {
+      "kind": "via_absent",
+      "ch": "ch2",
+      "room": "room_dw_mansion_east_4f_b",
+      "via": "obj_doorW",
+      "sibling": null,
+      "to": "ch2.queens_mansion.queen_s_mansion_3f",
+      "priority": 7177,
+      "batch": 169,
+      "doors_here": [
+        "obj_doora",
+        "obj_doorany",
+        "obj_doorb"
+      ]
+    },
+    {
+      "kind": "via_absent",
+      "ch": "ch2",
+      "room": "room_dw_mansion_east_4f_b",
+      "via": "obj_doorW",
+      "sibling": null,
+      "to": "ch2.queens_mansion.dw_mansion_noelle_room",
+      "priority": 7178,
+      "batch": 169,
+      "doors_here": [
+        "obj_doora",
+        "obj_doorany",
+        "obj_doorb"
+      ]
+    },
+    {
+      "kind": "via_absent",
+      "ch": "ch2",
+      "room": "room_dw_cyber_virovirokun_fight",
+      "via": "obj_doorW",
+      "sibling": null,
+      "to": "ch2.cyber_field.dw_cyber_musical_door",
+      "priority": 7189,
+      "batch": 169,
+      "doors_here": [
+        "obj_doorb"
+      ]
+    }
+  ]
+}

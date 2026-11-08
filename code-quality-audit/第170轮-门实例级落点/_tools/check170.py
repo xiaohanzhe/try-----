@@ -49,17 +49,24 @@ from modules.item_interact import (route_for_door, _pick_by_pos,  # noqa: E402
                                    _rule_door_axis, door_letter_of)
 
 #: 钉死
-EXPECT_ROUTES = 1936
+EXPECT_ROUTES = 1961
 EXPECT_BATCH170 = 6
 EXPECT_PRIO = list(range(7190, 7196))
-EXPECT_W_RULES = 196                 # 190（168/169）+ 6（170）
+EXPECT_W_RULES = 221                 # 190（168/169）+ 6（170）+ 25（171）
 EXPECT_ENT_FILLED = 190              # batch169 的 102 条里原先 88 条没记，本轮补齐
 EXPECT_RANGE_FLIP = 0                # 方向反了 = 0（修完）
 EXPECT_RANGE_MISS = 0                # 该有区间却没有 = 0（修完）
-EXPECT_COORD = 17                    # 本轮写死的门实例坐标条数
-EXPECT_AXIS_Y = 12                   # 其中 y 轴（同房两扇门 x 相同，只能按 y 分）
-EXPECT_DOOR_Y = 23                   # 带 door_y 的总数：12 条 y 轴修正 + 6 条新规则 + 5 条原本就有
-EXPECT_AFFECTED = 17                 # 传 pos 会改变结果的场景数
+EXPECT_COORD = 17                    # 第170轮写死的门实例坐标条数
+EXPECT_AXIS_Y = 12                   # 该轮 y 轴修正（同房两扇门 x 相同，只能按 y 分）
+EXPECT_DOOR_Y = 48                   # 带 door_y 的总数（第171轮落定：23 + 25 条新边）
+EXPECT_AFFECTED = 26                 # 传 pos 会改变结果的场景数（只增不减的敏感度闸）
+EXPECT_BATCH171 = 25                 # 第171轮那批（7200~7224）
+
+#: ★★★ 第171轮的教训：**别把会随轮次增长的绝对数写成 `==`**。
+#:   第170轮原判据 A3/B3/C3/D2b 全都钉了当日快照，171 一加 25 条边就四连红 ——
+#:   那不是回归，是判据过时（同 165 的 `fit` 恒真、134 `B5` 同族）。
+#:   现在统一改成两种写法：①「历史段冻结 + 新段只增不减」② 结构性不变量。
+FROZEN_BATCH = {None: 88, 169: 102, 170: 6}   # 168 那批规则没有 batch 字段 ⇒ 记成 None
 KIND = 'delta_door_table'
 W_VIA = ('obj_doorW', 'obj_doorw_musfade')
 
@@ -125,20 +132,25 @@ for r in MINE:
     same = [q for q in RL if q is not r and q.get('priority') == r.get('priority')]
     if same:
         _collide.append((r.get('priority'), len(same)))
-check(u'A2 ★★ 本轮 9 条的 priority 不与**任何**既有规则重复（不许顶掉谁）',
+check(u'A2 ★★ 第170轮那 %d 条的 priority 不与**任何**既有规则重复（不许顶掉谁）'
+      % EXPECT_BATCH170,
       not _collide, u'撞车=%r' % (_collide[:5],))
 #: ★ 基线表里 `priority=200` 本来就有 4 条（都是 desktop 门）—— 那是既有事实，
-#:   不是本轮引入的。判据只盯"我加的那 9 条"，不然会报一个跟本轮无关的红。
+#:   不是第170轮引入的。判据只盯"那一轮加的 6 条"，不然会报一个跟它无关的红。
 
 _all_batch = collections.Counter((r.get('_original') or {}).get('batch') for r in W_RULES)
-check(u'A3 段位分布：第168轮段(无 batch) + 169 段 + 170 段 = %d'
-      % EXPECT_W_RULES,
-      _all_batch.get(None, 0) + _all_batch.get(169, 0) + _all_batch.get(170, 0)
-      == EXPECT_W_RULES
-      and _all_batch.get(169) == 102 and _all_batch.get(170) == EXPECT_BATCH170
-      and _all_batch.get(None) == 88,
+_bad_hist = [(k, _all_batch.get(k, 0), v) for k, v in FROZEN_BATCH.items()
+             if _all_batch.get(k, 0) != v]
+_later = sum(v for k, v in _all_batch.items() if k not in FROZEN_BATCH)
+_bad_label = [k for k in _all_batch if k is not None and not isinstance(k, int)]
+check(u'A3 段位分布：历史段**冻结**（无 batch %d / 169 段 %d / 170 段 %d，一格都不许动）'
+      u' + 171 起 %d 条（只增不减）；段位标签只许 None 或整数'
+      % (FROZEN_BATCH[None], FROZEN_BATCH[169], FROZEN_BATCH[170], _later),
+      not _bad_hist and not _bad_label and _later >= EXPECT_BATCH171,
       u'%r' % (dict(_all_batch),))
-#: ★ 第168轮那 88 条**没有 `batch` 字段**（所以是 None）—— 按 168 去数会数出 0。 
+#: ★ 第168轮那 88 条**没有 `batch` 字段**（所以是 None）—— 按 168 去数会数出 0。
+#: ★ 原写法是「三段之和 == 全表条数」，只在"段位集合永远不变"时才成立 ——
+#:   171 多了第四段就立刻红。真正的闸是「历史段一格不动 + 新段不少 + 没有编出来的段位标签」。
 
 
 # ===========================================================================
@@ -229,11 +241,14 @@ if os.path.exists(INST_P):
 _axis_y = [r for r in W_RULES if (r.get('_original') or {}).get('axis') == 'y']
 _coord_rules = [r for r in W_RULES
                 if (r.get('_original') or {}).get('door_y') is not None]
-check(u'B3 打上 `axis: "y"` 的规则 == %d 条；带 `door_y` 的 == %d 条'
-      u'（后者含 8 条原本就有 y 的老规则）'
+_axis_no_y = [r.get('priority') for r in _axis_y
+              if (r['_original'] or {}).get('door_y') is None]
+check(u'B3 `axis:"y"` ≥ %d 条、带 `door_y` 的 ≥ %d 条（两处都是只增不减）；'
+      u'且每条 `axis:"y"` 都必须记了 door_y（轴判断没坐标就是空话）'
       % (EXPECT_AXIS_Y, EXPECT_DOOR_Y),
-      len(_axis_y) == EXPECT_AXIS_Y and len(_coord_rules) == EXPECT_DOOR_Y,
-      u'axisY=%d doorY=%d' % (len(_axis_y), len(_coord_rules)))
+      len(_axis_y) >= EXPECT_AXIS_Y and len(_coord_rules) >= EXPECT_DOOR_Y
+      and not _axis_no_y,
+      u'axisY=%d doorY=%d 缺y=%r' % (len(_axis_y), len(_coord_rules), _axis_no_y[:5]))
 
 _bad_coord = []
 for r in _coord_rules:
@@ -340,10 +355,17 @@ check(u'C1 ★★★ 可唯一认领的门，`route_for_door(pos=…)` 必须返
 check(u'C2 ★★★ 挑不出唯一的门，必须**逐字退回**「priority 最小」的老口径',
       not _fb_viol, u'违例=%d %r' % (len(_fb_viol), _fb_viol[:4]))
 
-check(u'C3 ★★★ 传 `pos` 会改变结果的场景 == %d（多一个少一个都要重判）'
+#: ★ 只增不减的敏感度闸（不是快照）：每多一个场景，代表多一扇「光看字母分不出来、
+#:   必须靠坐标才认领得到」的门。答案对不对由 C1/C2/B3b 逐条判，这里只管"没缩水"。
+#:   配套闸：`pos` 能改变答案的场景，表里必须**至少两条**候选规则 —— 只有一条时
+#:   给不给坐标都是同一个答案，那就说明 `_aff` 记错了，或 `_pick_by_pos` 在乱动。
+_by_scene = collections.Counter(r.get('when_scene') for r in RL)
+_thin = [s for s in _aff if _by_scene.get(s, 0) < 2]
+check(u'C3 ★★★ 传 `pos` 会改变结果的场景 ≥ %d（只增不减，缩水就是丢门）；'
+      u'且这些场景每条都至少有 2 条候选规则在抢'
       % EXPECT_AFFECTED,
-      len(_aff) == EXPECT_AFFECTED,
-      u'n=%d %r' % (len(_aff), sorted(_aff)[:6]))
+      len(_aff) >= EXPECT_AFFECTED and not _thin,
+      u'n=%d 不足两条=%r 样本=%r' % (len(_aff), _thin[:4], sorted(_aff)[:6]))
 
 # ---- 负控制：必须**真的**走不到"取第一个"那条路 ----
 _rules_dark = [r for r in W_RULES if r.get('when_scene') == 'ch2.queens_mansion.dw_mansion_darkbulb_1']
@@ -404,9 +426,25 @@ for r in MINE:
             _shadow.append((r.get('priority'), q.get('priority')))
 check(u'D2 ★★★ 新增规则不许**抢走**谁的权：同 (场景,目标) 的既有规则 priority 必须更小',
       not _shadow, u'抢权=%r' % (_shadow[:5],))
-check(u'D2b 全表最大 priority == %d（新增段在末尾，`_pick` 取最小 ⇒ 只能填空不能顶替）'
-      % EXPECT_PRIO[-1],
-      _maxp == EXPECT_PRIO[-1], u'max=%r' % (_maxp,))
+#: ★★★ 结构性不变量（不再是"当日最大号 == 7195"那种快照）：
+#:   最新一批的 priority 段必须**整体压在全部旧段之上**，且全表最大值就落在这一批。
+#:   有了它，`_pick`（取最小）在结构上就抢不走任何既有规则的权 —— 只可能填空。
+#:   哪天有人插一条低号新规则进来，这条立刻红，而不是等下一个人肉眼看出来。
+_bp = collections.defaultdict(list)
+for _r in RL:
+    _p = _r.get('priority')
+    if not isinstance(_p, int):
+        continue
+    _b = (_r.get('_original') or {}).get('batch')
+    _bp[-1 if _b is None else _b].append(_p)      # 168 那批无 batch ⇒ 当最老的 -1
+_newest = max(k for k in _bp if k >= 0)
+_new_prios = _bp[_newest]
+_older_max = max(p for k, v in _bp.items() if k != _newest for p in v)
+check(u'D2b ★★★ 最新一批（batch=%d）的 priority 段整体压在旧段之上：min %d > 旧段 max %d，'
+      u'且全表最大 %d 就在这一批（新增只能填空不能顶替）'
+      % (_newest, min(_new_prios), _older_max, _maxp),
+      min(_new_prios) > _older_max and _maxp == max(_new_prios),
+      u'批=%d min=%d 旧max=%d 全表max=%d' % (_newest, min(_new_prios), _older_max, _maxp))
 
 #: 反回滚闸：条数不许缩水
 check(u'D3 ★★★ 反回滚：路由总数 %d、W 规则 %d，均不低于本轮落定值'
