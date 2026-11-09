@@ -465,9 +465,12 @@ def load_scene(scene_id, scene_dir_path=None, entry=None):
       2. **区域分片** `_zone.<chapter>.<area>.json` —— 第 38 轮新增的 926 个走这条。
          需要 `entry`（索引里的登记行）来知道自己在哪个 (章, 区域)。
 
-    :param entry: 可选。`load_index()['scenes'][scene_id]`。给了它，
-                  独立文件缺失时才会去分片里找；不给就只认独立文件
-                  （向后兼容：老调用方 `load_scene(sid)` 行为完全不变）。
+    :param entry: 可选。`load_index()['scenes'][scene_id]`（**展平并注入了
+                  chapter_id / area_id** 的那份）。给了它，独立文件缺失时才会
+                  去分片里找；不给就只认独立文件（向后兼容：老调用方
+                  `load_scene(sid)` 行为完全不变）。
+                  ★ 第177轮起它**只**用于"定位是哪一片"，
+                  **不再**用来补 `original_room_id`（两条来源现在都自带，见下）。
 
     为什么独立文件"存在但坏掉"时不静默改读分片：那会让一份半坏的数据
     **悄悄换一个数据源**，产出的场景看起来正常但来源已经不是你预期的那份。
@@ -495,26 +498,24 @@ def load_scene(scene_id, scene_dir_path=None, entry=None):
         scene.dir_path = base
         # ★ 第99轮：隐形触发器名单 —— 两条来源都挂（见 load_obj_visible）。
         scene.hidden_objects = load_obj_visible(base)
-        # ★ 独立文件场景（第 36 轮登记的 87 个）**不带** original_room_id ——
-        #   它写在 `_index.json` 的登记行里。从 entry 补一次，让渲染层
-        #   无论走哪条来源都能查房间几何（否则这 87 个场景会退化为"房间未知"）。
-        if scene.original_room_id is None and isinstance(entry, dict):
-            _oid = entry.get('original_room_id')
-            if isinstance(_oid, int):
-                scene.original_room_id = _oid
+        # ★★★ 第177轮：**这里原来有一段"从 entry 补 original_room_id"的回退，已删。**
+        #   第175轮把 87 个独立文件都补上了 rid 之后，两条来源 2166/2166 **全部自带**
+        #   （与 `_index.json` 逐条相等）⇒ 那段回退从来没执行过。
+        #   留着它的坏处不是"多几行"，而是**它会把"文件缺字段"这件事悄悄盖住**：
+        #   将来新增场景忘了写 rid，渲染层会安静地用索引里的值顶上，
+        #   而"文件本身不自足"这个事实谁都看不见（第175轮就是为了这个才补字段）。
+        #   现在改成如实返回 `None` ⇒ 缺字段会显形（`check177 C3/C4` 钉这个）。
         return scene
 
     # ---- 来源 2：区域分片 ----
+    # ★★★ 第177轮：分片分支原来也有一段"从 entry 补 rid"，同样已删（理由同上一段）。
+    #   分片里的 2078 个场景本来就自带 `original_room_id`（`check177 A2`）。
+    #   `entry` 在这里**只**用来定位是哪一片（chapter_id / area_id）—— 不能删。
     if isinstance(entry, dict):
         chapter_id = entry.get('chapter_id')
         area_id = entry.get('area_id')
         if chapter_id and area_id:
-            scene = load_zone(chapter_id, area_id, base).get(scene_id)
-            if scene is not None and scene.original_room_id is None:
-                _oid = entry.get('original_room_id')
-                if isinstance(_oid, int):
-                    scene.original_room_id = _oid
-            return scene
+            return load_zone(chapter_id, area_id, base).get(scene_id)
     return None
 
 
@@ -934,8 +935,10 @@ class SceneState(object):
         self.bg = raw.get('bg')
         # ★ 原作房间下标：**两个来源，一个字段**。
         #   分片里的场景自带 `original_room_id`；独立文件场景（第 36 轮登记）
-        #   写在 `_index.json` 的登记行里（`entry`），所以 `from_dict` 之后
-        #   控制器可能还要用 `entry` 补一次 —— 见 `load_scene()`。
+        #   在**第175轮**也逐文件补上了（87 个文件各 +1 行，自足率 2166/2166）。
+        #   ⇒ 第177轮删掉了 `load_scene()` 里那段"从 entry 补"的回退：
+        #     它从没执行过，留着只会把"文件缺字段"悄悄盖住。
+        #     现在这里**如实**取 raw 里的值，缺就是 `None`。
         _oid = raw.get('original_room_id')
         self.original_room_id = _oid if isinstance(_oid, int) else None
         self.bgm = raw.get('bgm')
