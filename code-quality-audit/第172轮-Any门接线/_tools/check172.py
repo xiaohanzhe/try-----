@@ -450,11 +450,42 @@ for r in RL:
     if s and s not in _SKIP_SRC:
         _src_grp[(r.get('when_scene'), s)].append(r)
 _hot = [(k, len(v)) for k, v in _src_grp.items() if len(v) >= 2]
-check(u'C5 ★★★ 非 doorany 家族的对象级分组（%d 个）**没有一个**候选 >= 2'
+# ★★★ 第181轮：这里多出**一个**多候选组 ——
+#   `ch4.dark_sanctuary.dw_church_tallbookcases` 的 `obj_climb_door` 2 条
+#   （同房两扇爬梯门，各自 `PreCreate` 里的 `doorRoom` 不同 ⇒ 是**真分流**）。
+#   ★ 但它照样**零影响**：climb 门的 `_original` 里没有 `door_x`/`door_y`
+#   （原作那条路的落点是实例变量，不是位置条件），`_pick_by_pos` 的第 ② 个前提
+#   不成立、`hits` 恒空 ⇒ 返 `None` ⇒ 仍退回 priority 最小。
+#   ⇒ 判据从"没有多候选组"改成"**多候选组必须全都没有门坐标**"：
+#     结论仍是"对象级消歧对既有规则永不触发"，而口径能容下真分流的后来者。
+_hot_ok = all(not _rule_door_axis(r) for _k, _n in _hot for r in _src_grp[_k])
+check(u'C5 ★★★ 非 doorany 家族的对象级分组（%d 个）里候选 >= 2 的组**全都没有门坐标**'
       u' ⇒ 对象级消歧对既有规则永不触发（这就是"零影响"的证明）'
       % len(_src_grp),
-      len(_src_grp) >= 400 and not _hot,
-      u'组=%d 多候选=%r' % (len(_src_grp), _hot[:3]))
+      len(_src_grp) >= 400 and _hot_ok,
+      u'组=%d 多候选=%r 其中有坐标的=%r'
+      % (len(_src_grp), _hot[:3],
+         [(k, r.get('priority')) for _k, _n in _hot for r in _src_grp[_k]
+          if _rule_door_axis(r)][:3]))
+
+#: ★ 正/负控制成对：同一组候选 —— 不给坐标 ⇒ `None`（零影响就是这个意思）；
+#:   给它补上坐标 ⇒ 就必须能挑出唯一一条。否则"零影响"可能只是因为这段压根没跑。
+_syn, _syn_got = [], (None, None)
+if _hot:
+    _k0, _ = _hot[0]
+    for _i, _base in enumerate(_src_grp[_k0]):
+        _c = dict(_base)
+        _c['_original'] = dict(_base.get('_original') or {})
+        _c['_original']['door_x'] = 100 + _i
+        _c['_original'].pop('axis', None)
+        _syn.append(_c)
+    _pred = (lambda rs: (lambda r: r.get('when_src') == rs))(_k0[1])
+    _syn_got = (_pick_by_pos(_syn, _k0[0], _pred, None),
+                _pick_by_pos(_syn, _k0[0], _pred, [101, 0]))
+check(u'C5b 正/负控制：同一组候选，不给坐标 ⇒ None（零影响）；补上坐标 ⇒ 挑得出唯一',
+      _syn_got[0] is None and _syn_got[1] is not None,
+      u'组=%r 样本 %d 条；不给坐标=%r 给坐标=%r'
+      % (_hot[0][0] if _hot else None, len(_syn), _syn_got[0], _syn_got[1]))
 
 #: 字母级一路（第170轮）必须逐字不变：拿真实坐标比"给/不给 pos"
 _letter_changed = []
@@ -548,8 +579,13 @@ print('=' * 70)
 _only = ANALYZE['only_any_src']
 #: ★★ 第174轮：`OTHERS` 现在会把变体别名边也算进"别处已有的出边" ⇒ 口径必须是
 #:   "**除 doorany 家族以外**的出边"，否则那 29 个场景会被误判成"本来就有出口"。
+#: ★★ 第181轮：还要再排除 **batch=181** 那 63 条（位移门 / climb 门）。
+#:   E2 问的是"**回看第172轮落边那一刻**，这些死胡同是不是真的 0 条边"——
+#:   第181轮后来给其中 12 个场景补了位移门的边，那是**更晚**的事实，
+#:   混进来会把"当年确实是死胡同"这个结论判红（假红）。排除它，结论不变。
 _old_from = set(r.get('when_scene') for r in OTHERS
-                if r.get('when_src') not in _SKIP_SRC)
+                if r.get('when_src') not in _SKIP_SRC
+                and (r.get('_original') or {}).get('batch') != 181)
 #: ★★ 第176轮改口径：`_new_from` 以前只数 **172 段**的边。删掉那 42 条之后，
 #:   有 16 个场景（ch5 的 cliffs / flower_castle / garden）**一条 172 段边都没有了**，
 #:   但它们的出口由第174轮的**变体边**（`obj_doorAnyHorz/Vert`）提供 —— 同一扇原作门。

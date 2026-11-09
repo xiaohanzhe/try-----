@@ -500,6 +500,7 @@ check(u'E1 ★★★ 证据侧 `no_marker` 例外**恰好 3 条**，且逐条等
       u'%r' % (_nm_keys,))
 
 _exc_leak = []
+_exc_181 = []
 for _c, _s, _d in NO_MARKER_EXC:
     _ss, _dd = REV[_c].get(_s), REV[_c].get(_d)
     if not _ss or not _dd:
@@ -507,12 +508,37 @@ for _c, _s, _d in NO_MARKER_EXC:
         continue
     # ★ 只问"有没有被当成 **D/X** 边写进表"：这几对房间**可能**早由 A/B/C 合法覆盖，
     #   那不算泄漏（marker 判据只给 D/X 用）。
+    # ★★★ 第181轮改口径（有账，不是把数调小）：这三对**确实**已经有 D 边了，
+    #   但来的**不是**本轮这套 marker 推导，而是第181轮的**位移机制**独立推出来的
+    #   （`obj_doorD` 的 `Alarm_2` = `room_goto(room_previous(room_previous(room)))`，
+    #   五章指令逐条一致；`ch2 263→261` / `55→53` / `ch4 34→32` 三条**都是 −2**，
+    #   与位移算术逐条吻合）。⇒ 当年判 `no_marker` 也不算错：marker 只是**旁证**，
+    #   位移门本身不依赖 marker；这三间是 backup / closet / hallway，本来就不是
+    #   带标记的入口房。所以：本轮的这些边**从泄漏名单里摘掉**，
+    #   由紧跟着的 E2b 逐条认账（只许是第181轮、只许 shift == −2、只许这 3 条）。
     for _r in RL:
-        if _r.get('when_scene') == _ss and _r.get('to') == _dd \
-                and _r.get('when_door') in ('D', 'X'):
+        if _r.get('when_scene') != _ss or _r.get('to') != _dd:
+            continue
+        if _r.get('when_door') not in ('D', 'X'):
+            continue
+        _o = _r.get('_original') or {}
+        if _o.get('batch') == 181:
+            _exc_181.append((_c, _s, _d, _r.get('when_door'), _o.get('via'), _o.get('shift')))
+        else:
             _exc_leak.append(u'%s→%s 被写成 %s 边' % (_ss, _dd, _r.get('when_door')))
-check(u'E2 ★★★ 这 3 条例外**没有**被写成 D/X 边（若已由 A/B/C 覆盖则不算泄漏）',
+check(u'E2 ★★★ 这 3 条例外**没有**被本轮(第125轮)的 marker 推导写成 D/X 边'
+      u'（第181轮按位移机制落的那几条单列给 E2b）',
       not _exc_leak, u'%r' % (_exc_leak[:3],))
+
+#: ★★ E2b：第181轮那几条必须**恰好**是这 3 对、只许 D 门、只许 shift == −2。
+#:   一条不多（多出来的就是真泄漏）、一条 shift 不对（就是位移模型错）。
+_EXP_181 = sorted(NO_MARKER_EXC)
+check(u'E2b ★★ 第181轮按位移机制落下的 D 边**恰好**覆盖这 3 对、`shift` 全为 −2、'
+      u'`via` 全是 `obj_doorD`（与 `Alarm_2` 的 −2 逐条吻合）',
+      sorted((c, s, d) for c, s, d, _l, _v, _sh in _exc_181) == _EXP_181
+      and all(l == 'D' and sh == -2 and str(v).startswith('obj_doorD')
+              for _c, _s, _d, l, v, sh in _exc_181),
+      u'实测 %r' % (_exc_181,))
 
 # --- 正控制：例外里的房间在索引里确实存在（否则 E1/E2 是在比对空气） ---
 _missing = [(c, s, d) for c, s, d in NO_MARKER_EXC

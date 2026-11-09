@@ -1,0 +1,609 @@
+章	门物件	事件	条件	动作	目标	指令位	事件长度
+1	obj_darkdoor	Step_0		goto	32	488	1214
+1	obj_darkdoorevent	Step_0		goto	49	274	276
+1	obj_doorA	Alarm_2		next	1	10	12
+1	obj_doorA_musfade	Alarm_2		next	1	10	12
+1	obj_doorB	Alarm_2		prev	-1	15	17
+1	obj_doorB_musfade	Alarm_2		prev	-1	10	12
+1	obj_doorC	Alarm_2		shift	2	11	15
+1	obj_doorC	Alarm_2		goto	VAR:FN:room_next	13	15
+1	obj_doorC_musfade	Alarm_2		shift	2	11	15
+1	obj_doorC_musfade	Alarm_2		goto	VAR:FN:room_next	13	15
+1	obj_doorD	Alarm_2		shift	-2	11	15
+1	obj_doorD	Alarm_2		goto	VAR:FN:room_previous	13	15
+1	obj_doorD_musfade	Alarm_2		shift	-2	11	15
+1	obj_doorD_musfade	Alarm_2		goto	VAR:FN:room_previous	13	15
+1	obj_doorE	Alarm_2		shift	3	11	16
+1	obj_doorE	Alarm_2		goto	VAR:FN:room_next	14	16
+1	obj_doorF	Alarm_2		shift	-3	11	16
+1	obj_doorF	Alarm_2		goto	VAR:FN:room_previous	14	16
+1	obj_doorW	Alarm_2	room==13	goto	18	16	58
+1	obj_doorW	Alarm_2	room==18	goto	13	24	58
+1	obj_doorW	Alarm_2	room==11	goto	27	32	58
+1	obj_doorW	Alarm_2	room==27	goto	11	40	58
+1	obj_doorW	Alarm_2	room==9	goto	10	48	58
+1	obj_doorW	Alarm_2	room==10	goto	9	56	58
+1	obj_doorX	Alarm_2	room==45	goto	47	16	283
+1	obj_doorX	Alarm_2	room==47	goto	45	24	283
+1	obj_doorX	Alarm_2	room==13	goto	26	32	283
+1	obj_doorX	Alarm_2	room==26	goto	13	40	283
+1	obj_doorX	Alarm_2	room==15	goto	23	48	283
+1	obj_doorX	Alarm_2	room==23	goto	15	56	283
+1	obj_doorX	Alarm_2	room==29	goto	14	64	283
+1	obj_doorX	Alarm_2	room==14	goto	29	72	283
+1	obj_doorX	Alarm_2	room==11	goto	22	80	283
+1	obj_doorX	Alarm_2	room==22	goto	11	88	283
+1	obj_doorX	Alarm_2	room==9	goto	24	96	283
+1	obj_doorX	Alarm_2	room==24	goto	9	104	283
+1	obj_doorX	Alarm_2	room==106	goto	105	112	283
+1	obj_doorX	Alarm_2	room==105	goto	106	120	283
+1	obj_doorX	Alarm_2	room==86	goto	85	128	283
+1	obj_doorX	Alarm_2	room==85	goto	86	136	283
+1	obj_doorX	Alarm_2	room==96	goto	90	144	283
+1	obj_doorX	Alarm_2	plot==120	goto	91	156	283
+1	obj_doorX	Alarm_2	plot==120	goto	96	161	283
+1	obj_doorX	Alarm_2		goto	90	188	283
+1	obj_doorX	Alarm_2		goto	94	193	283
+1	obj_doorX	Alarm_2	plot==150	prev	-1	203	283
+1	obj_doorX	Alarm_2	plot==150	goto	97	208	283
+1	obj_doorX	Alarm_2	plot==150	next	1	218	283
+1	obj_doorX	Alarm_2	plot==150	goto	104	223	283
+1	obj_doorX	Alarm_2	room==91	goto	90	260	283
+1	obj_doorX	Alarm_2	room==94	goto	93	273	283
+1	obj_doorX	Alarm_2		event_user	0	280	283
+1	obj_doorX_musfade	Alarm_2	room==45	goto	47	16	222
+1	obj_doorX_musfade	Alarm_2	room==47	goto	45	24	222
+1	obj_doorX_musfade	Alarm_2	room==59	goto	133	32	222
+1	obj_doorX_musfade	Alarm_2	room==142	goto	82	40	222
+1	obj_doorX_musfade	Alarm_2		goto	142	65	222
+1	obj_doorX_musfade	Alarm_2		goto	88	70	222
+1	obj_doorX_musfade	Alarm_2	room==7	goto	5	78	222
+1	obj_doorX_musfade	Alarm_2	room==5	goto	7	86	222
+1	obj_doorX_musfade	Alarm_2	room==14	goto	29	94	222
+1	obj_doorX_musfade	Alarm_2	room==29	goto	14	102	222
+1	obj_doorX_musfade	Alarm_2	x==1300	goto	109	114	222
+1	obj_doorX_musfade	Alarm_2	room==123	goto	134	127	222
+1	obj_doorX_musfade	Alarm_2	room==109	goto	107	141	222
+1	obj_doorX_musfade	Alarm_2		goto	114	151	222
+1	obj_doorX_musfade	Alarm_2		goto	123	161	222
+1	obj_doorX_musfade	Alarm_2		goto	111	171	222
+1	obj_doorX_musfade	Alarm_2	room==107	goto	109	186	222
+1	obj_doorX_musfade	Alarm_2	room==114	goto	109	199	222
+1	obj_doorX_musfade	Alarm_2	room==111	goto	109	212	222
+1	obj_doorX_musfade	Alarm_2	room==113	goto	104	220	222
+1	obj_doorw_musfade	Alarm_2	room==114	goto	110	16	78
+1	obj_doorw_musfade	Alarm_2	room==123	goto	110	31	78
+1	obj_doorw_musfade	Alarm_2	room==110	goto	114	50	78
+1	obj_doorw_musfade	Alarm_2		goto	123	60	78
+1	obj_doorw_musfade	Alarm_2	room==104	goto	113	68	78
+1	obj_doorw_musfade	Alarm_2	room==113	goto	104	76	78
+1	obj_shortcut_door	Step_0		goto	VAR:door_destination	157	159
+2	obj_darkdoor	Step_0		goto	53	504	1252
+2	obj_doorA	Alarm_2		event_user	7	4	16
+2	obj_doorA	Alarm_2		next	1	14	16
+2	obj_doorA_musfade	Alarm_2		event_user	7	12	16
+2	obj_doorA_musfade	Alarm_2		next	1	14	16
+2	obj_doorAny	Alarm_2		event_user	7	4	17
+2	obj_doorAny	Alarm_2		goto	VAR:doorRoom	15	17
+2	obj_doorB	Alarm_2		event_user	7	9	21
+2	obj_doorB	Alarm_2		prev	-1	19	21
+2	obj_doorB_musfade	Alarm_2		event_user	7	12	16
+2	obj_doorB_musfade	Alarm_2		prev	-1	14	16
+2	obj_doorC	Alarm_2		event_user	7	12	19
+2	obj_doorC	Alarm_2		shift	2	15	19
+2	obj_doorC	Alarm_2		goto	VAR:FN:room_next	17	19
+2	obj_doorC_musfade	Alarm_2		event_user	7	12	19
+2	obj_doorC_musfade	Alarm_2		shift	2	15	19
+2	obj_doorC_musfade	Alarm_2		goto	VAR:FN:room_next	17	19
+2	obj_doorD	Alarm_2		event_user	7	4	19
+2	obj_doorD	Alarm_2		shift	-2	15	19
+2	obj_doorD	Alarm_2		goto	VAR:FN:room_previous	17	19
+2	obj_doorD_musfade	Alarm_2		event_user	7	12	19
+2	obj_doorD_musfade	Alarm_2		shift	-2	15	19
+2	obj_doorD_musfade	Alarm_2		goto	VAR:FN:room_previous	17	19
+2	obj_doorE	Alarm_2		event_user	7	12	20
+2	obj_doorE	Alarm_2		shift	3	15	20
+2	obj_doorE	Alarm_2		goto	VAR:FN:room_next	18	20
+2	obj_doorF	Alarm_2		event_user	7	12	20
+2	obj_doorF	Alarm_2		shift	-3	15	20
+2	obj_doorF	Alarm_2		goto	VAR:FN:room_previous	18	20
+2	obj_doorW	Alarm_2		event_user	7	12	1805
+2	obj_doorW	Alarm_2	room==34	goto	29	20	1805
+2	obj_doorW	Alarm_2	room==43	goto	27	28	1805
+2	obj_doorW	Alarm_2	room==25	goto	26	36	1805
+2	obj_doorW	Alarm_2	room==26	goto	25	44	1805
+2	obj_doorW	Alarm_2	x==370	goto	48	64	1805
+2	obj_doorW	Alarm_2	x==1840	goto	43	80	1805
+2	obj_doorW	Alarm_2	room==48	goto	27	90	1805
+2	obj_doorW	Alarm_2	x==280	goto	46	110	1805
+2	obj_doorW	Alarm_2	x==660	goto	34	126	1805
+2	obj_doorW	Alarm_2	room==46	goto	29	136	1805
+2	obj_doorW	Alarm_2	room==58	goto	56	144	1805
+2	obj_doorW	Alarm_2	room==56	goto	58	152	1805
+2	obj_doorW	Alarm_2	room==63	goto	67	162	1805
+2	obj_doorW	Alarm_2	x==1000	goto	69	182	1805
+2	obj_doorW	Alarm_2	x==700	goto	63	198	1805
+2	obj_doorW	Alarm_2	x==340	goto	71	218	1805
+2	obj_doorW	Alarm_2	x==610	goto	72	234	1805
+2	obj_doorW	Alarm_2	x==860	goto	262	250	1805
+2	obj_doorW	Alarm_2	x==10	goto	79	264	1805
+2	obj_doorW	Alarm_2	x==1200	goto	255	278	1805
+2	obj_doorW	Alarm_2	y==60	goto	89	292	1805
+2	obj_doorW	Alarm_2	y==400	goto	96	302	1805
+2	obj_doorW	Alarm_2	room==102	goto	84	312	1805
+2	obj_doorW	Alarm_2	room==87	goto	97	322	1805
+2	obj_doorW	Alarm_2	room==97	goto	87	332	1805
+2	obj_doorW	Alarm_2	y==900	goto	87	346	1805
+2	obj_doorW	Alarm_2	y==10	goto	94	356	1805
+2	obj_doorW	Alarm_2	room==94	goto	89	370	1805
+2	obj_doorW	Alarm_2		goto	87	380	1805
+2	obj_doorW	Alarm_2	x==180	goto	85	398	1805
+2	obj_doorW	Alarm_2	x==1000	goto	87	408	1805
+2	obj_doorW	Alarm_2	x==1400	goto	87	418	1805
+2	obj_doorW	Alarm_2	y==430	goto	93	432	1805
+2	obj_doorW	Alarm_2	y==50	goto	92	442	1805
+2	obj_doorW	Alarm_2	room==92	goto	85	452	1805
+2	obj_doorW	Alarm_2	room==89	goto	94	466	1805
+2	obj_doorW	Alarm_2		goto	84	476	1805
+2	obj_doorW	Alarm_2	room==71	goto	68	486	1805
+2	obj_doorW	Alarm_2	room==72	goto	68	496	1805
+2	obj_doorW	Alarm_2	room==262	goto	68	506	1805
+2	obj_doorW	Alarm_2	room==69	goto	67	516	1805
+2	obj_doorW	Alarm_2	room==139	goto	117	526	1805
+2	obj_doorW	Alarm_2	x==10	goto	139	540	1805
+2	obj_doorW	Alarm_2	x==720	goto	137	550	1805
+2	obj_doorW	Alarm_2	room==119	goto	138	560	1805
+2	obj_doorW	Alarm_2	room==118	goto	138	570	1805
+2	obj_doorW	Alarm_2	room==137	goto	117	580	1805
+2	obj_doorW	Alarm_2	room==138	goto	119	594	1805
+2	obj_doorW	Alarm_2	room==122	goto	123	608	1805
+2	obj_doorW	Alarm_2	y==900	goto	122	628	1805
+2	obj_doorW	Alarm_2	room==142	goto	123	638	1805
+2	obj_doorW	Alarm_2	room==140	goto	123	648	1805
+2	obj_doorW	Alarm_2	x==4500	goto	131	662	1805
+2	obj_doorW	Alarm_2	x==50	goto	128	672	1805
+2	obj_doorW	Alarm_2	room==130	goto	129	682	1805
+2	obj_doorW	Alarm_2	room==131	goto	129	692	1805
+2	obj_doorW	Alarm_2	room==136	goto	157	702	1805
+2	obj_doorW	Alarm_2	x==280	goto	150	722	1805
+2	obj_doorW	Alarm_2	x==590	goto	151	738	1805
+2	obj_doorW	Alarm_2	x==1900	goto	153	748	1805
+2	obj_doorW	Alarm_2	room==151	goto	152	758	1805
+2	obj_doorW	Alarm_2	room==150	goto	152	768	1805
+2	obj_doorW	Alarm_2	x==10	goto	152	782	1805
+2	obj_doorW	Alarm_2	plot==120	goto	154	796	1805
+2	obj_doorW	Alarm_2		goto	156	803	1805
+2	obj_doorW	Alarm_2	x==10	goto	153	817	1805
+2	obj_doorW	Alarm_2	x==600	goto	155	827	1805
+2	obj_doorW	Alarm_2	x==10	goto	154	841	1805
+2	obj_doorW	Alarm_2	x==600	goto	156	851	1805
+2	obj_doorW	Alarm_2	plot==120	goto	155	869	1805
+2	obj_doorW	Alarm_2	plot==120	goto	153	874	1805
+2	obj_doorW	Alarm_2	room==182	goto	157	884	1805
+2	obj_doorW	Alarm_2	y==470	goto	182	912	1805
+2	obj_doorW	Alarm_2	y==470	goto	187	936	1805
+2	obj_doorW	Alarm_2	y==670	goto	164	952	1805
+2	obj_doorW	Alarm_2	room==217	goto	157	962	1805
+2	obj_doorW	Alarm_2	room==181	goto	183	976	1805
+2	obj_doorW	Alarm_2		goto	208	986	1805
+2	obj_doorW	Alarm_2	x==10	goto	157	1000	1805
+2	obj_doorW	Alarm_2		goto	176	1016	1805
+2	obj_doorW	Alarm_2		goto	179	1023	1805
+2	obj_doorW	Alarm_2	x==10	goto	171	1037	1805
+2	obj_doorW	Alarm_2	x==150	goto	177	1053	1805
+2	obj_doorW	Alarm_2	x==1000	goto	178	1063	1805
+2	obj_doorW	Alarm_2		goto	176	1079	1805
+2	obj_doorW	Alarm_2		goto	179	1084	1805
+2	obj_doorW	Alarm_2	room==178	goto	176	1094	1805
+2	obj_doorW	Alarm_2	y==200	goto	177	1108	1805
+2	obj_doorW	Alarm_2		goto	171	1115	1805
+2	obj_doorW	Alarm_2	room==172	goto	175	1129	1805
+2	obj_doorW	Alarm_2	x==800	goto	174	1139	1805
+2	obj_doorW	Alarm_2	x==1400	goto	173	1149	1805
+2	obj_doorW	Alarm_2	room==175	goto	172	1159	1805
+2	obj_doorW	Alarm_2	room==173	goto	172	1169	1805
+2	obj_doorW	Alarm_2	room==174	goto	172	1179	1805
+2	obj_doorW	Alarm_2	x==1200	goto	184	1193	1805
+2	obj_doorW	Alarm_2		goto	168	1200	1805
+2	obj_doorW	Alarm_2	room==184	goto	186	1214	1805
+2	obj_doorW	Alarm_2		goto	185	1224	1805
+2	obj_doorW	Alarm_2		goto	185	1234	1805
+2	obj_doorW	Alarm_2		goto	212	1244	1805
+2	obj_doorW	Alarm_2		goto	209	1254	1805
+2	obj_doorW	Alarm_2	room==183	goto	181	1264	1805
+2	obj_doorW	Alarm_2	x==260	goto	184	1278	1805
+2	obj_doorW	Alarm_2	x==1540	goto	184	1288	1805
+2	obj_doorW	Alarm_2	room==212	goto	184	1298	1805
+2	obj_doorW	Alarm_2	room==189	goto	187	1308	1805
+2	obj_doorW	Alarm_2	room==188	goto	187	1318	1805
+2	obj_doorW	Alarm_2	x==10	goto	188	1332	1805
+2	obj_doorW	Alarm_2	y==200	goto	157	1348	1805
+2	obj_doorW	Alarm_2	y==440	goto	168	1364	1805
+2	obj_doorW	Alarm_2	x==500	goto	194	1374	1805
+2	obj_doorW	Alarm_2	x==870	goto	189	1384	1805
+2	obj_doorW	Alarm_2	x==1250	goto	190	1394	1805
+2	obj_doorW	Alarm_2	y==4600	goto	186	1408	1805
+2	obj_doorW	Alarm_2		goto	187	1415	1805
+2	obj_doorW	Alarm_2	room==190	goto	187	1425	1805
+2	obj_doorW	Alarm_2	room==191	goto	204	1435	1805
+2	obj_doorW	Alarm_2	x==150	goto	44	1455	1805
+2	obj_doorW	Alarm_2	x==230	goto	45	1471	1805
+2	obj_doorW	Alarm_2	room==45	goto	42	1481	1805
+2	obj_doorW	Alarm_2	room==44	goto	42	1491	1805
+2	obj_doorW	Alarm_2	room==259	goto	84	1501	1805
+2	obj_doorW	Alarm_2	room==162	goto	165	1511	1805
+2	obj_doorW	Alarm_2	room==180	goto	165	1521	1805
+2	obj_doorW	Alarm_2	y==4700	goto	162	1535	1805
+2	obj_doorW	Alarm_2		goto	180	1542	1805
+2	obj_doorW	Alarm_2	x==0	goto	127	1556	1805
+2	obj_doorW	Alarm_2		goto	129	1563	1805
+2	obj_doorW	Alarm_2	room==127	goto	128	1573	1805
+2	obj_doorW	Alarm_2	room==96	goto	84	1587	1805
+2	obj_doorW	Alarm_2		goto	88	1597	1805
+2	obj_doorW	Alarm_2	room==88	goto	96	1607	1805
+2	obj_doorW	Alarm_2	room==90	goto	95	1617	1805
+2	obj_doorW	Alarm_2	room==205	goto	204	1627	1805
+2	obj_doorW	Alarm_2	room==206	goto	204	1637	1805
+2	obj_doorW	Alarm_2	room==207	goto	204	1647	1805
+2	obj_doorW	Alarm_2	room==204	goto	191	1661	1805
+2	obj_doorW	Alarm_2		goto	205	1671	1805
+2	obj_doorW	Alarm_2		goto	206	1681	1805
+2	obj_doorW	Alarm_2		goto	207	1691	1805
+2	obj_doorW	Alarm_2	room==208	goto	209	1705	1805
+2	obj_doorW	Alarm_2		goto	181	1715	1805
+2	obj_doorW	Alarm_2	x==200	goto	187	1729	1805
+2	obj_doorW	Alarm_2	x==500	goto	203	1739	1805
+2	obj_doorW	Alarm_2	room==203	goto	194	1749	1805
+2	obj_doorW	Alarm_2	room==209	goto	210	1763	1805
+2	obj_doorW	Alarm_2		goto	184	1773	1805
+2	obj_doorW	Alarm_2		goto	208	1783	1805
+2	obj_doorW	Alarm_2	room==95	goto	90	1793	1805
+2	obj_doorW	Alarm_2	room==210	goto	209	1803	1805
+2	obj_doorX	Alarm_2		event_user	7	12	256
+2	obj_doorX	Alarm_2	room==55	goto	56	20	256
+2	obj_doorX	Alarm_2	room==29	goto	42	28	256
+2	obj_doorX	Alarm_2	room==42	goto	29	36	256
+2	obj_doorX	Alarm_2	room==31	goto	39	44	256
+2	obj_doorX	Alarm_2	room==39	goto	31	52	256
+2	obj_doorX	Alarm_2	room==50	goto	30	60	256
+2	obj_doorX	Alarm_2	room==30	goto	50	68	256
+2	obj_doorX	Alarm_2	room==27	goto	38	76	256
+2	obj_doorX	Alarm_2	room==38	goto	27	84	256
+2	obj_doorX	Alarm_2	room==25	goto	40	92	256
+2	obj_doorX	Alarm_2	room==40	goto	25	100	256
+2	obj_doorX	Alarm_2	plot==12	goto	61	112	256
+2	obj_doorX	Alarm_2	plot==12	goto	62	117	256
+2	obj_doorX	Alarm_2	room==61	goto	56	125	256
+2	obj_doorX	Alarm_2	x==500	goto	66	141	256
+2	obj_doorX	Alarm_2	x==800	goto	65	149	256
+2	obj_doorX	Alarm_2	x==940	goto	64	157	256
+2	obj_doorX	Alarm_2	x==500	goto	59	166	256
+2	obj_doorX	Alarm_2	x==1320	goto	56	174	256
+2	obj_doorX	Alarm_2	y==1400	goto	60	182	256
+2	obj_doorX	Alarm_2	room==65	goto	62	192	256
+2	obj_doorX	Alarm_2	room==64	goto	62	202	256
+2	obj_doorX	Alarm_2	room==66	goto	62	212	256
+2	obj_doorX	Alarm_2	plot==12	goto	61	226	256
+2	obj_doorX	Alarm_2	plot==12	goto	62	231	256
+2	obj_doorX	Alarm_2	plot==12	goto	61	249	256
+2	obj_doorX	Alarm_2	plot==12	goto	62	254	256
+2	obj_doorX_musfade	Alarm_2		event_user	7	12	82
+2	obj_doorX_musfade	Alarm_2	room==55	goto	56	20	82
+2	obj_doorX_musfade	Alarm_2	room==56	goto	55	28	82
+2	obj_doorX_musfade	Alarm_2	room==23	goto	21	36	82
+2	obj_doorX_musfade	Alarm_2	room==21	goto	23	44	82
+2	obj_doorX_musfade	Alarm_2	room==30	goto	50	52	82
+2	obj_doorX_musfade	Alarm_2	room==50	goto	30	60	82
+2	obj_doorX_musfade	Alarm_2	room==62	goto	229	72	82
+2	obj_doorX_musfade	Alarm_2	room==89	goto	230	80	82
+2	obj_doorw_musfade	Alarm_2		event_user	7	12	180
+2	obj_doorw_musfade	Alarm_2	x==1140	goto	47	32	180
+2	obj_doorw_musfade	Alarm_2	room==47	goto	27	42	180
+2	obj_doorw_musfade	Alarm_2		goto	140	64	180
+2	obj_doorw_musfade	Alarm_2		goto	141	97	180
+2	obj_doorw_musfade	Alarm_2		goto	142	102	180
+2	obj_doorw_musfade	Alarm_2	room==129	goto	130	112	180
+2	obj_doorw_musfade	Alarm_2	room==141	goto	123	122	180
+2	obj_doorw_musfade	Alarm_2	room==157	goto	231	132	180
+2	obj_doorw_musfade	Alarm_2	room==46	goto	29	142	180
+2	obj_doorw_musfade	Alarm_2	room==169	goto	164	152	180
+2	obj_doorw_musfade	Alarm_2	room==164	goto	169	162	180
+2	obj_doorw_musfade	Alarm_2	room==108	goto	232	170	180
+2	obj_doorw_musfade	Alarm_2	room==56	goto	230	178	180
+2	obj_shortcut_door	Step_0		goto	VAR:door_destination	157	159
+3	obj_board_b2s_icedoor	Step_0		goto	115	293	389
+3	obj_board_b2s_icedoor	Step_0		goto	137	387	389
+3	obj_darkdoor	Step_0		goto	50	504	1252
+3	obj_doorA	Alarm_2		event_user	7	4	16
+3	obj_doorA	Alarm_2		next	1	14	16
+3	obj_doorA_musfade	Alarm_2		event_user	7	12	16
+3	obj_doorA_musfade	Alarm_2		next	1	14	16
+3	obj_doorAny	Alarm_2		event_user	7	4	17
+3	obj_doorAny	Alarm_2		goto	VAR:doorRoom	15	17
+3	obj_doorB	Alarm_2		event_user	7	9	21
+3	obj_doorB	Alarm_2		prev	-1	19	21
+3	obj_doorB_musfade	Alarm_2		event_user	7	12	16
+3	obj_doorB_musfade	Alarm_2		prev	-1	14	16
+3	obj_doorC	Alarm_2		event_user	7	12	32
+3	obj_doorC	Alarm_2	room==110	goto	28	24	32
+3	obj_doorC	Alarm_2	room==110	shift	2	28	32
+3	obj_doorC	Alarm_2	room==110	goto	VAR:FN:room_next	30	32
+3	obj_doorC_musfade	Alarm_2		event_user	7	12	19
+3	obj_doorC_musfade	Alarm_2		shift	2	15	19
+3	obj_doorC_musfade	Alarm_2		goto	VAR:FN:room_next	17	19
+3	obj_doorD	Alarm_2		event_user	7	4	19
+3	obj_doorD	Alarm_2		shift	-2	15	19
+3	obj_doorD	Alarm_2		goto	VAR:FN:room_previous	17	19
+3	obj_doorD_musfade	Alarm_2		event_user	7	12	19
+3	obj_doorD_musfade	Alarm_2		shift	-2	15	19
+3	obj_doorD_musfade	Alarm_2		goto	VAR:FN:room_previous	17	19
+3	obj_doorE	Alarm_2		event_user	7	12	20
+3	obj_doorE	Alarm_2		shift	3	15	20
+3	obj_doorE	Alarm_2		goto	VAR:FN:room_next	18	20
+3	obj_doorF	Alarm_2		event_user	7	12	20
+3	obj_doorF	Alarm_2		shift	-3	15	20
+3	obj_doorF	Alarm_2		goto	VAR:FN:room_previous	18	20
+3	obj_doorW	Alarm_2		event_user	7	12	348
+3	obj_doorW	Alarm_2	room==31	goto	26	20	348
+3	obj_doorW	Alarm_2	room==40	goto	24	28	348
+3	obj_doorW	Alarm_2	room==22	goto	23	36	348
+3	obj_doorW	Alarm_2	room==23	goto	22	44	348
+3	obj_doorW	Alarm_2	x==370	goto	45	64	348
+3	obj_doorW	Alarm_2	x==1840	goto	40	80	348
+3	obj_doorW	Alarm_2	room==45	goto	24	90	348
+3	obj_doorW	Alarm_2	x==280	goto	43	110	348
+3	obj_doorW	Alarm_2	x==660	goto	31	126	348
+3	obj_doorW	Alarm_2	room==43	goto	26	136	348
+3	obj_doorW	Alarm_2	room==53	goto	52	144	348
+3	obj_doorW	Alarm_2	room==52	goto	53	152	348
+3	obj_doorW	Alarm_2	room==57	goto	61	162	348
+3	obj_doorW	Alarm_2	x==1000	goto	63	182	348
+3	obj_doorW	Alarm_2	x==700	goto	57	198	348
+3	obj_doorW	Alarm_2	x==340	goto	64	218	348
+3	obj_doorW	Alarm_2	x==610	goto	65	234	348
+3	obj_doorW	Alarm_2	x==860	goto	80	250	348
+3	obj_doorW	Alarm_2	room==64	goto	62	260	348
+3	obj_doorW	Alarm_2	room==65	goto	62	270	348
+3	obj_doorW	Alarm_2	room==80	goto	62	280	348
+3	obj_doorW	Alarm_2	room==63	goto	61	290	348
+3	obj_doorW	Alarm_2	x==150	goto	41	310	348
+3	obj_doorW	Alarm_2	x==230	goto	42	326	348
+3	obj_doorW	Alarm_2	room==42	goto	39	336	348
+3	obj_doorW	Alarm_2	room==41	goto	39	346	348
+3	obj_doorX	Alarm_2		event_user	7	12	209
+3	obj_doorX	Alarm_2	room==26	goto	39	20	209
+3	obj_doorX	Alarm_2	room==39	goto	26	28	209
+3	obj_doorX	Alarm_2	room==28	goto	36	36	209
+3	obj_doorX	Alarm_2	room==36	goto	28	44	209
+3	obj_doorX	Alarm_2	room==47	goto	27	52	209
+3	obj_doorX	Alarm_2	room==27	goto	47	60	209
+3	obj_doorX	Alarm_2	room==24	goto	35	68	209
+3	obj_doorX	Alarm_2	room==35	goto	24	76	209
+3	obj_doorX	Alarm_2	room==22	goto	37	84	209
+3	obj_doorX	Alarm_2	room==37	goto	22	92	209
+3	obj_doorX	Alarm_2	room==52	goto	56	100	209
+3	obj_doorX	Alarm_2	x==500	goto	60	116	209
+3	obj_doorX	Alarm_2	x==800	goto	59	124	209
+3	obj_doorX	Alarm_2	x==940	goto	58	132	209
+3	obj_doorX	Alarm_2	x==500	goto	54	141	209
+3	obj_doorX	Alarm_2	x==1320	goto	52	149	209
+3	obj_doorX	Alarm_2	y==1400	goto	55	157	209
+3	obj_doorX	Alarm_2	room==59	goto	56	167	209
+3	obj_doorX	Alarm_2	room==58	goto	56	177	209
+3	obj_doorX	Alarm_2	room==60	goto	56	187	209
+3	obj_doorX	Alarm_2	room==54	goto	56	197	209
+3	obj_doorX	Alarm_2	room==55	goto	56	207	209
+3	obj_doorX_musfade	Alarm_2		event_user	7	12	66
+3	obj_doorX_musfade	Alarm_2	room==52	goto	56	20	66
+3	obj_doorX_musfade	Alarm_2	room==20	goto	18	28	66
+3	obj_doorX_musfade	Alarm_2	room==18	goto	20	36	66
+3	obj_doorX_musfade	Alarm_2	room==27	goto	47	44	66
+3	obj_doorX_musfade	Alarm_2	room==47	goto	27	52	66
+3	obj_doorX_musfade	Alarm_2	room==56	goto	69	64	66
+3	obj_doorw_musfade	Alarm_2		event_user	7	12	62
+3	obj_doorw_musfade	Alarm_2	x==1140	goto	44	32	62
+3	obj_doorw_musfade	Alarm_2	room==44	goto	24	42	62
+3	obj_doorw_musfade	Alarm_2	room==43	goto	26	52	62
+3	obj_doorw_musfade	Alarm_2	room==52	goto	70	60	62
+3	obj_dw_ranking_minigame_door	Step_0		goto	VAR:game_room	62	144
+3	obj_shortcut_door	Step_0		goto	VAR:door_destination	157	159
+4	obj_climb_door	Alarm_2		event_user	7	4	17
+4	obj_climb_door	Alarm_2		goto	VAR:doorRoom	15	17
+4	obj_darkdoor	Step_0		goto	59	504	1252
+4	obj_doorA	Alarm_2		event_user	7	4	16
+4	obj_doorA	Alarm_2		next	1	14	16
+4	obj_doorA_musfade	Alarm_2		event_user	7	12	16
+4	obj_doorA_musfade	Alarm_2		next	1	14	16
+4	obj_doorAny	Alarm_2		event_user	7	4	17
+4	obj_doorAny	Alarm_2		goto	VAR:doorRoom	15	17
+4	obj_doorB	Alarm_2		event_user	7	9	21
+4	obj_doorB	Alarm_2		prev	-1	19	21
+4	obj_doorB_musfade	Alarm_2		event_user	7	12	16
+4	obj_doorB_musfade	Alarm_2		prev	-1	14	16
+4	obj_doorC	Alarm_2		event_user	7	12	19
+4	obj_doorC	Alarm_2		shift	2	15	19
+4	obj_doorC	Alarm_2		goto	VAR:FN:room_next	17	19
+4	obj_doorC_musfade	Alarm_2		event_user	7	12	19
+4	obj_doorC_musfade	Alarm_2		shift	2	15	19
+4	obj_doorC_musfade	Alarm_2		goto	VAR:FN:room_next	17	19
+4	obj_doorD	Alarm_2		event_user	7	4	19
+4	obj_doorD	Alarm_2		shift	-2	15	19
+4	obj_doorD	Alarm_2		goto	VAR:FN:room_previous	17	19
+4	obj_doorD_musfade	Alarm_2		event_user	7	12	19
+4	obj_doorD_musfade	Alarm_2		shift	-2	15	19
+4	obj_doorD_musfade	Alarm_2		goto	VAR:FN:room_previous	17	19
+4	obj_doorE	Alarm_2		event_user	7	12	20
+4	obj_doorE	Alarm_2		shift	3	15	20
+4	obj_doorE	Alarm_2		goto	VAR:FN:room_next	18	20
+4	obj_doorF	Alarm_2		event_user	7	12	20
+4	obj_doorF	Alarm_2		shift	-3	15	20
+4	obj_doorF	Alarm_2		goto	VAR:FN:room_previous	18	20
+4	obj_doorW	Alarm_2		event_user	7	12	348
+4	obj_doorW	Alarm_2	room==31	goto	26	20	348
+4	obj_doorW	Alarm_2	room==40	goto	24	28	348
+4	obj_doorW	Alarm_2	room==22	goto	23	36	348
+4	obj_doorW	Alarm_2	room==23	goto	22	44	348
+4	obj_doorW	Alarm_2	x==370	goto	45	64	348
+4	obj_doorW	Alarm_2	x==1840	goto	40	80	348
+4	obj_doorW	Alarm_2	room==45	goto	24	90	348
+4	obj_doorW	Alarm_2	x==280	goto	43	110	348
+4	obj_doorW	Alarm_2	x==660	goto	31	126	348
+4	obj_doorW	Alarm_2	room==43	goto	26	136	348
+4	obj_doorW	Alarm_2	room==62	goto	61	144	348
+4	obj_doorW	Alarm_2	room==61	goto	62	152	348
+4	obj_doorW	Alarm_2	room==66	goto	70	162	348
+4	obj_doorW	Alarm_2	x==1000	goto	72	182	348
+4	obj_doorW	Alarm_2	x==700	goto	66	198	348
+4	obj_doorW	Alarm_2	x==340	goto	73	218	348
+4	obj_doorW	Alarm_2	x==610	goto	74	234	348
+4	obj_doorW	Alarm_2	x==860	goto	89	250	348
+4	obj_doorW	Alarm_2	room==73	goto	71	260	348
+4	obj_doorW	Alarm_2	room==74	goto	71	270	348
+4	obj_doorW	Alarm_2	room==89	goto	71	280	348
+4	obj_doorW	Alarm_2	room==72	goto	70	290	348
+4	obj_doorW	Alarm_2	x==150	goto	41	310	348
+4	obj_doorW	Alarm_2	x==230	goto	42	326	348
+4	obj_doorW	Alarm_2	room==42	goto	39	336	348
+4	obj_doorW	Alarm_2	room==41	goto	39	346	348
+4	obj_doorX	Alarm_2		event_user	7	12	219
+4	obj_doorX	Alarm_2	room==26	goto	39	20	219
+4	obj_doorX	Alarm_2	room==39	goto	26	28	219
+4	obj_doorX	Alarm_2	room==28	goto	36	36	219
+4	obj_doorX	Alarm_2	room==36	goto	28	44	219
+4	obj_doorX	Alarm_2	room==56	goto	27	52	219
+4	obj_doorX	Alarm_2	room==27	goto	56	60	219
+4	obj_doorX	Alarm_2	room==24	goto	35	68	219
+4	obj_doorX	Alarm_2	room==35	goto	24	76	219
+4	obj_doorX	Alarm_2	room==22	goto	37	84	219
+4	obj_doorX	Alarm_2	room==37	goto	22	92	219
+4	obj_doorX	Alarm_2	room==61	goto	65	100	219
+4	obj_doorX	Alarm_2	x==500	goto	69	116	219
+4	obj_doorX	Alarm_2	x==800	goto	68	124	219
+4	obj_doorX	Alarm_2	x==940	goto	67	132	219
+4	obj_doorX	Alarm_2	x==500	goto	63	141	219
+4	obj_doorX	Alarm_2	x==1320	goto	61	149	219
+4	obj_doorX	Alarm_2	y==1400	goto	64	157	219
+4	obj_doorX	Alarm_2	room==68	goto	65	167	219
+4	obj_doorX	Alarm_2	room==67	goto	65	177	219
+4	obj_doorX	Alarm_2	room==297	goto	65	187	219
+4	obj_doorX	Alarm_2	room==69	goto	65	197	219
+4	obj_doorX	Alarm_2	room==63	goto	65	207	219
+4	obj_doorX	Alarm_2	room==64	goto	65	217	219
+4	obj_doorX_musfade	Alarm_2		event_user	7	12	101
+4	obj_doorX_musfade	Alarm_2	room==61	goto	65	20	101
+4	obj_doorX_musfade	Alarm_2	room==20	goto	18	28	101
+4	obj_doorX_musfade	Alarm_2	plot==15	goto	46	46	101
+4	obj_doorX_musfade	Alarm_2	plot==15	goto	20	51	101
+4	obj_doorX_musfade	Alarm_2	room==27	goto	56	59	101
+4	obj_doorX_musfade	Alarm_2	room==56	goto	27	67	101
+4	obj_doorX_musfade	Alarm_2	room==65	goto	78	79	101
+4	obj_doorX_musfade	Alarm_2	y==1500	goto	64	99	101
+4	obj_doorw_musfade	Alarm_2		event_user	7	12	62
+4	obj_doorw_musfade	Alarm_2	x==1140	goto	44	32	62
+4	obj_doorw_musfade	Alarm_2	room==44	goto	24	42	62
+4	obj_doorw_musfade	Alarm_2	room==43	goto	26	52	62
+4	obj_doorw_musfade	Alarm_2	room==61	goto	79	60	62
+4	obj_lw_rain_indoor_ambience	Step_0		event_user	2	164	166
+4	obj_shortcut_door	Step_0		goto	VAR:door_destination	157	159
+5	obj_ch5_LWF_town_schooldoor	Step_0		goto	76	520	532
+5	obj_climb_door	Alarm_2		event_user	7	4	17
+5	obj_climb_door	Alarm_2		goto	VAR:doorRoom	15	17
+5	obj_darkdoor	Step_0		goto	48	504	1252
+5	obj_doorA	Alarm_2		event_user	7	4	16
+5	obj_doorA	Alarm_2		next	1	14	16
+5	obj_doorA_musfade	Alarm_2		event_user	7	12	16
+5	obj_doorA_musfade	Alarm_2		next	1	14	16
+5	obj_doorAny	Alarm_2		event_user	7	4	17
+5	obj_doorAny	Alarm_2		goto	VAR:doorRoom	15	17
+5	obj_doorAnyModespecific	Alarm_2		event_user	7	4	24
+5	obj_doorAnyModespecific	Alarm_2		goto	VAR:doorRoom	22	24
+5	obj_doorAnyModespecific	Step_0		shift	1	93	97
+5	obj_doorB	Alarm_2		event_user	7	9	21
+5	obj_doorB	Alarm_2		prev	-1	19	21
+5	obj_doorB_musfade	Alarm_2		event_user	7	12	16
+5	obj_doorB_musfade	Alarm_2		prev	-1	14	16
+5	obj_doorC	Alarm_2		event_user	7	12	19
+5	obj_doorC	Alarm_2		shift	2	15	19
+5	obj_doorC	Alarm_2		goto	VAR:FN:room_next	17	19
+5	obj_doorC_musfade	Alarm_2		event_user	7	12	19
+5	obj_doorC_musfade	Alarm_2		shift	2	15	19
+5	obj_doorC_musfade	Alarm_2		goto	VAR:FN:room_next	17	19
+5	obj_doorD	Alarm_2		event_user	7	4	19
+5	obj_doorD	Alarm_2		shift	-2	15	19
+5	obj_doorD	Alarm_2		goto	VAR:FN:room_previous	17	19
+5	obj_doorD_musfade	Alarm_2		event_user	7	12	19
+5	obj_doorD_musfade	Alarm_2		shift	-2	15	19
+5	obj_doorD_musfade	Alarm_2		goto	VAR:FN:room_previous	17	19
+5	obj_doorE	Alarm_2		event_user	7	12	20
+5	obj_doorE	Alarm_2		shift	3	15	20
+5	obj_doorE	Alarm_2		goto	VAR:FN:room_next	18	20
+5	obj_doorF	Alarm_2		event_user	7	12	20
+5	obj_doorF	Alarm_2		shift	-3	15	20
+5	obj_doorF	Alarm_2		goto	VAR:FN:room_previous	18	20
+5	obj_doorW	Alarm_2		event_user	7	12	348
+5	obj_doorW	Alarm_2	room==29	goto	24	20	348
+5	obj_doorW	Alarm_2	room==38	goto	22	28	348
+5	obj_doorW	Alarm_2	room==20	goto	21	36	348
+5	obj_doorW	Alarm_2	room==21	goto	20	44	348
+5	obj_doorW	Alarm_2	x==370	goto	43	64	348
+5	obj_doorW	Alarm_2	x==1840	goto	38	80	348
+5	obj_doorW	Alarm_2	room==43	goto	22	90	348
+5	obj_doorW	Alarm_2	x==280	goto	41	110	348
+5	obj_doorW	Alarm_2	x==660	goto	29	126	348
+5	obj_doorW	Alarm_2	room==41	goto	24	136	348
+5	obj_doorW	Alarm_2	room==51	goto	50	144	348
+5	obj_doorW	Alarm_2	room==50	goto	51	152	348
+5	obj_doorW	Alarm_2	room==55	goto	59	162	348
+5	obj_doorW	Alarm_2	x==1000	goto	62	182	348
+5	obj_doorW	Alarm_2	x==700	goto	55	198	348
+5	obj_doorW	Alarm_2	x==340	goto	63	218	348
+5	obj_doorW	Alarm_2	x==610	goto	64	234	348
+5	obj_doorW	Alarm_2	x==860	goto	80	250	348
+5	obj_doorW	Alarm_2	room==63	goto	60	260	348
+5	obj_doorW	Alarm_2	room==64	goto	60	270	348
+5	obj_doorW	Alarm_2	room==80	goto	60	280	348
+5	obj_doorW	Alarm_2	room==62	goto	59	290	348
+5	obj_doorW	Alarm_2	x==150	goto	39	310	348
+5	obj_doorW	Alarm_2	x==230	goto	40	326	348
+5	obj_doorW	Alarm_2	room==40	goto	37	336	348
+5	obj_doorW	Alarm_2	room==39	goto	37	346	348
+5	obj_doorX	Alarm_2		event_user	7	12	209
+5	obj_doorX	Alarm_2	room==24	goto	37	20	209
+5	obj_doorX	Alarm_2	room==37	goto	24	28	209
+5	obj_doorX	Alarm_2	room==26	goto	34	36	209
+5	obj_doorX	Alarm_2	room==34	goto	26	44	209
+5	obj_doorX	Alarm_2	room==45	goto	25	52	209
+5	obj_doorX	Alarm_2	room==25	goto	45	60	209
+5	obj_doorX	Alarm_2	room==22	goto	33	68	209
+5	obj_doorX	Alarm_2	room==33	goto	22	76	209
+5	obj_doorX	Alarm_2	room==20	goto	35	84	209
+5	obj_doorX	Alarm_2	room==35	goto	20	92	209
+5	obj_doorX	Alarm_2	room==50	goto	54	100	209
+5	obj_doorX	Alarm_2	x==500	goto	58	116	209
+5	obj_doorX	Alarm_2	x==800	goto	57	124	209
+5	obj_doorX	Alarm_2	x==940	goto	56	132	209
+5	obj_doorX	Alarm_2	x==500	goto	52	141	209
+5	obj_doorX	Alarm_2	x==1320	goto	50	149	209
+5	obj_doorX	Alarm_2	y==1400	goto	53	157	209
+5	obj_doorX	Alarm_2	room==57	goto	54	167	209
+5	obj_doorX	Alarm_2	room==56	goto	54	177	209
+5	obj_doorX	Alarm_2	room==58	goto	54	187	209
+5	obj_doorX	Alarm_2	room==52	goto	54	197	209
+5	obj_doorX	Alarm_2	room==53	goto	54	207	209
+5	obj_doorX_musfade	Alarm_2		event_user	7	12	66
+5	obj_doorX_musfade	Alarm_2	room==50	goto	54	20	66
+5	obj_doorX_musfade	Alarm_2	room==18	goto	16	28	66
+5	obj_doorX_musfade	Alarm_2	room==16	goto	18	36	66
+5	obj_doorX_musfade	Alarm_2	room==25	goto	45	44	66
+5	obj_doorX_musfade	Alarm_2	room==45	goto	25	52	66
+5	obj_doorX_musfade	Alarm_2	room==54	goto	69	64	66
+5	obj_doorw_musfade	Alarm_2		event_user	7	12	62
+5	obj_doorw_musfade	Alarm_2	x==1140	goto	42	32	62
+5	obj_doorw_musfade	Alarm_2	room==42	goto	22	42	62
+5	obj_doorw_musfade	Alarm_2	room==41	goto	24	52	62
+5	obj_doorw_musfade	Alarm_2	room==50	goto	70	60	62
+5	obj_dw_fcastle_left_twodoors	Step_0		event_user	1	2273	2275
+5	obj_fusuma_door	Step_0		event_user	0	240	443
+5	obj_room_castle_tv_mike_door	Step_0		goto	213	230	400
+5	obj_room_castle_tv_mike_door	Step_0		goto	213	383	400
+5	obj_shortcut_door	Step_0		goto	VAR:door_destination	659	661

@@ -1,0 +1,1247 @@
+[
+  {
+    "to": "ch1.card_castle.card_castle_5f",
+    "priority": 8200,
+    "reason": "原作 GML：房间 room_cc_4f 的 `obj_doorE` 的 `Alarm_2` 执行 `room_goto(room_next(room_next(room_next(room))))`；位移 +3 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_cc_5f（下标 120→123）。取证：第181轮 `probe181.ch1.txt`（逐指令）+ `probe181b.ch1.json`（反编译 GML）。",
+    "when_scene": "ch1.card_castle.cc_4f",
+    "when_door": "E",
+    "when_src": "obj_doorE",
+    "_original": {
+      "chapter": "ch1",
+      "kind": "delta_door_shift",
+      "via": "obj_doorE",
+      "code": "gml_Object_obj_doorE_Alarm_2",
+      "shift": 3,
+      "src_room_name": "room_cc_4f",
+      "dst_room_name": "room_cc_5f",
+      "src_room_id": 120,
+      "dst_room_id": 123,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch1.card_castle.cc_4f",
+    "priority": 8201,
+    "reason": "原作 GML：房间 room_cc_5f 的 `obj_doorF` 的 `Alarm_2` 执行 `room_goto(room_previous(room_previous(room_previous(room))))`；位移 -3 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_cc_4f（下标 123→120）。取证：第181轮 `probe181.ch1.txt`（逐指令）+ `probe181b.ch1.json`（反编译 GML）。",
+    "when_scene": "ch1.card_castle.card_castle_5f",
+    "when_door": "F",
+    "when_src": "obj_doorF",
+    "_original": {
+      "chapter": "ch1",
+      "kind": "delta_door_shift",
+      "via": "obj_doorF",
+      "code": "gml_Object_obj_doorF_Alarm_2",
+      "shift": -3,
+      "src_room_name": "room_cc_5f",
+      "dst_room_name": "room_cc_4f",
+      "src_room_id": 123,
+      "dst_room_id": 120,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch1.card_castle.cc_fountain",
+    "priority": 8202,
+    "reason": "原作 GML：房间 room_cc_prefountain 的 `obj_doorA_musfade` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_cc_fountain（下标 129→130）。取证：第181轮 `probe181.ch1.txt`（逐指令）+ `probe181b.ch1.json`（反编译 GML）。",
+    "when_scene": "ch1.card_castle.cc_prefountain",
+    "when_door": "A",
+    "when_src": "obj_doorA_musfade",
+    "_original": {
+      "chapter": "ch1",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA_musfade",
+      "code": "gml_Object_obj_doorA_musfade_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_cc_prefountain",
+      "dst_room_name": "room_cc_fountain",
+      "src_room_id": 129,
+      "dst_room_id": 130,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.system.teacup_demobullets",
+    "priority": 8203,
+    "reason": "原作 GML：房间 room_shaun_puzzle 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_teacup_demobullets（下标 11→10）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.system.shaun_puzzle",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_shaun_puzzle",
+      "dst_room_name": "room_teacup_demobullets",
+      "src_room_id": 11,
+      "dst_room_id": 10,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.hometown.insidecloset",
+    "priority": 8204,
+    "reason": "原作 GML：房间 room_castle_town 的 `obj_doorD` 的 `Alarm_2` 执行 `room_goto(room_previous(room_previous(room)))`；位移 -2 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_insidecloset（下标 55→53）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.castle_town.castle_town",
+    "when_door": "D",
+    "when_src": "obj_doorD",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorD",
+      "code": "gml_Object_obj_doorD_Alarm_2",
+      "shift": -2,
+      "src_room_name": "room_castle_town",
+      "dst_room_name": "room_insidecloset",
+      "src_room_id": 55,
+      "dst_room_id": 53,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.my_castle_town.my_castle_town",
+    "priority": 8205,
+    "reason": "原作 GML：房间 room_dw_castle_area_2 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_castle_area_2_transformed（下标 61→62）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.castle_town.castle_town_2",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_castle_area_2",
+      "dst_room_name": "room_dw_castle_area_2_transformed",
+      "src_room_id": 61,
+      "dst_room_id": 62,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_field.dw_cyber_intro_connector",
+    "priority": 8206,
+    "reason": "原作 GML：房间 room_dw_cyber_intro_2 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_cyber_intro_connector（下标 76→75）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_field.dw_cyber_intro_2",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_cyber_intro_2",
+      "dst_room_name": "room_dw_cyber_intro_connector",
+      "src_room_id": 76,
+      "dst_room_id": 75,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_field.dw_cyber_keyboard_puzzle_3",
+    "priority": 8207,
+    "reason": "原作 GML：房间 room_dw_cyber_battle_maze_3 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_cyber_keyboard_puzzle_3（下标 98→97）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_field.dw_cyber_battle_maze_3",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_cyber_battle_maze_3",
+      "dst_room_name": "room_dw_cyber_keyboard_puzzle_3",
+      "src_room_id": 98,
+      "dst_room_id": 97,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_field.dw_cyber_shaunsmusicalbullettunnel",
+    "priority": 8208,
+    "reason": "原作 GML：房间 room_dw_cyber_teacup_2 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_cyber_shaunsmusicalbullettunnel（下标 99→100）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_field.dw_cyber_teacup_2",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_cyber_teacup_2",
+      "dst_room_name": "room_dw_cyber_shaunsmusicalbullettunnel",
+      "src_room_id": 99,
+      "dst_room_id": 100,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_field.dw_cyber_maze_rhythm",
+    "priority": 8209,
+    "reason": "原作 GML：房间 room_dw_cyber_shaunsmusicalbullettunnel 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_cyber_maze_rhythm（下标 100→101）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_field.dw_cyber_shaunsmusicalbullettunnel",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_cyber_shaunsmusicalbullettunnel",
+      "dst_room_name": "room_dw_cyber_maze_rhythm",
+      "src_room_id": 100,
+      "dst_room_id": 101,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_field.dw_cyber_maze_rhythm",
+    "priority": 8210,
+    "reason": "原作 GML：房间 room_dw_cyber_escalator_slide 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_cyber_maze_rhythm（下标 102→101）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_field.dw_cyber_escalator_slide",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_cyber_escalator_slide",
+      "dst_room_name": "room_dw_cyber_maze_rhythm",
+      "src_room_id": 102,
+      "dst_room_id": 101,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_field.dw_cyber_escalator_slide",
+    "priority": 8211,
+    "reason": "原作 GML：房间 room_dw_cyber_nuberts_treasure 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_cyber_escalator_slide（下标 103→102）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_field.dw_cyber_nuberts_treasure",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_cyber_nuberts_treasure",
+      "dst_room_name": "room_dw_cyber_escalator_slide",
+      "src_room_id": 103,
+      "dst_room_id": 102,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_spamton_house",
+    "priority": 8212,
+    "reason": "原作 GML：房间 room_dw_city_spamton_shop_exterior 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_spamton_house（下标 108→109）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_spamton_shop_exterior",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_spamton_shop_exterior",
+      "dst_room_name": "room_dw_city_spamton_house",
+      "src_room_id": 108,
+      "dst_room_id": 109,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_mice",
+    "priority": 8213,
+    "reason": "原作 GML：房间 room_dw_city_hacker 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_mice（下标 115→116）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.cyber_city_alleyway_1",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_hacker",
+      "dst_room_name": "room_dw_city_mice",
+      "src_room_id": 115,
+      "dst_room_id": 116,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_big_1",
+    "priority": 8214,
+    "reason": "原作 GML：房间 room_dw_city_mice 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_big_1（下标 116→117）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_mice",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_mice",
+      "dst_room_name": "room_dw_city_big_1",
+      "src_room_id": 116,
+      "dst_room_id": 117,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_mice",
+    "priority": 8215,
+    "reason": "原作 GML：房间 room_dw_city_big_1 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_mice（下标 117→116）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_big_1",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_city_big_1",
+      "dst_room_name": "room_dw_city_mice",
+      "src_room_id": 117,
+      "dst_room_id": 116,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_big_3",
+    "priority": 8216,
+    "reason": "原作 GML：房间 room_dw_city_savepoint 的 `obj_doorA_musfade` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_big_3（下标 121→122）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.cyber_city_music_shop",
+    "when_door": "A",
+    "when_src": "obj_doorA_musfade",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA_musfade",
+      "code": "gml_Object_obj_doorA_musfade_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_savepoint",
+      "dst_room_name": "room_dw_city_big_3",
+      "src_room_id": 121,
+      "dst_room_id": 122,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_postbaseball_2",
+    "priority": 8217,
+    "reason": "原作 GML：房间 room_dw_city_postbaseball_1 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_postbaseball_2（下标 133→134）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.cyber_city_heights",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_postbaseball_1",
+      "dst_room_name": "room_dw_city_postbaseball_2",
+      "src_room_id": 133,
+      "dst_room_id": 134,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_postbaseball_3",
+    "priority": 8218,
+    "reason": "原作 GML：房间 room_dw_city_postbaseball_2 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_postbaseball_3（下标 134→135）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_postbaseball_2",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_postbaseball_2",
+      "dst_room_name": "room_dw_city_postbaseball_3",
+      "src_room_id": 134,
+      "dst_room_id": 135,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_postbaseball_3",
+    "priority": 8219,
+    "reason": "原作 GML：房间 room_dw_city_mansion_front 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_postbaseball_3（下标 136→135）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_mansion_front",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_city_mansion_front",
+      "dst_room_name": "room_dw_city_postbaseball_3",
+      "src_room_id": 136,
+      "dst_room_id": 135,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_moss",
+    "priority": 8220,
+    "reason": "原作 GML：房间 room_dw_city_big_3_backup_2exits 的 `obj_doorB_musfade` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_moss（下标 143→142）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_big_3_backup_2exits",
+    "when_door": "B",
+    "when_src": "obj_doorB_musfade",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB_musfade",
+      "code": "gml_Object_obj_doorB_musfade_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_city_big_3_backup_2exits",
+      "dst_room_name": "room_dw_city_moss",
+      "src_room_id": 143,
+      "dst_room_id": 142,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_noelle_fight_intro",
+    "priority": 8221,
+    "reason": "原作 GML：房间 room_dw_city_carnival 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_noelle_fight_intro（下标 146→147）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_carnival",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_carnival",
+      "dst_room_name": "room_dw_city_noelle_fight_intro",
+      "src_room_id": 146,
+      "dst_room_id": 147,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_monologue_old",
+    "priority": 8222,
+    "reason": "原作 GML：房间 room_dw_city_spamton_shop_interior 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_monologue_old（下标 148→149）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_spamton_shop_interior",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_spamton_shop_interior",
+      "dst_room_name": "room_dw_city_monologue_old",
+      "src_room_id": 148,
+      "dst_room_id": 149,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_krisroom",
+    "priority": 8223,
+    "reason": "原作 GML：房间 room_dw_city_monologue_old 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_krisroom（下标 149→150）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_monologue_old",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_monologue_old",
+      "dst_room_name": "room_dw_mansion_krisroom",
+      "src_room_id": 149,
+      "dst_room_id": 150,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_east_1f_secret",
+    "priority": 8224,
+    "reason": "原作 GML：房间 room_dw_mansion_east_1f_e 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_east_1f_secret（下标 163→164）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.queens_mansion.dw_mansion_east_1f_e",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_mansion_east_1f_e",
+      "dst_room_name": "room_dw_mansion_east_1f_secret",
+      "src_room_id": 163,
+      "dst_room_id": 164,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_east_teacup_2",
+    "priority": 8225,
+    "reason": "原作 GML：房间 room_dw_mansion_east_teacup_3 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_east_teacup_2（下标 167→168）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup_3",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_mansion_east_teacup_3",
+      "dst_room_name": "room_dw_mansion_east_teacup_2",
+      "src_room_id": 167,
+      "dst_room_id": 168,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_east_teacup_4",
+    "priority": 8226,
+    "reason": "原作 GML：房间 room_dw_mansion_east_teacup_3 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_east_teacup_4（下标 167→166）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup_3",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_mansion_east_teacup_3",
+      "dst_room_name": "room_dw_mansion_east_teacup_4",
+      "src_room_id": 167,
+      "dst_room_id": 166,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_east_2f_a",
+    "priority": 8227,
+    "reason": "原作 GML：房间 room_dw_mansion_east_2f_transformed_new 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_east_2f_a（下标 181→180）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.queens_mansion.dw_mansion_east_2f_transformed_new",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_mansion_east_2f_transformed_new",
+      "dst_room_name": "room_dw_mansion_east_2f_a",
+      "src_room_id": 181,
+      "dst_room_id": 180,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.queen_s_mansion_rooftop_2",
+    "priority": 8228,
+    "reason": "原作 GML：房间 room_dw_mansion_prefountain 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_fountain（下标 199→200）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.queens_mansion.queen_s_mansion_rooftop",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_mansion_prefountain",
+      "dst_room_name": "room_dw_mansion_fountain",
+      "src_room_id": 199,
+      "dst_room_id": 200,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_dining_storage",
+    "priority": 8229,
+    "reason": "原作 GML：房间 room_dw_mansion_east_1f_b 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_dining_storage（下标 211→210）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.queens_mansion.dw_mansion_east_1f_b",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_mansion_east_1f_b",
+      "dst_room_name": "room_dw_mansion_dining_storage",
+      "src_room_id": 211,
+      "dst_room_id": 210,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_east_2f_c_b",
+    "priority": 8230,
+    "reason": "原作 GML：房间 room_dw_mansion_traffic_original 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_east_2f_c_b（下标 213→212）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.queens_mansion.dw_mansion_traffic_original",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_mansion_traffic_original",
+      "dst_room_name": "room_dw_mansion_east_2f_c_b",
+      "src_room_id": 213,
+      "dst_room_id": 212,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_east_2f_teacup",
+    "priority": 8231,
+    "reason": "原作 GML：房间 room_dw_mansion_east_4f_e 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_east_2f_teacup（下标 216→215）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.queens_mansion.dw_mansion_east_4f_e",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_mansion_east_4f_e",
+      "dst_room_name": "room_dw_mansion_east_2f_teacup",
+      "src_room_id": 216,
+      "dst_room_id": 215,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_field.dw_cyber_keyboard_puzzle_1_old",
+    "priority": 8232,
+    "reason": "原作 GML：房间 room_dw_cyber_battle_maze_2_old 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_cyber_keyboard_puzzle_1_old（下标 242→243）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_field.dw_cyber_battle_maze_2_old",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_cyber_battle_maze_2_old",
+      "dst_room_name": "room_dw_cyber_keyboard_puzzle_1_old",
+      "src_room_id": 242,
+      "dst_room_id": 243,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_field.dw_cyber_keyboard_puzzle_1_old",
+    "priority": 8233,
+    "reason": "原作 GML：房间 room_dw_cyber_tasque_battle_og 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_cyber_keyboard_puzzle_1_old（下标 244→243）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_field.dw_cyber_tasque_battle_og",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_cyber_tasque_battle_og",
+      "dst_room_name": "room_dw_cyber_keyboard_puzzle_1_old",
+      "src_room_id": 244,
+      "dst_room_id": 243,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_field.dw_cyber_battle_maze_1_original",
+    "priority": 8234,
+    "reason": "原作 GML：房间 room_dw_cyber_tasque_battle_og 的 `obj_doorC` 的 `Alarm_2` 执行 `room_goto(room_next(room_next(room)))`；位移 +2 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_cyber_battle_maze_1_Original（下标 244→246）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_field.dw_cyber_tasque_battle_og",
+    "when_door": "C",
+    "when_src": "obj_doorC",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorC",
+      "code": "gml_Object_obj_doorC_Alarm_2",
+      "shift": 2,
+      "src_room_name": "room_dw_cyber_tasque_battle_og",
+      "dst_room_name": "room_dw_cyber_battle_maze_1_Original",
+      "src_room_id": 244,
+      "dst_room_id": 246,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_mice2_og",
+    "priority": 8235,
+    "reason": "原作 GML：房间 room_dw_mansion_east_teacup_4_old 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_mice2_og（下标 254→253）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.queens_mansion.dw_mansion_east_teacup_4_old",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_mansion_east_teacup_4_old",
+      "dst_room_name": "room_dw_city_mice2_og",
+      "src_room_id": 254,
+      "dst_room_id": 253,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_dining_storage_old",
+    "priority": 8236,
+    "reason": "原作 GML：房间 room_dw_city_traffic_5_old 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_dining_storage_old（下标 257→258）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_traffic_5_old",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_traffic_5_old",
+      "dst_room_name": "room_dw_mansion_dining_storage_old",
+      "src_room_id": 257,
+      "dst_room_id": 258,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_field.dw_cyber_viromaze2",
+    "priority": 8237,
+    "reason": "原作 GML：房间 room_dw_city_traffic_5_old 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_cyber_viromaze2（下标 257→256）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_traffic_5_old",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_city_traffic_5_old",
+      "dst_room_name": "room_dw_cyber_viromaze2",
+      "src_room_id": 257,
+      "dst_room_id": 256,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_dining_storage_old",
+    "priority": 8238,
+    "reason": "原作 GML：房间 room_dw_cyber_virovirokun_fight 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_dining_storage_old（下标 259→258）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_field.dw_cyber_virovirokun_fight",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_cyber_virovirokun_fight",
+      "dst_room_name": "room_dw_mansion_dining_storage_old",
+      "src_room_id": 259,
+      "dst_room_id": 258,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.card_castle.cc_lancer",
+    "priority": 8239,
+    "reason": "原作 GML：房间 room_dw_city_traffic_3_backup 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_cc_lancer（下标 261→262）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_traffic_3_backup",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_traffic_3_backup",
+      "dst_room_name": "room_cc_lancer",
+      "src_room_id": 261,
+      "dst_room_id": 262,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_east_2f_d_backup",
+    "priority": 8240,
+    "reason": "原作 GML：房间 room_dw_city_traffic_3_backup 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_east_2f_d_backup（下标 261→260）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_traffic_3_backup",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_city_traffic_3_backup",
+      "dst_room_name": "room_dw_mansion_east_2f_d_backup",
+      "src_room_id": 261,
+      "dst_room_id": 260,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.cyber_city.dw_city_traffic_3_backup",
+    "priority": 8241,
+    "reason": "原作 GML：房间 room_cc_clover 的 `obj_doorD_musfade` 的 `Alarm_2` 执行 `room_goto(room_previous(room_previous(room)))`；位移 -2 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_city_traffic_3_backup（下标 263→261）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.card_castle.cc_clover",
+    "when_door": "D",
+    "when_src": "obj_doorD_musfade",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorD_musfade",
+      "code": "gml_Object_obj_doorD_musfade_Alarm_2",
+      "shift": -2,
+      "src_room_name": "room_cc_clover",
+      "dst_room_name": "room_dw_city_traffic_3_backup",
+      "src_room_id": 263,
+      "dst_room_id": 261,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.queens_mansion.dw_mansion_bridgesold",
+    "priority": 8242,
+    "reason": "原作 GML：房间 room_dw_city_big_3_og 的 `obj_doorA` 的 `Alarm_2` 执行 `room_goto_next()`；位移 +1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_dw_mansion_bridgesold（下标 265→266）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_big_3_og",
+    "when_door": "A",
+    "when_src": "obj_doorA",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorA",
+      "code": "gml_Object_obj_doorA_Alarm_2",
+      "shift": 1,
+      "src_room_name": "room_dw_city_big_3_og",
+      "dst_room_name": "room_dw_mansion_bridgesold",
+      "src_room_id": 265,
+      "dst_room_id": 266,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch2.card_castle.cc_fountain",
+    "priority": 8243,
+    "reason": "原作 GML：房间 room_dw_city_big_3_og 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_cc_fountain（下标 265→264）。取证：第181轮 `probe181.ch2.txt`（逐指令）+ `probe181b.ch2.json`（反编译 GML）。",
+    "when_scene": "ch2.cyber_city.dw_city_big_3_og",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch2",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_dw_city_big_3_og",
+      "dst_room_name": "room_cc_fountain",
+      "src_room_id": 265,
+      "dst_room_id": 264,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch3.hometown.town_church",
+    "priority": 8244,
+    "reason": "原作 GML：房间 room_town_krisyard_dark 的 `obj_doorC` 的 `Alarm_2` 执行 `room_goto(room_next(room_next(room)))`；位移 +2 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_town_church（下标 110→28）。（★ 该房有单点覆盖：`if (global.chapter == 3 && room == 110) { room_goto(28); exit; }`，此处按覆盖落 28，不是 112。）取证：第181轮 `probe181.ch3.txt`（逐指令）+ `probe181b.ch3.json`（反编译 GML）。",
+    "when_scene": "ch3.hometown.town_krisyard_dark",
+    "when_door": "C",
+    "when_src": "obj_doorC",
+    "_original": {
+      "chapter": "ch3",
+      "kind": "delta_door_shift",
+      "via": "obj_doorC",
+      "code": "gml_Object_obj_doorC_Alarm_2",
+      "shift": 2,
+      "src_room_name": "room_town_krisyard_dark",
+      "dst_room_name": "room_town_church",
+      "src_room_id": 110,
+      "dst_room_id": 28,
+      "batch": 181,
+      "override": "global.chapter == 3 && room == 110"
+    }
+  },
+  {
+    "to": "ch4.hometown.hospital_hallway",
+    "priority": 8245,
+    "reason": "原作 GML：房间 room_hospital_rudy 的 `obj_doorB` 的 `Alarm_2` 执行 `room_goto_previous()`；位移 -1 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_hospital_hallway（下标 33→32）。取证：第181轮 `probe181.ch4.txt`（逐指令）+ `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.hometown.hospital_rudy",
+    "when_door": "B",
+    "when_src": "obj_doorB",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_shift",
+      "via": "obj_doorB",
+      "code": "gml_Object_obj_doorB_Alarm_2",
+      "shift": -1,
+      "src_room_name": "room_hospital_rudy",
+      "dst_room_name": "room_hospital_hallway",
+      "src_room_id": 33,
+      "dst_room_id": 32,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.hometown.hospital_hallway",
+    "priority": 8246,
+    "reason": "原作 GML：房间 room_hospital_room2 的 `obj_doorD` 的 `Alarm_2` 执行 `room_goto(room_previous(room_previous(room)))`；位移 -2 落在 `Data.Rooms` **下标**上 ⇒ 落到 room_hospital_hallway（下标 34→32）。取证：第181轮 `probe181.ch4.txt`（逐指令）+ `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.hometown.hospital_room2",
+    "when_door": "D",
+    "when_src": "obj_doorD",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_shift",
+      "via": "obj_doorD",
+      "code": "gml_Object_obj_doorD_Alarm_2",
+      "shift": -2,
+      "src_room_name": "room_hospital_room2",
+      "dst_room_name": "room_hospital_hallway",
+      "src_room_id": 34,
+      "dst_room_id": 32,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.dark_sanctuary.dark_sanctuary_1_library",
+    "priority": 8247,
+    "reason": "原作 GML：房间 room_dw_church_tallbookcases 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_church_tallbookcases_12_PreCreate` 里把 `doorRoom` 写成 room_dw_church_nwconnect；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_church_nwconnect。取证：第181轮 `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.dark_sanctuary.dw_church_tallbookcases",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_church_tallbookcases_12_PreCreate",
+      "src_room_name": "room_dw_church_tallbookcases",
+      "dst_room_name": "room_dw_church_nwconnect",
+      "src_room_id": 122,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.dark_sanctuary.dw_church_secretpiano",
+    "priority": 8248,
+    "reason": "原作 GML：房间 room_dw_church_tallbookcases 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_church_tallbookcases_14_PreCreate` 里把 `doorRoom` 写成 room_dw_church_secretpiano；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_church_secretpiano。取证：第181轮 `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.dark_sanctuary.dw_church_tallbookcases",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_church_tallbookcases_14_PreCreate",
+      "src_room_name": "room_dw_church_tallbookcases",
+      "dst_room_name": "room_dw_church_secretpiano",
+      "src_room_id": 122,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.dark_sanctuary.dw_church_holywatercooler",
+    "priority": 8249,
+    "reason": "原作 GML：房间 room_dw_church_savepoint 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_church_savepoint_7_PreCreate` 里把 `doorRoom` 写成 room_dw_church_holywatercooler；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_church_holywatercooler。取证：第181轮 `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.dark_sanctuary.dark_sanctuary_1_lower_left",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_church_savepoint_7_PreCreate",
+      "src_room_name": "room_dw_church_savepoint",
+      "dst_room_name": "room_dw_church_holywatercooler",
+      "src_room_id": 177,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.dark_sanctuary.dw_church_knightclimb",
+    "priority": 8250,
+    "reason": "原作 GML：房间 room_dw_church_intropiano 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_church_intropiano_14_PreCreate` 里把 `doorRoom` 写成 room_dw_church_knightclimb；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_church_knightclimb。取证：第181轮 `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.dark_sanctuary.dw_church_intropiano",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_church_intropiano_14_PreCreate",
+      "src_room_name": "room_dw_church_intropiano",
+      "dst_room_name": "room_dw_church_knightclimb",
+      "src_room_id": 211,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.dark_sanctuary.dw_church_holywatercooler",
+    "priority": 8251,
+    "reason": "原作 GML：房间 room_dw_church_intro_gerson 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_church_intro_gerson_44_PreCreate` 里把 `doorRoom` 写成 room_dw_church_holywatercooler；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_church_holywatercooler。取证：第181轮 `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.dark_sanctuary.dw_church_intro_gerson",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_church_intro_gerson_44_PreCreate",
+      "src_room_name": "room_dw_church_intro_gerson",
+      "dst_room_name": "room_dw_church_holywatercooler",
+      "src_room_id": 212,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.dark_sanctuary.dw_church_tallbookcases",
+    "priority": 8252,
+    "reason": "原作 GML：房间 room_dw_church_nwconnect 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_church_nwconnect_11_PreCreate` 里把 `doorRoom` 写成 room_dw_church_tallbookcases；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_church_tallbookcases。取证：第181轮 `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.dark_sanctuary.dark_sanctuary_1_library",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_church_nwconnect_11_PreCreate",
+      "src_room_name": "room_dw_church_nwconnect",
+      "dst_room_name": "room_dw_church_tallbookcases",
+      "src_room_id": 219,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.dark_sanctuary.dw_church_tallbookcases",
+    "priority": 8253,
+    "reason": "原作 GML：房间 room_dw_church_secretpiano 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_church_secretpiano_0_PreCreate` 里把 `doorRoom` 写成 room_dw_church_tallbookcases；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_church_tallbookcases。取证：第181轮 `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.dark_sanctuary.dw_church_secretpiano",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_church_secretpiano_0_PreCreate",
+      "src_room_name": "room_dw_church_secretpiano",
+      "dst_room_name": "room_dw_church_tallbookcases",
+      "src_room_id": 226,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.dark_sanctuary.dark_sanctuary_1_library",
+    "priority": 8254,
+    "reason": "原作 GML：房间 room_dw_church_tallbookcases_backup 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_church_tallbookcases_backup_10_PreCreate` 里把 `doorRoom` 写成 room_dw_church_nwconnect；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_church_nwconnect。取证：第181轮 `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.dark_sanctuary.dw_church_tallbookcases_backup",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_church_tallbookcases_backup_10_PreCreate",
+      "src_room_name": "room_dw_church_tallbookcases_backup",
+      "dst_room_name": "room_dw_church_nwconnect",
+      "src_room_id": 228,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.dark_sanctuary.dw_church_intro_gerson",
+    "priority": 8255,
+    "reason": "原作 GML：房间 room_dw_church_holywatercooler 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_church_holywatercooler_7_PreCreate` 里把 `doorRoom` 写成 room_dw_church_intro_gerson；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_church_intro_gerson。取证：第181轮 `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.dark_sanctuary.dw_church_holywatercooler",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_church_holywatercooler_7_PreCreate",
+      "src_room_name": "room_dw_church_holywatercooler",
+      "dst_room_name": "room_dw_church_intro_gerson",
+      "src_room_id": 242,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch4.dark_sanctuary.dw_church_intropiano",
+    "priority": 8256,
+    "reason": "原作 GML：房间 room_dw_church_knightclimb 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_church_knightclimb_1_PreCreate` 里把 `doorRoom` 写成 room_dw_church_intropiano；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_church_intropiano。取证：第181轮 `probe181b.ch4.json`（反编译 GML）。",
+    "when_scene": "ch4.dark_sanctuary.dw_church_knightclimb",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch4",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_church_knightclimb_1_PreCreate",
+      "src_room_name": "room_dw_church_knightclimb",
+      "dst_room_name": "room_dw_church_intropiano",
+      "src_room_id": 260,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch5.garden.garden_way_home",
+    "priority": 8257,
+    "reason": "原作 GML：房间 room_dw_garden_aquaplatforming 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_garden_aquaplatforming_27_PreCreate` 里把 `doorRoom` 写成 room_dw_garden_aquadash；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_garden_aquadash。取证：第181轮 `probe181b.ch5.json`（反编译 GML）。",
+    "when_scene": "ch5.garden.dw_garden_aquaplatforming",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch5",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_garden_aquaplatforming_27_PreCreate",
+      "src_room_name": "room_dw_garden_aquaplatforming",
+      "dst_room_name": "room_dw_garden_aquadash",
+      "src_room_id": 143,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch5.garden.dw_garden_aquaplatforming",
+    "priority": 8258,
+    "reason": "原作 GML：房间 room_dw_garden_aquadash 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_garden_aquadash_3_PreCreate` 里把 `doorRoom` 写成 room_dw_garden_aquaplatforming；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_garden_aquaplatforming。取证：第181轮 `probe181b.ch5.json`（反编译 GML）。",
+    "when_scene": "ch5.garden.garden_way_home",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch5",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_garden_aquadash_3_PreCreate",
+      "src_room_name": "room_dw_garden_aquadash",
+      "dst_room_name": "room_dw_garden_aquaplatforming",
+      "src_room_id": 150,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch5.flower_castle.dw_fcastle_top_intro",
+    "priority": 8259,
+    "reason": "原作 GML：房间 room_dw_fcastle_foyer 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_fcastle_foyer_14_PreCreate` 里把 `doorRoom` 写成 room_dw_fcastle_top_intro；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_fcastle_top_intro。取证：第181轮 `probe181b.ch5.json`（反编译 GML）。",
+    "when_scene": "ch5.flower_castle.dw_fcastle_foyer",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch5",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_fcastle_foyer_14_PreCreate",
+      "src_room_name": "room_dw_fcastle_foyer",
+      "dst_room_name": "room_dw_fcastle_top_intro",
+      "src_room_id": 178,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch5.flower_castle.dw_fcastle_foyer",
+    "priority": 8260,
+    "reason": "原作 GML：房间 room_dw_fcastle_post_party_jail 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_fcastle_post_party_jail_1_PreCreate` 里把 `doorRoom` 写成 room_dw_fcastle_foyer；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_fcastle_foyer。取证：第181轮 `probe181b.ch5.json`（反编译 GML）。",
+    "when_scene": "ch5.flower_castle.flower_castle_jail",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch5",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_fcastle_post_party_jail_1_PreCreate",
+      "src_room_name": "room_dw_fcastle_post_party_jail",
+      "dst_room_name": "room_dw_fcastle_foyer",
+      "src_room_id": 179,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch5.flower_castle.dw_fcastle_foyer",
+    "priority": 8261,
+    "reason": "原作 GML：房间 room_dw_fcastle_top_intro 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_fcastle_top_intro_11_PreCreate` 里把 `doorRoom` 写成 room_dw_fcastle_foyer；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_fcastle_foyer。取证：第181轮 `probe181b.ch5.json`（反编译 GML）。",
+    "when_scene": "ch5.flower_castle.dw_fcastle_top_intro",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch5",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_fcastle_top_intro_11_PreCreate",
+      "src_room_name": "room_dw_fcastle_top_intro",
+      "dst_room_name": "room_dw_fcastle_foyer",
+      "src_room_id": 218,
+      "batch": 181
+    }
+  },
+  {
+    "to": "ch5.flower_castle.dw_fcastle_top_intro",
+    "priority": 8262,
+    "reason": "原作 GML：房间 room_dw_fcastle_asgore 的 `obj_climb_door` 在自己的实例创建代码 `gml_RoomCC_room_dw_fcastle_asgore_4_PreCreate` 里把 `doorRoom` 写成 room_dw_fcastle_top_intro；`Alarm_2` 执行 `event_user(7); instance_create(0,0,obj_persistentfadein); room_goto(doorRoom)` ⇒ 落到 room_dw_fcastle_top_intro。取证：第181轮 `probe181b.ch5.json`（反编译 GML）。",
+    "when_scene": "ch5.flower_castle.dw_fcastle_asgore",
+    "when_door": null,
+    "when_src": "obj_climb_door",
+    "_original": {
+      "chapter": "ch5",
+      "kind": "delta_door_instance",
+      "via": "obj_climb_door",
+      "code": "gml_Object_obj_climb_door_Alarm_2",
+      "precreate": "gml_RoomCC_room_dw_fcastle_asgore_4_PreCreate",
+      "src_room_name": "room_dw_fcastle_asgore",
+      "dst_room_name": "room_dw_fcastle_top_intro",
+      "src_room_id": 243,
+      "batch": 181
+    }
+  }
+]

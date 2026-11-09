@@ -314,9 +314,18 @@ for sid, objs in OBJS.items():
         # ★★★ 候选集必须用**全表**而不是只挑 W 规则：`route_for_door` 是按
         #   (场景, 字母) 查的，A~F/X/Y 门和 ut 的对象级规则都在同一个池子里。
         #   只挑 W 会把 1,297 个"别的门字母"误判成"原本查不到"（第一版就这么假红了）。
+        # ★★★ 第181轮改：候选集还必须**与 `route_for_door` 同一套解析顺序** ——
+        #   产品侧是「先对象级（`when_src == src`）→ 没有才退字母级（跳过带 when_src 的）」。
+        #   第一版只取字母级 ⇒ 第181轮给 A~F / climb 门落的 63 条**对象级**边被排除在外，
+        #   而 `route_for_door(src=…)` 明明先命中它们 ⇒ 算出的"老口径"是 `None`
+        #   ⇒ 41 条"该退回却没退回"的**假红**。这是"候选集须与被测同一套"的又一次现场。
         cands = [r for r in RL
-                 if r.get('when_scene') == sid and not r.get('when_src')
-                 and (not r.get('when_door') or r.get('when_door') == lt)]
+                 if r.get('when_scene') == sid and o.get('src')
+                 and r.get('when_src') == o.get('src')]
+        if not cands:
+            cands = [r for r in RL
+                     if r.get('when_scene') == sid and not r.get('when_src')
+                     and (not r.get('when_door') or r.get('when_door') == lt)]
         hits = []
         for r in cands:
             k = _rule_coord(r)

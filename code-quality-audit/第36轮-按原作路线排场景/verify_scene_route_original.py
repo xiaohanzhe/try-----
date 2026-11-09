@@ -510,6 +510,8 @@ _n_table = 0
 _n_ot = 0
 _n_any = 0
 _n_any_var = 0
+_n_shift181 = 0
+_n_inst181 = 0
 
 
 #: ★ 通用出生点（`sprite` 自证：`spr_markerAny`，与任何字母的 sprite 都不同）。
@@ -627,6 +629,88 @@ def _delta_bad(r):
     return None
 
 
+# ★★★ 第181轮：第九、第十种机制 —— 这两族**必须单开纯函数**，不许把
+#   `_delta_bad` / `_DOOR_DELTA` 改宽：
+#   ① 老口径读 `_original.door_letter` + `room_delta`（第44轮那批 139 条的字段形状），
+#      第181轮这批读 **`when_door`（门名字字母）** + `shift` —— 字段名都不同；
+#   ② 老口径只知道 A~D 四族，第181轮新证出 **E(+3) / F(−3)** 两族（五章 `Alarm_2`
+#      逐指令一致：`room_next` / `room_previous` 各叠三次）；
+#   ③ 把老函数改宽 ⇒ 第44轮那批的鉴别力（"D 当成 +2 必须报红"那条负控制）会被一起
+#      削弱。所以这里**只增不改**，老函数一个字没动。
+_KIND_SHIFT181 = 'delta_door_shift'
+_KIND_INST181 = 'delta_door_instance'
+#: 门对象名 → (名字字母, 位移)。取证：五章 `gml_Object_<obj>_Alarm_2` 的逐条指令。
+_SHIFT181 = {
+    'obj_doorA': ('A', 1), 'obj_doorA_musfade': ('A', 1),
+    'obj_doorB': ('B', -1), 'obj_doorB_musfade': ('B', -1),
+    'obj_doorC': ('C', 2), 'obj_doorC_musfade': ('C', 2),
+    'obj_doorD': ('D', -2), 'obj_doorD_musfade': ('D', -2),
+    'obj_doorE': ('E', 3), 'obj_doorF': ('F', -3),
+}
+#: ★ ch3 的唯一单点覆盖：`if (global.chapter == 3 && room == 110) room_goto(28)`
+#:   —— 全五章 A~F 六族里**只此一处**不是纯位移（112 才是 +2 的自然结果）。
+_OVERRIDE181 = ('ch3', 110, 28)
+_CH181 = ('ch1', 'ch2', 'ch3', 'ch4', 'ch5')
+
+
+def _shift181_bad(r):
+    u"""第181轮位移门（A~F 六族）的 `_original` 自洽判定 → 原因 / None（纯函数）。"""
+    o = r.get('_original')
+    if not isinstance(o, dict):
+        return u'无_original'
+    via = o.get('via')
+    if via not in _SHIFT181:
+        return u'via=%r' % (via,)
+    letter, delta = _SHIFT181[via]
+    if o.get('chapter') not in _CH181:
+        return u'chapter=%r' % (o.get('chapter'),)
+    if r.get('when_door') != letter:
+        return u'when_door=%r≠%r' % (r.get('when_door'), letter)
+    if o.get('shift') != delta:
+        return u'shift=%r≠%d' % (o.get('shift'), delta)
+    si, di = o.get('src_room_id'), o.get('dst_room_id')
+    if not (isinstance(si, int) and isinstance(di, int)):
+        return u'房间下标=%r/%r' % (si, di)
+    if o.get('override'):
+        if (o.get('chapter'), si, di) != _OVERRIDE181:
+            return u'覆盖点=%r≠%r' % ((o.get('chapter'), si, di), _OVERRIDE181)
+    elif di != si + delta:
+        return u'下标算术 %d%+d≠%d' % (si, delta, di)
+    if not (o.get('src_room_name') and o.get('dst_room_name')):
+        return u'房名空'
+    return None
+
+
+def _inst181_bad(r):
+    u"""第181轮实例门（`obj_climb_door`）的 `_original` 自洽判定 → 原因 / None。
+
+    ★ 与 `_any_self_ok` 共用同一个 `gml_RoomCC_<房>_<实例号>_PreCreate` 形状校验：
+      代码名里嵌的房名必须等于 `src_room_name`，两个字段互相自证、编不出来。
+    ★ 但它**不要求门坐标**，也不要求 `table` —— climb 门的 `Alarm_2` 只有
+      `room_goto(doorRoom)`，没有"房间表"可指。这三点差异就是它必须单开函数的原因。
+    """
+    o = r.get('_original')
+    if not isinstance(o, dict):
+        return u'无_original'
+    if o.get('chapter') not in _CH181:
+        return u'chapter=%r' % (o.get('chapter'),)
+    via = o.get('via')
+    if r.get('when_src') != via or r.get('when_door') is not None:
+        return u'对象级口径不对(when_src=%r when_door=%r)' % (
+            r.get('when_src'), r.get('when_door'))
+    p = o.get('precreate')
+    if not isinstance(p, str):
+        return u'precreate=%r' % (p,)
+    m = _ANY_RE.match(p)
+    if not m or m.group(1) != o.get('src_room_name'):
+        return u'precreate 嵌的房名≠src_room_name(%r)' % (p,)
+    if not (o.get('src_room_name') and o.get('dst_room_name')):
+        return u'房名空'
+    if not isinstance(o.get('src_room_id'), int):
+        return u'src_room_id=%r' % (o.get('src_room_id'),)
+    return None
+
+
 for _r in (routes.get('routes') or []):
     if _r.get('when_scene') in _ORIGIN:
         continue
@@ -665,6 +749,18 @@ for _r in (routes.get('routes') or []):
         if not _any_self_ok(_r):
             _struct_bad.append('%s(doorany 家族每实例目标不自洽)' % _r.get('to'))
         continue
+    if _o.get('kind') == _KIND_SHIFT181:
+        _n_shift181 += 1
+        _w181 = _shift181_bad(_r)
+        if _w181:
+            _struct_bad.append('%s(位移门 %s)' % (_r.get('to'), _w181))
+        continue
+    if _o.get('kind') == _KIND_INST181:
+        _n_inst181 += 1
+        _w181 = _inst181_bad(_r)
+        if _w181:
+            _struct_bad.append('%s(实例门 %s)' % (_r.get('to'), _w181))
+        continue
     _why = _delta_bad(_r)
     if _why:
         _struct_bad.append('%s(%s)' % (_r.get('to'), _why))
@@ -673,9 +769,63 @@ check('C3 每条规则的 _original 自洽于**它声明的原作机制**'
       'ut 门为 room_goto 取证 / room_goto_next ±1 / room_next·previous(room) 位移 ±1·±2 ｜ '
       'X 门为 `Alarm_2` 表驱动 ｜ outertale 门为 guard 常量对 / `room_goto_next` +1 ｜ '
       '`obj_doorAny` 为每实例 `PreCreate` 的 `doorRoom`（代码名嵌的房名必须等于源房，'
-      '允许 `room_goto` 回自身的迷宫回路；排除 desktop 世界门）',
+      '允许 `room_goto` 回自身的迷宫回路；排除 desktop 世界门）｜ '
+      '**第181轮两族**：A~F 六族位移门（`when_door` 必须是名字字母且 `shift` 与之相符、'
+      '下标算术闭合，唯一例外是 ch3 `110→28` 的单点覆盖）/ '
+      '`obj_climb_door` 为每实例 `PreCreate` 的 `doorRoom`（同款代码名自证，但不需要门坐标）',
       not _struct_bad,
       '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
+
+# ★★★ 第181轮：新加的两族**必须真有样本**，否则 C3 那两个分支形同虚设
+#   （把它们整段删掉 C3 照样绿 —— 这正是"空集恒真"的老病）。
+check('C3a16 ★ 第181轮位移门分支确有样本（%d 条，只增不减；门槛 47）'
+      % (_n_shift181,), _n_shift181 >= 47, '实测 %d' % (_n_shift181,))
+check('C3a17 ★ 第181轮实例门分支确有样本（%d 条，只增不减；门槛 16）'
+      % (_n_inst181,), _n_inst181 >= 16, '实测 %d' % (_n_inst181,))
+
+#: ★★★ 正/负控制成对：三条负控制各错一个维度，`_shift181_bad` 必须**分别**报红；
+#:   把正确的喂进去必须 None。只测"能报红"会漏掉"永远报红"，只测"能绿"会漏掉恒真。
+_D181 = {'to': 'ch3.x.y', 'when_scene': 'ch3.x.x', 'when_door': 'C',
+         'when_src': 'obj_doorC',
+         '_original': {'kind': _KIND_SHIFT181, 'chapter': 'ch3', 'via': 'obj_doorC',
+                       'shift': 2, 'src_room_name': 'room_a', 'dst_room_name': 'room_c',
+                       'src_room_id': 10, 'dst_room_id': 12, 'batch': 181}}
+_D181_OVR = {'to': 'ch3.system.dw_ch3_man', 'when_scene': 'ch3.x.x', 'when_door': 'C',
+             'when_src': 'obj_doorC',
+             '_original': {'kind': _KIND_SHIFT181, 'chapter': 'ch3', 'via': 'obj_doorC',
+                           'shift': 2, 'src_room_name': 'room_a', 'dst_room_name': 'room_man',
+                           'src_room_id': 110, 'dst_room_id': 28, 'batch': 181,
+                           'override': True}}
+check('C3a18 正/负控制：`_shift181_bad` 对"合法 / 单点覆盖合法 / 字母填成 entrance 数值 / '
+      'shift 改了 / 下标算术不闭合 / 覆盖点改到别处"六种输入各不相同',
+      _shift181_bad(_D181) is None
+      and _shift181_bad(_D181_OVR) is None
+      and _shift181_bad(dict(_D181, when_door='3')) is not None
+      and _shift181_bad(dict(_D181, _original=dict(_D181['_original'], shift=1))) is not None
+      and _shift181_bad(dict(_D181, _original=dict(_D181['_original'],
+                                                   dst_room_id=13))) is not None
+      and _shift181_bad(dict(_D181_OVR, _original=dict(
+          _D181_OVR['_original'], src_room_id=111))) is not None,
+      repr((_shift181_bad(_D181), _shift181_bad(_D181_OVR),
+            _shift181_bad(dict(_D181, when_door='3')))))
+
+_I181 = {'to': 'ch5.x.b', 'when_scene': 'ch5.x.a', 'when_door': None,
+         'when_src': 'obj_climb_door',
+         '_original': {'kind': _KIND_INST181, 'chapter': 'ch5', 'via': 'obj_climb_door',
+                       'precreate': 'gml_RoomCC_room_a_4_PreCreate',
+                       'src_room_name': 'room_a', 'dst_room_name': 'room_b',
+                       'src_room_id': 10, 'batch': 181}}
+check('C3a19 正/负控制：`_inst181_bad` 对"合法 / 代码名嵌的房名改了 / 给了门字母 / '
+      'when_src 与 via 不符 / precreate 不是那形状"五种输入各不相同',
+      _inst181_bad(_I181) is None
+      and _inst181_bad(dict(_I181, _original=dict(
+          _I181['_original'], precreate='gml_RoomCC_room_z_4_PreCreate'))) is not None
+      and _inst181_bad(dict(_I181, when_door='A')) is not None
+      and _inst181_bad(dict(_I181, when_src='obj_doorAny')) is not None
+      and _inst181_bad(dict(_I181, _original=dict(
+          _I181['_original'], precreate='gml_RoomCC_room_a_PreCreate'))) is not None,
+      repr((_inst181_bad(_I181),
+            _inst181_bad(dict(_I181, when_door='A')))))
 
 # C3a13 —— ★★★ 第172轮：`obj_doorAny` 分支**确实存在且被管到**（防空集恒真），
 #   并且它有鉴别力（正/负控制）。★ 少了这条，把所有 Any 规则删掉也能"绿"。

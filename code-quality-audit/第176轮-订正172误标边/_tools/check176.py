@@ -68,6 +68,12 @@ EXPECT_VAR = 51           # 第174轮的变体边（42 Horz + 9 Vert），本轮
 EXPECT_VAR_HORZ = 42
 EXPECT_VAR_VERT = 9
 EXPECT_HORZ_OF_RM = 36    # 留档里真身是 Horz 的条数
+#: ★★★ 第181轮：本轮的判据全部在"**减去 batch=181 那 63 条**"的表上做。
+#:   check176 守的是「第176轮删掉那 42 条**没动别的东西**」—— 那是**第181轮之前**的事实。
+#:   第181轮按位移 / 实例变量机制又落了 63 条（另一条独立推导线，归 `check181` 守），
+#:   混进来会把"其余逐条相同"判成假红。⇒ 判据口径改成"现行表 − 181 段"，
+#:   并且**不把 2768 调成 2831**：改的是"拿哪张表去比"，不是把历史数改大。
+EXPECT_181 = 63           # 第181轮的净增（只做减法口径的锚点，不并入本条的任何分母）
 EXPECT_VERT_OF_RM = 6     # 留档里真身是 Vert 的条数
 EXPECT_SNAP_N = 3047      # 全表门物件数（快照键数）
 EXPECT_SNAP_HIT = 2898    # 其中解出目标的门物件数
@@ -147,6 +153,9 @@ RM_KEYS = set((r.get('when_scene'), r.get('to'),
                (r.get('_original') or {}).get('door_y')) for r in REMOVED)
 
 MINE = [r for r in RL if (r.get('_original') or {}).get('batch') == BATCH]
+#: ★★★ 第181轮的两张视图（见 `EXPECT_181` 的注释）
+RL_181 = [r for r in RL if (r.get('_original') or {}).get('batch') == 181]
+RL_BASE = [r for r in RL if (r.get('_original') or {}).get('batch') != 181]
 VIA_ROWS = [r for r in RL if r.get('when_src') == VIA]
 VAR_ROWS = [r for r in RL if r.get('when_src') in VAR_SRC]
 
@@ -258,12 +267,14 @@ check(u'B2 ★★ 172 段 priority 的空洞**恰好**是留档那 42 个（不�
       % (len(_holed), set(_holed) == RM_PRIOS,
          sorted(set(_holed) - RM_PRIOS)[:5]))
 
-check(u'B3 条数两套账：现存 %d == 改前 %d - %d；`via=%s` %d == %d - %d'
-      % (len(RL), EXPECT_BEFORE, EXPECT_RM, VIA, len(VIA_ROWS),
+check(u'B3 条数两套账：现存 %d − 第181轮 %d == 改前 %d - %d；`via=%s` %d == %d - %d'
+      % (len(RL), len(RL_181), EXPECT_BEFORE, EXPECT_RM, VIA, len(VIA_ROWS),
          EXPECT_VIA_BEFORE, EXPECT_RM),
-      len(RL) == EXPECT_AFTER and len(VIA_ROWS) == EXPECT_VIA_AFTER
+      len(RL_BASE) == EXPECT_AFTER and len(RL_181) == EXPECT_181
+      and len(VIA_ROWS) == EXPECT_VIA_AFTER
       and len(MINE) == EXPECT_VIA_AFTER,
-      u'routes=%d via=%d mine=%d' % (len(RL), len(VIA_ROWS), len(MINE)))
+      u'routes=%d（= %d + 181段 %d）via=%d mine=%d'
+      % (len(RL), len(RL_BASE), len(RL_181), len(VIA_ROWS), len(MINE)))
 
 _c_h = sum(1 for r in VAR_ROWS if r.get('when_src') == VAR_SRC[0])
 _c_v = sum(1 for r in VAR_ROWS if r.get('when_src') == VAR_SRC[1])
@@ -276,11 +287,11 @@ check(u'B4 ★★ 第174轮的变体边**一条没少**：%d 条（Horz %d + Ver
 #: ★★★ B5：拿 `git HEAD` 的改前副本，按留档 priority 摘掉 42 条，剩下的规范化
 #:   指纹必须与**现在磁盘上的表**逐条相同。这是"别的一条没动"的硬证明 ——
 #:   不是拿我自己的快照跟自己比，改前副本来自 git。
-check(u'B5 ★★★ 除这 %d 条外**其余逐条相同**：现状的规范化 sha1 == 改前副本'
-      u'摘掉留档后的 sha1' % EXPECT_RM,
-      canon(RL) == BEFORE['rest_sha1'] and len(RL) == BEFORE['rest_n'],
-      u'现状=%s 期望=%s n=%d/%d'
-      % (canon(RL)[:12], BEFORE['rest_sha1'][:12], len(RL), BEFORE['rest_n']))
+check(u'B5 ★★★ 除这 %d 条外**其余逐条相同**：现状**减去第181轮那 %d 条**后的规范化 '
+      u'sha1 == 改前副本摘掉留档后的 sha1' % (EXPECT_RM, len(RL_181)),
+      canon(RL_BASE) == BEFORE['rest_sha1'] and len(RL_BASE) == BEFORE['rest_n'],
+      u'现状−181段=%s 期望=%s n=%d/%d'
+      % (canon(RL_BASE)[:12], BEFORE['rest_sha1'][:12], len(RL_BASE), BEFORE['rest_n']))
 
 #: 负控制：随便改一条现存边的 `to`，B5 的指纹**必须**变（否则 B5 恒真）
 if RL:
@@ -322,19 +333,24 @@ print('=' * 70)
 
 OBJS = load_objs()
 snap_now = snapshot(RL, OBJS)
+#: ★★★ 第181轮：**改前快照是在"第181轮那 63 条还不存在"时录的**，
+#:   所以比较必须站在同一张表上 ⇒ 用 `RL_BASE`（现行表 − 181段）重算一次。
+#:   否则 48 个门物件会因为"第181轮让它们终于有路可走"而报差异 ——
+#:   那是**修好了**，不是"删那 42 条动坏了"。
+snap_base = snapshot(RL_BASE, OBJS)
 _snap_ev = SNAP_EV['snap']
-_diff = [(k, _snap_ev.get(k), snap_now.get(k))
-         for k in set(_snap_ev) | set(snap_now)
-         if _snap_ev.get(k) != snap_now.get(k)]
+_diff = [(k, _snap_ev.get(k), snap_base.get(k))
+         for k in set(_snap_ev) | set(snap_base)
+         if _snap_ev.get(k) != snap_base.get(k)]
 check(u'C1 ★★★ 全表路由快照：%d 个门物件（其中 %d 个解出目标）的 `route_for_door`'
-      u'结果与改前快照**逐值相同**'
-      % (len(snap_now), sum(1 for v in snap_now.values() if v)),
-      len(snap_now) == EXPECT_SNAP_N and len(_snap_ev) == EXPECT_SNAP_N
-      and sum(1 for v in snap_now.values() if v) == EXPECT_SNAP_HIT
+      u'结果与改前快照**逐值相同**（在"现行表 − 第181轮 %d 条"上比）'
+      % (len(snap_base), sum(1 for v in snap_base.values() if v), len(RL_181)),
+      len(snap_base) == EXPECT_SNAP_N and len(_snap_ev) == EXPECT_SNAP_N
+      and sum(1 for v in snap_base.values() if v) == EXPECT_SNAP_HIT
       and not _diff,
-      u'键=%d/%d 解出=%d 差异=%d'
-      % (len(snap_now), len(_snap_ev), sum(1 for v in snap_now.values() if v),
-         len(_diff)))
+      u'键=%d/%d 解出=%d 差异=%d（含 181 段的现行表解出 %d）'
+      % (len(snap_base), len(_snap_ev), sum(1 for v in snap_base.values() if v),
+         len(_diff), sum(1 for v in snap_now.values() if v)))
 
 #: ★★ "纯冗余"的直接证据：把 42 条**加回去**，快照一点不变 ⇒ 它们从来没被消费
 snap_back = snapshot(list(RL) + list(REMOVED), OBJS)
@@ -439,8 +455,9 @@ print('=' * 70)
 print(u'D 段  留档可整段恢复（无损）')
 print('=' * 70)
 
-RESTORED = list(RL) + list(REMOVED)
-check(u'D1 加回 42 条 ⇒ %d 条 == 改前 %d 条' % (len(RESTORED), EXPECT_BEFORE),
+RESTORED = list(RL_BASE) + list(REMOVED)
+check(u'D1 加回 42 条 ⇒ %d 条 == 改前 %d 条（用"现行表 − 第181轮 %d 条"作底）'
+      % (len(RESTORED), EXPECT_BEFORE, len(RL_181)),
       len(RESTORED) == EXPECT_BEFORE, u'实得=%d' % len(RESTORED))
 
 _rp = sorted(r.get('priority') for r in RESTORED
@@ -456,9 +473,9 @@ check(u'D3 加回后 `via=%s` 恢复成 %d 条' % (VIA, EXPECT_VIA_BEFORE),
       len(_rvia) == EXPECT_VIA_BEFORE, u'实得=%d' % len(_rvia))
 
 snap_rest = snapshot(RESTORED, OBJS)
-_diff_r = [k for k in set(snap_now) | set(snap_rest)
-           if snap_now.get(k) != snap_rest.get(k)]
-check(u'D4 ★★ 加回后的全表路由快照也 == 现在的快照 ⇒ 恢复是**无损**的'
+_diff_r = [k for k in set(snap_base) | set(snap_rest)
+           if snap_base.get(k) != snap_rest.get(k)]
+check(u'D4 ★★ 加回后的全表路由快照也 == "现行表 − 181段"的快照 ⇒ 恢复是**无损**的'
       u'（不只是条数对上，行为也对上）',
       not _diff_r, u'差异=%d' % len(_diff_r))
 

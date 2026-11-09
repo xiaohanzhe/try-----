@@ -1,0 +1,54 @@
+[
+  {
+    "scene": null,
+    "scene_name": "森林·man（隐藏房）",
+    "from_scene": "ch1.forest.forest_area5",
+    "from_room": "room_forest_area5",
+    "probability": 0.02,
+    "probability_expr": "ceil(random(50)) == 50",
+    "gate": "global.flag[910] == 0",
+    "once": true,
+    "status": "target_not_registered",
+    "note": "原作确有这扇门，但目标房 room_man 在本项目里**没有登记成场景**（_index.json 查无此项）⇒ 无法落边，只登记证据。",
+    "evidence": "第181轮 probe181b.ch1.json → gml_Object_obj_doorX_musfade_Alarm_2：`if (room == room_forest_area5) { ch = ceil(random(50)); if (ch == 50 && global.flag[910] == 0) room_goto(room_man); else room_goto(room_forest_starwalker); }`"
+  },
+  {
+    "scene": "ch2.cyber_city.dw_city_man",
+    "scene_name": "赛博都市·man",
+    "from_scene": "ch2.cyber_city.dw_city_traffic_3",
+    "from_room": "room_dw_city_traffic_3",
+    "probability": 0.02,
+    "probability_expr": "ceil(random(50)) == 50",
+    "gate": "scr_sideb_get_phase() == 0 && global.flag[917] < 2 && global.flag[918] == 0",
+    "once": true,
+    "status": "data_only",
+    "note": "现有 `_routes.json` 把 `dw_city_traffic_3 → dw_city_man` 记成**确定性边**（priority 7122），与原作 1/50 不符。第181轮只登记不改既有边；第182轮做加权挑选时再改成概率分支。",
+    "evidence": "第181轮 probe181b.ch2.json → gml_Object_obj_doorw_musfade_Alarm_2：`if (global.flag[917] == 0 && scr_sideb_get_phase() == 0) room_goto(room_dw_city_dog_traffic); else { var man_room = scr_sideb_get_phase() == 0 && global.flag[917] < 2 && global.flag[918] == 0 && ceil(random(50)) == 50; if (man_room) room_goto(room_dw_city_man); else room_goto(room_dw_city_moss); }`"
+  },
+  {
+    "scene": "ch3.system.dw_ch3_man",
+    "scene_name": "系统与演出·ch3_man",
+    "from_scene": null,
+    "from_room": null,
+    "probability": null,
+    "probability_expr": null,
+    "gate": null,
+    "once": null,
+    "status": "no_incoming_edge",
+    "note": "场景已登记但路由表里**没有任何入边**；本轮取证未找到指向它的门代码，条件未解。",
+    "evidence": "第181轮 probe181b.ch1..ch5.json 全部 door 代码反编译，未见 room_dw_ch3_man 引用"
+  },
+  {
+    "scene": "ch4.second_sanctuary.dw_churchb_man",
+    "scene_name": "第二圣域·churchb_man",
+    "from_scene": "ch4.second_sanctuary.dw_churchb_windows",
+    "from_room": "room_dw_churchb_windows",
+    "probability": null,
+    "probability_expr": null,
+    "gate": null,
+    "once": null,
+    "status": "gate_unresolved",
+    "note": "入边是 `obj_doorAny`（priority 7776），其实例 PreCreate **无条件**写 `doorRoom = room_dw_churchb_man`；概率/前置条件不在门对象代码里，本轮**未解**，不臆造数值。",
+    "evidence": "第181轮 probe181b.ch4.json → 实例 room_dw_churchb_windows 的 creation_gml：`doorRoom = room_dw_churchb_man; doorEntrance = 9; doorFadeMusic = 1;`"
+  }
+]

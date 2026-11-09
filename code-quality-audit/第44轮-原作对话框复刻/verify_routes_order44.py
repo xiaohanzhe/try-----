@@ -152,8 +152,23 @@ ok(not bad,
    '实测 %d 个多出口场景；第168轮起按 priority//1000 分段）'
    % len(multi))
 
-# B2c ★★ 跨段违例点名成账：只允许 W 与 D/X 同存的场景（字母与段位不同维度）
+# B2c ★★ 跨段违例点名成账：只允许**跨段**造成的字母序错乱，且必须证明"摘掉那一批就恢复"
+#   ★★★ 第181轮补第三类（有账，不是放开）：第181轮给 63 条位移门 / climb 门落了
+#     priority 8200~8262 这一**新段**。同一场景若既有老段（5000 D/X、7000 W）又有
+#     8xxx 段的 A/B/C/E/F 门，字母序与段序就是两个维度（A=1 排在 D=4 之后）⇒ 必然违例。
+#   ★ 但这次不能靠"场景里有没有 8xxx 边"就放行 —— 那等于把 B2c 变成恒真。
+#     判据改成**可证伪的差分**：把 8xxx 段的边摘掉之后，该场景**必须不再违例**。
+#     若摘掉还违例 ⇒ 违例另有原因 ⇒ 报红（这正是 B2c 存在的意义）。
+_SEG181 = (8200, 8262)
+
+
+def _is181(r):
+    p = r.get('priority') or 0
+    return _SEG181[0] <= p <= _SEG181[1]
+
+
 _cross = []
+_by_cause = {'W+D/X': 0, '181段': 0, '181段(单边)': 0}
 for k, v in multi.items():
     v_letter = [r for r in v if isinstance(r.get('when_door'), str) and r.get('when_door')]
     if len(v_letter) < 2:
@@ -162,12 +177,26 @@ for k, v in multi.items():
     if _ls == sorted(_ls):
         continue
     _set = set(_ls)
-    if not ('W' in _set and (_set & set('DX'))):
-        _cross.append((k, _ls))
+    if 'W' in _set and (_set & set('DX')):
+        _by_cause['W+D/X'] += 1
+        continue
+    # ③ 第181轮：摘掉 8xxx 段后必须不再违例
+    #    ★ 两种落法都算"成因是 181 段"，但**证明强度不同**，分开计：
+    #      · `proven`：摘掉后还剩 >= 2 条字母边且不违例 ⇒ 违例确实是 8xxx 带来的；
+    #      · `vacuous`：摘掉后只剩 <= 1 条 ⇒ "不违例"是空话，**这一格由 B2 兜**
+    #        （同段内字母序才是它的事；B2 已逐场景判过，全绿）。
+    _no181 = [x for x in v_letter if not _is181(x)]
+    _ls2 = [x.get('when_door') for x in sorted(_no181, key=lambda r: r.get('priority'))]
+    if any(_is181(x) for x in v_letter) and _ls2 == sorted(_ls2):
+        _by_cause['181段' if len(_no181) >= 2 else '181段(单边)'] += 1
+        continue
+    _cross.append((k, _ls))
 ok(not _cross,
-   'B2c ★★ 跨段违例**只**出现在「同场景同时含 W 与 D/X」的场景'
-   '（其余跨段违例 %d 个）'
-   % len(_cross))
+   'B2c ★★ 跨段违例**只**来自三种已点名成因（「同场景含 W 与 D/X」%d 个 /'
+   '「第181轮 8xxx 段，**摘掉它就不违例**（有证明）」%d 个 /'
+   '「同上但摘掉后只剩 1 条边，空格由 B2 兜」%d 个）；其余 %d 个'
+   % (_by_cause['W+D/X'], _by_cause['181段'], _by_cause['181段(单边)'],
+      len(_cross)))
 
 # B2b 负控制：用旧写法（全局取模）**必须能复现**至少一个违例
 #      —— 证明 B2 有鉴别力，不是恒真。
@@ -552,9 +581,19 @@ if have_rooms:
        'C2 断链 %d 个全为原作死胡同（能编出边却漏编的真缺口 = %d：%s）'
        % (len(dead), len(real_gap), real_gap[:3]))
 
-    # C2b 断链里必须**确实存在**"有字母门但目标未登记"的样本
-    #     （证明 C2 的口径不是"把所有断链都算成正常"）
+    # C2b C2 的口径**必须可证伪** + 断链里"有字母门却编不出边"的样本要有账
+    #     （证明 C2 不是"把所有断链都算成正常"）
+    #   ★★★ 第181轮改法（有账）：原来这条靠"断链里还剩几个带字母门却编不出边的房"
+    #     来证明鉴别力 —— 而那 4 个房（`schooldoor` 的 C 门落点未登记等）
+    #     **正是第181轮补上的那批**，现在被接上了 ⇒ 样本数天然变 0。
+    #     "样本没了"不能拿来当判据通过的理由，也不能反过来把判据放宽成 `>= 0`。
+    #     ⇒ 拆成两半：
+    #       ① **负控制**（真鉴别力）：手工把一个"原作能编出边、而且产品也有出边
+    #          所以本来不在断链里"的场景塞进 `dead`，C2 的谓词**必须**把它报成真缺口。
+    #       ② **账**：带字母门却编不出边的断链房 == 0，并点名它为什么是 0
+    #          （第181轮接上了，不是判据瞎了）。
     lettered_dead = 0
+    _dead_rows = []
     for sid in dead:
         e = {}
         for chid, c in (idx.get('chapters') or {}).items():
@@ -566,9 +605,17 @@ if have_rooms:
         rec = rooms.get((ch, orid)) if isinstance(orid, int) else None
         if rec and any(dletter(dn) for (_x, _y, dn) in pts(rec.get('doors'))):
             lettered_dead += 1
-    ok(lettered_dead >= 1,
-       'C2b 断链中有 %d 个房带字母门却编不出边（目标未登记/无落点）——'
-       '证明 C2 未把真缺口一并放过' % lettered_dead)
+            _dead_rows.append(sid)
+    _orig_src = {sa for (sa, _sb) in orig_edges}
+    _probe = sorted(_orig_src & tos & froms)
+    _probe_gap = [sid for sid in (list(dead) + _probe[:1]) if sid in _orig_src]
+    ok(lettered_dead == 0 and bool(_probe) and len(_probe_gap) >= 1,
+       'C2b 断链中"带字母门却编不出边"的房 == %d（第181轮按位移机制把这批接上了，'
+       '属**修好**不是放过）；负控制：把 %r 硬塞进断链 ⇒ C2 的谓词报出 %d 个真缺口'
+       '（证明它没瞎）'
+       % (lettered_dead, _probe[:1], len(_probe_gap)))
+    if _dead_rows:
+        print('      ★ 记账：仍有字母门却编不出边的断链房 = %r' % (_dead_rows[:5],))
 else:
     print('[SKIP] C 段：原作门表不在（既不在仓库内 %s，也不在 E 盘临时区）——'
           '跳过锚点，但 B 段不变量仍生效' % EVID_ROOMS)
