@@ -1,0 +1,11 @@
+第179轮 §2 现场复现（第178轮的自伤）
+============================================================
+窗口 A = QRect(100,500,800,400)  ->  下沿 = 900
+宠物   pos.y = 700, height = 100  ->  脚底 foot = 800
+A 是宠物**正站着的那块楼板**（floor_visible_contains 用的是 rect.contains(点)）
+
+pick_insert_after_by_foot_y(800, [A]) = (170, {'reason': 'behind', 'bottom': 900, 'n_front': 1})
+
+=> reason=behind，锚点 = 0xAA —— 正是它自己站的窗口。
+   set_window_behind(宠物, 0xAA) 的结果是宠物被插到 A 之后 = 被 A 盖住 = 看不见。
+   HWND_TOP=0  HWND_BOTTOM=1

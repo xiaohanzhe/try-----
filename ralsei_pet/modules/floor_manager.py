@@ -434,10 +434,30 @@ class FloorManager:
         `underlying_windows` 全量 —— 被前面窗口完全压住的窗口"暂时不存在"，
         它既不显示、也不该当遮挡者（否则会出现"被一个看不见的窗口挡住"）。
 
+        ★★★ 第179轮修正（第178轮的自伤）：**"站在谁上面"优先于 Y 排序**。
+        事实链：`get_current_floor` 判"站在哪块楼板"用的是 `floor_visible_contains(pos)`
+        = `rect.contains(宠物的点)` ⇒ 宠物**站在窗口矩形内部**（`main.py` 里落点
+        `target_y` 也被夹在 `window_rect.top()+标题栏+20 … bottom()-h-20`）。
+        于是"窗口下沿 > 脚底"对**它自己站着的那块板**永远成立 ⇒ 第178轮那套纯 Y 规则
+        会把宠物插到**自己所站的窗口后面** ⇒ 被窗口盖住、直接看不见。
+        ⇒ 现在先看 `floor`：站在窗口楼板上就**无条件**插到那块窗口之前（= 第13轮的老口径），
+        Y 排序只在"站在桌面"时才生效 —— 那里才是"走到窗口背后被挡住"真正发生的地方。
+
         **不给 `foot_y` 时行为一字不变**：第十三轮的 `verify_round13_build` F1/F2
         与第十六轮 A4 都按老口径断言，这条向后兼容是硬要求。
         """
         if foot_y is not None and self.underlying_windows:
+            #: ① 站在窗口楼板上 ⇒ 必须在那块窗口之前（否则被自己站的板挡住）。
+            _stand = floor.get('window_hwnd') if isinstance(floor, dict) else None
+            try:
+                _stand_alive = bool(_stand and win32gui.IsWindow(_stand))
+            except Exception:
+                _stand_alive = False
+            if _stand_alive:
+                self._last_z_pick = {'reason': 'standing_floor', 'bottom': None,
+                                     'n_front': 0}
+                return _stand
+            #: ② 站在桌面（或楼板窗口刚好被关掉）⇒ 按屏幕 Y 排序。
             anchor, info = pick_insert_after_by_foot_y(foot_y, self.floors)
             self._last_z_pick = info
             return anchor
