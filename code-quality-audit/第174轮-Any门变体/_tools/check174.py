@@ -84,9 +84,21 @@ EXPECT_FILES_ZONE = 3     # 分片载体
 EXPECT_FILES_ONE = 1      # 独立场景文件载体
 PRIO_BASE = 8100
 PRIO_END = PRIO_BASE + EXPECT_EDGES - 1
-EXPECT_ROUTES_FLOOR = 2810   # 2,759 + 51
-EXPECT_ANY_172 = 798         # 第172轮的 `when_src == obj_doorAny` 条数，**本轮一条不许动**
-EXPECT_MISLABEL = 42         # 172 里 via 说假话的条数（Horz 36 + Vert 6），只留档不修
+#: ★★ 第176轮：那 42 条「`via` 说假话」的 172 段边**已被删除**（留档
+#:   `第176轮-订正172误标边/_evidence/removed176.json`，可整段加回）⇒
+#:   2,810 -> 2,768、172 段 `obj_doorAny` 798 -> 756。**两个数都从留档推**。
+RM_P = os.environ.get('CQ_RM174') or os.path.join(
+    REPO, 'code-quality-audit', u'第176轮-订正172误标边', '_evidence',
+    'removed176.json')
+if not os.path.isfile(RM_P):
+    print(u'[FATAL] 找不到第176轮删除留档：%s' % RM_P)
+    sys.exit(2)
+REMOVED = json.loads(io.open(RM_P, encoding='utf-8', errors='replace',
+                            newline='').read())['items']
+EXPECT_ROUTES_FLOOR = 2810 - len(REMOVED)   # 2,759 + 51 - 42
+EXPECT_ANY_172 = 798 - len(REMOVED)         # 第172轮的 `when_src == obj_doorAny` 现存条数
+EXPECT_MISLABEL = 42         # 172 里 via 说假话的**原始**条数（Horz 36 + Vert 6）
+EXPECT_MISLABEL_LIVE = 0     # 第176轮之后，表里这类误标边必须**一条不剩**
 EXPECT_ORIG_OBJS = 3197      # 第68轮普查口径（五章 · 非 doorany 家族）
 EXPECT_DESKTOP_DOORS = 4
 CHECK_FLOOR = 35
@@ -342,15 +354,20 @@ check(u'B5 负控制：`route_for_door` 对**编造的变体名**必须返 None�
                          src=HORZ, pos=None) is not None)
 
 _any172 = [q for q in ROUTES if isinstance(q, dict) and q.get('when_src') == 'obj_doorAny']
-check(u'B6 ★★老账不动：第172轮的 `when_src == obj_doorAny` 仍 %d 条，'
-      u'且本轮一条都没被改标签（`kind` 不是 delta_door_any_variant）'
-      % EXPECT_ANY_172,
+check(u'B6 ★★账要对得上：第172轮的 `when_src == obj_doorAny` 现存 %d 条'
+      u'（= 原 798 - 第176轮删掉的 %d），且一条都没被**改标签**（`kind` 不是 '
+      u'delta_door_any_variant）'
+      % (EXPECT_ANY_172, len(REMOVED)),
       len(_any172) == EXPECT_ANY_172
       and not [q for q in _any172
                if (q.get('_original') or {}).get('kind') == 'delta_door_any_variant'],
       u'实得=%d' % len(_any172))
 
-# ---- B7 ★ 留档：172 那 798 条里有 42 条的 `via` 说假话（真身是变体）----
+# ---- B7 ★★★ 第176轮结案：172 里那 42 条「`via` 说假话」的边**已删除** ----
+#: 反查探针（`precreate` -> 真实 `obj`）不看产品表，是**独立一侧**的证据。
+#: 判据从"留档 42 条"翻成"**现存 0 条**"，并且要双向对账：
+#:   ① 现存 172 段里，反查真身是变体的 ⇒ 必须 0 条（误标已清干净）
+#:   ② 留档那 42 条**每一条**反查出来都真是变体 ⇒ 留档没冤枉人、也没夹私货
 _pc2obj = {}
 for ch, fn in (('ch1', 'probe_any172.ch1.json'), ('ch2', 'probe_any172.ch2.json'),
                ('ch3', 'probe_any172.ch3.json'), ('ch4', 'probe_any172.ch4.json'),
@@ -365,11 +382,19 @@ _b172 = [q for q in ROUTES if (q.get('_original') or {}).get('batch') == 172]
 _mislabel = [q for q in _b172
              if _pc2obj.get(((q['_original']).get('chapter'),
                              (q['_original']).get('precreate'))) in WANT]
-check(u'B7 ★留档（**不修**）：172 的 %d 条边里有 %d 条 `via` 标的 `obj_doorAny` '
-      u'其实来自变体（用 `precreate` 反查探针的真实实例）—— 改标签要动第172/36轮两套账，'
-      u'留待单独一轮裁定' % (len(_b172), len(_mislabel)),
-      len(_b172) == EXPECT_ANY_172 and len(_mislabel) == EXPECT_MISLABEL,
-      u'（这条红只可能意味着两件事之一：172 的边被改过，或探针取证被换了）')
+#: 留档侧：每条都得能在探针里查到"真身是变体"（查不到 ⇒ `None` ⇒ 报红）
+_rm_obj = [_pc2obj.get(((r['_original']).get('chapter'),
+                        (r['_original']).get('precreate'))) for r in REMOVED]
+_rm_not_var = [i for i, o in enumerate(_rm_obj) if o not in WANT]
+check(u'B7 ★★★ 误标边清干净：现存 172 段里「`via` 标的 `obj_doorAny` 其实来自变体」'
+      u'**%d 条**（第176轮前是 %d 条）；且留档那 %d 条**逐条**反查出来都真是变体'
+      u'（留档没冤枉人）'
+      % (len(_mislabel), EXPECT_MISLABEL, len(REMOVED)),
+      len(_mislabel) == EXPECT_MISLABEL_LIVE
+      and len(REMOVED) == EXPECT_MISLABEL
+      and not _rm_not_var,
+      u'现存误标=%d 留档=%d 留档中非变体=%r'
+      % (len(_mislabel), len(REMOVED), _rm_not_var[:5]))
 
 # ★ B8：实例创建代码的名字是**机械生成**的 `gml_RoomCC_<源房名>_<实例号>_PreCreate`
 #   ⇒ 拿它反查"这条边真是这间房摆的那扇门吗"，是**编不出来**的硬证据。
@@ -466,16 +491,26 @@ else:
     check(u'C6 负控制：不给 pos / 给不存在的坐标 ⇒ 退回 priority 最小，**两次答案相同**',
           _a is not None and _a == _b, u'%s -> %r / %r' % (_probe_sid, _a, _b))
 
-# ★★ C7：本轮**不改可达图** —— 42 个 (源,目标) 对在"不含本轮 51 条边"的旧表里
+# ★★ C7：第174轮**不改可达图** —— 42 个 (源,目标) 对在"不含本轮 51 条边"的旧表里
 #      就已经全部存在。这句话必须由数据自己说，否则"补了 51 条边"很容易被误读成
 #      "新增了 51 条通路"。真实效果是：把**原本无人消费的死边**变成了**真能走过去的门**。
-_old_pairs = set((q.get('when_scene'), q.get('to')) for q in ROUTES
+# ★★ 第176轮：那 42 条误标边已删，所以"旧表"用 `现存 ∪ 留档` 还原（口径一字不改）；
+#    另加一条新断言：删边**没有丢掉任何一个 (源,目标) 对** ⇒ 可达图逐对不变。
+_pre176 = ROUTES + REMOVED
+_old_pairs = set((q.get('when_scene'), q.get('to')) for q in _pre176
                  if isinstance(q, dict) and q.get('when_src') not in WANT)
 _new_only = sorted(_pairs - _old_pairs)
+_pairs_pre = set((q.get('when_scene'), q.get('to')) for q in _pre176
+                 if isinstance(q, dict))
+_pairs_now = set((q.get('when_scene'), q.get('to')) for q in ROUTES
+                 if isinstance(q, dict))
 check(u'C7 ★★可达图不变：42 个 (源,目标) 对里，**%d 个**在旧表（不含本轮 51 条）中就已存在 '
-      u'⇒ 本轮不新增任何新通路，只把死边变活门' % (len(_pairs) - len(_new_only)),
-      not _new_only,
-      u'只在本地新增的对=%r' % (_new_only[:3],))
+      u'⇒ 本轮不新增任何新通路，只把死边变活门；且第176轮删掉那 %d 条后 '
+      u'(源,目标) 对集合**逐对不变**'
+      % (len(_pairs) - len(_new_only), len(REMOVED)),
+      not _new_only and _pairs_now == _pairs_pre,
+      u'只在本地新增的对=%r 删后丢掉的对=%r'
+      % (_new_only[:3], sorted(_pairs_pre - _pairs_now)[:3]))
 
 # ---------------------------------------------------------------------------
 print('')

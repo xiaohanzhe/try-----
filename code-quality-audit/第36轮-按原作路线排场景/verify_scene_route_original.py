@@ -679,8 +679,17 @@ check('C3 每条规则的 _original 自洽于**它声明的原作机制**'
 
 # C3a13 —— ★★★ 第172轮：`obj_doorAny` 分支**确实存在且被管到**（防空集恒真），
 #   并且它有鉴别力（正/负控制）。★ 少了这条，把所有 Any 规则删掉也能"绿"。
-check('C3a13 ★ C3 的 `obj_doorAny` 分支确有样本（%d 条，只增不减）' % (_n_any,),
-      _n_any >= 798,
+#   ★★★ 第176轮：那 42 条"标称 obj_doorAny、真身是变体"的误标边已删 ⇒ 798 → 756。
+#   门槛**从第176轮留档推**，不写死：`798 - len(removed176.json['items'])`。
+_RM176 = load_json(os.path.join(
+    _ROOT, 'code-quality-audit', u'第176轮-订正172误标边', '_evidence',
+    'removed176.json')) if os.path.isfile(os.path.join(
+        _ROOT, 'code-quality-audit', u'第176轮-订正172误标边', '_evidence',
+        'removed176.json')) else None
+_N_ANY_FLOOR = 798 - (len((_RM176 or {}).get('items') or []))
+check('C3a13 ★ C3 的 `obj_doorAny` 分支确有样本（%d 条，只增不减；门槛 %d = 798 - 第176轮删掉的 %d）'
+      % (_n_any, _N_ANY_FLOOR, len((_RM176 or {}).get('items') or [])),
+      _n_any >= _N_ANY_FLOOR,
       '实测 %d' % (_n_any,))
 
 

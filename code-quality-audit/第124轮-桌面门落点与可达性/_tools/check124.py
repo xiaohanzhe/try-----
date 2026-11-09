@@ -415,10 +415,20 @@ _same_door = _same_door_groups(RL)
 #: ★★ 第174轮：允许的重复条数 = 历史上那 5 条 + 本轮**变体别名边**的条数。
 #:   不是"把 5 调成 56"，而是"只认这一种来源" —— 别处冒出重复照样红。
 _n_var_edges = len([q for q in RL if q.get('when_src') in VAR_SRC])
-_expect_dup = EXPECT_DUP_EDGES + _n_var_edges
-check(u'D2 ★★ 边数守恒：唯一边 %d >= %d、重复 %d == %d（历史 5 + 第174轮变体别名 %d）；'
+#: ★★★ 第176轮：删掉 42 条误标边后，那 42 个"172 + 174 双胞胎"组只剩变体一条
+#:   ⇒ **不再是重复组**。所以"变体造成的重复行数"不能再按"变体边条数"算，
+#:   要按**现状**算：所有行都是变体族、且组内 >1 行的组，每组贡献 (size - 1) 行。
+#:   （改前 51 条变体边 ⇒ 56；改后 9 条在重复组里 ⇒ 14。数字是算出来的，不是拍的。）
+_grp_rows124 = collections.defaultdict(list)
+for _q in RL:
+    _grp_rows124[(_q.get('when_scene'), _q.get('to'))].append(_q)
+_n_var_dup = sum(len(v) - 1 for v in _grp_rows124.values()
+                 if len(v) > 1
+                 and all(x.get('when_src') in VAR_SRC for x in v))
+_expect_dup = EXPECT_DUP_EDGES + _n_var_dup
+check(u'D2 ★★ 边数守恒：唯一边 %d >= %d、重复 %d == %d（历史 5 + 变体族**现状**造成的 %d 行）；'
       u'且每个重复组内的**门标识两两不同**（同房间不同门同目标 = 合法；同门重复 = 冗余）'
-      % (EXPECT_UNIQUE_EDGES, EXPECT_UNIQUE_EDGES, _expect_dup, _expect_dup, _n_var_edges),
+      % (EXPECT_UNIQUE_EDGES, EXPECT_UNIQUE_EDGES, _expect_dup, _expect_dup, _n_var_dup),
       _uniq >= EXPECT_UNIQUE_EDGES and len(RL) - _uniq == _expect_dup
       and not _same_door,
       u'unique=%d routes=%d dup=%d（期望 %d） 同门重复=%r'

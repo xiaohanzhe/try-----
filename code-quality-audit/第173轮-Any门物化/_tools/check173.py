@@ -96,8 +96,15 @@ EXPECT_NOROOM = 10
 #: ★ 第174轮：2,759 → 2,810（补了 `obj_doorAnyHorz/Vert` 51 条）。
 #:   这里改成 **floor**（`>=`）：后续轮次只许往上加，缩水由「Any 边 798 未变 +
 #:   反回滚」两条兜；写死绝对数会在下一轮合法增量时假红（第171轮踩过）。
-EXPECT_ROUTES = 2759
-EXPECT_ANY_EDGES = 798
+EXPECT_ROUTES = 2768              # 2,810 - 42（第176轮删误标边，见下）
+#: ★★ 第176轮：删掉 42 条**误标**的 `via='obj_doorAny'` 边（真身是变体
+#:   `obj_doorAnyHorz/Vert`，第174轮已落过同样的 (场景,目标,坐标)）⇒
+#:   `obj_doorAny` 边 798 -> 756。**从留档读，不写死**：这条判据的本意是
+#:   "any 边数没被本轮（第173轮）动过"，删边是**另一轮**的事、有账可查才放行。
+RM_P = os.environ.get('CQ_RM173') or os.path.join(
+    REPO, 'code-quality-audit', u'第176轮-订正172误标边', '_evidence',
+    'removed176.json')
+EXPECT_ANY_EDGES_EVID = 798       # 第172轮落定时的原值（冻结）
 #: 第174轮把另外两个变体也物化了 ⇒ 「非本轮对象」的口径必须扩到**整个家族**，
 #: 否则每加一个变体 `_non_any_ch` 就会涨一截，这条守卫会自己失效。
 ANY_FAMILY = ('obj_doorAny', 'obj_doorAnyHorz', 'obj_doorAnyVert',
@@ -131,6 +138,13 @@ def check(desc, cond, extra=u''):
 def jl(p):
     return json.loads(io.open(p, encoding='utf-8', errors='replace',
                               newline='').read())
+
+
+#: ★★ 第176轮的删除留档 —— `obj_doorAny` 边的期望值由它**推出来**
+if not os.path.isfile(RM_P):
+    print(u'[FATAL] 找不到第176轮删除留档：%s' % RM_P)
+    sys.exit(2)
+EXPECT_ANY_EDGES = EXPECT_ANY_EDGES_EVID - len(jl(RM_P)['items'])
 
 
 def inst_rooms(p):

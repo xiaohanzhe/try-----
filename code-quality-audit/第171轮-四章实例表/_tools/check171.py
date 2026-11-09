@@ -311,14 +311,21 @@ _pairs = set((r.get('when_scene'), r.get('to')) for r in RL)
 #: ★ 第172轮：唯一 1956 → **2754**（+798），重复组仍是 5。
 #:   改写成「唯一边只增不减 + 重复组数守恒」—— 这是结构性不变量，
 #:   不随轮次增长；写死 `== 1956` 到了 172 就变成"判据过时"（171 自己踩过的坑）。
-check(u'E1 ★★ 唯一边只增不减（%d ≥ 1956）、重复 %d == 5 + 第174轮变体别名 %d'
+#: ★★★ 第176轮：删掉 42 条误标边后，那 42 个"172 + 174 双胞胎"组只剩变体一条
+#:   ⇒ **不再是重复组**。"变体造成的重复行数"改成按**现状**算：所有行都是变体族、
+#:   组内 >1 行的组，每组贡献 (size - 1) 行（改前 51 ⇒ 56；改后 9 ⇒ 14）。
+_grp171 = collections.defaultdict(list)
+for _q in RL:
+    _grp171[(_q.get('when_scene'), _q.get('to'))].append(_q)
+_n_var_dup171 = sum(len(v) - 1 for v in _grp171.values()
+                    if len(v) > 1
+                    and all(x.get('when_src') in ('obj_doorAnyHorz',
+                                                  'obj_doorAnyVert') for x in v))
+check(u'E1 ★★ 唯一边只增不减（%d ≥ 1956）、重复 %d == 5 + 变体族**现状**造成的 %d 行'
       u'（没引入**别的**来源的重复）'
-      % (len(_pairs), len(RL) - len(_pairs),
-         len([r for r in RL if r.get('when_src') in ('obj_doorAnyHorz',
-                                                     'obj_doorAnyVert')])),
+      % (len(_pairs), len(RL) - len(_pairs), _n_var_dup171),
       len(_pairs) >= 1956
-      and len(RL) - len(_pairs) == 5 + len([r for r in RL if r.get('when_src') in
-                                           ('obj_doorAnyHorz', 'obj_doorAnyVert')]),
+      and len(RL) - len(_pairs) == 5 + _n_var_dup171,
       u'unique=%d routes=%d dup=%d' % (len(_pairs), len(RL), len(RL) - len(_pairs)))
 
 check(u'E2 ★★★ 反回滚：路由总数 ≥ %d、W 规则 ≥ %d（改动只增不减）'

@@ -1,0 +1,1120 @@
+{
+ "note": "第176轮删掉的 42 条误标边（原样留档，可整段加回 _routes.json）",
+ "count": 42,
+ "items": [
+  {
+   "to": "ch5.cliffs.dw_cliff_twirlflowerwind",
+   "priority": 7831,
+   "reason": "原作 GML：room_dw_cliff_bonuscombat 的 `obj_doorAny` 实例（x=-40, y=640）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_bonuscombat_21_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_twirlflowerwind ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_twirlflowerwind（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_bonuscombat",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_bonuscombat_21_PreCreate",
+    "src_room_name": "room_dw_cliff_bonuscombat",
+    "dst_room_name": "room_dw_cliff_twirlflowerwind",
+    "src_room_id": 170,
+    "dst_room_id": 174,
+    "door_x": -40,
+    "door_y": 640,
+    "door_x_all": [
+     -40,
+     200
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_seth_miniboss",
+   "priority": 7835,
+   "reason": "原作 GML：room_dw_cliff_dash_runner 的 `obj_doorAny` 实例（x=10000, y=480）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_dash_runner_7_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_seth_miniboss ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_seth_miniboss（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_dash_runner",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_dash_runner_7_PreCreate",
+    "src_room_name": "room_dw_cliff_dash_runner",
+    "dst_room_name": "room_dw_cliff_seth_miniboss",
+    "src_room_id": 159,
+    "dst_room_id": 160,
+    "door_x": 10000,
+    "door_y": 480,
+    "door_x_all": [
+     -40,
+     10000
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_twirlflowerplatforming",
+   "priority": 7836,
+   "reason": "原作 GML：room_dw_cliff_dash_runner 的 `obj_doorAny` 实例（x=-40, y=-200）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_dash_runner_10_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_twirlflowerplatforming ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_twirlflowerplatforming（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_dash_runner",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_dash_runner_10_PreCreate",
+    "src_room_name": "room_dw_cliff_dash_runner",
+    "dst_room_name": "room_dw_cliff_twirlflowerplatforming",
+    "src_room_id": 159,
+    "dst_room_id": 171,
+    "door_x": -40,
+    "door_y": -200,
+    "door_x_all": [
+     -40,
+     10000
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_shicave",
+   "priority": 7837,
+   "reason": "原作 GML：room_dw_cliff_eastcliff 的 `obj_doorAny` 实例（x=-40, y=2440）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_eastcliff_10_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_shicave ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_shicave（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_eastcliff",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_eastcliff_10_PreCreate",
+    "src_room_name": "room_dw_cliff_eastcliff",
+    "dst_room_name": "room_dw_cliff_shicave",
+    "src_room_id": 169,
+    "dst_room_id": 165,
+    "door_x": -40,
+    "door_y": 2440,
+    "door_x_all": [
+     -40,
+     -20
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_verticalwind",
+   "priority": 7838,
+   "reason": "原作 GML：room_dw_cliff_eastcliff 的 `obj_doorAny` 实例（x=-20, y=1440）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_eastcliff_9_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_verticalwind ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_verticalwind（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_eastcliff",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_eastcliff_9_PreCreate",
+    "src_room_name": "room_dw_cliff_eastcliff",
+    "dst_room_name": "room_dw_cliff_verticalwind",
+    "src_room_id": 169,
+    "dst_room_id": 166,
+    "door_x": -20,
+    "door_y": 1440,
+    "door_x_all": [
+     -40,
+     -20
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_shicave",
+   "priority": 7840,
+   "reason": "原作 GML：room_dw_cliff_finaldash 的 `obj_doorAny` 实例（x=1900, y=930）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_finaldash_14_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_shicave ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_shicave（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_finaldash",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_finaldash_14_PreCreate",
+    "src_room_name": "room_dw_cliff_finaldash",
+    "dst_room_name": "room_dw_cliff_shicave",
+    "src_room_id": 163,
+    "dst_room_id": 165,
+    "door_x": 1900,
+    "door_y": 930,
+    "door_x_all": [
+     -80,
+     320,
+     1400,
+     1900,
+     6880,
+     9762
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_verticalwind",
+   "priority": 7841,
+   "reason": "原作 GML：room_dw_cliff_finaldash 的 `obj_doorAny` 实例（x=9762, y=722）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_finaldash_6_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_verticalwind ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_verticalwind（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_finaldash",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_finaldash_6_PreCreate",
+    "src_room_name": "room_dw_cliff_finaldash",
+    "dst_room_name": "room_dw_cliff_verticalwind",
+    "src_room_id": 163,
+    "dst_room_id": 166,
+    "door_x": 9762,
+    "door_y": 722,
+    "door_x_all": [
+     -80,
+     320,
+     1400,
+     1900,
+     6880,
+     9762
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_eastcliff",
+   "priority": 7854,
+   "reason": "原作 GML：room_dw_cliff_shicave 的 `obj_doorAny` 实例（x=1080, y=120）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_shicave_7_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_eastcliff ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_eastcliff（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_shicave",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_shicave_7_PreCreate",
+    "src_room_name": "room_dw_cliff_shicave",
+    "dst_room_name": "room_dw_cliff_eastcliff",
+    "src_room_id": 165,
+    "dst_room_id": 169,
+    "door_x": 1080,
+    "door_y": 120,
+    "door_x_all": [
+     1080
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_dash_runner",
+   "priority": 7856,
+   "reason": "原作 GML：room_dw_cliff_twirlflowerplatforming 的 `obj_doorAny` 实例（x=3800, y=600）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_twirlflowerplatforming_7_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_dash_runner ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_dash_runner（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_twirlflowerplatforming",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_twirlflowerplatforming_7_PreCreate",
+    "src_room_name": "room_dw_cliff_twirlflowerplatforming",
+    "dst_room_name": "room_dw_cliff_dash_runner",
+    "src_room_id": 171,
+    "dst_room_id": 159,
+    "door_x": 3800,
+    "door_y": 600,
+    "door_x_all": [
+     -34,
+     1840,
+     3800
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_bonuscombat",
+   "priority": 7859,
+   "reason": "原作 GML：room_dw_cliff_twirlflowerwind 的 `obj_doorAny` 实例（x=2480, y=160）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_twirlflowerwind_75_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_bonuscombat ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_bonuscombat（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_twirlflowerwind",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_twirlflowerwind_75_PreCreate",
+    "src_room_name": "room_dw_cliff_twirlflowerwind",
+    "dst_room_name": "room_dw_cliff_bonuscombat",
+    "src_room_id": 174,
+    "dst_room_id": 170,
+    "door_x": 2480,
+    "door_y": 160,
+    "axis": "y",
+    "door_x_all": [
+     -34,
+     2480
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.cliffs_below_castle",
+   "priority": 7861,
+   "reason": "原作 GML：room_dw_cliff_verticalwind 的 `obj_doorAny` 实例（x=-80, y=-40）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_verticalwind_2_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_verticalwind_post ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.cliffs_below_castle（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_verticalwind",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_verticalwind_2_PreCreate",
+    "src_room_name": "room_dw_cliff_verticalwind",
+    "dst_room_name": "room_dw_cliff_verticalwind_post",
+    "src_room_id": 166,
+    "dst_room_id": 167,
+    "door_x": -80,
+    "door_y": -40,
+    "door_x_all": [
+     -80,
+     -40,
+     640
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_eastcliff",
+   "priority": 7862,
+   "reason": "原作 GML：room_dw_cliff_verticalwind 的 `obj_doorAny` 实例（x=640, y=8640）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_verticalwind_8_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_eastcliff ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_eastcliff（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_verticalwind",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_verticalwind_8_PreCreate",
+    "src_room_name": "room_dw_cliff_verticalwind",
+    "dst_room_name": "room_dw_cliff_eastcliff",
+    "src_room_id": 166,
+    "dst_room_id": 169,
+    "door_x": 640,
+    "door_y": 8640,
+    "door_x_all": [
+     -80,
+     -40,
+     640
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.cliffs.dw_cliff_finaldash",
+   "priority": 7863,
+   "reason": "原作 GML：room_dw_cliff_verticalwind 的 `obj_doorAny` 实例（x=-40, y=8520）在**每实例创建代码** `gml_RoomCC_room_dw_cliff_verticalwind_4_PreCreate` 里把 `doorRoom` 写死成 room_dw_cliff_finaldash ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.cliffs.dw_cliff_finaldash（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.cliffs.dw_cliff_verticalwind",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_cliff_verticalwind_4_PreCreate",
+    "src_room_name": "room_dw_cliff_verticalwind",
+    "dst_room_name": "room_dw_cliff_finaldash",
+    "src_room_id": 166,
+    "dst_room_id": 163,
+    "door_x": -40,
+    "door_y": 8520,
+    "door_x_all": [
+     -80,
+     -40,
+     640
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_top_challenge",
+   "priority": 7867,
+   "reason": "原作 GML：room_dogplatforming 的 `obj_doorAny` 实例（x=2560, y=1000）在**每实例创建代码** `gml_RoomCC_room_dogplatforming_9_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_challenge ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_challenge（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dogplatforming",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dogplatforming_9_PreCreate",
+    "src_room_name": "room_dogplatforming",
+    "dst_room_name": "room_dw_fcastle_top_challenge",
+    "src_room_id": 175,
+    "dst_room_id": 242,
+    "door_x": 2560,
+    "door_y": 1000,
+    "door_x_all": [
+     680,
+     2560
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_dangerous_platforming",
+   "priority": 7871,
+   "reason": "原作 GML：room_dw_fcastle_bounce_3 的 `obj_doorAny` 实例（x=-40, y=2600）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_bounce_3_22_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_dangerous_platforming ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_dangerous_platforming（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_bounce_3",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_bounce_3_22_PreCreate",
+    "src_room_name": "room_dw_fcastle_bounce_3",
+    "dst_room_name": "room_dw_fcastle_dangerous_platforming",
+    "src_room_id": 192,
+    "dst_room_id": 186,
+    "door_x": -40,
+    "door_y": 2600,
+    "door_x_all": [
+     -40
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_bounce_3",
+   "priority": 7873,
+   "reason": "原作 GML：room_dw_fcastle_dangerous_platforming 的 `obj_doorAny` 实例（x=5600, y=3000）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_dangerous_platforming_51_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_bounce_3 ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_bounce_3（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_dangerous_platforming",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_dangerous_platforming_51_PreCreate",
+    "src_room_name": "room_dw_fcastle_dangerous_platforming",
+    "dst_room_name": "room_dw_fcastle_bounce_3",
+    "src_room_id": 186,
+    "dst_room_id": 192,
+    "door_x": 5600,
+    "door_y": 3000,
+    "door_x_all": [
+     -34,
+     5120,
+     5600
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_orange_puppet_introduction",
+   "priority": 7899,
+   "reason": "原作 GML：room_dw_fcastle_gloves_tower 的 `obj_doorAny` 实例（x=1600, y=2880）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_gloves_tower_10_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_orange_puppet_introduction ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_orange_puppet_introduction（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_gloves_tower",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_gloves_tower_10_PreCreate",
+    "src_room_name": "room_dw_fcastle_gloves_tower",
+    "dst_room_name": "room_dw_fcastle_orange_puppet_introduction",
+    "src_room_id": 201,
+    "dst_room_id": 200,
+    "door_x": 1600,
+    "door_y": 2880,
+    "axis": "y",
+    "door_x_all": [
+     206,
+     1600
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_trainroom",
+   "priority": 7900,
+   "reason": "原作 GML：room_dw_fcastle_gloves_tower 的 `obj_doorAny` 实例（x=1600, y=2320）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_gloves_tower_34_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_trainroom ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_trainroom（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_gloves_tower",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_gloves_tower_34_PreCreate",
+    "src_room_name": "room_dw_fcastle_gloves_tower",
+    "dst_room_name": "room_dw_fcastle_trainroom",
+    "src_room_id": 201,
+    "dst_room_id": 215,
+    "door_x": 1600,
+    "door_y": 2320,
+    "axis": "y",
+    "door_x_all": [
+     206,
+     1600
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_sidepuzzle",
+   "priority": 7914,
+   "reason": "原作 GML：room_dw_fcastle_obscured_bullets 的 `obj_doorAny` 实例（x=-40, y=2160）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_obscured_bullets_13_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_sidepuzzle ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_sidepuzzle（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_obscured_bullets",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_obscured_bullets_13_PreCreate",
+    "src_room_name": "room_dw_fcastle_obscured_bullets",
+    "dst_room_name": "room_dw_fcastle_sidepuzzle",
+    "src_room_id": 203,
+    "dst_room_id": 212,
+    "door_x": -40,
+    "door_y": 2160,
+    "door_x_all": [
+     -40,
+     1200,
+     2480
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_top_ascent",
+   "priority": 7916,
+   "reason": "原作 GML：room_dw_fcastle_orange_gauntlet 的 `obj_doorAny` 实例（x=-40, y=600）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_orange_gauntlet_36_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_ascent ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_ascent（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_orange_gauntlet",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_orange_gauntlet_36_PreCreate",
+    "src_room_name": "room_dw_fcastle_orange_gauntlet",
+    "dst_room_name": "room_dw_fcastle_top_ascent",
+    "src_room_id": 244,
+    "dst_room_id": 241,
+    "door_x": -40,
+    "door_y": 600,
+    "door_x_all": [
+     -40,
+     2440
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_gloves_tower",
+   "priority": 7917,
+   "reason": "原作 GML：room_dw_fcastle_orange_puppet_introduction 的 `obj_doorAny` 实例（x=-40, y=2760）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_orange_puppet_introduction_7_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_gloves_tower ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_gloves_tower（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_orange_puppet_introduction",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_orange_puppet_introduction_7_PreCreate",
+    "src_room_name": "room_dw_fcastle_orange_puppet_introduction",
+    "dst_room_name": "room_dw_fcastle_gloves_tower",
+    "src_room_id": 200,
+    "dst_room_id": 201,
+    "door_x": -40,
+    "door_y": 2760,
+    "door_x_all": [
+     -40,
+     760
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_obscured_bullets",
+   "priority": 7939,
+   "reason": "原作 GML：room_dw_fcastle_sidepuzzle 的 `obj_doorAny` 实例（x=1160, y=800）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_sidepuzzle_5_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_obscured_bullets ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_obscured_bullets（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_sidepuzzle",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_sidepuzzle_5_PreCreate",
+    "src_room_name": "room_dw_fcastle_sidepuzzle",
+    "dst_room_name": "room_dw_fcastle_obscured_bullets",
+    "src_room_id": 212,
+    "dst_room_id": 203,
+    "door_x": 1160,
+    "door_y": 800,
+    "door_x_all": [
+     1160
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_orange_gauntlet",
+   "priority": 7948,
+   "reason": "原作 GML：room_dw_fcastle_top_ascent 的 `obj_doorAny` 实例（x=840, y=2600）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_top_ascent_43_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_orange_gauntlet ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_orange_gauntlet（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_top_ascent",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_top_ascent_43_PreCreate",
+    "src_room_name": "room_dw_fcastle_top_ascent",
+    "dst_room_name": "room_dw_fcastle_orange_gauntlet",
+    "src_room_id": 241,
+    "dst_room_id": 244,
+    "door_x": 840,
+    "door_y": 2600,
+    "door_x_all": [
+     -40,
+     -34,
+     840
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_top_challenge",
+   "priority": 7949,
+   "reason": "原作 GML：room_dw_fcastle_top_ascent 的 `obj_doorAny` 实例（x=-40, y=2600）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_top_ascent_46_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_challenge ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_challenge（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_top_ascent",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_top_ascent_46_PreCreate",
+    "src_room_name": "room_dw_fcastle_top_ascent",
+    "dst_room_name": "room_dw_fcastle_top_challenge",
+    "src_room_id": 241,
+    "dst_room_id": 242,
+    "door_x": -40,
+    "door_y": 2600,
+    "door_x_all": [
+     -40,
+     -34,
+     840
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dogplatforming",
+   "priority": 7950,
+   "reason": "原作 GML：room_dw_fcastle_top_challenge 的 `obj_doorAny` 实例（x=240, y=440）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_top_challenge_80_PreCreate` 里把 `doorRoom` 写死成 room_dogplatforming ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dogplatforming（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_top_challenge",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_top_challenge_80_PreCreate",
+    "src_room_name": "room_dw_fcastle_top_challenge",
+    "dst_room_name": "room_dogplatforming",
+    "src_room_id": 242,
+    "dst_room_id": 175,
+    "door_x": 240,
+    "door_y": 440,
+    "door_x_all": [
+     240,
+     3160,
+     6600
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_top_ascent",
+   "priority": 7951,
+   "reason": "原作 GML：room_dw_fcastle_top_challenge 的 `obj_doorAny` 实例（x=6600, y=840）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_top_challenge_2_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_ascent ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_ascent（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_top_challenge",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_top_challenge_2_PreCreate",
+    "src_room_name": "room_dw_fcastle_top_challenge",
+    "dst_room_name": "room_dw_fcastle_top_ascent",
+    "src_room_id": 242,
+    "dst_room_id": 241,
+    "door_x": 6600,
+    "door_y": 840,
+    "door_x_all": [
+     240,
+     3160,
+     6600
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_top_descent",
+   "priority": 7952,
+   "reason": "原作 GML：room_dw_fcastle_top_challenge 的 `obj_doorAny` 实例（x=3160, y=1320）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_top_challenge_74_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_descent ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_descent（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_top_challenge",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_top_challenge_74_PreCreate",
+    "src_room_name": "room_dw_fcastle_top_challenge",
+    "dst_room_name": "room_dw_fcastle_top_descent",
+    "src_room_id": 242,
+    "dst_room_id": 228,
+    "door_x": 3160,
+    "door_y": 1320,
+    "door_x_all": [
+     240,
+     3160,
+     6600
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_top_challenge",
+   "priority": 7953,
+   "reason": "原作 GML：room_dw_fcastle_top_descent 的 `obj_doorAny` 实例（x=600, y=320）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_top_descent_20_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_challenge ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_challenge（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_top_descent",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_top_descent_20_PreCreate",
+    "src_room_name": "room_dw_fcastle_top_descent",
+    "dst_room_name": "room_dw_fcastle_top_challenge",
+    "src_room_id": 228,
+    "dst_room_id": 242,
+    "door_x": 600,
+    "door_y": 320,
+    "door_x_all": [
+     40,
+     600
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_top_pinkdoor",
+   "priority": 7954,
+   "reason": "原作 GML：room_dw_fcastle_top_descent 的 `obj_doorAny` 实例（x=40, y=3840）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_top_descent_19_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_top_pinkdoor ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_top_pinkdoor（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_top_descent",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_top_descent_19_PreCreate",
+    "src_room_name": "room_dw_fcastle_top_descent",
+    "dst_room_name": "room_dw_fcastle_top_pinkdoor",
+    "src_room_id": 228,
+    "dst_room_id": 229,
+    "door_x": 40,
+    "door_y": 3840,
+    "door_x_all": [
+     40,
+     600
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.flower_castle.dw_fcastle_gloves_tower",
+   "priority": 7965,
+   "reason": "原作 GML：room_dw_fcastle_trainroom 的 `obj_doorAny` 实例（x=-40, y=200）在**每实例创建代码** `gml_RoomCC_room_dw_fcastle_trainroom_13_PreCreate` 里把 `doorRoom` 写死成 room_dw_fcastle_gloves_tower ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.flower_castle.dw_fcastle_gloves_tower（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.flower_castle.dw_fcastle_trainroom",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_fcastle_trainroom_13_PreCreate",
+    "src_room_name": "room_dw_fcastle_trainroom",
+    "dst_room_name": "room_dw_fcastle_gloves_tower",
+    "src_room_id": 215,
+    "dst_room_id": 201,
+    "door_x": -40,
+    "door_y": 200,
+    "door_x_all": [
+     -40
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.dw_garden_finalplatforming",
+   "priority": 7997,
+   "reason": "原作 GML：room_dw_garden_aquadash_plat 的 `obj_doorAny` 实例（x=6400, y=-320）在**每实例创建代码** `gml_RoomCC_room_dw_garden_aquadash_plat_5_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_finalplatforming ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_finalplatforming（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.dw_garden_aquadash_plat",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_aquadash_plat_5_PreCreate",
+    "src_room_name": "room_dw_garden_aquadash_plat",
+    "dst_room_name": "room_dw_garden_finalplatforming",
+    "src_room_id": 153,
+    "dst_room_id": 137,
+    "door_x": 6400,
+    "door_y": -320,
+    "door_x_all": [
+     6400
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.garden_shrine",
+   "priority": 7998,
+   "reason": "原作 GML：room_dw_garden_aquahole_left 的 `obj_doorAny` 实例（x=640, y=-200）在**每实例创建代码** `gml_RoomCC_room_dw_garden_aquahole_left_6_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquahole ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.garden_shrine（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.dw_garden_aquahole_left",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_aquahole_left_6_PreCreate",
+    "src_room_name": "room_dw_garden_aquahole_left",
+    "dst_room_name": "room_dw_garden_aquahole",
+    "src_room_id": 151,
+    "dst_room_id": 141,
+    "door_x": 640,
+    "door_y": -200,
+    "door_x_all": [
+     634,
+     640
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.dw_garden_aquashrine",
+   "priority": 7999,
+   "reason": "原作 GML：room_dw_garden_aquaplatforming 的 `obj_doorAny` 实例（x=-34, y=-240）在**每实例创建代码** `gml_RoomCC_room_dw_garden_aquaplatforming_29_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquashrine ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquashrine（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.dw_garden_aquaplatforming",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_aquaplatforming_29_PreCreate",
+    "src_room_name": "room_dw_garden_aquaplatforming",
+    "dst_room_name": "room_dw_garden_aquashrine",
+    "src_room_id": 143,
+    "dst_room_id": 142,
+    "door_x": -34,
+    "door_y": -240,
+    "door_x_all": [
+     -34
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.dw_garden_aquaplatforming",
+   "priority": 8000,
+   "reason": "原作 GML：room_dw_garden_aquashrine 的 `obj_doorAny` 实例（x=634, y=0）在**每实例创建代码** `gml_RoomCC_room_dw_garden_aquashrine_7_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquaplatforming ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquaplatforming（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.dw_garden_aquashrine",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_aquashrine_7_PreCreate",
+    "src_room_name": "room_dw_garden_aquashrine",
+    "dst_room_name": "room_dw_garden_aquaplatforming",
+    "src_room_id": 142,
+    "dst_room_id": 143,
+    "door_x": 634,
+    "door_y": 0,
+    "door_x_all": [
+     -34,
+     634
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.garden_shrine",
+   "priority": 8001,
+   "reason": "原作 GML：room_dw_garden_aquashrine 的 `obj_doorAny` 实例（x=-34, y=0）在**每实例创建代码** `gml_RoomCC_room_dw_garden_aquashrine_0_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquahole ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.garden_shrine（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.dw_garden_aquashrine",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_aquashrine_0_PreCreate",
+    "src_room_name": "room_dw_garden_aquashrine",
+    "dst_room_name": "room_dw_garden_aquahole",
+    "src_room_id": 142,
+    "dst_room_id": 141,
+    "door_x": -34,
+    "door_y": 0,
+    "door_x_all": [
+     -34,
+     634
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.dw_garden_aquadash_plat",
+   "priority": 8008,
+   "reason": "原作 GML：room_dw_garden_finalplatforming 的 `obj_doorAny` 实例（x=-40, y=2120）在**每实例创建代码** `gml_RoomCC_room_dw_garden_finalplatforming_56_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquadash_plat ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquadash_plat（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.dw_garden_finalplatforming",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_finalplatforming_56_PreCreate",
+    "src_room_name": "room_dw_garden_finalplatforming",
+    "dst_room_name": "room_dw_garden_aquadash_plat",
+    "src_room_id": 137,
+    "dst_room_id": 153,
+    "door_x": -40,
+    "door_y": 2120,
+    "axis": "y",
+    "door_x_all": [
+     -40,
+     -34,
+     634,
+     640
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.dw_garden_finalplatforming_right",
+   "priority": 8009,
+   "reason": "原作 GML：room_dw_garden_finalplatforming 的 `obj_doorAny` 实例（x=640, y=2120）在**每实例创建代码** `gml_RoomCC_room_dw_garden_finalplatforming_57_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_finalplatforming_right ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_finalplatforming_right（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.dw_garden_finalplatforming",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_finalplatforming_57_PreCreate",
+    "src_room_name": "room_dw_garden_finalplatforming",
+    "dst_room_name": "room_dw_garden_finalplatforming_right",
+    "src_room_id": 137,
+    "dst_room_id": 138,
+    "door_x": 640,
+    "door_y": 2120,
+    "door_x_all": [
+     -40,
+     -34,
+     634,
+     640
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.dw_garden_finalplatforming",
+   "priority": 8011,
+   "reason": "原作 GML：room_dw_garden_finalplatforming_right 的 `obj_doorAny` 实例（x=-34, y=2360）在**每实例创建代码** `gml_RoomCC_room_dw_garden_finalplatforming_right_1_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_finalplatforming ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_finalplatforming（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.dw_garden_finalplatforming_right",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_finalplatforming_right_1_PreCreate",
+    "src_room_name": "room_dw_garden_finalplatforming_right",
+    "dst_room_name": "room_dw_garden_finalplatforming",
+    "src_room_id": 138,
+    "dst_room_id": 137,
+    "door_x": -34,
+    "door_y": 2360,
+    "door_x_all": [
+     -34
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.dw_garden_platshortcut",
+   "priority": 8020,
+   "reason": "原作 GML：room_dw_garden_hopschef 的 `obj_doorAny` 实例（x=1674, y=1480）在**每实例创建代码** `gml_RoomCC_room_dw_garden_hopschef_1_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_platshortcut ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_platshortcut（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.dw_garden_hopschef",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_hopschef_1_PreCreate",
+    "src_room_name": "room_dw_garden_hopschef",
+    "dst_room_name": "room_dw_garden_platshortcut",
+    "src_room_id": 126,
+    "dst_room_id": 127,
+    "door_x": 1674,
+    "door_y": 1480,
+    "door_x_all": [
+     446,
+     1674
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.dw_garden_hopschef",
+   "priority": 8031,
+   "reason": "原作 GML：room_dw_garden_platshortcut 的 `obj_doorAny` 实例（x=-34, y=760）在**每实例创建代码** `gml_RoomCC_room_dw_garden_platshortcut_37_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_hopschef ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_hopschef（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.dw_garden_platshortcut",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_platshortcut_37_PreCreate",
+    "src_room_name": "room_dw_garden_platshortcut",
+    "dst_room_name": "room_dw_garden_hopschef",
+    "src_room_id": 127,
+    "dst_room_id": 126,
+    "door_x": -34,
+    "door_y": 760,
+    "door_x_all": [
+     -34,
+     220
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.dw_garden_aquahole_left",
+   "priority": 8056,
+   "reason": "原作 GML：room_dw_garden_aquahole 的 `obj_doorAny` 实例（x=-40, y=760）在**每实例创建代码** `gml_RoomCC_room_dw_garden_aquahole_19_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquahole_left ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquahole_left（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.garden_shrine",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_aquahole_19_PreCreate",
+    "src_room_name": "room_dw_garden_aquahole",
+    "dst_room_name": "room_dw_garden_aquahole_left",
+    "src_room_id": 141,
+    "dst_room_id": 151,
+    "door_x": -40,
+    "door_y": 760,
+    "door_x_all": [
+     -40,
+     -34,
+     634
+    ],
+    "batch": 172
+   }
+  },
+  {
+   "to": "ch5.garden.dw_garden_aquashrine",
+   "priority": 8057,
+   "reason": "原作 GML：room_dw_garden_aquahole 的 `obj_doorAny` 实例（x=634, y=760）在**每实例创建代码** `gml_RoomCC_room_dw_garden_aquahole_0_PreCreate` 里把 `doorRoom` 写死成 room_dw_garden_aquashrine ⇒ `Alarm_2` 的 `room_goto(doorRoom)` 落到 ch5.garden.dw_garden_aquashrine（第172轮按实例创建代码补；此前表里没有这条边 ⇒ 门查不到目标 ⇒ 按 E 没反应）。",
+   "when_scene": "ch5.garden.garden_shrine",
+   "when_door": null,
+   "when_src": "obj_doorAny",
+   "_original": {
+    "chapter": "ch5",
+    "kind": "delta_door_any",
+    "table": "gml_Object_obj_doorAny_Alarm_2",
+    "via": "obj_doorAny",
+    "precreate": "gml_RoomCC_room_dw_garden_aquahole_0_PreCreate",
+    "src_room_name": "room_dw_garden_aquahole",
+    "dst_room_name": "room_dw_garden_aquashrine",
+    "src_room_id": 141,
+    "dst_room_id": 142,
+    "door_x": 634,
+    "door_y": 760,
+    "door_x_all": [
+     -40,
+     -34,
+     634
+    ],
+    "batch": 172
+   }
+  }
+ ]
+}

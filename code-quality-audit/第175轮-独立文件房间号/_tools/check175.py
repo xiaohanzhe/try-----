@@ -252,16 +252,29 @@ check(u'C2 87 个文件「除房间号外」的指纹 == 改前快照（不符 %
 check(u'C3 每个文件行数 == 改前 + 1（不符 %d %r）' % (len(_ln), _ln[:3]), not _ln)
 check(u'C4 字节增量恰好等于新增那一行（不符 %d %r）' % (len(_by), _by[:3]), not _by)
 
-_rc, _out = git('-c', 'core.quotepath=false', 'diff', '--name-only', 'HEAD', '--',
-                'ralsei_pet/assets/scenes/')
+#: ★★★ 第176轮修正（这两条判据**原本的设计不成立**）：
+#:   C5/C6 以前比的是 `git diff HEAD -- scenes/`，只有"第175轮还没提交"时才绿。
+#:   一提交，`_routes.json` 变成唯一改动 ⇒ C5/C6 恒红。**判据不能依赖"未提交状态"**。
+#:   ⇒ 改成**绑定到那次提交**：先用 `git log -S original_room_id` 找到把 rid 加进去的
+#:   那个 commit，再核它的 numstat。同一件事（"那次改动的面就是 87 个文件、只加不删"），
+#:   但再提交多少次都不影响判据。
+_one = sorted(f for f in SOLO if f not in _had)[0]
+_rc0, _out0 = git('-c', 'core.quotepath=false', 'log', '--format=%H', '-S',
+                  'original_room_id', '--',
+                  'ralsei_pet/assets/scenes/' + _one)
+_sha = (_out0.split()[0] if _rc0 == 0 and _out0.split() else u'')
+
+_rc, _out = git('-c', 'core.quotepath=false', 'show', '--name-only',
+                '--format=', _sha, '--', 'ralsei_pet/assets/scenes/')
 _changed = set(x.strip() for x in _out.splitlines() if x.strip())
 _want = set('ralsei_pet/assets/scenes/' + f for f in SOLO if f not in _had)
-check(u'C5 ★ git 侧改动面恰好是那 87 个文件（git 说 %d 个；多 %r；少 %r）'
-      % (len(_changed), sorted(_changed - _want)[:3], sorted(_want - _changed)[:3]),
-      _rc == 0 and _changed == _want)
+check(u'C5 ★ git 侧改动面恰好是那 87 个文件（commit=%s；git 说 %d 个；多 %r；少 %r）'
+      % (_sha[:8] or u'<找不到>', len(_changed),
+         sorted(_changed - _want)[:3], sorted(_want - _changed)[:3]),
+      bool(_sha) and _rc == 0 and _changed == _want)
 
-_rc2, _out2 = git('-c', 'core.quotepath=false', 'diff', '--numstat', 'HEAD', '--',
-                  'ralsei_pet/assets/scenes/')
+_rc2, _out2 = git('-c', 'core.quotepath=false', 'show', '--numstat',
+                  '--format=', _sha, '--', 'ralsei_pet/assets/scenes/')
 _add = _del = _files = 0
 for line in _out2.splitlines():
     p = line.split('\t')

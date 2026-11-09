@@ -18,6 +18,26 @@ u"""第172轮 · 「`obj_doorAny` 每实例目标」回归锁。
    消歧（`_pick_by_pos`），挑不出唯一才落回"priority 最小"。理由是同一间房里
    两扇 Any 门的目标不同 —— 只按 `when_src` 查必然全去同一间。
 
+## ★★★ 第176轮订正（本文件已随之改口径，**不是**"历史数变了就把期望值调小"）
+
+第172轮那 798 条里有 **42 条是误标边**，第176轮已删（留档
+`第176轮-订正172误标边/_evidence/removed176.json`，可整段加回）。三条独立证据：
+
+① **标错**：`when_src` / `via` 写 `obj_doorAny`，但它们的 `precreate` 在
+   第174轮取证里真身是 `obj_doorAnyHorz`(36) / `obj_doorAnyVert`(6)。
+② **死边**：`route_for_door` 对象级匹配是 `r['when_src'] == src` **精确字符串相等**，
+   而这些门的 `src` 已是变体名 ⇒ **一条都匹配不上**（删前就是死的）。
+③ **纯冗余**：与第174轮的 51 条在 `(场景, 目标, door_x, door_y)` 上 **42/42 完全重合**。
+
+⇒ 本文件的分母从此分两套，**不再混用**：
+
+- `EXPECT_N = 798`：**证据侧** `analyze172.json` 的 `new_pairs`（冻结，取证没变）
+- `EXPECT_LIVE = 756`：**产品侧**现存条数 `= EXPECT_N - len(REMOVED)`
+- 两套之间的桥是 `REMOVED_PAIRS`（从留档读，**不写死**）：
+  `PAIRS | REMOVED_PAIRS == EVID_PAIRS` 且 `PAIRS & REMOVED_PAIRS` 为空 —— B1。
+- priority 段位因此出现 **42 个空洞**，且空洞集合必须**恒等于**留档的 42 个
+  priority（A1）—— 这是"删的正好是那 42 条、没误伤别人"的硬闸。
+
 ## 判据分六段
 
 - A 段：段位与分母（防空集恒真；★ 一律"历史段冻结 + 新段只增不减"）
@@ -45,6 +65,10 @@ SCENES = os.path.join(PKG, 'assets', 'scenes')
 ROUTES_P = os.environ.get('CQ_ROUTES172') or os.path.join(SCENES, '_routes.json')
 EV = os.environ.get('CQ_EV172') or os.path.join(ROUND, '_evidence')
 ANALYZE_P = os.path.join(EV, 'analyze172.json')
+#: ★ 第176轮的删除留档（跨轮引用；`mutate172.py` 用 `CQ_RM172` 换掉它）
+RM_P = (os.environ.get('CQ_RM172')
+        or os.path.join(REPO, 'code-quality-audit', '第176轮-订正172误标边',
+                        '_evidence', 'removed176.json'))
 SELF = os.path.abspath(__file__)
 
 for _p in (PKG, os.path.join(PKG, 'modules')):
@@ -57,16 +81,28 @@ from modules.scene_system import load_index  # noqa: E402
 
 #: 钉死的段位常量
 BATCH = 172
+#: ★ 证据侧（第172轮取证）冻结：`analyze172.json` 的 `new_pairs` 条数
 EXPECT_N = 798
 PRIO_BASE = 7300
-EXPECT_PRIO = list(range(PRIO_BASE, PRIO_BASE + EXPECT_N))
-EXPECT_ROUTES_FLOOR = 2759          # 1961 + 798
+#: ★ 产品侧现存条数 —— **由留档推**（下面 `EXPECT_LIVE = EXPECT_N - len(REMOVED_PAIRS)`）
+#:   ★★ 第176轮：曾把 798 直接写死在这里当"产品条数"，删掉 42 条误标边后
+#:   它就变成"历史数变了就把期望值调小"的坏味道。现在两套分母分开记账。
+#:   （`EXPECT_ROUTES_FLOOR` 同理：1961 + 798 - 42 = 2717，但取实测 2768 留余量）
+EXPECT_ROUTES_FLOOR = 2768          # 1961 + 798 + 51 - 42（含第174轮那 51 条）
 EXPECT_DOORS = 881                  # 五章 Any 门扇数（证据侧）
 EXPECT_DEADEND = 404                # 「只有 Any 门能出」的场景数
-EXPECT_MULTI_SCENES = 242           # 同场景两扇以上 Any 边（会走消歧）
-EXPECT_ONLY_ANY_SCENES = 425        # 有 Any 边的场景数
+#: ★★ 第176轮删掉 42 条后重测：有 Any 边的场景 425 -> 409（那 16 个场景
+#:   失去了全部 **172 段**边，出口改由第174轮变体边提供，见 E1）；同场景两扇
+#:   以上 242 -> 227（15 个场景原来是"172+174 双胞胎"凑出的 2 条，现只剩 1 条）。
+EXPECT_MULTI_SCENES = 227
+EXPECT_ONLY_ANY_SCENES = 409
 EXPECT_SELF_LOOP = 1                # 原作 room_goto 回自身（迷宫回路）
 EXPECT_DUP_GROUPS = 5               # 全表既有合法重复组数（第123/125轮那 5 组）
+#: 第174轮变体别名边的**内部**合法重复组数（同房两扇 Horz/Vert 同目标 ⇒ 同
+#:   `(场景,目标)` 落 2 条，靠 `door_x/door_y` 区分）。删掉 172 的重合边后实测 7。
+EXPECT_VAR_DUP_GROUPS = 7
+#: `axis: "y"` 的**扇数**（证据侧冻结 48 扇）；删掉的 42 条里占 4 条 ⇒ 现存 44
+EXPECT_AXIS_Y_EVID = 48
 #: ★★ 第174轮：`obj_doorAnyHorz/Vert` 落了 51 条**对象级别名边**（同一扇原作门
 #:   在本轮之前被错标成 `obj_doorAny`，目标对早已存在）⇒ 它们**有意**与既有
 #:   (场景,目标) 重复。判据因此改成结构性的：允许的重复组 = 5 + 变体边覆盖的组数，
@@ -110,6 +146,21 @@ SCN = IDX.get('scenes') or {}
 MINE = [r for r in RL if (r.get('_original') or {}).get('batch') == BATCH]
 OTHERS = [r for r in RL if (r.get('_original') or {}).get('batch') != BATCH]
 
+#: ★★★ 第176轮的删除留档 —— 后面**所有**"少掉的那部分"都从这里取，一律不写死
+if not os.path.isfile(RM_P):
+    print(u'[FATAL] 找不到第176轮删除留档：%s' % RM_P)
+    sys.exit(2)
+REMOVED = jl(RM_P)['items']
+REMOVED_PAIRS = set((r.get('when_scene'), r.get('to')) for r in REMOVED)
+REMOVED_PRIOS = set(r.get('priority') for r in REMOVED)
+#: 产品侧现存条数 = 证据侧 - 留档条数（**推出来的**，不是拍的）
+EXPECT_LIVE = EXPECT_N - len(REMOVED_PAIRS)
+#: 现存 priority 必须是"基础连续段 - 留档的那几个洞"
+EXPECT_PRIO = [p for p in range(PRIO_BASE, PRIO_BASE + EXPECT_N)
+               if p not in REMOVED_PRIOS]
+EXPECT_AXIS_Y = EXPECT_AXIS_Y_EVID - sum(
+    1 for r in REMOVED if (r.get('_original') or {}).get('axis') == 'y')
+
 
 def _pos(r):
     o = r.get('_original') or {}
@@ -141,26 +192,31 @@ print('=' * 70)
 print(u'A 段  段位与分母（防空集恒真）')
 print('=' * 70)
 
-check(u'A0 分母：证据 rows == %d、`new_pairs` == %d、产品表 >= %d 条、本轮段非空'
-      % (EXPECT_DOORS, EXPECT_N, EXPECT_ROUTES_FLOOR),
+check(u'A0 分母两套账：证据 rows == %d、`new_pairs` == %d（冻结）、'
+      u'产品表 >= %d 条、本轮段 == %d（= %d - 留档 %d）'
+      % (EXPECT_DOORS, EXPECT_N, EXPECT_ROUTES_FLOOR, EXPECT_LIVE,
+         EXPECT_N, len(REMOVED_PAIRS)),
       len(ROWS) == EXPECT_DOORS and len(EVID_PAIRS) == EXPECT_N
-      and len(RL) >= EXPECT_ROUTES_FLOOR and len(MINE) == EXPECT_N,
-      u'rows=%d evid=%d routes=%d mine=%d'
-      % (len(ROWS), len(EVID_PAIRS), len(RL), len(MINE)))
+      and len(RL) >= EXPECT_ROUTES_FLOOR and len(MINE) == EXPECT_LIVE
+      and len(REMOVED_PAIRS) == 42,
+      u'rows=%d evid=%d routes=%d mine=%d removed=%d'
+      % (len(ROWS), len(EVID_PAIRS), len(RL), len(MINE), len(REMOVED_PAIRS)))
 
 _prios = sorted(r.get('priority') for r in MINE)
-check(u'A1 本轮段 %d 条、priority %d~%d 连续无空洞、无重复'
-      % (EXPECT_N, PRIO_BASE, PRIO_BASE + EXPECT_N - 1),
+_holes = sorted(set(range(PRIO_BASE, PRIO_BASE + EXPECT_N)) - set(_prios))
+check(u'A1 本轮段 %d 条、priority 落在 %d~%d 区间、**空洞恰好 == 留档的 %d 个**'
+      u'（洞 = 被删的那几条，一个不多一个不少）'
+      % (EXPECT_LIVE, PRIO_BASE, PRIO_BASE + EXPECT_N - 1, len(REMOVED_PRIOS)),
       _prios == EXPECT_PRIO,
-      u'n=%d 首末=%r 唯一=%d'
+      u'n=%d 首末=%r 唯一=%d 空洞=%d 洞==留档?%r'
       % (len(_prios), (_prios[0], _prios[-1]) if _prios else None,
-         len(set(_prios))))
+         len(set(_prios)), len(_holes), set(_holes) == REMOVED_PRIOS))
 
 _used = collections.Counter(r.get('priority') for r in OTHERS)
 _collide = [(r.get('priority'), _used[r.get('priority')])
             for r in MINE if _used.get(r.get('priority'))]
 check(u'A2 ★★ 本轮 %d 条的 priority 不与**任何**既有规则重复（不许顶掉谁）'
-      % EXPECT_N,
+      % EXPECT_LIVE,
       not _collide, u'撞车=%r' % (_collide[:5],))
 
 _bat = collections.Counter((r.get('_original') or {}).get('batch') for r in RL)
@@ -170,8 +226,8 @@ _bad_label = [k for k in _bat if k is not None and not isinstance(k, int)]
 check(u'A3 段位分布：历史段**冻结**（169 段 %d / 170 段 %d / 171 段 %d，一格都不许动）'
       u' + 172 段 %d 条（只增不减）；无 batch 的那批 >= %d；段位标签只许 None 或整数'
       % (FROZEN_BATCH[169], FROZEN_BATCH[170], FROZEN_BATCH[171],
-         _bat.get(BATCH, 0), 1828),
-      not _bad_hist and not _bad_label and _bat.get(BATCH, 0) >= EXPECT_N
+         EXPECT_LIVE, 1828),
+      not _bad_hist and not _bad_label and _bat.get(BATCH, 0) >= EXPECT_LIVE
       and _bat.get(None, 0) >= 1828,
       u'%r' % (dict(_bat),))
 #: ★ 第171轮的教训：判据**禁写死随轮次增长的绝对数**。这里 169/170/171 三段
@@ -192,19 +248,31 @@ _grp_rows = collections.defaultdict(list)
 for _r in RL:
     _grp_rows[(_r.get('when_scene'), _r.get('to'))].append(_r)
 _multi_scenes = dict((k, v) for k, v in MULTI.items() if len(v) >= 2)
-_n_var_pairs = len(set((r.get('when_scene'), r.get('to')) for r in RL
-                       if r.get('when_src') in VAR_SRC))
-check(u'A5 分母闸：多候选场景 >= %d、有 Any 边的场景 >= %d、全表重复组 == %d'
-      u'（历史 5 + 第174轮变体别名 %d）'
+#: ★★ 第176轮改口径：以前是 `5 + (变体边覆盖的组数)`，其中 42 组是
+#:   "172 与 174 各一条"的**双胞胎**重复；那 42 条 172 边删掉后这些组只剩 1 条
+#:   ⇒ 不再是重复组。现在的口径是**结构性**的：
+#:     允许的重复组 = 历史 5 + **全部由变体族组成**的组（同房两扇同目标，靠坐标分）
+#:     另加一条新不变式：**任何重复组里都不许有 172 段的边**（172 段自身必须无重复）
+_dup_keys = sorted(k for k, v in _grp_rows.items() if len(v) > 1)
+_dup_var = [k for k in _dup_keys
+            if all(x.get('when_src') in VAR_SRC for x in _grp_rows[k])]
+_dup_172 = [k for k in _dup_keys
+            if any((x.get('_original') or {}).get('batch') == BATCH
+                   for x in _grp_rows[k])]
+check(u'A5 分母闸：多候选场景 >= %d、有 Any 边的场景 >= %d、'
+      u'全表重复组 == %d（历史 %d + 第174轮变体内部 %d）、'
+      u'且含 172 段边的重复组 **0 个**（172 段自身不许重复）'
       % (EXPECT_MULTI_SCENES, EXPECT_ONLY_ANY_SCENES,
-         EXPECT_DUP_GROUPS + _n_var_pairs, _n_var_pairs),
+         EXPECT_DUP_GROUPS + EXPECT_VAR_DUP_GROUPS,
+         EXPECT_DUP_GROUPS, EXPECT_VAR_DUP_GROUPS),
       len(_multi_scenes) >= EXPECT_MULTI_SCENES
       and len(MULTI) >= EXPECT_ONLY_ANY_SCENES
-      and sum(1 for v in _grp.values() if v > 1) == EXPECT_DUP_GROUPS + _n_var_pairs,
-      u'multi=%d scenes=%d dupgroups=%d（期望 %d）'
-      % (len(_multi_scenes), len(MULTI),
-         sum(1 for v in _grp.values() if v > 1),
-         EXPECT_DUP_GROUPS + _n_var_pairs))
+      and len(_dup_keys) == EXPECT_DUP_GROUPS + EXPECT_VAR_DUP_GROUPS
+      and len(_dup_var) == EXPECT_VAR_DUP_GROUPS
+      and not _dup_172,
+      u'multi=%d scenes=%d dupgroups=%d（历史 %d + 变体内部 %d）含172段=%d'
+      % (len(_multi_scenes), len(MULTI), len(_dup_keys),
+         len(_dup_keys) - len(_dup_var), len(_dup_var), len(_dup_172)))
 
 _tot = ANALYZE['total']
 check(u'A6 证据自洽：五类裁决之和 == rows == %d；`src_unmapped` == %d'
@@ -220,12 +288,14 @@ print('=' * 70)
 print(u'B 段  产品表 ↔ 原作证据逐条对账')
 print('=' * 70)
 
-check(u'B1 ★★★ 双向集合相等：产品本轮段 %d 条唯一边 == 证据 `new_pairs` %d 条'
-      u'（对称差必须为空）'
-      % (len(PAIRS), len(EVID_PAIRS)),
-      PAIRS == EVID_PAIRS,
-      u'多出=%r 少了=%r'
-      % (sorted(PAIRS - EVID_PAIRS)[:3], sorted(EVID_PAIRS - PAIRS)[:3]))
+check(u'B1 ★★★ 双向集合相等：产品现存 %d 条唯一边 **∪ 留档 %d 条** == 证据 '
+      u'`new_pairs` %d 条；且两者**交集为空**（删掉的确实不在了、剩下的确实是原集的子集）'
+      % (len(PAIRS), len(REMOVED_PAIRS), len(EVID_PAIRS)),
+      PAIRS | REMOVED_PAIRS == EVID_PAIRS and not (PAIRS & REMOVED_PAIRS),
+      u'多出=%r 少了=%r 交集=%r'
+      % (sorted(PAIRS - EVID_PAIRS)[:3],
+         sorted(EVID_PAIRS - PAIRS - REMOVED_PAIRS)[:3],
+         sorted(PAIRS & REMOVED_PAIRS)[:3]))
 
 #: 证据按 (章, 源房名, x, y) 建索引 —— 一扇门一个键
 EIDX = {}
@@ -252,9 +322,9 @@ def _match(r):
 
 
 _miss = [r.get('priority') for r in MINE if _match(r) is None]
-check(u'B2 ★★★ 逐条对账：本轮 %d 条全都能唯一回溯到一扇原作门实例'
+check(u'B2 ★★★ 逐条对账：现存 %d 条全都能唯一回溯到一扇原作门实例'
       u'（章 + 源房名 + 门坐标 + `PreCreate` 代码名 + `doorRoom` 目标房 + 产品 `to` 六项全中）'
-      % EXPECT_N,
+      % EXPECT_LIVE,
       not _miss, u'对不上的 %d 条: %r' % (len(_miss), _miss[:5]))
 
 #: 负控制：把一条的门坐标挪 1px，B2 必须立刻报红（证明它不是"有 _original 就绿"）
@@ -279,8 +349,9 @@ for r in MINE:
         _axis_bad.append((r.get('priority'), o.get('axis'), want))
 _n_axis = sum(1 for r in MINE if (r.get('_original') or {}).get('axis') == 'y')
 check(u'B4 `axis` 口径：同房同 x 撞车（%d 扇）必须写 `axis: "y"`，其余不写'
-      % _n_axis,
-      not _axis_bad and _n_axis == 48,
+      u'（扇数 = 证据侧 %d - 留档里带 axis 的 %d）'
+      % (_n_axis, EXPECT_AXIS_Y_EVID, EXPECT_AXIS_Y_EVID - EXPECT_AXIS_Y),
+      not _axis_bad and _n_axis == EXPECT_AXIS_Y,
       u'不符 %d 条: %r' % (len(_axis_bad), _axis_bad[:5]))
 
 _unreg = []
@@ -325,7 +396,7 @@ for r in MINE:
     if got != r.get('to'):
         _c1_bad.append((r.get('priority'), got, r.get('to')))
 check(u'C1 ★★★ 拿**这扇门的真实坐标**调 `route_for_door` ⇒ 必须返回它自己的目标'
-      u'（%d 条逐条扫，不是抽几条）' % EXPECT_N,
+      u'（%d 条逐条扫，不是抽几条）' % EXPECT_LIVE,
       not _c1_bad, u'错 %d 条: %r' % (len(_c1_bad), _c1_bad[:4]))
 
 _diff_pairs = 0
@@ -438,9 +509,9 @@ check(u'D1 重复组内**门标识两两不同**（同房间不同门同目标 =
 
 _sz = os.path.getsize(ROUTES_P)
 check(u'D2 ★★★ 反回滚：路由 >= %d 条、本轮段 >= %d 条、文件 >= 2,000,000 B'
-      u'（缩水 >30%% 直接报红）'
-      % (EXPECT_ROUTES_FLOOR, EXPECT_N),
-      len(RL) >= EXPECT_ROUTES_FLOOR and len(MINE) >= EXPECT_N
+      u'（缩水 >30%% 直接报红；★ 第176轮删了 42 条，floor 与 172 段门槛同步重算）'
+      % (EXPECT_ROUTES_FLOOR, EXPECT_LIVE),
+      len(RL) >= EXPECT_ROUTES_FLOOR and len(MINE) >= EXPECT_LIVE
       and _sz >= 2000000,
       u'routes=%d mine=%d size=%d' % (len(RL), len(MINE), _sz))
 
@@ -479,10 +550,15 @@ _only = ANALYZE['only_any_src']
 #:   "**除 doorany 家族以外**的出边"，否则那 29 个场景会被误判成"本来就有出口"。
 _old_from = set(r.get('when_scene') for r in OTHERS
                 if r.get('when_src') not in _SKIP_SRC)
-_new_from = set(MULTI)
+#: ★★ 第176轮改口径：`_new_from` 以前只数 **172 段**的边。删掉那 42 条之后，
+#:   有 16 个场景（ch5 的 cliffs / flower_castle / garden）**一条 172 段边都没有了**，
+#:   但它们的出口由第174轮的**变体边**（`obj_doorAnyHorz/Vert`）提供 —— 同一扇原作门。
+#:   ⇒ 出口口径改为"**doorany 家族**的边"，与 `_old_from` 的排除集严格互补。
+_new_from = set(r.get('when_scene') for r in RL
+                if r.get('when_src') in ((VIA,) + VAR_SRC))
 _still = [s for s in _only if s not in _new_from]
 _got = [s for s in _only if s in _new_from]
-check(u'E1 ★★★ "只有 Any 门能出"的场景 %d 个：除本轮外**一条出边都没有**，'
+check(u'E1 ★★★ "只有 Any 门能出"的场景 %d 个：除 doorany 家族外**一条出边都没有**，'
       u'含本轮后**全部**有出边（逐场景点名，不是只报个数）'
       % EXPECT_DEADEND,
       len(_only) == EXPECT_DEADEND and not _still
