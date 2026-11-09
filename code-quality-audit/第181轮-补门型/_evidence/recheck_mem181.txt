@@ -1,0 +1,36 @@
+第181轮 记忆复检（core-file-recheck）  PASS=21 FAIL=0
+======================================================================
+[PASS] 1a 速查本无 BOM 且 UTF-8 可解
+[PASS] 1b 速查本无 U+FFFD
+       fffd=0
+[PASS] 1c 当日日志 LF 口径未变（CRLF=0）
+       crlf=0 lone_lf=349
+[PASS] 1d 当日日志无 U+FFFD
+[PASS] 1e 详版无 U+FFFD 且无 BOM
+[PASS] 1f 速查本行尾口径未变（仍 64 个 CRLF）
+       crlf=64 lone_lf=0
+[PASS] 2a 速查本 12 个一级小节 0~11 全在
+       heads=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+[PASS] 2b 无标题被 Edit 粘到上一行
+       glued=[]
+[PASS] 2c 181 条目在 §7 且带 §183 指针
+[PASS] 2d 详版有 §183 小节标题
+       hits=1
+[PASS] 2e 当日日志有第181轮小节
+[PASS] 3a js_len ≤ 10000（与 check95 A2 同口径）
+       js_len=9894 余量=+106
+[PASS] 4a 本轮脚本无「常量 True」判据（若有必须同文件存在同名 False 分支）
+       trues=[]
+[PASS] 4b 本轮脚本确被真解析过（no-op 控制：解析数 > 0）
+       parsed=['an181.py', 'apply181.py', 'calc181.py', 'check181.py', 'mutate181.py', 'run_probe181.py', 'sim181.py', 'survey181.py']
+[PASS] 5a 被删令牌 diff 非空（no-op 控制：否则本判据没在干活）
+       removed=20
+[PASS] 5b 被删令牌 0 丢失（详版可查 或 白名单带锚点）
+       removed=20  直接命中=20  白名单=0  丢失=[]
+[PASS] 5c 负控制夹具自证真阴性（所有 4 字子串都不在详版）
+       subs=7
+[PASS] 5d 负控制：伪造令牌必须判为丢失
+[PASS] 6a 工作区只有声明的 4 项被改（3 记忆文件 + 本复检自己的报告）
+       files=['.workbuddy/memory/2026-11-09.md', '.workbuddy/memory/MEMORY.md', '.workbuddy/memory/参考-契约与历轮（详版）.md', 'code-quality-audit/第181轮-补门型/_evidence/recheck_mem181.txt']
+[PASS] 6c 负控制：注入伪造路径后同一谓词必须报出它
+[PASS] 6b 路径未被八进制转义（quotepath=false 生效）
