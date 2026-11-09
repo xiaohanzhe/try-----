@@ -13002,6 +13002,13 @@ class RalseiPet(QMainWindow):
         · 站在窗口楼板上 → 插到该窗口之上；
         · 站在桌面上（1楼） → 插到 WorkerW 之后 = 桌面图标之上、所有应用窗口之下。
 
+        ★★★ 第178轮：改成**「遮挡 = 按屏幕 Y 排序」**（第164轮用户裁定 `BBA` 第三项，
+        此前一直登记为 ❌ 未实现）。锚点不再看"宠物站在哪块楼板上"，而是看
+        **宠物脚底的屏幕 Y** 与各窗口**下沿**谁大 —— 谁靠下谁在前，详见
+        `floor_manager.pick_insert_after_by_foot_y`。
+        脚底 = 窗口下沿（第163轮起本体下沿 = 画布底沿、`anchored_resize_xy` 固定
+        底边 ⇒ 窗口 bottom 就是脚底，不再随动画高度浮动）。
+
         修复（第十三轮）：之前这里是 `setWindowFlags(... | Qt.WindowStaysOnTopHint)`，
         把宠物**永久置顶**，于是它永远画在所有窗口之上、遮挡关系完全失效
         （用户原话："他直接走到我的窗口上面了，根本没遮挡关系这类的"）。
@@ -13027,8 +13034,12 @@ class RalseiPet(QMainWindow):
             return False
         if not hwnd:
             return False
+        #: ★★★ 第178轮：脚底 Y = 窗口下沿（见 docstring）。给 `foot_y` 后
+        #: `get_insert_after_hwnd` 走「按屏幕 Y 排序」；窗口表还没就绪时它自己
+        #: 回退老逻辑，这里不需要再判一次。
+        foot_y = self.pos().y() + self.height()
         insert_after = self.floor_manager.get_insert_after_hwnd(
-            getattr(self, 'current_floor', None))
+            getattr(self, 'current_floor', None), foot_y=foot_y)
         return FloorManager.set_window_behind(hwnd, insert_after)
 
     def check_window_movement(self):

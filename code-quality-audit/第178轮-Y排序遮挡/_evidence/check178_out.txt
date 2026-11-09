@@ -1,0 +1,62 @@
+
+======================================================================
+A 段  纯函数：排列语义（遮挡 = 按屏幕 Y 排序）
+======================================================================
+[PASS] A1 没有窗口 ⇒ `HWND_TOP`（宠物最近，画在最前；不是 WorkerW、不是 BOTTOM）    anchor=0 reason=frontmost
+[PASS] A2 所有窗口下沿都在脚底**之上**（脚底在屏幕最底）⇒ `HWND_TOP`    anchor=0
+[PASS] A3 三个窗口全在脚底下方 ⇒ 取下沿**最小**的（最近的前挡者）= 400 那扇    anchor=17 bottom=400 n_front=3
+[PASS] A4 脚底正好=某窗口下沿 ⇒ 齐平算"在宠物后面"，该窗口不挡它（取 700 那扇）    anchor=34 bottom=700
+[PASS] A5 脚底 690 ⇒ 前挡者是 700/1080 ⇒ 取 700    anchor=34
+[PASS] A6 脚底 710 ⇒ 700 那扇落到身后 ⇒ 只剩 1080 当前挡者（**翻面**）    690→34 710→51
+[PASS] A7 ★★ 输入顺序无关：打乱 24 次、7 种脚底高度，锚点集合只由 (脚底, 下沿) 决定（偷偷按 z 序排的实现会在这里抖）    集合=[34, 51]
+[PASS] A8 两种矩形形态（`QRect` / 半开四元组）结果一致 —— 下沿口径统一为 `top+height`    QRect=7 tuple=7
+[PASS] A9 `window_hwnd` 键名（`floors` 的写法）与 `hwnd` 等价
+[PASS] A10 无效句柄（0 / None / 字符串）不进候选 ⇒ 只剩合法的那扇
+[PASS] A11 ★ 1px 边界：脚底 = 下沿 - 1 仍算"窗口在前"（下沿必须是 `top+height`，不是 `QRect.bottom()`）    599→61 600→0
+[PASS] A12 下沿并列 ⇒ 取 z 序更前（`z_order` 更小）的那扇当锚点，宠物落在两者之后    anchor=52
+[PASS] A13 `foot_y=None` ⇒ 返回 `None`（不是 `HWND_TOP`）—— 让调用方走回退，不许猜    anchor=None
+
+======================================================================
+B 段  接线：foot_y 真的被传下去、候选真的是 floors
+======================================================================
+[PASS] B1 `get_insert_after_hwnd` 签名含 `foot_y` 且默认 `None`（不给就保持老行为）    形参=['self', 'floor', 'foot_y']
+[PASS] B2 函数体里真的**调用**了 `pick_insert_after_by_foot_y`（不是只 import）    调用点=1
+[PASS] B3 ★ 候选用的是 `self.floors`（**只含成立的楼层**），不是 `underlying_windows` 全量    第二实参=Attribute(value=Name(id='self', ctx=Load()), attr='floors', 
+[PASS] B4 ★ 窗口表为空时有**回退闸**（`self.underlying_windows` 作条件）—— 否则启动第一拍会把宠物顶到最前
+[PASS] B5 `_apply_pet_z_order` 真的以关键字 `foot_y=` 把脚底传下去
+[PASS] B6 `foot_y` 由 `pos().y() + height()` 得到（脚底 = 窗口下沿，第163轮口径）
+[PASS] B7 ★ 第167轮那条闸还在：场景层置顶期间**直接 return**，不许把宠物插回普通层
+[PASS] B8 `set_window_behind` 的代码里**不再**出现 `X or HWND_BOTTOM`，且改成显式 `is None` 判断（`HWND_TOP == 0` 是假值，会被静默翻成 BOTTOM）    or 行号=[] 显式 None 判断=True
+
+======================================================================
+C 段  真对象行为（win32gui 打桩，不碰真实窗口）
+======================================================================
+[PASS] C1 站在 0x22 之后（脚底 500、0x22 下沿 700）⇒ 锚点 = 0x22    anchor=34 info={'reason': 'behind', 'bottom': 700, 'n_front': 1}
+[PASS] C2 ★ 0x33 只在 `underlying_windows`、不在 `floors` ⇒ **不许**当遮挡者（被压住的窗口"暂时不存在"，不能"被一个看不见的窗口挡住"）    anchor=0 info={'reason': 'frontmost', 'bottom': None, 'n_front': 0}
+[PASS] C3 窗口表为空（还没跑过 `update_floors`）⇒ **回退老逻辑**，落到 WorkerW/BOTTOM    anchor=1 reason='fallback_floor'
+[PASS] C4 不传 `foot_y` ⇒ 老口径（插到所站楼板之上）= 0x99（第十三轮 F1/F2 靠它）    anchor=153
+
+======================================================================
+D 段  `set_window_behind` 的 `HWND_TOP` 陷阱（本轮修的真 bug）
+======================================================================
+[PASS] D0 夹具自检：桩确实收到了 `SetWindowPos` 调用（否则下面几条全是空转）    calls=[(17, 0, 531)]
+[PASS] D1 ★★★ 传 `HWND_TOP` ⇒ 第 2 个实参必须是 **0**（改前是 `1` = BOTTOM，语义正好反过来）    insert=0（HWND_TOP=0 / HWND_BOTTOM=1）
+[PASS] D2 传 `None` ⇒ 仍然回落 `HWND_BOTTOM`（老行为一字不变）    insert=1
+[PASS] D3 传有效句柄 ⇒ 原样交给 `SetWindowPos`    insert=34
+[PASS] D4 传失效句柄（窗口刚被关掉）⇒ 回落 `HWND_BOTTOM`，绝不把野句柄交出去    insert=1
+[PASS] D5 目标句柄无效 ⇒ 返回 `False` 且**一次都不调用** `SetWindowPos`    ret=False calls=0
+
+======================================================================
+E 段  文件与自检（判据也是被测物）
+======================================================================
+[PASS] E1 floor_manager.py 无 BOM、UTF-8 可解码、AST 可解析
+[PASS] E1 main.py 无 BOM、UTF-8 可解码、AST 可解析
+[PASS] E2 ★★★ 全部 37 条 `check(...)` 的第二参**都不是**常量真（恒真判据比不写还危险）    恒真行号=[]
+[PASS] E3 单一 harness：本文件只定义 `check(desc, cond, extra)`，没有第二套 `ok(...)`
+[PASS] E4 判据条数下限：AST 数出 >= 35 条（防有人整段删掉）
+[PASS] E5 零外部盘 / 零网络：源码里不出现 E 盘路径或 URL（★ 令牌用拼接构造，避免扫描器扫到自己）    命中=[]
+[PASS] E6 不构造真机、不 import 主程序（本轮只碰 z 序判定，不需要显示器）    命中=[]
+
+======================================================================
+合计：PASS=38 FAIL=0
+======================================================================

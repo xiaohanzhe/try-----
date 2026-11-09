@@ -96,6 +96,101 @@ def _area(t):
     return max(0, r - l) * max(0, b - t0)
 
 
+# ---------------------------------------------------------------------------
+# 第178轮：遮挡 = 按屏幕 Y 排序（第164轮用户裁定 `BBA` 三项之三，到本轮才落地）
+# ---------------------------------------------------------------------------
+# 裁定的原文：**「遮挡 = 按屏幕 Y 排序（走到窗口"背后"即被挡住）」**。
+#
+# 在此之前，宠物被插在「它所站的那块楼板之上」（`get_insert_after_hwnd(floor)`），
+# 于是谁挡谁完全由**窗口自己的 z 序**决定，与宠物站在屏幕什么高度无关 ——
+# 这正是第164轮登记为「❌ 未实现」的那一条。
+#
+# 2.5D 口径（与本项目 §164 的空间模型一致）：
+#   · 屏幕 Y 越大 = 离观众越近；
+#   · 窗口是**悬空的板**，它在"离观众多远"这件事上由它的**下沿**代表
+#     （下沿 = 板子与地面接触的那条线）；
+#   · 宠物的"远近"由它的**脚底**代表。
+#   ⇒ 谁的 Y 更大谁在前面：窗口下沿 > 宠物脚底 ⇒ 窗口在前面 ⇒ 它挡住宠物。
+#
+# 为什么锚点取「最近的那个前挡者」而不是别的东西：
+#   Win32 的 z 序是一根**线性链**，我们只能指定"插到某个窗口之后"，没法一次
+#   表达"在 A 后面、但在 B 前面"。所以取**下沿最小**（= 离宠物最近的）那个前挡者
+#   当锚点：插到它之后，宠物就同时落在"所有前挡者之后"与"所有后挡者之前"的
+#   那一格里 —— 这正是 Y 排序要求的相对位置。
+
+def _rect_bottom_y(rect):
+    """矩形的**下沿 Y**（半开区间口径：`top + height`，不是 `QRect.bottom()`）。
+
+    ★ `QRect.bottom()` 等于 `top + height - 1`（"最后一行仍含的像素"），与
+      `_rect_tuple` 的半开口径差 1。本模块一律用半开口径，否则"下沿刚好等于
+      脚底"的那一像素会判成"窗口在前"，出现随机的 1px 翻面。
+    两种入参都吃：`QRect` 与 `(left, top, right, bottom)` 四元组。
+    """
+    if rect is None:
+        return None
+    if hasattr(rect, 'height') and hasattr(rect, 'top'):
+        try:
+            return int(rect.top()) + int(rect.height())
+        except Exception:
+            return None
+    try:
+        return int(rect[3])
+    except Exception:
+        return None
+
+
+def pick_insert_after_by_foot_y(foot_y, windows):
+    """按「屏幕 Y 排序」挑宠物该插到谁**之后**。**纯函数**，不碰 Win32、不读全局。
+
+    :param foot_y: 宠物脚底的屏幕 Y。`None` ⇒ 无判定（返回 `None`，调用方回退老逻辑）。
+    :param windows: 遮挡候选。每项是 dict，认 `hwnd` / `window_hwnd` 两种键
+                    （`underlying_windows` 用前者，`floors` 用后者），
+                    `rect` 认 `QRect` 与四元组，`z_order` 可选。
+    :return: `(anchor, info)`
+
+        · `anchor` = 要交给 `SetWindowPos(hWndInsertAfter=...)` 的值；
+          没有任何窗口在宠物前面时返回 **`HWND_TOP`**（= 插到非置顶带最前）。
+        · `info` = 诊断用：`{'reason', 'bottom', 'n_front'}`。
+
+    ★★★ 为什么"无前挡者"要返回 `HWND_TOP` 而不是 WorkerW：
+      按 Y 排序，宠物此刻比所有窗口都靠近观众 ⇒ 它就该画在所有窗口之前。
+      返回 WorkerW 会把它塞回"所有应用窗口之下"，等于又退回 z 序口径。
+      ⚠️ 顺带钉一个**真陷阱**：`HWND_TOP == 0`，而 `set_window_behind` 里原来是
+      `insert = hwnd_after or HWND_BOTTOM` —— `0 or X` 会变成 `X`，于是
+      "插到最前"会被静默翻成"插到最底"。那条已在本轮一并修掉（`check178 D1`）。
+    """
+    if foot_y is None:
+        return None, {'reason': 'no_foot_y', 'bottom': None, 'n_front': 0}
+    try:
+        foot_y = int(foot_y)
+    except Exception:
+        return None, {'reason': 'bad_foot_y', 'bottom': None, 'n_front': 0}
+
+    best = None          # (排序键, hwnd, bottom)
+    n_front = 0
+    for w in windows or ():
+        if not isinstance(w, dict):
+            continue
+        hwnd = w.get('hwnd')
+        if not hwnd:
+            hwnd = w.get('window_hwnd')
+        if not isinstance(hwnd, int) or hwnd == 0:
+            continue
+        bottom = _rect_bottom_y(w.get('rect'))
+        if bottom is None or bottom <= foot_y:
+            #: 下沿不在脚底下方 ⇒ 这块板子在宠物**后面**（或与脚底齐平）⇒ 不挡它。
+            #: 齐平算"后面"：贴同一条线时让宠物在前，视觉上更符合"站在板上"。
+            continue
+        n_front += 1
+        key = (bottom, w.get('z_order') or 0)
+        if best is None or key < best[0]:
+            best = (key, hwnd, bottom)
+
+    if best is None:
+        return HWND_TOP, {'reason': 'frontmost', 'bottom': None, 'n_front': 0}
+    return best[1], {'reason': 'behind', 'bottom': best[2], 'n_front': n_front}
+
+
 def _cut(rect, hole):
     """从 rect 里挖掉 hole，返回 ≤4 个**互不重叠**的矩形（可能为空）。"""
     l, t, r, b = rect
@@ -163,6 +258,9 @@ class FloorManager:
         }
         self._workerw_hwnd = None
         self._workerw_find_time = 0
+        #: 第178轮：最近一次 z 序判定的诊断信息（`get_insert_after_hwnd` 写）。
+        #: 只用于取证/日志，不参与任何判定。
+        self._last_z_pick = {'reason': 'init', 'bottom': None, 'n_front': 0}
 
     def update_floors(self):
         # 始终更新桌面层的屏幕尺寸（窗口列表更新失败时也能保底）
@@ -319,17 +417,35 @@ class FloorManager:
 
         return workerw
 
-    def get_insert_after_hwnd(self, floor):
+    def get_insert_after_hwnd(self, floor=None, foot_y=None):
         """返回"宠物应该紧贴在谁之上"的 HWND。
 
         这是"一层压一层"的关键（Windows 原生 `SetWindowPos(insertAfter=...)`）：
           · 站在窗口楼板上 → 插到**那块窗口之上**，于是任何排在它前面的窗口
-            都会自然盖住宠物（这就是"前面的窗口压住你"）；
+            都会自然盖住宠物（这就是"前面的窗口压住宠物"）；
           · 站在桌面上（1楼） → 插到 WorkerW 之后，即"桌面图标之上、所有应用窗口之下"。
 
         修复（第十三轮）：窗口句柄失效时不再直接把野句柄交给 SetWindowPos
         （窗口可能刚好在这一拍被关掉），改为回落到 WorkerW / HWND_BOTTOM。
+
+        ★★★ 第178轮：给了 `foot_y` 就改走**「遮挡 = 按屏幕 Y 排序」**
+        （第164轮用户裁定 `BBA` 第三项，此前登记为 ❌ 未实现）。
+        候选遮挡者取 `self.floors`（**只含"成立"的楼层**）而不是
+        `underlying_windows` 全量 —— 被前面窗口完全压住的窗口"暂时不存在"，
+        它既不显示、也不该当遮挡者（否则会出现"被一个看不见的窗口挡住"）。
+
+        **不给 `foot_y` 时行为一字不变**：第十三轮的 `verify_round13_build` F1/F2
+        与第十六轮 A4 都按老口径断言，这条向后兼容是硬要求。
         """
+        if foot_y is not None and self.underlying_windows:
+            anchor, info = pick_insert_after_by_foot_y(foot_y, self.floors)
+            self._last_z_pick = info
+            return anchor
+        #: `underlying_windows` 为空 = 还没跑过 `update_floors`（或枚举失败）⇒
+        #: 没有可信的窗口表，**回退老逻辑**。绝不在这里猜 HWND_TOP：
+        #: 那会在启动第一拍把宠物顶到所有窗口之前（第13轮那个"永久置顶"的观感）。
+        self._last_z_pick = {'reason': 'fallback_floor', 'bottom': None,
+                             'n_front': 0}
         if floor is None or floor.get('type') == 'desktop':
             return self._workerw_or_bottom()
 
@@ -396,10 +512,16 @@ class FloorManager:
 
         `hwnd_after` 失效（窗口刚被关掉）时回落到 HWND_BOTTOM ——
         绝不把野句柄交给 SetWindowPos（那会得到一次无法预期的 z 序跳变）。
+
+        ★★★ 第178轮修一个**静默语义陷阱**：原来是
+        `insert = hwnd_after or HWND_BOTTOM`。而 `HWND_TOP == 0` 是**假值**
+        ⇒ 传 `HWND_TOP`（"插到最前"，第178轮 Y 排序会用到）会被 `or` 吞掉、
+        变成 `HWND_BOTTOM`（"插到最底"）—— 语义正好**反过来**，而且不报错。
+        现在只把 `None` 当"没给"，`0` 原样当 `HWND_TOP` 用（`check178 D1`）。
         """
         if not hwnd_target or not win32gui.IsWindow(hwnd_target):
             return False
-        insert = hwnd_after or HWND_BOTTOM
+        insert = HWND_BOTTOM if hwnd_after is None else hwnd_after
         try:
             if insert not in (HWND_BOTTOM, HWND_TOP, HWND_TOPMOST, HWND_NOTOPMOST) \
                     and not win32gui.IsWindow(insert):
