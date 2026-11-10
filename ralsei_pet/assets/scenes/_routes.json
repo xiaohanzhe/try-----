@@ -60214,6 +60214,7 @@
     {
       "scene": null,
       "scene_name": "森林·man（隐藏房）",
+      "enabled": false,
       "from_scene": "ch1.forest.forest_area5",
       "from_room": "room_forest_area5",
       "probability": 0.02,
@@ -60227,6 +60228,7 @@
     {
       "scene": "ch2.cyber_city.dw_city_man",
       "scene_name": "赛博都市·man",
+      "enabled": true,
       "from_scene": "ch2.cyber_city.dw_city_traffic_3",
       "from_room": "room_dw_city_traffic_3",
       "probability": 0.02,
@@ -60234,12 +60236,13 @@
       "gate": "scr_sideb_get_phase() == 0 && global.flag[917] < 2 && global.flag[918] == 0",
       "once": true,
       "status": "data_only",
-      "note": "现有 `_routes.json` 把 `dw_city_traffic_3 → dw_city_man` 记成**确定性边**（priority 7122），与原作 1/50 不符。第181轮只登记不改既有边；第182轮做加权挑选时再改成概率分支。",
+      "note": "第182轮**已启用**：站在这间房出门时掷 1/50，命中且没发现过才改去本房；真站进来后写 `data_store/hidden_rooms_seen.json` **永久锁定**。⚠️ 既有确定性边 `dw_city_traffic_3 → dw_city_man`（priority 7122）**尚未删除**：删它会撞第181轮 `A1`（总数 `>= 2831`）与 `D1`（老账覆盖计数）两道锁；而 `7121`（dog_traffic）优先级更小 ⇒ `7122` 从未被 `match()` 消费，删与不删都不改变运行行为。",
       "evidence": "第181轮 probe181b.ch2.json → gml_Object_obj_doorw_musfade_Alarm_2：`if (global.flag[917] == 0 && scr_sideb_get_phase() == 0) room_goto(room_dw_city_dog_traffic); else { var man_room = scr_sideb_get_phase() == 0 && global.flag[917] < 2 && global.flag[918] == 0 && ceil(random(50)) == 50; if (man_room) room_goto(room_dw_city_man); else room_goto(room_dw_city_moss); }`"
     },
     {
       "scene": "ch3.system.dw_ch3_man",
       "scene_name": "系统与演出·ch3_man",
+      "enabled": false,
       "from_scene": null,
       "from_room": null,
       "probability": null,
@@ -60253,6 +60256,7 @@
     {
       "scene": "ch4.second_sanctuary.dw_churchb_man",
       "scene_name": "第二圣域·churchb_man",
+      "enabled": false,
       "from_scene": "ch4.second_sanctuary.dw_churchb_windows",
       "from_room": "room_dw_churchb_windows",
       "probability": null,

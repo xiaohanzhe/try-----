@@ -72,6 +72,7 @@ def _pet_logger_name(_name):
     return 'ralsei_pet.' + _name
 
 import os
+import random
 
 from scene_system import _read_json, scenes_dir  # noqa: F401
 
@@ -116,6 +117,7 @@ def load_routes(scene_dir_path=None):
          'schema_version': int,
          'routes': [route, ...],      # 已按 (priority, 声明序) 稳定排序
          'fallback': route | None,    # `_fallback` 字段
+         'hidden': [hidden, ...],     # `_hidden_rooms` 字段（第182轮；原样带出）
          'error': str | None}
 
     每条 `route` 是原 dict 的浅拷贝 + 补充键：
@@ -129,6 +131,7 @@ def load_routes(scene_dir_path=None):
         'schema_version': 0,
         'routes': [],
         'fallback': None,
+        'hidden': [],
         'error': None,
     }
     path = routes_path(scene_dir_path)
@@ -177,10 +180,23 @@ def load_routes(scene_dir_path=None):
     if not isinstance(fallback, dict) or not isinstance(fallback.get('to'), str):
         fallback = None
 
+    # ★ 第182轮：隐藏房登记（顶层 `_hidden_rooms`）。**原样带出来**，不做取舍 ——
+    #   取舍（enabled / 概率合法 / once / 已发现）全部由 `pick_hidden()` 一处判，
+    #   免得"加载器悄悄筛掉一条"变成事后查不到的静默降级（设计律 1/2）。
+    raw_hidden = raw.get('_hidden_rooms')
+    hidden = []
+    if isinstance(raw_hidden, (list, tuple)):
+        for order, entry in enumerate(raw_hidden):
+            if isinstance(entry, dict):
+                hidden.append(dict(entry, _order=order))
+            else:
+                _log.warning('隐藏房登记第 %d 条不是对象（已跳过）', order)
+
     result['ok'] = True
     result['schema_version'] = version
     result['routes'] = routes
     result['fallback'] = fallback
+    result['hidden'] = hidden
     if skipped:
         # 只在有问题时记一条，且**带上数量** —— 排查"我加的场景怎么去不了"
         # 时，这条日志是唯一线索。
@@ -421,6 +437,106 @@ def describe_route(route):
     if reason:
         parts.append('- ' + reason)
     return ' '.join(parts)
+
+
+# ===========================================================================
+#  隐藏房 —— 「进门那一刻掷骰子，掷中就改去隐藏房」（第182轮）
+# ===========================================================================
+
+#: 隐藏房的默认语义 —— **只出现一次**。
+#: `_hidden_rooms` 条目写 `once: false` 可以显式允许反复出现；不写、写 null、
+#: 写别的值一律按 `true` 处理（口径见第182轮用户裁定：「真随机 + 进过一次就锁」）。
+#: ⚠️ 默认取"锁"而不是"不锁"是**故意**的：漏锁的后果是用户反复撞进同一间房
+#:    （立刻看得见、像 bug）；漏放的后果只是那间房不再出现（与"没实现"同形）。
+_HIDDEN_ONCE_DEFAULT = True
+
+
+def _hidden_probability(entry):
+    """取一条隐藏房登记的概率（float）；不合法 → `None`（调用方跳过，设计律 2）。
+
+    合法范围是 `(0, 1]` 的开区间到 1：`0` 等于"登记了但永不出现"（该直接不写
+    这条登记），`>1` 是笔误。**不在**这里做四舍五入或纠偏 —— 静默改写数据
+    比跳过更坏（同设计律 2 的理由）。
+    """
+    try:
+        p = float(entry.get('probability'))
+    except (TypeError, ValueError):
+        return None
+    if not (0.0 < p <= 1.0):
+        return None
+    return p
+
+
+def hidden_key(entry):
+    """一条隐藏房登记的**锁键** = 它的目标 `scene`。取不到 → `''`。
+
+    单提出来是因为"写锁"和"查锁"必须是同一个键 —— 两处各取一次
+    `entry['scene']` 就是两个笔误机会（同 `route_target` 的理由）。
+    """
+    if not isinstance(entry, dict):
+        return ''
+    scene = entry.get('scene')
+    return scene if isinstance(scene, str) else ''
+
+
+def pick_hidden(hidden, from_scene, seen=None, roll=None):
+    """**站在 `from_scene`、正要迈出门**时，判定要不要改去某间隐藏房。
+
+    返回命中的那一条登记（dict，已补 `_probability`），没有命中 → `None`。
+
+    :param hidden: `load_routes()['hidden']`。
+    :param from_scene: 当前所在场景 id（原作的 `room == room_xxx` 那个 `room`）。
+    :param seen: 已经发现过的场景集合（dict / set / list 都行，只做 `in` 判断）。
+    :param roll: **可注入的随机源**（返回 `[0, 1)` 的无参可调用）。不传就用
+        `random.random()`。★ 判据靠它把"掷骰"变成确定行为 —— 不给注入点
+        就只能统计频率，那种判据既慢又不稳（第182轮的口径）。
+
+    ★ 为什么掷骰在**出门时**而不是"进门后"：原作那段是门对象的 `Alarm_2`，
+      条件是 `if (room == room_forest_area5) { … room_goto(room_man) … }` ——
+      `room` 是**你正站着的这间**，掷中就直接把目的地换成隐藏房。所以判据的
+      主语是"从哪儿出发"，不是"原本要去哪儿"。
+
+    ★ 多条登记挂在同一个 `from_scene` 时**按声明序逐条掷、先命中先得**：
+      这样"两间隐藏房同时可用"的极端情况下行为仍然可解释（写在前面的优先），
+      而不是取决于 dict 的遍历顺序。
+
+    ★ 不掷骰的三种情况（都不是错误，直接跳过）：`enabled` 不是 `True`
+      （只留档不投用）、概率不合法、`once` 且已经发现过。
+    """
+    if not from_scene or not isinstance(hidden, (list, tuple)):
+        return None
+    seen = seen if seen is not None else ()
+    rnd = roll or random.random
+
+    for entry in sorted((e for e in hidden if isinstance(e, dict)),
+                        key=lambda e: e.get('_order', 0)):
+        if entry.get('enabled') is not True:
+            continue
+        target = hidden_key(entry)
+        if not target:
+            continue
+        if entry.get('from_scene') != from_scene:
+            continue
+
+        once = entry.get('once')
+        once = _HIDDEN_ONCE_DEFAULT if once is None else bool(once)
+        if once and target in seen:
+            continue
+
+        p = _hidden_probability(entry)
+        if p is None:
+            continue
+        try:
+            r = float(rnd())
+        except Exception:
+            # 随机源坏了不能让走动崩掉 —— 当作"没掷中"，下一跳还有机会。
+            continue
+        if 0.0 <= r < p:
+            hit = dict(entry)
+            hit['_probability'] = p
+            return hit
+    return None
+
 
 
 # ===========================================================================

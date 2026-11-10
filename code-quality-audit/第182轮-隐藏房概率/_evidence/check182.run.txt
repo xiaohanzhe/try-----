@@ -1,0 +1,32 @@
+[PASS] A1 顶层仍有 `_hidden_rooms`，且条数与第181轮登记一致（4 条）    实测 4 条
+[PASS] A2 ★ 启用的**恰好一条**，且是 ch2 的 `dw_city_man`（本轮只投用这一间）    启用 ['ch2.cyber_city.dw_city_man']
+[PASS] A3 ★ 启用那条的概率 == 1/50（原作 `ceil(random(50)) == 50`），且 `once` 为真    probability=0.02 once=True
+[PASS] A4 其余三条都是 `enabled: false`，且各自写明**为什么不能启用**（三种不同理由）    status=['target_not_registered', 'no_incoming_edge', 'gate_unresolved']
+[PASS] A5 四条都带 `evidence`（没有取证就不许登记 —— 第181轮口径）    缺 []
+[PASS] B0 `scene_routing` 可 import（零 Qt 依赖；失败则下面整段如实红）
+[PASS] B1 ★ 成对控制：roll=0.0 命中、roll=0.5 不中，且两者**结果不同**    hit='ch2.cyber_city.dw_city_man' miss=None
+[PASS] B2 边界精确：`r = p−ε` 命中、`r = p` **不中**（严格小于，不是小于等于）    p=0.02
+[PASS] B3 ★ `once` 且已发现过 ⇒ **再也不会**命中（这就是"进过一次就锁"）
+[PASS] B4 对偶控制：同一条改成 `once: false` ⇒ 已发现**仍能**命中（证明 B3 锁的是 once 不是别的）
+[PASS] B5 `enabled` 不为 True ⇒ 永不命中（ch1 那间目标未登记，roll=0.0 也不许中）
+[PASS] B6 ★ 概率非法（0 / 1.5 / "x" / None）一律跳过 —— 不猜、不纠偏（设计律 2）
+[PASS] B7 ★ 只认 `from_scene`：站在别的房间掷骰**一律不中**（原作条件是 `room == 源房`）
+[PASS] B8 同一 `from_scene` 多条登记 ⇒ 按声明序逐条掷，**写在前面的优先**    得 'B'
+[PASS] B9 随机源抛异常 ⇒ 当作"没掷中"、**不向上抛**（走动不能因为骰子坏了就崩）
+[PASS] B10 边界：p = 1.0 ⇒ `r = 0.999…` 也命中（否则 p=1 与 p=0 不可区分）
+[PASS] B11 ★★ 频率独立验证：真随机 100000 次，命中数落在 1/50 的合理区间 [1700, 2300]    实测 1927（1.927%）
+[PASS] C1 ★★ 掷骰挂在**走动入口**，且行号早于两个换房分支（命中后目标先被改写，后面全自然）    travel=True divert=[7774] resolve=[7779] commit=[7787]
+[PASS] C2 记账挂在**两条路径共用的收尾**里（`_travel_feedback_done` 调 `_commit_hidden_seen`）    calls=[7857]
+[PASS] C3 ★★ "掷中" ≠ "已发现"：`_commit_hidden_seen` 里必须有一条 `cur != sid` 的提前返回（按真到了判）    找到 1 条
+[PASS] C4 掷骰那一层**不写盘**（`dump`/`replace`/`makedirs` 一个都不许出现）—— 记账只在 C2 那处    md_ok=True 命中 []
+[PASS] C5 记账走**原子替换**（`os.replace`）—— 写一半断电也不会留半个 JSON
+[PASS] C6 账本路径走 `data_store.app_file`（唯一入口契约，不硬编码数据根）
+[PASS] D1 本文件无 BOM 且 UTF-8 可解
+[PASS] D2 本文件无 U+FFFD
+[PASS] D3 本文件里没有"常量 True"判据（恒真比不写还危险）    行号 []
+[PASS] D4 不依赖外部盘/临时区（源码里没有真实盘符路径，比如 D 盘临时区）    命中 []
+[PASS] D5 判据条数不随环境变（本文件恒发 28 条断言，含本条自身）    当前 28
+
+==========================================================================
+合计 28 条判据  PASS=28  FAIL=0
+==========================================================================

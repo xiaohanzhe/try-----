@@ -1,0 +1,37 @@
+第182轮 记忆复检（core-file-recheck）  PASS=22 FAIL=0
+======================================================================
+[PASS] 1a 速查本无 BOM 且 UTF-8 可解
+[PASS] 1b 速查本无 U+FFFD
+       fffd=0
+[PASS] 1c 今日日记得 LF 口径（CRLF=0）
+       crlf=0 lone_lf=94
+[PASS] 1d 今日日志无 U+FFFD
+[PASS] 1e 详版无 U+FFFD 且无 BOM
+[PASS] 1f 速查本行尾口径未变（CRLF 数不少于上次）
+       crlf=65 lone_lf=0
+[PASS] 2a 速查本 12 个一级小节 0~11 全在
+       heads=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+[PASS] 2b 无标题被 Edit 粘到上一行
+       glued=[]
+[PASS] 2c 182 条目在 §7 且带 §184 指针
+[PASS] 2c2 181 条目仍在（追加时没误删上一条）
+[PASS] 2d 详版有 §184 小节标题
+       hits=2
+[PASS] 2e 今日日志有第182轮小节
+[PASS] 3a js_len ≤ 10000（与 check95 A2 同口径）
+       js_len=9956 余量=+44
+[PASS] 4a 本轮脚本无「常量 True」判据
+       trues=[]
+[PASS] 4b 本轮脚本确被真解析过（no-op 控制）
+       parsed=['check182.py', 'mutate182.py']
+[PASS] 5a 被删令牌 diff 非空（no-op 控制）
+       removed=7
+[PASS] 5b 被删令牌 0 丢失（详版可查 或 白名单带锚点）
+       removed=7  直接命中=6  白名单=1  丢失=[]
+[PASS] 5c 负控制夹具自证真阴性
+       subs=7
+[PASS] 5d 负控制：伪造令牌必须判为丢失
+[PASS] 6a 工作区没有声明之外的改动
+       extra=[] 全部=['.workbuddy/memory/2026-11-10.md', '.workbuddy/memory/MEMORY.md', '.workbuddy/memory/参考-契约与历轮（详版）.md', 'code-quality-audit/regress/baseline.json', 'code-quality-audit/regress/run_all.py', 'code-quality-audit/第182轮-隐藏房概率/', 'ralsei_pet/assets/scenes/_routes.json', 'ralsei_pet/modules/scene_routing.py', 'ralsei_pet/src/main.py']
+[PASS] 6b 负控制：注入伪造路径后同一谓词必须报出它
+[PASS] 6c 路径未被八进制转义（quotepath=false 生效）

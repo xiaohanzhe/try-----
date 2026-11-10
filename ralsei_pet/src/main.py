@@ -7768,6 +7768,10 @@ class RalseiPet(QMainWindow):
                 _log.info('走动请求被忽略：场景系统未就绪')
                 return False
             before = self.__dict__.get('current_scene')
+            # ★ 第182轮：**出门那一拍**掷一次隐藏房骰（原作 `Alarm_2` 的 1/50）。
+            #   放在算路之前：命中就把目标换成隐藏房，后面的过渡/寻路/收尾
+            #   全都自然作用在"真要去的地方"上，不用在三条路径里各改一遍。
+            target = self._maybe_divert_to_hidden(before, target)
             # ★★★ 第109轮「原作式场景过渡」：先**算好**目的地，再用过渡包住换房。
             #   为什么不直接 `travel_to` 再补过渡：换房是同步的，等它跑完画面早已
             #   跳变，再补一层"淡入"就会**先瞬变后淡入**（顺序反了，用户看得见）。
@@ -7847,6 +7851,108 @@ class RalseiPet(QMainWindow):
             _log.info('走动完成 ⇒ %s（%s）', sid, name)
         except Exception:
             pass
+        # ★ 第182轮：落地后**才**给隐藏房记账（"真到了"才算发现）。
+        #   放在这里而不是切换点，是因为两条路径都汇到这一个收尾。
+        try:
+            self._commit_hidden_seen()
+        except Exception:
+            _log.exception('隐藏房记账入口异常（已忽略）')
+
+    # ------------------------------------------------- 隐藏房（第182轮）
+    #: 已发现隐藏房的落盘文件（相对 `data_store` 的数据根）。
+    #: 不进 vault（`E:\RalseiMemory\`）：那是**角色记忆**；这个是"这局世界探索到哪"
+    #: 的边角状态，丢了顶多再撞一次那间房，不值得占角色记忆的位置。
+    HIDDEN_SEEN_FILE = 'hidden_rooms_seen.json'
+
+    def _hidden_seen_path(self):
+        """已发现账本的绝对路径。**每次现取**（`data_store` 的根可能在运行期迁移）。"""
+        import data_store
+        return data_store.app_file(RalseiPet.HIDDEN_SEEN_FILE)
+
+    def _hidden_seen(self):
+        """读已发现账本 `{scene_id: {'at': iso}}`。**永不抛**：坏文件当空账。
+
+        ★ 为什么坏文件要当空账而不是报错停下：这只是一层"别重复撞同一间房"的
+          体验优化，读不出来最多多撞一次；而抛出去会让**整个走动**失败，
+          那是拿小好处换大坏处。
+        """
+        try:
+            import json
+            path = self._hidden_seen_path()
+            if not os.path.isfile(path):
+                return {}
+            with open(path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            return data if isinstance(data, dict) else {}
+        except Exception as e:
+            _log.debug('隐藏房账本读取失败（按空账处理）: %s', e)
+            return {}
+
+    def _maybe_divert_to_hidden(self, from_scene, target):
+        """站在 `from_scene`、正要出门 ⇒ 掷骰决定要不要改去隐藏房。返回（可能改过的）目标。
+
+        ★ 第182轮。原作形状：门对象的 `Alarm_2` 里
+          `if (room == room_xxx) { if (ceil(random(50)) == 50 && !flag) room_goto(man) }`
+          —— 概率**从数据来**（`_hidden_rooms[].probability`，ch2 = 0.02 = 1/50），
+          不在代码里写死，也不在这里改数据。
+
+        ★ 命中后**不立即记账**：真站进去了才算"发现过"（见 `_commit_hidden_seen`）。
+          否则 `switch` 失败时会把没去成的房记成已发现 ⇒ 那扇门**永远消失**，
+          而且没有任何报错 —— 是典型的静默降级（设计律 1）。
+        """
+        try:
+            routes = self.__dict__.get('_scene_routes') or {}
+            hidden = routes.get('hidden') or []
+            if not hidden or not from_scene:
+                return target
+            import scene_routing
+            hit = scene_routing.pick_hidden(hidden, from_scene, self._hidden_seen())
+            if not hit:
+                return target
+            sid = scene_routing.hidden_key(hit)
+            if not sid:
+                return target
+            self.__dict__['_hidden_pending'] = sid
+            _log.info('隐藏房掷骰命中 ⇒ 改去 %s（原本要去 %s，p=%s）',
+                      sid, target, hit.get('_probability'))
+            return sid
+        except Exception:
+            _log.exception('隐藏房判定异常（已忽略，照常走原目标）')
+            return target
+
+    def _commit_hidden_seen(self):
+        """**真的站进隐藏房了**才记账。返回是否记了。
+
+        ★ 判据是"当前场景 == 待记账的隐藏房"，而不是"掷骰命中过" ——
+          前者是事实，后者只是意图（中间隔着 `switch`、过渡、甚至用户取消）。
+        """
+        try:
+            sid = self.__dict__.pop('_hidden_pending', None)
+            if not sid:
+                return False
+            cur = self.__dict__.get('current_scene')
+            if cur != sid:
+                _log.info('隐藏房未到位（当前 %s ≠ %s）⇒ 不记账', cur, sid)
+                return False
+            seen = self._hidden_seen()
+            if sid in seen:
+                return False
+            import json
+            import time
+            seen[sid] = {'at': time.strftime('%Y-%m-%dT%H:%M:%S')}
+            path = self._hidden_seen_path()
+            parent = os.path.dirname(path)
+            if parent and not os.path.isdir(parent):
+                os.makedirs(parent, exist_ok=True)
+            tmp = path + '.tmp'
+            with open(tmp, 'w', encoding='utf-8') as f:
+                json.dump(seen, f, ensure_ascii=False, indent=2, sort_keys=True)
+            os.replace(tmp, path)          # 原子替换：写一半断电也不会留半个 JSON
+            _log.info('隐藏房已发现并锁定 ⇒ %s（此后再不会掷中它）', sid)
+            return True
+        except Exception:
+            _log.exception('隐藏房记账失败（已忽略，最多下次再撞一次）')
+            return False
 
     def _travel_commit(self, target, before):
         """**老路径**：同步走完（不带过渡 / 过渡被拒时的回落）。语义与第76轮一致。"""
