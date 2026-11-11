@@ -1,0 +1,41 @@
+[PASS] A1 顶层 `_gates` 存在且恰好 1 条    实际 1
+[PASS] A2 七个必备键齐全（缺一个就不是一条完整的门控）    缺 []
+[PASS] A3 值对：管的是 (traffic_3, W)，未记→dog_traffic / 已记→moss    实测 {'when_scene': 'ch2.cyber_city.dw_city_traffic_3', 'when_door': 'W', 'mark': 'ch2.city.dog_traffic', 'to_when_unset': 'ch2.cyber_city.dw_city_dog_traffic', 'to_when_set': 'ch2.cyber_city.dw_city_moss'}
+[PASS] A4 记账点 == 未记那一支的目的地（"去了 dog_traffic 才算过完那一拍"）    set_mark_when_arrive='ch2.cyber_city.dw_city_dog_traffic' / to_when_unset='ch2.cyber_city.dw_city_dog_traffic'
+[PASS] A5 两个目标**本来就有边**（门控不是凭空造路）    同门现存目标 ['ch2.cyber_city.dw_city_dog_traffic', 'ch2.cyber_city.dw_city_moss']
+[PASS] A6 两个目标都在 `_index.json` 登记成场景（否则切过去必失败）    登记到 2 / 缺 []
+[PASS] A7 ★★ 本轮**没有**动任何 route 对象（带门控键的规则 0 条），routes 仍 2830 条    脏规则 0 条 / routes=2830
+[PASS] A8 `_original` 的三个 cond 与第170轮留档**逐字相同**（不是我誊的）    留档 {7121: 'global.flag[917] == 0 && scr_sideb_get_phase() == 0', 7122: '!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && man_room', 7123: '!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && !(man_room)'}
+         本表 {'cond_unset': 'global.flag[917] == 0 && scr_sideb_get_phase() == 0', 'cond_man': '!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && man_room', 'cond_set': '!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && !(man_room)'}
+[PASS] B1 产品 `load_routes()` 真的把 `_gates` 带出来了（1 条）    gates=1
+[PASS] B2 `gate_for(traffic_3, W)` 命中    实测 {'when_scene': 'ch2.cyber_city.dw_city_traffic_3', 'when_door': 'W', 'mark': 'ch2.city.dog_traffic', 'set_mark_when_arrive': 'ch2.cyber_city.dw_city_dog_traffic', 'to_when_unset': 'ch2.cyber_city.dw_city_dog_traffic', 'to_when_set': 'ch2.cyber_city.dw_city_moss', '_original': {'chapter': 'ch2', 'object': 'obj_doorw_musfade', 'event': 'Alarm_2', 'cond_unset': 'global.flag[917] == 0 && scr_sideb_get_phase() == 0', 'cond_set': '!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && !(man_room)', 'cond_man': '!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && man_room', 'evidence': 'code-quality-audit/第170轮-门实例级落点/_evidence/applied170.json（prio 7121 / 7122 / 7123 的 cond 原文）', 'note': '`dog_traffic` 与 `moss` 是同一扇门的**确定性两支**，区别只在剧情状态；`man` 那支是 1/50 概率，第182轮已由 `_hidden_rooms[1]` 承担，与门控无关。★★ `flag[917]` 在原件里是**次数**（`< 2` 才会继续掷 man），本产品只代理"去过 / 没去过"这层布尔（第184轮口径）⇒ `to_when_set` 之后永久去 moss。'}, '_order': 0}
+[PASS] B3 负控制：换个场景（`traffic_4`）必须不命中
+[PASS] B4 负控制：同场景换扇门（`A`）必须不命中
+[PASS] B5 ★★ 没给门字母 ⇒ **不套门控**（否则"随便哪个门出门都去 moss"）
+[PASS] B6 未记→dw_city_dog_traffic / 已记→dw_city_moss，且两者**必须不同**    未记='ch2.cyber_city.dw_city_dog_traffic' 已记='ch2.cyber_city.dw_city_moss'
+[PASS] B7 查账抛异常 ⇒ 当"没记"（不向上抛、也不擅自改道）    抛了吗 False / 结果 'ch2.cyber_city.dw_city_dog_traffic'
+[PASS] B8 `is_done` 传 None ⇒ 当"没记"（fail-open，等于第183轮的行为）
+[PASS] B9 到了 dw_city_dog_traffic 才该记账；到 dw_city_traffic_3 不记    到 dog=['ch2.city.dog_traffic'] 到 traffic_3=[]
+[PASS] B10 `gate_overrides` 打成 `{字母: 目标}`：未记 {'W': 'ch2.cyber_city.dw_city_dog_traffic'} / 已记 {'W': 'ch2.cyber_city.dw_city_moss'}
+[PASS] C1 `build_props` 有 `door_overrides` 形参    形参 ['scene', 'chapter', 'world', 'present', 'heal_all', 'on_enter', 'inventory', 'bus', 'pickups', 'routes', 'on_egg', 'egg_gate', 'readables', 'door_overrides']
+[PASS] C2 ★★ 门分支真的读了这张表**并且**把结果用上了（`door_overrides.get(...)` + `tgt = _ov`）    读取 1 处 / 赋值 1 处
+[PASS] C3 ★★ `item_interact` **没有** import `scene_routing` / `plot_mark`（零依赖 L1，G1 硬闸）    命中 []
+[PASS] C4 ★★ 宿主真的求值并**按关键字**传下去（`gate_overrides(...)` + `door_overrides=`）    求值 1 处 / 关键字 ['door_overrides']
+[PASS] C5 `_travel_feedback_done` 里两处记账都在，且 hidden 在 gate 之前（收尾点唯一）    实际顺序 ['_commit_hidden_seen', '_commit_gate_marks']
+[PASS] C6 ★★ 记账判据是"当前场景"（读 `current_scene`），不是"刚走过哪扇门"    属性 ['__dict__', 'exception', 'gate_marks_on_arrival', 'get', 'info', 'is_plot_done', 'mark_plot_done'] / 关键字符串命中 True
+[PASS] C7 ★★ `plot_mark` 不再是死设施：`mark_plot_done` 有真实调用方    调用方 ['src\\main.py']
+[PASS] D1 真 `build_props`（未记）⇒ 门指向 dog_traffic    实测 'ch2.cyber_city.dw_city_dog_traffic'
+[PASS] D2 真 `build_props`（已记）⇒ 门指向 moss —— **这就是本轮要的效果**    实测 'ch2.cyber_city.dw_city_moss'
+[PASS] D3 ★★ 不给 `door_overrides` ⇒ 与第183轮**逐字相同**（priority 口径 → dog_traffic）    实测 'ch2.cyber_city.dw_city_dog_traffic'
+[PASS] D4 负控制：覆盖表里塞个**无关字母** ⇒ 这扇 W 门一个字母都不许被顶掉    实测 'ch2.cyber_city.dw_city_dog_traffic'
+[PASS] E1 无 BOM / 无 U+FFFD    BOM [] / FFFD []
+[PASS] E2 没有恒真判据（`check(..., <字面量>)` 0 处）    可疑行 []
+[PASS] E3 不 import main / 不构造 RalseiPet（不碰 Qt、不起真机）
+[PASS] E4 判据自己**不写死外部盘路径**（机器无关）    命中 []
+[PASS] E5 判据条数 == 34（本行执行时 33 条已跑 + 自己）    实测 34
+==========================================================================
+合计 34 条判据  PASS=34  FAIL=0
+==========================================================================
+[NOTE] 本轮只做 `traffic_3` 这一扇。其余 11 条惰性规则、另外 3 间隐藏房
+       （ch1 `room_man` / ch3 `dw_ch3_man` / ch4 `dw_churchb_man`）仍是
+       `gate_unresolved`，继续只登记不投用。

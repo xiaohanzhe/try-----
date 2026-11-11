@@ -60237,5 +60237,25 @@
       "note": "入边是 `obj_doorAny`（priority 7776），其实例 PreCreate **无条件**写 `doorRoom = room_dw_churchb_man`；概率/前置条件不在门对象代码里，本轮**未解**，不臆造数值。",
       "evidence": "第181轮 probe181b.ch4.json → 实例 room_dw_churchb_windows 的 creation_gml：`doorRoom = room_dw_churchb_man; doorEntrance = 9; doorFadeMusic = 1;`"
     }
+  ],
+  "_gates": [
+    {
+      "when_scene": "ch2.cyber_city.dw_city_traffic_3",
+      "when_door": "W",
+      "mark": "ch2.city.dog_traffic",
+      "set_mark_when_arrive": "ch2.cyber_city.dw_city_dog_traffic",
+      "to_when_unset": "ch2.cyber_city.dw_city_dog_traffic",
+      "to_when_set": "ch2.cyber_city.dw_city_moss",
+      "_original": {
+        "chapter": "ch2",
+        "object": "obj_doorw_musfade",
+        "event": "Alarm_2",
+        "cond_unset": "global.flag[917] == 0 && scr_sideb_get_phase() == 0",
+        "cond_set": "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && !(man_room)",
+        "cond_man": "!(global.flag[917] == 0 && scr_sideb_get_phase() == 0) && man_room",
+        "evidence": "code-quality-audit/第170轮-门实例级落点/_evidence/applied170.json（prio 7121 / 7122 / 7123 的 cond 原文）",
+        "note": "`dog_traffic` 与 `moss` 是同一扇门的**确定性两支**，区别只在剧情状态；`man` 那支是 1/50 概率，第182轮已由 `_hidden_rooms[1]` 承担，与门控无关。★★ `flag[917]` 在原件里是**次数**（`< 2` 才会继续掷 man），本产品只代理\"去过 / 没去过\"这层布尔（第184轮口径）⇒ `to_when_set` 之后永久去 moss。"
+      }
+    }
   ]
 }

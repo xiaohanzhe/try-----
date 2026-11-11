@@ -5479,6 +5479,46 @@ SUITES = [
                 '只读 JSON / AST / 纯函数。零网络、零外部盘、不需要显示器。',
     },
     {
+        'id': 'check184',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第184轮-门控层', '_tools', 'check184.py'),
+        'offscreen': False,
+        'desc': '第一百八十四轮：**门控层** —— 同一扇门随剧情状态改去向'
+                '（只做 `ch2.cyber_city.dw_city_traffic_3` 的 W 门这一扇）。'
+                '★★ 起因：第183轮收尾留的 `[NOTE]` —— `7123 → dw_city_moss` 被 `7121` '
+                '无条件遮挡 ⇒ **`dw_city_moss` 永远不可达**。根因不是边写错，是路由表一条规则'
+                '只能表达"一扇门 → 一个固定目标"，而原作 `obj_doorw_musfade.Alarm_2` 是'
+                '「`flag[917] == 0 && phase == 0` ⇒ dog_traffic，否则 moss」（`man` 那支是 1/50，'
+                '第182轮已由 `_hidden_rooms[1]` 承担）。'
+                '★★ 形状：**顶层 `_gates`，一个 route 对象都没碰** —— 塞进 route 要给 7121/7123 '
+                '各加字段，而 `check169` 的 `_original` 指纹、`check176` 的规范化 sha1 都对 route '
+                '逐字段敏感 ⇒ 会撞一排无关老锁（A7 专门钉"带门控键的规则 0 条"）。'
+                '★★★ 三处口径（用户裁定）：① 状态源 = `plot_mark`（复用现成设施；它此前**零调用方**，'
+                '本轮是它的第一处真实消费，C7 钉这个）；② 记账时机 = **真站进去才写**（与第182轮'
+                '隐藏房同口径 `cur != sid`，`_travel_feedback_done` 收尾点）；③ 只代理"去过/没去过"'
+                '—— 原件里 `flag[917]` 是**次数**（`< 2` 才继续掷 man），布尔表达不了，如实写进 '
+                '`_original.note`，不假装保住。'
+                '★★ 门控**不 import 进 `item_interact`**（那是零依赖 L1，`G1` 硬闸禁止 import 项目内'
+                '模块）⇒ 求值放 `scene_routing`（纯函数 + 注入 `is_done`），宿主 `_rebuild_item_props` '
+                '算成 `{字母: 目标}` 当**纯数据**传下去；求值失败 ⇒ `None`（fail-open，行为与第183轮'
+                '逐字相同）。`gate_for` 在"没给门字母"时**故意 fail-closed**：门控会改目的地，'
+                '不知道哪扇门就套用 ＝ "随便哪个门出门都去 moss"。'
+                '★ 判据 34 条：A 数据 8 · B 纯函数/加载器 10 · C 接线（AST）7 · '
+                'D 端到端（真 `build_props`）4 · E 自检 5。'
+                '★★ 变异 **16/16 全抓**（`_tools/mutate184.py`，双跑幂等 + "红数 >0 且 <34" + '
+                '四个文件每步整文件还原并核对 sha1）。★★★ 四处是**夹具/期望自己的错**、实测后改的：'
+                'M7 用文本替换 `"when_door": "W"` 命中的是**第一条 route**（变异等于没做，0 红）⇒ 改整表'
+                '改写；M8 只把 `continue` 改 `pass`，后面那句相等判定照样拦下（0 红）⇒ 改成补字母；'
+                'M12 替换的是 main.py 里**第一处** `current_scene`，不在记账函数里（0 红）⇒ 改用四行唯一锚；'
+                'M13 两个 try 块中间夹着注释、拼成一串找不到锚 ⇒ 打占位符对调。'
+                '另有两条**期望值是我猜错**：M9（fail-closed）会连带把 B6/B10/D1 一起打红、M11 的 '
+                '`if False and ...` 只有 D2 能抓（C2 是结构判据）—— 按实测改期望，不改判据。'
+                '★★ 顺带修掉一个真问题：`route_for_door` 第一版曾在 `item_interact` 里直接调 '
+                '`scene_routing.gate_for`，那是**破零依赖**的写法，已改成注入式（C3 钉住）。'
+                '★ 进 `SUITES` 但**不进 `HERMETIC_IDS`**：只读 JSON / AST / 纯函数、不构造 '
+                '`RalseiPet()`、不碰 Qt。零网络、零外部盘、不需要显示器。',
+    },
+    {
         'id': 'check183',
         'script': os.path.join(ROOT, 'code-quality-audit',
                                '第183轮-删7122误边', '_tools', 'check183.py'),

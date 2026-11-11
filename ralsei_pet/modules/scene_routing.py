@@ -118,6 +118,7 @@ def load_routes(scene_dir_path=None):
          'routes': [route, ...],      # 已按 (priority, 声明序) 稳定排序
          'fallback': route | None,    # `_fallback` 字段
          'hidden': [hidden, ...],     # `_hidden_rooms` 字段（第182轮；原样带出）
+         'gates': [gate, ...],        # `_gates` 字段（第184轮；原样带出）
          'error': str | None}
 
     每条 `route` 是原 dict 的浅拷贝 + 补充键：
@@ -132,6 +133,7 @@ def load_routes(scene_dir_path=None):
         'routes': [],
         'fallback': None,
         'hidden': [],
+        'gates': [],
         'error': None,
     }
     path = routes_path(scene_dir_path)
@@ -192,11 +194,23 @@ def load_routes(scene_dir_path=None):
             else:
                 _log.warning('隐藏房登记第 %d 条不是对象（已跳过）', order)
 
+    # ★ 第184轮：门控登记（顶层 `_gates`）。同上**原样带出** —— "哪条也算数"
+    #   由 `gate_for()` / `gate_target()` 判，加载器不悄悄地筛。
+    raw_gates = raw.get('_gates')
+    gates = []
+    if isinstance(raw_gates, (list, tuple)):
+        for order, entry in enumerate(raw_gates):
+            if isinstance(entry, dict):
+                gates.append(dict(entry, _order=order))
+            else:
+                _log.warning('门控登记第 %d 条不是对象（已跳过）', order)
+
     result['ok'] = True
     result['schema_version'] = version
     result['routes'] = routes
     result['fallback'] = fallback
     result['hidden'] = hidden
+    result['gates'] = gates
     if skipped:
         # 只在有问题时记一条，且**带上数量** —— 排查"我加的场景怎么去不了"
         # 时，这条日志是唯一线索。
@@ -537,6 +551,180 @@ def pick_hidden(hidden, from_scene, seen=None, roll=None):
             return hit
     return None
 
+
+# ===========================================================================
+#  门控 —— 「同一扇门随剧情状态改去向」（第184轮）
+# ===========================================================================
+#
+# 要解决的问题（一句话）
+# ----------------------
+# `_routes.json` 里一条规则只能表达「从哪个场景的哪扇门出去」→ 一个固定目标。
+# 原作却常有「**同一扇门，剧情早期去 A，之后去 B**」——最典型的是 ch2
+# `obj_doorw_musfade.Alarm_2`：
+#
+#     if (flag[917] == 0 && phase == 0)                  room_goto(dog_traffic);
+#     else if (flag[917] < 2 && flag[918] == 0 && 1/50)  room_goto(man);
+#     else                                               room_goto(moss);
+#
+# 三分支里 `dog_traffic` 与 `moss` 是**确定性的两支**，区别只在"剧情状态"；
+# 第169轮把三分支物化成三条无条件边（`7121/7122/7123`），于是 priority 最小的
+# `7121` 永远赢 ⇒ `moss` **永远不可达**（第183轮的 `[NOTE]`）。
+#
+# 表达形状：**顶层 `_gates`，不碰 route 对象**
+# ---------------------------------------------
+# 塞进 route 对象（比如给 7121 加个 `when_gate` 键）要动两条规则，而 `check169`
+# 的 `_original` 指纹、`check176` 的规范化 sha1 都对 route 逐字段敏感 ⇒ 会撞一排
+# 与本轮无关的老锁。放顶层只影响"统计文件字节数"的纯回显套件。
+#
+#   "_gates": [{
+#       "when_scene": "<从哪个场景出发>",
+#       "when_door":  "W",                       # 门字母；缺省=任意门
+#       "mark":       "ch2.city.dog_traffic",    # 状态键（plot_mark 的 key）
+#       "set_mark_when_arrive": "<到这就写那笔账>",
+#       "to_when_unset": "<未写过 → 去这>",
+#       "to_when_set":   "<写过   → 去这>"
+#   }]
+#
+# ★ 门控**先于** priority 生效：`route_for_door` 一进来就问它，命中就直接返回，
+#   不再走 `_pick_by_pos` / priority 那套。理由：门控描述的是"这个门此刻是哪一支
+#   分支"，与"两条并列边谁更具体"不是同一个问题，混在一起排会得到无从解释的结果。
+
+#: `is_done` 没注入时按"账还没记"处理 —— **fail-open**，见 `gate_target`。
+_GATE_ASSUME_UNSET = False
+
+
+def _gate_str(entry, key):
+    """取门控项里的一个字符串字段；取不到 / 空 / 非字符串 → `''`。"""
+    if not isinstance(entry, dict):
+        return ''
+    v = entry.get(key)
+    return v if isinstance(v, str) and v else ''
+
+
+def gate_for(gates, scene_id, door=None):
+    """找出**管着 (场景, 门) 这一对**的门控项；没有 → `None`。
+
+    :param gates: `load_routes()['gates']`。
+    :param scene_id: 出发场景 id。
+    :param door: 门字母（`'W'` 这种）。**可以是 `None`** —— 见下。
+
+    匹配规则（三条，都很窄）
+    ------------------------
+      ① `when_scene` 必须等于 `scene_id`（支持 `'*'` 通配）；
+      ② `when_door` 为空 / 缺省 → 任意门都算；有值则须与 `door` 相等
+         （支持 `'*'`）；
+      ③ 按 `_order` 声明序取**第一条**命中的。
+
+    ★★ 为什么"没给 `door`"时**不匹配**，而不是像 `when_door` 那样放行
+    ---------------------------------------------------------------
+    `when_door` 是个**筛选条件**：不知道是哪扇门时放行，最多是多挑中一条本来
+    也合适的规则。门控不一样 —— 它会**改变目的地**。不知道是哪扇门就套门控，
+    等于"随便走哪个门都送去 moss"，那正是"走错房间"。
+    ⇒ 这里故意 **fail-closed**（缺信息就不套用），与 `when_src` 同款理由：
+      不放行最多是门控暂时不生效（可观测），放行则是静默走错。
+    """
+    if not scene_id or not isinstance(gates, (list, tuple)):
+        return None
+    for entry in sorted((e for e in gates if isinstance(e, dict)),
+                        key=lambda e: e.get('_order', 0)):
+        want_scene = _gate_str(entry, 'when_scene')
+        if not want_scene:
+            continue
+        if want_scene != '*' and want_scene != scene_id:
+            continue
+        want_door = _gate_str(entry, 'when_door')
+        if want_door:
+            if not (isinstance(door, str) and door):
+                continue          # ★ 缺门信息 ⇒ 不套门控（见 docstring）
+            if want_door != '*' and want_door != door:
+                continue
+        return entry
+    return None
+
+
+def gate_target(gate, is_done=None):
+    """这条门控此刻该走哪一支 → 目标 scene_id；表达不了 → `None`。
+
+    :param gate: `gate_for()` 的返回值。
+    :param is_done: **注入的查账可调用**（`mark -> bool`）。本模块零依赖、
+        **不许** import `plot_mark`（`check84` 用 AST 强制），所以只能注入。
+
+    ★★★ `is_done` 没给 / 调用抛异常 ⇒ 按**"账还没记"**处理（`_GATE_ASSUME_UNSET`）
+    ---------------------------------------------------------------------------
+    这是 **fail-open**：门继续指向 `to_when_unset`，也就是"今天的行为"。
+    反过来（当"已记"处理）会让门**悄悄改去另一间房**，而这件事**没有任何报错**，
+    只能靠"我怎么走到这儿来了"发现 —— 那是最坏的一类故障。
+    代价是：`is_done` 传丢了 ⇒ 门控**静默不生效**。这一条用判据钉死
+    （`check184` 钉 `main.py` 的传参链），不指望运行时自证。
+    """
+    mark = _gate_str(gate, 'mark')
+    if not mark:
+        return None
+    done = _GATE_ASSUME_UNSET
+    if callable(is_done):
+        try:
+            done = bool(is_done(mark))
+        except Exception:
+            # 查账坏了 → 当"没记"（同上：不擅自改道）。
+            done = _GATE_ASSUME_UNSET
+    to = _gate_str(gate, 'to_when_set' if done else 'to_when_unset')
+    return to or None
+
+
+def gate_overrides(gates, scene_id, is_done=None):
+    """把**这一场景**的门控一次性求成 `{门字母: 目标场景}`，供下游当纯数据用。
+
+    用途：`item_interact.build_props()` 是零依赖 L1（`G1` 硬闸禁止 import 项目内
+    模块），它自己读不了 `plot_mark` 的账 ⇒ 由宿主算好这张表再传下去。
+
+    ★ 只收 `when_door` 是**具体字母**的条目：
+      空 / 缺省会命中任意门，没有"字母"可当 key；`'*'` 同理。
+      这种条目仍然能通过 `gate_for(gates, scene, door)` 单点查询，
+      只是没法打包成 `{字母: 目标}` 这张表。**不猜一个 key 出来**。
+    ★ 同一字母出现两条且目标不同 ⇒ 按声明序**先写的赢**（与 `gate_for` 一致）；
+      这里不报错也不合并 —— 数据写错该由判据抓，不该由运行时替人挑。
+    """
+    out = {}
+    if not scene_id or not isinstance(gates, (list, tuple)):
+        return out
+    for entry in sorted((e for e in gates if isinstance(e, dict)),
+                        key=lambda e: e.get('_order', 0)):
+        if _gate_str(entry, 'when_scene') not in ('*', scene_id):
+            continue
+        letter = _gate_str(entry, 'when_door')
+        if not letter or letter == '*':
+            continue
+        if letter in out:
+            continue
+        tgt = gate_target(entry, is_done)
+        if tgt:
+            out[letter] = tgt
+    return out
+
+
+def gate_marks_on_arrival(gates, scene_id):
+    """**真站进了 `scene_id`** 时该写哪些账 → `[mark, ...]`（去重、保声明序）。
+
+    ★ 为什么记账要由表驱动、而不是在 `main` 里写 `if sid == '...dog_traffic'`：
+      写死一个房间 id 意味着"下一间要门控就得改代码"，而本项目的惯例是
+      能让数据说话的都放数据里（`_hidden_rooms` / `_routes` 都是这么长的）。
+    ★ 只返回**该写的**，不判断"是否已经写过" —— 去重与幂等是 `plot_mark.mark_done`
+      的事（它对同一个 key 重复写只是覆盖同一个 `True`）。
+    """
+    out = []
+    if not scene_id or not isinstance(gates, (list, tuple)):
+        return out
+    for entry in sorted((e for e in gates if isinstance(e, dict)),
+                        key=lambda e: e.get('_order', 0)):
+        arrive = _gate_str(entry, 'set_mark_when_arrive')
+        mark = _gate_str(entry, 'mark')
+        if not arrive or not mark:
+            continue
+        if arrive != scene_id:
+            continue
+        if mark not in out:
+            out.append(mark)
+    return out
 
 
 # ===========================================================================

@@ -417,7 +417,8 @@ class InspectProp(PropInteractable):
 
 def build_props(scene, chapter, world, present=None, heal_all=None,
                 on_enter=None, inventory=None, bus=None, pickups=None,
-                routes=None, on_egg=None, egg_gate=None, readables=None):
+                routes=None, on_egg=None, egg_gate=None, readables=None,
+                door_overrides=None):
     """把一个场景的 `objects` 变成可交互物列表。
 
     参数
@@ -452,6 +453,12 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
         ★ 第117轮：`load_readable_text()` 的结果（`{scene_id: {obj: 正文}}`）。
         给了 ⇒ 可读物用**原作正文**；没给 / 查不到 ⇒ 沿用 `READABLE_TEXT` 兜底
         （**不造假、也不崩**）。
+    door_overrides : dict
+        ★★★ 第184轮：**门控**算出的一层覆盖表 `{门字母: 目标场景}`。宿主
+        （`main._rebuild_item_props`）先用 `scene_routing.gate_for/gate_target`
+        求出"这一扇门此刻该走哪一支"，再把结果当纯数据传进来 —— 本模块零依赖，
+        不许自己读 `plot_mark`（见 `route_for_door` docstring 末段）。
+        **不给 ⇒ 与第183轮之前逐字相同**（门的目标仍然只由路由表 priority 决定）。
 
     ★ `key` 的构造规则：`<scene_id>#<objects下标>`。
       为什么不用 `src`：同一个房间里可能有 **多个** 同名对象（例如两个 `obj_savepoint`），
@@ -516,6 +523,15 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
             #      （如 `town_mid` 的三扇 W 门）靠它各去各处；单门场景不传也无所谓，
             #      `_pick_by_pos` 要求候选 ≥2 才会生效。
             tgt = route_for_door(routes, sid, letter, src=src, pos=o.get('pos'))
+            # ★★★ 第184轮：门控覆盖（由宿主算好传下来的一张 `{字母: 目标}`）。
+            #   ★ 放在查表**之后**、彩蛋判断**之前** —— 彩蛋门（Niko 的家）必须
+            #     仍然永远进不去，任何覆盖都不许把它顶掉。
+            #   ★ 覆盖不看 `tgt` 是否为空：门控表本身就是"这扇门此刻该去哪"的
+            #     权威（它给的 to_when_* 由判据钉住"必须是真实场景"）。
+            if isinstance(letter, str) and letter and isinstance(door_overrides, dict):
+                _ov = door_overrides.get(letter)
+                if isinstance(_ov, str) and _ov:
+                    tgt = _ov
             # ★★★ 第111轮 #47：Niko 的家 = 永远进不去的彩蛋（须在普通分支之前判）。
             #   ★ 与普通门同款契约：**前置条件缺一不可，缺了就不建**（不造假门）。
             #     彩蛋门的"前置条件"是 `on_egg` —— 没它就没法执行三连确认，
@@ -863,6 +879,13 @@ def route_for_door(routes, scene_id, letter, src=None, pos=None):
     所以对象级这一路也先过一次 `_pick_by_pos`，挑不出唯一才落回"priority 最小"。
     ★ 影响面实测为零：843 个 `(场景, when_src)` 组合中候选 ≥2 条的只有 242 个、
       且**全部**是 `obj_doorAny` ⇒ 既有 1,961 条逐字不变。
+
+    ★★★ 第184轮：门控层不在这里求值（`door_overrides` 由宿主算好传进来）
+    -------------------------------------------------------------------
+    "同一扇门随剧情状态改去向"要读 `plot_mark` 的账，而本模块**不许** import
+    项目内模块（`G1` 硬闸）⇒ 求值放在 `scene_routing.gate_for/gate_target`
+    （纯函数），由 `main._rebuild_item_props` 调完把结果当**纯数据**传下来。
+    这样本模块仍然只认"字母 → 目标场景"这一张表，行为与依赖都不变。
     """
     if isinstance(routes, dict):
         items = routes.get('routes') or []

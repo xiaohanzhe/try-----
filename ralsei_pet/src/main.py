@@ -7179,6 +7179,28 @@ class RalseiPet(QMainWindow):
                     _log.exception('可读物正文表载入失败（回落到兜底台词）')
                     readables = {}
                 self._readable_table = readables
+            # ★★★ 第184轮：**门控覆盖表**（`{门字母: 目标场景}`）。
+            #   为什么在这里算、而不是在 `item_interact` 里算：那个模块是零依赖 L1
+            #   （`G1` 硬闸禁止 import 项目内模块），读不了 `plot_mark` 的账。
+            #   ⇒ 门控求值放 `scene_routing`（纯函数 + 注入 `is_done`），
+            #     `build_props` 只把结果当**纯数据**用。
+            #   ★ 求值失败 ⇒ `None`（等价"没有门控"）⇒ 门退回 priority 口径。
+            #     这是 fail-open：算不出来时行为与第183轮之前**逐字相同**。
+            door_overrides = None
+            try:
+                if isinstance(routes, dict) and routes.get('ok'):
+                    sid_now = scene.get('scene_id') if isinstance(scene, dict) \
+                        else getattr(scene, 'scene_id', None)
+                    import scene_routing
+                    door_overrides = scene_routing.gate_overrides(
+                        routes.get('gates') or [], sid_now, self.is_plot_done) or None
+                    if door_overrides:
+                        _log.info('门控生效 ⇒ %s 的门 %s 改走 %s',
+                                  sid_now, sorted(door_overrides),
+                                  sorted(set(door_overrides.values())))
+            except Exception:
+                _log.exception('门控求值失败（按无门控处理，门仍走 priority）')
+                door_overrides = None
             self.item_props = item_interact_mod.build_props(
                 scene,
                 self.inventory.chapter,
@@ -7192,6 +7214,7 @@ class RalseiPet(QMainWindow):
                 on_egg=self._niko_home_egg,
                 egg_gate=self._niko_home_gate,
                 readables=readables,
+                door_overrides=door_overrides,
             )
         except Exception:
             _log.exception('可交互物构建失败（本场景没有可交互物，不影响其它功能）')
@@ -7857,6 +7880,12 @@ class RalseiPet(QMainWindow):
             self._commit_hidden_seen()
         except Exception:
             _log.exception('隐藏房记账入口异常（已忽略）')
+        # ★★★ 第184轮：同上理由 —— 落地后才给**门控**记账（"真站进去了"
+        #   才算过了那一拍）。放同一个收尾点，两条换房路径都覆盖到。
+        try:
+            self._commit_gate_marks()
+        except Exception:
+            _log.exception('门控记账入口异常（已忽略）')
 
     # ------------------------------------------------- 隐藏房（第182轮）
     #: 已发现隐藏房的落盘文件（相对 `data_store` 的数据根）。
@@ -7953,6 +7982,41 @@ class RalseiPet(QMainWindow):
         except Exception:
             _log.exception('隐藏房记账失败（已忽略，最多下次再撞一次）')
             return False
+
+    # ------------------------------------------------- 门控（第184轮）
+    def _commit_gate_marks(self):
+        u"""**真的站进了某个场景**之后，按 `_gates` 的登记写账。返回写了几个。
+
+        ★ 判据是"当前场景"而不是"刚走过哪扇门" —— 与第182轮隐藏房同口径：
+          门指向哪儿只是**意图**，`switch` 失败 / 过渡被取消都可能没到位；
+          按意图记账会让这条门控**提前**换支，而且没有任何报错。
+
+        ★ 写的是 `plot_mark` 的账（`plot:` 前缀由 `mark_key` 自动补）。
+          `plot_mark` 此前**零调用方**（等于死设施），本轮把第一处真实消费接上。
+
+        ★ 失败只记日志：这只是一笔"下一扇门走哪一支"的账，丢了最多下次还走旧支；
+          抛出去会把整次走动拖挂，得不偿失。
+        """
+        try:
+            sid = self.__dict__.get('current_scene')
+            if not sid:
+                return 0
+            routes = self.__dict__.get('_scene_routes')
+            if not isinstance(routes, dict):
+                return 0
+            import scene_routing
+            marks = scene_routing.gate_marks_on_arrival(routes.get('gates') or [], sid)
+            n = 0
+            for m in marks:
+                if self.is_plot_done(m):
+                    continue
+                if self.mark_plot_done(m, note=u'第184轮门控：到过 %s' % sid):
+                    n += 1
+                    _log.info('门控记账 ⇒ %s（此后该门改走另一支）', m)
+            return n
+        except Exception:
+            _log.exception('门控记账失败（已忽略）')
+            return 0
 
     def _travel_commit(self, target, before):
         """**老路径**：同步走完（不带过渡 / 过渡被拒时的回落）。语义与第76轮一致。"""
