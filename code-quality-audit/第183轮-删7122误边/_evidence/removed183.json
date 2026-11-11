@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "round": 183,
+    "why": "原作是 1/50 概率分支（ceil(random(50)) == 50），不是确定性边；第182轮已把概率机制接上（_hidden_rooms[1] enabled），本边让位。",
+    "why_not_repoint": "7123 已指向 dw_city_moss，改指会造出重复边。",
+    "why_safe": "7121 priority 更小且 when_* 相同 ⇒ match() 永远返回 7121，本条从未被消费。",
+    "restore": "把 routes 里的对象按原 priority 顺序插回 routes 数组即可（逐字段未改）。",
+    "removed_count": 1,
+    "total_before": 2831,
+    "total_after": 2830
+  },
+  "routes": [
+    {
+      "to": "ch2.cyber_city.dw_city_man",
+      "priority": 7122,
+      "reason": "原作连接：从 room_dw_city_traffic_3 的 W 门离开，落到 room_dw_city_man（**分支级**：`obj_doorw_musfade` 的 `Alarm_2` 里 `if (room == 123)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
+      "when_scene": "ch2.cyber_city.dw_city_traffic_3",
+      "when_door": "W",
+      "_original": {
+        "chapter": "ch2",
+        "door_letter": "W",
+        "kind": "delta_door_table",
+        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
+        "via": "obj_doorw_musfade",
+        "marker": "obj_markerX",
+        "src_room_name": "room_dw_city_traffic_3",
+        "dst_room_name": "room_dw_city_man",
+        "src_room_id": 123,
+        "dst_room_id": 141,
+        "entrance": 24,
+        "branch_letter": "X",
+        "door_x": null,
+        "door_x_all": [
+          0
+        ],
+        "x_range": [
+          null,
+          null
+        ],
+        "batch": 169
+      }
+    }
+  ]
+}

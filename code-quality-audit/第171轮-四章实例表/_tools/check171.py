@@ -48,7 +48,14 @@ from modules.item_interact import route_for_door, door_letter_of  # noqa: E402
 #: 钉死（改了数据就必须同步改这里，改不动说明改动没生效）
 #: ★ 第172轮：1,961 → **2,759**（`obj_doorAny` +798）。★ 分母闸用 `>=`。
 EXPECT_ROUTES = 2759
-EXPECT_W_RULES = 221                # 196（168/169/170）+ 25（171）
+#: ★★★ 第183轮「引账不调数」：删掉 1 条 W 边（`priority=7122`，`traffic_3 → dw_city_man`）。
+#:   原作那扇门里 `man` 是 `ceil(random(50)) == 50` 的 **1/50 概率分支**、`moss` 才是 else，
+#:   它不是确定性边；概率已由第182轮 `_hidden_rooms[1]` 承担，且 `7121`（dog_traffic）
+#:   `when_*` 完全相同、priority 更小 ⇒ 从未被 `match()` 消费。
+#:   留档：`code-quality-audit/第183轮-删7122误边/_evidence/removed183.json`
+W_BASE_183 = 221                     # 196（168/169/170）+ 25（171）
+W_REMOVED_183 = 1
+EXPECT_W_RULES = W_BASE_183 - W_REMOVED_183
 EXPECT_BATCH171 = 25
 EXPECT_PRIO = list(range(7200, 7225))
 EXPECT_ENT_MIN, EXPECT_ENT_MAX = 19, 24

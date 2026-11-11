@@ -1,0 +1,32 @@
+[PASS] A1 表里已经查不到 `priority=7122`（删干净了）    命中 0 条 []
+[PASS] A2 路由总数 == 2830（= 2831 − 1），且与留档 `meta.total_after` 对得上    实测 2830；留档 before=2831 after=2830
+[PASS] A3 留档文件存在、是对象、`routes` 恰好 1 条，且那条就是 7122    留档 1 条；priority=[7122]
+[PASS] A4 留档那条字段完整（`to`/`when_scene`/`when_door`/`_original` 都在，能原样加回去）    缺 []
+[PASS] A5 留档的确实是"那条"：源 = traffic_3、目标 = dw_city_man、批次 = 169    when_scene='ch2.cyber_city.dw_city_traffic_3' to='ch2.cyber_city.dw_city_man' src='room_dw_city_traffic_3' dst='room_dw_city_man' batch=169
+[PASS] A6 ★ 同源的另两条**没被误伤**：7121 仍 → dog_traffic、7123 仍 → moss    7121=['ch2.cyber_city.dw_city_dog_traffic'] 7123=['ch2.cyber_city.dw_city_moss']
+[PASS] A7 同一扇门（traffic_3 / W）现在恰好 2 条出边，且目标互不相同（没造出重复边）    2 条 → ['ch2.cyber_city.dw_city_dog_traffic', 'ch2.cyber_city.dw_city_moss']
+[PASS] B1 产品侧 `load_routes()` 读得动（`ok` 为真），且条数与 A2 一致    ok=True n=2830
+[PASS] B2 ★ `match(traffic_3, 门W)` 仍返回 7121 → dog_traffic（删边前后应当一模一样）    实测 (7121, 'ch2.cyber_city.dw_city_dog_traffic')
+[PASS] B3 ★★ 删边零行为差异：把留档加回表里再 match，结果与不加班**完全相同**    加回=(7121, 'ch2.cyber_city.dw_city_dog_traffic') 现在=(7121, 'ch2.cyber_city.dw_city_dog_traffic')
+[PASS] B4 ★★ 负控制：抠掉 7121 后 match 必须返回 7122（证明 7122 真被遮住、不是死条目）    实测 (7122, 'ch2.cyber_city.dw_city_man')
+[PASS] B5 同一语境现在**选不到** man 了（确定性边确实没了）    to='ch2.cyber_city.dw_city_dog_traffic'
+[PASS] B6 ★ 删边后概率机制接手：`pick_hidden(traffic_3, roll=0.0)` 仍命中 man    实测 'ch2.cyber_city.dw_city_man'
+[PASS] C1 ch2 那条登记仍完好：4 条里启用 1 条、p=0.02、指向 dw_city_man    登记 4 条；ch2 命中 1 条
+[PASS] C2 ★ 登记说明已更新：不再写"尚未删除"，并点明是第183轮删的    含"尚未删除"=False 含"第183轮"=True
+[PASS] C3 说明里仍保留关键口径（1/50 表达式 + 永久锁文件名），不是空口"已删除"    含表达式=True 含锁文件=True
+[PASS] D1 ★ 第181轮账本里记的删除 == 本轮留档里的 priority（跨轮对得上，不是各说各话）    账本 [7122]；留档 [7122]
+[PASS] D2 ★ 第181轮 A1 已"引账不调数"：右边是 `_BASE_TOTAL - _N_REMOVED`（BinOp），不再是裸数字    右操作数类型 'BinOp'
+[PASS] D3 留档可整段还原：内存里拼回去 = 2831 条，且 7122 仍唯一（还原不会造重复）    2831 条；7122 命中 1
+[PASS] D4 施工脚本仍幂等且守格式：无 `assert`（第180轮教训），且用 `dump_routes` 走无损往返    存在=True 有 dump_routes=True
+[PASS] E1 本文件无 BOM 且 UTF-8 可解
+[PASS] E2 本文件无 U+FFFD
+[PASS] E3 本文件里没有"常量 True"判据（恒真比不写还危险）    行号 []
+[PASS] E4 不依赖外部盘/临时区（源码里没有真实盘符路径）    命中 []
+[PASS] E5 不 import 真机/网络/Qt（`main`/`socket`/`requests`/`urllib`/`http`/`Qt` 全不碰）    行号 []
+[PASS] E6 判据条数不随环境变（本文件恒发 26 条断言，含本条自身）    当前 26
+
+==========================================================================
+合计 26 条判据  PASS=26  FAIL=0
+==========================================================================
+[NOTE] 现状（本轮不修）：7123 → dw_city_moss 仍被 7121 无条件遮挡 ⇒ 
+       `dw_city_moss` 目前不可达；表里表达不出"先 dog_traffic 后 moss"的门控。

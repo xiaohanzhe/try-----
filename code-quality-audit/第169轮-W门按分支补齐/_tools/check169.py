@@ -66,6 +66,26 @@ EXPECT_MARKERS = {'obj_markerw': 16, 'obj_markert': 18, 'obj_markerv': 11,
                   'obj_markeru': 12, 'obj_markerX': 23, 'obj_markers': 3,
                   'obj_markerAny': 15, None: 4}
 
+#: ★★★ 第183轮「引账不调数」：本轮段被**删掉 1 条**（`priority=7122`，`traffic_3 → dw_city_man`）。
+#:   为什么删 —— 原作那扇门里 `man` 是 `ceil(random(50)) == 50` 的 **1/50 概率分支**、
+#:   `moss` 才是 else，本轮段当初把它和 `dog_traffic`/`moss` 一起物化成了**无条件边**；
+#:   概率已由第182轮 `_hidden_rooms[1]` 承担，且 `7121`（dog_traffic）`when_*` 完全相同、
+#:   priority 更小 ⇒ 它从未被 `match()` 消费。留档：
+#:   `code-quality-audit/第183轮-删7122误边/_evidence/removed183.json`。
+#:   ⚠️ 关键：**证据侧仍是 102 条**（原件确实有这条分支）—— 变的只是"有没有落成确定边"。
+#:   所以这里不把 102 一改了之，而是让三条判据各自表述：
+#:     A1 段位 = 102 − 删；A4 marker 分布 = 原分布 − 被删那条的 marker；B1 重推 102 == 产品 + 留档。
+POST_169_REMOVED = {
+    7122: {'from': 'ch2.cyber_city.dw_city_traffic_3',
+           'to': 'ch2.cyber_city.dw_city_man',
+           'marker': 'obj_markerX'},
+}
+_N_REMOVED = len(POST_169_REMOVED)
+_LOST_PAIRS = set((_v['from'], _v['to']) for _v in POST_169_REMOVED.values())
+_WANT_MK = dict(EXPECT_MARKERS)
+for _v in POST_169_REMOVED.values():
+    _WANT_MK[_v['marker']] -= 1
+
 _n = {'p': 0, 'f': 0}
 _bad = []
 
@@ -107,11 +127,14 @@ check(u'A0 分母：`load_index()` ok=True、场景数 == %d、路由 >= %d 条�
       % (len(SCN), len(RL), len(MINE), IDX.get('ok')))
 
 _prios = sorted(r.get('priority') for r in MINE)
-check(u'A1 ★★★ 本轮段 %d 条、priority %d~%d **连续无空洞**'
-      % (EXPECT_N, PRIO_BASE, EXPECT_PRIO_END),
-      len(MINE) == EXPECT_N
-      and _prios == list(range(PRIO_BASE, EXPECT_PRIO_END + 1)),
-      u'n=%d 首末=%r' % (len(MINE), (_prios[0], _prios[-1])))
+check(u'A1 ★★★ 本轮段 %d 条、priority %d~%d **除第183轮删的那 1 条外连续无空洞**'
+      % (EXPECT_N - _N_REMOVED, PRIO_BASE, EXPECT_PRIO_END),
+      len(MINE) == EXPECT_N - _N_REMOVED
+      and _prios == [p for p in range(PRIO_BASE, EXPECT_PRIO_END + 1)
+                     if p not in POST_169_REMOVED],
+      u'n=%d 首末=%r 空洞=%r'
+      % (len(MINE), (_prios[0], _prios[-1]),
+         sorted(set(range(PRIO_BASE, EXPECT_PRIO_END + 1)) - set(_prios))))
 
 #: ★ 顺序必须由 (章, 源房, 目标) 排序决定 —— 否则每次重建 priority 都会漂，
 #:   `git diff` 看不出「到底改了哪几条」。这条专门抓「priority 对但顺序乱」。
@@ -141,10 +164,10 @@ _mk = collections.Counter((r.get('_original') or {}).get('marker') for r in MINE
 _fake = [r.get('to') for r in MINE
          if (r.get('_original') or {}).get('marker') not in MARK_OK + (None,)]
 check(u'A4 ★★★ `marker` 只用**真实**对象名；**大写 `obj_markerW` 一条都不许有**'
-      u'（那是第125轮量错的那把尺）；`None` 只许 %d 条（落点不自证，按原作照收）'
-      % EXPECT_MARKER_NONE,
-      not _fake and dict(_mk) == EXPECT_MARKERS,
-      u'实测 %r / 异常 %r' % (dict(_mk), _fake[:3]))
+      u'（那是第125轮量错的那把尺）；`None` 只许 %d 条（落点不自证，按原作照收）；'
+      u'分布已按第183轮删的那条扣减' % EXPECT_MARKER_NONE,
+      not _fake and dict(_mk) == _WANT_MK,
+      u'实测 %r / 期望 %r / 异常 %r' % (dict(_mk), _WANT_MK, _fake[:3]))
 
 _dup = [k for k, v in collections.Counter(
     (r.get('when_scene'), r.get('to')) for r in MINE).items() if v > 1]
@@ -244,11 +267,13 @@ check(u'B0 ★★ 守恒：%d 条原始分支 = %d（第168轮已收）+ %d（�
       and acct['oob'] == 0,
       u'实测 %r / 重推唯一边 %d' % (dict(acct), len(should)))
 
-check(u'B1 ★★★ **独立重推 == 产品本轮段**（双向差集都空）',
-      should == PAIRS,
-      u'重推 %d / 产品 %d / 多写 %r / 漏写 %r'
-      % (len(should), len(PAIRS), sorted(should - PAIRS)[:3],
-         sorted(PAIRS - should)[:3]))
+#: ★ 第183轮：证据侧**不缩水**（原件就是 102 条分支），产品侧少的那一条必须**恰好**是留档那条。
+#:   写成双向等式而不是"放宽成 >= 101"：多写别的、或删错了别的，都会红。
+check(u'B1 ★★★ **独立重推 == 产品本轮段 ∪ 第183轮留档那条**（双向差集都空）',
+      should == PAIRS | _LOST_PAIRS and PAIRS == should - _LOST_PAIRS,
+      u'重推 %d / 产品 %d / 多写 %r / 漏写 %r / 留档 %r'
+      % (len(should), len(PAIRS), sorted(should - PAIRS - _LOST_PAIRS)[:3],
+         sorted((PAIRS | _LOST_PAIRS) - should)[:3], sorted(_LOST_PAIRS)))
 
 #: ★ 每条规则都必须能回溯到**具体一条分支**（chapter/via/src/dst/entrance 四项对齐）。
 #:   只比 (when_scene, to) 是不够的 —— 目标对得上、来源门搞错一样是错。
@@ -340,10 +365,11 @@ check(u'D1 一房多出口场景 %d 个（运行时每场景只生效一条；�
       len(_multi) == 37,
       u'实测 %d' % len(_multi))
 
-#: 反回滚：本轮之后全表不许缩水
+#: 反回滚：本轮之后全表不许缩水（下限按第183轮那 1 条删除账扣减，见 POST_169_REMOVED）
 check(u'D2 ★★ 反回滚：全表 %d 条 ≥ %d；本轮段 %d 条 ≥ %d'
-      % (EXPECT_ROUTES, EXPECT_ROUTES, EXPECT_N, EXPECT_N),
-      len(RL) >= EXPECT_ROUTES and len(MINE) >= EXPECT_N,
+      % (EXPECT_ROUTES - _N_REMOVED, EXPECT_ROUTES - _N_REMOVED,
+         EXPECT_N - _N_REMOVED, EXPECT_N - _N_REMOVED),
+      len(RL) >= EXPECT_ROUTES - _N_REMOVED and len(MINE) >= EXPECT_N - _N_REMOVED,
       u'routes=%d mine=%d' % (len(RL), len(MINE)))
 
 #: 与第168轮分账：那 88 条必须**一条不少、一条不改**

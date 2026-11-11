@@ -533,11 +533,21 @@ if have_rooms:
     #:   + 102（第169轮，按分支解析补回的边）。两批同为 `when_door='W'`、同在 7000 段，
     #:   靠 `_original.batch` 分账（168 无该字段 / 169 = 169）；逐条重推分别归
     #:   `check168.B` 与 `check169.B`。
-    ok(len(_TBLW) == 221 and not _tblw_bad,
-       'C1c2 ★★ 表驱动门（W）段 == 221 条（第168轮 88 + 第169轮 102 + 第170轮 6 + 第171轮 25）、priority 7000~7999、'
+    #: ★★★ 第183轮「引账不调数」：**221 → 220**，删的是 `priority=7122`
+    #:   （`traffic_3 → dw_city_man`，属第169轮那批）。原作那扇门里 `man` 是
+    #:   `ceil(random(50)) == 50` 的 **1/50 概率分支**、`moss` 才是 else，它不是确定性边；
+    #:   概率已由第182轮 `_hidden_rooms[1]` 承担，且 `7121`（dog_traffic）`when_*` 完全相同、
+    #:   priority 更小 ⇒ 从未被 `match()` 消费。
+    #:   留档：`code-quality-audit/第183轮-删7122误边/_evidence/removed183.json`
+    W_BASE_183 = 221
+    W_REMOVED_183 = 1
+    ok(len(_TBLW) == W_BASE_183 - W_REMOVED_183 and not _tblw_bad,
+       'C1c2 ★★ 表驱动门（W）段 == %d 条（第168轮 88 + 第169轮 102 + 第170轮 6 + '
+       '第171轮 25 = %d，再减第183轮删的 %d）、priority 7000~7999、'
        '`kind=delta_door_table`、`table` 为反编译名、两端原作品下标齐备（异常 %d: %s）—— '
        '★逐条重推归 `check168.B` / `check169.B`'
-       % (len(_tblw_bad), _tblw_bad[:3]))
+       % (W_BASE_183 - W_REMOVED_183, W_BASE_183, W_REMOVED_183,
+          len(_tblw_bad), _tblw_bad[:3]))
 
     # ★★ C1b 第122轮：被 C1 排除的 ut 段**必须自证**（否则"排除"就成了没人管）。
     #   三条：① 条数钉死（第122轮 243 → 第123轮 **525**）；② 两端都必须是 ut 已登记

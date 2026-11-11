@@ -109,7 +109,12 @@ EXPECT_AXIS_Y_EVID = 48
 #:   **别的来源**再冒出重复照样红（不是把 5 调成 47 就完事）。
 VAR_SRC = ('obj_doorAnyHorz', 'obj_doorAnyVert')
 #: ★ 历史段**冻结**（这些数一旦变了就是有人动了老数据）
-FROZEN_BATCH = {169: 102, 170: 6, 171: 25}
+#: ★ 第183轮「引账不调数」：169 段 102 → 101 —— 删的那条 `priority=7122`
+#:   （`traffic_3 → dw_city_man`）正属于 batch=169。原作那是 `ceil(random(50)) == 50`
+#:   的 1/50 概率分支、不是确定性边，概率已由第182轮 `_hidden_rooms[1]` 承担。
+#:   留档：`code-quality-audit/第183轮-删7122误边/_evidence/removed183.json`
+W_REMOVED_183 = 1
+FROZEN_BATCH = {169: 102 - W_REMOVED_183, 170: 6, 171: 25}
 KIND = 'delta_door_any'
 VIA = 'obj_doorAny'
 TABLE = 'gml_Object_obj_doorAny_Alarm_2'

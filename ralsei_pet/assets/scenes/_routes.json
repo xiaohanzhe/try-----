@@ -34397,36 +34397,6 @@
       }
     },
     {
-      "to": "ch2.cyber_city.dw_city_man",
-      "priority": 7122,
-      "reason": "原作连接：从 room_dw_city_traffic_3 的 W 门离开，落到 room_dw_city_man（**分支级**：`obj_doorw_musfade` 的 `Alarm_2` 里 `if (room == 123)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
-      "when_scene": "ch2.cyber_city.dw_city_traffic_3",
-      "when_door": "W",
-      "_original": {
-        "chapter": "ch2",
-        "door_letter": "W",
-        "kind": "delta_door_table",
-        "table": "gml_Object_obj_doorw_musfade_Alarm_2",
-        "via": "obj_doorw_musfade",
-        "marker": "obj_markerX",
-        "src_room_name": "room_dw_city_traffic_3",
-        "dst_room_name": "room_dw_city_man",
-        "src_room_id": 123,
-        "dst_room_id": 141,
-        "entrance": 24,
-        "branch_letter": "X",
-        "door_x": null,
-        "door_x_all": [
-          0
-        ],
-        "x_range": [
-          null,
-          null
-        ],
-        "batch": 169
-      }
-    },
-    {
       "to": "ch2.cyber_city.dw_city_moss",
       "priority": 7123,
       "reason": "原作连接：从 room_dw_city_traffic_3 的 W 门离开，落到 room_dw_city_moss（**分支级**：`obj_doorw_musfade` 的 `Alarm_2` 里 `if (room == 123)` 之后各自指定 `entrance=24`；目标房含 `obj_markerX` 作为出生点）。",
@@ -60236,7 +60206,7 @@
       "gate": "scr_sideb_get_phase() == 0 && global.flag[917] < 2 && global.flag[918] == 0",
       "once": true,
       "status": "data_only",
-      "note": "第182轮**已启用**：站在这间房出门时掷 1/50，命中且没发现过才改去本房；真站进来后写 `data_store/hidden_rooms_seen.json` **永久锁定**。⚠️ 既有确定性边 `dw_city_traffic_3 → dw_city_man`（priority 7122）**尚未删除**：删它会撞第181轮 `A1`（总数 `>= 2831`）与 `D1`（老账覆盖计数）两道锁；而 `7121`（dog_traffic）优先级更小 ⇒ `7122` 从未被 `match()` 消费，删与不删都不改变运行行为。",
+      "note": "第182轮**已启用**：站在这间房出门时掷 1/50（`ceil(random(50)) == 50`），命中且没发现过才改去本房；真站进来后写 `data_store/hidden_rooms_seen.json` **永久锁定**。★ 第183轮已删掉与之冲突的确定性边 `dw_city_traffic_3 → dw_city_man`（原 priority 7122，留档 `第183轮-删7122误边/_evidence/removed183.json`）：原作那是 1/50 概率分支、不是确定性边，且 `7121`（dog_traffic）`when_*` 完全相同、priority 更小 ⇒ 它从落地起**从未被 `match()` 消费**，删它不改变任何运行行为。",
       "evidence": "第181轮 probe181b.ch2.json → gml_Object_obj_doorw_musfade_Alarm_2：`if (global.flag[917] == 0 && scr_sideb_get_phase() == 0) room_goto(room_dw_city_dog_traffic); else { var man_room = scr_sideb_get_phase() == 0 && global.flag[917] < 2 && global.flag[918] == 0 && ceil(random(50)) == 50; if (man_room) room_goto(room_dw_city_man); else room_goto(room_dw_city_moss); }`"
     },
     {

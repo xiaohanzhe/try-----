@@ -203,8 +203,34 @@ print(u'')
 # ---------------------------------------------------------------------------
 #  A 分母与批段
 # ---------------------------------------------------------------------------
-check(u'A1 路由总数 >= 2831（本轮落在 2831；此数只增不减，故不写死）',
-      len(ROUTES) >= 2831, u'实测 %d' % len(ROUTES))
+# ★ 第183轮「引账不调数」：不把 2831 / 2768 直接就地改成 2830 / 2767 ——
+#   那样下轮再删一条又要改一次数字，最后没人说得清这个数是怎么来的。
+#   改成把"**本轮的删除**"记成一个显式账本，让闸门的下限由账推出来：
+#      下限 = 第181轮落地基数 − 后续轮次的删除合计
+#   账本**只记删除**（增边由各轮自己加判据，不走这里，免得两边各算一遍）。
+POST_181_REMOVED = {
+    183: ([7122], u'priority=7122  traffic_3 → dw_city_man。原作 `obj_doorw_musfade.Alarm_2` 里'
+                  u'`man` 是 `ceil(random(50)) == 50` 的 1/50 分支、`moss` 才是 else，'
+                  u'第169轮把它物化成了无条件边；概率分支已由 `_hidden_rooms[1]` 承担，'
+                  u'且 `7121`（dog_traffic）`when_*` 完全相同、priority 更小 ⇒ 本条从未被 `match()` 消费。'
+                  u'留档：code-quality-audit/第183轮-删7122误边/_evidence/removed183.json'),
+}
+_N_REMOVED = sum(len(v[0]) for v in POST_181_REMOVED.values())
+_BASE_TOTAL = 2831      # 第181轮落地后的总数
+_BASE_LEGACY = 2768     # 第181轮落地后的"老账"条数（非 batch=181）
+
+check(u'A1 路由总数 >= %d（第181轮基数 %d − 后续删除账 %d：%s；此数只增不减，故不写死）'
+      % (_BASE_TOTAL - _N_REMOVED, _BASE_TOTAL, _N_REMOVED,
+         u'、'.join(u'第%d轮删%d' % (k, len(v[0])) for k, v in sorted(POST_181_REMOVED.items())) or u'无'),
+      len(ROUTES) >= _BASE_TOTAL - _N_REMOVED, u'实测 %d' % len(ROUTES))
+
+# ★ 账本不能只是算术（"记了账但边还在"同样是错）。逐 priority 验证**确实不在表里**。
+#   这一条让账本可被推翻：谁把 7122 加回去，A1b 立刻红。
+_GONE_PRIO = [p for _k, v in sorted(POST_181_REMOVED.items()) for p in v[0]]
+_STILL = [p for p in _GONE_PRIO
+          if any(isinstance(r, dict) and r.get('priority') == p for r in ROUTES)]
+check(u'A1b 账本里记的删除在表里确实查不到（否则账是假的）',
+      not _STILL, u'账本 %r；仍在表里 %r' % (_GONE_PRIO, _STILL))
 
 check(u'A2 batch=181 的条数 == 63',
       len(MINE) == 63, u'实测 %d' % len(MINE))
@@ -386,8 +412,9 @@ check(u'B10 负控制：虚构的 (场景, 目标) 在 batch=181 里查不到（
 # ---------------------------------------------------------------------------
 #  C 老账不动
 # ---------------------------------------------------------------------------
-check(u'C1 老账条数 >= 2768（只增不减）',
-      len(LEGACY) >= 2768, u'实测 %d' % len(LEGACY))
+check(u'C1 老账条数 >= %d（第181轮基数 %d − 后续删除账 %d；只增不减）'
+      % (_BASE_LEGACY - _N_REMOVED, _BASE_LEGACY, _N_REMOVED),
+      len(LEGACY) >= _BASE_LEGACY - _N_REMOVED, u'实测 %d' % len(LEGACY))
 
 # ★ `when_src` 本来就是**可选**字段（2,768 条里只有 1,408 条有），
 #   第一版把它当必填 ⇒ 假红。正确口径 = 老账的键集合必须是**已知键的子集**，
@@ -728,8 +755,8 @@ check(u'F4 AST 无恒真判据（`check(desc, True)` 出现 0 次）',
 # 判据条数固定（不随环境变）
 # ★★★ 这里踩过一个坑：F5 在执行时 `_n` 里**还没有它自己** ⇒ 写 `== 36` 时实测永远 35，
 #   判据自己把自己判红。正确写法是把自身 +1 算进去，改断言条数时必须同步改这个数字。
-check(u'F5 判据条数不随环境变（本文件恒发 39 条断言，含本条自身）',
-      _n['p'] + _n['f'] + 1 == 39, u'实测 %d（不含本条）+1 = %d' % (_n['p'] + _n['f'], _n['p'] + _n['f'] + 1))
+check(u'F5 判据条数不随环境变（本文件恒发 40 条断言，含本条自身）',
+      _n['p'] + _n['f'] + 1 == 40, u'实测 %d（不含本条）+1 = %d' % (_n['p'] + _n['f'], _n['p'] + _n['f'] + 1))
 
 # ---------------------------------------------------------------------------
 print('')

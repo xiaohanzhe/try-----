@@ -92,8 +92,16 @@ EXPECT_REFUSED_W = 98
 #: ★★ 第169轮：W 从 88 → **190** = 88（第168轮，graph 侧单分支边）
 #:   + 102（第169轮，按分支解析补回；`_original.batch = 169`）。
 #:   分账：第168轮那 88 条由 `check168` 守，第169轮那 102 条由 `check169` 守，
-#:   本条只守"两批加起来对得上"。
-EXPECT_W_IN_PROD = 221
+#:   本条只守"几批加起来对得上"。
+#: ★★★ 第183轮「引账不调数」：不满直接把 221 改成 220，而是记一笔删除账。
+#:   删的是 `priority=7122`（`traffic_3 → dw_city_man`）—— 原作那扇门里 `man` 是
+#:   `ceil(random(50)) == 50` 的 **1/50 概率分支**、`moss` 才是 else，它不是确定性边；
+#:   概率已由第182轮 `_hidden_rooms[1]` 承担，且 `7121`（dog_traffic）`when_*` 完全相同、
+#:   priority 更小 ⇒ 它从未被 `match()` 消费。
+#:   留档：`code-quality-audit/第183轮-删7122误边/_evidence/removed183.json`
+W_BASE_183 = 221
+W_REMOVED_183 = 1
+EXPECT_W_IN_PROD = W_BASE_183 - W_REMOVED_183
 #: 各章「有出边的场景数」—— 第124轮实测基线（**只增不减**）
 DENSITY_124 = {'ch1': 105, 'ch2': 127, 'ch3': 23, 'ch4': 22, 'ch5': 20}
 #: ★ 证据侧唯一允许的 3 条 `no_marker` 例外（如实不写）。
@@ -463,8 +471,9 @@ _w_in_prod = _w_rows(RL)
 _w_pairs = set((str(r.get('when_scene')), str(r.get('to'))) for r in RL
                if str((r.get('_original') or {}).get('via') or '') in W_DOOR)
 check(u'D1 ★★★ 产品路由表里 W 门规则**恰好 %d 条**'
-      u'（第168轮 88 + 第169轮 102；原口径是"一条都没有"）'
-      % EXPECT_W_IN_PROD,
+      u'（第168轮 88 + 第169轮 102 + 第170轮 6 + 第171轮 25 = %d，'
+      u'再减第183轮删的那 %d 条；原口径是"一条都没有"）'
+      % (EXPECT_W_IN_PROD, W_BASE_183, W_REMOVED_183),
       len(_w_in_prod) == EXPECT_W_IN_PROD and len(_w_pairs) == EXPECT_W_IN_PROD,
       u'实测 %d 条 / (场景,目标) 去重 %d' % (len(_w_in_prod), len(_w_pairs)))
 

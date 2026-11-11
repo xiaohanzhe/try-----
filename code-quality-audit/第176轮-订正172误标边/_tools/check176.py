@@ -74,6 +74,14 @@ EXPECT_HORZ_OF_RM = 36    # 留档里真身是 Horz 的条数
 #:   混进来会把"其余逐条相同"判成假红。⇒ 判据口径改成"现行表 − 181 段"，
 #:   并且**不把 2768 调成 2831**：改的是"拿哪张表去比"，不是把历史数改大。
 EXPECT_181 = 63           # 第181轮的净增（只做减法口径的锚点，不并入本条的任何分母）
+#: ★★★ 第183轮「引账不调数」：删掉 1 条（`priority=7122`，`traffic_3 → dw_city_man`，batch=169）。
+#:   原作那扇门里 `man` 是 `ceil(random(50)) == 50` 的 **1/50 概率分支**、`moss` 才是 else，
+#:   它不是确定性边；概率已由第182轮 `_hidden_rooms[1]` 承担，且 `7121`（dog_traffic）
+#:   `when_*` 完全相同、priority 更小 ⇒ 从未被 `match()` 消费。
+#:   ⚠️ `EXPECT_BEFORE` / `EXPECT_AFTER` / `BEFORE['rest_sha1']` **一个都不改** ——
+#:   它们是第176轮当日的**历史事实**（那份表当时确实 2,810 → 2,768）。
+#:   变的是"现在这张表又要少一条"，所以按"− 第183轮删除账"来表述。
+EXPECT_183 = 1            # 第183轮删的条数（留档在 第183轮-删7122误边/_evidence/removed183.json）
 EXPECT_VERT_OF_RM = 6     # 留档里真身是 Vert 的条数
 EXPECT_SNAP_N = 3047      # 全表门物件数（快照键数）
 EXPECT_SNAP_HIT = 2898    # 其中解出目标的门物件数
@@ -156,6 +164,18 @@ MINE = [r for r in RL if (r.get('_original') or {}).get('batch') == BATCH]
 #: ★★★ 第181轮的两张视图（见 `EXPECT_181` 的注释）
 RL_181 = [r for r in RL if (r.get('_original') or {}).get('batch') == 181]
 RL_BASE = [r for r in RL if (r.get('_original') or {}).get('batch') != 181]
+
+#: ★★★ 第183轮留档（把被删的那条按原位置插回去用；见 `EXPECT_183`）
+ARCH_183 = jl(os.path.join(REPO, 'code-quality-audit', u'第183轮-删7122误边',
+                           '_evidence', 'removed183.json')).get('routes') or []
+#: 原位置：就在 `priority=7121` **之后**（删之前的顺序是 7121 / 7122 / 7123 紧挨着）。
+#: ⚠️ 不能用"第一个 priority > 7122 的位置"—— 表里 8xxx 段在 1xxx 段后面，全局并不按
+#:   priority 单调，那样会插到几百行以外，指纹必然不等于第176轮那份。
+_BASE_WITH_183 = list(RL_BASE)
+for _a in ARCH_183:
+    _i = next((i for i, r in enumerate(_BASE_WITH_183)
+               if r.get('priority') == 7121), None)
+    _BASE_WITH_183.insert(_i + 1 if _i is not None else len(_BASE_WITH_183), _a)
 VIA_ROWS = [r for r in RL if r.get('when_src') == VIA]
 VAR_ROWS = [r for r in RL if r.get('when_src') in VAR_SRC]
 
@@ -267,10 +287,11 @@ check(u'B2 ★★ 172 段 priority 的空洞**恰好**是留档那 42 个（不�
       % (len(_holed), set(_holed) == RM_PRIOS,
          sorted(set(_holed) - RM_PRIOS)[:5]))
 
-check(u'B3 条数两套账：现存 %d − 第181轮 %d == 改前 %d - %d；`via=%s` %d == %d - %d'
-      % (len(RL), len(RL_181), EXPECT_BEFORE, EXPECT_RM, VIA, len(VIA_ROWS),
+check(u'B3 条数两套账：现存 %d − 第181轮 %d − 第183轮 %d == 改前 %d - %d；'
+      u'`via=%s` %d == %d - %d'
+      % (len(RL), len(RL_181), EXPECT_183, EXPECT_BEFORE, EXPECT_RM, VIA, len(VIA_ROWS),
          EXPECT_VIA_BEFORE, EXPECT_RM),
-      len(RL_BASE) == EXPECT_AFTER and len(RL_181) == EXPECT_181
+      len(RL_BASE) == EXPECT_AFTER - EXPECT_183 and len(RL_181) == EXPECT_181
       and len(VIA_ROWS) == EXPECT_VIA_AFTER
       and len(MINE) == EXPECT_VIA_AFTER,
       u'routes=%d（= %d + 181段 %d）via=%d mine=%d'
@@ -287,11 +308,14 @@ check(u'B4 ★★ 第174轮的变体边**一条没少**：%d 条（Horz %d + Ver
 #: ★★★ B5：拿 `git HEAD` 的改前副本，按留档 priority 摘掉 42 条，剩下的规范化
 #:   指纹必须与**现在磁盘上的表**逐条相同。这是"别的一条没动"的硬证明 ——
 #:   不是拿我自己的快照跟自己比，改前副本来自 git。
-check(u'B5 ★★★ 除这 %d 条外**其余逐条相同**：现状**减去第181轮那 %d 条**后的规范化 '
-      u'sha1 == 改前副本摘掉留档后的 sha1' % (EXPECT_RM, len(RL_181)),
-      canon(RL_BASE) == BEFORE['rest_sha1'] and len(RL_BASE) == BEFORE['rest_n'],
-      u'现状−181段=%s 期望=%s n=%d/%d'
-      % (canon(RL_BASE)[:12], BEFORE['rest_sha1'][:12], len(RL_BASE), BEFORE['rest_n']))
+check(u'B5 ★★★ 除这 %d 条外**其余逐条相同**：现状**减去第181轮那 %d 条、'
+      u'把第183轮留档那条按原位插回**后的规范化 sha1 == 改前副本摘掉留档后的 sha1'
+      % (EXPECT_RM, len(RL_181)),
+      canon(_BASE_WITH_183) == BEFORE['rest_sha1']
+      and len(_BASE_WITH_183) == BEFORE['rest_n'],
+      u'现状−181段+183留档=%s 期望=%s n=%d/%d'
+      % (canon(_BASE_WITH_183)[:12], BEFORE['rest_sha1'][:12],
+         len(_BASE_WITH_183), BEFORE['rest_n']))
 
 #: 负控制：随便改一条现存边的 `to`，B5 的指纹**必须**变（否则 B5 恒真）
 if RL:
@@ -456,9 +480,10 @@ print(u'D 段  留档可整段恢复（无损）')
 print('=' * 70)
 
 RESTORED = list(RL_BASE) + list(REMOVED)
-check(u'D1 加回 42 条 ⇒ %d 条 == 改前 %d 条（用"现行表 − 第181轮 %d 条"作底）'
-      % (len(RESTORED), EXPECT_BEFORE, len(RL_181)),
-      len(RESTORED) == EXPECT_BEFORE, u'实得=%d' % len(RESTORED))
+check(u'D1 加回 42 条 ⇒ %d 条 == 改前 %d 条 − 第183轮 %d 条'
+      u'（用"现行表 − 第181轮 %d 条"作底）'
+      % (len(RESTORED), EXPECT_BEFORE, EXPECT_183, len(RL_181)),
+      len(RESTORED) == EXPECT_BEFORE - EXPECT_183, u'实得=%d' % len(RESTORED))
 
 _rp = sorted(r.get('priority') for r in RESTORED
              if (r.get('_original') or {}).get('batch') == BATCH)

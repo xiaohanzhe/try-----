@@ -52,7 +52,14 @@ from modules.item_interact import (route_for_door, _pick_by_pos,  # noqa: E402
 EXPECT_ROUTES = 2759
 EXPECT_BATCH170 = 6
 EXPECT_PRIO = list(range(7190, 7196))
-EXPECT_W_RULES = 221                 # 190（168/169）+ 6（170）+ 25（171）
+#: ★★★ 第183轮「引账不调数」：删掉 1 条 W 边（`priority=7122`，`traffic_3 → dw_city_man`）。
+#:   原作那扇门里 `man` 是 `ceil(random(50)) == 50` 的 **1/50 概率分支**、`moss` 才是 else，
+#:   它不是确定性边；概率已由第182轮 `_hidden_rooms[1]` 承担，且 `7121`（dog_traffic）
+#:   `when_*` 完全相同、priority 更小 ⇒ 从未被 `match()` 消费。
+#:   留档：`code-quality-audit/第183轮-删7122误边/_evidence/removed183.json`
+W_BASE_183 = 221                     # 190（168/169）+ 6（170）+ 25（171）
+W_REMOVED_183 = 1
+EXPECT_W_RULES = W_BASE_183 - W_REMOVED_183
 EXPECT_ENT_FILLED = 190              # batch169 的 102 条里原先 88 条没记，本轮补齐
 EXPECT_RANGE_FLIP = 0                # 方向反了 = 0（修完）
 EXPECT_RANGE_MISS = 0                # 该有区间却没有 = 0（修完）
@@ -66,7 +73,9 @@ EXPECT_BATCH171 = 25                 # 第171轮那批（7200~7224）
 #:   第170轮原判据 A3/B3/C3/D2b 全都钉了当日快照，171 一加 25 条边就四连红 ——
 #:   那不是回归，是判据过时（同 165 的 `fit` 恒真、134 `B5` 同族）。
 #:   现在统一改成两种写法：①「历史段冻结 + 新段只增不减」② 结构性不变量。
-FROZEN_BATCH = {None: 88, 169: 102, 170: 6}   # 168 那批规则没有 batch 字段 ⇒ 记成 None
+#: ★ 第183轮：169 段 102 → **101**（被删的那条 `priority=7122` 正属于 batch=169）；
+#:   按删除账扣，不写裸数。其余两格一字未动。
+FROZEN_BATCH = {None: 88, 169: 102 - W_REMOVED_183, 170: 6}   # 168 那批规则没有 batch 字段 ⇒ 记成 None
 KIND = 'delta_door_table'
 W_VIA = ('obj_doorW', 'obj_doorw_musfade')
 
