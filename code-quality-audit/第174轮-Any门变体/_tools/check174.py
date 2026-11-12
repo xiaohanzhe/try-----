@@ -100,6 +100,10 @@ EXPECT_ANY_172 = 798 - len(REMOVED)         # 第172轮的 `when_src == obj_door
 EXPECT_MISLABEL = 42         # 172 里 via 说假话的**原始**条数（Horz 36 + Vert 6）
 EXPECT_MISLABEL_LIVE = 0     # 第176轮之后，表里这类误标边必须**一条不剩**
 EXPECT_ORIG_OBJS = 3197      # 第68轮普查口径（五章 · 非 doorany 家族）
+#: ★ 第185轮：`ch1.forest.room_man` 登记进产品 ⇒ 它那 **4 个**物件进入世界。
+#: **只加账**：上面那个历史冻结值一个字不动。
+MAN_185 = 4
+
 EXPECT_DESKTOP_DOORS = 4
 CHECK_FLOOR = 35
 
@@ -532,9 +536,9 @@ for _u in UNITS:
             _non_fam += 1
 _desktop_p = os.path.join(SCENES, 'desktop.json')
 _desktop = len((jl(_desktop_p).get('objects') or [])) if os.path.isfile(_desktop_p) else -1
-check(u'D1 既有 objects **一个都没被改**：五章非 doorany 家族 %d == %d、桌面世界门 %d == %d'
-      % (_non_fam, EXPECT_ORIG_OBJS, _desktop, EXPECT_DESKTOP_DOORS),
-      _non_fam == EXPECT_ORIG_OBJS and _desktop == EXPECT_DESKTOP_DOORS,
+check(u'D1 既有 objects **一个都没被改**：五章非 doorany 家族 %d == %d+%d、桌面世界门 %d == %d'
+      % (_non_fam, EXPECT_ORIG_OBJS, MAN_185, _desktop, EXPECT_DESKTOP_DOORS),
+      _non_fam == EXPECT_ORIG_OBJS + MAN_185 and _desktop == EXPECT_DESKTOP_DOORS,
       u'（把整个 doorany 家族排除在外，这样第173/174轮各自的增量都撞不到这条）')
 
 _badshape = []

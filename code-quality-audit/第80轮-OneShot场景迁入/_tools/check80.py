@@ -176,10 +176,24 @@ if os.path.exists(BAK_IDX):
     #   自己那一条。把它算进"变了的作品"是把两件事混为一谈。
     #   ⇒ 排除 desktop（它本就不属于任何原作房间，`original_room_id=-1`），
     #     并**保留**对它的正向断言（下方 "desktop 仍是一等场景"）。
+    # ★ 第185轮：`ch1.forest.room_man` 是本轮**新增**的一间，不是“碰了 ch1”。
+    #   做法：先把**账上那一间**从“现状副本”里摘掉，再逐章**深比** ——
+    #   既不削弱判据（摘完仍要求整章逐值相等），也不碰老备份。
+    #   另外 `_ledger_missing` 防“账上写了但现实不存在”—— 否则这条会退化成永真。
+    _LEDGER_185 = (('ch1', 'forest', 'ch1.forest.room_man'),)
+    _cur = json.loads(json.dumps(idx.get('chapters') or {}))
+    _ledger_missing = []
+    for _ch, _ar, _sid in _LEDGER_185:
+        _sl = (((_cur.get(_ch) or {}).get('areas') or {}).get(_ar) or {}).get('scenes') or {}
+        if _sid in _sl:
+            _sl.pop(_sid)
+        else:
+            _ledger_missing.append(_sid)
     diffs = [k for k, v in old_ch.items()
-             if k != 'desktop' and idx.get('chapters', {}).get(k) != v]
-    check('C1 ★★★ 迁入前 8 章（除 desktop 自身）逐值不变', not diffs,
-          '变了=%s' % (diffs or '无'))
+             if k != 'desktop' and _cur.get(k) != v]
+    check('C1 ★★★ 迁入前 8 章（除 desktop 自身）逐值不变（第185轮那一间挂账后）',
+          not diffs and not _ledger_missing,
+          '变了=%s / 账上缺=%s' % (diffs or '无', _ledger_missing or '无'))
     added = set(idx.get('chapters') or {}) - set(old_ch)
     removed = set(old_ch) - set(idx.get('chapters') or {})
     # ★★ 第99轮修正（同 C1 的第89轮修正：判据过窄 ⇒ 误报）：
@@ -197,8 +211,9 @@ if os.path.exists(BAK_IDX):
     n_new = sum(len(a.get('scenes') or {})
                 for c in (idx.get('chapters') or {}).values()
                 for a in (c.get('areas') or {}).values())
-    _delta = sum(n for _, n in _LEGIT_ROUNDS.values())
-    check('C3 ★ 总数 == 迁入前 + 逐章声明的增量（263 + 244）',
+    # ★ 第185轮：+1（`ch1.forest.room_man`）。增量账里加一笔，老备份不动。
+    _delta = sum(n for _, n in _LEGIT_ROUNDS.values()) + 1
+    check('C3 ★ 总数 == 迁入前 + 逐章声明的增量（263 + 244 + 第185轮 1）',
           n_new == n_old + _delta,
           '%d -> %d (+%d，应 +%d)' % (n_old, n_new, n_new - n_old, _delta))
 else:

@@ -305,26 +305,6 @@
               "file": "ch1.forest.forest_entrance.json",
               "original_room_id": 73
             },
-            "ch1.forest.forest_bake_sale": {
-              "name": "森林·义卖",
-              "file": "ch1.forest.forest_bake_sale.json",
-              "original_room_id": 82
-            },
-            "ch1.forest.forest_before_maze": {
-              "name": "森林·迷宫前",
-              "file": "ch1.forest.forest_before_maze.json",
-              "original_room_id": 90
-            },
-            "ch1.forest.forest_after_maze": {
-              "name": "森林·迷宫后",
-              "file": "ch1.forest.forest_after_maze.json",
-              "original_room_id": 96
-            },
-            "ch1.forest.forest_thrashing_room": {
-              "name": "森林·痛揍之屋",
-              "file": "ch1.forest.forest_thrashing_room.json",
-              "original_room_id": 97
-            },
             "ch1.forest.forest_area0": {
               "name": "猩红森林·area0",
               "name_raw": "room_forest_area0",
@@ -389,6 +369,11 @@
               "bg": null,
               "bg_source": "none"
             },
+            "ch1.forest.forest_bake_sale": {
+              "name": "森林·义卖",
+              "file": "ch1.forest.forest_bake_sale.json",
+              "original_room_id": 82
+            },
             "ch1.forest.forest_smith": {
               "name": "猩红森林·smith",
               "name_raw": "room_forest_smith",
@@ -445,6 +430,11 @@
               "bg": null,
               "bg_source": "none"
             },
+            "ch1.forest.forest_before_maze": {
+              "name": "森林·迷宫前",
+              "file": "ch1.forest.forest_before_maze.json",
+              "original_room_id": 90
+            },
             "ch1.forest.forest_maze1": {
               "name": "猩红森林·maze1",
               "name_raw": "room_forest_maze1",
@@ -484,6 +474,16 @@
               "original_room_id": 95,
               "bg": null,
               "bg_source": "none"
+            },
+            "ch1.forest.forest_after_maze": {
+              "name": "森林·迷宫后",
+              "file": "ch1.forest.forest_after_maze.json",
+              "original_room_id": 96
+            },
+            "ch1.forest.forest_thrashing_room": {
+              "name": "森林·痛揍之屋",
+              "file": "ch1.forest.forest_thrashing_room.json",
+              "original_room_id": 97
             },
             "ch1.forest.forest_afterthrash2": {
               "name": "猩红森林·afterthrash2",
@@ -538,6 +538,14 @@
               "name_raw": "room_forest_castlefront",
               "name_derived": true,
               "original_room_id": 104,
+              "bg": null,
+              "bg_source": "none"
+            },
+            "ch1.forest.room_man": {
+              "name": "猩红森林·man",
+              "name_raw": "room_man",
+              "name_derived": true,
+              "original_room_id": 142,
               "bg": null,
               "bg_source": "none"
             }

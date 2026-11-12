@@ -43,12 +43,13 @@ sys.path.insert(0, os.path.join(REPO, 'ralsei_pet'))
 from modules import scene_system as SS          # noqa: E402
 
 #: 分母常量（写死 + 判据里独立重算，两边必须相等才会绿）
-EXPECT_SCENES = 2166      # index 登记场景数
+#: ★ 第185轮：`ch1.forest.room_man` 进 zone + `_index.json` ⇒ 两个分母各 +1。只加账、不重算。
+EXPECT_SCENES = 2166 + 1      # index 登记场景数
 EXPECT_SOLO = 88          # 独立文件数
 EXPECT_ZONE_FILES = 76    # 分片文件数
-EXPECT_ZONE_SCENES = 2078 # 分片内场景数
+EXPECT_ZONE_SCENES = 2078 + 1 # 分片内场景数
 EXPECT_FILLED = 87        # 本轮补的条数
-EXPECT_SELF_BEFORE = 2079 # 改前自足数（2078 分片 + desktop）
+EXPECT_SELF_BEFORE = 2079 + 1 # 自足数（2079 分片 + desktop）
 CHECK_FLOOR = 30
 
 _n = {'p': 0, 'f': 0}

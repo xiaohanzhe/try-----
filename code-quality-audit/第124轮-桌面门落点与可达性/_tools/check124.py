@@ -60,7 +60,9 @@ for _p in (PKG, MODULES):
 #   直接 `d['scenes']` 拿到 `None` ⇒ 场景数 0 ⇒ 可达 0 ⇒ **每个数字都错，但不报错**。
 from modules import scene_system as SS       # noqa: E402
 
-EXPECT_SCENES = 2166
+#: ★ 第185轮：`ch1.forest.room_man` 登记 ⇒ 场景数 2166 + 1。
+#: 分母**只增不减**（历史段冻结，新段逐轮加账）—— 不重算、不调小。
+EXPECT_SCENES = 2166 + 1
 #: ★ 第126轮：1,531 → **1,740**（outertale 补了 209 条门路由，priority 6000~6208）。
 #: ★ 第168轮：1,740 → **1,828**（Deltarune 五章补了 88 条 **W 门**，
 #:   priority 7000~7087）。桌面 4 门的落点与可达账**不受影响**（W 段只落在

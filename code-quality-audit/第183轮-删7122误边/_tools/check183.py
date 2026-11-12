@@ -116,8 +116,16 @@ _hit = [r for r in ROUTES_L if isinstance(r, dict) and r.get('priority') == PRIO
 check(u'A1 表里已经查不到 `priority=7122`（删干净了）',
       _hit == [], u'命中 %d 条 %r' % (len(_hit), [r.get('to') for r in _hit]))
 
-check(u'A2 路由总数 == 2830（= 2831 − 1），且与留档 `meta.total_after` 对得上',
-      len(ROUTES_L) == 2830
+#: ★★★ 第185轮引账：本周目删边后是 2830，但第185轮加了 2 条森林手工边
+#:   （`area5 --X--> forest_starwalker` priority 9001、
+#:    `room_man --X--> forest_bake_sale` priority 9002，见 `第185轮-森林1of50隐藏房`）
+#:   ⇒ 现在是 2832。
+#:   ★ 留档里的 `total_before/after`（2831/2830）是**第183轮当天的历史事实**，
+#:     一个字都不许改 —— 改了等于篡改留档。所以只让"现数"减去本条新增账。
+_ADDED_185 = 2
+check(u'A2 路由总数 == 2830 + %d（第185轮新增账）= %d，且与留档 `meta.total_after` 对得上'
+      % (_ADDED_185, 2830 + _ADDED_185),
+      len(ROUTES_L) == 2830 + _ADDED_185
       and META.get('total_after') == 2830
       and META.get('total_before') == 2831,
       u'实测 %d；留档 before=%r after=%r'
@@ -212,8 +220,12 @@ check(u'B5 同一语境现在**选不到** man 了（确定性边确实没了）
       u'to=%r' % (None if _res_now is None else _res_now.get('to')))
 
 _HID = ROUTEDATA.get('_hidden_rooms') or []
-_divert = SR.pick_hidden(_HID, FROM_SCENE, seen=(), roll=lambda: 0.0)
-check(u'B6 ★ 删边后概率机制接手：`pick_hidden(traffic_3, roll=0.0)` 仍命中 man',
+#: ★ 第185轮：`pick_hidden` 新增 `door=`，且 ch2 那条补了 `when_door: "W"`
+#:   （原作那扇门是 `obj_doorw_musfade`）。缺门不掷是**新语义**，所以这里必须
+#:   显式说明走的是 W 门 —— 否则本判据会因 fail-closed 恒假（假红）。
+_DOOR_W = 'W'
+_divert = SR.pick_hidden(_HID, FROM_SCENE, seen=(), roll=lambda: 0.0, door=_DOOR_W)
+check(u'B6 ★ 删边后概率机制接手：`pick_hidden(traffic_3, roll=0.0, door="W")` 仍命中 man',
       isinstance(_divert, dict) and _divert.get('scene') == TO_SCENE,
       u'实测 %r' % (None if _divert is None else _divert.get('scene')))
 
@@ -287,8 +299,9 @@ check(u'D2 ★ 第181轮 A1 已"引账不调数"：右边是 `_BASE_TOTAL - _N_R
 
 _restore = list(ROUTES_L) + list(KEEP)
 _restore_hit = [r for r in _restore if isinstance(r, dict) and r.get('priority') == PRIORITY]
-check(u'D3 留档可整段还原：内存里拼回去 = 2831 条，且 7122 仍唯一（还原不会造重复）',
-      len(_restore) == 2831 and len(_restore_hit) == 1,
+check(u'D3 留档可整段还原：内存里拼回去 = 2831 + %d（第185轮新增账）= %d 条，'
+      u'且 7122 仍唯一（还原不会造重复）' % (_ADDED_185, 2831 + _ADDED_185),
+      len(_restore) == 2831 + _ADDED_185 and len(_restore_hit) == 1,
       u'%d 条；7122 命中 %d' % (len(_restore), len(_restore_hit)))
 
 _apply_src = rd(APPLY183) if os.path.isfile(APPLY183) else u''

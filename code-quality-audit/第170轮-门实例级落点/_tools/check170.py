@@ -487,21 +487,51 @@ check(u'D2 ★★★ 新增规则不许**抢走**谁的权：同 (场景,目标)
 #:   最新一批的 priority 段必须**整体压在全部旧段之上**，且全表最大值就落在这一批。
 #:   有了它，`_pick`（取最小）在结构上就抢不走任何既有规则的权 —— 只可能填空。
 #:   哪天有人插一条低号新规则进来，这条立刻红，而不是等下一个人肉眼看出来。
+#: ★★★ 第185轮修正：这条断言原本把**手工边**也算进"旧段"，于是本轮新增的两条
+#:   边（`priority=9001/9002`，见 `第185轮-森林1of50隐藏房`）一进来就把 181 那批压红。
+#:   但 D2b 判的是**生成器各批之间**的段序（`gen_routes44.py` 的
+#:   `110 + scene_ord * BAND + k` 逐批单调递增），手工边根本不在这条线上 ——
+#:   它们没有 `_original.batch`，和 168 那批（同样无 batch）一起落进同一个桶，
+#:   那是**两个不相干的集合被塞进一个名字**（同 171「判据过时」家族，不是回归）。
+#:   ⇒ 段序只拿**带 batch** 的规则算；手工边另外由 D2c 单独管（见下）。
+#:   ★ 不写成"排掉 9001/9002 这两个数"—— 那等于把判据钉在当日快照上，
+#:     下一轮再来一条手工边又要改一次（171 四连红的老毛病）。
 _bp = collections.defaultdict(list)
+_nobatch = []
 for _r in RL:
     _p = _r.get('priority')
     if not isinstance(_p, int):
         continue
     _b = (_r.get('_original') or {}).get('batch')
-    _bp[-1 if _b is None else _b].append(_p)      # 168 那批无 batch ⇒ 当最老的 -1
-_newest = max(k for k in _bp if k >= 0)
+    if _b is None:
+        _nobatch.append((_p, _r.get('when_scene'), _r.get('to')))
+    else:
+        _bp[_b].append(_p)
+_newest = max(_bp)
 _new_prios = _bp[_newest]
 _older_max = max(p for k, v in _bp.items() if k != _newest for p in v)
-check(u'D2b ★★★ 最新一批（batch=%d）的 priority 段整体压在旧段之上：min %d > 旧段 max %d，'
-      u'且全表最大 %d 就在这一批（新增只能填空不能顶替）'
-      % (_newest, min(_new_prios), _older_max, _maxp),
-      min(_new_prios) > _older_max and _maxp == max(_new_prios),
-      u'批=%d min=%d 旧max=%d 全表max=%d' % (_newest, min(_new_prios), _older_max, _maxp))
+_band_max = max(p for v in _bp.values() for p in v)
+check(u'D2b ★★★ 最新一批（batch=%d）的 priority 段整体压在**旧批**之上：min %d > 旧批 max %d，'
+      u'且生成器区间的最大 %d 就在这一批（新增只能填空不能顶替）'
+      % (_newest, min(_new_prios), _older_max, _band_max),
+      min(_new_prios) > _older_max and _band_max == max(_new_prios),
+      u'批=%d min=%d 旧批max=%d 生成器max=%d' % (_newest, min(_new_prios), _older_max, _band_max))
+
+#: ★★★ 第185轮新增：**手工边登记制**。手工边（无 `_original.batch`）绝大多数落在
+#:   生成器区间**以下**（110~7087），只有明确要"压过整条生成器链"的才允许更高 ——
+#:   那种边必须在这里登记，否则 D2b 的段序结论会被一条没登记的边悄悄破坏。
+#:   ★ 断言写成"实际集合 == 登记集合"，两个方向都管：多出来的报红、登记了却没落地的也报红
+#:     （防止白名单变成一张永远为真的空头支票）。
+_MANUAL_ABOVE_BAND = {
+    (9001, u'ch1.forest.forest_area5', u'ch1.forest.forest_starwalker'),
+    (9002, u'ch1.forest.room_man', u'ch1.forest.forest_bake_sale'),
+}
+_above = set(x for x in _nobatch if x[0] > _band_max)
+check(u'D2c ★★★ 手工边不许**绕开**段序：priority 高过生成器区间（>%d）的无 batch 边，'
+      u'必须与登记表逐条相等（多一条要登记，登记了没落地也算错）' % _band_max,
+      _above == _MANUAL_ABOVE_BAND,
+      u'多出=%r 缺=%r' % (sorted(_above - _MANUAL_ABOVE_BAND),
+                          sorted(_MANUAL_ABOVE_BAND - _above)))
 
 #: 反回滚闸：条数不许缩水
 check(u'D3 ★★★ 反回滚：路由总数 %d、W 规则 %d，均不低于本轮落定值'

@@ -50,9 +50,10 @@ from modules import scene_system as SS            # noqa: E402
 from modules.scene_system import (load_scene, load_zone,  # noqa: E402
                                   zone_filename)
 
-EXPECT_INDEX = 2166       # `_index.json` 登记场景数
+#: ★ 第185轮：`ch1.forest.room_man` 进 zone + `_index.json` ⇒ 两个分母各 +1。只加账、不重算。
+EXPECT_INDEX = 2166 + 1       # `_index.json` 登记场景数
 EXPECT_SOLO = 88          # 独立文件数（含 desktop）
-EXPECT_ZONE = 2078        # 分片内场景数
+EXPECT_ZONE = 2078 + 1        # 分片内场景数
 SENTINEL = -999999        # 哨兵：如果它还从 entry 取 rid，就会看到这个数
 CHECK_FLOOR = 29
 

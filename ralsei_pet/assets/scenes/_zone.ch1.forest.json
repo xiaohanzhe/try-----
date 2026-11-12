@@ -1084,6 +1084,40 @@
      "depth": 0
     }
    ]
+  },
+  "ch1.forest.room_man": {
+   "name": "猩红森林·man",
+   "name_raw": "room_man",
+   "name_derived": true,
+   "original_room_id": 142,
+   "bg": null,
+   "bg_source": "none",
+   "objects": [
+    {
+     "pos": [280, 240],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [340, 140],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [280, 460],
+     "sprite": "objs/spr_doorX_0.png",
+     "src": "obj_doorX_musfade",
+     "depth": 0
+    },
+    {
+     "pos": [300, 360],
+     "sprite": "objs/spr_markerX_0.png",
+     "src": "obj_markerX",
+     "depth": 0
+    }
+   ]
   }
  }
 }

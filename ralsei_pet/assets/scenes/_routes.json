@@ -60174,6 +60174,49 @@
         "src_room_id": 243,
         "batch": 181
       }
+    },
+    {
+      "to": "ch1.forest.forest_starwalker",
+      "priority": 9001,
+      "reason": "原作 `obj_doorX_musfade.Alarm_2` 的 else 分支：站在 猩红森林·area5 推这扇门（X），1/50 触发隐藏房 `room_man`，否则落到 猩红森林·starwalker。★ 与 `(area5, A)` 无关 —— 那条是另一扇门（`obj_doorA`，走下标位移机制）。",
+      "when_scene": "ch1.forest.forest_area5",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "code": "if (room == room_forest_area5)\r\n{\r\n    ch = ceil(random(50));\r\n    if (ch == 50 && global.flag[910] == 0)\r\n    {\r\n        room_goto(room_man);\r\n    }\r\n    else\r\n    {\r\n        room_goto(room_forest_starwalker);\r\n    }\r\n}",
+        "cond_man": "ceil(random(50)) == 50 && global.flag[910] == 0",
+        "door_letter": "X",
+        "dst_room_id": 88,
+        "dst_room_name": "room_forest_starwalker",
+        "evidence": "code-quality-audit/第109轮-场景过渡动画/_evidence/door_codes109b.json → gml_Object_obj_doorX_musfade_Alarm_2（len=1765）",
+        "kind": "delta_door_table",
+        "marker": "obj_markerX",
+        "src_room_id": 89,
+        "src_room_name": "room_forest_area5",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade"
+      }
+    },
+    {
+      "to": "ch1.forest.forest_bake_sale",
+      "priority": 9002,
+      "reason": "原作 `obj_doorX_musfade.Alarm_2`：`if (room == room_man) room_goto(room_forest_savepoint2)` —— 隐藏房的出口。`room_forest_savepoint2`(82) 在本项目里就是 森林·义卖（`forest_bake_sale`）。",
+      "when_scene": "ch1.forest.room_man",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "code": "if (room == room_man)\r\n{\r\n    room_goto(room_forest_savepoint2);\r\n}",
+        "door_letter": "X",
+        "dst_room_id": 82,
+        "dst_room_name": "room_forest_savepoint2",
+        "evidence": "code-quality-audit/第109轮-场景过渡动画/_evidence/door_codes109b.json → gml_Object_obj_doorX_musfade_Alarm_2（len=1765）",
+        "kind": "delta_door_table",
+        "marker": "obj_markerX",
+        "src_room_id": 142,
+        "src_room_name": "room_man",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade"
+      }
     }
   ],
   "_fallback": {
@@ -60182,18 +60225,19 @@
   },
   "_hidden_rooms": [
     {
-      "scene": null,
-      "scene_name": "森林·man（隐藏房）",
-      "enabled": false,
+      "scene": "ch1.forest.room_man",
+      "scene_name": "猩红森林·man（隐藏房）",
+      "enabled": true,
       "from_scene": "ch1.forest.forest_area5",
       "from_room": "room_forest_area5",
       "probability": 0.02,
       "probability_expr": "ceil(random(50)) == 50",
       "gate": "global.flag[910] == 0",
       "once": true,
-      "status": "target_not_registered",
-      "note": "原作确有这扇门，但目标房 room_man 在本项目里**没有登记成场景**（_index.json 查无此项）⇒ 无法落边，只登记证据。",
-      "evidence": "第181轮 probe181b.ch1.json → gml_Object_obj_doorX_musfade_Alarm_2：`if (room == room_forest_area5) { ch = ceil(random(50)); if (ch == 50 && global.flag[910] == 0) room_goto(room_man); else room_goto(room_forest_starwalker); }`"
+      "status": "enabled",
+      "note": "第185轮**已启用**：站在 `ch1.forest.forest_area5` 推 **X 门**（`obj_doorX_musfade`）时掷 1/50（`ceil(random(50)) == 50`），命中且没发现过才改去本房；真站进来后写 `data_store/hidden_rooms_seen.json` **永久锁定**（代理原作 `global.flag[910] == 0`）。★ 只对 X 门生效：same 房间还有一扇 `obj_doorA`（字母 A），原作那扇门**不掷骰**。★ 本房出口＝`(room_man, X) → ch1.forest.forest_bake_sale`（原作 `room_goto(room_forest_savepoint2)`）。",
+      "evidence": "code-quality-audit/第185轮-森林1of50隐藏房/_evidence/room_man185.json ← 第109轮 door_codes109b.json → gml_Object_obj_doorX_musfade_Alarm_2（len=1765）；第115轮 raw/ch1/inst68.json → room_man(idx=142, n=4) / room_forest_savepoint2(idx=82, n=10)",
+      "when_door": "X"
     },
     {
       "scene": "ch2.cyber_city.dw_city_man",
@@ -60205,9 +60249,10 @@
       "probability_expr": "ceil(random(50)) == 50",
       "gate": "scr_sideb_get_phase() == 0 && global.flag[917] < 2 && global.flag[918] == 0",
       "once": true,
-      "status": "data_only",
-      "note": "第182轮**已启用**：站在这间房出门时掷 1/50（`ceil(random(50)) == 50`），命中且没发现过才改去本房；真站进来后写 `data_store/hidden_rooms_seen.json` **永久锁定**。★ 第183轮已删掉与之冲突的确定性边 `dw_city_traffic_3 → dw_city_man`（原 priority 7122，留档 `第183轮-删7122误边/_evidence/removed183.json`）：原作那是 1/50 概率分支、不是确定性边，且 `7121`（dog_traffic）`when_*` 完全相同、priority 更小 ⇒ 它从落地起**从未被 `match()` 消费**，删它不改变任何运行行为。",
-      "evidence": "第181轮 probe181b.ch2.json → gml_Object_obj_doorw_musfade_Alarm_2：`if (global.flag[917] == 0 && scr_sideb_get_phase() == 0) room_goto(room_dw_city_dog_traffic); else { var man_room = scr_sideb_get_phase() == 0 && global.flag[917] < 2 && global.flag[918] == 0 && ceil(random(50)) == 50; if (man_room) room_goto(room_dw_city_man); else room_goto(room_dw_city_moss); }`"
+      "status": "enabled",
+      "note": "第182轮**已启用**：站在这间房出门时掷 1/50（`ceil(random(50)) == 50`），命中且没发现过才改去本房；真站进来后写 `data_store/hidden_rooms_seen.json` **永久锁定**。★ 第183轮已删掉与之冲突的确定性边 `dw_city_traffic_3 → dw_city_man`（原 priority 7122，留档 `第183轮-删7122误边/_evidence/removed183.json`）：原作那是 1/50 概率分支、不是确定性边，且 `7121`（dog_traffic）`when_*` 完全相同、priority 更小 ⇒ 它从落地起**从未被 `match()` 消费**，删它不改变任何运行行为。 ★ 第185轮补 `when_door: \"W\"`：原作那扇门是 `obj_doorw_musfade`（字母 W），本房所在的 4 个出口里只有 W 门该掷骰 —— 之前\"任意门都掷\"是接线层的近似。",
+      "evidence": "第181轮 probe181b.ch2.json → gml_Object_obj_doorw_musfade_Alarm_2：`if (global.flag[917] == 0 && scr_sideb_get_phase() == 0) room_goto(room_dw_city_dog_traffic); else { var man_room = scr_sideb_get_phase() == 0 && global.flag[917] < 2 && global.flag[918] == 0 && ceil(random(50)) == 50; if (man_room) room_goto(room_dw_city_man); else room_goto(room_dw_city_moss); }`",
+      "when_door": "W"
     },
     {
       "scene": "ch3.system.dw_ch3_man",

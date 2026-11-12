@@ -43,6 +43,7 @@
 | `door` | —— | 交回**路由层**（`classify` 标 `handled_by='scene_routing'`） |
 """
 import collections
+import inspect
 import json
 import logging
 
@@ -602,7 +603,7 @@ class DoorProp(PropInteractable):
         if self.on_enter is None:
             _log.warning('门 %s 没接 on_enter ⇒ 如实返回"没发生"', self.key)
             return False
-        ok = bool(self.on_enter(target))
+        ok = bool(_call_enter(self.on_enter, target, self.door_letter))
         if not ok:
             _log.info('门 %s 通向 %s 但切换失败（保持当前场景）', self.src, target)
             return False
@@ -730,6 +731,36 @@ class NikoHomeDoorProp(DoorProp):
 #:     · **用途明确** —— 桌面第 9 扇传送门（A~E 五章 / F UT / W 黄魂 /
 #:       X OneShot / **Y Outertale**）。
 DOOR_LETTERS = ('A', 'B', 'C', 'D', 'E', 'F', 'W', 'X', 'Y')
+
+
+def _accepts_door_kw(fn):
+    u"""注入的 `on_enter` 接不接受 `door=` 这个关键字参数。
+
+    ★ 为什么要问一句而不是直接传：`on_enter` 由**接线层注入**（宿主给的是
+      `RalseiPet._item_enter_scene`），两边版本可以不同步；项目里还有一批
+      桩把它写成 `lambda sid: ...`。直接传 `door=` 会让那些桩抛 `TypeError`，
+      而"捕获 TypeError 就退回旧签名"会把**真实的 TypeError**（宿主自己炸了）
+      一起吞掉 —— 所以这里**主动**看签名，不靠异常分流。
+    """
+    try:
+        sig = inspect.signature(fn)
+    except (TypeError, ValueError):
+        return False
+    if 'door' in sig.parameters:
+        return True
+    return any(p.kind is p.VAR_KEYWORD for p in sig.parameters.values())
+
+
+def _call_enter(fn, scene_id, door=None):
+    u"""调 `on_enter`：宿主认 `door=` 就把门字母带过去，否则按旧签名调。
+
+    ★ 第185轮：门字母只用来决定"这扇门要不要掷隐藏房骰"（原作条件是挂在
+      **门对象**的 `Alarm_2` 上的）。**不知道是哪扇门 ⇒ 什么都不变**，与
+      第184轮 `gate_for` 的 fail-closed 同口径。
+    """
+    if door and _accepts_door_kw(fn):
+        return fn(scene_id, door=door)
+    return fn(scene_id)
 
 
 def door_letter_of(src):

@@ -73,7 +73,12 @@ MAN = u'ch2.cyber_city.dw_city_man'
 MARK = u'ch2.city.dog_traffic'
 LETTER = u'W'
 
-EXPECT_ROUTES = 2830
+#: ★ 第185轮引账：本轮当天是 2830；第185轮加了 2 条森林手工边
+#:   （`area5 --X--> forest_starwalker` 9001、`room_man --X--> forest_bake_sale` 9002）。
+#:   ★ 不把原数字改成 2832：那个数字的含义是“第184轮当天的路由数”，
+#:     改它等于把历史读数也拉到今天，下一轮又要再改一次。
+_ADDED_185 = 2
+EXPECT_ROUTES = 2830 + _ADDED_185
 EXPECT_GATES = 1
 TOTAL_CHECKS = 34
 
@@ -195,8 +200,8 @@ check(u'A6 两个目标都在 `_index.json` 登记成场景（否则切过去必
 _GATEY = (u'when_gate', u'gate', u'when_flag', u'when_phase')
 _dirty = [r for r in ROUTES_L if isinstance(r, dict)
           and any(k in r for k in _GATEY)]
-check(u'A7 ★★ 本轮**没有**动任何 route 对象（带门控键的规则 0 条），routes 仍 %d 条'
-      % EXPECT_ROUTES,
+check(u'A7 ★★ 本轮**没有**动任何 route 对象（带门控键的规则 0 条）；routes == 2830 + %d（第185轮新增账）= %d 条'
+      % (_ADDED_185, EXPECT_ROUTES),
       _dirty == [] and len(ROUTES_L) == EXPECT_ROUTES,
       u'脏规则 %d 条 / routes=%d' % (len(_dirty), len(ROUTES_L)))
 

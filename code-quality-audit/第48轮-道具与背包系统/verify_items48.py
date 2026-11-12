@@ -786,9 +786,13 @@ def seg_f():
     _n_import = sum(len(m) for ch, m in (WORLDS.get('rooms') or {}).items()
                     if ch not in _DR_CH)
     _imp_ch = sorted(ch for ch in (WORLDS.get('rooms') or {}) if ch not in _DR_CH)
-    check('F2', cover.get('light') == 202 and cover.get('dark') == 809
+    # ★ 第185轮：`ch1.forest.room_man`（rid 142）登记进产品 ⇒ dark 809 → **809 + 1**。
+    #   依据不是猜的：`_worlds.json` 里 ch1 的**森林族 rid 79~100 逐条都是 dark**，
+    #   room_man 是同一片猩红森林里的一间；补值是**行级插入一行**（`fix_worlds185.py`
+    #   带"删掉那一行后行序列与原来逐行全等"的自证）。
+    check('F2', cover.get('light') == 202 and cover.get('dark') == 809 + 1
           and cover.get('unknown') == 3 + _n_import and not miss,
-          'F2 ★★场景世界覆盖独立重算：light 202 / dark 809 / unknown %d(=3+迁入 %d %r) '
+          'F2 ★★场景世界覆盖独立重算：light 202 / dark 809+1 / unknown %d(=3+迁入 %d %r) '
           '/ 未覆盖 0（%r，miss=%d）'
           % (3 + _n_import, _n_import, _imp_ch, dict(cover), len(miss)))
 
@@ -901,7 +905,10 @@ def seg_g():
     allowed = {
         'item_system': {'collections', 'json', 'logging', 'os'},
         'item_menu': {'collections', 'logging', 'random', 'item_system'},
-        'item_interact': {'collections', 'json', 'logging', 'os', 'companion'},
+        # ★ 第185轮：`item_interact` 多一个 `inspect`（标准库）—— `_accepts_door_kw()`
+        #   要用 `inspect.signature` 主动看注入回调的签名来决定传不传 `door=`，
+        #   而不是靠捕 `TypeError`（那会把宿主真实的 `TypeError` 一起吞掉）。
+        'item_interact': {'collections', 'inspect', 'json', 'logging', 'os', 'companion'},
         'global_hotkey': {'ctypes', 'ctypes.wintypes', 'logging'},
     }
     viol = []

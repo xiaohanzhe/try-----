@@ -705,10 +705,16 @@ check(u'E1 `_hidden_rooms` 存在且是 4 条（ch1 未登记房 + ch2/ch3/ch4�
       isinstance(HR, list) and len(HR) == 4,
       u'实测 %r' % (len(HR) if isinstance(HR, list) else type(HR).__name__,))
 
-check(u'E2 每间都有 `status` 与 `evidence`，且状态取值在白名单内',
+#: ★ 第185轮引账：白名单补 `enabled`。第181轮那时口径是"只登记、不投用"，
+#:   所以故意把 `enabled` 排除在外；第182/185 轮真投用了两间（ch1 `room_man`、
+#:   ch2 `dw_city_man`），状态自然变成 `enabled` —— 那不是回归，是白名单过时。
+#:   这里仍然**只加一个合法值**，不是把校验拆掉：四条都得命中白名单、都得带 evidence。
+_STATUS_OK = ('enabled', 'data_only', 'target_not_registered', 'no_incoming_edge',
+              'gate_unresolved')
+check(u'E2 每间都有 `status` 与 `evidence`，且状态取值在白名单内（共 %d 个合法值）'
+      % len(_STATUS_OK),
       isinstance(HR, list) and all(
-          h.get('status') in ('data_only', 'target_not_registered', 'no_incoming_edge',
-                              'gate_unresolved') and h.get('evidence')
+          h.get('status') in _STATUS_OK and h.get('evidence')
           for h in HR),
       u'状态 %r' % ([h.get('status') for h in (HR or [])],))
 
@@ -717,9 +723,30 @@ check(u'E3 概率 1/50 的两间（ch1/ch2）都记了 `probability=0.02` 与表
       len(_p02) == 2 and all(h.get('probability_expr') for h in _p02),
       u'%r' % ([(h.get('scene'), h.get('probability')) for h in (HR or [])],))
 
-check(u'E4 ★ 本轮**不声称已生效**：没有任何一条状态是 `enabled`（机制留到第182轮）',
-      all(h.get('status') != 'enabled' for h in (HR or [])),
-      u'有 enabled 的条数 %d' % sum(1 for h in (HR or []) if h.get('status') == 'enabled'))
+#: ★★★ 第185轮引账（原判据是第181轮的"本轮不声称已生效：没有任何一条 enabled"）。
+#:   第182轮启用 ch2、第185轮启用 ch1 之后，那条断言已经**不可能为真**，
+#:   再留着只会逼下一个人把"启用"回滚掉。改成**登记制**：
+#:   实际 enabled 集合必须与这里登记的**逐条相等** —— 多启一间要报红（避免悄悄放开），
+#:   登记了却没真启用也要报红（避免白名单变成空头支票）。
+_ENABLED_LEDGER = {
+    u'ch1.forest.room_man',           # 第185轮：area5 推 X 门掷 1/50
+    u'ch2.cyber_city.dw_city_man',    # 第182轮：出城时掷 1/50
+}
+_ENABLED_GOT = set()
+for _h in (HR or []):
+    if _h.get('enabled') is True or _h.get('status') == 'enabled':
+        _ENABLED_GOT.add(_h.get('scene'))
+#: 先钉死"启用的必须**同时**是 enabled=True 且 status=enabled"，两条口径不许打架
+_MIXED = [(h.get('scene'), h.get('enabled'), h.get('status')) for h in (HR or [])
+          if (h.get('enabled') is True) != (h.get('status') == 'enabled')]
+check(u'E4a ★ `enabled`（行为开关）与 `status`（口径描述）必须一致：True ⇔ enabled，'
+      u'不许出现"能触发但写着 data_only"这种自相矛盾',
+      not _MIXED, u'矛盾 %r' % (_MIXED,))
+check(u'E4b ★★★ 已启用集合 == 登记表（多启一间要报红，登记了没启用也报红）：%r'
+      % (sorted(_ENABLED_LEDGER),),
+      _ENABLED_GOT == _ENABLED_LEDGER,
+      u'多出=%r 缺=%r' % (sorted(_ENABLED_GOT - _ENABLED_LEDGER),
+                          sorted(_ENABLED_LEDGER - _ENABLED_GOT)))
 
 # ---------------------------------------------------------------------------
 #  F 自检
@@ -755,8 +782,9 @@ check(u'F4 AST 无恒真判据（`check(desc, True)` 出现 0 次）',
 # 判据条数固定（不随环境变）
 # ★★★ 这里踩过一个坑：F5 在执行时 `_n` 里**还没有它自己** ⇒ 写 `== 36` 时实测永远 35，
 #   判据自己把自己判红。正确写法是把自身 +1 算进去，改断言条数时必须同步改这个数字。
-check(u'F5 判据条数不随环境变（本文件恒发 40 条断言，含本条自身）',
-      _n['p'] + _n['f'] + 1 == 40, u'实测 %d（不含本条）+1 = %d' % (_n['p'] + _n['f'], _n['p'] + _n['f'] + 1))
+#: ★ 第185轮：E4 拆成 E4a（口径一致）/ E4b（登记制）两条 ⇒ 总数 40 → **41**。
+check(u'F5 判据条数不随环境变（本文件恒发 41 条断言，含本条自身）',
+      _n['p'] + _n['f'] + 1 == 41, u'实测 %d（不含本条）+1 = %d' % (_n['p'] + _n['f'], _n['p'] + _n['f'] + 1))
 
 # ---------------------------------------------------------------------------
 print('')

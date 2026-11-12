@@ -147,8 +147,10 @@ def main():
     #   总数会变。⇒ 判据改成"**不变量**"：四章（用户点名的 ch1/2/4/5）恒定 = 826，
     #   desktop 恒定 = 1，总数 **≥ 1,014**（只增不减）。这样加作品不会误报，
     #   而"四章被改坏 / 桌面被删"照样报红 —— 比写死数字**更严**且**不会过期**。
-    check('A5 产品场景 ≥ 1,014（含 desktop 1）；ch1/2/4/5 恒 == 826',
-          n_scenes >= 1014 and n_scenes_4 == 826 and per_ch_scenes.get('desktop') == 1
+    # ★ 第185轮：ch1 多了 `ch1.forest.room_man` ⇒ 四章合计 826 → **826 + 1**。
+    #   不改历史值、不重算：只把新增的那一间挂账。
+    check('A5 产品场景 ≥ 1,014（含 desktop 1）；ch1/2/4/5 恒 == 826 + 1',
+          n_scenes >= 1014 and n_scenes_4 == 826 + 1 and per_ch_scenes.get('desktop') == 1
           and len(per_ch_scenes) >= 6,
           '总 %d，四章 %d，分章 %r' % (n_scenes, n_scenes_4, per_ch_scenes))
 

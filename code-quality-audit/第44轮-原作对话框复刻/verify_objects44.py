@@ -111,6 +111,9 @@ def _desktop_doors():
 
 
 DESKTOP_DOORS = _desktop_doors()
+# ★ 第185轮：`ch1.forest.room_man` 登记进产品 ⇒ 它那 **4 个**物件进入世界。
+#   **只加账**：`EXPECT_TOTAL_ORIGINAL`（第68轮普查的历史事实）一个字不动。
+MAN_185 = 4
 EXPECT_TOTAL = EXPECT_TOTAL_ORIGINAL + DESKTOP_DOORS
 
 # ★★★ 第173轮：`obj_doorAny` 物化（+705 条）—— 期望值**现算**，不写死。
@@ -430,10 +433,10 @@ def main():
     ok(scenes_with_obj >= EXPECT_ZONE_WITH_OBJ + EXPECT_FILE_WITH_OBJ,
        'C1 带 objects 的场景数 >= %d（第68轮口径；第173轮 Any 门会让更多场景变"有"）实际=%d'
        % (EXPECT_ZONE_WITH_OBJ + EXPECT_FILE_WITH_OBJ, scenes_with_obj))
-    ok(len(all_objs) == EXPECT_TOTAL + ANY_EXPECT,
-       'C2 ★守恒：objects 总条数 == 原作 %d + 桌面世界门 %d + Any 门 %d = %d 实际=%d'
-       % (EXPECT_TOTAL_ORIGINAL, DESKTOP_DOORS, ANY_EXPECT,
-          EXPECT_TOTAL + ANY_EXPECT, len(all_objs)))
+    ok(len(all_objs) == EXPECT_TOTAL + ANY_EXPECT + MAN_185,
+       'C2 ★守恒：objects 总条数 == 原作 %d + 桌面世界门 %d + Any 门 %d + 第185轮 man %d = %d 实际=%d'
+       % (EXPECT_TOTAL_ORIGINAL, DESKTOP_DOORS, ANY_EXPECT, MAN_185,
+          EXPECT_TOTAL + ANY_EXPECT + MAN_185, len(all_objs)))
 
     # C3 独立重算：从**第68轮普查 + 按章对象表 + objs/** 三个真源重算期望值，
     #    必须与场景里的一致。这是"判据不依赖生成器自报"的关键 —— 判据自己算一遍。

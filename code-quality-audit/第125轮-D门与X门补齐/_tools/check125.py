@@ -182,9 +182,10 @@ for _sid, _rec in SC.items():
 print(u'')
 print(u'== A. 段位与分母（防空集恒真） ==')
 # ===========================================================================
+# ★ 第185轮：场景数 2166 → 2166 + 1（`ch1.forest.room_man`）。分母只增不减。
 check(u'A0 分母：`load_index()` ok=True、场景数 == %d、路由 == %d 条'
-      % (2166, len(RL)),
-      IDX.get('ok') is True and len(SC) == 2166 and len(RL) > 0,
+      % (2166 + 1, len(RL)),
+      IDX.get('ok') is True and len(SC) == 2166 + 1 and len(RL) > 0,
       u'scenes=%d routes=%d ok=%r' % (len(SC), len(RL), IDX.get('ok')))
 
 _prios = sorted(r['priority'] for r in NEW)

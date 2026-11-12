@@ -83,7 +83,13 @@ EXPECT_181 = 63           # 第181轮的净增（只做减法口径的锚点，�
 #:   变的是"现在这张表又要少一条"，所以按"− 第183轮删除账"来表述。
 EXPECT_183 = 1            # 第183轮删的条数（留档在 第183轮-删7122误边/_evidence/removed183.json）
 EXPECT_VERT_OF_RM = 6     # 留档里真身是 Vert 的条数
-EXPECT_SNAP_N = 3047      # 全表门物件数（快照键数）
+#: ★ 第185轮：3047 → **3047 + 1**。多的那一个是本轮新登记的 `ch1.forest.room_man`
+#:   自带的 `obj_doorX_musfade`（快照按**物件**枚举，多一间房就多一个门物件）。
+#:   ★ 不把 3047 改成裸数 3048：那个数字的含义是“第176轮当天的门物件数”。
+#:   `EXPECT_SNAP_HIT` 一字未动：新扫出来的那个门在“改前对照表”上解不出目标
+#:   （它靠的是第185轮 9002 那条边，而那条恰好被剔掉了）⇒ 解出数仍是 2898。
+_ADDED_OBJ_185 = 1
+EXPECT_SNAP_N = 3047 + _ADDED_OBJ_185      # 全表门物件数（快照键数）
 EXPECT_SNAP_HIT = 2898    # 其中解出目标的门物件数
 CHECK_FLOOR = 30
 
@@ -163,7 +169,25 @@ RM_KEYS = set((r.get('when_scene'), r.get('to'),
 MINE = [r for r in RL if (r.get('_original') or {}).get('batch') == BATCH]
 #: ★★★ 第181轮的两张视图（见 `EXPECT_181` 的注释）
 RL_181 = [r for r in RL if (r.get('_original') or {}).get('batch') == 181]
-RL_BASE = [r for r in RL if (r.get('_original') or {}).get('batch') != 181]
+
+#: ★★★ 第185轮新增账：两条森林手工边（`area5 --X--> forest_starwalker` 9001、
+#:   `room_man --X--> forest_bake_sale` 9002），**没有** `_original.batch`。
+#:   它们跟第176轮那次删除毫无关系，只是“现在表里多出来的”，必须从
+#:   “改前对照表”里剔掉，否则 B3/B5/C1/D1 四条会集体假红
+#:   （第181轮同款：改的是“拿哪张表去比”，不是把 2,810 / 2,768 这些历史数改大）。
+#:   ★ 判别不写死 priority：无 batch **且** priority 高过生成器区间
+#:     （`gen_routes44.py` 逐批递增，当前最大 8262）—— 与 `check170 D2c` 同口径。
+_BAND_MAX = max((r.get('priority') for r in RL
+                 if isinstance(r.get('priority'), int)
+                 and isinstance((r.get('_original') or {}).get('batch'), int)),
+                default=0)
+RL_185 = [r for r in RL
+          if not isinstance((r.get('_original') or {}).get('batch'), int)
+          and isinstance(r.get('priority'), int) and r['priority'] > _BAND_MAX]
+EXPECT_185 = 2
+_ID185 = set(id(r) for r in RL_185)
+RL_BASE = [r for r in RL
+           if (r.get('_original') or {}).get('batch') != 181 and id(r) not in _ID185]
 
 #: ★★★ 第183轮留档（把被删的那条按原位置插回去用；见 `EXPECT_183`）
 ARCH_183 = jl(os.path.join(REPO, 'code-quality-audit', u'第183轮-删7122误边',
@@ -292,10 +316,14 @@ check(u'B3 条数两套账：现存 %d − 第181轮 %d − 第183轮 %d == 改�
       % (len(RL), len(RL_181), EXPECT_183, EXPECT_BEFORE, EXPECT_RM, VIA, len(VIA_ROWS),
          EXPECT_VIA_BEFORE, EXPECT_RM),
       len(RL_BASE) == EXPECT_AFTER - EXPECT_183 and len(RL_181) == EXPECT_181
+      #: ★ 第185轮：`RL_185` 必须真的是 2 条。否则那个判别式可能
+      #:   因为“没有任何手工边”而静默变成空集（幂等于什么都不排除），
+      #:   那样 B3/B5/C1/D1 会回到假红而且看不出原因。
+      and len(RL_185) == EXPECT_185
       and len(VIA_ROWS) == EXPECT_VIA_AFTER
       and len(MINE) == EXPECT_VIA_AFTER,
-      u'routes=%d（= %d + 181段 %d）via=%d mine=%d'
-      % (len(RL), len(RL_BASE), len(RL_181), len(VIA_ROWS), len(MINE)))
+      u'routes=%d（= %d + 181段 %d + 185段 %d）via=%d mine=%d'
+      % (len(RL), len(RL_BASE), len(RL_181), len(RL_185), len(VIA_ROWS), len(MINE)))
 
 _c_h = sum(1 for r in VAR_ROWS if r.get('when_src') == VAR_SRC[0])
 _c_v = sum(1 for r in VAR_ROWS if r.get('when_src') == VAR_SRC[1])
@@ -309,8 +337,9 @@ check(u'B4 ★★ 第174轮的变体边**一条没少**：%d 条（Horz %d + Ver
 #:   指纹必须与**现在磁盘上的表**逐条相同。这是"别的一条没动"的硬证明 ——
 #:   不是拿我自己的快照跟自己比，改前副本来自 git。
 check(u'B5 ★★★ 除这 %d 条外**其余逐条相同**：现状**减去第181轮那 %d 条、'
-      u'把第183轮留档那条按原位插回**后的规范化 sha1 == 改前副本摘掉留档后的 sha1'
-      % (EXPECT_RM, len(RL_181)),
+      u'减去第185轮那 %d 条手工边、把第183轮留档那条按原位插回**后的规范化 sha1'
+      u' == 改前副本摘掉留档后的 sha1'
+      % (EXPECT_RM, len(RL_181), len(RL_185)),
       canon(_BASE_WITH_183) == BEFORE['rest_sha1']
       and len(_BASE_WITH_183) == BEFORE['rest_n'],
       u'现状−181段+183留档=%s 期望=%s n=%d/%d'
@@ -367,9 +396,11 @@ _diff = [(k, _snap_ev.get(k), snap_base.get(k))
          for k in set(_snap_ev) | set(snap_base)
          if _snap_ev.get(k) != snap_base.get(k)]
 check(u'C1 ★★★ 全表路由快照：%d 个门物件（其中 %d 个解出目标）的 `route_for_door`'
-      u'结果与改前快照**逐值相同**（在"现行表 − 第181轮 %d 条"上比）'
-      % (len(snap_base), sum(1 for v in snap_base.values() if v), len(RL_181)),
-      len(snap_base) == EXPECT_SNAP_N and len(_snap_ev) == EXPECT_SNAP_N
+      u'结果与改前快照**逐值相同**（在"现行表 − 第181轮 %d 条 − 第185轮 %d 条"上比；'
+      u'键数比留档多 %d 个 = 本轮新登记的 room_man 自带那扇 X 门）'
+      % (len(snap_base), sum(1 for v in snap_base.values() if v), len(RL_181),
+         len(RL_185), _ADDED_OBJ_185),
+      len(snap_base) == EXPECT_SNAP_N and len(_snap_ev) == 3047
       and sum(1 for v in snap_base.values() if v) == EXPECT_SNAP_HIT
       and not _diff,
       u'键=%d/%d 解出=%d 差异=%d（含 181 段的现行表解出 %d）'
@@ -481,8 +512,8 @@ print('=' * 70)
 
 RESTORED = list(RL_BASE) + list(REMOVED)
 check(u'D1 加回 42 条 ⇒ %d 条 == 改前 %d 条 − 第183轮 %d 条'
-      u'（用"现行表 − 第181轮 %d 条"作底）'
-      % (len(RESTORED), EXPECT_BEFORE, EXPECT_183, len(RL_181)),
+      u'（用"现行表 − 第181轮 %d 条 − 第185轮 %d 条手工边"作底）'
+      % (len(RESTORED), EXPECT_BEFORE, EXPECT_183, len(RL_181), len(RL_185)),
       len(RESTORED) == EXPECT_BEFORE - EXPECT_183, u'实得=%d' % len(RESTORED))
 
 _rp = sorted(r.get('priority') for r in RESTORED

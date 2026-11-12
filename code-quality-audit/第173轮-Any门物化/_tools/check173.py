@@ -111,6 +111,9 @@ ANY_FAMILY = ('obj_doorAny', 'obj_doorAnyHorz', 'obj_doorAnyVert',
               'obj_doorAnyModespecific')
 #: 历史冻结：本轮**不许**动任何既有 objects（只追加）
 EXPECT_ORIG_OBJS = 3197           # 第68轮普查口径（五章可绘制实例）
+#: ★ 第185轮：`ch1.forest.room_man` 登记进产品 ⇒ 它那 **4 个**物件进入世界。
+#: **只加账**：上面那个历史冻结值一个字不动。
+MAN_185 = 4
 EXPECT_DESKTOP_DOORS = 4          # `desktop.json` 的世界门（现读校验）
 #: C 段：解析不出目标的那几条（所在场景在原作里就没有 Any 门边）
 EXPECT_UNRESOLVED = 19
@@ -570,9 +573,9 @@ _desktop_p = os.path.join(SCENES, 'desktop.json')
 _desktop = len((jl(_desktop_p).get('objects') or [])) if os.path.isfile(_desktop_p) else -1
 check(u'D1 既有 objects **一个都没被改**：五章 %d == %d（原作普查）、桌面世界门 %d == %d'
       % (_non_any_ch, EXPECT_ORIG_OBJS, _desktop, EXPECT_DESKTOP_DOORS),
-      _non_any_ch == EXPECT_ORIG_OBJS and _desktop == EXPECT_DESKTOP_DOORS,
+      _non_any_ch == EXPECT_ORIG_OBJS + MAN_185 and _desktop == EXPECT_DESKTOP_DOORS,
       u'合计 %d == %d' % (_non_any_ch + _desktop,
-                         EXPECT_ORIG_OBJS + EXPECT_DESKTOP_DOORS))
+                         EXPECT_ORIG_OBJS + MAN_185 + EXPECT_DESKTOP_DOORS))
 
 check(u'D2 场景载体未缩水：分片 %d 个、摊平后单元 %d 个'
       % (len([f for f in os.listdir(SCENES)

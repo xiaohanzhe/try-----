@@ -7296,12 +7296,38 @@ class RalseiPet(QMainWindow):
         _log.info('存档点回血：本产品当前无队伍 HP 模型 ⇒ 未执行（如实返回 False）')
         return False
 
-    def _item_enter_scene(self, scene_id):
-        """暗之泉"进泉"——切到目标场景。返回是否真的切成功（**不假装成功**）。"""
+    def _item_enter_scene(self, scene_id, door=None):
+        """暗之泉"进泉" / 门"推门" —— 切到目标场景。返回是否真的切成功（**不假装成功**）。
+
+        ★★★ 第185轮：门那条路**原来完全绕过隐藏房与门控**。
+          修之前调用链是 `DoorProp.on_interact → _item_enter_scene → scene.switch`
+          —— 直达，既不经 `travel_to_scene`（第182轮把掷骰挂在那儿），
+          也不经 `_travel_feedback_done`（第184轮把门控记账挂在收尾里）。
+          后果：**真推门时隐藏房一次都不会触发、门控标记一次都不会写**
+          （那条机制只有"右键菜单去某场景 / 寻路走过去"才生效）。
+          现在这里补三件事，顺序固定：
+            ① 掷隐藏房骰（带门字母，只有该掷的那扇门才掷）；
+            ② `switch` 到（可能已被改过的）目标；
+            ③ 成功才走 `_travel_feedback_done()` —— 那是"真的换房了"的统一收尾，
+               隐藏房记账 / 门控记账都在里面（判据是"当前场景"，不是"意图"）。
+        """
         if not scene_id:
             return False
         try:
-            return bool(self.scene.switch(scene_id))
+            target = scene_id
+            try:
+                before = self.__dict__.get('current_scene')
+                target = self._maybe_divert_to_hidden(before, scene_id, door=door)
+            except Exception:
+                _log.exception('门/暗之泉：隐藏房判定异常（已忽略，照常走原目标）')
+                target = scene_id
+            ok = bool(self.scene.switch(target))
+            if ok:
+                try:
+                    self._travel_feedback_done()
+                except Exception:
+                    _log.exception('门/暗之泉：到达收尾异常（已忽略）')
+            return ok
         except Exception:
             _log.exception('暗之泉切场景失败：%s', scene_id)
             return False
@@ -7917,13 +7943,19 @@ class RalseiPet(QMainWindow):
             _log.debug('隐藏房账本读取失败（按空账处理）: %s', e)
             return {}
 
-    def _maybe_divert_to_hidden(self, from_scene, target):
+    def _maybe_divert_to_hidden(self, from_scene, target, door=None):
         """站在 `from_scene`、正要出门 ⇒ 掷骰决定要不要改去隐藏房。返回（可能改过的）目标。
 
         ★ 第182轮。原作形状：门对象的 `Alarm_2` 里
           `if (room == room_xxx) { if (ceil(random(50)) == 50 && !flag) room_goto(man) }`
-          —— 概率**从数据来**（`_hidden_rooms[].probability`，ch2 = 0.02 = 1/50），
+          —— 概率**从数据来**（`_hidden_rooms[].probability`，ch1/ch2 都 = 0.02 = 1/50），
           不在代码里写死，也不在这里改数据。
+
+        ★ 第185轮：多一个 `door`。原作的 1/50 条件挂在**某一扇门**的对象上
+          （ch1 是 `obj_doorX_musfade`＝字母 X，ch2 是 `obj_doorw_musfade`＝字母 W），
+          所以"从这间房的**任意**门出去都掷"是错的 —— 那会让走另一扇门的人
+          也被扔进隐藏房。`door=None`（不知道是哪扇门，例如从菜单直接去某场景）
+          ⇒ 带 `when_door` 的登记一律不掷（fail-closed，见 `pick_hidden`）。
 
         ★ 命中后**不立即记账**：真站进去了才算"发现过"（见 `_commit_hidden_seen`）。
           否则 `switch` 失败时会把没去成的房记成已发现 ⇒ 那扇门**永远消失**，
@@ -7935,7 +7967,8 @@ class RalseiPet(QMainWindow):
             if not hidden or not from_scene:
                 return target
             import scene_routing
-            hit = scene_routing.pick_hidden(hidden, from_scene, self._hidden_seen())
+            hit = scene_routing.pick_hidden(hidden, from_scene, self._hidden_seen(),
+                                            door=door)
             if not hit:
                 return target
             sid = scene_routing.hidden_key(hit)

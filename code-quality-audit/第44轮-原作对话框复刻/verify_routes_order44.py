@@ -507,28 +507,67 @@ if have_rooms:
     #   逐条落点的独立重推在 `check125.B2`（另一套实现，读 `conn42b` 的查表）。
     # ★★★ 第168轮：同一个 `kind` 现在装两段 —— X（5000~）与 W（7000~）
     #   ⇒ **拆成两段各自点名**，不许混在一起数。
-    def _tbl_of(letter, lo, hi):
-        rows = [r for r in RL
-                if _orig_of(r).get('kind') == 'delta_door_table'
-                and r.get('when_door') == letter
-                and r.get('when_scene') not in _ORIGIN_WORKS
-                and not str(r.get('when_scene') or '').startswith('ut.')]
+    def _tbl_of(letter, lo, hi, skip=frozenset()):
+        u"""按门字母取表驱动段。
+
+        :param skip: 要**摘出去单独判**的 `(场景, 目标)` 名单（默认空 ⇒ 与老行为一致）。
+            第185轮新增：手工边不落在生成器的 priority 段里，不能拿段位去判它。
+        """
+        allrows = [r for r in RL
+                   if _orig_of(r).get('kind') == 'delta_door_table'
+                   and r.get('when_door') == letter
+                   and r.get('when_scene') not in _ORIGIN_WORKS
+                   and not str(r.get('when_scene') or '').startswith('ut.')]
+        rows = [r for r in allrows if (r.get('when_scene'), r.get('to')) not in skip]
+        skipped = [r for r in allrows if (r.get('when_scene'), r.get('to')) in skip]
         bad = [r.get('to') for r in rows
                if not str(_orig_of(r).get('table') or '').startswith('gml_Object_')
                or not isinstance(_orig_of(r).get('src_room_id'), int)
                or not isinstance(_orig_of(r).get('dst_room_id'), int)
                or not isinstance(r.get('priority'), int)
                or r['priority'] < lo or r['priority'] > hi]
-        return rows, bad
+        return rows, bad, skipped
 
-    _TBL, _tbl_bad = _tbl_of('X', 5000, 5999)
-    ok(len(_TBL) == 83 and not _tbl_bad,
-       'C1c ★★ 表驱动门（X）段 == 83 条、priority 5000~5999、`kind=delta_door_table`、'
-       '`table` 为反编译名、两端原作品下标齐备（异常 %d: %s）—— '
+    #: ★★★ 第185轮引账：X 段 83 → **83（生成器）+ 2（手工边）**。
+    #:   多的两条：`area5 --X--> forest_starwalker`（9001）、
+    #:   `room_man --X--> forest_bake_sale`（9002）。见 `第185轮-森林1of50隐藏房`。
+    #:   它们**同样是** `delta_door_table`（`obj_doorX_musfade` 的 `Alarm_2` 查表：
+    #:   `if (room == room_forest_area5) { … 1/50 走 room_man，否则 starwalker }` /
+    #:   `if (room == room_man) room_goto(room_forest_savepoint2)`），
+    #:   但 priority 故意排在**生成器区间之上** —— 7850~8262 是
+    #:   `gen_routes44.py`（`110 + scene_ord*BAND + k`）的生成区间，手工边塞进去
+    #:   会**静默撞号**（本轮实测：第一版取 7901 就撞了 ch5 的一条 Any 门），
+    #:   重跑生成器还会再撞一次且不报错。⇒ "段位"只对生成器产物成立。
+    _MANUAL_X_185 = frozenset([
+        ('ch1.forest.forest_area5', 'ch1.forest.forest_starwalker'),
+        ('ch1.forest.room_man', 'ch1.forest.forest_bake_sale'),
+    ])
+
+    _TBL, _tbl_bad, _tbl_man = _tbl_of('X', 5000, 5999, _MANUAL_X_185)
+    #: 手工边改判"**高于整个 X 生成器段**"（不写死数字：拿本段实测最大值当界，
+    #: 生成器下次扩段也照样成立）。顺带核 `table` / 两端下标齐备。
+    _gen_max = max([r['priority'] for r in _TBL if isinstance(r.get('priority'), int)] or [0])
+    _man_bad = [r.get('to') for r in _tbl_man
+                if not str(_orig_of(r).get('table') or '').startswith('gml_Object_')
+                or not isinstance(_orig_of(r).get('src_room_id'), int)
+                or not isinstance(_orig_of(r).get('dst_room_id'), int)
+                or not isinstance(r.get('priority'), int)
+                or r['priority'] <= _gen_max]
+    ok(len(_TBL) == 83 and len(_tbl_man) == len(_MANUAL_X_185)
+       and not _tbl_bad and not _man_bad,
+       'C1c ★★★ 表驱动门（X）段 == 83（生成器产物，priority 5000~5999）+ %d（第185轮手工边，'
+       'priority 高于生成器段最大值 %d）== %d 条；`kind=delta_door_table`、`table` 为反编译名、'
+       '两端原作品下标齐备（生成段异常 %d: %s ｜ 手工段异常 %d: %s）—— '
        '★它**不在** C1 的论域里，逐条重推归 `check125.B2`'
-       % (len(_tbl_bad), _tbl_bad[:3]))
+       % (len(_MANUAL_X_185), _gen_max, len(_TBL) + len(_tbl_man),
+          len(_tbl_bad), _tbl_bad[:3], len(_man_bad), _man_bad[:3]))
 
-    _TBLW, _tblw_bad = _tbl_of('W', 7000, 7999)
+    _TBLW, _tblw_bad, _tblw_man = _tbl_of('W', 7000, 7999)
+    #: ★ W 段目前没有手工边；`_tblw_man` 必须为空 —— 否则说明有人绕开生成器加了 W 边，
+    #:   那要单独登记（不是静默放行）。
+    ok(not _tblw_man,
+       'C1c2b ★ W 段没有绕开生成器的手工边（空集才通过 —— '
+       '多一条就要单独登记，不许静默放行）')
     #: ★★ 第169轮：W 段 88 → **190** = 88（第168轮，graph 侧单分支边）
     #:   + 102（第169轮，按分支解析补回的边）。两批同为 `when_door='W'`、同在 7000 段，
     #:   靠 `_original.batch` 分账（168 无该字段 / 169 = 169）；逐条重推分别归

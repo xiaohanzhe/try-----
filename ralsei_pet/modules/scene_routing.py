@@ -493,7 +493,7 @@ def hidden_key(entry):
     return scene if isinstance(scene, str) else ''
 
 
-def pick_hidden(hidden, from_scene, seen=None, roll=None):
+def pick_hidden(hidden, from_scene, seen=None, roll=None, door=None):
     """**站在 `from_scene`、正要迈出门**时，判定要不要改去某间隐藏房。
 
     返回命中的那一条登记（dict，已补 `_probability`），没有命中 → `None`。
@@ -504,6 +504,9 @@ def pick_hidden(hidden, from_scene, seen=None, roll=None):
     :param roll: **可注入的随机源**（返回 `[0, 1)` 的无参可调用）。不传就用
         `random.random()`。★ 判据靠它把"掷骰"变成确定行为 —— 不给注入点
         就只能统计频率，那种判据既慢又不稳（第182轮的口径）。
+    :param door: 走的是哪扇门（字母）。★ 第185轮新增：登记里写了 `when_door`
+        就**只在那扇门**上掷。原作的条件挂在**门对象**的 `Alarm_2` 上
+        （`obj_doorX_musfade` / `obj_doorw_musfade`），同一间房别的门不掷。
 
     ★ 为什么掷骰在**出门时**而不是"进门后"：原作那段是门对象的 `Alarm_2`，
       条件是 `if (room == room_forest_area5) { … room_goto(room_man) … }` ——
@@ -514,8 +517,13 @@ def pick_hidden(hidden, from_scene, seen=None, roll=None):
       这样"两间隐藏房同时可用"的极端情况下行为仍然可解释（写在前面的优先），
       而不是取决于 dict 的遍历顺序。
 
-    ★ 不掷骰的三种情况（都不是错误，直接跳过）：`enabled` 不是 `True`
-      （只留档不投用）、概率不合法、`once` 且已经发现过。
+    ★ 不掷骰的四种情况（都不是错误，直接跳过）：`enabled` 不是 `True`
+      （只留档不投用）、概率不合法、`once` 且已经发现过、**登记指定了
+      `when_door` 但门字母对不上（含根本不知道是哪扇门）**。
+
+    ★★ 门字母缺失时**不掷**（fail-closed，与 `gate_for` 同口径）：掷骰会改
+      **目的地**，不知道走的是哪扇门就套用 ＝ "从这间房随便哪扇门出去都可能
+      被扔进隐藏房"，那是比"不掷"更坏的行为。
     """
     if not from_scene or not isinstance(hidden, (list, tuple)):
         return None
@@ -531,6 +539,13 @@ def pick_hidden(hidden, from_scene, seen=None, roll=None):
             continue
         if entry.get('from_scene') != from_scene:
             continue
+
+        want_door = entry.get('when_door')
+        if isinstance(want_door, str) and want_door:
+            if not (isinstance(door, str) and door):
+                continue          # ★ 缺门信息 ⇒ 不掷（见 docstring）
+            if want_door != '*' and want_door != door:
+                continue
 
         once = entry.get('once')
         once = _HIDDEN_ONCE_DEFAULT if once is None else bool(once)

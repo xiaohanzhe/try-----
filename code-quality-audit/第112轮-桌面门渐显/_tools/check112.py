@@ -328,7 +328,10 @@ check('L4b ★★ 负控制：L4 有鉴别力（派生写法 ⇒ 抓不到字面
 # ★★★ L5：`item_interact` **真的没有** import 项目内模块（`G1` 的同源断言，
 #   放在这里是为了"改了 L 段就立刻在本套件报红"，不用等到跑 48 轮套件）。
 _ii_bad_imports = set()
-_II_OK_TOP = ('collections', 'json', 'logging', 'os', 'sys', 'companion')
+#: ★ 第185轮：`inspect` 进白名单 —— `_accepts_door_kw()` 要用 `inspect.signature` **主动看签名**
+#:   来决定要不要给注入的 `on_enter` 传 `door=`（不靠捕 `TypeError`，否则会把宿主真实的
+#:   `TypeError` 一起吞掉）。`inspect` 是标准库，不破零依赖。
+_II_OK_TOP = ('collections', 'inspect', 'json', 'logging', 'os', 'sys', 'companion')
 for _n in _ast.walk(_ii_tree):
     if isinstance(_n, _ast.Import):
         for _a in _n.names:
