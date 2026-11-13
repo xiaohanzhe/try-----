@@ -1780,6 +1780,14 @@ class RalseiPet(QMainWindow):
         self._scene_index = None                    # load_index() 的结果（含 chapters/scenes/default_scene）
         self._scene_state = None                    # 当前场景的 SceneState（只读视图，换场景 = 换引用）
         self.current_scene = None                   # 当前场景 id（str），如 'desktop'
+        # ★★★ 第186轮：**来路**（上一个场景 id）。为什么要它：
+        #   `room_cc_prisonelevator` 的 X 门原作按 `flag[239]` 分四支，而那个 flag 的
+        #   语义就是"你从哪一层上来"（107→0 / 114→1 / 123→2 / 111→3）⇒ 出口 = **回程**。
+        #   同一扇门四个去向，靠 priority / 坐标 / 对象名都分不开，唯一能分开的是来路。
+        # ⚠️ 必须在这里预声明：SceneController 的 `__setattr__` 转发判据是「宿主**已拥有**
+        #   这个名字」，未预声明时首次赋值会落进控制器自己的 `__dict__` ⇒ 状态劈成两份，
+        #   而 G2 完全看不见（本项目真踩过两次，见 W1-4 报告铁律 3）。
+        self._scene_prev = None                     # 上一个场景 id（换场景时由 switch 记）
         self.scene_objects = []                     # 当前场景的可见物件缓存（P1 渲染层消费）
         self._scene_anchors = {}                     # 全局命名锚点表（_anchors.json）
         self._scene_loaded = False                  # 索引是否已尝试加载过（幂等守卫，防重复 IO）
@@ -7215,6 +7223,10 @@ class RalseiPet(QMainWindow):
                 egg_gate=self._niko_home_gate,
                 readables=readables,
                 door_overrides=door_overrides,
+                # ★★★ 第186轮：**来路** —— 电梯那类"同一扇门按你从哪来分四支"的门
+                #   靠它分流（`route_for_door(..., prev=)` → 规则里的 `when_prev`）。
+                #   取不到就是 None ⇒ 带 `when_prev` 的规则一律不参与，行为与之前逐字相同。
+                prev=self.__dict__.get('_scene_prev'),
             )
         except Exception:
             _log.exception('可交互物构建失败（本场景没有可交互物，不影响其它功能）')

@@ -1069,6 +1069,15 @@
               "original_room_id": 32,
               "bg": null,
               "bg_source": "none"
+            },
+            "ch1.hometown.school_unusedroom": {
+              "name": "家乡·school_unusedroom",
+              "name_raw": "room_school_unusedroom",
+              "name_derived": true,
+              "original_room_id": 33,
+              "bg": "bg/ch1_hometown_school_unusedroom.png",
+              "bg_source": "room.bg_layer",
+              "bg_asset": "bg_unusedclass"
             }
           },
           "zone": "_zone.ch1.hometown.json"

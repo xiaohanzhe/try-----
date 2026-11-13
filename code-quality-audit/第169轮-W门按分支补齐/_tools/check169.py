@@ -53,8 +53,9 @@ EXPECT_N = 102
 #: ★ 第172轮：1,961 → **2,759**（`obj_doorAny` +798）。★ 分母闸用 `>=`。
 EXPECT_ROUTES = 2759
 #: ★ 第185轮：`ch1.forest.room_man` 登记 ⇒ 场景数 2166 + 1。
+#: ★ 第186轮：`ch1.hometown.school_unusedroom`（rid 33）⇒ 再 +1。
 #: 分母**只增不减**（历史段冻结，新段逐轮加账）—— 不重算、不调小。
-EXPECT_SCENES = 2166 + 1
+EXPECT_SCENES = 2166 + 1 + 1
 EXPECT_PRIO_END = 7189
 #: 守恒账：176 条原始分支 = 60（第168轮已收）+ 116；116 = 2 未登记 + 8 已有别的门 + 4 重复 + 102
 EXPECT_RAW = 176

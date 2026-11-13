@@ -78,7 +78,9 @@ LETTER = u'W'
 #:   ★ 不把原数字改成 2832：那个数字的含义是“第184轮当天的路由数”，
 #:     改它等于把历史读数也拉到今天，下一轮又要再改一次。
 _ADDED_185 = 2
-EXPECT_ROUTES = 2830 + _ADDED_185
+#: ★ 第186轮引账：ch1 五间接了 11 条出口边（priority 9100~9110）。同上，不动 2830。
+_ADDED_186 = 11
+EXPECT_ROUTES = 2830 + _ADDED_185 + _ADDED_186
 EXPECT_GATES = 1
 TOTAL_CHECKS = 34
 
@@ -200,8 +202,9 @@ check(u'A6 两个目标都在 `_index.json` 登记成场景（否则切过去必
 _GATEY = (u'when_gate', u'gate', u'when_flag', u'when_phase')
 _dirty = [r for r in ROUTES_L if isinstance(r, dict)
           and any(k in r for k in _GATEY)]
-check(u'A7 ★★ 本轮**没有**动任何 route 对象（带门控键的规则 0 条）；routes == 2830 + %d（第185轮新增账）= %d 条'
-      % (_ADDED_185, EXPECT_ROUTES),
+check(u'A7 ★★ 本轮**没有**动任何 route 对象（带门控键的规则 0 条）；'
+      u'routes == 2830 + %d（第185轮账）+ %d（第186轮账）= %d 条'
+      % (_ADDED_185, _ADDED_186, EXPECT_ROUTES),
       _dirty == [] and len(ROUTES_L) == EXPECT_ROUTES,
       u'脏规则 %d 条 / routes=%d' % (len(_dirty), len(ROUTES_L)))
 

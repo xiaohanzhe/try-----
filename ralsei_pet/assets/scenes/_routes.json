@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "meta": {
-    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。\n★ 第123轮：ut 段由 243 条增到 525 条（+282）。新增的都是**位移机制**门：`obj_doorB`/`obj_doorBmusicfade` = `room_previous(room)`（−1）、`obj_doorC`/`obj_doorCmusicfade` = `room_next(room_next(room))`（+2）、`obj_doorD`/`obj_doorDmusicfade` = 双 `room_previous`（−2）、`obj_doorAmusicfade`/`obj_papdoor` = +1 —— 全部来自 `Alarm_2` 的反编译原文，与 Deltarune 的「A+1 / B−1 / C+2」同一套约定。条件分支点名的房间（如 `obj_doorA` 的 `castle_prebarrier`，按 `global.flag[7]` 分叉）**不套位移**、如实留空。生成器 `code-quality-audit/第123轮-补齐ut门证据/_tools/gen_routes123.py`。★ 第125轮：Deltarune 五章新增 **139** 条（D 门 56 / X 门 83，priority 5000~5138）。此前只有 A(+1)/B(−1)/C(+2)，`obj_doorD` 与 `obj_doorX` 被第44轮以\"证据不足\"拒收。本轮把两种门补齐，并**先独立验证**再写：D 的位移 = −2（第42轮 Alarm 反编译，与第123轮 ut 的 `obj_doorD` 同型），X 走表驱动（读 `Alarm_2` 的 `{房间→目标}`）；两者都要求**目标房含 `obj_marker<同字母>`**（D 71/74、X 94/94 命中）。★ **W 门不收**：`obj_markerw` 仅 60.2%、`obj_markerX` 84.3%，无一套到 100%，\"证据不足不猜\"这条纪律照旧。D 的 3 个例外全落在 backup/test 房，如实不写。生成器 `code-quality-audit/第125轮-D门与X门补齐/_tools/gen_routes125.py`。★ 第126轮：outertale 新增 **209** 条门路由（`ot_door_guard` 93 / `ot_door_shift` 116，priority 6000~6208）。此前 outertale **0 条**（\"看得到、走不通\"）。来源＝第115轮 `conn_ut.json` 的原始 op（301 条 goto）+ `inst_full.tsv` 的实例分布；`guard` = `if (room == N) room_goto(M)`，且**该门对象真摆在 N 这间房**（实例互证）；`shift` = `room_goto_next()`，按实例房 r → r+1（第123轮 ut 同型）。**不写**：无条件 `room_goto(M)`（src 未知，28 条）、守卫与实例打架（24 条）、两端未登记（54 条）、同(场景,对象)按坐标分叉的多目标（1 组）、`obj_mainchara`（走到屏幕边缘换房，另一层机制）。同时把同一组边写进 `_room_graph.json` 的 `chapters.outertale`（逐门寻路读那张图）。生成器 `code-quality-audit/第126轮-门型收口/_tools/gen_routes126.py`。★ 第168轮：Deltarune 五章新增 **88** 条 **W 门**（priority 7000~7087）。此前 W 一条都没写（第125轮以「`obj_markerw` 60.2% / `obj_markerX` 84.3%，无一套到 100%」拒收）。★ 本轮查明**当年两次都量错了对象**：产品里 marker 对象名是**小写** `obj_markerw`（sprite 是专属的 `spr_markerW`，与 A~F 同族），而 `obj_markerX` 是**字母 X 的**出生点（`spr_markerX`），不是通用兜底；真通用是 `obj_markerAny`（`spr_markerAny`）。机制侧同一次反汇编：`obj_doorW_Alarm_2` 的骨架与 A/B/C/D/X **逐句同形**（先给 `entrance` 赋值 → `instance_create` → 一串 `if (room == N) room_goto(M)`）。★ `entrance` **不是每类门的常量**：ch1 的 W 门只有 1 个分支（23），ch2 的 W 门有 145 次赋值、值域 19~24（= S/T/U/V/W/X 的字母序）⇒ 它是**每个分支各自指定落点字母**，所以判据不建立在它的具体数值上。落点自证按同一把尺重算：**同字母 72 条 + 通用 `obj_markerAny` 16 条 = 88 / 97 = 92.8%**，落在已收五类的 91.2%~96.7% 区间内。**拒收 7 条**（目标房只有 `obj_markerX` 1 条 / 只有别的字母 5 条 / 零 marker 的商店房 1 条），逐条见 report168.md。生成器 `code-quality-audit/第168轮-W门补齐/_tools/gen_routes168.py`。★ 第170轮：**按分支对账落点，并校正第169轮的元数据**。① `entrance` 从 102 条补到 **190/190**（+88，逐条来自 `obj_doorW_Alarm_2` / `obj_doorw_musfade_Alarm_2` 的 `global.entrance = N`）。② 区间按源码校正 **27** 条：其中 **11 条方向反了**（源码 `x < 10`，表里记成 `[10, None]` 即 `x > 10` —— 单边条件时 lo/hi 写反），另 16 条表里是 `[None, None]` 而源码有值；y 轴分支改用独立的 `y_range`（`x_range` 保持 `[None, None]` 不动，因为它本来就没有 x 条件）。③ 门实例坐标 **17** 条：`door_x` **5** 条 + `door_y` **12** 条 —— `dw_cyber_maze_rhythm` 两扇门 x 只差 2px（269/271）、y 是 2593/1，`dw_cyber_musical_door` / `dw_mansion_east_teacup(_2)` 两扇门 x **完全相同**，**拿 x 区分会把上下门判反**，所以这 12 条一律写 `door_y` 并加 `axis: \"y\"`。④ 新增 **6** 条（priority 7190~7195）：只补\"表里真的没有这条边\"的；原本还有 2 条候选与既有 (场景,目标) 完全重复 ⇒ **不加**（加了就是冗余条目，会同时弄脏 `check124 D2` 的同门重复与 `check169` 的覆盖桶）。其中 6 条让原本\"查不到 ⇒ 不建门\"的门活过来。⑤ **不猜**的地方：混轴条件（`x > 800 && y > 670`）源码解不出单一区间 ⇒ 保持原样；同一 `(房, 对象, 目标)` 有 2 条分支 ⇒ 匹配不到唯一 ⇒ 不动；`entrance` 在同一条边上不唯一（3 条）⇒ 不补。逐条见 `code-quality-audit/第170轮-门实例级落点/_evidence/applied170.json`。生成器 `code-quality-audit/第170轮-门实例级落点/_tools/apply170.py`。",
+    "note": "场景路由表 v2 —— 由原作**门的下标位移机制**生成（见 code-quality-audit/第44轮-原作对话框复刻/_tools/gen_routes44.py）。\n★ 第89轮：新增 8 条 `when_scene == 'desktop'` 的规则 = 桌面的传送门出口（五章 + UT + 黄魂 + OneShot）。为什么走同一张表：`item_interact.route_for_door` 是『门 → 目标』的唯一查询入口，另起一张桌面门表就会变成『同一份规则两处算』。桌面门的贴图与位置在 `desktop.json` 的 objects 里（obj_doorA~F/W/X）。\n★ 第122轮：新增 243 条 `when_scene` 以 `ut.` 开头的规则 = ut 的门（110 条对象级 `when_src` + 133 条字母 A）。ut 的门对象**不带字母**，目标写在 GML 的 `room_goto()` 里 ⇒ 只能按 (场景, 对象名) 定位，为此新增 `when_src` 字段（见 `item_interact.route_for_door`）。生成器 `code-quality-audit/第122轮-ut门与房间连接/_tools/gen_routes122.py`，只取可信层，候选层（`room_goto_next` 之外的猜测）一条不用。\n★ 第123轮：ut 段由 243 条增到 525 条（+282）。新增的都是**位移机制**门：`obj_doorB`/`obj_doorBmusicfade` = `room_previous(room)`（−1）、`obj_doorC`/`obj_doorCmusicfade` = `room_next(room_next(room))`（+2）、`obj_doorD`/`obj_doorDmusicfade` = 双 `room_previous`（−2）、`obj_doorAmusicfade`/`obj_papdoor` = +1 —— 全部来自 `Alarm_2` 的反编译原文，与 Deltarune 的「A+1 / B−1 / C+2」同一套约定。条件分支点名的房间（如 `obj_doorA` 的 `castle_prebarrier`，按 `global.flag[7]` 分叉）**不套位移**、如实留空。生成器 `code-quality-audit/第123轮-补齐ut门证据/_tools/gen_routes123.py`。★ 第125轮：Deltarune 五章新增 **139** 条（D 门 56 / X 门 83，priority 5000~5138）。此前只有 A(+1)/B(−1)/C(+2)，`obj_doorD` 与 `obj_doorX` 被第44轮以\"证据不足\"拒收。本轮把两种门补齐，并**先独立验证**再写：D 的位移 = −2（第42轮 Alarm 反编译，与第123轮 ut 的 `obj_doorD` 同型），X 走表驱动（读 `Alarm_2` 的 `{房间→目标}`）；两者都要求**目标房含 `obj_marker<同字母>`**（D 71/74、X 94/94 命中）。★ **W 门不收**：`obj_markerw` 仅 60.2%、`obj_markerX` 84.3%，无一套到 100%，\"证据不足不猜\"这条纪律照旧。D 的 3 个例外全落在 backup/test 房，如实不写。生成器 `code-quality-audit/第125轮-D门与X门补齐/_tools/gen_routes125.py`。★ 第126轮：outertale 新增 **209** 条门路由（`ot_door_guard` 93 / `ot_door_shift` 116，priority 6000~6208）。此前 outertale **0 条**（\"看得到、走不通\"）。来源＝第115轮 `conn_ut.json` 的原始 op（301 条 goto）+ `inst_full.tsv` 的实例分布；`guard` = `if (room == N) room_goto(M)`，且**该门对象真摆在 N 这间房**（实例互证）；`shift` = `room_goto_next()`，按实例房 r → r+1（第123轮 ut 同型）。**不写**：无条件 `room_goto(M)`（src 未知，28 条）、守卫与实例打架（24 条）、两端未登记（54 条）、同(场景,对象)按坐标分叉的多目标（1 组）、`obj_mainchara`（走到屏幕边缘换房，另一层机制）。同时把同一组边写进 `_room_graph.json` 的 `chapters.outertale`（逐门寻路读那张图）。生成器 `code-quality-audit/第126轮-门型收口/_tools/gen_routes126.py`。★ 第168轮：Deltarune 五章新增 **88** 条 **W 门**（priority 7000~7087）。此前 W 一条都没写（第125轮以「`obj_markerw` 60.2% / `obj_markerX` 84.3%，无一套到 100%」拒收）。★ 本轮查明**当年两次都量错了对象**：产品里 marker 对象名是**小写** `obj_markerw`（sprite 是专属的 `spr_markerW`，与 A~F 同族），而 `obj_markerX` 是**字母 X 的**出生点（`spr_markerX`），不是通用兜底；真通用是 `obj_markerAny`（`spr_markerAny`）。机制侧同一次反汇编：`obj_doorW_Alarm_2` 的骨架与 A/B/C/D/X **逐句同形**（先给 `entrance` 赋值 → `instance_create` → 一串 `if (room == N) room_goto(M)`）。★ `entrance` **不是每类门的常量**：ch1 的 W 门只有 1 个分支（23），ch2 的 W 门有 145 次赋值、值域 19~24（= S/T/U/V/W/X 的字母序）⇒ 它是**每个分支各自指定落点字母**，所以判据不建立在它的具体数值上。落点自证按同一把尺重算：**同字母 72 条 + 通用 `obj_markerAny` 16 条 = 88 / 97 = 92.8%**，落在已收五类的 91.2%~96.7% 区间内。**拒收 7 条**（目标房只有 `obj_markerX` 1 条 / 只有别的字母 5 条 / 零 marker 的商店房 1 条），逐条见 report168.md。生成器 `code-quality-audit/第168轮-W门补齐/_tools/gen_routes168.py`。★ 第170轮：**按分支对账落点，并校正第169轮的元数据**。① `entrance` 从 102 条补到 **190/190**（+88，逐条来自 `obj_doorW_Alarm_2` / `obj_doorw_musfade_Alarm_2` 的 `global.entrance = N`）。② 区间按源码校正 **27** 条：其中 **11 条方向反了**（源码 `x < 10`，表里记成 `[10, None]` 即 `x > 10` —— 单边条件时 lo/hi 写反），另 16 条表里是 `[None, None]` 而源码有值；y 轴分支改用独立的 `y_range`（`x_range` 保持 `[None, None]` 不动，因为它本来就没有 x 条件）。③ 门实例坐标 **17** 条：`door_x` **5** 条 + `door_y` **12** 条 —— `dw_cyber_maze_rhythm` 两扇门 x 只差 2px（269/271）、y 是 2593/1，`dw_cyber_musical_door` / `dw_mansion_east_teacup(_2)` 两扇门 x **完全相同**，**拿 x 区分会把上下门判反**，所以这 12 条一律写 `door_y` 并加 `axis: \"y\"`。④ 新增 **6** 条（priority 7190~7195）：只补\"表里真的没有这条边\"的；原本还有 2 条候选与既有 (场景,目标) 完全重复 ⇒ **不加**（加了就是冗余条目，会同时弄脏 `check124 D2` 的同门重复与 `check169` 的覆盖桶）。其中 6 条让原本\"查不到 ⇒ 不建门\"的门活过来。⑤ **不猜**的地方：混轴条件（`x > 800 && y > 670`）源码解不出单一区间 ⇒ 保持原样；同一 `(房, 对象, 目标)` 有 2 条分支 ⇒ 匹配不到唯一 ⇒ 不动；`entrance` 在同一条边上不唯一（3 条）⇒ 不补。逐条见 `code-quality-audit/第170轮-门实例级落点/_evidence/applied170.json`。生成器 `code-quality-audit/第170轮-门实例级落点/_tools/apply170.py`。★ 第186轮：ch1 五间「进得去出不来」的房接上出口，新增 **11** 条（priority 9100~9110），并新登记场景 `ch1.hometown.school_unusedroom`（rid 33）。根因不是缺边，而是\"房里没有能出去的东西\"或\"边要的条件表达不了\"：`forest_maze_susie` 两扇 X 门靠**门自身 y**（≥340 去 savepoint_relax、<340 回 maze2，`obj_doorX_Alarm_2`）；`cc_prisonelevator` 四分支读 `flag[239]` = **你从哪层来** （107→0/114→1/123→2/111→3，**无兜底** ⇒ 另有一条默认支，对应 `global.flag` 缺省 0），用本轮新增的 `when_prev` 表达；`dark_chase2` 是 `slidetimer==540` 的 `room_goto_next()` （rid 43→**44 castle_outskirts**）；`alphysclass` 的出口是 `obj_classscene_Create_0` 里 `if (global.plot>=3) instance_create(242,48,obj_doorB)` —— **运行时创建**的门，静态实例表里没有；`cc_fountain` 需先闭泉（`obj_fountainkris` con==12 → `obj_darkfountain_event` t>=650）再 `room_goto(room_school_unusedroom)`。 生成器 `code-quality-audit/第186轮-修有入无出/_tools/apply186.py`。",
     "how_it_works": [
       "1. 控制器把当前语境打包成 context（scene_id / mood / event / keywords）。",
       "2. scene_routing.match() 按 priority 升序挑第一条匹配规则。",
@@ -60216,6 +60216,233 @@
         "src_room_name": "room_man",
         "table": "gml_Object_obj_doorX_musfade_Alarm_2",
         "via": "obj_doorX_musfade"
+      }
+    },
+    {
+      "to": "ch1.forest.forest_before_maze",
+      "priority": 9100,
+      "reason": "原作连接：从 猩红森林·maze_susie 的 X 门离开。`gml_Object_obj_doorX_Alarm_2` 里这一段按**门自身的 y** 分流 —— `if (y >= (room_height / 2))`（房高 680 ⇒ 阈值 340）⇒ 这扇门在 y=665（下半），落到 `room_forest_savepoint_relax`。",
+      "when_scene": "ch1.forest.forest_maze_susie",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "delta_door_pos",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "axis": "y",
+        "door_x": 280,
+        "door_y": 665,
+        "cond": "y >= room_height/2",
+        "src_room_name": "room_forest_maze_susie",
+        "dst_room_name": "room_forest_savepoint_relax",
+        "src_room_id": 93,
+        "dst_room_id": 90
+      }
+    },
+    {
+      "to": "ch1.forest.forest_maze2",
+      "priority": 9101,
+      "reason": "原作连接：同一段 `gml_Object_obj_doorX_Alarm_2` 的**另一支** —— 门 y=0 在下半阈值之上（`else` 分支）⇒ 回 `room_forest_maze2`。两扇门同字母，靠门实例坐标消歧。",
+      "when_scene": "ch1.forest.forest_maze_susie",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "delta_door_pos",
+        "table": "gml_Object_obj_doorX_Alarm_2",
+        "via": "obj_doorX",
+        "marker": "obj_markerX",
+        "axis": "y",
+        "door_x": 280,
+        "door_y": 0,
+        "cond": "y < room_height/2",
+        "src_room_name": "room_forest_maze_susie",
+        "dst_room_name": "room_forest_maze2",
+        "src_room_id": 93,
+        "dst_room_id": 94
+      }
+    },
+    {
+      "to": "ch1.card_castle.card_castle_1f",
+      "priority": 9102,
+      "reason": "原作连接：`gml_Object_obj_doorX_musfade_Alarm_2` 里 `flag[239]==1` ⇒ `room_goto(room_cc_1f)`；1 是\"从一层（114）上来\"时写的值 ⇒ 回一层。",
+      "when_scene": "ch1.card_castle.cc_prisonelevator",
+      "when_door": "X",
+      "when_prev": "ch1.card_castle.card_castle_1f",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "delta_door_flag",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "flag": 239,
+        "flag_value": 1,
+        "when_prev_room": 114,
+        "src_room_name": "room_cc_prisonelevator",
+        "dst_room_name": "room_cc_1f",
+        "src_room_id": 109,
+        "dst_room_id": 114
+      }
+    },
+    {
+      "to": "ch1.card_castle.card_castle_5f",
+      "priority": 9103,
+      "reason": "原作连接：`gml_Object_obj_doorX_musfade_Alarm_2` 里 `flag[239]==2` ⇒ `room_goto(room_cc_5f)`；2 由 `gml_Object_obj_doorw_musfade_Alarm_2` 在从 `room_cc_elevator` 下行时写入 ⇒ 回五层。",
+      "when_scene": "ch1.card_castle.cc_prisonelevator",
+      "when_door": "X",
+      "when_prev": "ch1.card_castle.card_castle_5f",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "delta_door_flag",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "flag": 239,
+        "flag_value": 2,
+        "when_prev_room": 123,
+        "src_room_name": "room_cc_prisonelevator",
+        "dst_room_name": "room_cc_5f",
+        "src_room_id": 109,
+        "dst_room_id": 123
+      }
+    },
+    {
+      "to": "ch1.card_castle.card_castle_unknown",
+      "priority": 9104,
+      "reason": "原作连接：`gml_Object_obj_doorX_musfade_Alarm_2` 里 `flag[239]==3` ⇒ `room_goto(room_cc_prison_prejoker)`；3 是\"从 111 号？？？（prejoker）上来\"时写的值 ⇒ 回原房。",
+      "when_scene": "ch1.card_castle.cc_prisonelevator",
+      "when_door": "X",
+      "when_prev": "ch1.card_castle.card_castle_unknown",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "delta_door_flag",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "flag": 239,
+        "flag_value": 3,
+        "when_prev_room": 111,
+        "src_room_name": "room_cc_prisonelevator",
+        "dst_room_name": "room_cc_prison_prejoker",
+        "src_room_id": 109,
+        "dst_room_id": 111
+      }
+    },
+    {
+      "to": "ch1.card_castle.card_castle_prison",
+      "priority": 9105,
+      "reason": "原作连接（默认支）：`gml_Object_obj_doorX_musfade_Alarm_2` 里 `flag[239]` 四支**无兜底**，但 `global.flag` 缺省就是 0 ⇒ 从没坐过电梯（= 我们不知道来路）时落到 `room_cc_prison_to_elevator`（107）。",
+      "when_scene": "ch1.card_castle.cc_prisonelevator",
+      "when_door": "X",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "delta_door_flag",
+        "table": "gml_Object_obj_doorX_musfade_Alarm_2",
+        "via": "obj_doorX_musfade",
+        "marker": "obj_markerX",
+        "flag": 239,
+        "flag_value": 0,
+        "when_prev_room": null,
+        "src_room_name": "room_cc_prisonelevator",
+        "dst_room_name": "room_cc_prison_to_elevator",
+        "src_room_id": 109,
+        "dst_room_id": 107
+      }
+    },
+    {
+      "to": "ch1.castle_town.castle_outskirts",
+      "priority": 9106,
+      "reason": "原作连接：`gml_Object_obj_lancerslideevent_Step_0` 在 `if (slidetimer == 540)` 时 `room_goto_next()`；rid 43 的下一间是 **rid 44 `room_castle_outskirts`**（42 才是 chase1）。过场触发器落到我们这儿等价一扇门。",
+      "when_scene": "ch1.dark_world.dark_chase2",
+      "when_src": "obj_lancerslideevent",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "gml_room_goto_next",
+        "code": "gml_Object_obj_lancerslideevent_Step_0",
+        "via": "obj_lancerslideevent",
+        "cond": "slidetimer == 540",
+        "src_room_name": "room_dark_chase2",
+        "dst_room_name": "room_castle_outskirts",
+        "src_room_id": 43,
+        "dst_room_id": 44
+      }
+    },
+    {
+      "to": "ch1.hometown.schoollobby",
+      "priority": 9107,
+      "reason": "原作连接：`gml_Object_obj_classscene_Create_0` 在 `if (global.plot >= 3)` 时 `instance_create(242, 48, obj_doorB)`；`obj_doorB_Alarm_2` = `room_goto_previous()` ⇒ rid 29 `room_schoollobby`（A 门 +1 进来、B 门 −1 出去，正好一对）。★ 这扇门原作是**运行时创建**的。",
+      "when_scene": "ch1.hometown.alphysclass",
+      "when_door": "B",
+      "when_src": "obj_doorB",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "runtime_door",
+        "code": "gml_Object_obj_classscene_Create_0",
+        "via": "obj_doorB",
+        "marker": "obj_markerB",
+        "cond": "global.plot >= 3",
+        "door_x": 242,
+        "door_y": 48,
+        "src_room_name": "room_alphysclass",
+        "dst_room_name": "room_schoollobby",
+        "src_room_id": 30,
+        "dst_room_id": 29
+      }
+    },
+    {
+      "to": "ch1.hometown.school_unusedroom",
+      "priority": 9108,
+      "reason": "原作连接：`gml_Object_obj_fountainkris_Step_0` 的 `con == 12` 会 `instance_create(..., obj_darkfountain_event)`，那个对象的 Draw 在 `if (t >= 650)` 时 `scr_become_light()` 并 `room_goto(room_school_unusedroom)`（rid 33）⇒ 闭泉后回光世界。",
+      "when_scene": "ch1.card_castle.cc_fountain",
+      "when_src": "obj_fountainkris",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "gml_cutscene_goto",
+        "code": "gml_Object_obj_darkfountain_event_Draw_0",
+        "via": "obj_fountainkris",
+        "cond": "obj_fountainkris.con==12 -> obj_darkfountain_event.t>=650",
+        "src_room_name": "room_cc_fountain",
+        "dst_room_name": "room_school_unusedroom",
+        "src_room_id": 130,
+        "dst_room_id": 33
+      }
+    },
+    {
+      "to": "ch1.hometown.schooldoor",
+      "priority": 9109,
+      "reason": "原作连接：`room_school_unusedroom`（rid 33）的 D 门 = 房间数组下标 −2 ⇒ rid 31 `room_schooldoor`；目标房含 `obj_markerD`。",
+      "when_scene": "ch1.hometown.school_unusedroom",
+      "when_door": "D",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "delta_door_shift",
+        "via": "obj_doorD",
+        "marker": "obj_markerD",
+        "door_letter": "D",
+        "shift": -2,
+        "src_room_name": "room_school_unusedroom",
+        "dst_room_name": "room_schooldoor",
+        "src_room_id": 33,
+        "dst_room_id": 31
+      }
+    },
+    {
+      "to": "ch1.hometown.school_unusedroom",
+      "priority": 9110,
+      "reason": "原作连接：`room_schooldoor`（rid 31）的 C 门 = 房间数组下标 +2 ⇒ rid 33 `room_school_unusedroom`（与上面那条 D 门互逆，一进一出）。目标房含 `obj_markerC`。",
+      "when_scene": "ch1.hometown.schooldoor",
+      "when_door": "C",
+      "_original": {
+        "chapter": "ch1",
+        "kind": "delta_door_shift",
+        "via": "obj_doorC",
+        "marker": "obj_markerC",
+        "door_letter": "C",
+        "shift": 2,
+        "src_room_name": "room_schooldoor",
+        "dst_room_name": "room_school_unusedroom",
+        "src_room_id": 31,
+        "dst_room_id": 33
       }
     }
   ],

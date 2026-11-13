@@ -116,7 +116,10 @@ NO_MARKER_EXC = (
     ('ch4', 34, 32),     # room_hospital_room2 → room_hospital_hallway
 )
 #: ★ D 门边里"端点未登记"的条数（`ch4 90→88` 就在其中；本轮 15 条 unreg 里占 9 条）
-EXPECT_UNREG_D = 9
+#: ★★ 第186轮 9 → **8**：`room_school_unusedroom`（rid 33）登记成场景后，指向它的那条
+#:   D 门边不再"端点未登记"。★ 这是**账变少**，不是判据放松 —— 本条仍是 `==` 等值断言，
+#:   再冒出一条新的未登记 D 门边照样报红（分母闸原封不动）。
+EXPECT_UNREG_D = 8
 #: 已证位移门（第42轮 Alarm 反汇编 → `room_goto(room_previous(room_previous))`）
 DELTA_DOOR = {'obj_doorD': -2, 'obj_doorD_musfade': -2}
 #: 已证表驱动门 → 它读的那段 `Alarm_2`
@@ -183,9 +186,10 @@ print(u'')
 print(u'== A. 段位与分母（防空集恒真） ==')
 # ===========================================================================
 # ★ 第185轮：场景数 2166 → 2166 + 1（`ch1.forest.room_man`）。分母只增不减。
+# ★ 第186轮：再 +1（`ch1.hometown.school_unusedroom`，rid 33）。
 check(u'A0 分母：`load_index()` ok=True、场景数 == %d、路由 == %d 条'
-      % (2166 + 1, len(RL)),
-      IDX.get('ok') is True and len(SC) == 2166 + 1 and len(RL) > 0,
+      % (2166 + 1 + 1, len(RL)),
+      IDX.get('ok') is True and len(SC) == 2166 + 1 + 1 and len(RL) > 0,
       u'scenes=%d routes=%d ok=%r' % (len(SC), len(RL), IDX.get('ok')))
 
 _prios = sorted(r['priority'] for r in NEW)

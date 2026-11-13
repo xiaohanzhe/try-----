@@ -419,10 +419,15 @@ check(u'C1 老账条数 >= %d（第181轮基数 %d − 后续删除账 %d；只�
 # ★ `when_src` 本来就是**可选**字段（2,768 条里只有 1,408 条有），
 #   第一版把它当必填 ⇒ 假红。正确口径 = 老账的键集合必须是**已知键的子集**，
 #   不许出现本轮新增的键（那才说明我动了老账的结构）。
+#: ★★ 第186轮：`when_prev`（来路）登记为**已知可选键**。理由与 `when_src` 同族：
+#:   它是产品 `route_for_door(..., prev=)` 正式支持的匹配键（`scene_routing._match_one`
+#:   与 `item_interact._prev_ok` 两处都实现了），不是临时私有字段；
+#:   本条仍然能抓"冒出**别的**新键"（比如有人塞 `when_flag` / `when_time`）。
+#:   ★ 不改成"白名单随便加"—— 只加这一个，且它必须在产品代码里真有实现才配进这张表。
 _LEGACY_ALLOWED = {'to', 'priority', 'reason', 'when_scene', 'when_door',
-                   '_original', 'when_src', '_order', 'work'}
+                   '_original', 'when_src', '_order', 'work', 'when_prev'}
 _kb = sorted(set().union(*[set(r) for r in LEGACY]) - _LEGACY_ALLOWED)
-check(u'C2 老账没有出现已知集合以外的新键（`when_src` 是可选字段，不按必填算）',
+check(u'C2 老账没有出现已知集合以外的新键（`when_src` / `when_prev` 都是可选字段，不按必填算）',
       not _kb, u'越界键 %r' % (_kb,))
 
 check(u'C3 顶层 `meta` / `_fallback` / `schema_version` 原样保留',

@@ -110,7 +110,15 @@ PROP_CLASSES = {
     'obj_dw_churchc_savepoint_judgmentbell': {'kind': 'savepoint', 'in_data': True},
 
     'obj_darkfountain': {'kind': 'fountain', 'in_data': True},
-    'obj_fountainkris': {'kind': 'fountain', 'in_data': True},
+    # ★★★ 第186轮：`obj_fountainkris` 从 `fountain` 改判成 `door`。
+    #   为什么：全 147 间房里它**只出现在 `room_cc_fountain`**（本章末的暗泉房），
+    #   而原作那里它**不是可以进去的泉**，是**闭泉演出的触发器** ——
+    #   `obj_fountainkris_Step_0` 的 `con == 12` 会 `instance_create(..., obj_darkfountain_event)`，
+    #   那个对象的 Draw 在 `t >= 650` 时 `scr_become_light()` 并
+    #   `room_goto(room_school_unusedroom)`（回光世界）。落成"泉"会让宠物被送去
+    #   `FOUNTAIN_TARGET`（城堡镇）—— 那是产品的通用玩法，不是这一间的原作行为。
+    #   ★ 同房的 `obj_darkfountain` **保持 fountain**（通用"点泉"玩法不受影响）。
+    'obj_fountainkris': {'kind': 'door', 'in_data': True},
     'obj_fountainkris_ch2_sideb': {'kind': 'fountain', 'in_data': True},
     'obj_ch4_DCA12_darkfountain': {'kind': 'fountain', 'in_data': True},
     'obj_ch5_DW45_fountain': {'kind': 'fountain', 'in_data': True},
@@ -120,6 +128,12 @@ PROP_CLASSES = {
     'obj_shortcut_door': {'kind': 'door', 'in_data': True},
     'obj_darkdoor': {'kind': 'door', 'in_data': True},
     'obj_darkdoorevent': {'kind': 'door', 'in_data': True},
+    # ★★★ 第186轮：`obj_lancerslideevent`（`room_dark_chase2` 的滑行过场）。
+    #   原作它是**过场触发器**：`if (slidetimer == 540) room_goto_next()`。
+    #   落到我们这儿它就是一扇"站上去 → 换房"的门（本项目的门 = 换房入口，
+    #   不区分原作叫 door 还是 event）。不登记的话它是 `cutscene` 类，
+    #   `build_props` 会直接跳过 ⇒ 那间房永远出不去。
+    'obj_lancerslideevent': {'kind': 'door', 'in_data': True},
 
     # ---- 第68轮实例补采后**已有实例**的类（判据 = 产物里真有条数，见 verify_items68）----
     #   不再标 `gap`：缺口已经补上，留着旧说明就是"假话"（比没有注释更糟）。
@@ -419,7 +433,7 @@ class InspectProp(PropInteractable):
 def build_props(scene, chapter, world, present=None, heal_all=None,
                 on_enter=None, inventory=None, bus=None, pickups=None,
                 routes=None, on_egg=None, egg_gate=None, readables=None,
-                door_overrides=None):
+                door_overrides=None, prev=None):
     """把一个场景的 `objects` 变成可交互物列表。
 
     参数
@@ -460,6 +474,9 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
         求出"这一扇门此刻该走哪一支"，再把结果当纯数据传进来 —— 本模块零依赖，
         不许自己读 `plot_mark`（见 `route_for_door` docstring 末段）。
         **不给 ⇒ 与第183轮之前逐字相同**（门的目标仍然只由路由表 priority 决定）。
+    prev : str
+        ★★★ 第186轮：**来路**（上一个场景 id），交给 `route_for_door` 消歧。
+        只有带 `when_prev` 的规则看它；不给 ⇒ 那些规则不参与，行为与之前逐字相同。
 
     ★ `key` 的构造规则：`<scene_id>#<objects下标>`。
       为什么不用 `src`：同一个房间里可能有 **多个** 同名对象（例如两个 `obj_savepoint`），
@@ -523,7 +540,8 @@ def build_props(scene, chapter, world, present=None, heal_all=None,
             #   ★★ 第170轮：把**这扇门实例的坐标**传下去 —— 同场景多扇同字母门
             #      （如 `town_mid` 的三扇 W 门）靠它各去各处；单门场景不传也无所谓，
             #      `_pick_by_pos` 要求候选 ≥2 才会生效。
-            tgt = route_for_door(routes, sid, letter, src=src, pos=o.get('pos'))
+            tgt = route_for_door(routes, sid, letter, src=src, pos=o.get('pos'),
+                                 prev=prev)
             # ★★★ 第184轮：门控覆盖（由宿主算好传下来的一张 `{字母: 目标}`）。
             #   ★ 放在查表**之后**、彩蛋判断**之前** —— 彩蛋门（Niko 的家）必须
             #     仍然永远进不去，任何覆盖都不许把它顶掉。
@@ -867,12 +885,17 @@ def _pick_by_pos(items, scene_id, letter_ok, pos):
     return None
 
 
-def route_for_door(routes, scene_id, letter, src=None, pos=None):
+def route_for_door(routes, scene_id, letter, src=None, pos=None, prev=None):
     """在路由表里找「从 `scene_id` 的这扇门出去」→ 目标 scene_id；没有 → `None`。
 
     :param routes: `scene_routing.load_routes()` 的结果（`{'routes': [...]}`）或路线列表。
     :param src: ★★ 第122轮：**门对象名**（`obj_door_ruins13` 这种）。给了就**先**按
         对象级规则（`when_src`）找，找不到再退回字母规则。
+    :param prev: ★★★ 第186轮：**来路**（上一个场景 id）。
+        原作 `room_cc_prisonelevator` 的 X 门按 `flag[239]` 分四支，而那个 flag 的
+        语义就是"你从哪层上来" ⇒ 同一扇门要按来路分流。带了 `when_prev` 的规则
+        **只有 prev 相等才参与**；不带 `when_prev` 的老规则**完全不受影响**
+        （没有 prev / prev 不认识 ⇒ 它们照旧是候选，所以默认支照样能赢）。
     ★ 同一场景同一门字母**理论上唯一**；若真出现多条，取 `priority` 最小的
       （与 `scene_routing.match` 的裁决口径一致，**不新造**一套优先级）。
 
@@ -923,10 +946,26 @@ def route_for_door(routes, scene_id, letter, src=None, pos=None):
     else:
         items = routes or []
 
+    def _prev_ok(r):
+        """★第186轮：这条规则的 `when_prev` 是否满足。
+
+        · 规则**没有** `when_prev` ⇒ 放行（老规则 / 默认支，逐字不变）；
+        · 规则有 `when_prev`，但调用方没给 `prev` ⇒ **不匹配**（不凭猜分到某一条）；
+        · 都有 ⇒ 相等才算（`'*'` = 任意来路）。
+        """
+        want = r.get('when_prev')
+        if not (isinstance(want, str) and want):
+            return True
+        if not (isinstance(prev, str) and prev):
+            return False
+        return want == '*' or want == prev
+
     def _pick(pred):
         best = None
         for r in items:
             if not isinstance(r, dict) or r.get('when_scene') != scene_id:
+                continue
+            if not _prev_ok(r):
                 continue
             if not pred(r):
                 continue
@@ -959,6 +998,7 @@ def route_for_door(routes, scene_id, letter, src=None, pos=None):
 
     def _letter_ok(r):
         return (not r.get('when_src')
+                and _prev_ok(r)
                 and (not r.get('when_door') or r.get('when_door') == letter))
 
     # ③ 实例级消歧（第170轮）：只在"同场景同字母多候选 + 给了门坐标"时插一层

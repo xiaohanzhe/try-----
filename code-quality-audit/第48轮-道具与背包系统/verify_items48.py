@@ -790,9 +790,13 @@ def seg_f():
     #   依据不是猜的：`_worlds.json` 里 ch1 的**森林族 rid 79~100 逐条都是 dark**，
     #   room_man 是同一片猩红森林里的一间；补值是**行级插入一行**（`fix_worlds185.py`
     #   带"删掉那一行后行序列与原来逐行全等"的自证）。
-    check('F2', cover.get('light') == 202 and cover.get('dark') == 809 + 1
+    # ★★ 第186轮：`ch1.hometown.school_unusedroom`（rid 33）登记进产品 ⇒ **light 202 → 202 + 1**。
+    #   依据：`_worlds.json` 里 ch1 家乡族（rid 6~33 一带）逐条都是 light，且这间房的
+    #   原作 `bg_unusedclass` 属光世界的教室背景（同 round186 的 `bg_round39` 复核）。
+    #   ★ dark 那一项（`809 + 1` = 第185轮 room_man）一个字不动。
+    check('F2', cover.get('light') == 202 + 1 and cover.get('dark') == 809 + 1
           and cover.get('unknown') == 3 + _n_import and not miss,
-          'F2 ★★场景世界覆盖独立重算：light 202 / dark 809+1 / unknown %d(=3+迁入 %d %r) '
+          'F2 ★★场景世界覆盖独立重算：light 202+1 / dark 809+1 / unknown %d(=3+迁入 %d %r) '
           '/ 未覆盖 0（%r，miss=%d）'
           % (3 + _n_import, _n_import, _imp_ch, dict(cover), len(miss)))
 

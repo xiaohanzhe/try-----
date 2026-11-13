@@ -639,6 +639,13 @@ class SceneController(object):
             scene.dir_path = scene.dir_path or scenes_dir(scene_dir_path)
 
             # 状态一次性写完（不留"改了一半"的中间态）。
+            # ★★★ 第186轮：**先记来路再覆盖**。`_scene_prev` 是"上一个场景 id"，
+            #   给门路由的 `when_prev` 用（电梯按"你从哪层来"分四支）。
+            #   ★ 只在真的切成功时记（下面两行 load 失败时已经 return 了）；
+            #   ★ 同场景重入时不改（保持更早那个来路）—— 那才是"我从哪儿来的"。
+            _prev = pet.__dict__.get('current_scene')
+            if isinstance(_prev, str) and _prev and _prev != scene_id:
+                pet._scene_prev = _prev
             pet._scene_state = scene
             pet.current_scene = scene_id
             # ★第45轮：把当前**章**也投影成宿主状态 —— 寻路的②（目的地定位）

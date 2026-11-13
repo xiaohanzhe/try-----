@@ -269,6 +269,9 @@ def _match_one(route, context):
       · `when_door`    ★第44轮：出口标识（门）。**语义与其他键相反，见下**。
       · `when_mood`    宠物心情（控制器从 emotion_system 投影进来）
       · `when_event`   触发事件名（如 `"user_idle_5min"`）
+      · `when_prev`    ★第186轮：**来路**（上一个场景 id）—— 与 `when_src` 同款
+                       语义（缺席即判不匹配），用于"这台电梯回哪一层"这种
+                       "同一扇门按你从哪来分四支"的场合
       · `when_keywords` 语境关键词 —— context 里需有 `keywords` 集合，
                         任一命中即可（**OR 语义**，与其余键的 AND 语义不同，
                         这是刻意的：关键词是"说到某类话题"，多条同类词当然该
@@ -347,6 +350,27 @@ def _match_one(route, context):
         if not (isinstance(have_src, str) and have_src):
             return False, 0
         if want_src != '*' and have_src != want_src:
+            return False, 0
+        score += 1
+
+    # --- ★★★ 第186轮：**来路**条件（`when_prev` = 从哪个场景走过来）---
+    #   为什么要它：`room_cc_prisonelevator` 的 X 门在原作里按 `flag[239]` 分四支，
+    #   而 `flag[239]` 的语义就是「**你从哪一层上来**」（107→0 / 114→1 / 123→2 / 111→3，
+    #   那三个来源房各自在离开时写死它）。同一个 (场景, 门字母) 有 4 个合法去向，
+    #   靠 priority / 坐标 / 对象名**都分不开** —— 唯一能分开的就是"来路"。
+    #
+    #   ★ 与 `when_door` **故意不同**：缺席时**判不匹配**（不放行）。
+    #     理由同 `when_src`：一条按来路分流的规则被"不知道来路"的语境选中，
+    #     等于**凭空指定了一条分支** —— 那就是静默走错房间。
+    #     不放行最多是这条规则暂时用不上（可观测）。
+    #   ★★ 因此"不知道来路"的兜底必须由**另一条不带 `when_prev` 的规则**承担
+    #     （第186轮给电梯那条配了默认支 =`global.flag` 缺省 0），不能指望本键放行。
+    want_prev = route.get('when_prev')
+    if isinstance(want_prev, str) and want_prev:
+        have_prev = _get(context, 'prev')
+        if not (isinstance(have_prev, str) and have_prev):
+            return False, 0
+        if want_prev != '*' and have_prev != want_prev:
             return False, 0
         score += 1
 

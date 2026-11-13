@@ -175,9 +175,10 @@ print(u'')
 print(u'== A. 段位与分母（防空集恒真） ==')
 # ===========================================================================
 # ★ 第185轮：场景数 2166 → 2166 + 1（`ch1.forest.room_man`）。分母只增不减。
+# ★ 第186轮：再 +1（`ch1.hometown.school_unusedroom`，rid 33）。
 check(u'A0 分母：`load_index()` ok=True、场景数 == %d、路由 >= 2759 条、新段非空'
-      % (2166 + 1,),
-      IDX.get('ok') is True and len(SC) == 2166 + 1 and len(RL) >= 2759 and len(NEW) > 0,
+      % (2166 + 1 + 1,),
+      IDX.get('ok') is True and len(SC) == 2166 + 1 + 1 and len(RL) >= 2759 and len(NEW) > 0,
       u'scenes=%d routes=%d new=%d ok=%r'
       % (len(SC), len(RL), len(NEW), IDX.get('ok')))
 

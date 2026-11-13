@@ -203,11 +203,12 @@ print('=' * 74)
 # Deltarune 五章 + desktop 的分章数必须与第47/76轮基线**逐值相同**
 BASE = {'desktop': 1, 'ch1': 128, 'ch2': 236, 'ch3': 187, 'ch4': 261, 'ch5': 201}
 # ★ 第185轮：`ch1.forest.room_man` 是本轮**新增**的一间 ⇒ ch1 128 → 129。
+# ★ 第186轮：`ch1.hometown.school_unusedroom`（rid 33）再 +1 ⇒ ch1 128 → 130。
 #   **不改 BASE**（那是第47/76轮基线的历史事实），而是用“现状 − 本轮增量”去比 ——
 #   这条判据的意图是“别的作品/别的章不被碰”，不是“ch1 永远 128”。
-_LEDGER_185 = {'ch1': 1}
-got = {ch: len(idx_scenes.get(ch) or {}) - _LEDGER_185.get(ch, 0) for ch in BASE}
-check('C1 ★ Deltarune 六章分章数**逐值不变**（迁移只加不改；第185轮 ch1 +1 挂账后）',
+_LEDGER = {'ch1': 1 + 1}          # 第185轮 1 间 + 第186轮 1 间
+got = {ch: len(idx_scenes.get(ch) or {}) - _LEDGER.get(ch, 0) for ch in BASE}
+check('C1 ★ Deltarune 六章分章数**逐值不变**（迁移只加不改；第185/186轮 ch1 +2 挂账后）',
       got == BASE, '得 %r' % (got,))
 
 # 世界表：Deltarune 部分不动，ut/uty 全 unknown

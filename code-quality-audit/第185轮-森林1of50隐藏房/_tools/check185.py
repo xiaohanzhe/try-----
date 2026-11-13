@@ -65,6 +65,10 @@ GML_NAME = 'gml_Object_obj_doorX_musfade_Alarm_2'
 #: ★ 条数写死是为了防"某段整段被删掉还全绿"。**本条自身还没 +1** ⇒ 判 `TOTAL - 1`。
 TOTAL_CHECKS = 41
 EXPECT_ROUTES = 2832
+#: ★★★ 第186轮引账：ch1 五间「进得去出不来」接了 11 条出口边（priority 9100~9110）⇒ 2843。
+#:   ★ 不把 2832 改掉：那是"第185轮当天的路由数"的历史事实，只叠一笔新账。
+_ADDED_186 = 11
+EXPECT_ROUTES_NOW = EXPECT_ROUTES + _ADDED_186
 #: ★★★ 两条**手工边**的 priority 必须在 `gen_routes44.py` 的生成区间（110 + ord*BAND + k，
 #: 实测占满 7850~8262）**之外**。第一版取的 7900/7901 是错的：`7901` 早被
 #: `ch5.flower_castle.dw_fcastle_gloves_tower` 的 Any 门占着（第172轮补的那条），
@@ -186,7 +190,8 @@ _bad_sp = [(o.get('sprite'),) for o in _all_objs
 check(u'A6 两个场景引用的贴图**逐个**真实存在（含 bake_sale 独立文件那 10 个）',
       bool(_all_objs) and not _bad_sp, u'共 %d 个 / 缺=%r' % (len(_all_objs), _bad_sp))
 
-check(u'A7 routes 总数 == 2832（原 2830 + 2）', len(RT) == EXPECT_ROUTES,
+check(u'A7 routes 总数 == 2832 + %d（第186轮账）= %d（原 2830 + 2 + 11）'
+      % (_ADDED_186, EXPECT_ROUTES_NOW), len(RT) == EXPECT_ROUTES_NOW,
       u'实测=%d' % len(RT))
 
 
@@ -240,11 +245,16 @@ _cnt = {}
 for _p in _prio:
     _cnt[_p] = _cnt.get(_p, 0) + 1
 _duphi = sorted(p for p, n in _cnt.items() if n > 1 and p != 200)
-check(u'A13 ★ 两条手工边 priority 全表唯一，且**高于生成器区间**（撞号 ⇒ 胜负退化成声明序）',
+#: 生成器区间上界（`gen_routes44.py` 的 `110 + scene_ord * BAND + k` 实测占满 7850~8262，
+#: 见第170轮 D2c 的同一常量）。手工边必须整段压在这条线之上。
+GEN_MAX = 8262
+check(u'A13 ★ 两条手工边 priority 全表唯一，且**高于生成器区间**（>%d；撞号 ⇒ 胜负退化成声明序）'
+      % GEN_MAX,
       EXPECT_PRIO_X != EXPECT_PRIO_MAN
       and EXPECT_PRIO_X not in _duphi and EXPECT_PRIO_MAN not in _duphi
-      and bool(_prio) and max(_prio) == max(EXPECT_PRIO_X, EXPECT_PRIO_MAN),
-      u'除桌面 200 外的重复=%r / max=%r' % (_duphi, max(_prio) if _prio else None))
+      and EXPECT_PRIO_X > GEN_MAX and EXPECT_PRIO_MAN > GEN_MAX,
+      u'除桌面 200 外的重复=%r / 全表 max=%r'
+      % (_duphi, max(_prio) if _prio else None))
 
 #: ★★★ A14：**载体唯一性** —— 第185轮那次"重复载体"事故的固化判据。
 #: 全局不变量：`index 场景数 == 独立文件数 + zone 场景数`，且三件事同时成立：

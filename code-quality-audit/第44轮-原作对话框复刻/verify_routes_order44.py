@@ -160,6 +160,15 @@ ok(not bad,
 #     判据改成**可证伪的差分**：把 8xxx 段的边摘掉之后，该场景**必须不再违例**。
 #     若摘掉还违例 ⇒ 违例另有原因 ⇒ 报红（这正是 B2c 存在的意义）。
 _SEG181 = (8200, 8262)
+#: ★★★ 第186轮补第四类（同样有账、同样可证伪）：ch1 五间「进得去出不来」的出口边
+#:   落在 priority 9100~9110 这一**新手工段**。`ch1.hometown.schooldoor` 原先只有
+#:   D 门（低号段），本轮补上它那扇 C 门（9110）⇒ 按 priority 排出来是 D…D C，
+#:   字母序（C 在 D 前）与段序冲突 ⇒ 必然违例。
+#:   ★ 与 181 那类同一条纪律：**不许**靠"场景里有没有 91xx 边"就放行（那等于恒真），
+#:     必须证明"把这一段摘掉之后该场景就不再违例"。摘掉还违例 ⇒ 另有原因 ⇒ 报红。
+#:   ★ 写成**段表**而不是又加一个 `if`：下一轮再多一段手工边，只需在这里加一行。
+_BANDS = ((_SEG181[0], _SEG181[1], u'第181轮 8xxx 段'),
+          (9100, 9110, u'第186轮 91xx 段'))
 
 
 def _is181(r):
@@ -167,8 +176,14 @@ def _is181(r):
     return _SEG181[0] <= p <= _SEG181[1]
 
 
+def _in_band(r, lo, hi):
+    p = r.get('priority')
+    return isinstance(p, int) and lo <= p <= hi
+
+
 _cross = []
-_by_cause = {'W+D/X': 0, '181段': 0, '181段(单边)': 0}
+_by_cause = collections.Counter()
+_by_cause['W+D/X'] = 0
 for k, v in multi.items():
     v_letter = [r for r in v if isinstance(r.get('when_door'), str) and r.get('when_door')]
     if len(v_letter) < 2:
@@ -180,23 +195,31 @@ for k, v in multi.items():
     if 'W' in _set and (_set & set('DX')):
         _by_cause['W+D/X'] += 1
         continue
-    # ③ 第181轮：摘掉 8xxx 段后必须不再违例
-    #    ★ 两种落法都算"成因是 181 段"，但**证明强度不同**，分开计：
-    #      · `proven`：摘掉后还剩 >= 2 条字母边且不违例 ⇒ 违例确实是 8xxx 带来的；
+    # ③ 手工段：摘掉该段后必须不再违例（逐段试，命中即记账）
+    #    ★ 两种落法都算"成因是这一段"，但**证明强度不同**，分开计：
+    #      · `proven`：摘掉后还剩 >= 2 条字母边且不违例 ⇒ 违例确实是这一段带来的；
     #      · `vacuous`：摘掉后只剩 <= 1 条 ⇒ "不违例"是空话，**这一格由 B2 兜**
     #        （同段内字母序才是它的事；B2 已逐场景判过，全绿）。
-    _no181 = [x for x in v_letter if not _is181(x)]
-    _ls2 = [x.get('when_door') for x in sorted(_no181, key=lambda r: r.get('priority'))]
-    if any(_is181(x) for x in v_letter) and _ls2 == sorted(_ls2):
-        _by_cause['181段' if len(_no181) >= 2 else '181段(单边)'] += 1
-        continue
-    _cross.append((k, _ls))
+    _hit = False
+    for _lo, _hi, _nm in _BANDS:
+        _no = [x for x in v_letter if not _in_band(x, _lo, _hi)]
+        _ls2 = [x.get('when_door') for x in sorted(_no, key=lambda r: r.get('priority'))]
+        if any(_in_band(x, _lo, _hi) for x in v_letter) and _ls2 == sorted(_ls2):
+            _by_cause[_nm if len(_no) >= 2 else _nm + u'(单边)'] += 1
+            _hit = True
+            break
+    if not _hit:
+        _cross.append((k, _ls))
 ok(not _cross,
-   'B2c ★★ 跨段违例**只**来自三种已点名成因（「同场景含 W 与 D/X」%d 个 /'
+   'B2c ★★ 跨段违例**只**来自已点名成因（「同场景含 W 与 D/X」%d 个 /'
    '「第181轮 8xxx 段，**摘掉它就不违例**（有证明）」%d 个 /'
-   '「同上但摘掉后只剩 1 条边，空格由 B2 兜」%d 个）；其余 %d 个'
-   % (_by_cause['W+D/X'], _by_cause['181段'], _by_cause['181段(单边)'],
-      len(_cross)))
+   '「同上但摘掉后只剩 1 条边，空格由 B2 兜」%d 个 /'
+   '「第186轮 91xx 段，同上（有证明）」%d 个 /'
+   '「第186轮 91xx 段，摘掉后只剩 1 条边」%d 个）；其余 %d 个 %r'
+   % (_by_cause['W+D/X'], _by_cause[u'第181轮 8xxx 段'],
+      _by_cause[u'第181轮 8xxx 段(单边)'],
+      _by_cause[u'第186轮 91xx 段'], _by_cause[u'第186轮 91xx 段(单边)'],
+      len(_cross), _cross[:3]))
 
 # B2b 负控制：用旧写法（全局取模）**必须能复现**至少一个违例
 #      —— 证明 B2 有鉴别力，不是恒真。

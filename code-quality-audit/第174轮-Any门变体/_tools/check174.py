@@ -103,6 +103,8 @@ EXPECT_ORIG_OBJS = 3197      # 第68轮普查口径（五章 · 非 doorany 家�
 #: ★ 第185轮：`ch1.forest.room_man` 登记进产品 ⇒ 它那 **4 个**物件进入世界。
 #: **只加账**：上面那个历史冻结值一个字不动。
 MAN_185 = 4
+#: ★ 第186轮：`ch1.hometown.school_unusedroom` 9 个物件 + 两间既有场景各补 1 个出口物件 ⇒ +11。
+MAN_186 = 9 + 2
 
 EXPECT_DESKTOP_DOORS = 4
 CHECK_FLOOR = 35
@@ -536,9 +538,10 @@ for _u in UNITS:
             _non_fam += 1
 _desktop_p = os.path.join(SCENES, 'desktop.json')
 _desktop = len((jl(_desktop_p).get('objects') or [])) if os.path.isfile(_desktop_p) else -1
-check(u'D1 既有 objects **一个都没被改**：五章非 doorany 家族 %d == %d+%d、桌面世界门 %d == %d'
-      % (_non_fam, EXPECT_ORIG_OBJS, MAN_185, _desktop, EXPECT_DESKTOP_DOORS),
-      _non_fam == EXPECT_ORIG_OBJS + MAN_185 and _desktop == EXPECT_DESKTOP_DOORS,
+check(u'D1 既有 objects **一个都没被改**：五章非 doorany 家族 %d == %d+%d+%d、桌面世界门 %d == %d'
+      % (_non_fam, EXPECT_ORIG_OBJS, MAN_185, MAN_186, _desktop, EXPECT_DESKTOP_DOORS),
+      _non_fam == EXPECT_ORIG_OBJS + MAN_185 + MAN_186
+      and _desktop == EXPECT_DESKTOP_DOORS,
       u'（把整个 doorany 家族排除在外，这样第173/174轮各自的增量都撞不到这条）')
 
 _badshape = []

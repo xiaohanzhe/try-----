@@ -123,9 +123,12 @@ check(u'A1 表里已经查不到 `priority=7122`（删干净了）',
 #:   ★ 留档里的 `total_before/after`（2831/2830）是**第183轮当天的历史事实**，
 #:     一个字都不许改 —— 改了等于篡改留档。所以只让"现数"减去本条新增账。
 _ADDED_185 = 2
-check(u'A2 路由总数 == 2830 + %d（第185轮新增账）= %d，且与留档 `meta.total_after` 对得上'
-      % (_ADDED_185, 2830 + _ADDED_185),
-      len(ROUTES_L) == 2830 + _ADDED_185
+#: ★ 第186轮引账：ch1 五间「进得去出不来」接了 11 条出口边（priority 9100~9110）。
+#:   ★ 同样不把 2830 改掉 —— 那是"第183轮当天的路由数"的历史事实。
+_ADDED_186 = 11
+check(u'A2 路由总数 == 2830 + %d（第185轮账）+ %d（第186轮账）= %d，且与留档 `meta.total_after` 对得上'
+      % (_ADDED_185, _ADDED_186, 2830 + _ADDED_185 + _ADDED_186),
+      len(ROUTES_L) == 2830 + _ADDED_185 + _ADDED_186
       and META.get('total_after') == 2830
       and META.get('total_before') == 2831,
       u'实测 %d；留档 before=%r after=%r'
@@ -299,9 +302,10 @@ check(u'D2 ★ 第181轮 A1 已"引账不调数"：右边是 `_BASE_TOTAL - _N_R
 
 _restore = list(ROUTES_L) + list(KEEP)
 _restore_hit = [r for r in _restore if isinstance(r, dict) and r.get('priority') == PRIORITY]
-check(u'D3 留档可整段还原：内存里拼回去 = 2831 + %d（第185轮新增账）= %d 条，'
-      u'且 7122 仍唯一（还原不会造重复）' % (_ADDED_185, 2831 + _ADDED_185),
-      len(_restore) == 2831 + _ADDED_185 and len(_restore_hit) == 1,
+check(u'D3 留档可整段还原：内存里拼回去 = 2831 + %d（第185轮账）+ %d（第186轮账）= %d 条，'
+      u'且 7122 仍唯一（还原不会造重复）'
+      % (_ADDED_185, _ADDED_186, 2831 + _ADDED_185 + _ADDED_186),
+      len(_restore) == 2831 + _ADDED_185 + _ADDED_186 and len(_restore_hit) == 1,
       u'%d 条；7122 命中 %d' % (len(_restore), len(_restore_hit)))
 
 _apply_src = rd(APPLY183) if os.path.isfile(APPLY183) else u''

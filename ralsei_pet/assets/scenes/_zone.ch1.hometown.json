@@ -1530,6 +1530,12 @@
      "sprite": "objs/spr_markerA_0.png",
      "src": "obj_markerA",
      "depth": 0
+    },
+    {
+     "pos": [242, 48],
+     "sprite": "objs/spr_doorB_0.png",
+     "src": "obj_doorB",
+     "depth": 0
     }
    ]
   },
@@ -1762,6 +1768,71 @@
      "sprite": "objs/spr_papersit_0.png",
      "src": "obj_fallpaper",
      "depth": 600000
+    }
+   ]
+  },
+  "ch1.hometown.school_unusedroom": {
+   "name": "家乡·school_unusedroom",
+   "name_raw": "room_school_unusedroom",
+   "name_derived": true,
+   "original_room_id": 33,
+   "bg": "bg/ch1_hometown_school_unusedroom.png",
+   "bg_source": "room.bg_layer",
+   "bg_asset": "bg_unusedclass",
+   "objects": [
+    {
+     "pos": [140, 180],
+     "sprite": "objs/spr_doorD_0.png",
+     "src": "obj_doorD",
+     "depth": 0
+    },
+    {
+     "pos": [150, 136],
+     "sprite": "objs/spr_markerC_0.png",
+     "src": "obj_markerC",
+     "depth": 0
+    },
+    {
+     "pos": [138, 42],
+     "sprite": "objs/spr_event_0.png",
+     "src": "obj_unusedclassevent",
+     "depth": 0
+    },
+    {
+     "pos": [46, 100],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [110, 94],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [168, 126],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [166, 84],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [226, 90],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
+    },
+    {
+     "pos": [256, 90],
+     "sprite": "objs/spr_interactable_0.png",
+     "src": "obj_readable_room1",
+     "depth": 0
     }
    ]
   }

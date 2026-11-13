@@ -89,7 +89,13 @@ EXPECT_VERT_OF_RM = 6     # 留档里真身是 Vert 的条数
 #:   `EXPECT_SNAP_HIT` 一字未动：新扫出来的那个门在“改前对照表”上解不出目标
 #:   （它靠的是第185轮 9002 那条边，而那条恰好被剔掉了）⇒ 解出数仍是 2898。
 _ADDED_OBJ_185 = 1
-EXPECT_SNAP_N = 3047 + _ADDED_OBJ_185      # 全表门物件数（快照键数）
+#: ★★ 第186轮：3048 → **3048 + 2**。多的两个是
+#:   ① 新登记场景 `ch1.hometown.school_unusedroom` 自带的 `obj_doorD`（(140,180)）；
+#:   ② `ch1.hometown.alphysclass` 补上的 `obj_doorB`（(242,48)，原作是 `classscene` 运行时创建）。
+#:   ★ `dark_chase2.obj_lancerslideevent` **不进**这个账：快照按 `obj_door*` 前缀枚举，
+#:     它不是门对象（是过场触发器），所以键数只 +2 而不是 +3。
+_ADDED_OBJ_186 = 2
+EXPECT_SNAP_N = 3047 + _ADDED_OBJ_185 + _ADDED_OBJ_186      # 全表门物件数（快照键数）
 EXPECT_SNAP_HIT = 2898    # 其中解出目标的门物件数
 CHECK_FLOOR = 30
 
@@ -184,7 +190,12 @@ _BAND_MAX = max((r.get('priority') for r in RL
 RL_185 = [r for r in RL
           if not isinstance((r.get('_original') or {}).get('batch'), int)
           and isinstance(r.get('priority'), int) and r['priority'] > _BAND_MAX]
-EXPECT_185 = 2
+#: ★★ 第186轮：这个桶的定义是"**无 batch 且 priority 高过生成器区间**"
+#:   （`RL_185` 是它的变量名，实际含义是"手工边"）⇒ 第186轮又进来 11 条
+#:   （ch1 五间出口，priority 9100~9110）⇒ 2 → **2 + 11**。
+#:   ★ 不按 priority 数值写死（9001/9002/91xx），否则下一轮又得再改一次；
+#:     判别式原样保留，只是"这个桶现在有几条"要跟着账走。
+EXPECT_185 = 2 + 11
 _ID185 = set(id(r) for r in RL_185)
 RL_BASE = [r for r in RL
            if (r.get('_original') or {}).get('batch') != 181 and id(r) not in _ID185]
@@ -322,7 +333,7 @@ check(u'B3 条数两套账：现存 %d − 第181轮 %d − 第183轮 %d == 改�
       and len(RL_185) == EXPECT_185
       and len(VIA_ROWS) == EXPECT_VIA_AFTER
       and len(MINE) == EXPECT_VIA_AFTER,
-      u'routes=%d（= %d + 181段 %d + 185段 %d）via=%d mine=%d'
+      u'routes=%d（= %d + 181段 %d + 手工段 %d）via=%d mine=%d'
       % (len(RL), len(RL_BASE), len(RL_181), len(RL_185), len(VIA_ROWS), len(MINE)))
 
 _c_h = sum(1 for r in VAR_ROWS if r.get('when_src') == VAR_SRC[0])
@@ -337,7 +348,7 @@ check(u'B4 ★★ 第174轮的变体边**一条没少**：%d 条（Horz %d + Ver
 #:   指纹必须与**现在磁盘上的表**逐条相同。这是"别的一条没动"的硬证明 ——
 #:   不是拿我自己的快照跟自己比，改前副本来自 git。
 check(u'B5 ★★★ 除这 %d 条外**其余逐条相同**：现状**减去第181轮那 %d 条、'
-      u'减去第185轮那 %d 条手工边、把第183轮留档那条按原位插回**后的规范化 sha1'
+      u'减去第185/186轮那 %d 条手工边、把第183轮留档那条按原位插回**后的规范化 sha1'
       u' == 改前副本摘掉留档后的 sha1'
       % (EXPECT_RM, len(RL_181), len(RL_185)),
       canon(_BASE_WITH_183) == BEFORE['rest_sha1']
@@ -396,10 +407,11 @@ _diff = [(k, _snap_ev.get(k), snap_base.get(k))
          for k in set(_snap_ev) | set(snap_base)
          if _snap_ev.get(k) != snap_base.get(k)]
 check(u'C1 ★★★ 全表路由快照：%d 个门物件（其中 %d 个解出目标）的 `route_for_door`'
-      u'结果与改前快照**逐值相同**（在"现行表 − 第181轮 %d 条 − 第185轮 %d 条"上比；'
-      u'键数比留档多 %d 个 = 本轮新登记的 room_man 自带那扇 X 门）'
+      u'结果与改前快照**逐值相同**（在"现行表 − 第181轮 %d 条 − 第185/186轮 %d 条"上比；'
+      u'键数比留档多 %d 个 = 第185轮 room_man 那扇 X 门 + 第186轮新登记那间房的 D 门'
+      u' + alphysclass 那扇运行时 B 门）'
       % (len(snap_base), sum(1 for v in snap_base.values() if v), len(RL_181),
-         len(RL_185), _ADDED_OBJ_185),
+         len(RL_185), _ADDED_OBJ_185 + _ADDED_OBJ_186),
       len(snap_base) == EXPECT_SNAP_N and len(_snap_ev) == 3047
       and sum(1 for v in snap_base.values() if v) == EXPECT_SNAP_HIT
       and not _diff,
@@ -512,7 +524,7 @@ print('=' * 70)
 
 RESTORED = list(RL_BASE) + list(REMOVED)
 check(u'D1 加回 42 条 ⇒ %d 条 == 改前 %d 条 − 第183轮 %d 条'
-      u'（用"现行表 − 第181轮 %d 条 − 第185轮 %d 条手工边"作底）'
+      u'（用"现行表 − 第181轮 %d 条 − 第185/186轮 %d 条手工边"作底）'
       % (len(RESTORED), EXPECT_BEFORE, EXPECT_183, len(RL_181), len(RL_185)),
       len(RESTORED) == EXPECT_BEFORE - EXPECT_183, u'实得=%d' % len(RESTORED))
 

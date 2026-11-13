@@ -114,6 +114,11 @@ EXPECT_ORIG_OBJS = 3197           # 第68轮普查口径（五章可绘制实例
 #: ★ 第185轮：`ch1.forest.room_man` 登记进产品 ⇒ 它那 **4 个**物件进入世界。
 #: **只加账**：上面那个历史冻结值一个字不动。
 MAN_185 = 4
+#: ★ 第186轮：`ch1.hometown.school_unusedroom`（rid 33）登记 ⇒ **9 个**物件进世界；
+#: 另外两间既有场景补了 1 个出口物件（`alphysclass.obj_doorB` / `dark_chase2.obj_lancerslideevent`）
+#: ⇒ 合计 **+11**。★ 同样是"只加账"：`EXPECT_ORIG_OBJS` 一个字不动，
+#:   判据改写成 `== 3197 + MAN_185 + MAN_186`，多一个少一个都报红。
+MAN_186 = 9 + 2
 EXPECT_DESKTOP_DOORS = 4          # `desktop.json` 的世界门（现读校验）
 #: C 段：解析不出目标的那几条（所在场景在原作里就没有 Any 门边）
 EXPECT_UNRESOLVED = 19
@@ -571,11 +576,12 @@ for _u in UNITS:
             _non_any_ch += 1
 _desktop_p = os.path.join(SCENES, 'desktop.json')
 _desktop = len((jl(_desktop_p).get('objects') or [])) if os.path.isfile(_desktop_p) else -1
-check(u'D1 既有 objects **一个都没被改**：五章 %d == %d（原作普查）、桌面世界门 %d == %d'
-      % (_non_any_ch, EXPECT_ORIG_OBJS, _desktop, EXPECT_DESKTOP_DOORS),
-      _non_any_ch == EXPECT_ORIG_OBJS + MAN_185 and _desktop == EXPECT_DESKTOP_DOORS,
+check(u'D1 既有 objects **一个都没被改**：五章 %d == %d（原作普查+逐轮新增账）、桌面世界门 %d == %d'
+      % (_non_any_ch, EXPECT_ORIG_OBJS + MAN_185 + MAN_186, _desktop, EXPECT_DESKTOP_DOORS),
+      _non_any_ch == EXPECT_ORIG_OBJS + MAN_185 + MAN_186
+      and _desktop == EXPECT_DESKTOP_DOORS,
       u'合计 %d == %d' % (_non_any_ch + _desktop,
-                         EXPECT_ORIG_OBJS + MAN_185 + EXPECT_DESKTOP_DOORS))
+                         EXPECT_ORIG_OBJS + MAN_185 + MAN_186 + EXPECT_DESKTOP_DOORS))
 
 check(u'D2 场景载体未缩水：分片 %d 个、摊平后单元 %d 个'
       % (len([f for f in os.listdir(SCENES)

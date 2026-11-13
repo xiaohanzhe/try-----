@@ -512,6 +512,8 @@ _n_any = 0
 _n_any_var = 0
 _n_shift181 = 0
 _n_inst181 = 0
+#: ★ 第186轮五族的逐族样本计数（dict 而不是单个 int：每族都必须真有样本）
+_n186 = {}
 
 
 #: ★ 通用出生点（`sprite` 自证：`spr_markerAny`，与任何字母的 sprite 都不同）。
@@ -681,6 +683,116 @@ def _shift181_bad(r):
     return None
 
 
+#: ★★★ 第186轮：路由表里出现**第五族**原作机制 —— "房里压根没有静态门"的那些出口。
+#:   它们不是 A~F 位移、不是 X 表驱动、不是 Any 每实例 `doorRoom`、也不是 181 的实例门，
+#:   目标由**别的对象**给：
+#:     · `delta_door_pos`     —— `obj_doorX_Alarm_2` 里 `if (y >= room_height/2)` 按
+#:                                 **门自身坐标**分流（同字母两扇门去不同的房）；
+#:     · `delta_door_flag`    —— `obj_doorX_musfade_Alarm_2` 里 `flag[239]` 分支，
+#:                                 flag 的语义就是「你从哪层来」⇒ 出口 = 回原层；
+#:     · `gml_room_goto_next` —— `obj_lancerslideevent_Step_0` 到点 `room_goto_next()`；
+#:     · `runtime_door`       —— `obj_classscene_Create_0` 里**运行时创建**的门
+#:                                 （`instance_create(242,48,obj_doorB)` ⇒ `room_goto_previous()`）；
+#:     · `gml_cutscene_goto`  —— 闭泉演出末尾 `scr_become_light(); room_goto(...)`。
+#:   ★ 这是**加严**，不是放行：每族各有自己的自洽条件（见 `_r186_bad`），
+#:     而且 C3a19 要求**每一族都真有样本** —— 否则分支形同虚设（空集恒真的老病）。
+_KIND_186 = {
+    'delta_door_pos': u'坐标分流',
+    'delta_door_flag': u'来路分流',
+    'gml_room_goto_next': u'房间序 +1',
+    'runtime_door': u'运行时建门（回上一间）',
+    'gml_cutscene_goto': u'过场结束 goto',
+}
+
+
+def _r186_bad(r):
+    u"""第186轮五族的 `_original` 自洽判定 → 原因字符串 / None（纯函数，不读盘）。
+
+    五族共同的底线（不对就退回"编的"）：两端场景非空且**不自环**、房间号是 int
+    且不自环、`via` 非空。再按族各自加条件 —— 每一条都能从 GML 语义直接否证：
+
+      · 坐标分流：必须声明 `axis`（x/y）、两个坐标都是 int、`table` 非空，
+        且 `marker` 的末字母 == `when_door`（"目标房真摆着同字母 marker"这条
+        与 A~D 位移族同一把尺）。
+      · 来路分流：`flag` / `flag_value` 是 int；**来路账与规则必须对得上** ——
+        有 `when_prev_room` 就必须有 `when_prev` 且**落点房 == 来路房**
+        （原作四支都是"回你来的那一层"），`when_prev_room` 为空则**不许**带
+        `when_prev`（那就是默认支，凭什么挑一条来路）。
+      · 房间序 +1：`room_goto_next()` 的语义 ⇒ `dst_room_id == src_room_id + 1`。
+      · 运行时建门：`room_goto_previous()` ⇒ `dst == src − 1`；且必须记下坐标与
+        `code`（"哪段代码建的"），否则没法复核。
+      · 过场 goto：`code` 与 `cond` 都必须写清楚（"哪个对象、什么条件下"）。
+    """
+    o = r.get('_original') or {}
+    k = o.get('kind')
+    if k not in _KIND_186:
+        return u'kind=%r 不属本族' % (k,)
+    sc, to = r.get('when_scene'), r.get('to')
+    if not (isinstance(sc, str) and sc and isinstance(to, str) and to):
+        return u'两端场景空'
+    if sc == to:
+        return u'场景自环'
+    sri, dri = o.get('src_room_id'), o.get('dst_room_id')
+    if not (isinstance(sri, int) and isinstance(dri, int)):
+        return u'房间号=%r/%r' % (sri, dri)
+    if sri == dri:
+        return u'房间号自环'
+    if not (isinstance(o.get('via'), str) and o.get('via')):
+        return u'via 空'
+    if k == 'delta_door_pos':
+        if o.get('axis') not in ('x', 'y'):
+            return u'axis=%r' % (o.get('axis'),)
+        if not (isinstance(o.get('door_x'), int) and isinstance(o.get('door_y'), int)):
+            return u'门坐标不全 %r/%r' % (o.get('door_x'), o.get('door_y'))
+        if not (isinstance(o.get('table'), str) and o.get('table')):
+            return u'table 空'
+        mk = o.get('marker')
+        if not (isinstance(mk, str) and mk and mk[-1:] == r.get('when_door')):
+            return u'marker=%r 与 when_door=%r 不符' % (mk, r.get('when_door'))
+        return None
+    if k == 'delta_door_flag':
+        if not isinstance(o.get('flag'), int) or not isinstance(o.get('flag_value'), int):
+            return u'flag/flag_value=%r/%r' % (o.get('flag'), o.get('flag_value'))
+        if not (isinstance(o.get('table'), str) and o.get('table')):
+            return u'table 空'
+        wpr = o.get('when_prev_room')
+        wprev = r.get('when_prev')
+        if wpr is None:
+            if wprev:
+                return u'默认支不该带 when_prev'
+            return None
+        if not isinstance(wpr, int):
+            return u'when_prev_room=%r' % (wpr,)
+        if not (isinstance(wprev, str) and wprev):
+            return u'有来路账却缺 when_prev'
+        if dri != wpr:
+            return u'来路房 %d ≠ 落点房 %d' % (wpr, dri)
+        return None
+    if k == 'gml_room_goto_next':
+        if dri != sri + 1:
+            return u'room_goto_next 却 %d→%d（应 +1）' % (sri, dri)
+        if not (isinstance(o.get('code'), str) and o.get('code')):
+            return u'code 空'
+        return None
+    if k == 'runtime_door':
+        if dri != sri - 1:
+            return u'room_goto_previous 却 %d→%d（应 −1）' % (sri, dri)
+        if not (isinstance(o.get('code'), str) and o.get('code')):
+            return u'code 空'
+        if not (isinstance(o.get('door_x'), int) and isinstance(o.get('door_y'), int)):
+            return u'门坐标不全'
+        mk = o.get('marker')
+        if not (isinstance(mk, str) and mk and mk[-1:] == r.get('when_door')):
+            return u'marker=%r 与 when_door=%r 不符' % (mk, r.get('when_door'))
+        return None
+    # gml_cutscene_goto
+    if not (isinstance(o.get('code'), str) and o.get('code')):
+        return u'code 空'
+    if not (isinstance(o.get('cond'), str) and o.get('cond')):
+        return u'cond 空'
+    return None
+
+
 def _inst181_bad(r):
     u"""第181轮实例门（`obj_climb_door`）的 `_original` 自洽判定 → 原因 / None。
 
@@ -761,6 +873,14 @@ for _r in (routes.get('routes') or []):
         if _w181:
             _struct_bad.append('%s(实例门 %s)' % (_r.get('to'), _w181))
         continue
+    #: ★★★ 第186轮五族（坐标分流 / 来路分流 / 房间序+1 / 运行时建门 / 过场 goto）
+    if _o.get('kind') in _KIND_186:
+        _n186[_o['kind']] = _n186.get(_o['kind'], 0) + 1
+        _w186 = _r186_bad(_r)
+        if _w186:
+            _struct_bad.append('%s(%s %s)'
+                               % (_r.get('to'), _KIND_186[_o['kind']], _w186))
+        continue
     _why = _delta_bad(_r)
     if _why:
         _struct_bad.append('%s(%s)' % (_r.get('to'), _why))
@@ -772,7 +892,10 @@ check('C3 每条规则的 _original 自洽于**它声明的原作机制**'
       '允许 `room_goto` 回自身的迷宫回路；排除 desktop 世界门）｜ '
       '**第181轮两族**：A~F 六族位移门（`when_door` 必须是名字字母且 `shift` 与之相符、'
       '下标算术闭合，唯一例外是 ch3 `110→28` 的单点覆盖）/ '
-      '`obj_climb_door` 为每实例 `PreCreate` 的 `doorRoom`（同款代码名自证，但不需要门坐标）',
+      '`obj_climb_door` 为每实例 `PreCreate` 的 `doorRoom`（同款代码名自证，但不需要门坐标）｜ '
+      '**第186轮五族**：坐标分流（`axis`+两轴坐标+marker 同字母）/ 来路分流'
+      '（`flag` 四支、来路房==落点房、默认支不许带来路）/ `room_goto_next`（+1）/ '
+      '运行时建门（`room_goto_previous` ⇒ −1）/ 过场 goto（`code`+`cond` 必填）',
       not _struct_bad,
       '不自洽 %d 条: %s' % (len(_struct_bad), _struct_bad[:4]))
 
@@ -782,6 +905,50 @@ check('C3a16 ★ 第181轮位移门分支确有样本（%d 条，只增不减；
       % (_n_shift181,), _n_shift181 >= 47, '实测 %d' % (_n_shift181,))
 check('C3a17 ★ 第181轮实例门分支确有样本（%d 条，只增不减；门槛 16）'
       % (_n_inst181,), _n_inst181 >= 16, '实测 %d' % (_n_inst181,))
+
+#: ★★★ 第186轮：**逐族**要求有样本 —— 不是"总数 ≥ 9"就完事。
+#:   只数总数的话，五族里有一族永远抓不到样本也照样绿（那就是空分支）。
+#:   分母写死在这张表里：`_KIND_186` 每加一族，这里就必须跟着加，否则缺样本即红。
+check('C3a21 ★ 第186轮五族分支**每一族**都真有样本（%r）'
+      % (_n186,), all(_n186.get(k, 0) >= 1 for k in _KIND_186),
+      '缺样本族=%r' % ([k for k in _KIND_186 if _n186.get(k, 0) < 1],))
+
+#: ★★★ 正/负控制成对：合法输入必须 None（否则是"恒红"），四种错法必须**各不相同**
+#:   地报红（否则是"随便报一个"，鉴别力无法区分是哪一维错了）。
+_R186_OK = {'to': 'ch1.b.b', 'when_scene': 'ch1.a.a', 'when_door': 'X',
+            'when_prev': 'ch1.b.b',
+            '_original': {'kind': 'delta_door_flag', 'chapter': 'ch1',
+                          'via': 'obj_doorX_musfade',
+                          'table': 'gml_Object_obj_doorX_musfade_Alarm_2',
+                          'flag': 239, 'flag_value': 1, 'when_prev_room': 114,
+                          'src_room_id': 109, 'dst_room_id': 114}}
+
+
+def _r186_var(**ovr):
+    r = {'_original': dict(_R186_OK['_original'])}
+    r.update({k: v for k, v in _R186_OK.items() if k != '_original'})
+    r['_original'].update(ovr.pop('_o', {}))
+    r.update(ovr)
+    return r
+
+
+_R186_CASES = [
+    (u'缺 when_prev（有来路账）', _r186_var(when_prev=None)),
+    (u'来路房≠落点房', _r186_var(_o={'when_prev_room': 111})),
+    (u'默认支却带 when_prev', _r186_var(_o={'when_prev_room': None})),
+    (u'room_goto_next 差 2 间', {'to': 'ch1.b.b', 'when_scene': 'ch1.a.a',
+                                'when_door': None,
+                                '_original': {'kind': 'gml_room_goto_next', 'chapter': 'ch1',
+                                              'via': 'obj_lslidescene',
+                                              'code': 'gml_Object_x_Step_0',
+                                              'src_room_id': 43, 'dst_room_id': 45}}),
+]
+_r186_reasons = [_r186_bad(r) for _n, r in _R186_CASES]
+check('C3a22 正/负控制：`_r186_bad` 对「合法」返回 None、对四种错法**各不相同**地报红',
+      _r186_bad(_R186_OK) is None
+      and all(isinstance(x, str) and x for x in _r186_reasons)
+      and len(set(_r186_reasons)) == len(_r186_reasons),
+      '合法=%r / 四种=%r' % (_r186_bad(_R186_OK), _r186_reasons))
 
 #: ★★★ 正/负控制成对：三条负控制各错一个维度，`_shift181_bad` 必须**分别**报红；
 #:   把正确的喂进去必须 None。只测"能报红"会漏掉"永远报红"，只测"能绿"会漏掉恒真。

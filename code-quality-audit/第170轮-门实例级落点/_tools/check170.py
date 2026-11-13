@@ -330,11 +330,19 @@ for sid, objs in OBJS.items():
         #   ⇒ 41 条"该退回却没退回"的**假红**。这是"候选集须与被测同一套"的又一次现场。
         cands = [r for r in RL
                  if r.get('when_scene') == sid and o.get('src')
-                 and r.get('when_src') == o.get('src')]
+                 and r.get('when_src') == o.get('src')
+                 #: ★★★ 第186轮：这个探针**不传 `prev`**（`route_for_door(..., pos=)`
+                 #:   五个实参里没有来路），而 `when_prev` 是**fail-closed** 的：
+                 #:   没给来路 ⇒ 带 `when_prev` 的规则**不参与**（`_prev_ok` 返 False）。
+                 #:   ⇒ 候选集必须同样剔掉它们，否则"老口径"会把一条根本不可能被选中的
+                 #:   规则算成 priority 最小者，得出一个产品永远给不出的答案（假红）。
+                 #:   `cc_prisonelevator` 的 X 门正是这一例：不带来路时只剩默认支（回牢廊）。
+                 and not r.get('when_prev')]
         if not cands:
             cands = [r for r in RL
                      if r.get('when_scene') == sid and not r.get('when_src')
-                     and (not r.get('when_door') or r.get('when_door') == lt)]
+                     and (not r.get('when_door') or r.get('when_door') == lt)
+                     and not r.get('when_prev')]
         hits = []
         for r in cands:
             k = _rule_coord(r)
@@ -525,6 +533,22 @@ check(u'D2b ★★★ 最新一批（batch=%d）的 priority 段整体压在**�
 _MANUAL_ABOVE_BAND = {
     (9001, u'ch1.forest.forest_area5', u'ch1.forest.forest_starwalker'),
     (9002, u'ch1.forest.room_man', u'ch1.forest.forest_bake_sale'),
+    #: ★★★ 第186轮：ch1 五间「进得去出不来」的 11 条新边（priority 9100~9110）。
+    #:   为什么它们必须高过生成器区间：`cc_prisonelevator` 那条 X 门在原作里
+    #:   **按来路分四支**，而本表里同 (场景, 目标) 可能有老边 —— 只有优先级压过整条
+    #:   生成器链，"来路"这一路才真正说了算（同 185 那两条的手工边理由）。
+    #:   ★ 兜底支（9105）刻意排在三条 `when_prev` 之后：升序裁决，号大者输。
+    (9100, u'ch1.forest.forest_maze_susie', u'ch1.forest.forest_before_maze'),
+    (9101, u'ch1.forest.forest_maze_susie', u'ch1.forest.forest_maze2'),
+    (9102, u'ch1.card_castle.cc_prisonelevator', u'ch1.card_castle.card_castle_1f'),
+    (9103, u'ch1.card_castle.cc_prisonelevator', u'ch1.card_castle.card_castle_5f'),
+    (9104, u'ch1.card_castle.cc_prisonelevator', u'ch1.card_castle.card_castle_unknown'),
+    (9105, u'ch1.card_castle.cc_prisonelevator', u'ch1.card_castle.card_castle_prison'),
+    (9106, u'ch1.dark_world.dark_chase2', u'ch1.castle_town.castle_outskirts'),
+    (9107, u'ch1.hometown.alphysclass', u'ch1.hometown.schoollobby'),
+    (9108, u'ch1.card_castle.cc_fountain', u'ch1.hometown.school_unusedroom'),
+    (9109, u'ch1.hometown.school_unusedroom', u'ch1.hometown.schooldoor'),
+    (9110, u'ch1.hometown.schooldoor', u'ch1.hometown.school_unusedroom'),
 }
 _above = set(x for x in _nobatch if x[0] > _band_max)
 check(u'D2c ★★★ 手工边不许**绕开**段序：priority 高过生成器区间（>%d）的无 batch 边，'

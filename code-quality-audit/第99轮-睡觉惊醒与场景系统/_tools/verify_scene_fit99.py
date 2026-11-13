@@ -790,7 +790,9 @@ def sec_g():
             cnt[o.get('src')] = cnt.get(o.get('src'), 0) + 1
     # ★ 第185轮：`ch1.forest.room_man` 带 **2 个** `obj_readable_room1` ⇒ 921 → 921 + 2。
     #   其余三类一字未动（room_man 没有 markerA/B 与 doorW）。
-    for nm, want in (('obj_readable_room1', 921 + 2), ('obj_markerA', 227),
+    # ★★ 第186轮：`ch1.hometown.school_unusedroom`（rid 33）带 **6 个**可读物 ⇒ 再 +6。
+    #   这间房没有 markerA/B、也没有 doorW（它是 D 门 + markerC），故其余三类仍不动。
+    for nm, want in (('obj_readable_room1', 921 + 2 + 6), ('obj_markerA', 227),
                      ('obj_markerB', 223), ('obj_doorW', 212)):
         ok(cnt.get(nm) == want,
            'G27 逐类计数 %s = %d（实际 %s）' % (nm, want, cnt.get(nm)))

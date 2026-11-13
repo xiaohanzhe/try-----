@@ -114,6 +114,18 @@ DESKTOP_DOORS = _desktop_doors()
 # ★ 第185轮：`ch1.forest.room_man` 登记进产品 ⇒ 它那 **4 个**物件进入世界。
 #   **只加账**：`EXPECT_TOTAL_ORIGINAL`（第68轮普查的历史事实）一个字不动。
 MAN_185 = 4
+#: ★★ 第186轮：`ch1.hometown.school_unusedroom`（rid 33）登记 ⇒ 它那 **9 个**物件进世界；
+#:   另两间既有场景各补 1 个"出口物件"（`alphysclass.obj_doorB` 运行时建的门、
+#:   `dark_chase2.obj_lancerslideevent` 过场触发器）⇒ **合计 +11**。
+#:   ★ 同 185：`EXPECT_TOTAL_ORIGINAL` 一字不动。
+MAN_186 = 9 + 2
+#: ★★★ 其中**第68轮普查里没有的那 3 件**（C3 的独立重算只看普查表，看不见它们）：
+#:   ① `school_unusedroom.obj_unusedclassevent`（普查那间只记了 8 条，没有这个事件对象）；
+#:   ② `alphysclass.obj_doorB`（原作是 `classscene` 在 `plot>=3` 时**运行时创建**）；
+#:   ③ `dark_chase2.obj_lancerslideevent`（过场触发器，静态实例表里本来就没有）。
+#:   ⇒ C3 的期望 = 普查重算 + 桌面门 + Any 段 + **这 3 件**；C2 的期望 = 普查常数 + **11**。
+#:   ★ 两个数必须分开写：拿 11 去补 C3 会让它多出 8，那才是"把判据调松"。
+MAN_186_EXTRA = 3
 EXPECT_TOTAL = EXPECT_TOTAL_ORIGINAL + DESKTOP_DOORS
 
 # ★★★ 第173轮：`obj_doorAny` 物化（+705 条）—— 期望值**现算**，不写死。
@@ -433,10 +445,11 @@ def main():
     ok(scenes_with_obj >= EXPECT_ZONE_WITH_OBJ + EXPECT_FILE_WITH_OBJ,
        'C1 带 objects 的场景数 >= %d（第68轮口径；第173轮 Any 门会让更多场景变"有"）实际=%d'
        % (EXPECT_ZONE_WITH_OBJ + EXPECT_FILE_WITH_OBJ, scenes_with_obj))
-    ok(len(all_objs) == EXPECT_TOTAL + ANY_EXPECT + MAN_185,
-       'C2 ★守恒：objects 总条数 == 原作 %d + 桌面世界门 %d + Any 门 %d + 第185轮 man %d = %d 实际=%d'
-       % (EXPECT_TOTAL_ORIGINAL, DESKTOP_DOORS, ANY_EXPECT, MAN_185,
-          EXPECT_TOTAL + ANY_EXPECT + MAN_185, len(all_objs)))
+    ok(len(all_objs) == EXPECT_TOTAL + ANY_EXPECT + MAN_185 + MAN_186,
+       'C2 ★守恒：objects 总条数 == 原作 %d + 桌面世界门 %d + Any 门 %d + 第185轮 man %d '
+       '+ 第186轮 %d = %d 实际=%d'
+       % (EXPECT_TOTAL_ORIGINAL, DESKTOP_DOORS, ANY_EXPECT, MAN_185, MAN_186,
+          EXPECT_TOTAL + ANY_EXPECT + MAN_185 + MAN_186, len(all_objs)))
 
     # C3 独立重算：从**第68轮普查 + 按章对象表 + objs/** 三个真源重算期望值，
     #    必须与场景里的一致。这是"判据不依赖生成器自报"的关键 —— 判据自己算一遍。
@@ -445,10 +458,11 @@ def main():
     #      两边都要动才自洽：只改常量不改重算会让 C3 报红（鉴别力正确）。
     #    ★★ 第99轮：`DESKTOP_DOORS` 改为从 `desktop.json` **现读** ⇒
     #      语义 = 「原作重算 + 桌面实际声明 == 产品总数」，加门不用再改这里。
-    expect = _recount_expected(obj_files) + DESKTOP_DOORS + ANY_EXPECT
+    expect = _recount_expected(obj_files) + DESKTOP_DOORS + ANY_EXPECT + MAN_186_EXTRA
     ok(expect > 0 and expect == len(all_objs),
-       'C3 ★判据独立重算（第68轮普查×按章对象表×objs 三源 + desktop %d 扇门 + Any %d）== 实得 独立算=%d 实得=%d'
-       % (DESKTOP_DOORS, ANY_EXPECT, expect, len(all_objs)))
+       'C3 ★判据独立重算（第68轮普查×按章对象表×objs 三源 + desktop %d 扇门 + Any %d '
+       '+ 第186轮普查里没有的 %d 件）== 实得 独立算=%d 实得=%d'
+       % (DESKTOP_DOORS, ANY_EXPECT, MAN_186_EXTRA, expect, len(all_objs)))
 
     print('')
     print('== D 负控制（证明判据有鉴别力）==')

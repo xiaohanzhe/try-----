@@ -5588,6 +5588,47 @@ SUITES = [
                 '删了就没法复核“这张表是从哪读出来的”。',
     },
     {
+        'id': 'check186',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第186轮-修有入无出', '_tools', 'check186.py'),
+        'offscreen': False,
+        'desc': '第一百八十六轮：**ch1 五间「进得去出不来」的房接上出口**'
+                '（`_routes.json` 2,832 → 2,843，priority 9100~9110；'
+                '`_index.json` 2,167 → 2,168，新登记 `ch1.hometown.school_unusedroom`）。'
+                '★★★ 根因**不是"缺边"**，而是两类：①「房里根本没有能出去的东西」——'
+                '`dark_chase2` 的出口是 `obj_lancerslideevent`（过场触发器，`slidetimer==540` 时 '
+                '`room_goto_next()`，rid 43→**44**，42 才是 chase1）；'
+                '`alphysclass` 的出口是 `obj_classscene_Create_0` 里 '
+                '`if (global.plot>=3) instance_create(242,48,obj_doorB)` —— **运行时创建**，'
+                '静态实例表里查不到；`cc_fountain` 要先闭泉'
+                '（`obj_fountainkris` con==12 → `obj_darkfountain_event` t>=650）'
+                '再 `room_goto(room_school_unusedroom)`。②「边要的条件我们表达不了」——'
+                '`forest_maze_susie` 同字母两扇 X 门靠**门自身 y** 分流'
+                '（`if (y >= room_height/2)`，房高 680 ⇒ 阈值 340；实测门 y=665 / y=0）；'
+                '`cc_prisonelevator` 一扇门四个去向靠 `flag[239]`，而那个 flag 的语义就是'
+                '「你从哪层来」（107→0 / 114→1 / 123→2 / 111→3，**无兜底**）。'
+                '⇒ 产品侧新增 `when_prev`（来路）一路：`scene_routing._match_one` 按 '
+                '`route.get("when_prev")` 加分，`item_interact.route_for_door(..., prev=)` 的 '
+                '`_pick` 与 `_letter_ok` 都过 `_prev_ok`；`scene_controller.switch()` 记 '
+                '`_scene_prev`（`main.py` 里**预声明**该字段，否则 `__setattr__` 转发会把状态劈两份），'
+                '`_rebuild_item_props()` 把它传给 `build_props(prev=)`。'
+                '★★ 两条容易踩的：`when_prev` **缺席即判不匹配**（放行＝凭空指定一扇门），'
+                '所以"不知道来路"的兜底必须由**另一条不带 `when_prev` 的规则**承担，'
+                '而且它必须排在三条具体支**之后** —— `priority` 是**升序**裁决，'
+                '号大者输，兜底放前面会让三条 `when_prev` 支永远不生效；'
+                '`when_prev` 的匹配也**不是**某一类门常量，判据不许建在它的数值上。'
+                '★ 数据侧的施工器 `apply186.py` 自带**空转往返自证**（不改内容 dump 一遍必须与原文'
+                '逐字节相同 —— 本目录三种 JSON 排版各不相同：`_index`/`_routes` 是 indent=2 且尾无换行、'
+                '标量数组 `_index` 内联而 `_routes` 逐行；`_zone.*` 是 indent=1 且尾有换行），'
+                '并**先整段清空本轮 priority 区间再重写**（按键去重删不掉定稿时砍掉的那条，'
+                '也会让 priority 出现空洞），跑几次结果都一致。'
+                '★ 判据 33 条：A 数据 10（含"同门重复 0"与"本轮 11 条各自唯一"）· B 纯函数 8 · '
+                'C 接线 6（AST 查三处真接线 + `main.py` 预声明）· D 端到端 5（真跑 `build_props` + '
+                '**两条负控制**：删掉「来路=一层」那条 ⇒ 必须落默认支；把三条 `when_prev` 全拆掉 ⇒ '
+                '来路=五层也拿不到五层）· E 自检 4（含分母闸、AST 常量扫盘符、条数固定）。'
+                '★ 零 Qt、零网络、零外部盘；不 import `main`，也不构造 `RalseiPet()`。',
+    },
+    {
         'id': 'check183',
         'script': os.path.join(ROOT, 'code-quality-audit',
                                '第183轮-删7122误边', '_tools', 'check183.py'),

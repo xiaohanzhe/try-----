@@ -36,12 +36,26 @@ NON_PLAYABLE = ('system', 'debug')
 
 #: ★ 真缺口（原作门图里有边的未覆盖 playable 房间）—— 动手前写死的"事实快照"。
 #: ch3 不在本轮范围（用户口径：第三章的黑暗喷泉开在 Kris 家里，那两个不能同时存在）。
+#: ⚠️ **这是第47轮当日的快照，永久冻结、不改字面量**（记忆铁律：老锁改法＝引账不调数）。
 REAL_GAPS_4 = {
     ('ch1', 33), ('ch1', 133), ('ch1', 134),
     ('ch2', 54), ('ch2', 229), ('ch2', 230), ('ch2', 231),
     ('ch4', 60),
     ('ch5', 49), ('ch5', 79),
 }
+
+#: ★★★ 第186轮：`room_school_unusedroom`（ch1 rid 33）**已经通了** ——
+#:   本轮给 `cc_fountain` 补了 `obj_fountainkris` 的落点边、并把 rid 33 登记成
+#:   产品场景 `ch1.hometown.school_unusedroom`，于是它从"进得去出不来"的缺口
+#:   变成已覆盖。原来的 10 间缺口 ⇒ **9 间**。
+#:   ⇒ 这里**不删 `REAL_GAPS_4` 里那一项**（那会篡改第47轮的取证结论），
+#:     而是另立一张"差分表"，让"这一项是被**解决**掉的"可单独审计：
+#:     若哪天 rid 33 又退回未覆盖，`EXPECT_REAL` 里没有它 ⇒ A7 立刻报红。
+COVERED_186 = {('ch1', 33)}
+EXPECT_REAL = REAL_GAPS_4 - COVERED_186
+
+#: 第186轮产品场景净增（`ch1.hometown.school_unusedroom` 1 间，属 ch1）
+NEW_SCENE_186 = 1
 
 PASS = 0
 FAIL = 0
@@ -149,8 +163,10 @@ def main():
     #   而"四章被改坏 / 桌面被删"照样报红 —— 比写死数字**更严**且**不会过期**。
     # ★ 第185轮：ch1 多了 `ch1.forest.room_man` ⇒ 四章合计 826 → **826 + 1**。
     #   不改历史值、不重算：只把新增的那一间挂账。
-    check('A5 产品场景 ≥ 1,014（含 desktop 1）；ch1/2/4/5 恒 == 826 + 1',
-          n_scenes >= 1014 and n_scenes_4 == 826 + 1 and per_ch_scenes.get('desktop') == 1
+    # ★ 第186轮：ch1 又多了 `ch1.hometown.school_unusedroom`（rid 33）⇒ **+ 1**。
+    check('A5 产品场景 ≥ 1,014（含 desktop 1）；ch1/2/4/5 恒 == 826 + 1 + 1',
+          n_scenes >= 1014 and n_scenes_4 == 826 + 1 + NEW_SCENE_186
+          and per_ch_scenes.get('desktop') == 1
           and len(per_ch_scenes) >= 6,
           '总 %d，四章 %d，分章 %r' % (n_scenes, n_scenes_4, per_ch_scenes))
 
@@ -160,10 +176,12 @@ def main():
         play[ch] = sorted(i for i in idxs if kind[ch].get(i) not in NON_PLAYABLE)
         cov[ch] = sorted(i for i in play[ch] if i in prod[ch])
         missing[ch] = sorted(i for i in play[ch] if i not in prod[ch])
-    check('A6 ch1/2/4/5 playable == 853；已覆盖 == 812；未覆盖 == 41',
+    # ★ 第186轮：rid 33 从"未覆盖"移进"已覆盖" ⇒ 覆盖 812 → 812 + 1，
+    #   未覆盖 41 → 41 - 1（**总数 853 不动**，只是内部搬运）。
+    check('A6 ch1/2/4/5 playable == 853；已覆盖 == 812 + 1；未覆盖 == 41 - 1',
           sum(len(play[c]) for c in FOUR) == 853
-          and sum(len(cov[c]) for c in FOUR) == 812
-          and sum(len(missing[c]) for c in FOUR) == 41,
+          and sum(len(cov[c]) for c in FOUR) == 812 + NEW_SCENE_186
+          and sum(len(missing[c]) for c in FOUR) == 41 - NEW_SCENE_186,
           'playable=%d cov=%d miss=%d'
           % (sum(len(play[c]) for c in FOUR), sum(len(cov[c]) for c in FOUR),
              sum(len(missing[c]) for c in FOUR)))
@@ -174,12 +192,12 @@ def main():
         for i in missing[ch]:
             d = deg.get(ch, {}).get(i) or {'in': 0, 'out': 0}
             (real if (d['in'] or d['out']) else iso).add((ch, i))
-    check('A7 ★★ 真缺口（原作门图里有边）== 10 间，且集合精确相等',
-          real == REAL_GAPS_4,
+    check('A7 ★★ 真缺口（原作门图里有边）== 10 - 1 间，且集合精确相等',
+          real == EXPECT_REAL,
           '实得 %r；多=%r 少=%r'
-          % (sorted(real), sorted(real - REAL_GAPS_4), sorted(REAL_GAPS_4 - real)))
-    check('A8 ★ 负控制：真缺口(10) 严格少于未覆盖(41) —— 归因这步真筛过',
-          len(real) == 10 and len(real) + len(iso) == 41,
+          % (sorted(real), sorted(real - EXPECT_REAL), sorted(EXPECT_REAL - real)))
+    check('A8 ★ 负控制：真缺口(10 - 1) 严格少于未覆盖(41 - 1) —— 归因这步真筛过',
+          len(real) == len(EXPECT_REAL) and len(real) + len(iso) == 41 - NEW_SCENE_186,
           'real=%d iso=%d' % (len(real), len(iso)))
     check('A9 两集合不相交（归因是一刀两断，不是重叠）', not (real & iso))
 
@@ -304,18 +322,27 @@ def main():
     #   不再用 `总数 - oneshot == stock` 这种两段相减（它允许"ch1 掉 1、ch5 补 1"
     #   互相抵掉），改成**逐章钉死 + 禁止出现未登记的章**。
     _BG_BY_CH = {
-        'ch1': 40, 'ch2': 58, 'ch3': 38, 'ch4': 53, 'ch5': 46,   # 合计 235
+        # ★★★ 第186轮：`ch1.hometown.school_unusedroom`（rid 33）是**带真背景**登记的
+        #   （`bg/ch1_hometown_school_unusedroom.png` 7,025 字节，原作 `bg_unusedclass`
+        #   320×240 原样复制、不缩放，第39轮口径）⇒ ch1 的"有背景场景数" 40 → 40 + 1。
+        #   ⚠️ 这不许写成"总数涨 1 就过"：下面 `_bg_diff` 逐章对账，写错章就报红。
+        'ch1': 40 + NEW_SCENE_186,
+        'ch2': 58, 'ch3': 38, 'ch4': 53, 'ch5': 46,   # 第120轮口径：合计 235
         'oneshot': _BG_ONESHOT,
         'ut': _BG_UT,
     }
     _bg_pin = sum(_BG_BY_CH.values())
+    # ★ 第186轮：`_BG_STOCK` 是第39~100轮的冻结快照（235），不重算；
+    #   标签里要显示"当前"的 Deltarune 分项 ⇒ 另立 `_BG_STOCK_NOW`，
+    #   否则 `235 + 263 + 338 = 836` 与实测 837 对不上（判据标签自相矛盾）。
+    _BG_STOCK_NOW = _BG_STOCK + NEW_SCENE_186
     _bg_diff = dict((ch, (n_bg_by_ch.get(ch, 0), want))
                     for ch, want in _BG_BY_CH.items()
                     if n_bg_by_ch.get(ch, 0) != want)
     _bg_extra = sorted(set(n_bg_by_ch) - set(_BG_BY_CH))
     check('B8 背景覆盖率逐章钉住（合计 %d = Deltarune %d + OneShot %d + ut %d；'
           '分母 = 当前产品场景数 %d）'
-          % (_bg_pin, _BG_STOCK, _BG_ONESHOT, _BG_UT, n_scenes),
+          % (_bg_pin, _BG_STOCK_NOW, _BG_ONESHOT, _BG_UT, n_scenes),
           n_bg == _bg_pin and not _bg_diff and not _bg_extra,
           '实得 %d；不一致 %r；未登记的章 %r'
           % (n_bg, _bg_diff, _bg_extra))
@@ -332,8 +359,13 @@ def main():
     for ch, i in real:
         k = c38.get('%s:%d' % (ch, i))
         dist[k] = dist.get(k, 0) + 1
-    check('C1 ★ 10 个真缺口在第38轮 cls 里：maybe 9 / nonscene 1（当年"待裁定"至今没裁）',
-          dist.get('maybe') == 9 and dist.get('nonscene') == 1 and len(dist) == 2,
+    # ★ 第186轮：`('ch1', 33)` 移出真缺口集合 ⇒ 那一条原来是 `maybe`，
+    #   于是 maybe 9 → 9 - 1、nonscene 仍 1（合计 9）。**这是账变少，不是判据放松**：
+    #   `len(dist) == 2` 与 `nonscene == 1` 都还在，`maybe` 也仍是**等值**断言
+    #   （不是 `<=`），所以"剩下的 9 间被重新归成别的类"照样报红。
+    check('C1 ★ 10 - 1 个真缺口在第38轮 cls 里：maybe 9 - 1 / nonscene 1'
+          '（当年"待裁定"至今没裁）',
+          dist.get('maybe') == 9 - 1 and dist.get('nonscene') == 1 and len(dist) == 2,
           '实得 %r' % dist)
 
     names = {'%s:%d' % (ch, i): (rooms.get('%s:%d' % (ch, i)) or {}).get('name') or ''
@@ -356,8 +388,9 @@ def main():
               and (deg.get(ch, {}).get(i) or {'in': 0, 'out': 0})['out'] == 0
               for ch, i in iso))
     print()
-    print('   [INFO] ch1/2/4/5：原作 1,005 间 / playable 853 / 已覆盖 812 / '
-          '未覆盖 41 = 真缺口 10 + 孤立 31')
+    print('   [INFO] ch1/2/4/5：原作 1,005 间 / playable 853 / 已覆盖 812 + %d / '
+          '未覆盖 41 - %d = 真缺口 10 - %d + 孤立 31'
+          % (NEW_SCENE_186, NEW_SCENE_186, NEW_SCENE_186))
 
     print()
     print('=== RESULT: PASS=%d FAIL=%d ===' % (PASS, FAIL))

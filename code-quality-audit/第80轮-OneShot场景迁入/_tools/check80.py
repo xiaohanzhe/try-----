@@ -177,13 +177,15 @@ if os.path.exists(BAK_IDX):
     #   ⇒ 排除 desktop（它本就不属于任何原作房间，`original_room_id=-1`），
     #     并**保留**对它的正向断言（下方 "desktop 仍是一等场景"）。
     # ★ 第185轮：`ch1.forest.room_man` 是本轮**新增**的一间，不是“碰了 ch1”。
-    #   做法：先把**账上那一间**从“现状副本”里摘掉，再逐章**深比** ——
+    # ★ 第186轮：`ch1.hometown.school_unusedroom`（rid 33）同一性质。
+    #   做法：先把**账上那几间**从“现状副本”里摘掉，再逐章**深比** ——
     #   既不削弱判据（摘完仍要求整章逐值相等），也不碰老备份。
     #   另外 `_ledger_missing` 防“账上写了但现实不存在”—— 否则这条会退化成永真。
-    _LEDGER_185 = (('ch1', 'forest', 'ch1.forest.room_man'),)
+    _LEDGER = (('ch1', 'forest', 'ch1.forest.room_man'),
+               ('ch1', 'hometown', 'ch1.hometown.school_unusedroom'))
     _cur = json.loads(json.dumps(idx.get('chapters') or {}))
     _ledger_missing = []
-    for _ch, _ar, _sid in _LEDGER_185:
+    for _ch, _ar, _sid in _LEDGER:
         _sl = (((_cur.get(_ch) or {}).get('areas') or {}).get(_ar) or {}).get('scenes') or {}
         if _sid in _sl:
             _sl.pop(_sid)
@@ -191,7 +193,7 @@ if os.path.exists(BAK_IDX):
             _ledger_missing.append(_sid)
     diffs = [k for k, v in old_ch.items()
              if k != 'desktop' and _cur.get(k) != v]
-    check('C1 ★★★ 迁入前 8 章（除 desktop 自身）逐值不变（第185轮那一间挂账后）',
+    check('C1 ★★★ 迁入前 8 章（除 desktop 自身）逐值不变（第185/186轮那两间挂账后）',
           not diffs and not _ledger_missing,
           '变了=%s / 账上缺=%s' % (diffs or '无', _ledger_missing or '无'))
     added = set(idx.get('chapters') or {}) - set(old_ch)
@@ -212,8 +214,9 @@ if os.path.exists(BAK_IDX):
                 for c in (idx.get('chapters') or {}).values()
                 for a in (c.get('areas') or {}).values())
     # ★ 第185轮：+1（`ch1.forest.room_man`）。增量账里加一笔，老备份不动。
-    _delta = sum(n for _, n in _LEGIT_ROUNDS.values()) + 1
-    check('C3 ★ 总数 == 迁入前 + 逐章声明的增量（263 + 244 + 第185轮 1）',
+    # ★ 第186轮：+1（`ch1.hometown.school_unusedroom`）。
+    _delta = sum(n for _, n in _LEGIT_ROUNDS.values()) + 1 + 1
+    check('C3 ★ 总数 == 迁入前 + 逐章声明的增量（263 + 244 + 第185/186轮各 1）',
           n_new == n_old + _delta,
           '%d -> %d (+%d，应 +%d)' % (n_old, n_new, n_new - n_old, _delta))
 else:
