@@ -78,10 +78,14 @@ POS = [
 ]
 
 # ---- B 负控制：正常台词，一个字都不许动 ----
+# ★★★ 第188轮引账（详版 §190）：原来的 B3 是 `（笑）随你便。`，被当成"正常台词"要求
+#   逐字不变。第188轮量出 `（笑）` 这类**裸情绪标签**正是 `ACTION_PAREN` 残留的头号来源
+#   （419 条里 42 处），产品补了第四道闸 `_BARE_LABEL_RE` 专门删它 ⇒ **该条期望已变更**，
+#   从"逐字不变"改成"必须删"，挪到 B9。这里不是把负控制改松：下面仍 6 条逐字不变，
+#   另加 B8（第一人称心里话保留）与 B9（裸标签必删），B 段条数不变。
 NEG = [
     '（你懂的）那种感觉。',
     '（你说的对）那就这么办。',
-    '（笑）随你便。',
     '（其实我很害怕）但我还是要去。',
     '（你叫什么名字）我先问问。',
     '（你想去吗）我等你决定。',
@@ -111,6 +115,11 @@ for i, src in enumerate(NEG, 1):
 check('B8 第一人称心里话不被误删（既有裁定）',
       S('（其实我很害怕）但我还是要去。') == '（其实我很害怕）但我还是要去。')
 
+# ★★★ 第188轮引账（详版 §190）：裸情绪标签**必须删**（原 B3 的期望已变更）。
+#   负控制没变松 —— 上面 6 条仍一条不许动，这条是**新增的期望**，不是删掉的反例。
+check('B9 ★ 裸情绪标签 `（笑）` 按第188轮口径必须删（原 B3 期望已变更）',
+      S('（笑）随你便。') == '随你便。', repr(S('（笑）随你便。')))
+
 # ==================================================== C 训练判据
 for tag, src, _ in POS:
     m = C._PAREN_RE.search(src)
@@ -128,28 +137,31 @@ check('C9 两把尺刻意不同：`（你懂的）` 产品保留、训练报违�
 
 # ==================================================== D 破坏性负控制
 def _with_broken_guard(fn):
-    """**把新判据拆干净**：四条一起拆，只拆一条不算数（§95.13）。
+    """**把新判据拆干净**：五道一起拆，只拆一条不算数（§95.13）。
 
     ★ 第113轮f 追加第四条：`_rescue_quoted`。不拆它，引号里的话会被救出来，
       正控制就"看起来仍然生效"—— 那正是"负控制没拆干净"的假绿。
+    ★★★ 第188轮追加第五条：`_BARE_LABEL_RE`（戊闸）。不拆它，`（笑）` 仍会被删，
+      D2 就会变成"拿拆了一半的夹具证明 B 没被误伤"—— 又一次假绿。
     """
     saved = (ES._SECOND_PERSON_NARRATION, ES._QUOTED_IN_PAREN, ES._ANY_PAREN_RE,
-             ES._rescue_quoted)
+             ES._rescue_quoted, ES._BARE_LABEL_RE)
     try:
         ES._SECOND_PERSON_NARRATION = re.compile(r'(?!)')
         ES._QUOTED_IN_PAREN = re.compile(r'(?!)')
         ES._ANY_PAREN_RE = re.compile(r'[（(]([^）)]{0,40})[）)]')
         ES._rescue_quoted = lambda m: m.group(0)
+        ES._BARE_LABEL_RE = re.compile(r'(?!)')
         return fn()
     finally:
         (ES._SECOND_PERSON_NARRATION, ES._QUOTED_IN_PAREN, ES._ANY_PAREN_RE,
-         ES._rescue_quoted) = saved
+         ES._rescue_quoted, ES._BARE_LABEL_RE) = saved
 
 
 _broken_kept = _with_broken_guard(lambda: [S(s) for _, s, _ in POS])
-check('D1 ★ 拆掉新判据后 4 条正控制必须**全部**重新漏掉（证明 A 不是恒真）',
+check('D1 ★ 拆掉新判据后 %d 条正控制必须**全部**重新漏掉（证明 A 不是恒真）' % len(POS),
       all(g == s for g, (_, s, _) in zip(_broken_kept, POS)),
-      '漏掉 %d/4' % sum(1 for g, (_, s, _) in zip(_broken_kept, POS) if g == s))
+      '漏掉 %d/%d' % (sum(1 for g, (_, s, _) in zip(_broken_kept, POS) if g == s), len(POS)))
 
 # 拆完之后负控制仍然不许被误伤（说明 B 也不是靠"改坏了才通过"）
 _broken_neg = _with_broken_guard(lambda: [S(s) for s in NEG])
