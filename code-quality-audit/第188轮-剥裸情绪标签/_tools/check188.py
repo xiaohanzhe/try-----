@@ -162,17 +162,23 @@ if _has_fn:
                 and isinstance(node.args[0], ast.Name)):
             _subs.append((node.args[0].id, node.lineno))
 _names = [n for n, _ in _subs]
-check(u'D2 函数体里 `_ANY_PAREN_RE.sub` 恰好 3 处（丁救台词 / 丙叙述 / 戊裸标签）',
-      len(_subs) == 3, u'%r' % (_subs,))
+check(u'D2 函数体里 `_ANY_PAREN_RE.sub` 恰好 4 处'
+      u'（己发声 / 丁救台词 / 丙叙述 / 戊裸标签）',
+      len(_subs) == 4, u'%r' % (_subs,))
 
 _ln = dict((n, l) for n, l in _subs)
 # ★ 回调名**带前导下划线**（模块级函数 `_rescue_quoted` / `_kill_narration` /
 #   `_kill_bare_label`）。第一版判据写成不带下划线的名字，`_ln.get` 全 None ⇒ 报红。
 #   报红三步里第二步「再疑判据本身」命中：产品行号 777 < 781 < 787，顺序本来就是对的。
-check(u'D3 戊闸排在丁闸**之后**（先救引号台词，否则台词跟着标签一起没）',
-      '_rescue_quoted' in _ln and '_kill_bare_label' in _ln
-      and _ln['_kill_bare_label'] > _ln['_rescue_quoted'],
-      u'rescue=%s bare=%s' % (_ln.get('_rescue_quoted'), _ln.get('_kill_bare_label')))
+# ★★ 第189轮引账：新增己闸 `_rescue_voice`（发声直出），排在**最前**。
+#   本判据从"3 处"改成"4 处"，并把「己在最前」并进同一条（条数不变，仍是 26 条）。
+check(u'D3 闸序：己发声 → 丁救台词 → 戊裸标签（先直出、再救台词、最后删标签）',
+      '_rescue_voice' in _ln and '_rescue_quoted' in _ln
+      and '_kill_bare_label' in _ln
+      and _ln['_rescue_voice'] < _ln['_rescue_quoted'] < _ln['_kill_bare_label'],
+      u'voice=%s rescue=%s bare=%s'
+      % (_ln.get('_rescue_voice'), _ln.get('_rescue_quoted'),
+         _ln.get('_kill_bare_label')))
 
 check(u'D4 `main._clean_ai_reply` 仍在调 `strip_action_parentheticals`（接线没断）',
       'strip_action_parentheticals' in rd(MAIN_PY))

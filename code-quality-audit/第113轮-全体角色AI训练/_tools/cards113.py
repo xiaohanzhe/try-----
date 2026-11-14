@@ -88,6 +88,46 @@ def build_card(item):
     }
 
 
+def carry_trained(card, path):
+    """★ 重建卡片时把**训练后回填**的字段从旧卡带过来（第189轮补的坑）。
+
+    事故经过：第189轮改完 `asgore.txt` 后按惯例跑 `cards113.py --all` 重建卡片，
+    结果 **59 张卡的 `patch` 与 61 张卡的 `eval` 被清空**（`build_card()` 里这两个
+    字段恒为 `''` / `{}`），`voice_markers` 也被重新抽取、把第113轮r 手工剔掉的
+    灌水项（`想` / `……` / `[……]` / `I` / `时候`）又塞了回去 —— 10 张卡受影响。
+    表现是四把老锁同时红：`check139 A0/A3/D5`、`check142 A4/C1`、
+    `test_evalpick113s L4b/L4c`、`test_markers113r H`。
+
+    为什么以前没暴露：`main()` 里已经写了「重建索引**不许冲掉训练结果**」，
+    但它保的是 `_index.json` 的 `patches` / `trained` —— **卡片那一侧没保**。
+    于是索引还记着 59 条纠正，卡片里全空了，`check139` 的"三处不漂"当场红。
+
+    口径：
+      · `patch` / `eval` 新卡为空而旧卡非空 ⇒ 沿用旧卡（这两个字段只可能由
+        训练写入，重建流程本身永远产不出它们）。
+      · `voice_markers` 只在**人设 sha256 没变**时沿用旧值 —— 人设没改，抽出来的
+        就该跟上次一样；不一样只可能是第113轮r 的手工剔词被冲掉。真不一样时
+        打印一行，让人看得见"这次抽取结果被压住了"，不静默。
+    """
+    old = C.load_json(path) or {}
+    if not old:
+        return card
+    for k in ('patch', 'eval'):
+        if old.get(k) and not card.get(k):
+            card[k] = old[k]
+    # ★★ 判"沿用"必须认**空列表**：第113轮r 把 `hy_chujin_ketsukane` 的 markers
+    #    清成了 `[]`（`I` 是英文代词，谁说话都命中），而 `[]` 是 falsy ——
+    #    第一版写成 `old.get('voice_markers')` 就把它当"没登记"，于是重新抽回 `["I"]`。
+    #    正确条件是"这个人设没变、且旧卡**有这个字段**就沿用"，空列表也是结论。
+    if (old.get('persona_sha256') and old.get('persona_sha256') == card.get('persona_sha256')
+            and 'voice_markers' in old
+            and (old.get('voice_markers') or []) != (card.get('voice_markers') or [])):
+        print('  [保留] %-22s voice_markers 人设未变 ⇒ 沿用已登记 %r（本次抽取 %r）'
+              % (card.get('id'), old.get('voice_markers'), card.get('voice_markers')))
+        card['voice_markers'] = old['voice_markers']
+    return card
+
+
 def card_for_plain(nid, lines, name, name_cn=''):
     """纯 NPC（18 人）：按第49轮口径走内置台词，不过模型。
 
@@ -150,9 +190,10 @@ def main(argv):
 
     written = []
     for item in roster:
+        _p = os.path.join(cards_dir, item['id'] + '.json')
         card = build_card(item)
-        C.write_text(os.path.join(cards_dir, item['id'] + '.json'),
-                     json.dumps(card, ensure_ascii=False, indent=1) + '\n')
+        # `carry_trained` 原地改 `card` 再返回同一个对象 ⇒ 下面 append 的已是带过来的版本
+        C.write_text(_p, json.dumps(carry_trained(card, _p), ensure_ascii=False, indent=1) + '\n')
         written.append(card)
 
     if all_tier:
@@ -167,7 +208,8 @@ def main(argv):
                 card = card_for_gap(nid, rec.get('name') or nid, rec.get('name_cn') or '',
                                     '既无人设也无内置台词 —— 缺口，等用户给设定')
             C.write_text(os.path.join(cards_dir, nid + '.json'),
-                         json.dumps(card, ensure_ascii=False, indent=1) + '\n')
+                         json.dumps(carry_trained(card, os.path.join(cards_dir, nid + '.json')),
+                                    ensure_ascii=False, indent=1) + '\n')
             written.append(card)
         for item in gaps:
             if any(c['id'] == item['id'] for c in written):
@@ -175,7 +217,8 @@ def main(argv):
             card = card_for_gap(item['id'], item['name'], item['name_cn'],
                                 'registry 标为 main，但没有人设文件（第55轮口径：主线设定由用户提供）')
             C.write_text(os.path.join(cards_dir, item['id'] + '.json'),
-                         json.dumps(card, ensure_ascii=False, indent=1) + '\n')
+                         json.dumps(carry_trained(card, os.path.join(cards_dir, item['id'] + '.json')),
+                                    ensure_ascii=False, indent=1) + '\n')
             written.append(card)
 
     index = {

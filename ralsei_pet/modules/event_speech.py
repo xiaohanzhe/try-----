@@ -726,10 +726,57 @@ def _rescue_quoted(m):
     return ''.join(spans)
 
 
+#: ★★★ 第189轮（用户口径：「笑声也就是角色发出来的声音**直接显示**就好，
+#:   这也是原作的一种特色」）：发声类括号**不删，改成直出**。
+#:   `（笑声：Geh ha ha ha ha）` → `Geh ha ha ha ha`；`（NYEH HEH HEH!）` → `NYEH HEH HEH!`。
+#: ★★ 实测边界（`_evidence/measure189.json`）：419 条 `ACTION_PAREN` 跑完护栏后
+#:   仍在的括号里，"发声类"只有 **30 处 / 4 种形态**：`（NYEH HEH HEH!）` 19、
+#:   `（笑声：Geh ha ha ha ha）` 5、`（NYEH HEH HEH！）` 5、`（NYEH HEH HEH!)` 1。
+#:   而 `（SANS! STOP BEING LAZY!）` 4 处**含实词**，是台词错位不是发声 ⇒ 必须留着
+#:   （判据 `B1` 专门钉这一条，防止有人把"英文大写"当成笑声）。
+_VOICE_LABEL_RE = re.compile(
+    u'^\\s*(?:笑\\s*声|笑|声音|音效|语气声)\\s*[:：]\\s*(\\S.*)$', re.S)
+#: `（笑声（哈））` 这种套一层的写法
+_VOICE_WRAP_RE = re.compile(
+    u'^\\s*(?:笑\\s*声|声音|音效)\\s*[（(]\\s*(\\S.*?)\\s*[)）]\\s*$', re.S)
+#: 整段就是中文拟声（语料里 0 例，属**预防性覆盖**；判据里标了 no-data）
+_ONO_RE = re.compile(u'^[哈嘿嘻呵嚯哇呜啊嗯哼哦呀唉]{2,}$')
+_EN_TOK_RE = re.compile(u"[A-Za-z']+")
+#: 英文"笑声词"白名单。★ 只收纯发声音节，**不收**任何实词 ——
+#:   `STOP/BEING/LAZY` 这类不在表里 ⇒ `（SANS! STOP BEING LAZY!）` 天然不命中。
+_LAUGH_EN = frozenset([
+    'ha', 'haa', 'haha', 'hahaha', 'hahahaha', 'heh', 'hehe', 'heheh',
+    'hehehe', 'heheheh', 'nyeh', 'nyehh', 'mweh', 'mwehehe', 'mweheheh',
+    'geh', 'geheh', 'huh', 'ho', 'hoho', 'hohoho', 'hah', 'hee', 'heehee',
+    'teehee', 'nyah', 'nya', 'lah', 'mwah', 'psst', 'lol'])
+
+
+def _rescue_voice(m):
+    """己闸替换：括号内容是**发声** ⇒ 返回声音本体（直出）；否则原样返回。
+
+    ★ 三支：① `标签：内容` ② 整段中文拟声 ③ 整段英文笑声词。
+      三者都不命中 ⇒ `m.group(0)`，交给甲/丙/戊照旧处理。
+    """
+    inner = (m.group(1) or '').strip()
+    mo = _VOICE_LABEL_RE.match(inner) or _VOICE_WRAP_RE.match(inner)
+    if mo:
+        payload = (mo.group(1) or '').strip()
+        return payload or m.group(0)
+    if _ONO_RE.match(inner):
+        return inner
+    toks = _EN_TOK_RE.findall(inner)
+    if toks and all(x.lower() in _LAUGH_EN for x in toks):
+        return inner
+    return m.group(0)
+
+
 def strip_action_parentheticals(text):
     """删掉台词里夹带的「括号旁白」，返回剩下的台词。
 
-    四道闸合起来覆盖括号的全部已知形态：
+    五道闸合起来覆盖括号的全部已知形态：
+      己) **发声直出**（第189轮补）：括号内容**整段是声音**（`（笑声：X）` /
+          `（NYEH HEH HEH!）`）→ **不删，把声音本体留下**（用户口径："笑声音效直接显示，
+          这也是原作的一种特色"）
       甲) 括号内以**动作/发声动词**开头 → `_ACTION_PAREN_RE`（老闸）
       乙) 句首括号 → `looks_like_narration`（老闸，走"整句作废"）
       丙) **描述性旁白**（本闸，第27轮补）：括号内容是"从外部描述自己"的
@@ -745,7 +792,7 @@ def strip_action_parentheticals(text):
       * 删完只剩标点/空白（没有任何实义字符）
 
     注意：这里**不做** `looks_like_narration` 那类"整句作废"的判断 ——
-    句首括号的整句叙述交给那道老闸，四道闸分工不同（见上方注释）。
+    句首括号的整句叙述交给那道老闸，五道闸分工不同（见上方注释）。
     """
     if not isinstance(text, str):
         return ""
@@ -771,10 +818,15 @@ def strip_action_parentheticals(text):
         return "" if _BARE_LABEL_RE.match(inner) else m.group(0)
 
     _before = text
+    # 己闸（第189轮）：**发声直出** —— `（笑声：X）` / `（NYEH HEH HEH!）` 把声音本体留下。
+    #   ⚠️ 排在**最前**：发声不是"该删的旁白"，也不是"该救的引号台词"，
+    #      它是一条独立的"转译"规则。放最前可以保证后面四道闸对**其余**括号
+    #      的行为逐字不变（回归面最小）。
+    t = _ANY_PAREN_RE.sub(_rescue_voice, text)
     # 丁闸（第113轮f）：**先救出台词** —— 括号里有引号的，把引号内容提出来，
     #   否则后面几道闸会把它连旁白一起删掉（susie 98% 的括号都是这种）。
     #   ⚠️ 顺序是硬约束：必须在甲/丙/戊之前，否则台词早被删没了。
-    t = _ANY_PAREN_RE.sub(_rescue_quoted, text)
+    t = _ANY_PAREN_RE.sub(_rescue_quoted, t)
     # 甲闸：动作旁白（括号内以动作动词开头）
     t = _ACTION_PAREN_RE.sub('', t)
     # 丙闸：描述性旁白

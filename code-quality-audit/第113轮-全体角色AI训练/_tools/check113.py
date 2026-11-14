@@ -107,6 +107,105 @@ empty_fields = [i['id'] for i in roster
 check('A5 每张 persona 卡都解析出了 identity 与 voice（防"分节正则失效 ⇒ 空卡"）',
       not empty_fields, '空字段：%s' % (','.join(empty_fields[:8]) or '无'))
 
+# ---------------------------------------------------------------- A6 重建不许冲训练结果
+# ★★★ 第189轮实证的坑：改完 `asgore.txt` 按惯例跑 `cards113.py --all` 重建卡片，
+#   结果 **59 张卡的 `patch`、61 张卡的 `eval` 被清空**（`build_card()` 里这两个字段
+#   恒为 `''` / `{}`），`voice_markers` 也被重新抽取、把第113轮r 手工剔掉的灌水项
+#   （`想` / `……` / `[……]`）又塞回去（10 张）。四处老锁同时红：
+#   `check139 A0/A3/D5`、`check142 A4/C1`、`test_evalpick113s L4b/L4c`、
+#   `test_markers113r H`。而 `cards113.py` 里**早就写着**「重建索引不许冲掉训练结果」——
+#   它保的是 `_index.json` 的 `patches`/`trained`，**卡片那一侧一直没保**。
+#   所以这里锁的不是"某张卡的内容"，而是"重建这条路不许丢训练成果"。
+print()
+mark('A5b 重建卡片不许冲掉训练结果（第189轮实证：--all 清空 59 张 patch / 61 张 eval）')
+import ast as _astA  # noqa: E402
+import tempfile  # noqa: E402
+sys.path.insert(0, HERE)
+import cards113 as CD  # noqa: E402
+
+_tree = _astA.parse(_read(os.path.join(HERE, 'cards113.py')))
+_bad_writes, _n_card_writes = [], 0
+for _node in _astA.walk(_tree):
+    if not isinstance(_node, _astA.Call):
+        continue
+    _fn = _node.func
+    if not (isinstance(_fn, _astA.Attribute) and _fn.attr == 'write_text'):
+        continue
+    _txt = _astA.unparse(_node)
+    if '_index.json' in _txt:                  # 写索引那一处不审（它保的是 patches/trained）
+        continue
+    _n_card_writes += 1
+    if 'carry_trained' not in _txt:
+        _bad_writes.append(_txt[:70])
+check('A5b cards113.py 每一处写卡都经过 carry_trained（persona / plain / gap 三处）',
+      _n_card_writes == 3 and not _bad_writes,
+      '写卡点=%d 未过 carry 的=%r' % (_n_card_writes, _bad_writes[:2]))
+
+_tmp = tempfile.mkdtemp(prefix='c113a5b_')
+_p_old = os.path.join(_tmp, 'x.json')
+with open(_p_old, 'w', encoding='utf-8', newline='\n') as _fh:
+    json.dump({'id': 'x', 'persona_sha256': 'AAA', 'patch': 'P',
+               'eval': {'violations': 3}, 'voice_markers': ['嗯']}, _fh)
+_new = {'id': 'x', 'persona_sha256': 'AAA', 'patch': '', 'eval': {},
+        'voice_markers': ['嗯', '想']}
+_got = CD.carry_trained(dict(_new), _p_old)
+check('A5c 行为：旧卡有 patch/eval ⇒ 重建后沿用，且人设未变时 markers 不被重新抽取覆盖',
+      _got['patch'] == 'P' and _got['eval'] == {'violations': 3}
+      and _got['voice_markers'] == ['嗯'],
+      'patch=%r eval=%r markers=%r' % (_got['patch'], _got['eval'], _got['voice_markers']))
+
+# ★ 负控制：旧卡本来就没有训练结果 ⇒ 不许凭空造一个（否则 A5c 可能是"恒真"）
+_p_empty = os.path.join(_tmp, 'y.json')
+with open(_p_empty, 'w', encoding='utf-8', newline='\n') as _fh:
+    json.dump({'id': 'y', 'persona_sha256': 'BBB', 'patch': '', 'eval': {}}, _fh)
+_got2 = CD.carry_trained({'id': 'y', 'persona_sha256': 'BBB', 'patch': '', 'eval': {},
+                          'voice_markers': ['想']}, _p_empty)
+check('A5d 负控制：旧卡没有 patch/eval ⇒ 新卡仍是空的（不是凭空造）',
+      _got2['patch'] == '' and _got2['eval'] == {} and _got2['voice_markers'] == ['想'],
+      'patch=%r eval=%r markers=%r' % (_got2['patch'], _got2['eval'], _got2['voice_markers']))
+
+# ★★ 第189轮**第二次**实测的坑：`hy_chujin_ketsukane` 的 markers 被第113轮r 清成了 `[]`
+#    （`I` 是英文代词，任何英文句子都命中），而 `[]` 是 falsy —— 把守第一版写成
+#    `old.get('voice_markers')`，于是把它当成"没登记"，又把 `["I"]` 抽了回来。
+#    ⇒ 判定条件必须是"**有这个字段**"而不是"字段非空"。这条判据钉住它。
+_p_empty_mk = os.path.join(_tmp, 'z.json')
+with open(_p_empty_mk, 'w', encoding='utf-8', newline='\n') as _fh:
+    json.dump({'id': 'z', 'persona_sha256': 'CCC', 'patch': '', 'eval': {},
+               'voice_markers': []}, _fh)
+_got3 = CD.carry_trained({'id': 'z', 'persona_sha256': 'CCC', 'patch': '', 'eval': {},
+                          'voice_markers': ['I']}, _p_empty_mk)
+check('A5g 人设未变时，旧卡把 markers 清成 [] 也照样沿用（不许把灌水项抽回来）',
+      _got3['voice_markers'] == [], 'markers=%r' % (_got3['voice_markers'],))
+
+# ★ 负控制：人设真变了（sha256 不同）⇒ 必须重新抽取，不许沿用旧名单
+_got4 = CD.carry_trained({'id': 'z', 'persona_sha256': 'DIFF', 'patch': '', 'eval': {},
+                          'voice_markers': ['I']}, _p_empty_mk)
+check('A5h 负控制：人设 sha256 变了 ⇒ markers 必须重新抽取（沿用旧名单才是错）',
+      _got4['voice_markers'] == ['I'], 'markers=%r' % (_got4['voice_markers'],))
+
+# ★★ 端到端：真拿 asgore 的人设跑一遍 build_card + carry，结果必须与磁盘卡一致
+_item_a = next((i for i in roster if i['id'] == 'asgore'), None)
+_p_a = os.path.join(cdir, 'asgore.json')
+_e2e = CD.carry_trained(CD.build_card(_item_a), _p_a) if _item_a else {}
+_disk_a = cards.get('asgore') or {}
+check('A5e 端到端：asgore 走「build_card + carry_trained」后 patch/eval/sha256 与磁盘卡逐字相同',
+      bool(_e2e) and _e2e['patch'] == (_disk_a.get('patch') or '')
+      and _e2e['eval'] == (_disk_a.get('eval') or {})
+      and _e2e['persona_sha256'] == _disk_a.get('persona_sha256'),
+      'patch=%d字 eval=%d键' % (len(_e2e.get('patch') or ''), len(_e2e.get('eval') or {})))
+
+# ★ 破坏性负控制：把 carry_trained 打回恒等 ⇒ A5e 那条判据必须真的变红
+_real_carry = CD.carry_trained
+try:
+    CD.carry_trained = lambda c, p: c
+    _broken = CD.carry_trained(CD.build_card(_item_a), _p_a)
+finally:
+    CD.carry_trained = _real_carry
+check('A5f 破坏性负控制：拆掉 carry_trained（打回恒等）⇒ 重建出来的 patch 必为空',
+      _broken['patch'] == '' and _broken['patch'] != (_disk_a.get('patch') or ''),
+      '拆掉后 patch=%r / 磁盘 %r' % (_broken['patch'], (_disk_a.get('patch') or '')[:12]))
+
+
 # ★ 判据自身的体检：口癖名单**不得**含 meta 词（AI/模型/提示词）。
 #   本轮首版真栽过：尾部【本项目补充】被并进【示例反应】⇒ Susie 的口癖里多了「AI」，
 #   于是"口癖命中率"反过来奖励自称 AI 的回复。这条判据就是拦它。

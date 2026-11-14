@@ -104,12 +104,17 @@ def main():
     total = len(raws)
 
     _orig = E._BARE_LABEL_RE
+    _orig_voice = E._rescue_voice
     try:
         E._BARE_LABEL_RE = re.compile(u'(?!)')      # 永不匹配 ⇒ 戊闸退化成 no-op
+        # ★★ 第189轮追加：己闸（发声直出）也必须一起禁掉，否则"改前"里混进了
+        #    189 轮的效果（实测会从 312 掉到 300），基线就串味了。
+        E._rescue_voice = lambda m: m.group(0)
         before_left, _ = run(raws)
         before_outs = dict((k, E.strip_action_parentheticals(v)) for k, v in raws)
     finally:
         E._BARE_LABEL_RE = _orig                    # ★ 必须还原
+        E._rescue_voice = _orig_voice
 
     after_left, still = run(raws)
     after_outs = dict((k, E.strip_action_parentheticals(v)) for k, v in raws)
@@ -134,9 +139,9 @@ def main():
         f.write(json.dumps(d, ensure_ascii=False, indent=2))
 
     print(u'带 ACTION_PAREN 的轮：%d' % total)
-    print(u'改前（三闸）残留：%d 轮' % before_left)
-    print(u'改后（四闸）残留：%d 轮' % after_left)
-    print(u'戊闸消掉：%d 轮' % (before_left - after_left))
+    print(u'改前（第187轮那三道闸）残留：%d 轮' % before_left)
+    print(u'现在（五道闸：己/丁/甲/丙/戊）残留：%d 轮' % after_left)
+    print(u'合计消掉：%d 轮' % (before_left - after_left))
     print(u'戊闸实际删掉的括号内容 top10：')
     for u_, c in killed.most_common(10):
         print(u'  %-16s %d' % (u_, c))

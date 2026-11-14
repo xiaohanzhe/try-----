@@ -1,0 +1,2420 @@
+{
+  "schema": 1,
+  "corpus": {
+    "chars": 77,
+    "paren_turns": 419,
+    "turns": 3696
+  },
+  "voice": {
+    "tags_colon": 0,
+    "onomatopoeia": 0,
+    "laugh_en": 0,
+    "distinct": 0,
+    "total": 0,
+    "top": [],
+    "other_top": [
+      [
+        "（红色眼睛微微闪烁）",
+        21
+      ],
+      [
+        "（你在围裙口袋里找创可贴）",
+        15
+      ],
+      [
+        "（你轻声说）",
+        14
+      ],
+      [
+        "（你在炉子前坐下）",
+        10
+      ],
+      [
+        "（你轻轻叹了口气）",
+        7
+      ],
+      [
+        "（你在围裙里找创可贴）",
+        6
+      ],
+      [
+        "（你皱了皱眉）",
+        5
+      ],
+      [
+        "（红色眼睛闪烁）",
+        4
+      ],
+      [
+        "（你在围裙口袋里找了找）",
+        4
+      ],
+      [
+        "（SANS! STOP BEING LAZY!）",
+        4
+      ],
+      [
+        "（你的翅膀轻轻扇动）",
+        3
+      ],
+      [
+        "（你微微一笑）",
+        3
+      ],
+      [
+        "（UNDYNE TRAINS ME EVERY DAY!）",
+        3
+      ],
+      [
+        "（红色眼睛闪烁了一下）",
+        2
+      ],
+      [
+        "（红色眼睛再次闪烁）",
+        2
+      ],
+      [
+        "（你叹了口气）",
+        2
+      ],
+      [
+        "（你摇了摇头）",
+        2
+      ],
+      [
+        "（你微笑了一下）",
+        2
+      ],
+      [
+        "（你点点头）",
+        2
+      ],
+      [
+        "（嘿嘿笑了一声）",
+        2
+      ],
+      [
+        "(撇了下嘴)",
+        2
+      ],
+      [
+        "（眨了下眼睛）",
+        2
+      ],
+      [
+        "（嘿嘿笑了下）",
+        2
+      ],
+      [
+        "（你在厨房忙碌）",
+        2
+      ],
+      [
+        "（你在围裙里翻找）",
+        2
+      ]
+    ],
+    "en_other_top": [
+      [
+        "（SANS! STOP BEING LAZY!）",
+        4
+      ],
+      [
+        "（UNDYNE TRAINS ME EVERY DAY!）",
+        3
+      ],
+      [
+        "（FLOWEY? WANT TO COME OVER FOR SPAGHETTI？）",
+        2
+      ],
+      [
+        "（看着Kris）",
+        1
+      ],
+      [
+        "(如果发现 ta 在场就来这么一说，不在的话就不提了。)",
+        1
+      ],
+      [
+        "(小心翼翼地摸了摸自己的小包) 我现在还留着呢。虽然 Starlo 说不是真正的宝石，但对我来说已经足够闪亮。(露出一个得意的笑)",
+        1
+      ],
+      [
+        "（眼睛有些紧张地盯着 Clover)",
+        1
+      ],
+      [
+        "(皱了眉) Ed 说啥呢……他说我也就是这样吧？好疼啊。好吧，我不搭理他。(撇了下嘴)",
+        1
+      ],
+      [
+        "（你看着 Starlo）",
+        1
+      ],
+      [
+        "（你在炉子旁给 Starlo 拉了个椅子）",
+        1
+      ],
+      [
+        "（你递给 Ed 一杯热茶）",
+        1
+      ],
+      [
+        "（The Entity）",
+        1
+      ],
+      [
+        "（希望 Sans 这次不吃太多番茄酱）",
+        1
+      ],
+      [
+        "（SANS! SURE DIDN'T HAVE TO TURN ON THE HEATING! 他说我又开始浪费能源了）",
+        1
+      ],
+      [
+        "（还有 SANS 的袜子）",
+        1
+      ],
+      [
+        "（希望SANS没来捣乱）",
+        1
+      ],
+      [
+        "（希望SANS这个时候出现帮我收拾场子）",
+        1
+      ],
+      [
+        "（SANS! STOP BEING LAZY!)",
+        1
+      ],
+      [
+        "（希望SANS没来打扰我的意面制作）",
+        1
+      ],
+      [
+        "（I STILL BELIEVE IN YOU）",
+        1
+      ]
+    ]
+  },
+  "markers": {
+    "per_char": [
+      {
+        "id": "lancer",
+        "name_cn": "兰瑟",
+        "turns": 48,
+        "hit_turns": 48,
+        "rate": 100.0,
+        "markers": [
+          "嚯嚯嚯",
+          "嘿嘿嘿",
+          "坏蛋",
+          "本大爷",
+          "坏蛋小队",
+          "哇咔咔"
+        ]
+      },
+      {
+        "id": "noelle",
+        "name_cn": "诺艾尔",
+        "turns": 48,
+        "hit_turns": 48,
+        "rate": 100.0,
+        "markers": [
+          "嗯……",
+          "那个……",
+          "对不起……",
+          "对不起",
+          "讨厌",
+          "非常害怕"
+        ]
+      },
+      {
+        "id": "os_lamplighter",
+        "name_cn": "灯夫",
+        "turns": 48,
+        "hit_turns": 48,
+        "rate": 100.0,
+        "markers": [
+          "呃",
+          "嗯",
+          "啊",
+          "Fudge"
+        ]
+      },
+      {
+        "id": "os_shepherd",
+        "name_cn": "牧羊人",
+        "turns": 48,
+        "hit_turns": 48,
+        "rate": 100.0,
+        "markers": [
+          "羊",
+          "计算机/编程"
+        ]
+      },
+      {
+        "id": "ot_asgore",
+        "name_cn": "Asgore",
+        "turns": 48,
+        "hit_turns": 48,
+        "rate": 100.0,
+        "markers": [
+          "哦",
+          "嗯",
+          "这样啊",
+          "算了"
+        ]
+      },
+      {
+        "id": "ot_kidd",
+        "name_cn": "Kidd",
+        "turns": 48,
+        "hit_turns": 48,
+        "rate": 100.0,
+        "markers": [
+          "c‘mon",
+          "dude",
+          "yo",
+          "man",
+          "Yo"
+        ]
+      },
+      {
+        "id": "rouxls",
+        "name_cn": "鲁尔斯·卡德",
+        "turns": 48,
+        "hit_turns": 48,
+        "rate": 100.0,
+        "markers": [
+          "you",
+          "thou",
+          "-est",
+          "-eth",
+          "吾",
+          "汝"
+        ]
+      },
+      {
+        "id": "ut_asgore",
+        "name_cn": "Asgore Dreemurr",
+        "turns": 48,
+        "hit_turns": 48,
+        "rate": 100.0,
+        "markers": [
+          "哦",
+          "嗯",
+          "这样啊",
+          "算了"
+        ]
+      },
+      {
+        "id": "ut_monster_kid",
+        "name_cn": "Monster Kid",
+        "turns": 48,
+        "hit_turns": 48,
+        "rate": 100.0,
+        "markers": [
+          "Yo"
+        ]
+      },
+      {
+        "id": "ut_sans",
+        "name_cn": "Sans",
+        "turns": 48,
+        "hit_turns": 48,
+        "rate": 100.0,
+        "markers": [
+          "hey",
+          "k",
+          "heh",
+          "huh",
+          "welp",
+          "dude"
+        ]
+      },
+      {
+        "id": "mike",
+        "name_cn": "迈克",
+        "turns": 48,
+        "hit_turns": 47,
+        "rate": 97.9,
+        "markers": [
+          "话匣子",
+          "试音",
+          "试 Mike",
+          "Mike",
+          "……"
+        ]
+      },
+      {
+        "id": "ot_muffet",
+        "name_cn": "Muffet",
+        "turns": 48,
+        "hit_turns": 47,
+        "rate": 97.9,
+        "markers": [
+          "亲爱的",
+          "小可爱",
+          "茶里的点缀"
+        ]
+      },
+      {
+        "id": "ut_gaster",
+        "name_cn": "W.D. Gaster",
+        "turns": 48,
+        "hit_turns": 47,
+        "rate": 97.9,
+        "markers": [
+          "黑暗",
+          "更加黑暗",
+          "裂缝",
+          "看_不见",
+          "……他……",
+          "……核心……"
+        ]
+      },
+      {
+        "id": "ot_sans",
+        "name_cn": "Sans",
+        "turns": 48,
+        "hit_turns": 46,
+        "rate": 95.8,
+        "markers": [
+          "hey",
+          "k",
+          "heh",
+          "huh",
+          "welp",
+          "dude"
+        ]
+      },
+      {
+        "id": "ut_mettaton",
+        "name_cn": "Mettaton",
+        "turns": 48,
+        "hit_turns": 45,
+        "rate": 93.8,
+        "markers": [
+          "亲爱的",
+          "宝贝",
+          "甜心",
+          "达令",
+          "欢迎来到",
+          "让我们"
+        ]
+      },
+      {
+        "id": "ot_mettaton",
+        "name_cn": "Mettaton",
+        "turns": 48,
+        "hit_turns": 44,
+        "rate": 91.7,
+        "markers": [
+          "亲爱的",
+          "宝贝",
+          "甜心",
+          "达令",
+          "欢迎来到",
+          "让我们"
+        ]
+      },
+      {
+        "id": "ot_alphys",
+        "name_cn": "Alphys",
+        "turns": 48,
+        "hit_turns": 40,
+        "rate": 83.3,
+        "markers": [
+          "呃……",
+          "那个……",
+          "就是……",
+          "lol",
+          "omg",
+          "brb"
+        ]
+      },
+      {
+        "id": "ut_alphys",
+        "name_cn": "Alphys",
+        "turns": 48,
+        "hit_turns": 38,
+        "rate": 79.2,
+        "markers": [
+          "呃……",
+          "那个……",
+          "就是……",
+          "lol",
+          "omg",
+          "brb"
+        ]
+      },
+      {
+        "id": "hy_flowey",
+        "name_cn": "Flowey",
+        "turns": 48,
+        "hit_turns": 37,
+        "rate": 77.1,
+        "markers": [
+          "howdy",
+          "golly",
+          "friend",
+          "buddy",
+          "pal",
+          "kiddo"
+        ]
+      },
+      {
+        "id": "hy_starlo",
+        "name_cn": "Starlo",
+        "turns": 48,
+        "hit_turns": 35,
+        "rate": 72.9,
+        "markers": [
+          "Howdy",
+          "reckon",
+          "ain't",
+          "y'all",
+          "gonna",
+          "wanna"
+        ]
+      },
+      {
+        "id": "queen",
+        "name_cn": "女王",
+        "turns": 48,
+        "hit_turns": 35,
+        "rate": 72.9,
+        "markers": [
+          "邪恶",
+          "快乐"
+        ]
+      },
+      {
+        "id": "ut_muffet",
+        "name_cn": "Muffet",
+        "turns": 48,
+        "hit_turns": 35,
+        "rate": 72.9,
+        "markers": [
+          "亲爱的",
+          "小可爱",
+          "茶里的点缀"
+        ]
+      },
+      {
+        "id": "asgore",
+        "name_cn": "艾斯戈尔",
+        "turns": 48,
+        "hit_turns": 33,
+        "rate": 68.8,
+        "markers": [
+          "Howdy",
+          "骑士就在那里"
+        ]
+      },
+      {
+        "id": "kris",
+        "name_cn": "克里斯",
+        "turns": 48,
+        "hit_turns": 31,
+        "rate": 64.6,
+        "markers": [
+          "想",
+          "……",
+          "（点头）",
+          "（摇头）",
+          "（看着对方）",
+          "（向前走）"
+        ]
+      },
+      {
+        "id": "ot_undyne",
+        "name_cn": "Undyne",
+        "turns": 48,
+        "hit_turns": 31,
+        "rate": 64.6,
+        "markers": [
+          "punk"
+        ]
+      },
+      {
+        "id": "ut_undyne",
+        "name_cn": "Undyne",
+        "turns": 48,
+        "hit_turns": 28,
+        "rate": 58.3,
+        "markers": [
+          "punk"
+        ]
+      },
+      {
+        "id": "toriel",
+        "name_cn": "托丽尔",
+        "turns": 48,
+        "hit_turns": 23,
+        "rate": 47.9,
+        "markers": [
+          "亲爱的",
+          "Asgore"
+        ]
+      },
+      {
+        "id": "os_niko",
+        "name_cn": "Niko",
+        "turns": 48,
+        "hit_turns": 21,
+        "rate": 43.8,
+        "markers": [
+          "嗯……",
+          "那个……"
+        ]
+      },
+      {
+        "id": "gerson",
+        "name_cn": "格森",
+        "turns": 48,
+        "hit_turns": 18,
+        "rate": 37.5,
+        "markers": [
+          "在我那个年代",
+          "黑暗面",
+          "小家伙",
+          "小朋友",
+          "年轻人",
+          "正义之锤"
+        ]
+      },
+      {
+        "id": "king",
+        "name_cn": "黑桃王",
+        "turns": 48,
+        "hit_turns": 17,
+        "rate": 35.4,
+        "markers": [
+          "光之民",
+          "光之使者",
+          "路西法"
+        ]
+      },
+      {
+        "id": "os_the_author",
+        "name_cn": "The Author",
+        "turns": 48,
+        "hit_turns": 16,
+        "rate": 33.3,
+        "markers": [
+          "开口",
+          "对话",
+          "记录",
+          "这让我痛苦"
+        ]
+      },
+      {
+        "id": "os_watcher",
+        "name_cn": "Watcher",
+        "turns": 48,
+        "hit_turns": 16,
+        "rate": 33.3,
+        "markers": [
+          "时间在走",
+          "时候",
+          "时候快到了",
+          "时候在走",
+          "世界要结束了"
+        ]
+      },
+      {
+        "id": "ut_frisk",
+        "name_cn": "Frisk",
+        "turns": 48,
+        "hit_turns": 16,
+        "rate": 33.3,
+        "markers": [
+          "想",
+          "……",
+          "（点头）",
+          "（摇头）",
+          "（看着对方）",
+          "（向前走）"
+        ]
+      },
+      {
+        "id": "os_rowbot",
+        "name_cn": "Rowbot",
+        "turns": 48,
+        "hit_turns": 15,
+        "rate": 31.2,
+        "markers": [
+          "聊天",
+          "报告状态",
+          "执行对话协议",
+          "今天天气真好",
+          "感动",
+          "最后"
+        ]
+      },
+      {
+        "id": "spamton",
+        "name_cn": "斯帕姆顿",
+        "turns": 48,
+        "hit_turns": 15,
+        "rate": 31.2,
+        "markers": [
+          "e",
+          "3",
+          "o/O",
+          "0",
+          "BIG",
+          "大人物"
+        ]
+      },
+      {
+        "id": "berdly",
+        "name_cn": "伯德利",
+        "turns": 48,
+        "hit_turns": 13,
+        "rate": 27.1,
+        "markers": [
+          "如你所见",
+          "显而易见",
+          "根据我的分析",
+          "天才般的",
+          "哼哼哼哼",
+          "专业性"
+        ]
+      },
+      {
+        "id": "ot_napstablook",
+        "name_cn": "Napstablook",
+        "turns": 48,
+        "hit_turns": 13,
+        "rate": 27.1,
+        "markers": [
+          "oh……",
+          "我骄傲"
+        ]
+      },
+      {
+        "id": "tenna",
+        "name_cn": "天娜",
+        "turns": 48,
+        "hit_turns": 13,
+        "rate": 27.1,
+        "markers": [
+          "嗯哼～",
+          "明星参赛者",
+          "野生动物",
+          "Ant"
+        ]
+      },
+      {
+        "id": "ralsei",
+        "name_cn": "雷尔赛",
+        "turns": 48,
+        "hit_turns": 11,
+        "rate": 22.9,
+        "markers": [
+          "首先/其次",
+          "修好",
+          "那边",
+          "（歪头）",
+          "扮演",
+          "我在"
+        ]
+      },
+      {
+        "id": "hy_guardener",
+        "name_cn": "Guardener",
+        "turns": 48,
+        "hit_turns": 9,
+        "rate": 18.8,
+        "markers": [
+          "……"
+        ]
+      },
+      {
+        "id": "os_kelvin",
+        "name_cn": "Kelvin",
+        "turns": 48,
+        "hit_turns": 7,
+        "rate": 14.6,
+        "markers": [
+          "猫喜欢温暖",
+          "我不是猫"
+        ]
+      },
+      {
+        "id": "susie",
+        "name_cn": "苏西",
+        "turns": 48,
+        "hit_turns": 7,
+        "rate": 14.6,
+        "markers": [
+          "喂",
+          "白痴",
+          "笨蛋",
+          "烦死了",
+          "随便",
+          "哼"
+        ]
+      },
+      {
+        "id": "os_rue",
+        "name_cn": "Rue",
+        "turns": 48,
+        "hit_turns": 5,
+        "rate": 10.4,
+        "markers": [
+          "高处",
+          "眺望",
+          "请回来"
+        ]
+      },
+      {
+        "id": "ut_toriel",
+        "name_cn": "Toriel",
+        "turns": 48,
+        "hit_turns": 5,
+        "rate": 10.4,
+        "markers": [
+          "Asgore"
+        ]
+      },
+      {
+        "id": "hy_chujin_ketsukane",
+        "name_cn": "Chujin Ketsukane",
+        "turns": 48,
+        "hit_turns": 4,
+        "rate": 8.3,
+        "markers": [
+          "I"
+        ]
+      },
+      {
+        "id": "ut_napstablook",
+        "name_cn": "Napstablook",
+        "turns": 48,
+        "hit_turns": 4,
+        "rate": 8.3,
+        "markers": [
+          "oh……",
+          "我骄傲"
+        ]
+      },
+      {
+        "id": "hy_ace",
+        "name_cn": "Ace",
+        "turns": 48,
+        "hit_turns": 3,
+        "rate": 6.2,
+        "markers": [
+          "oui",
+          "chérie",
+          "deal",
+          "bluff",
+          "all in"
+        ]
+      },
+      {
+        "id": "os_prophetbot",
+        "name_cn": "先知机器人",
+        "turns": 48,
+        "hit_turns": 3,
+        "rate": 6.2,
+        "markers": [
+          "聊天",
+          "传达"
+        ]
+      },
+      {
+        "id": "ot_asriel_twinkly",
+        "name_cn": "Asriel Dreemurr 与 Twinkly",
+        "turns": 48,
+        "hit_turns": 3,
+        "rate": 6.2,
+        "markers": [
+          "friend",
+          "idiot"
+        ]
+      },
+      {
+        "id": "ot_toriel",
+        "name_cn": "Toriel",
+        "turns": 48,
+        "hit_turns": 3,
+        "rate": 6.2,
+        "markers": [
+          "Asgore"
+        ]
+      },
+      {
+        "id": "os_cedric",
+        "name_cn": "Cedric",
+        "turns": 48,
+        "hit_turns": 2,
+        "rate": 4.2,
+        "markers": [
+          "真实"
+        ]
+      },
+      {
+        "id": "hy_ed",
+        "name_cn": "Ed",
+        "turns": 48,
+        "hit_turns": 1,
+        "rate": 2.1,
+        "markers": [
+          "强壮"
+        ]
+      },
+      {
+        "id": "hy_moray",
+        "name_cn": "Moray",
+        "turns": 48,
+        "hit_turns": 1,
+        "rate": 2.1,
+        "markers": [
+          "士气官"
+        ]
+      },
+      {
+        "id": "os_prototype",
+        "name_cn": "Prototype",
+        "turns": 48,
+        "hit_turns": 1,
+        "rate": 2.1,
+        "markers": [
+          "聊天",
+          "陈述",
+          "[……]"
+        ]
+      },
+      {
+        "id": "os_silver",
+        "name_cn": "Silver",
+        "turns": 48,
+        "hit_turns": 1,
+        "rate": 2.1,
+        "markers": [
+          "第二次机会",
+          "[……]"
+        ]
+      },
+      {
+        "id": "ut_flowey",
+        "name_cn": "Flowey",
+        "turns": 48,
+        "hit_turns": 1,
+        "rate": 2.1,
+        "markers": [
+          "friend",
+          "idiot"
+        ]
+      },
+      {
+        "id": "flowery",
+        "name_cn": "花",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "hy_axis",
+        "name_cn": "Axis",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "hy_bowll",
+        "name_cn": "Bowll",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "hy_ceroba_ketsukane",
+        "name_cn": "Ceroba Ketsukane",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "hy_clover",
+        "name_cn": "Clover",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": [
+          "yer",
+          "ain't",
+          "gonna",
+          "wanna"
+        ]
+      },
+      {
+        "id": "hy_dalv",
+        "name_cn": "Dalv",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "hy_martlet",
+        "name_cn": "Martlet",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "hy_mooch",
+        "name_cn": "Mooch",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": [
+          "财务主管"
+        ]
+      },
+      {
+        "id": "hy_sousborg",
+        "name_cn": "Sousborg",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "os_alula",
+        "name_cn": "Alula",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": [
+          "严肃",
+          "火是什么"
+        ]
+      },
+      {
+        "id": "os_calamus",
+        "name_cn": "Calamus",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": [
+          "y‘know"
+        ]
+      },
+      {
+        "id": "os_george",
+        "name_cn": "George",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": [
+          "真正的你"
+        ]
+      },
+      {
+        "id": "os_kip",
+        "name_cn": "Kip",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "os_ling",
+        "name_cn": "Ling",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "os_magpie",
+        "name_cn": "Magpie",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "os_maize",
+        "name_cn": "Maize",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": [
+          "救世主"
+        ]
+      },
+      {
+        "id": "os_mason",
+        "name_cn": "Mason",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "os_the_world_machine",
+        "name_cn": "The Entity / 本体",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": [
+          "系统消息",
+          "谢谢你"
+        ]
+      },
+      {
+        "id": "ot_papyrus",
+        "name_cn": "Papyrus",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "ut_chara",
+        "name_cn": "Chara",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      },
+      {
+        "id": "ut_papyrus",
+        "name_cn": "Papyrus",
+        "turns": 48,
+        "hit_turns": 0,
+        "rate": 0.0,
+        "markers": []
+      }
+    ],
+    "chronic": [
+      {
+        "id": "lancer",
+        "marker": "本大爷",
+        "turns": 48,
+        "hits": 48,
+        "rate": 100.0,
+        "generic": false
+      },
+      {
+        "id": "ot_kidd",
+        "marker": "Yo",
+        "turns": 48,
+        "hits": 48,
+        "rate": 100.0,
+        "generic": false
+      },
+      {
+        "id": "ut_monster_kid",
+        "marker": "Yo",
+        "turns": 48,
+        "hits": 48,
+        "rate": 100.0,
+        "generic": false
+      },
+      {
+        "id": "ot_muffet",
+        "marker": "亲爱的",
+        "turns": 48,
+        "hits": 46,
+        "rate": 95.8,
+        "generic": false
+      },
+      {
+        "id": "ut_sans",
+        "marker": "hey",
+        "turns": 48,
+        "hits": 46,
+        "rate": 95.8,
+        "generic": false
+      },
+      {
+        "id": "ut_sans",
+        "marker": "welp",
+        "turns": 48,
+        "hits": 46,
+        "rate": 95.8,
+        "generic": false
+      },
+      {
+        "id": "ot_sans",
+        "marker": "welp",
+        "turns": 48,
+        "hits": 44,
+        "rate": 91.7,
+        "generic": false
+      }
+    ],
+    "rows": [
+      {
+        "id": "lancer",
+        "marker": "本大爷",
+        "turns": 48,
+        "hits": 48,
+        "rate": 100.0,
+        "generic": false
+      },
+      {
+        "id": "ot_kidd",
+        "marker": "Yo",
+        "turns": 48,
+        "hits": 48,
+        "rate": 100.0,
+        "generic": false
+      },
+      {
+        "id": "ut_monster_kid",
+        "marker": "Yo",
+        "turns": 48,
+        "hits": 48,
+        "rate": 100.0,
+        "generic": false
+      },
+      {
+        "id": "mike",
+        "marker": "……",
+        "turns": 48,
+        "hits": 47,
+        "rate": 97.9,
+        "generic": true
+      },
+      {
+        "id": "ut_gaster",
+        "marker": "……",
+        "turns": 48,
+        "hits": 47,
+        "rate": 97.9,
+        "generic": true
+      },
+      {
+        "id": "ot_muffet",
+        "marker": "亲爱的",
+        "turns": 48,
+        "hits": 46,
+        "rate": 95.8,
+        "generic": false
+      },
+      {
+        "id": "ut_sans",
+        "marker": "hey",
+        "turns": 48,
+        "hits": 46,
+        "rate": 95.8,
+        "generic": false
+      },
+      {
+        "id": "ut_sans",
+        "marker": "welp",
+        "turns": 48,
+        "hits": 46,
+        "rate": 95.8,
+        "generic": false
+      },
+      {
+        "id": "ot_sans",
+        "marker": "welp",
+        "turns": 48,
+        "hits": 44,
+        "rate": 91.7,
+        "generic": false
+      },
+      {
+        "id": "ot_alphys",
+        "marker": "那个……",
+        "turns": 48,
+        "hits": 37,
+        "rate": 77.1,
+        "generic": false
+      },
+      {
+        "id": "hy_flowey",
+        "marker": "howdy",
+        "turns": 48,
+        "hits": 36,
+        "rate": 75.0,
+        "generic": false
+      },
+      {
+        "id": "mike",
+        "marker": "Mike",
+        "turns": 48,
+        "hits": 36,
+        "rate": 75.0,
+        "generic": false
+      },
+      {
+        "id": "noelle",
+        "marker": "嗯……",
+        "turns": 48,
+        "hits": 35,
+        "rate": 72.9,
+        "generic": true
+      },
+      {
+        "id": "queen",
+        "marker": "快乐",
+        "turns": 48,
+        "hits": 35,
+        "rate": 72.9,
+        "generic": false
+      },
+      {
+        "id": "ut_alphys",
+        "marker": "那个……",
+        "turns": 48,
+        "hits": 34,
+        "rate": 70.8,
+        "generic": false
+      },
+      {
+        "id": "ut_sans",
+        "marker": "you",
+        "turns": 48,
+        "hits": 34,
+        "rate": 70.8,
+        "generic": false
+      },
+      {
+        "id": "asgore",
+        "marker": "Howdy",
+        "turns": 48,
+        "hits": 33,
+        "rate": 68.8,
+        "generic": false
+      },
+      {
+        "id": "ut_mettaton",
+        "marker": "亲爱的",
+        "turns": 48,
+        "hits": 33,
+        "rate": 68.8,
+        "generic": false
+      },
+      {
+        "id": "lancer",
+        "marker": "嘿嘿嘿",
+        "turns": 48,
+        "hits": 31,
+        "rate": 64.6,
+        "generic": false
+      },
+      {
+        "id": "ot_undyne",
+        "marker": "punk",
+        "turns": 48,
+        "hits": 31,
+        "rate": 64.6,
+        "generic": false
+      },
+      {
+        "id": "ut_muffet",
+        "marker": "小可爱",
+        "turns": 48,
+        "hits": 31,
+        "rate": 64.6,
+        "generic": false
+      },
+      {
+        "id": "ot_mettaton",
+        "marker": "亲爱的",
+        "turns": 48,
+        "hits": 28,
+        "rate": 58.3,
+        "generic": false
+      },
+      {
+        "id": "ut_undyne",
+        "marker": "punk",
+        "turns": 48,
+        "hits": 28,
+        "rate": 58.3,
+        "generic": false
+      },
+      {
+        "id": "ot_muffet",
+        "marker": "小可爱",
+        "turns": 48,
+        "hits": 24,
+        "rate": 50.0,
+        "generic": false
+      },
+      {
+        "id": "kris",
+        "marker": "……",
+        "turns": 48,
+        "hits": 23,
+        "rate": 47.9,
+        "generic": true
+      },
+      {
+        "id": "os_niko",
+        "marker": "嗯……",
+        "turns": 48,
+        "hits": 20,
+        "rate": 41.7,
+        "generic": true
+      },
+      {
+        "id": "ut_sans",
+        "marker": "ok",
+        "turns": 48,
+        "hits": 20,
+        "rate": 41.7,
+        "generic": false
+      },
+      {
+        "id": "hy_starlo",
+        "marker": "Howdy",
+        "turns": 48,
+        "hits": 18,
+        "rate": 37.5,
+        "generic": false
+      },
+      {
+        "id": "noelle",
+        "marker": "那个……",
+        "turns": 48,
+        "hits": 18,
+        "rate": 37.5,
+        "generic": false
+      },
+      {
+        "id": "ot_mettaton",
+        "marker": "节目",
+        "turns": 48,
+        "hits": 18,
+        "rate": 37.5,
+        "generic": false
+      },
+      {
+        "id": "toriel",
+        "marker": "亲爱的",
+        "turns": 48,
+        "hits": 18,
+        "rate": 37.5,
+        "generic": false
+      },
+      {
+        "id": "ut_gaster",
+        "marker": "黑暗",
+        "turns": 48,
+        "hits": 18,
+        "rate": 37.5,
+        "generic": false
+      },
+      {
+        "id": "ut_mettaton",
+        "marker": "节目",
+        "turns": 48,
+        "hits": 18,
+        "rate": 37.5,
+        "generic": false
+      },
+      {
+        "id": "ut_mettaton",
+        "marker": "观众",
+        "turns": 48,
+        "hits": 18,
+        "rate": 37.5,
+        "generic": false
+      },
+      {
+        "id": "ot_sans",
+        "marker": "heh",
+        "turns": 48,
+        "hits": 17,
+        "rate": 35.4,
+        "generic": false
+      },
+      {
+        "id": "ut_alphys",
+        "marker": "呃……",
+        "turns": 48,
+        "hits": 17,
+        "rate": 35.4,
+        "generic": false
+      },
+      {
+        "id": "noelle",
+        "marker": "对不起",
+        "turns": 48,
+        "hits": 16,
+        "rate": 33.3,
+        "generic": false
+      },
+      {
+        "id": "os_watcher",
+        "marker": "时候",
+        "turns": 48,
+        "hits": 16,
+        "rate": 33.3,
+        "generic": false
+      },
+      {
+        "id": "ot_mettaton",
+        "marker": "宝贝",
+        "turns": 48,
+        "hits": 15,
+        "rate": 31.2,
+        "generic": false
+      },
+      {
+        "id": "ut_muffet",
+        "marker": "亲爱的",
+        "turns": 48,
+        "hits": 15,
+        "rate": 31.2,
+        "generic": false
+      },
+      {
+        "id": "gerson",
+        "marker": "小家伙",
+        "turns": 48,
+        "hits": 14,
+        "rate": 29.2,
+        "generic": false
+      },
+      {
+        "id": "noelle",
+        "marker": "对不起……",
+        "turns": 48,
+        "hits": 14,
+        "rate": 29.2,
+        "generic": false
+      },
+      {
+        "id": "ot_mettaton",
+        "marker": "观众",
+        "turns": 48,
+        "hits": 14,
+        "rate": 29.2,
+        "generic": false
+      },
+      {
+        "id": "king",
+        "marker": "光之民",
+        "turns": 48,
+        "hits": 13,
+        "rate": 27.1,
+        "generic": false
+      },
+      {
+        "id": "os_rowbot",
+        "marker": "等待",
+        "turns": 48,
+        "hits": 13,
+        "rate": 27.1,
+        "generic": false
+      },
+      {
+        "id": "os_the_author",
+        "marker": "记录",
+        "turns": 48,
+        "hits": 13,
+        "rate": 27.1,
+        "generic": false
+      },
+      {
+        "id": "ot_napstablook",
+        "marker": "oh……",
+        "turns": 48,
+        "hits": 13,
+        "rate": 27.1,
+        "generic": false
+      },
+      {
+        "id": "hy_starlo",
+        "marker": "reckon",
+        "turns": 48,
+        "hits": 12,
+        "rate": 25.0,
+        "generic": false
+      },
+      {
+        "id": "tenna",
+        "marker": "嗯哼～",
+        "turns": 48,
+        "hits": 11,
+        "rate": 22.9,
+        "generic": false
+      },
+      {
+        "id": "lancer",
+        "marker": "嚯嚯嚯",
+        "turns": 48,
+        "hits": 10,
+        "rate": 20.8,
+        "generic": false
+      },
+      {
+        "id": "hy_guardener",
+        "marker": "……",
+        "turns": 48,
+        "hits": 9,
+        "rate": 18.8,
+        "generic": true
+      },
+      {
+        "id": "hy_starlo",
+        "marker": "ain't",
+        "turns": 48,
+        "hits": 9,
+        "rate": 18.8,
+        "generic": false
+      },
+      {
+        "id": "lancer",
+        "marker": "坏蛋",
+        "turns": 48,
+        "hits": 9,
+        "rate": 18.8,
+        "generic": false
+      },
+      {
+        "id": "ot_alphys",
+        "marker": "呃……",
+        "turns": 48,
+        "hits": 9,
+        "rate": 18.8,
+        "generic": false
+      },
+      {
+        "id": "ut_mettaton",
+        "marker": "收视率",
+        "turns": 48,
+        "hits": 9,
+        "rate": 18.8,
+        "generic": false
+      },
+      {
+        "id": "berdly",
+        "marker": "哼哼哼哼",
+        "turns": 48,
+        "hits": 8,
+        "rate": 16.7,
+        "generic": false
+      },
+      {
+        "id": "ot_mettaton",
+        "marker": "收视率",
+        "turns": 48,
+        "hits": 8,
+        "rate": 16.7,
+        "generic": false
+      },
+      {
+        "id": "spamton",
+        "marker": "BIG",
+        "turns": 48,
+        "hits": 8,
+        "rate": 16.7,
+        "generic": false
+      },
+      {
+        "id": "os_kelvin",
+        "marker": "猫喜欢温暖",
+        "turns": 48,
+        "hits": 7,
+        "rate": 14.6,
+        "generic": false
+      },
+      {
+        "id": "ot_sans",
+        "marker": "hey",
+        "turns": 48,
+        "hits": 7,
+        "rate": 14.6,
+        "generic": false
+      },
+      {
+        "id": "ralsei",
+        "marker": "那边",
+        "turns": 48,
+        "hits": 7,
+        "rate": 14.6,
+        "generic": false
+      },
+      {
+        "id": "ut_gaster",
+        "marker": "我在这里",
+        "turns": 48,
+        "hits": 7,
+        "rate": 14.6,
+        "generic": false
+      },
+      {
+        "id": "os_watcher",
+        "marker": "时候快到了",
+        "turns": 48,
+        "hits": 6,
+        "rate": 12.5,
+        "generic": false
+      },
+      {
+        "id": "toriel",
+        "marker": "Asgore",
+        "turns": 48,
+        "hits": 6,
+        "rate": 12.5,
+        "generic": false
+      },
+      {
+        "id": "ut_asgore",
+        "marker": "这样啊",
+        "turns": 48,
+        "hits": 6,
+        "rate": 12.5,
+        "generic": false
+      },
+      {
+        "id": "ut_frisk",
+        "marker": "……",
+        "turns": 48,
+        "hits": 6,
+        "rate": 12.5,
+        "generic": true
+      },
+      {
+        "id": "ut_sans",
+        "marker": "heh",
+        "turns": 48,
+        "hits": 5,
+        "rate": 10.4,
+        "generic": false
+      },
+      {
+        "id": "ut_toriel",
+        "marker": "Asgore",
+        "turns": 48,
+        "hits": 5,
+        "rate": 10.4,
+        "generic": false
+      },
+      {
+        "id": "king",
+        "marker": "光之使者",
+        "turns": 48,
+        "hits": 4,
+        "rate": 8.3,
+        "generic": false
+      },
+      {
+        "id": "kris",
+        "marker": "（点头）",
+        "turns": 48,
+        "hits": 4,
+        "rate": 8.3,
+        "generic": false
+      },
+      {
+        "id": "mike",
+        "marker": "试音",
+        "turns": 48,
+        "hits": 4,
+        "rate": 8.3,
+        "generic": false
+      },
+      {
+        "id": "os_rue",
+        "marker": "高处",
+        "turns": 48,
+        "hits": 4,
+        "rate": 8.3,
+        "generic": false
+      },
+      {
+        "id": "os_the_author",
+        "marker": "对话",
+        "turns": 48,
+        "hits": 4,
+        "rate": 8.3,
+        "generic": false
+      },
+      {
+        "id": "ut_frisk",
+        "marker": "（摇头）",
+        "turns": 48,
+        "hits": 4,
+        "rate": 8.3,
+        "generic": false
+      },
+      {
+        "id": "ut_gaster",
+        "marker": "更加黑暗",
+        "turns": 48,
+        "hits": 4,
+        "rate": 8.3,
+        "generic": false
+      },
+      {
+        "id": "ut_mettaton",
+        "marker": "宝贝",
+        "turns": 48,
+        "hits": 4,
+        "rate": 8.3,
+        "generic": false
+      },
+      {
+        "id": "ut_napstablook",
+        "marker": "oh……",
+        "turns": 48,
+        "hits": 4,
+        "rate": 8.3,
+        "generic": false
+      },
+      {
+        "id": "berdly",
+        "marker": "天才般的",
+        "turns": 48,
+        "hits": 3,
+        "rate": 6.2,
+        "generic": false
+      },
+      {
+        "id": "lancer",
+        "marker": "哇咔咔",
+        "turns": 48,
+        "hits": 3,
+        "rate": 6.2,
+        "generic": false
+      },
+      {
+        "id": "os_prophetbot",
+        "marker": "传达",
+        "turns": 48,
+        "hits": 3,
+        "rate": 6.2,
+        "generic": false
+      }
+    ],
+    "ge90": [
+      "lancer",
+      "noelle",
+      "os_lamplighter",
+      "os_shepherd",
+      "ot_asgore",
+      "ot_kidd",
+      "rouxls",
+      "ut_asgore",
+      "ut_monster_kid",
+      "ut_sans",
+      "mike",
+      "ot_muffet",
+      "ut_gaster",
+      "ot_sans",
+      "ut_mettaton",
+      "ot_mettaton"
+    ],
+    "mid": [
+      "ot_alphys",
+      "ut_alphys",
+      "hy_flowey",
+      "hy_starlo",
+      "queen",
+      "ut_muffet",
+      "asgore",
+      "kris",
+      "ot_undyne",
+      "ut_undyne",
+      "toriel",
+      "os_niko"
+    ],
+    "lt40": [
+      "gerson",
+      "king",
+      "os_the_author",
+      "os_watcher",
+      "ut_frisk",
+      "os_rowbot",
+      "spamton",
+      "berdly",
+      "ot_napstablook",
+      "tenna",
+      "ralsei",
+      "hy_guardener",
+      "os_kelvin",
+      "susie",
+      "os_rue",
+      "ut_toriel",
+      "hy_chujin_ketsukane",
+      "ut_napstablook",
+      "hy_ace",
+      "os_prophetbot",
+      "ot_asriel_twinkly",
+      "ot_toriel",
+      "os_cedric",
+      "hy_ed",
+      "hy_moray",
+      "os_prototype",
+      "os_silver",
+      "ut_flowey",
+      "flowery",
+      "hy_axis",
+      "hy_bowll",
+      "hy_ceroba_ketsukane",
+      "hy_clover",
+      "hy_dalv",
+      "hy_martlet",
+      "hy_mooch",
+      "hy_sousborg",
+      "os_alula",
+      "os_calamus",
+      "os_george",
+      "os_kip",
+      "os_ling",
+      "os_magpie",
+      "os_maize",
+      "os_mason",
+      "os_the_world_machine",
+      "ot_papyrus",
+      "ut_chara",
+      "ut_papyrus"
+    ]
+  },
+  "bookish": {
+    "turns": 3696,
+    "sents": 19700,
+    "avg_sent_cjk": 16.96,
+    "long_sent_ratio": 4.08,
+    "bookish_turn_ratio": 9.5,
+    "spoken_turn_ratio": 60.63,
+    "nin_ratio": 0.14,
+    "end_period_ratio": 48.05,
+    "end_excl_ratio": 23.19,
+    "word_hits": [
+      [
+        "尽管",
+        150
+      ],
+      [
+        "不仅",
+        51
+      ],
+      [
+        "总之",
+        43
+      ],
+      [
+        "即便",
+        37
+      ],
+      [
+        "而且",
+        27
+      ],
+      [
+        "因此",
+        17
+      ],
+      [
+        "然而",
+        12
+      ],
+      [
+        "乃",
+        12
+      ],
+      [
+        "基于",
+        11
+      ],
+      [
+        "亦",
+        4
+      ],
+      [
+        "此外",
+        3
+      ],
+      [
+        "除此之外",
+        2
+      ],
+      [
+        "总而言之",
+        1
+      ],
+      [
+        "颇为",
+        1
+      ]
+    ],
+    "per_char": [
+      {
+        "id": "rouxls",
+        "bookish_turns": 29,
+        "turns": 48,
+        "rate": 60.4
+      },
+      {
+        "id": "hy_guardener",
+        "bookish_turns": 21,
+        "turns": 48,
+        "rate": 43.8
+      },
+      {
+        "id": "hy_ceroba_ketsukane",
+        "bookish_turns": 16,
+        "turns": 48,
+        "rate": 33.3
+      },
+      {
+        "id": "berdly",
+        "bookish_turns": 13,
+        "turns": 48,
+        "rate": 27.1
+      },
+      {
+        "id": "ut_toriel",
+        "bookish_turns": 13,
+        "turns": 48,
+        "rate": 27.1
+      },
+      {
+        "id": "hy_martlet",
+        "bookish_turns": 11,
+        "turns": 48,
+        "rate": 22.9
+      },
+      {
+        "id": "ot_papyrus",
+        "bookish_turns": 11,
+        "turns": 48,
+        "rate": 22.9
+      },
+      {
+        "id": "hy_ace",
+        "bookish_turns": 9,
+        "turns": 48,
+        "rate": 18.8
+      },
+      {
+        "id": "ot_napstablook",
+        "bookish_turns": 9,
+        "turns": 48,
+        "rate": 18.8
+      },
+      {
+        "id": "toriel",
+        "bookish_turns": 9,
+        "turns": 48,
+        "rate": 18.8
+      },
+      {
+        "id": "ot_mettaton",
+        "bookish_turns": 8,
+        "turns": 48,
+        "rate": 16.7
+      },
+      {
+        "id": "hy_starlo",
+        "bookish_turns": 7,
+        "turns": 48,
+        "rate": 14.6
+      },
+      {
+        "id": "os_niko",
+        "bookish_turns": 7,
+        "turns": 48,
+        "rate": 14.6
+      },
+      {
+        "id": "ralsei",
+        "bookish_turns": 7,
+        "turns": 48,
+        "rate": 14.6
+      },
+      {
+        "id": "ut_chara",
+        "bookish_turns": 7,
+        "turns": 48,
+        "rate": 14.6
+      },
+      {
+        "id": "ut_mettaton",
+        "bookish_turns": 7,
+        "turns": 48,
+        "rate": 14.6
+      },
+      {
+        "id": "hy_sousborg",
+        "bookish_turns": 6,
+        "turns": 48,
+        "rate": 12.5
+      },
+      {
+        "id": "os_alula",
+        "bookish_turns": 6,
+        "turns": 48,
+        "rate": 12.5
+      },
+      {
+        "id": "os_the_author",
+        "bookish_turns": 6,
+        "turns": 48,
+        "rate": 12.5
+      },
+      {
+        "id": "ot_asgore",
+        "bookish_turns": 6,
+        "turns": 48,
+        "rate": 12.5
+      },
+      {
+        "id": "ot_toriel",
+        "bookish_turns": 6,
+        "turns": 48,
+        "rate": 12.5
+      },
+      {
+        "id": "queen",
+        "bookish_turns": 6,
+        "turns": 48,
+        "rate": 12.5
+      },
+      {
+        "id": "ut_papyrus",
+        "bookish_turns": 6,
+        "turns": 48,
+        "rate": 12.5
+      },
+      {
+        "id": "asgore",
+        "bookish_turns": 5,
+        "turns": 48,
+        "rate": 10.4
+      },
+      {
+        "id": "hy_chujin_ketsukane",
+        "bookish_turns": 5,
+        "turns": 48,
+        "rate": 10.4
+      },
+      {
+        "id": "os_george",
+        "bookish_turns": 5,
+        "turns": 48,
+        "rate": 10.4
+      },
+      {
+        "id": "os_kip",
+        "bookish_turns": 5,
+        "turns": 48,
+        "rate": 10.4
+      },
+      {
+        "id": "os_prophetbot",
+        "bookish_turns": 5,
+        "turns": 48,
+        "rate": 10.4
+      },
+      {
+        "id": "os_watcher",
+        "bookish_turns": 5,
+        "turns": 48,
+        "rate": 10.4
+      },
+      {
+        "id": "ot_asriel_twinkly",
+        "bookish_turns": 5,
+        "turns": 48,
+        "rate": 10.4
+      },
+      {
+        "id": "flowery",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "hy_axis",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "noelle",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "os_calamus",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "os_kelvin",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "os_ling",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "os_mason",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "ot_kidd",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "tenna",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "ut_muffet",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "ut_napstablook",
+        "bookish_turns": 4,
+        "turns": 48,
+        "rate": 8.3
+      },
+      {
+        "id": "hy_mooch",
+        "bookish_turns": 3,
+        "turns": 48,
+        "rate": 6.2
+      },
+      {
+        "id": "mike",
+        "bookish_turns": 3,
+        "turns": 48,
+        "rate": 6.2
+      },
+      {
+        "id": "os_the_world_machine",
+        "bookish_turns": 3,
+        "turns": 48,
+        "rate": 6.2
+      },
+      {
+        "id": "ut_alphys",
+        "bookish_turns": 3,
+        "turns": 48,
+        "rate": 6.2
+      },
+      {
+        "id": "hy_bowll",
+        "bookish_turns": 2,
+        "turns": 48,
+        "rate": 4.2
+      },
+      {
+        "id": "hy_clover",
+        "bookish_turns": 2,
+        "turns": 48,
+        "rate": 4.2
+      },
+      {
+        "id": "hy_moray",
+        "bookish_turns": 2,
+        "turns": 48,
+        "rate": 4.2
+      },
+      {
+        "id": "king",
+        "bookish_turns": 2,
+        "turns": 48,
+        "rate": 4.2
+      },
+      {
+        "id": "lancer",
+        "bookish_turns": 2,
+        "turns": 48,
+        "rate": 4.2
+      },
+      {
+        "id": "os_cedric",
+        "bookish_turns": 2,
+        "turns": 48,
+        "rate": 4.2
+      },
+      {
+        "id": "os_magpie",
+        "bookish_turns": 2,
+        "turns": 48,
+        "rate": 4.2
+      },
+      {
+        "id": "os_maize",
+        "bookish_turns": 2,
+        "turns": 48,
+        "rate": 4.2
+      },
+      {
+        "id": "os_rue",
+        "bookish_turns": 2,
+        "turns": 48,
+        "rate": 4.2
+      },
+      {
+        "id": "spamton",
+        "bookish_turns": 2,
+        "turns": 48,
+        "rate": 4.2
+      },
+      {
+        "id": "gerson",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "hy_dalv",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "hy_flowey",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "os_lamplighter",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "os_prototype",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "os_rowbot",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "ot_alphys",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "ot_muffet",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "ot_undyne",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "susie",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "ut_asgore",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "ut_flowey",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "ut_monster_kid",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "ut_undyne",
+        "bookish_turns": 1,
+        "turns": 48,
+        "rate": 2.1
+      },
+      {
+        "id": "hy_ed",
+        "bookish_turns": 0,
+        "turns": 48,
+        "rate": 0.0
+      },
+      {
+        "id": "kris",
+        "bookish_turns": 0,
+        "turns": 48,
+        "rate": 0.0
+      },
+      {
+        "id": "os_shepherd",
+        "bookish_turns": 0,
+        "turns": 48,
+        "rate": 0.0
+      },
+      {
+        "id": "os_silver",
+        "bookish_turns": 0,
+        "turns": 48,
+        "rate": 0.0
+      },
+      {
+        "id": "ot_sans",
+        "bookish_turns": 0,
+        "turns": 48,
+        "rate": 0.0
+      },
+      {
+        "id": "ut_frisk",
+        "bookish_turns": 0,
+        "turns": 48,
+        "rate": 0.0
+      },
+      {
+        "id": "ut_gaster",
+        "bookish_turns": 0,
+        "turns": 48,
+        "rate": 0.0
+      },
+      {
+        "id": "ut_sans",
+        "bookish_turns": 0,
+        "turns": 48,
+        "rate": 0.0
+      }
+    ]
+  }
+}
