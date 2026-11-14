@@ -1,0 +1,281 @@
+{
+ "needles": [
+  [
+   1,
+   "嗯，我想想啊。"
+  ],
+  [
+   1,
+   "哦，对，就是那样。"
+  ],
+  [
+   2,
+   "我也是刚知道，还没细看呢。"
+  ],
+  [
+   3,
+   "等下，我好像记错了。"
+  ],
+  [
+   3,
+   "你说得对，我搞混了。"
+  ],
+  [
+   4,
+   "这个啊……我一时说不上来，反正不坏。"
+  ],
+  [
+   4,
+   "行，那就这样吧。"
+  ],
+  [
+   5,
+   "刚才有点乱，现在好多了。"
+  ],
+  [
+   5,
+   "是有点怪，不过还能应付。"
+  ],
+  [
+   6,
+   "你要是着急就先走，我随后跟上。"
+  ]
+ ],
+ "rows": {
+  "hy_martlet": {
+   "baseline": {
+    "score": {
+     "turns": 48,
+     "bookish_turns": 11,
+     "bookish_rate": 22.9,
+     "spoken_rate": 54.2,
+     "avg_sent": 20.73,
+     "marker_rate": null
+    },
+    "leak": {
+     "turns": 48,
+     "any_hit": 0,
+     "per_example": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+     },
+     "top": []
+    }
+   },
+   "armB": {
+    "score": {
+     "turns": 48,
+     "bookish_turns": 9,
+     "bookish_rate": 18.8,
+     "spoken_rate": 72.9,
+     "avg_sent": 22.83,
+     "marker_rate": null
+    },
+    "leak": {
+     "turns": 48,
+     "any_hit": 0,
+     "per_example": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+     },
+     "top": []
+    }
+   },
+   "armC": {
+    "score": {
+     "turns": 48,
+     "bookish_turns": 7,
+     "bookish_rate": 14.6,
+     "spoken_rate": 75.0,
+     "avg_sent": 19.98,
+     "marker_rate": null
+    },
+    "leak": {
+     "turns": 48,
+     "any_hit": 0,
+     "per_example": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+     },
+     "top": []
+    }
+   }
+  },
+  "hy_ace": {
+   "baseline": {
+    "score": {
+     "turns": 48,
+     "bookish_turns": 9,
+     "bookish_rate": 18.8,
+     "spoken_rate": 87.5,
+     "avg_sent": 19.25,
+     "marker_rate": 6.2
+    },
+    "leak": {
+     "turns": 48,
+     "any_hit": 0,
+     "per_example": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+     },
+     "top": []
+    }
+   },
+   "armB": {
+    "score": {
+     "turns": 48,
+     "bookish_turns": 3,
+     "bookish_rate": 6.2,
+     "spoken_rate": 87.5,
+     "avg_sent": 19.9,
+     "marker_rate": 0.0
+    },
+    "leak": {
+     "turns": 48,
+     "any_hit": 1,
+     "per_example": {
+      "1": 1,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+     },
+     "top": [
+      [
+       "哦，对，就是那样。",
+       1
+      ]
+     ]
+    }
+   },
+   "armC": {
+    "score": {
+     "turns": 48,
+     "bookish_turns": 5,
+     "bookish_rate": 10.4,
+     "spoken_rate": 81.2,
+     "avg_sent": 16.22,
+     "marker_rate": 14.6
+    },
+    "leak": {
+     "turns": 48,
+     "any_hit": 2,
+     "per_example": {
+      "1": 0,
+      "2": 0,
+      "3": 3,
+      "4": 0,
+      "5": 0,
+      "6": 0
+     },
+     "top": [
+      [
+       "等下，我好像记错了。",
+       2
+      ],
+      [
+       "你说得对，我搞混了。",
+       1
+      ]
+     ]
+    }
+   }
+  },
+  "os_niko": {
+   "baseline": {
+    "score": {
+     "turns": 48,
+     "bookish_turns": 7,
+     "bookish_rate": 14.6,
+     "spoken_rate": 87.5,
+     "avg_sent": 19.1,
+     "marker_rate": 43.8
+    },
+    "leak": {
+     "turns": 48,
+     "any_hit": 0,
+     "per_example": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+     },
+     "top": []
+    }
+   },
+   "armB": {
+    "score": {
+     "turns": 48,
+     "bookish_turns": 1,
+     "bookish_rate": 2.1,
+     "spoken_rate": 95.8,
+     "avg_sent": 17.63,
+     "marker_rate": 72.9
+    },
+    "leak": {
+     "turns": 48,
+     "any_hit": 0,
+     "per_example": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+     },
+     "top": []
+    }
+   },
+   "armC": {
+    "score": {
+     "turns": 48,
+     "bookish_turns": 2,
+     "bookish_rate": 4.2,
+     "spoken_rate": 95.8,
+     "avg_sent": 17.71,
+     "marker_rate": 72.9
+    },
+    "leak": {
+     "turns": 48,
+     "any_hit": 0,
+     "per_example": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0
+     },
+     "top": []
+    }
+   }
+  }
+ },
+ "EX": [
+  "· 平常接话的样子：“嗯，我想想啊。”“哦，对，就是那样。”",
+  "· 普通一句话就是一口气说完：“我也是刚知道，还没细看呢。”",
+  "· “等下，我好像记错了。”“你说得对，我搞混了。”",
+  "· “这个啊……我一时说不上来，反正不坏。”“行，那就这样吧。”",
+  "· “刚才有点乱，现在好多了。”“是有点怪，不过还能应付。”",
+  "· “你要是着急就先走，我随后跟上。”"
+ ]
+}

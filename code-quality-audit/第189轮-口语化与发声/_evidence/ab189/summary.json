@@ -1,0 +1,80 @@
+{
+ "hy_martlet": {
+  "baseline": {
+   "turns": 48,
+   "bookish_turns": 11,
+   "bookish_rate": 22.9,
+   "spoken_rate": 54.2,
+   "avg_sent": 20.73,
+   "marker_rate": null
+  },
+  "armB": {
+   "turns": 48,
+   "bookish_turns": 9,
+   "bookish_rate": 18.8,
+   "spoken_rate": 72.9,
+   "avg_sent": 22.83,
+   "marker_rate": null
+  },
+  "armC": {
+   "turns": 48,
+   "bookish_turns": 7,
+   "bookish_rate": 14.6,
+   "spoken_rate": 75.0,
+   "avg_sent": 19.98,
+   "marker_rate": null
+  }
+ },
+ "hy_ace": {
+  "baseline": {
+   "turns": 48,
+   "bookish_turns": 9,
+   "bookish_rate": 18.8,
+   "spoken_rate": 87.5,
+   "avg_sent": 19.25,
+   "marker_rate": 6.2
+  },
+  "armB": {
+   "turns": 48,
+   "bookish_turns": 3,
+   "bookish_rate": 6.2,
+   "spoken_rate": 87.5,
+   "avg_sent": 19.9,
+   "marker_rate": 0.0
+  },
+  "armC": {
+   "turns": 48,
+   "bookish_turns": 5,
+   "bookish_rate": 10.4,
+   "spoken_rate": 81.2,
+   "avg_sent": 16.22,
+   "marker_rate": 14.6
+  }
+ },
+ "os_niko": {
+  "baseline": {
+   "turns": 48,
+   "bookish_turns": 7,
+   "bookish_rate": 14.6,
+   "spoken_rate": 87.5,
+   "avg_sent": 19.1,
+   "marker_rate": 43.8
+  },
+  "armB": {
+   "turns": 48,
+   "bookish_turns": 1,
+   "bookish_rate": 2.1,
+   "spoken_rate": 95.8,
+   "avg_sent": 17.63,
+   "marker_rate": 72.9
+  },
+  "armC": {
+   "turns": 48,
+   "bookish_turns": 2,
+   "bookish_rate": 4.2,
+   "spoken_rate": 95.8,
+   "avg_sent": 17.71,
+   "marker_rate": 72.9
+  }
+ }
+}
