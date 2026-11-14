@@ -156,9 +156,14 @@ head(u'B. 端到端：三类卡真的逐字进了 system prompt（真跑 build_s
 
 REL = {i: NP.relation_patch(i) for i in BY_ID}
 EVO = {i: NP.evolution_patch(i) for i in BY_ID}
-check(u'B0 三类卡覆盖数：patch 59 / relation 58 / evolution 44（分母非空）',
+# ★★★ 第187轮：`evolution` 44 → **77**。44 是**过渡版**（`evolve113.py` 用 `turns_n==36`
+#   那次跑出来的，只覆盖当时跑完的人）。第113轮o 全量 77 人 × 48 轮跑完之后，
+#   第187轮把 `evolve113.py` 重跑了一遍 ⇒ 77 人 / 每对最多 3 条进 prompt。
+#   ⇒ 这里跟着涨，**不是把判据放宽**：它本来就是"覆盖数 == 数据文件里的人数"，
+#     只是当年那个 44 是过渡产物的快照。是否"正式版"另由 B0c 钉住（turns_n == 48）。
+check(u'B0 三类卡覆盖数：patch 59 / relation 58 / evolution 77（分母非空）',
       (len(PATCH), sum(1 for v in REL.values() if v),
-       sum(1 for v in EVO.values() if v)) == (59, 58, 44),
+       sum(1 for v in EVO.values() if v)) == (59, 58, 77),
       u'%d / %d / %d' % (len(PATCH), sum(1 for v in REL.values() if v),
                         sum(1 for v in EVO.values() if v)))
 
@@ -185,13 +190,42 @@ PATCH_IN = [nid for nid in PATCH if nid in PERSONAS]
 REL_IN = dict((k, v) for k, v in REL.items() if k in PERSONAS and v)
 EVO_IN = dict((k, v) for k, v in EVO.items() if k in PERSONAS and v)
 _outer = [nid for nid in _tri['ralsei']]
-check(u'B0b 进链分母：patch 58/59、relation 57/58、evolution 44/44 进链（差的都属主宠外链）',
-      (len(PATCH_IN), len(REL_IN), len(EVO_IN)) == (58, 57, 44)
+# ★ 第187轮：evolution 44/44 → **76/77**（77 人有卡，`ralsei` 仍属主宠外链、不进这条链）。
+#   ⚠️ 原注释里"ralsei 的 evolution 为 0"**已过时**：正式版演化卡里他也有数据了；
+#     他只是**进不了 `npc_system_prompt()` 这条链**（真源是 `assets/ralsei_persona.md`，
+#     走 `main._with_ralsei_patch()`，见 check137）。所以"差 == 外链"这条**判据没变**。
+check(u'B0b 进链分母：patch 58/59、relation 57/58、evolution 76/77 进链（差的都属主宠外链）',
+      (len(PATCH_IN), len(REL_IN), len(EVO_IN)) == (58, 57, 76)
       and len(_outer) == 1 and _outer[0] not in PERSONAS
       and sorted(set(PATCH) - set(PATCH_IN)) == _outer
       and sorted(set(k for k, v in REL.items() if v) - set(REL_IN)) == _outer,
       u'%d / %d / %d，差=%r' % (len(PATCH_IN), len(REL_IN), len(EVO_IN),
                                set(PATCH) - set(PATCH_IN)))
+
+# ---------------------------------------------------------------- B0c 正式版反回滚闸
+#
+# ★★★ 第187轮新增。为什么必须单钉一条：
+#   `_evolution.json` 有**两种版本长得很像** —— 过渡版（`turns_n == 36`，44 人）和
+#   正式版（`turns_n == 48`，77 人）。上面 B0/B0b 只数"有几个人有卡"，
+#   把 36 轮那份放回去仍然会得 44 ⇒ **只要有人把文件换成备份的过渡版，B0 会红但
+#   看不出"为什么红"**；反过来若哪天把 B0 的数字改成"≥44"就彻底失去鉴别力。
+#   ⇒ 这里直接钉**数据版本号**（`turns_n`），并配一条负控制：把 36 轮那份拿来必须判红。
+_EVO_PATH = os.path.join(PET, 'assets', 'npc', '_relations', '_evolution.json')
+try:
+    _evo_raw = json.load(io.open(_EVO_PATH, 'r', encoding='utf-8'))
+except Exception as e:                                    # noqa: BLE001
+    _evo_raw = {'turns_n': None, 'count': 0, '_err': str(e)}
+check(u'B0c ★★★ 演化卡是**正式版**（turns_n == 48 / count == 77）—— 不是 36 轮过渡版',
+      _evo_raw.get('turns_n') == 48 and _evo_raw.get('count') == 77,
+      u'turns_n=%r count=%r err=%r'
+      % (_evo_raw.get('turns_n'), _evo_raw.get('count'), _evo_raw.get('_err')))
+# 负控制：把同一份数据的 turns_n 假装成 36（过渡版），同一条判据必须判否。
+#   ★ 输入是**真数据**、只改版本号这一处 ⇒ 它确实落进被测分支（不是空转）。
+_evo_fake = dict(_evo_raw)
+_evo_fake['turns_n'] = 36
+check(u'B0c2 负控制：把 turns_n 改回 36（过渡版）⇒ 同一条判据必须判红',
+      not (_evo_fake.get('turns_n') == 48 and _evo_fake.get('count') == 77),
+      u'伪造后 turns_n=%r' % (_evo_fake.get('turns_n'),))
 
 _ok_p = 0
 _bad = []

@@ -1,0 +1,633 @@
+{
+ "bad_rate_turns": 24.22,
+ "bad_turns": 895,
+ "by_code_share": {
+  "ACTION_PAREN": 34.15,
+  "AI_SELF": 12.31,
+  "MARKDOWN": 0.16,
+  "META": 2.44,
+  "NOT_CN": 12.63,
+  "REPEAT": 21.76,
+  "TOO_LONG": 16.54
+ },
+ "by_code_turns": {
+  "ACTION_PAREN": 419,
+  "AI_SELF": 151,
+  "MARKDOWN": 2,
+  "META": 30,
+  "NOT_CN": 155,
+  "REPEAT": 267,
+  "TOO_LONG": 203
+ },
+ "by_tag": {
+  "close": [
+   36,
+   154,
+   23.38
+  ],
+  "deep": [
+   40,
+   154,
+   25.97
+  ],
+  "feel": [
+   45,
+   231,
+   19.48
+  ],
+  "mem": [
+   43,
+   231,
+   18.61
+  ],
+  "meta": [
+   161,
+   231,
+   69.7
+  ],
+  "npc": [
+   98,
+   462,
+   21.21
+  ],
+  "open": [
+   55,
+   231,
+   23.81
+  ],
+  "plot": [
+   95,
+   462,
+   20.56
+  ],
+  "pref": [
+   71,
+   462,
+   15.37
+  ],
+  "press": [
+   47,
+   231,
+   20.35
+  ],
+  "quirk": [
+   36,
+   154,
+   23.38
+  ],
+  "rel": [
+   111,
+   462,
+   24.03
+  ],
+  "world": [
+   57,
+   231,
+   24.68
+  ]
+ },
+ "by_turn_bucket": {
+  "1": [
+   173,
+   924,
+   18.72
+  ],
+  "2": [
+   191,
+   924,
+   20.67
+  ],
+  "3": [
+   208,
+   924,
+   22.51
+  ],
+  "4": [
+   323,
+   924,
+   34.96
+  ]
+ },
+ "by_turn_bucket_ex_probe": {
+  "1": [
+   173,
+   924,
+   18.72
+  ],
+  "2": [
+   191,
+   924,
+   20.67
+  ],
+  "3": [
+   208,
+   924,
+   22.51
+  ],
+  "4": [
+   162,
+   693,
+   23.38
+  ]
+ },
+ "char_codes": {
+  "asgore": {
+   "ACTION_PAREN": 47,
+   "AI_SELF": 1,
+   "TOO_LONG": 3
+  },
+  "berdly": {
+   "AI_SELF": 2,
+   "META": 2,
+   "REPEAT": 2,
+   "TOO_LONG": 2
+  },
+  "flowery": {
+   "REPEAT": 1,
+   "TOO_LONG": 1
+  },
+  "gerson": {
+   "AI_SELF": 1
+  },
+  "hy_ace": {
+   "ACTION_PAREN": 12,
+   "AI_SELF": 2,
+   "NOT_CN": 5,
+   "REPEAT": 8,
+   "TOO_LONG": 4
+  },
+  "hy_axis": {
+   "AI_SELF": 1,
+   "REPEAT": 1
+  },
+  "hy_bowll": {
+   "AI_SELF": 1,
+   "NOT_CN": 4,
+   "REPEAT": 3
+  },
+  "hy_ceroba_ketsukane": {
+   "AI_SELF": 3,
+   "META": 2,
+   "NOT_CN": 1,
+   "REPEAT": 4,
+   "TOO_LONG": 3
+  },
+  "hy_chujin_ketsukane": {
+   "AI_SELF": 2,
+   "NOT_CN": 3,
+   "REPEAT": 1
+  },
+  "hy_clover": {
+   "AI_SELF": 2,
+   "NOT_CN": 4,
+   "REPEAT": 1
+  },
+  "hy_dalv": {
+   "AI_SELF": 1
+  },
+  "hy_ed": {
+   "AI_SELF": 1
+  },
+  "hy_flowey": {
+   "NOT_CN": 10,
+   "REPEAT": 1,
+   "TOO_LONG": 1
+  },
+  "hy_guardener": {
+   "ACTION_PAREN": 47,
+   "AI_SELF": 10,
+   "REPEAT": 1,
+   "TOO_LONG": 5
+  },
+  "hy_martlet": {
+   "ACTION_PAREN": 48,
+   "AI_SELF": 3,
+   "META": 3,
+   "REPEAT": 3,
+   "TOO_LONG": 13
+  },
+  "hy_mooch": {
+   "ACTION_PAREN": 47,
+   "AI_SELF": 2,
+   "NOT_CN": 1,
+   "REPEAT": 1
+  },
+  "hy_moray": {
+   "ACTION_PAREN": 48,
+   "AI_SELF": 4,
+   "REPEAT": 3,
+   "TOO_LONG": 10
+  },
+  "hy_sousborg": {
+   "AI_SELF": 3,
+   "NOT_CN": 24,
+   "REPEAT": 44,
+   "TOO_LONG": 5
+  },
+  "hy_starlo": {
+   "ACTION_PAREN": 2,
+   "AI_SELF": 1,
+   "NOT_CN": 8,
+   "REPEAT": 11,
+   "TOO_LONG": 19
+  },
+  "king": {
+   "AI_SELF": 2,
+   "REPEAT": 1
+  },
+  "kris": {
+   "AI_SELF": 2
+  },
+  "lancer": {
+   "AI_SELF": 2
+  },
+  "mike": {
+   "AI_SELF": 1,
+   "REPEAT": 2,
+   "TOO_LONG": 4
+  },
+  "noelle": {
+   "AI_SELF": 1,
+   "META": 2
+  },
+  "os_alula": {
+   "AI_SELF": 2,
+   "NOT_CN": 1,
+   "REPEAT": 2,
+   "TOO_LONG": 2
+  },
+  "os_calamus": {
+   "AI_SELF": 3,
+   "REPEAT": 1,
+   "TOO_LONG": 1
+  },
+  "os_cedric": {
+   "AI_SELF": 2,
+   "META": 1,
+   "REPEAT": 1
+  },
+  "os_george": {
+   "AI_SELF": 3,
+   "REPEAT": 3,
+   "TOO_LONG": 4
+  },
+  "os_kelvin": {
+   "AI_SELF": 2,
+   "REPEAT": 2
+  },
+  "os_kip": {
+   "AI_SELF": 2
+  },
+  "os_lamplighter": {
+   "AI_SELF": 2
+  },
+  "os_ling": {
+   "AI_SELF": 3,
+   "TOO_LONG": 1
+  },
+  "os_magpie": {
+   "AI_SELF": 1
+  },
+  "os_maize": {
+   "AI_SELF": 3,
+   "REPEAT": 2
+  },
+  "os_mason": {
+   "AI_SELF": 1,
+   "TOO_LONG": 1
+  },
+  "os_niko": {
+   "ACTION_PAREN": 46,
+   "AI_SELF": 2,
+   "META": 7,
+   "TOO_LONG": 9
+  },
+  "os_prophetbot": {
+   "AI_SELF": 1,
+   "REPEAT": 24
+  },
+  "os_prototype": {
+   "AI_SELF": 2,
+   "NOT_CN": 2
+  },
+  "os_rowbot": {
+   "AI_SELF": 3,
+   "META": 1,
+   "REPEAT": 2
+  },
+  "os_rue": {
+   "META": 1
+  },
+  "os_shepherd": {
+   "AI_SELF": 1,
+   "META": 1,
+   "REPEAT": 13,
+   "TOO_LONG": 1
+  },
+  "os_silver": {
+   "REPEAT": 1
+  },
+  "os_the_author": {
+   "AI_SELF": 2,
+   "META": 1
+  },
+  "os_the_world_machine": {
+   "AI_SELF": 3,
+   "META": 4
+  },
+  "os_watcher": {
+   "AI_SELF": 1,
+   "REPEAT": 5
+  },
+  "ot_alphys": {
+   "AI_SELF": 2
+  },
+  "ot_asgore": {
+   "ACTION_PAREN": 1,
+   "AI_SELF": 1,
+   "REPEAT": 1,
+   "TOO_LONG": 1
+  },
+  "ot_asriel_twinkly": {
+   "AI_SELF": 3,
+   "NOT_CN": 13,
+   "REPEAT": 7,
+   "TOO_LONG": 26
+  },
+  "ot_kidd": {
+   "AI_SELF": 3
+  },
+  "ot_mettaton": {
+   "AI_SELF": 2,
+   "REPEAT": 1,
+   "TOO_LONG": 2
+  },
+  "ot_muffet": {
+   "AI_SELF": 3
+  },
+  "ot_napstablook": {
+   "AI_SELF": 2,
+   "NOT_CN": 6,
+   "REPEAT": 29,
+   "TOO_LONG": 3
+  },
+  "ot_papyrus": {
+   "ACTION_PAREN": 1,
+   "AI_SELF": 3,
+   "NOT_CN": 1,
+   "TOO_LONG": 1
+  },
+  "ot_sans": {
+   "AI_SELF": 1,
+   "NOT_CN": 3,
+   "REPEAT": 5
+  },
+  "ot_toriel": {
+   "AI_SELF": 3,
+   "TOO_LONG": 1
+  },
+  "ot_undyne": {
+   "AI_SELF": 3,
+   "TOO_LONG": 1
+  },
+  "queen": {
+   "AI_SELF": 3
+  },
+  "ralsei": {
+   "AI_SELF": 3,
+   "REPEAT": 1,
+   "TOO_LONG": 1
+  },
+  "rouxls": {
+   "ACTION_PAREN": 26,
+   "AI_SELF": 2,
+   "META": 1,
+   "REPEAT": 3,
+   "TOO_LONG": 1
+  },
+  "spamton": {
+   "AI_SELF": 2,
+   "REPEAT": 1
+  },
+  "susie": {
+   "ACTION_PAREN": 2
+  },
+  "tenna": {
+   "AI_SELF": 2,
+   "TOO_LONG": 3
+  },
+  "toriel": {
+   "AI_SELF": 1,
+   "TOO_LONG": 1
+  },
+  "ut_alphys": {
+   "AI_SELF": 2,
+   "REPEAT": 1,
+   "TOO_LONG": 3
+  },
+  "ut_asgore": {
+   "ACTION_PAREN": 45,
+   "AI_SELF": 2,
+   "REPEAT": 2,
+   "TOO_LONG": 1
+  },
+  "ut_chara": {
+   "AI_SELF": 1,
+   "NOT_CN": 14,
+   "REPEAT": 15,
+   "TOO_LONG": 2
+  },
+  "ut_flowey": {
+   "AI_SELF": 2,
+   "NOT_CN": 2,
+   "TOO_LONG": 1
+  },
+  "ut_frisk": {
+   "AI_SELF": 1
+  },
+  "ut_gaster": {
+   "AI_SELF": 3
+  },
+  "ut_mettaton": {
+   "ACTION_PAREN": 2,
+   "AI_SELF": 2,
+   "NOT_CN": 1,
+   "REPEAT": 1,
+   "TOO_LONG": 5
+  },
+  "ut_monster_kid": {
+   "AI_SELF": 2,
+   "NOT_CN": 2
+  },
+  "ut_muffet": {
+   "AI_SELF": 1
+  },
+  "ut_napstablook": {
+   "AI_SELF": 1,
+   "NOT_CN": 3,
+   "REPEAT": 2,
+   "TOO_LONG": 1
+  },
+  "ut_papyrus": {
+   "ACTION_PAREN": 45,
+   "AI_SELF": 3,
+   "MARKDOWN": 2,
+   "META": 2,
+   "REPEAT": 10,
+   "TOO_LONG": 19
+  },
+  "ut_sans": {
+   "NOT_CN": 47,
+   "REPEAT": 29,
+   "TOO_LONG": 37
+  },
+  "ut_toriel": {
+   "AI_SELF": 3,
+   "META": 2,
+   "REPEAT": 3,
+   "TOO_LONG": 1
+  },
+  "ut_undyne": {
+   "AI_SELF": 2,
+   "REPEAT": 12,
+   "TOO_LONG": 3
+  }
+ },
+ "chars": 77,
+ "clean_chars": [],
+ "items_per_bad_turn": 1.37,
+ "multi_code_turns": 271,
+ "normal": {
+  "bad": 734,
+  "rate": 21.18,
+  "turns": 3465
+ },
+ "probe": {
+  "bad": 161,
+  "by_code": {
+   "ACTION_PAREN": 25,
+   "AI_SELF": 142,
+   "META": 13,
+   "NOT_CN": 14,
+   "REPEAT": 32,
+   "TOO_LONG": 7
+  },
+  "rate": 69.7,
+  "turns": 231
+ },
+ "probe_at_turn": {
+  "42": 77,
+  "43": 77,
+  "44": 77
+ },
+ "slot_kinds": 48,
+ "top10_by_items": [
+  "ut_sans",
+  "ut_papyrus",
+  "hy_sousborg",
+  "hy_martlet",
+  "hy_moray",
+  "os_niko",
+  "hy_guardener",
+  "asgore",
+  "hy_mooch",
+  "ut_asgore"
+ ],
+ "top10_items": 684,
+ "top10_share": 55.75,
+ "top_chars": [
+  [
+   "asgore",
+   48,
+   48,
+   100.0
+  ],
+  [
+   "hy_martlet",
+   48,
+   48,
+   100.0
+  ],
+  [
+   "hy_moray",
+   48,
+   48,
+   100.0
+  ],
+  [
+   "hy_guardener",
+   47,
+   48,
+   97.9
+  ],
+  [
+   "hy_mooch",
+   47,
+   48,
+   97.9
+  ],
+  [
+   "ut_sans",
+   47,
+   48,
+   97.9
+  ],
+  [
+   "os_niko",
+   46,
+   48,
+   95.8
+  ],
+  [
+   "ut_papyrus",
+   46,
+   48,
+   95.8
+  ],
+  [
+   "hy_sousborg",
+   45,
+   48,
+   93.8
+  ],
+  [
+   "ut_asgore",
+   45,
+   48,
+   93.8
+  ],
+  [
+   "ot_napstablook",
+   32,
+   48,
+   66.7
+  ],
+  [
+   "rouxls",
+   29,
+   48,
+   60.4
+  ],
+  [
+   "ot_asriel_twinkly",
+   28,
+   48,
+   58.3
+  ],
+  [
+   "hy_starlo",
+   25,
+   48,
+   52.1
+  ],
+  [
+   "os_prophetbot",
+   25,
+   48,
+   52.1
+  ]
+ ],
+ "turns": 3696,
+ "turns_cap": 48,
+ "violation_items": 1227
+}
