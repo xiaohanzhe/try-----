@@ -104,7 +104,73 @@
 （`grep -i ceroba` 全量确认。）
 
 ⇒ **结论：黄魂 `game.droid` 里 `spr_portrait_*` 的像素就是黑白线稿。**
-游戏是不是在运行时给它上色，本轮**未验证**（代码反汇编那条路没通，见 §4.3）。
+
+### 3.4 ★★★ C 方案（查"游戏是否运行时上色"）**已闭环：不着色**
+
+用户 2026-11-15 裁定 `C，不行就B` ⇒ 先把 C 挖到底。**挖到了，答案是"不变色"。**
+
+**第一步：修好反编译**（上一版 `dump_code190.csx` 失败的原因）
+
+上一版用 `c.Instructions.ToString()`，在 UTMT 0.9.2 上 `Instructions` 不是带 ToString 反汇编的链表
+⇒ 拿到的是类型名 ⇒ **12186 段全部命中 0**，而且异常被 try/catch 吞掉，看起来"跑成功了"。
+★ 教训复述：**判据恒空 = 恒真的反面**。0 命中必须先怀疑"我根本没取到文本"。
+
+正确姿势抄自 UTMT 自带 `Scripts/Resource Exporters/ExportSpecificCode.csx`：
+
+```csharp
+var ctx = new UndertaleModLib.Decompiler.GlobalDecompileContext(Data);
+var st  = Data.ToolInfo.DecompilerSettings;
+string gml = new Underanalyzer.Decompiler.DecompileContext(ctx, code, st).DecompileToString();
+```
+
+`scan_code190.csx` 实测（黄魂）：
+
+| 指标 | 值 |
+|---|---|
+| 代码段总数 | **12186** |
+| 子代码段跳过 | 1189（`ParentEntry != null`，不能单独反编译） |
+| 实际反编译 | **10997** |
+| 反编译失败 | **0** |
+| 提到 `portrait` 的段 | **258** |
+| 提到 `image_blend`/`draw_sprite_ext` 的段 | 1712 |
+| 提到 shader/surface 的段 | 255 |
+| 耗时 | **1 s** |
+
+**第二步：看绘制代码**（`gml_Object_obj_dialogue_battle_Draw_64`）：
+
+```gml
+var portrait_y_disjoint = yy + (sprite_get_height(prt[message_current]) / 3) + 28;
+draw_sprite_ext(prt[message_current], prt_animate, portrait_xx, portrait_y_disjoint,
+                0.5, 0.5, 0, c_white, 1);        // ← 颜色参数写死 c_white
+```
+
+- 颜色参数 = **`c_white`（纯白 = 不着色、不染色）**
+- 缩放 **0.5**（110×106 的肖像在屏上只有 55×53 —— 所以是小尺寸线稿图标，不是大立绘）
+- 同一段里 `color == true` / `message_col` 那套是**文字**变色，跟肖像无关（别误读）
+
+**第三步：穷举确认**（把所有画肖像的调用都抓出来数）
+
+| 代码段 | 颜色参数 | 次数 |
+|---|---|---|
+| `obj_dialogue_postfight_flowey` | `c_white` | 3 |
+| `obj_dialogue` | `c_white` | 3 |
+| `obj_dialogue_battle` | `c_white` | 2 |
+| `obj_dialogue_nongui` | `c_white` | 2 |
+| `obj_dialogue_battle_asgore` | `c_white` | 2 |
+| `obj_dialogue_flowey_ending` | `c_white` | 2 |
+| `cutscene_dialogue_chujin` | `c_white` | 3 |
+| `battle_dummy_training_parent` | `c_white` | 1 |
+| `quote_battle_ffstarlo` | `c_white` | 1 |
+| **合计** | **全部 `c_white`** | **19** |
+
+⇒ **19/19 处全是不着色。黄魂在原作里就是黑白线稿肖像。**
+
+★★ 这条反而把 B 方案的性质改了：B 不是"画质降级的退路"，而是**忠于原作**的走法
+（对齐项目口径「一切根据原作」）。
+
+★ 仍未知（不影响结论）：`spr_portrait_*` 为什么不带色（美术风格 / 制作流程），
+以及游戏是否在别处对这些 sprite 做了整屏调色 —— 但**对话绘制这条主路径已经确证不着色**。
+
 
 ---
 
@@ -162,12 +228,19 @@ start=19 出  4096/4096 px，用   503/6309 B，透明 3973
 | 黄魂 UTY | 117 | **117** | 83 | 83 | **98** |
 | UT | 42 | **42** | 0 | 0 | 见 §3.2 |
 
-### 4.3 ★★ 代码反汇编那条路没通
+### 4.3 代码反汇编：第一版失败，第二版成功
 
-`dump_code190.csx` 扫 12186 个代码段，**命中 0**。
+**第一版 `dump_code190.csx` 失败**：扫 12186 个代码段**命中 0**。
 原因：`c.Instructions.ToString()` 在 UTMT 0.9.2 上取不到 GML 反汇编文本
 （异常被 try/catch 吞掉，所有 `txt` 都是空串）。
-⇒ "游戏是不是在运行时给肖像上色"这个问题的**代码侧证据本轮没拿到**。
+
+**第二版 `scan_code190.csx` 成功**：改用 UTMT 自带脚本的正确姿势
+（`new Underanalyzer.Decompiler.DecompileContext(ctx, code, st).DecompileToString()`），
+**10997 段反编译、0 失败、1 秒跑完、命中 portrait 258 段**。
+据此拿到 §3.4 的决定性证据。
+
+★ 这两版放在一起就是一条通用教训：**"0 命中"必须先当成"我没取到数据"来处理**，
+先证明分母（反编译成功了多少段）≠ 0，再谈命中率。
 
 ### 4.4 ★★★ E 盘坏点会让 UTMT 伪装成"代码写错了"
 
@@ -259,18 +332,66 @@ if written != len(uv):
 
 ---
 
-## 7. 待用户裁定（一个决定影响 8 个角色）
+## 7. 裁定结果：**C 已闭环（不着色）⇒ 走 B**
 
-黄魂 `spr_portrait_*` 是**黑白线稿**这件事，三个走法：
+用户 2026-11-15：`C，不行就B`
 
-| 走法 | 说明 | 代价 |
+| 走法 | 结论 |
+|---|---|
+| C（挖运行时上色） | **已闭环**：19/19 处绘制全用 `c_white`，原作不着色（§3.4） |
+| **B（黑白线稿直接当表情图）** | **采用**。而且不是退路 —— 原作就是黑白，走 B 才忠于「一切根据原作」 |
+| A（黄魂先不动） | 作废 |
+
+### 7.1 B 方案必须先处理的一件事：黑底
+
+`spr_portrait_*` 是 **100% 不透明、黑占 72%**（一个黑色矩形 + 白线）。
+桌宠说话气泡是浅色的，**白线 + 黑底直接贴上去既遮挡又难看**，所以必须先转：
+
+| 变体 | 处理 | 适用 |
 |---|---|---|
-| **A（推荐，符合"没有的不动"）** | 黄魂肖像**先不动**，登记为"有素材但无颜色"；先做 OneShot 21 人 + UT 彩色脸族 | 黄魂 8 人暂时没有表情 |
-| B | 把黑白线稿**直接当表情图用** | 风格突兀，和白彩素材混在一起 |
-| C | 继续挖"游戏是不是运行时上色" | 未知，可能挖不出来 |
+| `line` | 黑→透明，白线保留 | 深色气泡 |
+| **`ink`（默认）** | 黑→透明，白线**反相为黑线** | **浅色气泡（当前 UI）** |
 
-★ 我给的默认：**A**。理由：用户口径是"齐全的就正常做，没有的不动"，黑白线稿不算"齐全"；
-且它和我旧判据的冲突已经在 §3 澄清，不存在"我为了省事跳过"的动机。
+★ 判据（不许只做"看起来变了"）：转换后必须
+① 透明像素占比 ≈ 原黑占比（±2%）；
+② 非透明像素的 RGB ≈ 原白像素（或反相后全为黑）；
+③ 尺寸不变；
+④ 出图肉眼确认能认出角色。
+
+### 7.2 B 已落地：`ralsei_pet/assets/faces/`（190 个文件 / 29 个 id）
+
+脚本 `build_faces190.py`，产物在 `ralsei_pet/assets/faces/`：
+
+| 类别 | id 数 | 文件数 | 说明 |
+|---|---|---|---|
+| `expression`（能驱动情绪） | **8** | **164** | 黄魂 91 种情绪 × 帧。ace 6 / axis 9 / ceroba 28 / chujin 8 / ed 4 / mooch 8 / moray 6 / starlo 22 |
+| `portrait`（只能当身份卡） | **21** | **26** | OneShot 424×276 彩绘整图（含背景、100% 不透明） |
+| **合计** | **29** | **190** | manifest 在 `assets/faces/manifest.json` |
+
+**转换方式**：亮度→alpha（`alpha = L`，颜色统一成黑）。不硬切阈值，所以抗锯齿边缘不丢、
+近黑背景像素（如 `(42,6,24)`）也不会漏进画面。
+
+**四道闸（全绿）**：
+
+| 闸 | 判据 | 结果 |
+|---|---|---|
+| ① | 磁盘文件数 == manifest 条目数 | 190 / 190 |
+| ② | 源亮度(预乘) ≥128 的像素数 == 产物 `alpha≥128` 的像素数 | 抽检 164 张，偏差 >2 的 **0** |
+| ③ | 每个产物都能重新打开、尺寸与 manifest 一致 | 不一致 **0** |
+| ④ | 黄魂 8 个 id 全在；OneShot 21 个 id 全在 | 8/8 · 21/21 |
+
+★ **闸② 第一版写错了一次**：`to_ink` 的 alpha 是连续值 `L`，闸却用 `a > 0` 数"不透明"
+⇒ 任何 `L>0` 都算进去，必然比 `L>=128` 多，报出 15 张假红。
+教训：**闸的判据必须和被测实现同口径**，否则量的是两件事。
+
+**第五道闸（肉眼）**：把 8 张贴到浅米色底上看，Ace（帽子/面具）、Axis（天线/表情）
+轮廓清晰、不同情绪确实不同，背景已是浅底（黑砖去掉成功）。
+
+**如实跳过**：55 帧有肖像但项目里没有对应 id —— `kanako` / `asgore` / `alphys` / `fchujin`
+（黄魂里的 asgore/alphys 与项目 `ut_asgore`/`ot_alphys` 不是同一个角色，不许硬挂）。
+
+**验证**：全量回归 **186 套件 / PASS=8222 / FAIL=0**（新增素材未破坏任何既有判据）。
+
 
 ---
 

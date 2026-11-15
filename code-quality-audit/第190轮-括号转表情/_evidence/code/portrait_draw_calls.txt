@@ -1,0 +1,50 @@
+# 第190轮 · 黄魂「肖像怎么画的」证据摘录
+# 源：D:/_tmp190/hy_scan_code190/code_hits.txt（2.0 MB，全量不入库）
+# 生成：scan_code190.csx（反编译 10997 段 / 0 失败 / 命中 portrait 258 段）
+
+## 一、穷举：所有画肖像的 draw_sprite_ext 调用
+
+gml_Object_obj_dialogue_flowey_ending_Draw_64   color = c_white
+gml_Object_obj_dialogue_flowey_ending_Draw_64   color = c_white
+gml_Object_obj_quote_battle_ffstarlo_Draw_0     color = c_white
+gml_Object_obj_dialogue_battle_Draw_64          color = c_white
+gml_Object_obj_dialogue_battle_Draw_64          color = c_white
+gml_Object_obj_ceroba_phase_2_overworld_cutscene_dialogue_chujin_Draw_64  color = c_white
+gml_Object_obj_ceroba_phase_2_overworld_cutscene_dialogue_chujin_Draw_64  color = c_white
+gml_Object_obj_ceroba_phase_2_overworld_cutscene_dialogue_chujin_Draw_64  color = c_white
+gml_Object_obj_dialogue_Draw_64                 color = c_white
+gml_Object_obj_dialogue_Draw_64                 color = c_white
+gml_Object_obj_dialogue_Draw_64                 color = c_white
+gml_Object_obj_dialogue_nongui_Draw_0           color = c_white
+gml_Object_obj_dialogue_nongui_Draw_0           color = c_white
+gml_Object_obj_newhome_03_dialogue_postfight_flowey_Draw_64  color = c_white
+gml_Object_obj_newhome_03_dialogue_postfight_flowey_Draw_64  color = c_white
+gml_Object_obj_newhome_03_dialogue_postfight_flowey_Draw_64  color = c_white
+gml_Object_obj_dialogue_battle_asgore_Draw_64   color = c_white
+gml_Object_obj_dialogue_battle_asgore_Draw_64   color = c_white
+gml_Object_obj_quote_battle_dummy_training_parent_Draw_0  color = c_white
+
+## 二、计数：共 19 处，颜色参数去重后 = ['c_white']
+
+## 三、obj_dialogue_battle_Draw_64 的肖像绘制段（原文）
+
+var portrait_y_disjoint = yy + (sprite_get_height(prt[message_current]) / 3) + 28;
+    draw_sprite_ext(prt[message_current], prt_animate, portrait_xx, portrait_y_disjoint, 0.5, 0.5, 0, c_white, 1);
+    if (prt_animate == 0)
+    {
+        switch (prt[message_current])
+        {
+            case 343:
+                if (portrait_idle_animated == 0 && irandom(40) == 1)
+                {
+                    portrait_idle_animated = 346;
+                    portrait_idle_frame = 0;
+                }
+                if (portrait_idle_animated != 0)
+                {
+                    draw_sprite_ext(portrait_idle_animated, portrait_idle_frame, portrait_xx, portrait_y_disjoint, 0.5, 0.5, 0, c_white, 1);
+                    portrait_idle_frame += 0.2;
+                }
+                if (portrait_idle_frame >= sprite_get_number(portrait_idle_animated))
+                {
+                    po
