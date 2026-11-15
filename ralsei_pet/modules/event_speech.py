@@ -702,6 +702,148 @@ _BARE_LABEL_RE = re.compile(
     % (_BARE_MOD, _BARE_MOOD, _BARE_SUF))
 
 
+# ---------------------------------------------------------------------------
+# 末闸补：**残留括号**里的「外在表现」（第190轮续）
+#
+# 用户 2026-11-15 三条原话：
+#   ① `只有实质性的外在表现的才转成旁白，就比如动作，表情，不用连想一想都转`
+#   ② `像是和场景互动比如推开门这类的也不用，那些是场景能表达出来的`
+#   ③ `对话框也是要原作的那种哦，别一个对话框装n多条信息`
+#
+# 洞在哪
+# ------
+# 五道闸跑完仍有约 230 轮带括号（第189轮实测）。剩下的那些，甲闸抓不到是因为
+# **动词表里根本没有那些词** —— 实测 `（推开门）` / `（蹲下身子）` 原样留在台词里
+# 显示给用户看。用户现在给的处理口径是**分三类**：
+#
+#   · **场景交互**（推开门 / 走到 / 跳上 / 拿起）→ **删掉，不出旁白**
+#     场景里本来就有门、有动画，再用文字说一遍是冗余（口径②）
+#   · **角色自表示**（蹲下身子 / 拍了拍 / 叉腰）→ **删掉 + 出旁白**
+#     （口径①：实质性外在表现）
+#   · **内在活动**（`想了想` / `犹豫` / `沉思片刻`）→ **删掉，也不出旁白**
+#     ★★ 这条是 2026-11-15 用户第二次纠正才定下来的，我第一版把它归进了
+#     "原样保留"，错在把"不用连想一想都转"读成了"留着"。用户原话：
+#       `不不不，想一想这类的不留，旁白也只是负责，动作类，
+#        像是每一个想一想都播那就太麻烦了`
+#     ⇒ 见下方 `_INNER_ACT_VERBS`。**旁白只负责"看得见"的动作与表情。**
+#   · 其余（`（笑不出来）` / `（SANS! STOP BEING LAZY!）`）→ **原样保留**
+#     前者是状态不是动作（`A22g` 钉着），后者是台词
+#
+# ⚠️ 为什么**另立两张表**、不往 `_ACTION_VERBS` 里加词
+# ------------------------------------------------
+# 那张表是**甲闸**的判据，`A22g` 实测钉着"裸 `笑` 会让 `（笑不出来）` 被误杀"。
+# 一动它 `A22g` 就红。这两张表**只给末闸用**，甲闸行为逐字不变。
+#
+# ⚠️ 为什么末闸而不是新加一道闸
+# --------------------------
+# `check188 D2` 钉着「函数体里 `_ANY_PAREN_RE.sub` **恰好 4 处**」（闸序与条数是
+# 第188轮真场景锁下的）。扩末闸的职责不需要动这个数，新加一道就会红。
+# 末闸本来就是"清理活到这一步还剩的括号"的位置，加一类同职责形态不算混职。
+_SCENE_ACT_VERBS = (
+    u'推门|推|拉开|拉|开|关上|关|合上|按|踩|搬|搬起|扔|丢|捡|拾|插|拔|锁|'
+    u'走近|走到|走向|跑向|跑|跳上|跳下|爬上|爬下|探头|张望|伸手|'
+    u'拿|拿起|放下|放|掏|递|接过|举')
+#: 角色自身的表现（不涉及外部物体）。**只收甲闸没覆盖的**（甲闸已认"低头/抬头/
+#: 皱眉/点头/摇头/叹气/摸/拍…"），所以这张表故意很短 —— 收多了等于把甲闸复制一遍。
+_SELF_ACT_VERBS = (u'蹲|蹲下|蹲着|叉腰|愣住|愣|僵住|抿嘴|咬唇|挺直|绷紧|'
+                   # 2026-11-15 续二实测漏网：`（叹了口气）` / `（皱了皱眉）` 这两种
+                   # 中间被 `了` 拆开，`_ACTION_VERBS` 里的 `叹`/`皱眉` 拼不上，
+                   # 于是原样留在台词里给用户看。单列固定短语比放宽正则安全。
+                   u'叹了口气|叹口气|皱了皱眉|皱起眉头|抿了抿嘴|瘪了瘪嘴')
+
+_SCENE_ACT_RE = re.compile(
+    u'^\\s*(?:%s)?\\s*(?:%s)[^）)＊*]{0,12}\\s*$'
+    % (_ACTION_MODIFIERS, _SCENE_ACT_VERBS))
+_SELF_ACT_RE = re.compile(
+    u'^\\s*(?:%s)?\\s*(?:%s)[^）)＊*]{0,12}\\s*$'
+    % (_ACTION_MODIFIERS, _SELF_ACT_VERBS))
+
+#: 出现这些就**不认**成"外在表现"（否则会误伤心里话）：
+#:   · 人称代词 —— `（我想他大概是忘了）` 是心里话
+#:   · 认知/情态词 —— `（想了想）` 是内在活动（用户口径①明确说不用转）
+#:   · 否定 —— `（笑不出来）` 是状态不是动作，`A22g` 就靠它
+_EXT_ACT_DENY = (u'我', u'你', u'他', u'她', u'它', u'咱', u'想', u'觉得',
+                 u'应该', u'大概', u'可能', u'也许', u'好像', u'似乎',
+                 u'其实', u'因为', u'如果', u'但是', u'不过',
+                 u'不', u'没', u'别', u'若', u'要是')
+
+
+def is_scene_act(act):
+    """这段括号内容是不是**和场景/物体互动**（⇒ 删掉但**不出旁白**）。
+
+    ★ 用户口径②：`像是和场景互动比如推开门这类的也不用，那些是场景能表达出来的`
+    ★ 这个判定同时给两处用：末闸（决定删不删）与显示层（决定要不要说成旁白）。
+      两处**共用同一个函数**，免得"删了却又冒出一行旁白"这种自相矛盾。
+    """
+    s = (act or u'').strip() if isinstance(act, str) else u''
+    if not s:
+        return False
+    if any(d in s for d in _EXT_ACT_DENY):
+        return False
+    return bool(_SCENE_ACT_RE.match(s))
+
+
+def is_self_act(act):
+    """这段括号内容是不是**角色自身的外在表现**（⇒ 删掉 + 说成旁白）。"""
+    s = (act or u'').strip() if isinstance(act, str) else u''
+    if not s:
+        return False
+    if any(d in s for d in _EXT_ACT_DENY):
+        return False
+    return bool(_SELF_ACT_RE.match(s))
+
+
+# ---------------------------------------------------------------------------
+# 第三张表：**内在活动**（第190轮续二）—— 删掉，但**不出旁白**
+#
+# 用户 2026-11-15 原话（纠正我上一版的理解）：
+#   `不不不，想一想这类的不留，旁白也只是负责，动作类，
+#    像是每一个想一想都播那就太麻烦了`
+#
+# ★ 我上一版把「不用连想一想都转」读成了"**原样保留**在台词里"，是错的：
+#   "不留" = 连字都不要，直接从台词里删掉；同时**不许**冒出一行旁白 ——
+#   否则每句心里活动都要多播一屏，用户说的"太麻烦了"就是这个意思。
+#
+# 三类到此定型（三张表各管一类，互不重叠）：
+#   · `_SCENE_ACT_VERBS` 场景交互 → **删，不说**
+#   · `_INNER_ACT_VERBS` 内在活动 → **删，不说**   ← 本轮新增
+#   · `_SELF_ACT_VERBS`  外在表现 → **删，说成旁白**
+#
+# ⚠️ 为什么不把它并进 `_EXT_ACT_DENY`
+#   那张表是**否定表**（命中 = "不认成动作"），命中后括号会**原样留在台词里**。
+#   而这次要的是**删掉**，方向相反，只能另立一张。
+# ⚠️ 为什么用"整段匹配 + 12 字余量"而不是包含匹配
+#   `（我想想该怎么说）` 是**合法的第一人称心里话**，`C19`/`A22c` 都钉着它必须留下。
+#   整段匹配要求内在动词**在开头**（前面只允许挂程度副词），`我…` 开头的不命中，
+#   与既有契约天然不冲突。
+# ---------------------------------------------------------------------------
+_INNER_ACT_VERBS = (
+    u'想|想着|想了想|想到|寻思|琢磨|思考|沉思|思量|思忖|'
+    u'回忆|回想|记起|追忆|'
+    u'犹豫|纠结|盘算|猜测|心想|暗想|暗道|'
+    u'考虑|掂量|权衡|意识到|察觉|'
+    # 下两位来自 `_BARE_MOOD` / `_NARRATION_INNER` 已经会删的那批：
+    # 它们在**前几道闸**就被删并 `_note` 了，这里只负责"别把它们播成旁白"。
+    u'沉默|停顿')
+
+_INNER_ACT_RE = re.compile(
+    u'^\\s*(?:%s)?\\s*(?:%s)[^）)＊*]{0,12}\\s*$'
+    % (_ACTION_MODIFIERS, _INNER_ACT_VERBS))
+
+
+def is_inner_act(act):
+    """这段括号内容是不是**内在活动**（⇒ 删掉、也**不出旁白**）。
+
+    用户口径：`想一想这类的不留 … 每一个想一想都播那就太麻烦了`
+    ★ 返回 True 的两件事一起做：末闸**删掉**、显示层**不播**。
+      两个调用点共用本函数 —— 免得"删了却还在旁边念一行"。
+    """
+    s = (act or u'').strip() if isinstance(act, str) else u''
+    if not s:
+        return False
+    return bool(_INNER_ACT_RE.match(s))
+
+
 # 任意括号对（用于叙述形态的清理）
 # ★★★ 113轮e：原 `{0,40}` 上限太窄，模型写的旁白常超 40 字 ⇒ 丙闸根本没机会判。
 #   `[^）)]` 已保证不跨括号对，放宽到 200 不会吞掉后续台词。
@@ -770,7 +912,7 @@ def _rescue_voice(m):
     return m.group(0)
 
 
-def strip_action_parentheticals(text, sink=None):
+def strip_action_parentheticals(text, sink=None, pause_sink=None):
     """删掉台词里夹带的「括号旁白」，返回剩下的台词。
 
     ★★★ 第190轮新增 `sink`（用户口径：「括号里的内容也就是表情和动作，
@@ -778,6 +920,17 @@ def strip_action_parentheticals(text, sink=None):
 
         _acts = []
         clean = strip_action_parentheticals(text, sink=_acts)   # _acts 里是原片段
+
+    ★★★ 第190轮续二新增 `pause_sink`（用户口径：「**但一定要留时间**，
+    如果有，那就用动画表示哦」）：
+
+        _inner = []
+        clean = strip_action_parentheticals(text, sink=_acts, pause_sink=_inner)
+
+      **内在活动**（`想了想` / `犹豫` / `沉默片刻`）删掉之后：
+        · 不进 `sink` —— 它没有表情可换，也不许变成旁白（"每一个想一想都播太麻烦了"）
+        · 进 `pause_sink` —— 显示层据此**留一段停顿**，有对应动画就用动画演
+      两个通道**分开**是刻意的：合成一个通道，显示层就分不清"该说话"还是"该停顿"。
 
     返回值的语义**完全不变**（字符串）⇒ 既有调用方零影响。
 
@@ -808,17 +961,27 @@ def strip_action_parentheticals(text, sink=None):
         return ""
 
     def _note(removed):
-        """记下**真的被删掉**的那一段（供上层驱动表情）。
+        """记下**真的被删掉**的那一段（供上层驱动表情 / 停顿）。
 
         ★ 只在`各闸确实删了东西`时调用 —— 不能在函数末尾统一猜"大概删了什么"，
           否则拿到的是猜出来的旁白，不是实际删掉的。
         ★ 空串/纯空白/纯标点不记（`（）` 这种没有动作含义）。
+        ★★★ 第190轮续二：**内在活动改道去 `pause_sink`**。
+          把所有闸都塞进这一个出口，而不是逐个闸判断 —— 内在词会从甲/丙/戊
+          **任意一道**漏出来（`犹豫`走戊、`沉默片刻`走丙、`想了想`走末闸），
+          逐个改闸等于留一堆漏点；从出口分流则天然全覆盖。
         """
-        if sink is None:
+        if sink is None and pause_sink is None:
             return
         s = (removed or "").strip().strip("()（）[]【】")
         s = s.strip()
-        if s and re.search(r'[0-9A-Za-z\u4e00-\u9fff]', s):
+        if not (s and re.search(r'[0-9A-Za-z\u4e00-\u9fff]', s)):
+            return
+        if is_inner_act(s):
+            if pause_sink is not None:
+                pause_sink.append(s)
+            return
+        if sink is not None:
             sink.append(s)
 
     def _kill_narration(m):
@@ -832,14 +995,29 @@ def strip_action_parentheticals(text, sink=None):
         return m.group(0)              # 其余（含第一人称心里话）→ 原样保留
 
     def _kill_bare_label(m):
-        """戊闸替换：括号内容**整段**是裸情绪标签 → 清掉；其余原样留。
+        """末闸：括号内容**整段**是裸情绪标签 / 残留的外在表现 → 清掉；其余原样留。
 
         ★ 只认"整段等形态"，所以 `（笑不出来）`（`不出来` 不在后缀集）与
           `（微笑切面条）`（`微笑` 后面跟的是名词）都不会命中。
+        ★★ 第190轮续：多认**残留的外在表现**两类（见上方 `_SCENE_ACT_VERBS`
+          那张长注释）。场景交互与角色自表示**都删**，区别只在显示层：
+          场景类不出旁白（场景自己会表现），自表示类才说成旁白。
         """
         inner = (m.group(1) or "").strip()
+        # ★★ 第190轮续二：**内在活动**（`（想了想）` / `（犹豫）` / `（沉思片刻）`）
+        #   ⇒ 删掉；但要**留下时间**（用户：`但一定要留时间如果有，那就用动画表示哦`）。
+        #   `_note()` 内部会把它改道到 `pause_sink`，所以这里照常记一笔即可 ——
+        #   记了它不会变成旁白（`sink` 收不到），只会让显示层知道"这里该停顿一下"。
+        #   ★ 必须排在最前：`（犹豫）` 同时能命中下面的 `_BARE_LABEL_RE`，
+        #     先判内在，才能保证它走停顿通道而不是表情通道。
+        if is_inner_act(inner):
+            _note(inner)
+            return ""
         if _BARE_LABEL_RE.match(inner):
             _note(inner)               # ★ 裸情绪标签正是最想要的信号（（笑）（微笑））
+            return ""
+        if is_scene_act(inner) or is_self_act(inner):
+            _note(inner)               # ★ 外在表现也删；显示层再按类分流
             return ""
         return m.group(0)
 
@@ -954,6 +1132,39 @@ _ACT_EMOTION_RES = [(re.compile(p), e) for p, e in ACT_EMOTION_RULES]
 ACT_EMOTION_FALLBACK = 'neutral'
 
 
+def act_to_emotion_ex(act):
+    """→ `(emo, hit)`。`hit=True` 表示**语义上真的落到了一条具体情绪规则**。
+
+    ★★★ 第190轮续（用户：`括号里的东西有些没有表情的那就用旁白`）：
+      `act_to_emotion` 的"永远返回一个值"**不变**（老锁钉着，兜底 neutral），
+      但"到底有没有匹配到"必须能**被上层观测** —— 否则调用方分不清
+      「（苦笑）真匹配到 sad」和「（推开门）只好兜底 neutral」，
+      也就没法实现"没表情的走旁白"。
+
+    ★ 为什么用**第二个返回值**而不是把兜底改成 `None`：
+      改兜底会同时打破老锁（`check190 B` 段 10 条钉着"不许空着"）
+      和 `acts_to_emotion` 的全部调用方。加一个"旁路出口"是改动最小的做法。
+
+    >>> act_to_emotion_ex('苦笑')
+    ('sad', True)
+    >>> act_to_emotion_ex('轻轻敲了敲键盘')
+    ('neutral', False)
+    """
+    if not act:
+        return ACT_EMOTION_FALLBACK, False
+    if not isinstance(act, str):
+        try:
+            act = str(act)
+        except Exception:  # noqa: BLE001
+            return ACT_EMOTION_FALLBACK, False
+    for rx, emo in _ACT_EMOTION_RES:
+        if rx.search(act):
+            # ★ `neutral` 也可能是**规则的显式结果**（`点头|摇头|温柔|安心|平静|放松|咳`），
+            #   那是真匹配；只有"一条都不中"才叫没匹配。
+            return emo, True
+    return ACT_EMOTION_FALLBACK, False
+
+
 def act_to_emotion(act):
     """把一段括号动作/旁白映射成情绪键。**永远返回非空字符串**。
 
@@ -964,17 +1175,7 @@ def act_to_emotion(act):
     >>> act_to_emotion('轻轻敲了敲键盘')      # 没有情绪词 ⇒ 兜底，不空着
     'neutral'
     """
-    if not act:
-        return ACT_EMOTION_FALLBACK
-    if not isinstance(act, str):
-        try:
-            act = str(act)
-        except Exception:  # noqa: BLE001
-            return ACT_EMOTION_FALLBACK
-    for rx, emo in _ACT_EMOTION_RES:
-        if rx.search(act):
-            return emo
-    return ACT_EMOTION_FALLBACK
+    return act_to_emotion_ex(act)[0]
 
 
 def acts_to_emotion(acts):

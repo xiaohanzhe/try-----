@@ -71,6 +71,31 @@ except ImportError:  # 允许被包外单独导入（如单测直接跑本文件
     _sys2.path.append(_os2.path.dirname(_os2.path.abspath(__file__)))
     import dr_textbox as _drbox
 
+# ★★ 第190轮续：需要"这个动作**有没有**匹配到具体情绪"这个**可观测**结论。
+#   `event_speech` 是纯逻辑模块（只 import random/re，不碰 Qt）⇒ 不会形成环。
+#   取不到就退化成"永远没匹配"（全部走旁白）—— **宁可多说一句旁白，
+#   也不要静默地什么都不显示**（后者用户根本看不出发生了什么）。
+try:
+    from event_speech import act_to_emotion_ex as _act_ex
+    from event_speech import ACT_EMOTION_FALLBACK as _ACT_FALLBACK
+    from event_speech import is_scene_act as _is_scene_act
+    from event_speech import is_inner_act as _is_inner_act
+except ImportError:  # 允许被包外单独导入
+    try:
+        from modules.event_speech import act_to_emotion_ex as _act_ex
+        from modules.event_speech import ACT_EMOTION_FALLBACK as _ACT_FALLBACK
+        from modules.event_speech import is_scene_act as _is_scene_act
+        from modules.event_speech import is_inner_act as _is_inner_act
+    except ImportError:
+        _act_ex = None
+        _ACT_FALLBACK = 'neutral'
+
+        def _is_scene_act(act):
+            return False
+
+        def _is_inner_act(act):
+            return False
+
 _log = logging.getLogger(_pet_logger_name(__name__))
 
 
@@ -846,7 +871,44 @@ class DialogueUI(QWidget):
             _log.debug("dialogue_ui UI 缩放异常（已忽略）: %s", e)
         return self._ui_scale
 
+    #: 表情键 → 外部动画组名（第190轮续二）。
+    #: ★ 用户原话：`角色做出表情的时候原作有些时候也会配合一些外部动画来加强表示`
+    #: ★ 只列**确定存在**的组（`assets/animations.json` 里逐个核过），
+    #:   缺了的话 `play_animation_once` 会静默 `note_animation_miss` —— 不能靠猜。
+    #: ★ 只给 4 个"强情绪"配：`有些时候` 是被要求的，每个表情都抖反而吵。
+    EXPRESSION_ANIM = {
+        'happy': 'laugh',
+        'surprised': 'surprised',
+        'cry': 'cry',
+        'sad': 'sad',
+    }
+    #: 同一个表情的动画冷却（秒）：连聊三句不该抖三次。
+    EXPRESSION_ANIM_COOLDOWN = 2.5
+
     def set_face(self, face_type, char_id=None):
+        """贴头像（外层壳）：真正贴图在 `_set_face_apply`，这里补"表情配动画"。
+
+        ★★★ 第190轮续二（用户：`角色做出表情的时候原作有些时候也会配合一些
+          外部动画来加强表示`）：表情不能只换脸，还要偶尔配一个身体动画。
+          ★ 必须是**外层壳**而不是塞进 `_set_face_apply` 里 —— 那个函数有两条
+            `return`（角色素材 / Ralsei 老路径），逐个加调用迟早漏一条。
+        ★ 失败绝不影响贴图：动画是锦上添花，`_maybe_expression_anim` 自己吞异常。
+        """
+        self._set_face_apply(face_type, char_id)
+        self._maybe_expression_anim(face_type, char_id)
+
+    def _maybe_expression_anim(self, face_type, char_id=None):
+        """把"这个表情"交给宿主去演一段动画。拿不到能力就安静跳过。"""
+        fn = getattr(self.parent, 'play_expression_anim', None)
+        if not callable(fn):
+            return False
+        try:
+            return bool(fn(face_type, char_id))
+        except Exception as e:  # noqa: BLE001
+            _log.debug("dialogue_ui 表情动画失败（不影响贴图）: %s", e)
+            return False
+
+    def _set_face_apply(self, face_type, char_id=None):
         """贴头像。给了 `char_id` 就用**那个角色自己的**素材。
 
         ★★★ 第190轮（用户：`一视同仁，不再是主体为 ralsei 的项目了`）：
@@ -954,6 +1016,167 @@ class DialogueUI(QWidget):
         except Exception as e:  # noqa: BLE001
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
+    # ============================================== 表情 / 旁白 的分流（第190轮续）
+    #
+    # 用户 2026-11-15 原话：
+    #   `括号里的东西有些没有表情的那就用旁白，你还记得旁白是啥，对吧，
+    #    到时候就单独把那些括号交给旁白说就好`
+    #   （我追问口径，回答）`就是没表情素材可以用来当做那个括号里的东西用的时候`
+    #
+    # ⇒ 只有**真有一张对应这个动作的图**才占头像位；
+    #   凡是"只能退到正常脸"或"连正常脸都没有"的，一律把那段括号交给旁白说出来。
+    #   ★ "正常脸"算不算？**不算** —— 它不对应那个动作，用户说的是"能用来当作
+    #     那个括号里的东西用"。唯一例外是**规则显式命中 neutral** 的动作
+    #     （`（点头）`/`（温柔）`）：正常脸就是它的正解，不该为它单出一行旁白。
+
+    def _char_face_has_real(self, char_id, face_type):
+        """NPC：这个情绪在该角色素材里**有没有真对应它的图**（底图不算）。
+
+        ★ 只判存在性、不加载 pixmap —— 一句台词可能要好几次这种判断，
+          每次都 `get_face` 会把 UI 线程拖慢。
+        """
+        try:
+            loader = getattr(self.parent, 'sprite_loader', None)
+            has_f = getattr(loader, 'has_face_for', None)
+            if not callable(has_f):
+                return False
+            for nm in _char_face_candidates(face_type):
+                # ★★ 走到"底图档"就**停**：后面的名字全是 normal/neutral/default/plain，
+                #    命中它们只证明"这个角色有张正常脸"，不证明"有这张情绪图"。
+                #    （这也是"判据不许把底图算成命中"的落点。）
+                if nm in _CHAR_FACE_BASE_NAMES:
+                    break
+                try:
+                    if has_f(char_id, nm):
+                        return True
+                except Exception as e:  # noqa: BLE001
+                    _log.debug("dialogue_ui 判角色表情存在失败: %s", e)
+        except Exception as e:  # noqa: BLE001
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        return False
+
+    def _ralsei_face_has_real(self, face_type):
+        """Ralsei：走 `_FACE_MAP` + `ralsei_face/` 那条**老路径**。
+
+        ★ 不能拿 `char_id='ralsei'` 走上面那个方法：Ralsei 的素材是
+          `ralsei_face/face_*.png`（按长键命名），不是 `assets/faces/<id>/`
+          那套按情绪短键命名的目录 —— 走错了会把他的括号全判成"没表情"。
+        """
+        try:
+            name = _resolve_face_name(face_type)
+            if not name or name == 'face_normal':
+                return False
+            loader = getattr(self.parent, 'sprite_loader', None)
+            has = getattr(loader, 'has_face', None)
+            return bool(callable(has) and has(name))
+        except Exception as e:  # noqa: BLE001
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+            return False
+
+    def face_has_real(self, char_id, face_type):
+        """对外统一判「有没有**真对应**这个情绪的图」。`char_id=None` ⇒ Ralsei 老路径。"""
+        if char_id:
+            return self._char_face_has_real(char_id, face_type)
+        return self._ralsei_face_has_real(face_type)
+
+    def split_acts(self, char_id, acts):
+        """把这一句的括号动作分两路：**能换表情的** / **该说成旁白的**。
+
+        返回 `(face_key, narr)`：
+          · `face_key` —— 第一个**真能换出对应图**的情绪键；一个都换不出 ⇒ `None`
+          · `narr`     —— 换不出图的**原始括号片段**（保持出现顺序，交给旁白）
+
+        ★ 头像位只有一个，所以"能换表情"的只取**第一个**（与
+          `acts_to_emotion` 取第一个的口径一致：先出现的通常是这句的基调）；
+          但**旁白段可以有多条**，一个都不许丢。
+        """
+        face_key = None
+        face_soft = None
+        narr = []
+        for a in (acts or []):
+            if not a or not str(a).strip():
+                continue
+            # ★★★ 第190轮续（用户：`像是和场景互动比如推开门这类的也不用，
+            #   那些是场景能表达出来的`）⇒ 场景交互类**两样都不要**：
+            #   既不让它占头像位，也不说成旁白 —— 场景里本来就有门、有动画。
+            #   ★ 判定与末闸**共用同一个函数**，免得"这边删了、那边又冒出旁白"。
+            if _is_scene_act(a):
+                continue
+            # ★★★ 第190轮续二（用户：`想一想这类的不留，旁白也只是负责，动作类，
+            #   像是每一个想一想都播那就太麻烦了`）⇒ 内在活动**同样两样都不要**。
+            #   它们能被走到这里，是因为 `_BARE_MOOD`/`_NARRATION_INNER` 在前几道闸
+            #   就已经删掉并 `_note` 了（`（犹豫）`/`（沉默片刻）`/`（停顿了一下）`）。
+            #   末闸那份内在判定管"新出现的"，这份管"早期被删的" —— 两道都要，缺一就漏。
+            if _is_inner_act(a):
+                continue
+            try:
+                emo, hit = (_act_ex(a) if callable(_act_ex)
+                            else (_ACT_FALLBACK, False))
+            except Exception as e:  # noqa: BLE001
+                _log.debug("dialogue_ui 情绪映射失败: %s", e)
+                emo, hit = _ACT_FALLBACK, False
+            if not hit:
+                # 语义上就没匹配到任何情绪 ⇒ 没有"能代表它的表情" ⇒ 旁白
+                narr.append(a)
+                continue
+            if emo == _ACT_FALLBACK:
+                # 规则**显式**命中中性（`点头`/`摇头`/`温柔`/`安心`/`平静`/`放松`/`咳`）：
+                # 正常脸就是它的正解 ⇒ 只保底贴个正常脸，不出旁白
+                if face_soft is None:
+                    face_soft = emo
+                continue
+            if self.face_has_real(char_id, emo):
+                if face_key is None:
+                    face_key = emo
+            else:
+                # 语义对上了，但这个角色**没有那张图**（只能退正常脸）⇒ 旁白
+                narr.append(a)
+        return (face_key or face_soft), narr
+
+    def _narration_html(self, text):
+        """旁白一行的 HTML 片段（**纯拼接，不刷新** —— 让调用方只刷一次）。
+
+        ★ 与 `▸ 名字: 台词` 在视觉上必须**一眼分得开**，否则读起来像"有个人
+          名字叫旁白"：无 `▸`、无名字、斜体、颜色比正文暗一档。
+        """
+        import html as _html
+        s = str(text or '').strip()
+        if not s:
+            return ''
+        return (f'<div style="color:#a9a29a;font-size:{self._html_pt(10)}pt;'
+                f'line-height:1.45;font-style:italic;margin:2px 0 2px 6px;">'
+                f'{_html.escape(s)}</div>')
+
+    def add_narration(self, text):
+        """**旁白**：没有说话人的第三人称叙述（原作 `scr_noface`）。
+
+        用户 2026-11-15：`到时候就单独把那些括号交给旁白说就好`
+
+        ★ 走历史区而不是前台打字机 —— 前台是 Ralsei 的显示位，旁白不该抢它。
+        """
+        blob = self._narration_html(text)
+        if not blob:
+            return False
+        self._history_html += blob
+        self._refresh_display()
+        return True
+
+    def _acts_of_this_line(self):
+        """取这一句的括号原始片段（**取出即清**）。取不到 ⇒ 空列表。
+
+        ★ 优先用 `main.pop_pending_paren_acts()`（信息更全：能逐条判）；
+          老宿主没有这个方法就退回标量情绪（`pop_pending_face_emotion`），
+          那条路径下"没表情的括号"**没法还原成原文**，只能维持旧行为。
+        """
+        p = getattr(self.parent, 'pop_pending_paren_acts', None)
+        if callable(p):
+            try:
+                return list(p() or [])
+            except Exception as e:  # noqa: BLE001
+                _log.debug("dialogue_ui 取括号片段失败: %s", e)
+                return []
+        return []
+
     # ---------------------------------------------------------------- typing
     def add_dialogue(self, speaker, message, face_type="normal", _streamed=False):
         # 修复：消息类型防护 + HTML 转义。
@@ -1018,20 +1241,31 @@ class DialogueUI(QWidget):
                 _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
                 _label = speaker
             self._reset_front_stage()
+            self._npc_line_begin()      # ★ 一个框只装当前这一条（原作口径）
             # ★ 贴 NPC 自己的脸。放在 `_reset_front_stage()` 之后（它现在不碰头像，
             #   但顺序摆对，以后改了也不会被冲掉）。拿不到素材会自动回落 Ralsei 的
             #   `face_normal`，所以对没有素材的 28 个角色行为与改动前一致。
             # ★★ 情绪取法：**这一句的括号优先**（NPC 的话也走 `_clean_ai_reply`，
             #   括号同样被 sink 收集过），没有括号才用传进来的 face_type。
+            #   第190轮续：括号还要**逐条**分两路 —— 换不出图的交给旁白。
             _nface = face_type
-            _pop = getattr(self.parent, 'pop_pending_face_emotion', None)
-            if callable(_pop):
-                try:
-                    _nface = _pop() or _nface
-                except Exception as e:  # noqa: BLE001
-                    _log.debug("dialogue_ui 取 NPC 括号表情失败: %s", e)
-                    _nface = face_type
+            _acts = self._acts_of_this_line()
+            _narr = []
+            if _acts:
+                _k, _narr = self.split_acts(speaker, _acts)
+                if _k:
+                    _nface = _k
+            else:
+                _pop = getattr(self.parent, 'pop_pending_face_emotion', None)
+                if callable(_pop):
+                    try:
+                        _nface = _pop() or _nface
+                    except Exception as e:  # noqa: BLE001
+                        _log.debug("dialogue_ui 取 NPC 括号表情失败: %s", e)
+                        _nface = face_type
             self.set_face(_nface, char_id=speaker)
+            # 旁白在本句台词**之前**：括号是动作，动作先于说话
+            self._history_html += ''.join(self._narration_html(n) for n in _narr)
             # ★★ 第113轮h：`caps` 登记角色的「全大写」放在**渲染层**做，不逼模型输出英文。
             #   缘起：`hy_guardener` 人设原文要求「所有对话都以大写字母输出」，可中文
             #   没有大小写 —— 模型收到这条只能改去说英文（实测中文占比 0.00，36/36 轮）。
@@ -1053,7 +1287,18 @@ class DialogueUI(QWidget):
             self.is_typing = False
             self._refresh_display()
         elif speaker == "ralsei":
-            self.set_face(face_type)
+            # ★★ 第190轮续：括号**逐条**分两路 —— 能换表情的占头像位，
+            #   换不出图的交给旁白（用户：`有些没有表情的那就用旁白`）。
+            #   ★ 这里才是 Ralsei 带括号回复的**真入口**：事件台词与 AI 回复都走
+            #     `add_dialogue("ralsei", ...)`，而不是 `show_dialogue(message)`。
+            _acts = self._acts_of_this_line()
+            _narr = []
+            _rface = face_type
+            if _acts:
+                _k, _narr = self.split_acts(None, _acts)
+                if _k:
+                    _rface = _k
+            self.set_face(_rface)
             if _streamed:
                 # 流式（S8）：这段回复在流式期间**已经逐字显示在前台**了，所以
                 #   ① 不能走 `_start_typing`（会从第 0 字重打一遍，视觉上闪一下再重来）；
@@ -1069,6 +1314,11 @@ class DialogueUI(QWidget):
                 #   必须放在上面那句 commit **之后**（否则刚清完又被追加回来）。
                 self._maybe_break_turn(_turn_gap)
                 self._start_typing(message)   # 传原文，渲染时才转义（见 _refresh_display）
+            # ★★ 第190轮续：旁白追加在**历史区末尾**（前台是这句台词本身）⇒
+            #   视觉顺序就是"先动作、后说话"，且 `_maybe_break_turn` 已经把上一轮
+            #   清掉，所以它一定落在这一轮里面，不会被当成上一句的尾巴。
+            for _n in _narr:
+                self.add_narration(_n)
         else:
             # 用户说的话：先打断打字机，再把上一条Ralsei并入历史，然后追加用户消息
             self.stop_typing()
@@ -1166,6 +1416,20 @@ class DialogueUI(QWidget):
         self._refresh_display()
         return True
 
+    def _npc_line_begin(self):
+        """NPC 台词开场：**清空历史区**，一个框只装当前这一条。
+
+        ★★★ 用户 2026-11-15：`对话框也是要原作的那种哦，别一个对话框装n多条信息`
+          原作是一个文本框显示**当前这一页**，按 Z 才往下走 —— 不是把历史往下堆。
+
+        ★ 为什么 NPC 用"直接清"而不是 Ralsei 那条 `_maybe_break_turn(间隔)`：
+          NPC 台词**不经过** `_note_focus`，没有可靠的时间戳可算间隔；
+          而且 NPC 一次事件本来就说一句，"堆起来"只可能是几个事件挤进一个框，
+          那正是用户不要的。Ralsei 侧仍走第52轮那套（同拍保留 / 跨拍让位），
+          一个字没动（`dialog_turn52` 守着）。
+        """
+        self._history_html = ""
+
     def add_npc_line(self, label, text, char_id=None):
         """「某人说：…」的显示出口（★ 第55轮）。**不进 Ralsei 的历史/话题锚/拟人记忆。**
 
@@ -1184,11 +1448,20 @@ class DialogueUI(QWidget):
         safe_label = _html.escape(str(label or '?'))
         safe_msg = _html.escape(text)
         self._reset_front_stage()
+        self._npc_line_begin()          # ★ 一个框只装当前这一条（原作口径）
         # ★ 贴这个 NPC 自己的脸。情绪取值：**这一句的括号优先**
         #   （NPC 回复也过 `_clean_ai_reply`，括号同样被 sink 收集过），
         #   没有括号就退回 normal。
-        if char_id:
-            _nface = 'normal'
+        # ★★ 第190轮续：括号要**逐条**分两路 —— 能换表情的占头像位，
+        #   换不出图的交给旁白（用户：`有些没有表情的那就用旁白`）。
+        _nface = 'normal'
+        _acts = self._acts_of_this_line()
+        _narr = []
+        if _acts:
+            _k, _narr = self.split_acts(char_id, _acts)
+            if _k:
+                _nface = _k
+        else:
             _pop = getattr(self.parent, 'pop_pending_face_emotion', None)
             if callable(_pop):
                 try:
@@ -1196,7 +1469,10 @@ class DialogueUI(QWidget):
                 except Exception as e:  # noqa: BLE001
                     _log.debug("dialogue_ui 取 NPC 括号表情失败: %s", e)
                     _nface = 'normal'
+        if char_id:
             self.set_face(_nface, char_id=char_id)
+        # 旁白在本句台词**之前**：括号是动作，动作先于说话
+        self._history_html += ''.join(self._narration_html(n) for n in _narr)
         self._history_html += (
             f'<div style="color:#c9a86a;font-size:{self._html_pt(10)}pt;line-height:1.45;'
             f'margin:2px 0 2px 0;">▸ {safe_label}: {safe_msg}</div>')
@@ -1865,28 +2141,30 @@ class DialogueUI(QWidget):
         if message:
             # ★★★ 第190轮：**台词里的括号动作优先**（用户：「括号里的内容也就是表情
             #   和动作，用人物动画和表情头像表示」）。
-            #   括号情绪由 `main._clean_ai_reply` 在删括号时记下，这里取走（取出即清）。
-            #   ★ 与下面 `emotion_system` 那条的分工：
-            #     · 有括号 → 用括号里的情绪（这一句**当场**在笑/在气，优先级最高）
-            #     · 没括号 → 才按角色当前的心情取（老路径，一字未改）
+            #   ★★ 第190轮续：括号的**取用与分流**统一挪进 `add_dialogue` ——
+            #     因为 Ralsei 的带括号回复（事件台词 / AI 回复）实际走的是
+            #     `add_dialogue(...)` + `show_dialogue()`（无参），**不经过这里**；
+            #     而"哪条括号能换表情、哪条要当旁白"只有到那一层才判得准。
+            #     这里只做**看**（peek），不抢状态：没有括号才退回"按当前心情"。
             if face_type is None:
-                _pop = getattr(self.parent, 'pop_pending_face_emotion', None)
-                if callable(_pop):
+                _peek = getattr(self.parent, 'peek_pending_paren_acts', None)
+                _has_acts = False
+                if callable(_peek):
                     try:
-                        face_type = _pop()
+                        _has_acts = bool(_peek() or [])
                     except Exception as e:  # noqa: BLE001
-                        _log.debug("dialogue_ui 取括号表情失败: %s", e)
-                        face_type = None
-            # 如果未指定表情，尝试使用当前情绪对应的表情
-            if face_type is None:
-                try:
-                    current_emotion, emotion_value = \
-                        self.parent.emotion_system.get_current_emotion()
-                    intensity = abs(emotion_value)
-                    face_type = self.parent.emotion_system.get_face_for_emotion(
-                        current_emotion, intensity)
-                except Exception:
-                    face_type = "normal"
+                        _log.debug("dialogue_ui peek 括号失败: %s", e)
+                        _has_acts = False
+                if not _has_acts:
+                    # 如果未指定表情，尝试使用当前情绪对应的表情
+                    try:
+                        current_emotion, emotion_value = \
+                            self.parent.emotion_system.get_current_emotion()
+                        intensity = abs(emotion_value)
+                        face_type = self.parent.emotion_system.get_face_for_emotion(
+                            current_emotion, intensity)
+                    except Exception:
+                        face_type = "normal"
             self.add_dialogue("ralsei", message, face_type)
         self.show()
         # show 之后再定位：_position_above_ralsei 在不可见时会提前 return，

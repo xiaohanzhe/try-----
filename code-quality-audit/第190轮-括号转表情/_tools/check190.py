@@ -34,7 +34,21 @@ E 段不测"函数返回了值"，而是**拿真实素材清单验"一定拿得�
 
 ## 分段
 
-A sink 通道 6 · B 情绪映射 10 · C 别名链 6 · D 接线 8 · E 素材可达 5 · F 自检 3 = **38 条**
+A sink 通道 6 · B 情绪映射 10 · C 别名链 6 · D 接线 8 · E 素材可达 5 ·
+G 旁白/三类分流 14 · F 自检 3 = **52 条**
+
+## 第190轮续二：三类的边界（G10~G11b）
+
+用户第二次纠正后定型（原话见 G10 段上方）：
+
+| 括号内容 | 台词留字 | 出旁白 | 备注 |
+|---|---|---|---|
+| 场景交互（推开门/走到窗边） | ✘ | ✘ | 场景自己能表达 |
+| **内在活动（想了想/犹豫/沉默片刻）** | ✘ | ✘ | `每一个想一想都播那就太麻烦了` |
+| 外在表现（叹气/苦笑/蹲下/叉腰） | ✘ | ✔ | 就是"看得见"的那类 |
+
+★ G4/G5/G5b 的样例在续二里**换过一次**（`推开门` → `敲键盘`）：不是放宽判据，
+  而是 `推开门` 归入场景类后"不出旁白"才是正解，拿它当"映射不到"的替身属于**夹具过期**。
 """
 import ast
 import io
@@ -362,10 +376,306 @@ else:
           % len(_E2E), not _e2e_bad, u'断链的 %r' % (_e2e_bad[:3],))
 
 
+# ================================================================ G 旁白分流
+print('\n=== G 旁白分流（没表情可用的括号 ⇒ 交给旁白说出来）===')
+
+# ★★★ 用户 2026-11-15：
+#   `括号里的东西有些没有表情的那就用旁白，你还记得旁白是啥，对吧，
+#    到时候就单独把那些括号交给旁白说就好`
+#   （我追问"没有表情"按哪个口径判）`就是没表情素材可以用来当做那个括号里的
+#    东西用的时候`
+#
+# ⇒ 判据的核心是**素材层**"有没有真对应这张图"，不是"语义上对不对"：
+#   语义对上了、但只能退到正常脸，也**算没表情** ⇒ 走旁白。
+
+
+class _FakeUI(object):
+    """假 self：只提供 `split_acts` 需要的 `face_has_real`。
+
+    ★ 为什么不建真 `DialogueUI`：那要 QApplication + 整套控件，而本套件
+      从头到尾"零 Qt 构造"。`split_acts` 里除了 `self.face_has_real(...)`
+      全是模块级函数 ⇒ 假 self 就够，而且能**精确指定**哪些 (角色, 情绪)
+      有真图 —— 测的是分流逻辑本身，不是素材。
+    """
+
+    def __init__(self, real):
+        self._real = set(real)
+
+    def face_has_real(self, char_id, face_type):
+        return (str(char_id), str(face_type)) in self._real
+
+
+def _split(real, cid, acts):
+    return D.DialogueUI.split_acts(_FakeUI(real), cid, acts)
+
+
+# G1 映射的双出口：真匹配 hit=True / 兜底 hit=False；
+#    老接口 `act_to_emotion` 的"永远非空"**一个字没变**
+_ex_real = E.act_to_emotion_ex(u'苦笑')
+_ex_fall = E.act_to_emotion_ex(u'轻轻敲了敲键盘')
+check(u'G1 映射双出口：真匹配 hit=True / 兜底 hit=False，且老接口仍永远非空',
+      _ex_real == ('sad', True) and _ex_fall == ('neutral', False)
+      and E.act_to_emotion(u'轻轻敲了敲键盘') == 'neutral',
+      u'苦笑=%r 敲键盘=%r' % (_ex_real, _ex_fall))
+
+# G2 ★ 负控制：该角色**真有**这张情绪图 ⇒ 换表情、**不许**出旁白
+_fk, _nr = _split([('hy_x', 'smile')], 'hy_x', [u'笑'])
+check(u'G2 负控制：真有对应图 ⇒ 换表情且**不出**旁白（旁白不能乱冒）',
+      _fk == 'smile' and _nr == [], u'face=%r narr=%r' % (_fk, _nr))
+
+# G3 ★★★ 用户口径的落点：只能退到正常脸 ⇒ 算"没表情" ⇒ 走旁白
+_fk, _nr = _split([], 'hy_x', [u'笑'])
+check(u'G3 ★★★ 只有底图可用 ⇒ 该括号进旁白、头像位不占（用户口径）',
+      _fk is None and _nr == [u'笑'], u'face=%r narr=%r' % (_fk, _nr))
+
+# G4 语义上就没匹配到任何情绪 ⇒ 同样走旁白
+#    ★★ 第190轮续二换样例（引账，不是调数）：原来拿 `推开门` 当"映射不到"的替身，
+#      可这个词现在归**场景类**（用户：`像是和场景互动比如推开门这类的也不用`），
+#      它"不出旁白"才是对的 —— 用它当替身会和新口径打架，属于**夹具过期**。
+#      改用 `敲键盘`：`G1` 已实测 `hit=False`，且场景/内在/外在三张表都不认它。
+_fk, _nr = _split([('hy_x', 'neutral')], 'hy_x', [u'敲键盘'])
+check(u'G4 语义没匹配到任何情绪 ⇒ 走旁白（即使该角色有正常脸）',
+      _fk is None and _nr == [u'敲键盘'], u'face=%r narr=%r' % (_fk, _nr))
+
+# G5 混合：一句两条括号，一条能换、一条不能 ⇒ 头像位取能换的那条，
+#    另一条照样**一条不丢**地进旁白
+_fk, _nr = _split([('hy_x', 'smile')], 'hy_x', [u'笑', u'敲键盘'])
+check(u'G5 混合括号：能换表情的占头像位，另一条**不丢**、进旁白',
+      _fk == 'smile' and _nr == [u'敲键盘'], u'face=%r narr=%r' % (_fk, _nr))
+
+# G5b 反过来（能换的在后）：头像位仍归它 ⇒ 顺序不影响"谁占位"
+_fk, _nr = _split([('hy_x', 'cry')], 'hy_x', [u'敲键盘', u'哭'])
+check(u'G5b 能换表情的那条在后 ⇒ 仍占头像位，旁白只留换不出的那条',
+      _fk == 'cry' and _nr == [u'敲键盘'], u'face=%r narr=%r' % (_fk, _nr))
+
+# G6 边界：规则**显式**命中中性（点头/摇头/温柔…）⇒ 正常脸就是它的正解，
+#    **不该**为它单出一行旁白（否则每句"（点头）"都多一行，很吵）
+_fk, _nr = _split([], 'hy_x', [u'点头'])
+check(u'G6 边界：显式中性动作（点头）⇒ 贴正常脸、**不**出旁白',
+      _fk == 'neutral' and _nr == [], u'face=%r narr=%r' % (_fk, _nr))
+
+# ---------------------------------------------------------------------------
+# G10~G11b（第190轮续二）：用户 2026-11-15 的第二轮口径
+#
+#   `不不不，想一想这类的不留，旁白也只是负责，动作类，
+#    像是每一个想一想都播那就太麻烦了`
+#   `但一定要留时间如果有，那就用动画表示哦`
+#
+# ⇒ 三类定型：场景交互**删不说** / 内在活动**删不说** / 外在表现**删+说**。
+#   旁白的职责被收窄成"只负责看得见的东西"。
+# ---------------------------------------------------------------------------
+
+# G10 ★★★ 场景交互类：即使它一条情绪规则都映射不上，也**不许**变成旁白。
+#     这条是 G4 的反面 —— 两条合起来才说明"进旁白"是有门槛的，不是兜底垃圾桶。
+_fk, _nr = _split([('hy_x', 'smile')], 'hy_x', [u'推开门', u'笑'])
+check(u'G10 场景交互类：映射不上也**不许**进旁白（场景自己能表达）',
+      _fk == 'smile' and _nr == [], u'face=%r narr=%r' % (_fk, _nr))
+
+# G11 ★★★ 内在活动：台词里**一个字都不留**，而且**一声旁白都不出**
+_i_acts = []
+_i_clean = E.strip_action_parentheticals(u'（想了想）也许吧。', sink=_i_acts)
+_fk, _nr = _split([('hy_x', 'neutral')], 'hy_x', _i_acts)
+check(u'G11 内在活动：台词里删干净、且不冒旁白（`太麻烦了`）',
+      (u'想了想' not in _i_clean) and (_nr == []) and (_fk is None),
+      u'clean=%r acts=%r narr=%r' % (_i_clean, _i_acts, _nr))
+
+# G11b 早期闸（`_BARE_MOOD`/`_NARRATION_INNER`）删掉的内在词**会进 sink**，
+#      所以分流层必须自己再挡一道 —— 少这一道，`（犹豫）`照样会变成一行旁白。
+_fk, _nr = _split([('hy_x', 'neutral')], 'hy_x', [u'犹豫', u'沉默片刻'])
+check(u'G11b 早期闸删掉的内在词：进得了 sink，分流层也必须**挡住不播**',
+      _nr == [], u'face=%r narr=%r' % (_fk, _nr))
+
+
+# G7 旁白渲染：**没有说话人**（无 `▸`、无名字）且斜体 ——
+#    否则读起来像"有个人名字叫旁白"
+class _FakeHtml(object):
+    def _html_pt(self, n):
+        return int(n)
+
+
+_blank = D.DialogueUI._narration_html(_FakeHtml(), u'推开门')
+check(u'G7 旁白渲染**无说话人**（没有 `▸`、没有名字、斜体）',
+      bool(_blank) and (u'\u25b8' not in _blank) and (u'italic' in _blank)
+      and u'推开门' in _blank, _blank[:64])
+check(u'G7b 空/纯空白不进历史（负控制：别凭空多一行空旁白）',
+      D.DialogueUI._narration_html(_FakeHtml(), u'   ') == u''
+      and D.DialogueUI._narration_html(_FakeHtml(), None) == u'')
+
+# G8 取出即清：两个出口共用一份状态，取任一个都要把另一个清掉，
+#    否则"先取了片段、情绪还挂着"⇒ 下一句凭空多一个表情。
+#    ★ main 构造太重（QApplication + 整套真机），这里只能 AST 判**赋值** ——
+#      能证明的是"两个方法各自真的清了对方那一半"，**不是端到端行为**，如实标注。
+#    ★ 第一版用 `ast.dump` 取函数体去搜字符串，撞上 F2 的"禁止 dump"（那是防写盘
+#      的闸）⇒ 判据误报。改成**结构化判 `self.<attr> = ...`**，既更严也不撞闸。
+_main_tree_g = ast.parse(rd(MAIN_PY))
+
+
+def _self_assigns(fn_name):
+    """该函数体里所有 `self.<attr> = ...` 的 attr 名集合（不看字符串）。"""
+    out = set()
+    for node in ast.walk(_main_tree_g):
+        if isinstance(node, ast.FunctionDef) and node.name == fn_name:
+            for sub in ast.walk(node):
+                if isinstance(sub, ast.Assign):
+                    for t in sub.targets:
+                        if (isinstance(t, ast.Attribute)
+                                and isinstance(t.value, ast.Name)
+                                and t.value.id == 'self'):
+                            out.add(t.attr)
+    return out
+
+
+_a_acts = _self_assigns('pop_pending_paren_acts')
+_a_face = _self_assigns('pop_pending_face_emotion')
+check(u'G8 两个 pop 互相清状态（取一个就把另一个也清掉，防串句）',
+      bool(_a_acts) and bool(_a_face)
+      and '_pending_face_emotion' in _a_acts
+      and '_pending_paren_acts' in _a_face,
+      u'paren_acts 清 %r · face_emotion 清 %r' % (sorted(_a_acts), sorted(_a_face)))
+
+# G9 接线：两条**显示路径**都真的调了"取片段 + 拼旁白"
+#    ★ 用 AST 找**调用**，不扫文本 —— 注释里也有这两个名字，纯文本扫会假绿。
+_du_tree_g = ast.parse(rd(DU_PY))
+_acts_calls = []
+_narr_calls = []
+for node in ast.walk(_du_tree_g):
+    if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+        if node.func.attr == '_acts_of_this_line':
+            _acts_calls.append(getattr(node, 'lineno', -1))
+        elif node.func.attr in ('_narration_html', 'add_narration'):
+            _narr_calls.append(getattr(node, 'lineno', -1))
+check(u'G9 接线：`add_npc_line` / Ralsei / NPC 三条路径都取了片段，且都拼了旁白',
+      len(_acts_calls) >= 3 and len(_narr_calls) >= 3,
+      u'取片段 %r · 拼旁白 %r' % (_acts_calls, _narr_calls))
+
+# ===========================================================================
+# H 表演层（第190轮续二）：留时间 / 用动画 / 表情配动画
+#
+# 用户 2026-11-15 两条原话：
+#   `但一定要留时间如果有，那就用动画表示哦`
+#   `角色做出表情的时候原作有些时候也会配合一些外部动画来加强表示`
+#
+# ★ 这一段所有判据都要能看见"演不出来"的失败形态：动画名写错时
+#   `play_animation_once` 只 `note_animation_miss` 然后静默返回 False ——
+#   行为上完全看不出来。所以 H2 直接核 `animations.json` 里的组名。
+# ===========================================================================
+
+# H1 双通道：内在活动**只**进 `pause_sink`，一个都不许漏进 `sink`
+#    （漏进去就会被说成旁白 —— 用户：`每一个想一想都播那就太麻烦了`）
+_p1, _i1 = [], []
+_c1 = E.strip_action_parentheticals(u'（想了想）也许吧。', sink=_p1, pause_sink=_i1)
+_p2, _i2 = [], []
+_c2 = E.strip_action_parentheticals(u'（叹了口气）好吧。', sink=_p2, pause_sink=_i2)
+check(u'H1 双通道分离：内在活动只进 pause（不播），外在表现只进 sink（要播）',
+      (_i1 == [u'想了想'] and _p1 == []) and (_p2 == [u'叹了口气'] and _i2 == []),
+      u'内在→sink=%r pause=%r · 外在→sink=%r pause=%r'
+      % (_p1, _i1, _p2, _i2))
+
+# H2 ★★★ 动画名必须是 `animations.json` 里**真实存在**的组。
+#    否则 `play_animation_once` 静默返回 False ⇒ "说了要演、其实永远不演"，
+#    而且从任何行为断言上都看不出来（这是本项目最怕的失败形态）。
+_anim_path = os.path.join(REPO, 'ralsei_pet', 'assets', 'animations.json')
+try:
+    _anim_groups = set(json.loads(rd(_anim_path)).get('groups') or {})
+except Exception:
+    _anim_groups = set()
+_need_anims = {u'look_up'}
+try:
+    _need_anims |= set(D.DialogueUI.EXPRESSION_ANIM.values())
+except Exception:
+    _need_anims |= {u'laugh', u'surprised', u'cry', u'sad'}
+_miss_anim = sorted(_need_anims - _anim_groups)
+check(u'H2 ★ 每个用到的动画名都在 animations.json 里（写错不报错，只会永不播）',
+      bool(_anim_groups) and not _miss_anim,
+      u'用到 %r · 缺失 %r · 清单 %d 组'
+      % (sorted(_need_anims), _miss_anim, len(_anim_groups)))
+
+# H3 "先想再说"用的是**定时器**，不是动画完成回调
+#    ★ 理由：动画可能被 `change_animation` 的状态锁拦下（返回 False），
+#      回调就永远不来 ⇒ 台词永远不显示。"沉默"是这里最坏的失败方式。
+_h3 = None
+for node in ast.walk(_main_tree_g):
+    if isinstance(node, ast.FunctionDef) and node.name == '_event_say_after_thinking':
+        _h3 = node
+_timers = 0
+_anim_cb = 0
+_speak_def = False
+if _h3 is not None:
+    for sub in ast.walk(_h3):
+        if isinstance(sub, ast.FunctionDef) and sub.name == '_speak':
+            _speak_def = True
+        if isinstance(sub, ast.Call) and isinstance(sub.func, ast.Attribute):
+            if sub.func.attr == 'singleShot':
+                _timers += 1
+            if sub.func.attr == 'play_animation_once':
+                for kw in sub.keywords:
+                    if kw.arg == 'callback':
+                        _anim_cb += 1
+check(u'H3 「想一想」用定时器驱动说话，且**不**把说话挂在动画回调上',
+      (_h3 is not None) and _timers >= 1 and _speak_def and _anim_cb == 0,
+      u'找到函数=%s · singleShot=%d · _speak=%s · 动画回调=%d'
+      % (_h3 is not None, _timers, _speak_def, _anim_cb))
+
+# H4 `set_face` 必须是**外层壳**（先 `_set_face_apply` 再配动画）
+#    ★ 为什么不把动画直接塞进 `_set_face_apply`：那个函数里有**两条贴图分支**
+#      （角色素材命中 → 立刻 return；否则走 Ralsei 老路径），逐个加调用迟早漏一条。
+#      这里不数 `return`（它只有 1 条显式 return + 末尾落空），改判"两条分支都在"——
+#      即内层同时调了 `_char_face_pixmap` 与 `get_face`。少任何一条，说明有人把
+#      回落路径删了，那时"外壳"这个结构也就不再必要了，判据应该叫起来。
+_du_tree_h = ast.parse(rd(DU_PY))
+_shell = None
+_apply = None
+for node in ast.walk(_du_tree_h):
+    if isinstance(node, ast.FunctionDef) and node.name == 'set_face':
+        _shell = node
+    if isinstance(node, ast.FunctionDef) and node.name == '_set_face_apply':
+        _apply = node
+_shell_calls = set()
+if _shell is not None:
+    for sub in ast.walk(_shell):
+        if isinstance(sub, ast.Call) and isinstance(sub.func, ast.Attribute):
+            _shell_calls.add(sub.func.attr)
+_apply_calls = set()
+if _apply is not None:
+    for sub in ast.walk(_apply):
+        if isinstance(sub, ast.Call):
+            _f = sub.func
+            if isinstance(_f, ast.Attribute):
+                _apply_calls.add(_f.attr)
+            elif isinstance(_f, ast.Name):
+                _apply_calls.add(_f.id)
+check(u'H4 `set_face` 是外层壳：先贴图再配动画（内层两条贴图分支都还在）',
+      (u'_set_face_apply' in _shell_calls)
+      and (u'_maybe_expression_anim' in _shell_calls)
+      and (u'_char_face_pixmap' in _apply_calls)
+      and (u'get_face' in _apply_calls),
+      u'外壳调用 %r · 内层分支 %r'
+      % (sorted(_shell_calls), sorted(_apply_calls)))
+
+# H5 接线：显示层真的把表情交给了宿主；宿主那边确实在写节流状态
+#    ★ 不能找 `xxx.play_expression_anim(...)` 这种属性调用 —— 实现是
+#      `fn = getattr(self.parent, 'play_expression_anim')` 再 `fn(...)`，
+#      AST 里看到的是个局部名字。所以按 `getattr` 的**字符串常量**判。
+_du_hook_literal = False
+for node in ast.walk(_du_tree_h):
+    if isinstance(node, ast.FunctionDef) and node.name == '_maybe_expression_anim':
+        for sub in ast.walk(node):
+            if (isinstance(sub, ast.Call) and isinstance(sub.func, ast.Name)
+                    and sub.func.id == 'getattr'):
+                for a in sub.args:
+                    if isinstance(a, ast.Constant) and a.value == 'play_expression_anim':
+                        _du_hook_literal = True
+_main_anim_attrs = _self_assigns('play_expression_anim')
+check(u'H5 接线：表情→动画的钩子两边都接上了（宿主会写节流状态）',
+      _du_hook_literal and '_expr_anim_at' in _main_anim_attrs,
+      u'显示层取钩子=%s · 宿主写 %r'
+      % (_du_hook_literal, sorted(_main_anim_attrs)))
+
+
 # ================================================================ F 自检
 print('\n=== F 自检 ===')
 
-EXPECT = 38
+EXPECT = 57
 # F1 跑的时候后面还剩 F1/F2/F3 三条（含自己）⇒ 补 +3
 check(u'F1 判据条数 == 声明的 %d 条' % EXPECT, (_n['p'] + _n['f']) + 3 == EXPECT,
       u'实跑 %d 条（F1 之前，未计 F1/F2/F3）' % (_n['p'] + _n['f'],))

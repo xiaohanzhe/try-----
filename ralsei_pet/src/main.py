@@ -1791,6 +1791,17 @@ class RalseiPet(QMainWindow):
         #   这个名字」，未预声明时首次赋值会落进控制器自己的 `__dict__` ⇒ 状态劈成两份，
         #   而 G2 完全看不见（本项目真踩过两次，见 W1-4 报告铁律 3）。
         self._scene_prev = None                     # 上一个场景 id（换场景时由 switch 记）
+        # ---- 台词 -> 表情/旁白 的传递状态（第190轮）----
+        # ★ 预声明理由同上：`__getattr__` 回落链会去遍历控制器，未声明的名字每次
+        #   `getattr` 都要走一遍兜底；而且这两个名字是**一句一清**的，声明在
+        #   `__init__` 才能保证"第一句就有值可取"（否则第一句永远是 None）。
+        self._pending_face_emotion = None           # 这一句该配哪个表情（标量情绪键）
+        self._pending_paren_acts = []               # 这一句被删掉的括号**原始片段**
+        # ★★★ 第190轮续二：内在活动（`想了想`/`犹豫`）—— 字删了，但**要留时间**。
+        #   用户原话：`但一定要留时间如果有，那就用动画表示哦`
+        #   ★ 与 `_pending_paren_acts` **不是**一回事：那份会被说成旁白，这份不会，
+        #     只用来让显示层知道"开口之前先停一下（有动画就演一下）"。
+        self._pending_inner_acts = []
         self.scene_objects = []                     # 当前场景的可见物件缓存（P1 渲染层消费）
         self._scene_anchors = {}                     # 全局命名锚点表（_anchors.json）
         self._scene_loaded = False                  # 索引是否已尝试加载过（幂等守卫，防重复 IO）
@@ -15238,11 +15249,24 @@ class RalseiPet(QMainWindow):
         except Exception:
             return ""
 
+    # ---- 表演层：内在活动的停顿 / 表情配动画（第190轮续二）----
+    #: 「想一想」用哪个动画演。★ `assets/animations.json` 里**没有** `think` 组，
+    #:   逐个比对后最贴的是 `look_up`（4 帧 × 0.13s ≈ 0.52s，抬头发呆/好奇）。
+    INNER_THINK_ANIM = 'look_up'
+    #: 每条内在活动的停顿（毫秒）；多条累加但封顶，免得一句话等太久。
+    INNER_PAUSE_MS = 420
+    INNER_PAUSE_MAX_MS = 900
+
     def _event_say(self, text, face="happy", streamed=False):
         """事件台词显示的唯一出口（`add_dialogue` + `show_dialogue` 成对，只写一次）。
 
         `streamed=True` 表示这句话在流式期间**已经逐字显示在前台**了 →
         交给 `dialogue_ui.add_dialogue(..., _streamed=True)` 走"定格"而不是"从头重打"。
+
+        ★★★ 第190轮续二（用户：`但一定要留时间如果有，那就用动画表示哦`）：
+        这一句若带**内在活动**（`（想了想）` 这类已被删掉、且不说成旁白的括号），
+        开口之前先停一下，有动画就用动画演 —— 原作的"想一想"是**占时间**的，
+        字删了不代表可以不花时间，句子直接蹦出来会显得太急。
         """
         if not text:
             return False
@@ -15250,12 +15274,94 @@ class RalseiPet(QMainWindow):
             dui = getattr(self, 'dialogue_ui', None)
             if dui is None:
                 return False
+            # ★★ 内在活动：先"想一想"再开口。
+            #   三个前置条件缺一不可：
+            #     ① 这一句真有内在活动（`peek` 只看不取，重采样时还能再判）
+            #     ② 不是 streamed —— 那种情况字已经在屏幕上了，没法再"先停一下"
+            #     ③ 当前没在打字 —— 否则会跟正在播的那句抢屏（同拍连说会乱序）
+            _n_inner = 0
+            try:
+                _n_inner = len(self.peek_pending_inner_acts())
+            except Exception:
+                _n_inner = 0
+            if (_n_inner > 0 and not streamed
+                    and not bool(getattr(dui, 'is_typing', False))):
+                if self._event_say_after_thinking(text, face, dui, _n_inner):
+                    return True
             dui.add_dialogue("ralsei", text, face, _streamed=bool(streamed))
             dui.show_dialogue()
             self.last_interaction_time = time.time()
             return True
         except Exception as e:
             _log.warning(f"[事件台词] 显示失败: {e}")
+            return False
+
+    def _event_say_after_thinking(self, text, face, dui, n_inner):
+        """先演"想一想"（有动画就演），过一段再开口。
+
+        返回 `True` = 已经接手（台词会在定时器到点后显示）；
+        `False` = 没接手，调用方照常立即显示（动画/定时器都不可用时走这条）。
+
+        ★ 为什么用 `QTimer.singleShot` 而不是拿动画的完成回调来驱动说话：
+          动画可能被 `change_animation` 的状态锁拦下（`play_animation_once` 返回
+          False），那样回调永远不来，台词就**永远不显示**了 —— 沉默是这里最坏的
+          失败方式。定时器不依赖动画是否播成功，最坏情况只是"停顿有了、动画没演"。
+        """
+        try:
+            delay = min(self.INNER_PAUSE_MS * max(1, int(n_inner)),
+                        self.INNER_PAUSE_MAX_MS)
+            # 有动画就顺手演一个（失败完全不影响台词）
+            try:
+                self.play_animation_once(self.INNER_THINK_ANIM, restore_to='idle')
+            except Exception as e:  # noqa: BLE001
+                _log.debug("[台词] 想一想动画没播成（不影响台词）: %s", e)
+
+            def _speak():
+                try:
+                    dui.add_dialogue("ralsei", text, face)
+                    dui.show_dialogue()
+                    self.last_interaction_time = time.time()
+                except Exception as e:  # noqa: BLE001
+                    _log.warning(f"[事件台词] 延迟显示失败: {e}")
+
+            QTimer.singleShot(int(delay), _speak)
+            return True
+        except Exception as e:  # noqa: BLE001
+            _log.debug("[台词] 想一想停顿没建起来，退回立即显示: %s", e)
+            return False
+
+    def play_expression_anim(self, emotion, char_id=None):
+        """表情配一段外部动画（用户：`角色做出表情的时候原作有些时候也会
+        配合一些外部动画来加强表示`）。
+
+        ★ 只给**宠物本体**演：NPC 说话时换的是 NPC 的脸，让 Ralsei 的身体替
+          别人做动作是错的（`char_id` 非空直接跳过）。
+        ★ 三重节制，缺一条都会变成"每句话都在抖"：
+            ① 只有 `dialogue_ui.DialogueUI.EXPRESSION_ANIM` 里那 4 个强情绪有动画
+            ② 同一个表情 `EXPRESSION_ANIM_COOLDOWN` 秒内不重复
+            ③ 表情没变就不演（缩放重贴、连续同情绪都不该触发）
+        """
+        try:
+            if char_id:
+                return False
+            key = str(emotion or '').lower()
+            table = getattr(getattr(self, 'dialogue_ui', None),
+                            'EXPRESSION_ANIM', None) or {}
+            name = table.get(key)
+            if not name:
+                return False
+            now = time.time()
+            if now - float(getattr(self, '_expr_anim_at', 0.0)) < \
+                    float(getattr(getattr(self, 'dialogue_ui', None),
+                                 'EXPRESSION_ANIM_COOLDOWN', 2.5)):
+                return False
+            if getattr(self, '_expr_anim_face', None) == key:
+                return False
+            self._expr_anim_at = now
+            self._expr_anim_face = key
+            return bool(self.play_animation_once(name, restore_to='idle'))
+        except Exception as e:  # noqa: BLE001
+            _log.debug("[表情动画] 跳过: %s", e)
             return False
 
     def _event_ai_ready(self, kind, instant=False):
@@ -18121,10 +18227,23 @@ class RalseiPet(QMainWindow):
             #   （兜底 neutral），不存在"这一句没表情"的情况。
             #   ★ 存到 `_pending_face_emotion` 由显示层 `pop_pending_face_emotion()`
             #     取走（取出即清）—— 一句一个表情，不会串到下一句。
+            #   ★★ 第190轮续（用户：`括号里的东西有些没有表情的那就用旁白`）：
+            #     **原始片段也要留一份** —— 显示层要逐条判断"这条能不能换出表情，
+            #     换不出就交给旁白说出来"，光有标量情绪键做不到这件事。
             _paren_acts = []
-            t = strip_action_parentheticals(t, sink=_paren_acts)
+            # ★★ 第190轮续二：内在活动走**另一个通道**（`pause_sink`）。
+            #   它既不换表情、也不说成旁白，只让显示层"留时间"。
+            _inner_acts = []
+            t = strip_action_parentheticals(t, sink=_paren_acts,
+                                            pause_sink=_inner_acts)
+            self._pending_inner_acts = list(_inner_acts)
             if _paren_acts:
                 self._pending_face_emotion = acts_to_emotion(_paren_acts)
+                self._pending_paren_acts = list(_paren_acts)
+            else:
+                # ★ 显式清空：上一句若有括号而这一句没有，不清就会**串到下一句**
+                #   （沉默的那一句忽然冒出一条上一句的旁白）。
+                self._pending_paren_acts = []
             if not t:
                 return None
             # 0b) 剥掉 markdown 强调/列表标记（对话框不做 markdown 渲染）
@@ -18343,7 +18462,58 @@ class RalseiPet(QMainWindow):
         """
         v = getattr(self, '_pending_face_emotion', None)
         self._pending_face_emotion = None
+        # ★★ 第190轮续：两个出口共用**同一份状态**，取走任一个都要把另一个也清掉，
+        #   否则"先取了情绪、片段还挂着"⇒ 下一句凭空多出一条上一句的旁白。
+        self._pending_paren_acts = []
         return v
+
+    def pop_pending_paren_acts(self):
+        """取走「这一句被删掉的括号**原始片段**」（**取出即清**）。没有就返回 `[]`。
+
+        ★★★ 第190轮续（用户：`括号里的东西有些没有表情的那就用旁白，
+          到时候就单独把那些括号交给旁白说就好`）：
+          显示层要**逐条**判断"这条能不能换出表情、换不出就说成旁白"，
+          所以不能只给一个标量情绪键，必须给原文。
+        ★ 与 `pop_pending_face_emotion` 共用状态：取任一个都会把两边一起清掉。
+        """
+        v = getattr(self, '_pending_paren_acts', None)
+        self._pending_paren_acts = []
+        self._pending_face_emotion = None
+        return list(v or [])
+
+    def peek_pending_paren_acts(self):
+        """**只看不取**：这一句有没有括号片段。
+
+        ★ `dialogue_ui.show_dialogue` 用它决定"要不要退回按当前心情取表情"，
+          而真正的**取用**发生在 `add_dialogue` 里（那里才做表情/旁白分流）。
+          给它一个会清状态的接口，等于让它在 add_dialogue 之前把料吃掉。
+        """
+        try:
+            return list(getattr(self, '_pending_paren_acts', None) or [])
+        except Exception as e:  # noqa: BLE001
+            _log.debug("main peek_pending_paren_acts 异常: %s", e)
+            return []
+
+    def peek_pending_inner_acts(self):
+        """**只看不取**：这一句里有几处"内在活动"（决定要不要留时间/演动画）。
+
+        ★★★ 第190轮续二（用户：`但一定要留时间如果有，那就用动画表示哦`）：
+          这些括号的字已经被删了、也不会变成旁白，但**不能当作没发生** ——
+          原作的"想一想"是占了时间的，句子直接跳出来会显得太急。
+        ★ 只看不取：真正的"停顿"发生在 `_event_say` / `add_npc_line` 那一层，
+          那里可能被调用多次（比如重采样），提前清掉会让后一次判成"没有停顿"。
+        """
+        try:
+            return list(getattr(self, '_pending_inner_acts', None) or [])
+        except Exception as e:  # noqa: BLE001
+            _log.debug("main peek_pending_inner_acts 异常: %s", e)
+            return []
+
+    def pop_pending_inner_acts(self):
+        """取走内在活动片段（**取出即清**）。没有就返回 `[]`。"""
+        v = getattr(self, '_pending_inner_acts', None)
+        self._pending_inner_acts = []
+        return list(v or [])
 
     def _on_api_result(self, response, callback):
         """主线程槽：处理工作线程返回的 API 结果（由 _api_result 信号触发）。"""
