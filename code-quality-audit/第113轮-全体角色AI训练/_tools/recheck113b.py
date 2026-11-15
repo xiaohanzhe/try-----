@@ -92,7 +92,15 @@ def item2_structure():
     # 顺序：静态关系卡 → 演化卡 → SPEAK_RULES
     i_rel = src.find("【你和其他人的关系（照这个，别自己编）】")
     i_evo = src.find("if isinstance(evolution, str) and evolution.strip():")
-    i_speak = src.find('parts.append(SPEAK_RULES)')
+    # ★★ 第190轮记账：第113轮h 把 `parts.append(SPEAK_RULES)` 换成了
+    #    `parts.append(speak_rules_for(kind, npc_id))`（角色档位两轴 machine/caps），
+    #    而这条锚点当时没跟着改 ⇒ `find()` 恒返 -1、`0 <= i_evo < -1` **永假**，
+    #    从第113轮h 起一直红到现在（`8b70d0f8~1` 还有这句，之后就没有了）。
+    #    这就是「判据绑死一段会演进的字面量」的老毛病 —— 判据该判**意图**
+    #    （"speak 那一段必须排在演化卡之后"），不该判某一行源码长什么样。
+    #    现在两种写法都认；**两种都找不到 ⇒ 仍是 -1 ⇒ 照样红**（不是恒真）
+    i_speak = max(src.find('parts.append(SPEAK_RULES)'),
+                  src.find('parts.append(speak_rules_for('))
     ck('② 演化卡插在静态关系卡之后', 0 <= i_rel < i_evo, '%d < %d' % (i_rel, i_evo))
     ck('② 演化卡插在 SPEAK_RULES 之前', 0 <= i_evo < i_speak, '%d < %d' % (i_evo, i_speak))
 
