@@ -1,0 +1,47 @@
+### Data.EmbeddedTextures = 117
+
+### TextureWorker methods
+  inst   MagickImage GetEmbeddedTexture(UndertaleEmbeddedTexture embeddedTexture)
+  inst   Void ExportAsPNG(UndertaleTexturePageItem texPageItem, String filePath, String imageName, Boolean includePadding)
+  inst   IMagickImage`1 GetTextureFor(UndertaleTexturePageItem texPageItem, String imageName, Boolean includePadding)
+  static MagickImage ReadBGRAImageFromFile(String filePath)
+  static IMagickImage`1 ResizeImage(IMagickImage`1 image, Int32 width, Int32 height, PixelInterpolateMethod interpolateMethod)
+  static Byte[] ReadMaskData(String filePath, Int32 requiredWidth, Int32 requiredHeight)
+  static IMagickImage`1 GetCollisionMaskImage(MaskEntry mask, Int32 maskWidth, Int32 maskHeight)
+  static Void ExportCollisionMaskPNG(MaskEntry mask, String filePath, Int32 maskWidth, Int32 maskHeight)
+  static Void SaveImageToFile(IMagickImage`1 image, String filePath)
+  static ValueTuple`2 GetImageSizeFromFile(String filePath)
+  inst   Void Dispose()
+  inst   Type GetType()
+  inst   String ToString()
+  inst   Boolean Equals(Object obj)
+  inst   Int32 GetHashCode()
+
+### UndertaleEmbeddedTexture members
+  prop UndertaleString Name
+  prop UInt32 Scaled
+  prop UInt32 GeneratedMips
+  prop TexData TextureData
+  prop Boolean TextureExternal
+  prop Boolean TextureLoaded
+  prop Int32 TextureWidth
+  prop Int32 TextureHeight
+  prop Int32 IndexInGroup
+  prop UndertaleTextureGroupInfo TextureInfo
+
+### TexData members
+  type = UndertaleModLib.Models.UndertaleEmbeddedTexture+TexData
+  prop GMImage Image
+  prop Int32 Width
+  prop Int32 Height
+  prop Boolean FormatQOI
+  prop Boolean FormatBZ2
+
+### 已加载程序集里与图像相关的类型
+  asm UndertaleModLib
+    type UndertaleModLib.Util.GMImage+ImageFormat
+    type UndertaleModLib.Util.TextureWorker
+    type UndertaleModLib.Models.UndertaleVectorBitmapFillType
+    type UndertaleModLib.Models.UndertaleVectorBitmapFillData
+    type UndertaleModLib.Models.UndertaleYYSWFBitmapType
+    type UndertaleModLib.Models.UndertaleYYSWFBitmapData
