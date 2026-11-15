@@ -238,6 +238,21 @@ _FACE_MAP = {
     "firm": "face_firm and serious",
     # 疲惫
     "tired": "face_depression with a little hopeless",
+    # ── 第190轮补：`event_speech.ACT_EMOTION_RULES` 产出的**通用情绪键** ──
+    #   ★ 为什么必须补：那套规则吐的是 `smile` / `laugh` / `cry` 这些短键，而本表
+    #     原来是 `happy` / `sad_force_smile` 这类长键。缺映射时 `_resolve_face_name`
+    #     会兜底拼成 `face_smile` / `face_cry` 这种**不存在的名字**
+    #     ⇒ set_face 查出缺失、回退 `face_normal` ⇒ **括号里的笑等于被吃掉**
+    #     （NPC 那条链接得再好，Ralsei 自己这条也是白接）。
+    #   ★ 每条都指向**已存在的**素材名，不新建文件。
+    #   ★ 其余 11 个通用键（neutral/happy/sad/angry/surprised/shy/worried/
+    #     thinking/confused/serious/tired）本表早有，不重复登记。
+    "smile": "face_normal_smile_little",
+    "laugh": "face_happy_very",
+    "cry": "face_sad with a little hopeless",
+    "love": "face_shy with touched and happy",
+    "smug": "face_happy and playful",
+    "hurt": "face_a little sad",
 }
 
 
@@ -256,6 +271,71 @@ def _resolve_face_name(face_type):
         return _FACE_MAP[face_type]
     # 兜底：emotion_system 返回的不带 face_ 前缀的素材名，补上前缀
     return "face_" + face_type
+
+
+# ---------------------------------------------------------------------------
+# 「情绪键 → 该角色实际拥有的表情名」（第190轮新增）
+#
+# 为什么需要这一层：上面 `_FACE_MAP` 是 **Ralsei 专用**的（键是 `happy_very`、
+# `a little sad` 这种长名字，值是 `face_xxx` 文件）。而第190轮落的 NPC 素材
+# 用的是**原作的情绪名**（`normal` / `smile` / `angry` / `blush` / `pensive` …，
+# 68 个，各家还不完全一样：ceroba 28 个、ed 只有 4 个）。
+#
+# ⇒ 这里定义"一个通用情绪键可以尝试哪些原作名"，**按优先级逐个试**，
+#   最后一定以 `normal` 收尾。
+#
+# ★★★ 用户 2026-11-15：`难匹配也得匹配，后期微调就好`
+#   ⇒ 这个列表**绝不允许出现"全部试完还是没图"就放弃的情况** —— 末尾的 `normal`
+#     就是那条保底。哪怕情绪完全没对上，也至少换成这个角色的正常脸，
+#     而不是继续挂着上一个人的头像。
+# ---------------------------------------------------------------------------
+_EMO_ALIASES = {
+    'neutral':   ['normal', 'neutral', 'default', 'plain', 'nohat_normal'],
+    'smile':     ['smile', 'happy', 'grin', 'nohat_smile', 'content', 'normal'],
+    'happy':     ['happy', 'smile', 'grin', 'nohat_happy', 'content', 'normal'],
+    'laugh':     ['happy', 'grin', 'smile', 'smug', 'normal'],
+    'sad':       ['sad', 'big_sad', 'downer', 'sorrowful', 'disappointed',
+                  'mourning', 'normal'],
+    'cry':       ['crying', 'wailing', 'big_sad', 'sad', 'normal'],
+    'angry':     ['angry', 'mad', 'furious', 'irked', 'angry_alt', 'stern', 'normal'],
+    'surprised': ['surprised', 'oh', 'wat', 'wut', 'disbelief', 'normal'],
+    'shy':       ['blush', 'embarassed', 'embarassed_smile', 'flustered',
+                  'nervous', 'normal'],
+    'worried':   ['nervous', 'sweat', 'pensive', 'concerned', 'worry', 'normal'],
+    'thinking':  ['pensive', 'mutter', 'muttering', 'confounded',
+                  'closed_eyes', 'normal'],
+    'confused':  ['confused', 'confounded', 'wat', 'wut', 'normal'],
+    'serious':   ['serious', 'stern', 'down_talk', 'plain', 'normal'],
+    'tired':     ['downer', 'sad', 'plain', 'normal'],
+    'excited':   ['happy', 'grin', 'smile', 'normal'],
+    'love':      ['love', 'happy', 'smile', 'normal'],
+    'smug':      ['smug', 'smirk', 'eye_smirk', 'snarky', 'normal'],
+    'hurt':      ['hurt', 'damaged', 'sad', 'normal'],
+}
+
+#: 角色"那张正常脸"可能叫什么。★ 不能只写 `normal` —— 实测原作各家不一样：
+#:   `hy_chujin_ketsukane` 只有 `neutral`（8 个情绪里没有 normal/default）；
+#:   `hy_ceroba_ketsukane` 有 `neutral` 和 `default`；
+#:   `hy_ace` / `hy_ed` 是 `normal`。
+#: ⇒ 按这个顺序试，全不中再走 `sprite_loader.any_face_for()`（拿该角色任意一张）。
+_CHAR_FACE_BASE_NAMES = ('normal', 'neutral', 'default', 'plain')
+
+
+def _char_face_candidates(face_type):
+    """情绪键 → 该角色可能有的表情名列表（按优先级，**末尾一定有底图名**）。"""
+    key = (face_type or '').strip()
+    cands = []
+    if key:
+        # ★ 原键先试：黄魂的情绪名本身就是英文原样（`smirk` / `unamused`），
+        #   只要传进来的是这类名字，直接命中，不必过别名表。
+        cands.append(key)
+    for nm in _EMO_ALIASES.get(key, []):
+        if nm not in cands:
+            cands.append(nm)
+    for nm in _CHAR_FACE_BASE_NAMES:
+        if nm not in cands:
+            cands.append(nm)
+    return cands
 
 
 # ★★ 第75轮·思考占位总开关（模块级，**刻意不放在类上**）。
@@ -433,13 +513,26 @@ class DialogueUI(QWidget):
                                  self.BOX_INSET, self.BOX_INSET)
         inner.setSpacing(14)
 
-        # —— 左侧：Ralsei 头像（原作的"表情框"：方角 2px 白边，无圆角/无底色）——
+        # —— 左侧：头像（原作的"表情框"：方角 2px 白边，**黑底**）——
+        #
+        # ★★★ 第190轮：底色 `transparent` → **纯黑 `#000000`**。
+        #   用户裁定 `一句话，尽量按贴近原作即可` ⇒ 取最贴近原作的一种：
+        #   UT/DR 的对话框表情框就是**黑底 + 白边 + 方角**，肖像画在黑底上。
+        #
+        #   这不是审美偏好，是**功能必需**：第190轮实测 `assets/faces/` 的黄魂
+        #   肖像**原作本身就有三套底色**（164 帧里）——
+        #     · 黑底 + 白线 79 帧（axis/ceroba/chujin）—— 在白气泡里是一块黑牌
+        #     · 透明底 + 黑剪影 21 帧（ace/mooch）
+        #     · **纯白线 + 透明底 64 帧（ed/moray/starlo，前景 100% 白、零暗像素）**
+        #   最后那 64 帧贴在浅色底上**完全看不见**（`bubble_ctx.png` 实拍确证）。
+        #   ⇒ 统一黑底：79 帧的黑矩形"融进"底板看不出边界，64 帧的白线清晰可读，
+        #     21 帧的剪影也正常。素材一个像素没动，全部靠这一行 CSS 解决。
         self.face_label = QLabel(self)
         self.face_label.setFixedSize(84, 84)
         self.face_label.setAlignment(Qt.AlignCenter)
         self.face_label.setStyleSheet("""
             QLabel {
-                background-color: transparent;
+                background-color: #000000;
                 border: 2px solid #ffffff;
             }
         """)
@@ -735,7 +828,10 @@ class DialogueUI(QWidget):
 
             # —— 头像位图同步（否则 84 的框里贴 1.5 倍的小头像）——
             try:
-                self.set_face(getattr(self, '_last_face', 'normal'))
+                # ★ 190 轮：连"这是谁的脸"一起带回去，否则缩放一下 NPC 的头像
+                #   就变回 Ralsei 了（`_last_face_cid` 由 set_face 记住）。
+                self.set_face(getattr(self, '_last_face', 'normal'),
+                              getattr(self, '_last_face_cid', None))
             except Exception as e:
                 _log.debug("dialogue_ui 头像重贴失败: %s", e)
 
@@ -750,14 +846,39 @@ class DialogueUI(QWidget):
             _log.debug("dialogue_ui UI 缩放异常（已忽略）: %s", e)
         return self._ui_scale
 
-    def set_face(self, face_type):
+    def set_face(self, face_type, char_id=None):
+        """贴头像。给了 `char_id` 就用**那个角色自己的**素材。
+
+        ★★★ 第190轮（用户：`一视同仁，不再是主体为 ralsei 的项目了`）：
+        以前这个位只贴 Ralsei 的 `face_*.png`，NPC 说话时**故意不换**
+        （`add_dialogue` 里那条旧注释的原话是"表情位是 Ralsei 的显示位"）。
+        现在改成"谁说话贴谁的脸"，旧口径作废。
+
+        ★ 三级兜底（用户：`难匹配也得匹配`）：
+          ① 该角色在别名表里命中某个具体表情
+          ② 该角色自己的 `normal`
+          ③ 都拿不到（该角色根本没有素材目录）→ 回落到 Ralsei 的老路径，
+             行为与改动前**逐字相同**（所以没素材的角色不会比现在更差）。
+        """
         # ★★ 第108轮：记住"最后一次要贴的表情"—— UI 缩放后要按新尺寸**重贴**
         #   （否则框放大了、头像还是旧的小图）。不记的话只能贴成 normal，
         #   那会让"缩放一下表情就变了"，是可见的行为破坏。
+        #   ★ 190 轮补 `_last_face_cid`：重贴时也要记得"这是谁的脸"，
+        #     否则缩放一下 NPC 的头像就变回 Ralsei 了。
         try:
             self._last_face = face_type
+            self._last_face_cid = char_id
         except Exception:
             pass
+
+        # ① 该角色自己的素材优先
+        if char_id:
+            pm = self._char_face_pixmap(char_id, face_type)
+            if pm is not None:
+                self._apply_face_pixmap(pm)
+                return
+
+        # ② 回落 Ralsei 的老路径（本段逐字未改）
         name = _resolve_face_name(face_type)
         loader = self.parent.sprite_loader
         # 兜底：解析出的素材名若不存在（新增/拼错的表情键、emotion_system 返回
@@ -770,6 +891,48 @@ class DialogueUI(QWidget):
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         pixmap = loader.get_face(name)
         if pixmap and not pixmap.isNull():
+            self._apply_face_pixmap(pixmap)
+
+    def _char_face_pixmap(self, char_id, face_type):
+        """按候选链取该角色的表情图。拿不到返回 `None`（交给上层回落）。
+
+        ★ 全部用 `getattr` 取 loader 的方法：测试桩上的 sprite_loader 可能没有
+          这两个新方法，缺了就当作"这个角色没素材"，绝不能抛异常把整条 UI 打断。
+        """
+        try:
+            loader = getattr(self.parent, 'sprite_loader', None)
+            get_f = getattr(loader, 'get_face_for', None)
+            if not callable(get_f):
+                return None
+            has_f = getattr(loader, 'has_face_for', None)
+            for nm in _char_face_candidates(face_type):
+                try:
+                    if callable(has_f) and not has_f(char_id, nm):
+                        continue
+                    pm = get_f(char_id, nm)
+                except Exception as e:  # noqa: BLE001
+                    _log.debug("dialogue_ui 取角色表情失败: %s", e)
+                    continue
+                if pm is not None and not pm.isNull():
+                    return pm
+            # ★★★ 最后一道保险（用户：`难匹配也得匹配`）：候选链一路没命中
+            #   ⇒ 拿该角色**任意一张**。宁可这张表情不太准，也不能让头像停在
+            #   上一个角色脸上 —— 后者是明显的错，前者用户已明确说会后期微调。
+            any_f = getattr(loader, 'any_face_for', None)
+            if callable(any_f):
+                try:
+                    pm = any_f(char_id)
+                    if pm is not None and not pm.isNull():
+                        return pm
+                except Exception as e:  # noqa: BLE001
+                    _log.debug("dialogue_ui 取角色兜底表情失败: %s", e)
+        except Exception as e:  # noqa: BLE001
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
+        return None
+
+    def _apply_face_pixmap(self, pixmap):
+        """把头像位图按当前 UI 倍率贴上去（Ralsei / NPC 两路共用）。"""
+        try:
             # ★★ 第108轮：贴图尺寸 = 基准 78 × UI 倍率（与 face_label 的 84×倍率配套，
             #   两者都从 `_ui_base` 派生 ⇒ 框与图始终同比例）。
             _sc = float(getattr(self, '_ui_scale', 1.0))
@@ -783,8 +946,13 @@ class DialogueUI(QWidget):
             _side = int(round(_pix_base * _sc))
             if _side < 8:
                 _side = 8
+            # ★ 原作肖像素材**不是正方形**（黄魂 88×112 ~ 110×106），
+            #   `KeepAspectRatio` 会让它只占满一边。用 Smooth 缩放保持可读，
+            #   不做裁切（裁了就改动原作构图了）。
             self.face_label.setPixmap(
                 pixmap.scaled(_side, _side, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        except Exception as e:  # noqa: BLE001
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
     # ---------------------------------------------------------------- typing
     def add_dialogue(self, speaker, message, face_type="normal", _streamed=False):
@@ -831,8 +999,15 @@ class DialogueUI(QWidget):
             # 记忆（第九轮）：把这一轮作为"日常小片段"喂给拟人记忆系统
             self._note_memory(speaker, message)
         if _npc_line:
-            # NPC 的话**直接落历史区**：不走打字机、不换表情 ——
-            # 打字机与表情位都是 **Ralsei 的显示位**，借来显示别人会看起来像他在说。
+            # NPC 的话**直接落历史区**：不走打字机。
+            #
+            # ★★★ 第190轮改了"不换表情"这一半。原注释是：
+            #   「打字机与表情位都是 **Ralsei 的显示位**，借来显示别人会看起来像他在说」
+            #   那条口径的前提是"**只有 Ralsei 有表情素材**"。现在 8 个黄魂角色
+            #   + 21 个 OneShot 角色都有自己的脸（`assets/faces/`），前提不成立。
+            #   用户同轮的口径是 `一视同仁，不再是主体为 ralsei 的项目了`
+            #   ⇒ 谁说话就贴谁的脸，反而是"看起来像他在说"的正解。
+            # ★ 打字机**仍然不借**：那是 Ralsei 的逐字打字节奏，与贴图无关。
             # 名字取宿主给的标签（中文名优先），拿不到就退回 id。
             _label = speaker
             try:
@@ -843,6 +1018,20 @@ class DialogueUI(QWidget):
                 _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
                 _label = speaker
             self._reset_front_stage()
+            # ★ 贴 NPC 自己的脸。放在 `_reset_front_stage()` 之后（它现在不碰头像，
+            #   但顺序摆对，以后改了也不会被冲掉）。拿不到素材会自动回落 Ralsei 的
+            #   `face_normal`，所以对没有素材的 28 个角色行为与改动前一致。
+            # ★★ 情绪取法：**这一句的括号优先**（NPC 的话也走 `_clean_ai_reply`，
+            #   括号同样被 sink 收集过），没有括号才用传进来的 face_type。
+            _nface = face_type
+            _pop = getattr(self.parent, 'pop_pending_face_emotion', None)
+            if callable(_pop):
+                try:
+                    _nface = _pop() or _nface
+                except Exception as e:  # noqa: BLE001
+                    _log.debug("dialogue_ui 取 NPC 括号表情失败: %s", e)
+                    _nface = face_type
+            self.set_face(_nface, char_id=speaker)
             # ★★ 第113轮h：`caps` 登记角色的「全大写」放在**渲染层**做，不逼模型输出英文。
             #   缘起：`hy_guardener` 人设原文要求「所有对话都以大写字母输出」，可中文
             #   没有大小写 —— 模型收到这条只能改去说英文（实测中文占比 0.00，36/36 轮）。
@@ -977,8 +1166,13 @@ class DialogueUI(QWidget):
         self._refresh_display()
         return True
 
-    def add_npc_line(self, label, text):
-        """「某人说：…」的显示出口（★ 第55轮）。**不进 Ralsei 的历史/话题锚/拟人记忆。**"""
+    def add_npc_line(self, label, text, char_id=None):
+        """「某人说：…」的显示出口（★ 第55轮）。**不进 Ralsei 的历史/话题锚/拟人记忆。**
+
+        ★★★ 第190轮加 `char_id`：这是 NPC 台词的**主路径**（`npc_speak` 的回调走这里），
+        所以"一视同仁、谁说话贴谁的脸"必须在这里落地 —— 光改 `add_dialogue` 的 NPC 分支
+        是不够的（那条分支只有 `_is_npc_speaker(speaker)` 为真才走，实测调用点极少）。
+        """
         import html as _html
         if text is None:
             text = ""
@@ -990,6 +1184,19 @@ class DialogueUI(QWidget):
         safe_label = _html.escape(str(label or '?'))
         safe_msg = _html.escape(text)
         self._reset_front_stage()
+        # ★ 贴这个 NPC 自己的脸。情绪取值：**这一句的括号优先**
+        #   （NPC 回复也过 `_clean_ai_reply`，括号同样被 sink 收集过），
+        #   没有括号就退回 normal。
+        if char_id:
+            _nface = 'normal'
+            _pop = getattr(self.parent, 'pop_pending_face_emotion', None)
+            if callable(_pop):
+                try:
+                    _nface = _pop() or _nface
+                except Exception as e:  # noqa: BLE001
+                    _log.debug("dialogue_ui 取 NPC 括号表情失败: %s", e)
+                    _nface = 'normal'
+            self.set_face(_nface, char_id=char_id)
         self._history_html += (
             f'<div style="color:#c9a86a;font-size:{self._html_pt(10)}pt;line-height:1.45;'
             f'margin:2px 0 2px 0;">▸ {safe_label}: {safe_msg}</div>')
@@ -1656,6 +1863,20 @@ class DialogueUI(QWidget):
         # 不再每次重置位置：用户拖过后保持用户放置位置
         # 仅在未被拖过时定位到屏幕正下方居中
         if message:
+            # ★★★ 第190轮：**台词里的括号动作优先**（用户：「括号里的内容也就是表情
+            #   和动作，用人物动画和表情头像表示」）。
+            #   括号情绪由 `main._clean_ai_reply` 在删括号时记下，这里取走（取出即清）。
+            #   ★ 与下面 `emotion_system` 那条的分工：
+            #     · 有括号 → 用括号里的情绪（这一句**当场**在笑/在气，优先级最高）
+            #     · 没括号 → 才按角色当前的心情取（老路径，一字未改）
+            if face_type is None:
+                _pop = getattr(self.parent, 'pop_pending_face_emotion', None)
+                if callable(_pop):
+                    try:
+                        face_type = _pop()
+                    except Exception as e:  # noqa: BLE001
+                        _log.debug("dialogue_ui 取括号表情失败: %s", e)
+                        face_type = None
             # 如果未指定表情，尝试使用当前情绪对应的表情
             if face_type is None:
                 try:
@@ -1814,7 +2035,8 @@ class DialogueUI(QWidget):
             except Exception as e:
                 _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
             if reply_text:
-                self.add_npc_line(label, reply_text)
+                # ★ 190 轮：把 npc_id 一起传下去 —— 这是"贴谁的脸"的依据
+                self.add_npc_line(label, reply_text, char_id=npc_id)
                 if not self.isVisible():
                     try:
                         self.show()

@@ -770,8 +770,16 @@ def _rescue_voice(m):
     return m.group(0)
 
 
-def strip_action_parentheticals(text):
+def strip_action_parentheticals(text, sink=None):
     """删掉台词里夹带的「括号旁白」，返回剩下的台词。
+
+    ★★★ 第190轮新增 `sink`（用户口径：「括号里的内容也就是表情和动作，
+    用人物动画和表情头像表示」⇒ 删掉的那段不能扔，要拿去驱动表情）。
+
+        _acts = []
+        clean = strip_action_parentheticals(text, sink=_acts)   # _acts 里是原片段
+
+    返回值的语义**完全不变**（字符串）⇒ 既有调用方零影响。
 
     五道闸合起来覆盖括号的全部已知形态：
       己) **发声直出**（第189轮补）：括号内容**整段是声音**（`（笑声：X）` /
@@ -799,12 +807,27 @@ def strip_action_parentheticals(text):
     if not text:
         return ""
 
+    def _note(removed):
+        """记下**真的被删掉**的那一段（供上层驱动表情）。
+
+        ★ 只在`各闸确实删了东西`时调用 —— 不能在函数末尾统一猜"大概删了什么"，
+          否则拿到的是猜出来的旁白，不是实际删掉的。
+        ★ 空串/纯空白/纯标点不记（`（）` 这种没有动作含义）。
+        """
+        if sink is None:
+            return
+        s = (removed or "").strip().strip("()（）[]【】")
+        s = s.strip()
+        if s and re.search(r'[0-9A-Za-z\u4e00-\u9fff]', s):
+            sink.append(s)
+
     def _kill_narration(m):
         """丙闸替换：括号内容是"描述自己"的 → 清掉；是心里话 → 原样留。"""
         inner = (m.group(1) or "").strip()
         if (_NARRATION_INNER.match(inner)
                 or _SECOND_PERSON_NARRATION.match(inner)
                 or _QUOTED_IN_PAREN.search(inner)):
+            _note(inner)
             return ""                  # 描述性旁白 → 清掉
         return m.group(0)              # 其余（含第一人称心里话）→ 原样保留
 
@@ -815,20 +838,38 @@ def strip_action_parentheticals(text):
           `（微笑切面条）`（`微笑` 后面跟的是名词）都不会命中。
         """
         inner = (m.group(1) or "").strip()
-        return "" if _BARE_LABEL_RE.match(inner) else m.group(0)
+        if _BARE_LABEL_RE.match(inner):
+            _note(inner)               # ★ 裸情绪标签正是最想要的信号（（笑）（微笑））
+            return ""
+        return m.group(0)
+
+    def _kill_action(m):
+        """甲闸替换：括号内以动作/发声动词开头 → 删掉并记录。"""
+        _note(m.group(1) if m.groups() else m.group(0))
+        return ""
 
     _before = text
     # 己闸（第189轮）：**发声直出** —— `（笑声：X）` / `（NYEH HEH HEH!）` 把声音本体留下。
     #   ⚠️ 排在**最前**：发声不是"该删的旁白"，也不是"该救的引号台词"，
     #      它是一条独立的"转译"规则。放最前可以保证后面四道闸对**其余**括号
     #      的行为逐字不变（回归面最小）。
+    #   ★★ 第190轮：己闸**不删内容、只转译**，但它转译掉的那个括号正是情绪信号
+    #      （`（NYEH HEH HEH!）` 是 asgore 的招牌大笑）⇒ 必须补记一笔。
+    #      ⚠️ 用**先扫一遍再 sub**，而不是把回调包成闭包 —— `_rescue_voice`
+    #      必须保持**模块级裸名**：老锁 `check189 D3` 钉着"不是函数内闭包"，
+    #      `probe188.py` 靠 monkeypatch `E._rescue_voice` 关闸。
+    #      包一层闭包会让这两处静默失效（第190轮真踩过，check188/189 双红）。
+    if sink is not None:
+        for _mv in _ANY_PAREN_RE.finditer(text):
+            if _rescue_voice(_mv) != _mv.group(0):
+                _note(_mv.group(0))
     t = _ANY_PAREN_RE.sub(_rescue_voice, text)
     # 丁闸（第113轮f）：**先救出台词** —— 括号里有引号的，把引号内容提出来，
     #   否则后面几道闸会把它连旁白一起删掉（susie 98% 的括号都是这种）。
     #   ⚠️ 顺序是硬约束：必须在甲/丙/戊之前，否则台词早被删没了。
     t = _ANY_PAREN_RE.sub(_rescue_quoted, t)
     # 甲闸：动作旁白（括号内以动作动词开头）
-    t = _ACTION_PAREN_RE.sub('', t)
+    t = _ACTION_PAREN_RE.sub(_kill_action, t)
     # 丙闸：描述性旁白
     t = _ANY_PAREN_RE.sub(_kill_narration, t)
     # 戊闸（第188轮）：**裸情绪标签**（`（笑）` / `（微笑）` / `（苦笑）`）。
@@ -870,6 +911,86 @@ _LEAD_PUNCT = u'！!？?，,、。；;：: \t'
 #:   而两处**必须看到同一个决定**（否则"流式留着、收尾削掉"＝字缩回去）。
 #:   **默认 False ＝ 削**，与 128 轮行为一字不差 ⇒ 没设过的调用方（含全部探针）不变。
 _HES_ALLOW = {'on': False}
+
+
+# ---------------------------------------------------------------------------
+# 「括号动作 → 情绪键」（第190轮新增）
+#
+# 用户 2026-11-15 两条口径：
+#   ① `括号里的内容也就是表情和动作，用人物动画和表情头像表示`
+#   ② `难匹配也得匹配，后期微调就好`
+#
+# ⇒ **永远返回一个键**，兜底 `'neutral'`。宁可偶尔贴错表情，也不许"有时候换、
+#   有时候不换"——后者在观感上像坏了，前者只是不准，而且用户已明确说会后期微调。
+# ---------------------------------------------------------------------------
+#: 顺序即优先级。★ 具体规则必须排在笼统规则前面：
+#:    `苦笑`→sad 要早于 `笑`→smile；`尴尬地笑`→shy 要早于 `笑`；`大笑`→laugh 要早于 `笑`。
+#: ★ 全部用 `re.search`（不是 `match`）：「不好意思地笑了笑」的情绪词不在开头。
+ACT_EMOTION_RULES = [
+    (r'苦笑|强颜|勉强.{0,4}笑', 'sad'),
+    (r'尴尬|不好意思|讪|窘笑', 'shy'),
+    (r'大笑|狂笑|笑出声|爆笑|哈{2,}|呵呵|嘿嘿|噗嗤|噗的一声|HEH|HAH|NYEH', 'laugh'),
+    (r'哭|泪|呜咽|啜泣|抽泣|哽咽', 'cry'),
+    (r'怒|生气|发火|愤|吼|瞪|咬牙|拔高', 'angry'),
+    (r'惊|吓|震惊|呆住|愣|不敢信|一地', 'surprised'),
+    (r'害羞|脸红|难为情', 'shy'),
+    (r'担心|不安|忧虑|焦虑|紧张|慌|揪心', 'worried'),
+    (r'思考|想了想|沉思|琢磨|沉吟|顿了顿|沉吟|回想', 'thinking'),
+    (r'困惑|不解|迷惑|纳闷|莫名其妙|歪头', 'confused'),
+    (r'认真|严肃|正色|郑重|冷静|板起', 'serious'),
+    (r'困|疲惫|累了|打哈欠|打了个哈欠|叹气|叹了口气|耸肩', 'tired'),
+    (r'兴奋|激动|雀跃|两眼放光|眼睛一亮', 'excited'),
+    (r'感激|感谢|感动|动容', 'love'),
+    (r'得意|轻蔑|嘲|不屑|挑眉毛', 'smug'),
+    (r'受伤|疼|痛|龇牙', 'hurt'),
+    (r'笑|微笑|含笑|轻笑|莞尔|乐了', 'smile'),
+    (r'点头|摇头|温柔|安心|平静|放松|咳', 'neutral'),
+]
+
+_ACT_EMOTION_RES = [(re.compile(p), e) for p, e in ACT_EMOTION_RULES]
+
+#: 兜底情绪键。⚠️ 不许改成 None/""：调用方拿它去查表情，空值会让"难匹配也得匹配"
+#: 直接失效（第190轮用户专门交代过这一条）。
+ACT_EMOTION_FALLBACK = 'neutral'
+
+
+def act_to_emotion(act):
+    """把一段括号动作/旁白映射成情绪键。**永远返回非空字符串**。
+
+    >>> act_to_emotion('笑')
+    'smile'
+    >>> act_to_emotion('苦笑了下')
+    'sad'
+    >>> act_to_emotion('轻轻敲了敲键盘')      # 没有情绪词 ⇒ 兜底，不空着
+    'neutral'
+    """
+    if not act:
+        return ACT_EMOTION_FALLBACK
+    if not isinstance(act, str):
+        try:
+            act = str(act)
+        except Exception:  # noqa: BLE001
+            return ACT_EMOTION_FALLBACK
+    for rx, emo in _ACT_EMOTION_RES:
+        if rx.search(act):
+            return emo
+    return ACT_EMOTION_FALLBACK
+
+
+def acts_to_emotion(acts):
+    """一串动作片段 → 一个情绪键（取**第一个**能匹配到具体情绪的）。
+
+    ★ 为什么取第一个而不是最后一个：括号是按台词顺序出现的，先出现的那个
+      通常就是这一句的情绪基调；取最后一个会让「（笑）……（叹气）」变成叹气。
+    ★ 全都匹配不到具体情绪 ⇒ 兜底 `neutral`（同样不空着）。
+    """
+    if not acts:
+        return ACT_EMOTION_FALLBACK
+    for a in acts:
+        emo = act_to_emotion(a)
+        if emo != ACT_EMOTION_FALLBACK:
+            return emo
+    return ACT_EMOTION_FALLBACK
 
 
 def set_head_hesitation_allowance(allow):

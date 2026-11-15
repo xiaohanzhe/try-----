@@ -5723,6 +5723,32 @@ SUITES = [
                 '★ 零 Qt、零网络、零外部盘；不 import `main`，也不构造 `RalseiPet()`。',
     },
     {
+        'id': 'check190',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第190轮-括号转表情', '_tools', 'check190.py'),
+        'offscreen': False,
+        'desc': '第一百九十轮：**括号动作 → 表情**（素材落地 + 一视同仁接线）。'
+                '★★★ 用户四条口径：①「括号里的内容也就是表情和动作，用人物动画和表情头像表示」'
+                '②「一视同仁，不再是主体为 ralsei 的项目了」③「难匹配也得匹配，后期微调就好」'
+                '④ 头像底板「一句话，尽量按贴近原作即可」⇒ 纯黑。'
+                '★ 整条链四段：`strip_action_parentheticals(text, sink=acts)` 把**删掉的括号吐出来**'
+                '（返回值语义不变，对既有调用方零影响）→ `acts_to_emotion` 映射成情绪键'
+                '（**永远有值**，兜底 neutral）→ `dialogue_ui._char_face_candidates` 展开成'
+                '「该角色真实拥有的名字」→ `sprite_loader.get_face_for/any_face_for` 逐级取图。'
+                '★★★ 关键设计：候选链末尾固定补 `normal/neutral/default/plain` 四个底图名'
+                '—— 实测原作各家不统一（`hy_chujin_ketsukane` 只有 `neutral`、'
+                '`hy_ceroba_ketsukane` 是 `default`、`hy_ace`/`hy_ed` 是 `normal`），'
+                '只写 normal 会让 chujin 永远贴不出图；最后还有 `any_face_for` 拿"该角色任意一张"。'
+                '★★ E 段不测"函数返回了值"，而是拿**真实 manifest** 验 8 个 id × 18 个情绪键'
+                '的笛卡尔积**全部**能落到真实存在的图 —— 这才是"难匹配也得匹配"的硬证据。'
+                '★ 素材侧**一个像素没改**（用户裁定按原样）：`assets/faces/` 190 文件 / 29 个 id，'
+                '由 `build_faces190.py`（默认 MODE=original）+ `verify_faces190.py` 三层独立核验'
+                '（L1 仓库==中间件 / L2 仓库==从整页重裁 / L3 负控制）守。'
+                '★ 判据 38 条：A sink 通道 6 · B 情绪映射 10（顺序即优先级：苦打压过笑）· '
+                'C 别名链 6 · D 接线 8（AST 找 `sink=` 关键字、非全文扫文本）· E 素材可达 5（含端到端：台词→真实 png）· F 自检 3。'
+                '★ 零 Qt 构造（只 import 模块，不建 QApplication）、零网络、零外部盘。',
+    },
+    {
         'id': 'check183',
         'script': os.path.join(ROOT, 'code-quality-audit',
                                '第183轮-删7122误边', '_tools', 'check183.py'),

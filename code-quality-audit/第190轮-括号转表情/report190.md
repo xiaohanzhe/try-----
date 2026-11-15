@@ -22,8 +22,9 @@
 | 落地形态 | **`original` 按原样**，改像素的 `ink`/`line` 降级为可选（§7.1） |
 | 落地规模 | `assets/faces/` **190 文件 / 29 个 id**（expression 164 + portrait 26），五道闸 + 两层独立核验全绿（§7.3–7.5） |
 | 新发现的真 bug | 20 个 OneShot 文件全被写成 `portrait.png`（信息丢失），已修 + 加闸⑤钉住（§7.5） |
-| 本轮产品代码改动 | **零**（`ralsei_pet/` 只新增素材，代码一个字节没动） |
-| 状态 | 素材已落地并验证；**待确认一项**：气泡里的肖像格是否统一用深色底板（§7.2） |
+| 底板裁定 | 用户 `一句话，尽量按贴近原作即可` ⇒ **纯黑** `#000000`（§9.1） |
+| 产品侧接线 | **已落地**：sink 吐括号 → 情绪映射 → 别名链 → 按角色取图；NPC 一视同仁；35 条套件全绿（§10） |
+| 状态 | 素材 + 接线都完成；一个已知缺口如实登记（未删括号不触发表情，§10.7） |
 
 ---
 
@@ -477,9 +478,9 @@ python preview190.py
 
 ---
 
-## 9. 待用户确认
+## 9. 底板裁定（已定）
 
-### 9.1 气泡里的肖像格要不要统一深色底板
+### 9.1 气泡里的肖像格用**纯黑底板** —— 用户已裁定
 
 **这不是要不要改素材的问题，素材保持原样不动**。是 UI 排版问题，起因是 §7.2 那个实测：
 
@@ -489,40 +490,237 @@ python preview190.py
 | 透明底黑剪影（ace / mooch） | 21 | 能看，但和上面观感不一致 |
 | **纯白线透明底（ed / moray / starlo）** | **64** | **完全看不见** |
 
-| 方案 | 做法 | 后果 |
-|---|---|---|
-| **A（我倾向）** | 气泡里肖像格固定一块**深色圆角底板**（如 `#2A2C33`），肖像按原尺寸贴上去 | 79 帧的黑矩形"融进"底板看不出来，64 帧的白线也看得清；观感统一，素材零改动 |
-| B | 肖像格用**纯黑**底板 | 同上，且最接近游戏内黑屏观感；但与项目现有气泡配色可能冲突 |
-| C | 什么都不做，肖像直接贴气泡 | 64 帧直接看不见 —— 已出图 `bubble_ctx.png` 佐证 |
+用户 2026-11-15 裁定：**`一句话，尽量按贴近原作即可`** ⇒ **纯黑底板**（方案 B）。
 
-**默认按 A 推进**（用户回不同意见再改）。等确认后再做产品侧接线（下文 9.2）。
+理由不只是"贴近原作"：UT/DR 的表情框本来就是**黑底 + 白边 + 方角**，
+而黑底同时解决三套底色 —— 79 帧的黑矩形融进底板、64 帧的白线清晰、21 帧的剪影正常。
+落地见 §10.6（就是一行 CSS）。
 
-### 9.2 产品侧接线的改造点（已摸清，**未动一行代码**）
 
-`modules/event_speech.py:773 strip_action_parentheticals(text)` 目前**只返回删完后的字符串**，
-被删掉的括号内容**没有任何出口**。要"括号 → 表情/动作"，必须让它把删掉的东西吐出来。
+### 9.2 产品侧接线的改造点（**已落地，详见 §10**）
 
-最安全的设计（对全部既有调用方零影响）：
+`modules/event_speech.py:773 strip_action_parentheticals(text)` 原本**只返回删完后的字符串**，
+被删掉的括号内容**没有任何出口** ⇒ 加可选 `sink`（返回值语义不变，对既有调用方零影响）。
+实现在 §10.2。
 
-```python
-def strip_action_parentheticals(text, sink=None):
-    ...
-    if sink is not None:
-        sink.append(被删原片段)   # 只有显式传 sink 的调用方拿得到
-    return t                       # 返回值语义完全不变
-```
+~~匹配不上的只做动作、不换表情~~ —— **这条已作废**：用户后来补了一句
+`还有，难匹配也得匹配，后期微调就好` ⇒ 改成**永远给一个表情**，兜底 `neutral`（§10.3）。
 
-**关键约束**：`sink` 必须在**每一道子闸真的删了东西**时记录，不能在函数末尾统一"猜"
-——否则拿到的是猜出来的旁白，不是实际删掉的。
-
-**为什么映射表可以很小**：第188轮那 231 轮实测里，被删的括号形态只有 **16 种**
+**为什么词表可以很小**：第188轮那 231 轮实测里，被删的括号形态只有 **16 种**
 （`（笑）`42 次 / `（微笑）`39 / `（NYEH HEH HEH!）`19 / `（苦笑）`6 / `（思考片刻）`3 …）
-⇒ 关键词匹配足够，不需要大词表。匹配不上的**只做动作、不换表情**（不猜）。
+⇒ 关键词匹配足够，不需要大词表。
 
 ### 9.3 本轮回归
 
-`code-quality-audit/regress/run_all.py`：**186 套件 / PASS=8222 / FAIL=0**，
+`code-quality-audit/regress/run_all.py`：**187 套件 / PASS=8260 / FAIL=0**，
 只有 `check99` 判 `IDENTICAL*`（真机 log 交错产生的空行噪声，剔空行后逐行全等，**未刷基线**）。
-⇒ 190 个素材替换**没有**撞到任何既有判据。
+⇒ 190 个素材替换 + 产品侧接线**没有**撞坏任何既有判据。
+
+★★★ **中途真撞了一次，记在这里**（`check188`/`check189` 双红）：己闸要"不删也记一笔"，
+第一版我把 `_ANY_PAREN_RE.sub` 的回调从模块级 `_rescue_voice` 包成了函数内闭包
+`_rescue_voice_note`。行为是对的，但**名字变了**：
+
+- `check189 D3` 明写「`_rescue_voice` 是**模块级**函数（不是函数内闭包 —— 判据与打桩都靠它）」
+- `check188 D3` / `check189 D2` 按 `_subs` 里的**回调名**判闸序
+- `_tools/probe188.py` 靠 monkeypatch `E._rescue_voice` 关闸做对照
+
+⇒ 三处静默失效。**修法不是改老锁**（那三处都是第189轮真场景下锁住的口径），
+而是**把名字还回去**：用例**先 `finditer` 扫一遍记账、再裸 `_ANY_PAREN_RE.sub(_rescue_voice, text)`**。
+语义与顺序一字不变（己闸仍第一个跑、仍不删内容），`sink` 也照样拿到
+`（NYEH HEH HEH!）` 这条信号（`check190 A5` 钉住）。
+
+★ 六个套件（`dialog_turn52` / `check132` / `check133` / `check182` / `check185` / `check186`）
+判 DIFF 的原因全是**回显值变了**：我在 `main.py` 加了几行 import 与一个方法 ⇒ 它们的
+`idx(commit)=16`、`掷骰@7332`、导入清单这类**打印出来的行号/列表**跟着漂。
+断言本身 `PASS`，按口径 `--only <id> --update` 重建基线（**判据一条没动**）。
+
+---
+
+## 10. 产品侧接线（**已落地**）
+
+用户两条补充口径：
+- 头像底板：`一句话，尽量按贴近原作即可` ⇒ **纯黑**
+- 映射策略：`难匹配也得匹配，后期微调就好` ⇒ **永远有值，不许空着**
+
+### 10.1 整条链（四段，每段都能单独验）
+
+```
+台词「（苦笑）算了」
+   │  event_speech.strip_action_parentheticals(text, sink=acts)
+   ▼  acts = ['苦笑']                      ← ① 删掉的必须**吐出来**
+   │  event_speech.acts_to_emotion(acts)
+   ▼  emo = 'sad'                          ← ② **永远有值**（兜底 neutral）
+   │  main._clean_ai_reply ⇒ self._pending_face_emotion
+   │  dialogue_ui.show_dialogue / NPC 分支 pop_pending_face_emotion()
+   ▼  dialogue_ui._char_face_candidates('sad')
+   │     = ['sad','big_sad','downer','sorrowful','disappointed','mourning','normal','neutral','default','plain']
+   │  sprite_loader.get_face_for(char_id, name) 逐级试
+   ▼  贴到 face_label（**黑底** #000 白边 2px，84×84）
+```
+
+### 10.2 ① sink：删掉的括号必须有出口
+
+改动只有一处签名：
+
+```python
+def strip_action_parentheticals(text, sink=None):
+```
+
+**返回值语义完全不变**（仍是字符串）⇒ 全部既有调用方零影响。
+`sink` 只在**每道子闸真的删了东西**时 append —— 不能在函数末尾统一"猜"，否则拿到的是
+猜出来的旁白，不是实际删掉的。
+
+★ 己闸（发声直显 `（NYEH HEH HEH!）`）原本是"转译不删"，这轮让它**也记一笔**：
+那正是 asgore 的招牌大笑，不记就等于把最典型的一条信号丢了。
+
+★★★ **实现方式有坑，写清楚免得下次再踩**：不能把回调包成闭包去记账。
+
+```python
+# ✗ 第一版（真撞了 check188/check189 两条老锁）
+def _rescue_voice_note(m):
+    out = _rescue_voice(m)
+    if out != m.group(0):
+        _note(m.group(0))
+    return out
+t = _ANY_PAREN_RE.sub(_rescue_voice_note, text)
+
+# ✓ 定稿：先扫一遍记账，再**裸名**交给 sub
+if sink is not None:
+    for _mv in _ANY_PAREN_RE.finditer(text):
+        if _rescue_voice(_mv) != _mv.group(0):
+            _note(_mv.group(0))
+t = _ANY_PAREN_RE.sub(_rescue_voice, text)
+```
+
+理由三条，缺一条都不行：`check189 D3` 钉「`_rescue_voice` 必须是**模块级**函数」；
+`check188 D3`/`check189 D2` 按**回调名**判闸序；`probe188.py` 靠 monkeypatch
+`E._rescue_voice` 关闸做对照实验。包一层闭包，这三处**全部静默失效**。
+
+★ 空括号 `（）` / 纯空白 / 纯标点**不记**（负控制：不该记的别记）。
+
+### 10.3 ② 情绪映射：顺序即优先级
+
+`ACT_EMOTION_RULES` 是**有序**规则表，`re.search`（不是 `match`，「不好意思地笑了笑」的情绪词不在开头）：
+
+| 靠前 | 结果 | 为什么要压过谁 |
+|---|---|---|
+| `苦笑|强颜|勉强…笑` | `sad` | 必须压过 `笑`→smile |
+| `尴尬|不好意思|讪` | `shy` | 同上 |
+| `大笑|狂笑|哈{2,}|HEH|NYEH` | `laugh` | 同上 |
+| …（哭/怒/惊/害羞/担心/思考/困惑/严肃/累/兴奋/感激/得意/受伤） | | |
+| `笑|微笑|含笑|轻笑` | `smile` | 笼统规则，排最后 |
+| 全不中 | **`neutral`** | 兜底，**不许空** |
+
+### 10.4 ③ 别名链：本轮最难的一环（踩了三个坑）
+
+`_char_face_candidates(emo)` 把情绪键展开成"这个角色**可能**有的名字"，供逐级试。
+
+**坑 1：不能只认 `normal`。** 实测原作各家"正常脸"名字不统一：
+
+| 角色 | 正常脸叫 | 情绪数 |
+|---|---|---|
+| `hy_ace` / `hy_ed` | `normal` | 6 / 4 |
+| `hy_ceroba_ketsukane` | `default`（也有 neutral） | 28 |
+| **`hy_chujin_ketsukane`** | **只有 `neutral`，没有 normal/default** | 8 |
+| `hy_mooch` / `hy_moray` / `hy_starlo` / `hy_axis` | `normal` | 15 / 12 / 44 / 9 |
+
+⇒ 候选链末尾固定补 **`normal, neutral, default, plain`** 四个，缺一个 chujin 就永远贴不出图。
+
+**坑 2：`get_face_for` 的缓存键必须带角色 id。** 不同角色的 `normal.png` 是不同图片，
+只用文件名当键会**串图**。
+
+**坑 3（最后一道保险）：** 候选链一路没命中时，调 `any_face_for(char_id)` 拿该角色**任意一张**。
+宁可这张表情不够准 —— 用户已明确说会后期微调；而贴不出来会让头像**停在上一个角色脸上**，
+那是明显的错。
+
+### 10.5 ④ NPC 也换表情（旧口径作废）
+
+`dialogue_ui.add_dialogue` 的 NPC 分支原来写着：
+
+> NPC 的话**直接落历史区**：不走打字机、不换表情 ——
+> 打字机与表情位都是 **Ralsei 的显示位**，借来显示别人会看起来像他在说。
+
+**这条口径的前提是"只有 Ralsei 有表情素材"**。现在 8 个黄魂 + 21 个 OneShot 角色
+都有自己的脸，前提不成立 ⇒ 改掉。用户同轮原话：
+`一视同仁，不再是主体为 ralsei 的项目了`。
+
+★ 打字机**仍然不借**（那是 Ralsei 的逐字节奏，与贴图无关），只借贴图。
+
+#### ★★★ 10.5.1 差点只改了一半：NPC 台词**不走** `add_dialogue`
+
+第一版只改了 `add_dialogue` 的 NPC 分支。后来查调用点才发现：
+
+```
+add_dialogue("ralsei", ...)   ← 只有 4 处调用，speaker 全是 "ralsei"
+add_npc_line(label, text)      ← NPC 台词的**主路径**（npc_speak 回调走它）
+```
+
+也就是说 `add_dialogue` 的 NPC 分支要 `_is_npc_speaker(speaker)` 为真才走，而
+**实际没人这么调** ⇒ 只改那里等于没改，NPC 头像永远不变。
+
+⇒ 补 `add_npc_line(label, text, char_id=None)`，并在 `npc_speak` 的回调里传 `npc_id`。
+这一条写成了判据 **D4b**（AST 查签名 + 查调用处真的传了），否则以后有人改回去不会报错。
+
+### 10.5.2 ★★ Ralsei 自己那条链也得补，否则等于接了一半
+
+`ACT_EMOTION_RULES` 吐的是**短键**（`smile` / `laugh` / `cry` / `love` / `smug` / `hurt`），
+而 Ralsei 的 `_FACE_MAP` 原来只有长键（`happy_very` / `sad_force_smile` …）。
+
+`_resolve_face_name` 对未知键的兜底是**拼 `face_` 前缀** ⇒ 会去找 `face_smile.png`、
+`face_cry.png` 这种**不存在的文件** ⇒ `set_face` 查出缺失 ⇒ 回退 `face_normal`
+⇒ **Ralsei 括号里的笑被吃掉**，NPC 那条链接得再好，主宠身上是白接的。
+
+⇒ 补 6 条映射（**全部指向已存在的素材**，不新建文件）：
+
+| 通用键 | → Ralsei 素材 |
+|---|---|
+| `smile` | `face_normal_smile_little` |
+| `laugh` | `face_happy_very` |
+| `cry` | `face_sad with a little hopeless` |
+| `love` | `face_shy with touched and happy` |
+| `smug` | `face_happy and playful` |
+| `hurt` | `face_a little sad` |
+
+其余 12 个通用键（neutral/happy/sad/angry/surprised/shy/worried/thinking/confused/
+serious/tired/excited）本表早有，不重复登记。
+
+判据 **C6** 拿 `ralsei_face/` 的实际文件清单验：18 个通用键**全部**能落到真实 png（50 个素材，0 落空）。
+
+
+### 10.6 ⑤ 纯黑底板 = 一行 CSS
+
+```css
+QLabel { background-color: #000000; border: 2px solid #ffffff; }   /* 原为 transparent */
+```
+
+这就是 §7.2 那 64 帧"纯白线看不见"的**全部解法** —— 素材一个像素没动。
+
+`preview_box190.py` 离线复现了渲染规则（84×84 / 2px 白边 / 784 居中 KeepAspectRatio），
+产物 `face_boxes.png`：8 个角色黑底上**全部清晰可辨、无空格**。
+
+### 10.7 已知缺口（如实登记，本轮**不做**）
+
+`（尴尬地笑了笑）` 这类**不被删**的括号**不触发表情**。
+
+原因：第188轮锁 `A22g` 明确"裸「笑」故意留在 `_ACTION_VERBS` 之外"（`（笑不出来）`
+会被误伤），戊闸的 `_BARE_LABEL_RE` 也只认"整段是标签"。动它要改已锁定的护栏，
+需要单独拍口径 —— 不在本轮顺手扩大改动面。
+
+### 10.8 本轮套件 `check190.py`（38 条，全绿）
+
+| 段 | 条数 | 守住什么 |
+|---|---|---|
+| A sink 通道 | 6 | 删掉的能吐出来、返回值不变、空括号不记 |
+| B 情绪映射 | 10 | 具体规则压过笼统规则、兜底不空 |
+| C 别名链 | 6 | 末尾四个底图名、未知键不吞、**Ralsei 侧 18 键全覆盖** |
+| D 接线 | 8 | AST 找 `sink=` 关键字；**NPC 主路径 `add_npc_line`**；底色是 #000 |
+| **E 素材可达** | **5** | **8 id × 18 键笛卡尔积全部能落到真实图** + 端到端台词→png |
+| F 自检 | 3 | 条数 / 只读 / `[PASS]` 字面量 |
+
+★ E 段是核心：它不测"函数返回了值"，而是拿**真实 manifest** 验"一定贴得出图"
+—— 这才是"难匹配也得匹配"的硬证据。E5 更进一步：拿 5 句真实形态的台词，
+一路跑到 `os.path.isfile(那个 png)`。
+
+
 
 

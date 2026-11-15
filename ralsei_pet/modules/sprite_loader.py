@@ -71,6 +71,18 @@ class SpriteLoader:
         _root = _project_root()
         self.sprite_dir = os.path.join(_root, "deltarune_ralsei")
         self.face_dir = os.path.join(_root, "ralsei_face")
+        # ★★ 第190轮：**按角色**取表情的素材根（`<id>/<emotion>.png`）。
+        #   上面那个 `face_dir` 只装 Ralsei 自己的 `face_*.png`；用户第190轮定下
+        #   「一视同仁，不再是主体为 ralsei 的项目」⇒ 每个 NPC 也要能用自己的表情。
+        #   素材来源见 `assets/faces/manifest.json`（黄魂 164 帧 + OneShot 26 张）。
+        #   ★ 两个候选是为了容错：仓库根下的 `ralsei_pet/assets/faces` 是当前实际位置，
+        #     若以后整体挪到 `assets/faces` 也不用改代码。
+        _cf_cands = [
+            os.path.join(_root, "ralsei_pet", "assets", "faces"),
+            os.path.join(_root, "assets", "faces"),
+        ]
+        self.char_face_dir = next(
+            (p for p in _cf_cands if os.path.isdir(p)), _cf_cands[0])
         
         # 添加图像缓存，避免重复加载
         self.image_cache = {}
@@ -923,7 +935,96 @@ class SpriteLoader:
 
         self.image_cache[face_key] = pixmap
         return pixmap
-        
+
+    # ---------------------------------------------------------------- 按角色取表情
+    # ★★★ 第190轮新增（用户口径：「一视同仁，不再是主体为 ralsei 的项目」）。
+    #
+    # 与上面 `get_face` 的分工：
+    #   · `get_face(name)`        —— Ralsei 专用，读平铺的 `ralsei_face/face_*.png`
+    #   · `get_face_for(cid,name)` —— **任何角色**，读 `assets/faces/<cid>/<name>.png`
+    #
+    # ★ 找不到时返回 `None`，**不返回占位图** —— 因为调用方有三级兜底
+    #   （本角色同名 → 本角色 normal → Ralsei face_normal），中间那层需要区分
+    #   "没有"和"有但是灰图"。`get_face` 返回占位图是历史行为，不改它（有回归锁）。
+    def _char_face_names(self, char_id):
+        """枚举某角色的表情名（小写、不含 .png）。结果按角色缓存。"""
+        if not char_id:
+            return set()
+        cache = getattr(self, '_char_face_cache', None)
+        if cache is None:
+            cache = self._char_face_cache = {}
+        if char_id in cache:
+            return cache[char_id]
+        names = set()
+        try:
+            for f in os.listdir(os.path.join(self.char_face_dir, char_id)):
+                if f.lower().endswith('.png'):
+                    names.add(f[:-4].lower())
+        except OSError:
+            # 该角色没有素材目录 = 正常的"没有"，不是错误（D 级 28 人就是这种）
+            pass
+        cache[char_id] = names
+        return names
+
+    def has_face_for(self, char_id, face_name):
+        """该角色是否有这张表情（不含 .png 后缀）。"""
+        if not char_id or not face_name:
+            return False
+        return face_name.lower() in self._char_face_names(char_id)
+
+    def get_face_for(self, char_id, face_name):
+        """读某角色的表情图。没有就返回 `None`（不返回占位图，理由见上）。
+
+        ★ 缓存键带上角色 id —— 不同角色的 `normal.png` 是不同图片，
+          只用文件名当键会串图（这是最容易犯的错，特意写在这）。
+        """
+        if not self.has_face_for(char_id, face_name):
+            return None
+        face_key = "cface_%s_%s" % (char_id, face_name)
+        if face_key in self.image_cache:
+            pixmap = self.image_cache.pop(face_key)   # 命中→移到末尾（真 LRU）
+            self.image_cache[face_key] = pixmap
+            self.cache_hits += 1
+            return pixmap
+        file_path = os.path.join(self.char_face_dir, char_id, face_name + ".png")
+        try:
+            pixmap = QPixmap(file_path)
+        except Exception as e:  # noqa: BLE001
+            _log.debug("sprite_loader 防御性异常（已忽略）: %s", e)
+            return None
+        if pixmap.isNull():
+            return None
+        self.cache_misses += 1
+        if len(self.image_cache) >= self.cache_limit:
+            del self.image_cache[next(iter(self.image_cache))]
+        self.image_cache[face_key] = pixmap
+        return pixmap
+
+    def any_face_for(self, char_id):
+        """该角色**任意一张**表情图（优先那张"正常脸"）。没有就 `None`。
+
+        ★★★ 这一条是用户「**难匹配也得匹配**」的最后一道保险。
+        实测原作各家的"正常脸"名字不统一（`hy_chujin_ketsukane` 只有 `neutral`，
+        `hy_ceroba_ketsukane` 是 `default`，`hy_ace`/`hy_ed` 是 `normal`）。
+        候选链上一路都没命中时，宁可贴一张不完全对应情绪的图 ——
+        那只是"这张表情不太准"；而贴不出来会让头像**停在上一个角色脸上**，
+        那才是明显的错。
+        """
+        names = self._char_face_names(char_id)
+        if not names:
+            return None
+        # 优先"正常脸"：按稳定顺序试，避免 `set` 迭代顺序导致同一句两次结果不同
+        for prefer in ('normal', 'neutral', 'default', 'plain', 'smile'):
+            if prefer in names:
+                pm = self.get_face_for(char_id, prefer)
+                if pm is not None and not pm.isNull():
+                    return pm
+        for nm in sorted(names):
+            pm = self.get_face_for(char_id, nm)
+            if pm is not None and not pm.isNull():
+                return pm
+        return None
+
     def get_position_offset(self, animation):
         """获取特定动画的位置偏移量"""
         return self.position_offset.get(animation, (0, 0))

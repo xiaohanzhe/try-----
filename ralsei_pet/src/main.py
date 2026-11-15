@@ -743,7 +743,10 @@ from modules.event_speech import (TIER_AI, EVENT_MAX_CHARS, RecentLinePicker,
                                   set_head_hesitation_allowance,
                                   looks_out_of_character, looks_like_assistant_speak,
                                   # ★ 第132轮：元话语泄漏（念规则/引模板/括注自评）
-                                  looks_like_meta_leak)
+                                  looks_like_meta_leak,
+                                  # ★ 第190轮：括号动作 → 情绪键（用户：括号内容
+                                  #   要用表情/动画表示；`难匹配也得匹配` ⇒ 永远有值）
+                                  acts_to_emotion)
 # ★★ 宠物手势判定（第75轮 B3）：**唯一真源**。
 # 改造前 `mousePressEvent` / `mouseMoveEvent` / `mouseReleaseEvent` /
 # `mouseDoubleClickEvent` 各写了一份"部位识别 + 手势识别"（含 `get_ralsei_body_part`
@@ -18111,7 +18114,17 @@ class RalseiPet(QMainWindow):
             #     `code-quality-audit/人味改造-2026-09-18/_evidence/paren_usage_2026-09-19.txt`
             #     与命中/误伤量化 `_evidence/paren_gate_2026-09-19.txt`。
             #     删干净（整句只有一个括号动作）→ 判无效，与其它判退走同一条重采样路径。
-            t = strip_action_parentheticals(t)
+            #
+            # ★★★ 第190轮：删掉的那一段**不扔** —— 用 `sink` 收集起来驱动表情。
+            #   用户口径：「括号里的内容也就是表情和动作，用人物动画和表情头像表示」
+            #   以及「难匹配也得匹配，后期微调就好」⇒ `acts_to_emotion` 永远有返回值
+            #   （兜底 neutral），不存在"这一句没表情"的情况。
+            #   ★ 存到 `_pending_face_emotion` 由显示层 `pop_pending_face_emotion()`
+            #     取走（取出即清）—— 一句一个表情，不会串到下一句。
+            _paren_acts = []
+            t = strip_action_parentheticals(t, sink=_paren_acts)
+            if _paren_acts:
+                self._pending_face_emotion = acts_to_emotion(_paren_acts)
             if not t:
                 return None
             # 0b) 剥掉 markdown 强调/列表标记（对话框不做 markdown 渲染）
@@ -18314,6 +18327,23 @@ class RalseiPet(QMainWindow):
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
         return False
+
+    def pop_pending_face_emotion(self):
+        """取走「这一句该配哪个表情」（**取出即清**）。没有就返回 None。
+
+        ★★★ 第190轮：`_clean_ai_reply` 的 0a 步删括号时，把删掉的内容经
+        `strip_action_parentheticals(sink=...)` + `acts_to_emotion()` 变成情绪键，
+        暂存在 `_pending_face_emotion`。显示层（`dialogue_ui.show_dialogue`）来取。
+
+        ★ 必须**取出即清**：不清的话，上一句的「（笑）」会一直挂着，
+          下一句明明没括号也照样笑 —— 用户会立刻看出不对。
+        ★ 返回 `None` 与返回 `'neutral'` **语义不同**：
+          · `None`      = 这句压根没有括号 ⇒ 交给 `emotion_system` 按当前心情决定
+          · `'neutral'` = 有括号但没匹配到具体情绪 ⇒ 就用正常脸
+        """
+        v = getattr(self, '_pending_face_emotion', None)
+        self._pending_face_emotion = None
+        return v
 
     def _on_api_result(self, response, callback):
         """主线程槽：处理工作线程返回的 API 结果（由 _api_result 信号触发）。"""
