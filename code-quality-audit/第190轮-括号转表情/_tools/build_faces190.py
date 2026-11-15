@@ -25,10 +25,22 @@ u"""第190轮 · 把已确证"齐全"的原作素材落进 `ralsei_pet/assets/fa
 ★ 比"if L<64 就透明"那种硬阈值好：**不会把抗锯齿边缘切掉**，也不会把
   近黑背景像素（如 `(42,6,24)`）漏进画面。
 
+★★ 三种变体，**默认 original**
+----------------------------
+用户 2026-11-15 看过三行对照图后裁定：`ok，按原样来就好`
+⇒ 默认 `original`：**不做任何颜色/透明度变换，直接用原作像素**
+（黑底 + 白填充，100% 不透明 —— 游戏里就长这样，且**不依赖气泡底色**，
+  换成深底浅底都不会"看不见"）。这也最符合项目口径「一切根据原作」。
+
+另外两种保留为可选（`--mode ink` / `--mode line`），不默认生成：
+  · `ink`  黑填充 + 透明底 —— 浅色气泡更清楚，但角色像剪影
+  · `line` 白填充 + 透明底 —— 原作观感，但浅底上会看不见
+
 用法
 ----
-    python build_faces190.py --dry     # 只出计划表，不写盘
-    python build_faces190.py           # 落盘 + 四道闸
+    python build_faces190.py --dry              # 只出计划表，不写盘
+    python build_faces190.py                    # 默认 original
+    python build_faces190.py --mode ink         # 需要时再生成
 """
 import io
 import json
@@ -44,6 +56,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROUND = os.path.abspath(os.path.join(HERE, '..'))
 REPO = os.path.abspath(os.path.join(ROUND, '..', '..'))
 OUT_ROOT = os.path.join(REPO, 'ralsei_pet', 'assets', 'faces')
+
+#: original = 原样（默认）；ink/line = 见 docstring
+MODE = 'original'
 
 HY_MAN = u'D:\\_tmp190\\cropped\\hy\\_manifest.json'
 HY_DIR = u'D:\\_tmp190\\cropped\\hy'
@@ -63,7 +78,7 @@ HY_ROLE = {
 #: 有肖像但项目里没有对应 id ⇒ 如实登记，不硬塞
 HY_NO_ID = ['kanako', 'asgore', 'alphys', 'fchujin']
 
-#: OneShot 文件名 → 项目角色 id（21/21）
+#: OneShot 文件名 → 项目角色 id（**20 条**；加 george1..6 归一的 os_george 共 21 个 id）
 OS_MAP = {
     'alula': 'os_alula', 'calamus': 'os_calamus', 'cedric': 'os_cedric',
     'kelvin': 'os_kelvin', 'kip': 'os_kip', 'lamplighter': 'os_lamplighter',
@@ -125,7 +140,12 @@ def split_name(nm):
 
 
 def main():
+    global MODE
     dry = '--dry' in sys.argv[1:]
+    if '--mode' in sys.argv:
+        i = sys.argv.index('--mode')
+        MODE = sys.argv[i + 1] if i + 1 < len(sys.argv) else 'original'
+    print(u'[模式] %s（用户 2026-11-15 裁定「按原样来就好」⇒ 默认 original）' % MODE)
     if not os.path.isfile(HY_MAN):
         print(u'[停手] 缺黄魂裁切清单：%s' % HY_MAN)
         return 2
@@ -165,7 +185,12 @@ def main():
             if base.startswith('george'):
                 os_plan.append((OS_GEORGE, base, os.path.join(OS_DIR, fn)))
             elif base in OS_MAP:
-                os_plan.append((OS_MAP[base], 'portrait', os.path.join(OS_DIR, fn)))
+                # ★★ 第二格必须是**文件名 base**，不是字面量 'portrait'。
+                #   第一版写成了 `(OS_MAP[base], 'portrait', ...)`（把 kind 塞进来了），
+                #   结果 20 个角色目录里全叫 `portrait.png`、manifest 的 emotion
+                #   也退化成 'portrait' ⇒ 人名信息丢失、无法反推源文件。
+                #   `kind` 在 manifest 里是硬编码 'portrait'，不需要从这里传。
+                os_plan.append((OS_MAP[base], base, os.path.join(OS_DIR, fn)))
             else:
                 print(u'[警告] OneShot 有文件但无 id 映射：%s' % fn)
     else:
@@ -209,28 +234,47 @@ def main():
         d = os.path.join(OUT_ROOT, cid)
         os.makedirs(d, exist_ok=True)
         im = Image.open(src).convert('RGBA')
-        ink = to_ink(im, (0, 0, 0))
+        # ★ 按模式出图。`original`（用户选定）**完全不改像素**，只换目录/文件名。
+        if MODE == 'original':
+            out = im
+        elif MODE == 'ink':
+            out = to_ink(im, (0, 0, 0))
+        elif MODE == 'line':
+            out = to_ink(im, (255, 255, 255))
+        else:
+            print(u'[停手] 未知 mode：%s' % MODE)
+            return 3
         fn = ('%s.png' % emo) if fr == 0 else ('%s_f%d.png' % (emo, fr))
-        ink.save(os.path.join(d, fn))
+        out.save(os.path.join(d, fn))
 
-        # ★ 闸②：产物 alpha 与"源亮度"必须逐点对得上（HALF 阈值比，不用 a>0）。
-        #   ★★ 第一版这里写错过：`to_ink` 的 alpha 是连续值 L（0~255），
-        #   闸却用 `a > 0` 当"不透明"统计 ⇒ 任何 L>0 的像素都算进去，
-        #   于是必然比"L>=128 的个数"多，报出一堆假红。
-        #   教训：**闸的判据必须和被测实现的定义同口径**，否则量的是两件事。
-        spar = list(im.getdata())
-        opx = list(ink.getdata())
-        #   且 `to_ink` 用的是预乘亮度 `L = lum*a//255` ⇒ 这里必须同样预乘，
-        #   否则半透明源会再差一截（这批虽然 100% 不透明，但闸不能靠这个前提）
-        want = sum(1 for p in spar if (lum(p[0], p[1], p[2]) * p[3]) // 255 >= 128)
-        got = sum(1 for p in opx if p[3] >= 128)
+        # ── 闸②：判据必须跟着 mode 走（**同口径**，这是上一版翻车的地方）──
         g2_checked += 1
-        if abs(want - got) > 2:
-            g2_bad.append((fn, want, got))
+        if MODE == 'original':
+            # 原样模式：**逐像素完全相同**才叫"没改"。
+            #   ★★ 必须**读回落盘文件**再比，不能拿 `out` 比 —— `out is im`，
+            #   `im.tobytes() != out.tobytes()` 是**恒假**（同一对象比自己），
+            #   那样这道闸等于不存在（记忆铁律：恒真/恒假判据比不写还危险）。
+            #   读回来还能顺带抓 PNG 保存的位深/调色板损失。
+            back = Image.open(os.path.join(d, fn)).convert('RGBA')
+            if im.tobytes() != back.tobytes():
+                g2_bad.append((fn, 'pixels-differ'))
+            got = sum(1 for p in back.getdata() if p[3] > 0)
+        else:
+            # 转换模式：源亮度(预乘) ≥128 的像素数 == 产物 alpha≥128 的像素数
+            #   ★★ 第一版这里写错过：`to_ink` 的 alpha 是连续值 L（0~255），
+            #   闸却用 `a > 0` 当"不透明"统计 ⇒ 任何 L>0 的像素都算进去，
+            #   于是必然比"L>=128 的个数"多，报出一堆假红。
+            #   教训：**闸的判据必须和被测实现的定义同口径**，否则量的是两件事。
+            want = sum(1 for p in im.getdata()
+                       if (lum(p[0], p[1], p[2]) * p[3]) // 255 >= 128)
+            got = sum(1 for p in out.getdata() if p[3] >= 128)
+            if abs(want - got) > 2:
+                g2_bad.append((fn, want, got))
 
         manifest.append({'id': cid, 'kind': kind, 'emotion': emo, 'frame': fr,
-                         'file': '%s/%s' % (cid, fn), 'wxh': list(ink.size),
-                         'opaque_pct': round(100.0 * got / (ink.size[0] * ink.size[1]), 1)})
+                         'variant': MODE,
+                         'file': '%s/%s' % (cid, fn), 'wxh': list(out.size),
+                         'opaque_pct': round(100.0 * got / (out.size[0] * out.size[1]), 1)})
         n_expr += 1
 
     for cid, base, src in os_plan:
@@ -258,10 +302,23 @@ def main():
     ok1 = (n_disk == len(manifest))
     print(u'   %s  磁盘 %d / manifest %d' % (u'OK' if ok1 else u'报红', n_disk, len(manifest)))
 
-    print(u'[闸②] 亮度→alpha 守恒（源 L>=128 的像素数 == 产物不透明像素数）')
+    if MODE == 'original':
+        print(u'[闸②] 原样保真（落盘文件读回后逐像素 == 源图）')
+    else:
+        print(u'[闸②] 亮度→alpha 守恒（源 L>=128 的像素数 == 产物不透明像素数）')
     ok2 = (not g2_bad)
-    print(u'   %s  抽检 %d 张，偏差 >2 的 %d 张 %s'
+    print(u'   %s  抽检 %d 张，不一致的 %d 张 %s'
           % (u'OK' if ok2 else u'报红', g2_checked, len(g2_bad), g2_bad[:3]))
+    # ★ 负控制：证明这道闸**真能抓出"像素变了"**。只改内存副本，不碰落盘文件。
+    if g2_checked:
+        _pm = manifest[0]
+        _pp = os.path.join(OUT_ROOT, _pm['file'].replace('/', os.sep))
+        _a = Image.open(_pp).convert('RGBA')
+        _b = _a.copy()
+        _b.putpixel((0, 0), (1, 2, 3, 4))
+        print(u'   [负控制] 人为改 1 像素 ⇒ %s'
+              % (u'能抓出 OK' if _a.tobytes() != _b.tobytes()
+                 else u'抓不出（判据失效，本闸作废）'))
 
     print(u'[闸③] 每个产物都能重新打开且尺寸与 manifest 一致')
     bad3 = []
@@ -289,8 +346,24 @@ def main():
     print(u'')
     print(u'[结果] expression %d 帧 / portrait %d 张 / 共 %d 个 id'
           % (n_expr, len(os_plan), len(ids)))
+
+    # ── 闸⑤：命名语义（防 20 个角色全存成 portrait.png 那类静默退化）──
+    print(u'[闸⑤] 命名语义：emotion 不得等于 kind；同 id 下文件名不得重复')
+    bad5 = []
+    for m in manifest:
+        if m['emotion'] in ('portrait', 'expression'):
+            bad5.append((m['file'], u'emotion 退化成 kind 字面量'))
+    seen = {}
+    for m in manifest:
+        k = m['file'].lower()
+        if k in seen:
+            bad5.append((m['file'], u'与 %s 同名（会互相覆盖）' % seen[k]))
+        seen[k] = m['file']
+    ok5 = (not bad5)
+    print(u'   %s  问题 %d %s' % (u'OK' if ok5 else u'报红', len(bad5), bad5[:4]))
+
     print(u'[输出] %s' % OUT_ROOT)
-    if not (ok1 and ok2 and ok3 and ok4):
+    if not (ok1 and ok2 and ok3 and ok4 and ok5):
         print(u'[报红] 有闸未过 ⇒ 不许当成功')
         return 6
     return 0
