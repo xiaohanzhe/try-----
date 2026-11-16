@@ -1,0 +1,44 @@
+[PASS] A1 `class DialogueUI` 存在且 9 个翻页方法全部找得到  <- 类=True 缺方法=[]（共 3254 行）
+[PASS] A2 `PAGE_DWELL_MS` 是类级常量且 == 2000（约 2 秒静置才翻页）  <- 实得 2000
+[PASS] A3 `_init_state` 把四个队列状态都初始化（少一个 ⇒ 首次翻页 AttributeError 被吞）  <- 缺=[]
+[PASS] A4 `_page_timer` 是 singleShot（连发会一轮翻好几页）  <- setSingleShot 实参=[True]
+[PASS] A5 `_page_dwell_fire` 的唯一动作就是 `advance_page()`（计时到点不另开逻辑）  <- 调 advance_page 1 次
+[PASS] A6 对话层不绑 `Z` 键（用户口径：Z 归 R5 附身，翻页用单击/空回车/静置）  <- 命中行号=[]
+[PASS] B1 `advance_page` 对 `_page_idx` 只有 `+= 1` 一种写法（绝不跳页）  <- AugAssign=[('Add', 1)] 普通赋值=0 处
+[PASS] B2 `advance_page` 有"已到末页就返回 False"的封顶判断（否则越界取值）  <- 比较节点行号=[1269]
+[PASS] B3 `_push_page` **不碰** `_page_idx`（新页到达时游标必须原地不动）  <- 写了=['_hist_synced', '_history_html']
+[PASS] B4 `_arm_page_timer` **不碰** `_page_idx`（它只负责起计时）  <- 写了=[]
+[PASS] C1 `_push_page` 同时写 `_pages` 与 `_history_html`（双轨同源）  <- 写=['_hist_synced', '_history_html'] · `_pages.append` 行号=[1180]
+[PASS] C2 ★★★ `_start_typing` **不写** `_history_html`（写了 H4b 立刻破：历史 = 已完成的消息）  <- 写了=['_stream_raw', '_streaming', '_typing_page', 'is_typing', 'typing_index', 'typing_text']
+[PASS] C3 `_sync_typing_page_into_history` 同时推进 `_history_html` 与 `_hist_synced`  <- 写了=['_hist_synced', '_history_html']
+[PASS] C4 ★★ `_sync_typing_page_into_history` 的调用者**只有** `_commit_previous_ralsei_into_history`  <- 调用者=['_commit_previous_ralsei_into_history']
+[日志] 文件日志初始化失败，仅使用控制台: [Errno 13] Permission denied: 'E:\\RalseiMemory\\logs\\ralsei_pet.log'
+[PASS] C5 ★★★ 打字期间 `_history_html` 里**没有**这一句（历史只收已完成的）  <- hist='' synced=0 pages=1
+[PASS] C6 ★★ commit 之后才补进历史，且 `_hist_synced` 追上  <- hist='<div style="color:#ffffff;line-height:1.45;">甲句_未完成</div>' synced=1
+[PASS] D1 两条旁白 ⇒ **两页**（不是拼成一页）  <- 页数=2
+[PASS] D2 旁白 + 台词 ⇒ 台词是**最后一页**（自己是独立一页，不并入旁白页）  <- 页数=3 末页含台词=True
+[PASS] D3 ★★ 旁白页下标 < 台词页下标（动作先于说话）  <- typing_page=2 page_idx=0
+[PASS] D4 `current_page_html()` 是"画哪一页"的**唯一出口**（返回 `_pages[游标]`）  <- 命中=True
+[PASS] D5 游标越界钳到末页（`_page_idx` 被外部写坏也不崩、不空屏）  <- 钳后 == 末页: True
+[PASS] E1 单击 = 翻页：`mouseReleaseEvent` 里真的调 `advance_page()`  <- 调用行号=[2906]
+[PASS] E2 ★ 单击优先级：`stop_typing()` 排在 `advance_page()` **之前**（打字中先跳过，不抢翻页）  <- stop=[2905] advance=[2906]
+[PASS] E3 输入框**为空**时回车 = 翻页（原来 `send_message` 开头就 return，是 no-op）  <- advance=[2365] 回车闸=[2356]
+[PASS] E4 空回车同样先判打字再翻页（与单击同一口径，不出现两套行为）  <- stop=[2353, 2363] advance=[2365]
+[PASS] E5 `hide_dialogue` 停的是**翻页**计时（`self._page_timer.stop()`，不是顺手停别的计时器）  <- 命中行号=[2447]
+[PASS] F1 `_typing_own_page()` 判的是"游标是否还没走到打字页"（不是别的东西）  <- 比较节点行号=[1303]
+[PASS] F2 后台没占页 ⇒ 三分支走"老路径"（`_typing_page < 0`，与第192轮之前完全一致）  <- typing_page=-1
+[PASS] F3 占了页但还没轮到 ⇒ True（前台先不画，让旁白看得见）  <- typing_page=1 idx=0
+[FAIL] F4 ★★★ 旁白不会被前台顶掉：翻到旁白页时框里看得见旁白、看不见台词  <- 框内=''
+[FAIL] F5 ★★ 翻到台词页 ⇒ 一框一条：只剩台词，旁白不再同时出现  <- 打字已开=True 框内=''
+[PASS] G1 `_reset_pages` **不动** `_history_html`（那句留在调用点，A2a/A2b 盯着它）  <- 写了=['_hist_synced', '_page_idx', '_pages', '_typing_page']
+[PASS] G2 `_reset_pages` 清 `_page_idx` / `_typing_page` / `_hist_synced`（游标不清会指到旧页）  <- 缺=[]
+[PASS] G3 四个"清历史"的跟随点都跟着清了页游标（少一处 = 框清了但游标还指着旧页）  <- 调用点 4 个：['_maybe_break_turn', '_npc_line_begin', 'add_dialogue', 'add_npc_addressed']
+[PASS] G4 `advance_page` 走到打字页时**才**开打（`_begin_typing_at_page`）  <- 调用行号=[1275]
+[PASS] H1 判据名无重复（防复制粘贴漏改名 ⇒ 两条判据挤在一个名字下）  <- 共 35 条 / 去重后 35 条
+[PASS] H2 零网络 / 零外部盘：本套件不 import 任何网络模块  <- 命中=[]
+[PASS] H3 记下被测源码 sha1（换轮次后可比对"到底改没改"）  <- dialogue_ui.py sha1=f74e158c42822f17
+
+合计：PASS=36 FAIL=2  共 38 条
+【失败明细】
+  - F4 ★★★ 旁白不会被前台顶掉：翻到旁白页时框里看得见旁白、看不见台词  <- 框内=''
+  - F5 ★★ 翻到台词页 ⇒ 一框一条：只剩台词，旁白不再同时出现  <- 打字已开=True 框内=''

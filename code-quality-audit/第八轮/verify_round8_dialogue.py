@@ -240,6 +240,15 @@ def t5_scroll_position_is_preserved(app, ui):
     """核心：上翻历史后，刷新/闪烁都不能把视图弹回顶部。"""
     ui.typing_text = ""
     ui.is_typing = False
+    # ★★ 第192轮（**引账**，不是放宽判据）：显示真源从 `_history_html` 改成 `_pages`
+    #   —— `_refresh_display` 现在画 `current_page_html()`，而它在 `_pages` 非空时
+    #   就**不读** `_history_html`。本函数前面 `t1` 已经 `add_dialogue` 过 ⇒ `_pages`
+    #   非空，于是下面手工塞的 60 行被整段忽略，`max` 直接掉到 0
+    #   （T5.1 / T5.4 红，实测 max=0 h=278；改前 max=2854 h=380）。
+    #   ⇒ 先清页队列，让 `current_page_html()` 回落到 `_history_html` —— 这**就是**
+    #   产品契约（`_pages` 为空时它本来这么返回，见 `current_page_html`）。
+    #   判据一条没改，测的仍然是"上翻历史后刷新/闪烁不把视图弹回顶部"。
+    ui._reset_pages()
     ui._history_html = "".join(
         '<div style="color:#ffffff;line-height:1.45;">'
         '第 %02d 行历史消息，用于把文档撑高以验证滚动行为。</div>' % i

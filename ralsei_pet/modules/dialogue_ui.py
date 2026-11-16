@@ -434,6 +434,23 @@ class DialogueUI(QWidget):
     # 而两次独立开口之间至少隔着一次模型往返（实测首字 0.55~1.9s）
     # 或 `EVENT_SPEAK_MIN_INTERVAL = 2.0s` 的频率闸 —— 两边量级差得很开，不会误判。
     TURN_GAP_SECONDS = 1.5
+    # ------------------------------------------------------------------
+    # ★★★ 第192轮：翻页队列（一框一条 / 旁白单独一页）
+    #
+    # 用户口径（第190轮续二定的）：`原作不就是一句话一个框吗，按原作`
+    #   + 括号换不出表情的 `有些没有表情的那就用旁白`（⇒ 旁白**单独一页**）。
+    #
+    # 模型（刻意做成"只改画哪一页，不改存了什么"）：
+    #   `_history_html` 依旧是**全部页拼接**（老锁 check52a / e2e_narr190 读的就是它，
+    #   一个字节的语义都不变），另外维护 `_pages` 列表 + `_page_idx` 游标，
+    #   渲染时**只画 `_pages[_page_idx]` 这一页**。
+    #
+    # ★★ 绝不跳页：新页到达时 `_page_idx` **不动**，只重新起停留计时。
+    #   否则"同一拍三连"（一句旁白 + 两句台词）会直接跳到第三句、中间那句没人看见。
+    # ★ 停留阈值 2.0s：与 `EVENT_SPEAK_MIN_INTERVAL` 同量级（一次呼吸），
+    #   再短来不及读一个中文短句，再长像卡住。
+    # ★ 不用 `Z` 键：那是原作推进键，但本项目里它与 R5 附身抢同一个键。
+    PAGE_DWELL_MS = 2000
     # 输入栏常驻（不再"单击才展开"，用户根本不知道能打字）+ 一句占位提示
     ALWAYS_SHOW_INPUT_BAR = True
     # ★ 第90轮修复：单行 367px > 输入框可用 322px（FZXS12@11 实测），原文案被
@@ -684,6 +701,21 @@ class DialogueUI(QWidget):
         # 历史消息HTML缓冲：所有已经显示完的消息（用户输入+已打完的Ralsei回复）
         # 格式：每条是一段HTML（<span style=...>），拼接后用 setHtml 整体渲染
         self._history_html = ""
+        # ★★★ 第192轮：翻页队列（详见 `PAGE_DWELL_MS` 上方）
+        # `_pages` 与 `_history_html` **永远同步**：前者是逐页列表（决定"画哪一页"），
+        # 后者是它们的拼接（老锁读的就是它，语义不变）。
+        self._pages = []
+        self._page_idx = 0
+        #: 前台那一句在 `_pages` 里的下标（`-1` = 前台没占页，走叠加老路径）
+        self._typing_page = -1
+        #: `_pages` 里**已经同步进 `_history_html`** 的页数。
+        #  ★ 为什么需要它：打字中的那一句虽然占了一页（要能被单独翻到），但
+        #    **不能提前进历史** —— "历史 = 已完成的消息"是第52轮的不变式
+        #    （`dialog_turn52` H4b 明确断言跨轮让位后 hist == ''）。
+        self._hist_synced = 0
+        self._page_timer = QTimer(self)
+        self._page_timer.setSingleShot(True)
+        self._page_timer.timeout.connect(self._page_dwell_fire)
         # 打字机
         self.typing_timer = QTimer(self)
         self.typing_timer.timeout.connect(self._type_next_char)
@@ -1133,6 +1165,145 @@ class DialogueUI(QWidget):
                 narr.append(a)
         return (face_key or face_soft), narr
 
+    # ------------------------------------------------------------ 翻页队列
+    #: ★★★ 第192轮：一框一条。`_pages` 与 `_history_html` **永远同步**。
+    #:
+    #: 为什么不让 `_history_html` 变成"当前页"：
+    #:   `check52a` 的 A2a/A2b 是**静态**判据（`add_dialogue` / `_maybe_break_turn`
+    #:   里必须看得见 `self._history_html = ...`），`e2e_narr190` 是**运行期**按
+    #:   `_history_html` 切片对账的 —— 只要"存了什么"不变，它们全部继续绿。
+    #:   变的只有一件事：**画哪一页**。
+    def _push_page(self, blob):
+        """追加一页（历史区与页列表同步）。空串直接忽略（旁白可能就是空）。"""
+        if not blob:
+            return
+        self._pages.append(blob)
+        self._history_html += blob
+        self._hist_synced = len(self._pages)
+        self._arm_page_timer()
+
+    def _sync_typing_page_into_history(self):
+        """把"打字那一页"补进 `_history_html`（**只在 commit 时调**）。
+
+        ★ 这是"页先进列表、后进历史"的唯一补口：打字期间 `_pages` 有这一页
+          （能被翻到、能显示进度），但 `_history_html` 里还没有 —— 一旦提前写进去，
+          `dialog_turn52` H4b（跨轮让位后 hist 必须为空）立刻破。
+        """
+        try:
+            i = int(getattr(self, '_typing_page', -1))
+            if i < 0 or i >= len(self._pages):
+                return False
+            if i < int(getattr(self, '_hist_synced', 0)):
+                return False          # 已经同步过（正常 commit 只来一次）
+            self._history_html += self._pages[i]
+            self._hist_synced = i + 1
+            return True
+        except (TypeError, ValueError) as e:
+            _log.debug("dialogue_ui 同步打字页失败: %s", e)
+            return False
+
+    def _reset_pages(self):
+        """清空页游标（**不动 `_history_html`** —— 那句留在调用点，A2a/A2b 盯着它）。"""
+        self._pages = []
+        self._page_idx = 0
+        self._hist_synced = 0
+        # ★ 前台不再是任何一页 ⇒ 退回"前台直接画"的老路径（见 `_refresh_display`）
+        self._typing_page = -1
+        try:
+            self._page_timer.stop()
+        except Exception as e:  # noqa: BLE001
+            _log.debug("dialogue_ui 停翻页计时失败: %s", e)
+
+    def _arm_page_timer(self):
+        """有积压才起计时。
+
+        ★ 打字期间不起：让这一句先打完再谈下一页。
+        ★ 已在最后一页也**可能**还要起计时：那是"这一页就是打字页、但还没轮到它"
+          （`typing_page` 在更后面）的情形 —— 见 `_begin_typing_at_page`。
+        """
+        try:
+            if not self._pages:
+                self._page_timer.stop()
+                return
+            if self._page_idx < len(self._pages) - 1:
+                if self.is_typing:
+                    self._page_timer.stop()
+                    return
+                self._page_timer.start(self.PAGE_DWELL_MS)
+                return
+            self._page_timer.stop()
+        except Exception as e:  # noqa: BLE001
+            _log.debug("dialogue_ui 起翻页计时失败: %s", e)
+
+    def _page_dwell_fire(self):
+        """静置到点 ⇒ 翻一页（**只走一格**，绝不跳）。"""
+        self.advance_page()
+
+    def _begin_typing_at_page(self):
+        """当游标走到"打字页"时，才真正开动打字机。
+
+        ★ 为什么要延后：旁白排在台词前面时，那 2 秒停留会在打字机还在跑的时候
+          白白消耗掉 —— 等用户真看到那一页，字早就"打完了"，打字动画等于没有。
+        """
+        if not self.typing_text or self.is_typing:
+            return False
+        speed = 35 if len(self.typing_text) <= 60 else 22
+        self.is_typing = True
+        self.typing_index = 0
+        # 记下这一句真正的起始时刻，避免"从 0 重新打"被看成第二遍
+        self.typing_timer.start(speed)
+        self._refresh_display()
+        return True
+
+    def advance_page(self):
+        """前进一页。返回是否真的翻了。
+
+        ★★★ 绝不跳页：一次只 `+1`。新页到达时调用方**不许**把 `_page_idx`
+          直接设成末页 —— 否则"同一拍三连"会跳过中间那句（`_arm_page_timer`
+          只负责起计时，不改游标）。
+        """
+        try:
+            if not self._pages:
+                self._page_timer.stop()
+                return False
+            if self._page_idx >= len(self._pages) - 1:
+                self._page_timer.stop()
+                return False
+            self._page_idx += 1
+            # 翻到的正是"排着队还没开始打"的那一句 ⇒ 现在开打
+            if self._page_idx == self._typing_page:
+                self._begin_typing_at_page()
+            else:
+                self._refresh_display()
+            self._arm_page_timer()
+            return True
+        except Exception as e:  # noqa: BLE001
+            _log.debug("dialogue_ui 翻页失败（本帧跳过）: %s", e)
+            return False
+
+    def current_page_html(self):
+        """当前该画的 HTML（给 `_refresh_display` 与判据用，单一出口）。"""
+        try:
+            if self._pages:
+                i = max(0, min(int(self._page_idx), len(self._pages) - 1))
+                return self._pages[i]
+        except (TypeError, ValueError):
+            pass
+        return self._history_html
+
+    def _typing_own_page(self):
+        """前台这一句是不是"自己占一页且还没轮到"。
+
+        `True` ⇒ 当前画的是**别的一页**（旁白），前台先不画。
+        `False` ⇒ 前台就是当前页（或前台根本没占页），照老规矩独占/叠加。
+        """
+        try:
+            if self._typing_page < 0:
+                return False
+            return int(self._page_idx) < int(self._typing_page)
+        except (TypeError, ValueError):
+            return False
+
     def _narration_html(self, text):
         """旁白一行的 HTML 片段（**纯拼接，不刷新** —— 让调用方只刷一次）。
 
@@ -1157,7 +1328,8 @@ class DialogueUI(QWidget):
         blob = self._narration_html(text)
         if not blob:
             return False
-        self._history_html += blob
+        # ★ 第192轮：旁白**单独一页**（用户：括号换不出表情的就交给旁白）
+        self._push_page(blob)
         self._refresh_display()
         return True
 
@@ -1265,7 +1437,9 @@ class DialogueUI(QWidget):
                         _nface = face_type
             self.set_face(_nface, char_id=speaker)
             # 旁白在本句台词**之前**：括号是动作，动作先于说话
-            self._history_html += ''.join(self._narration_html(n) for n in _narr)
+            # ★ 第192轮：每条旁白**各占一页**（不再 join 成一块塞进同一页）
+            for _n in _narr:
+                self._push_page(self._narration_html(_n))
             # ★★ 第113轮h：`caps` 登记角色的「全大写」放在**渲染层**做，不逼模型输出英文。
             #   缘起：`hy_guardener` 人设原文要求「所有对话都以大写字母输出」，可中文
             #   没有大小写 —— 模型收到这条只能改去说英文（实测中文占比 0.00，36/36 轮）。
@@ -1279,7 +1453,7 @@ class DialogueUI(QWidget):
             _disp_msg = safe_message
             if _caps_on(speaker):
                 _disp_msg = _html.escape(message.translate(_ASCII_UPPER))
-            self._history_html += (
+            self._push_page(
                 f'<div style="color:#c9a86a;font-size:{self._html_pt(10)}pt;line-height:1.45;'
                 f'margin:2px 0 2px 0;">▸ {_html.escape(str(_label))}: {_disp_msg}</div>')
             self.typing_text = ""
@@ -1313,12 +1487,17 @@ class DialogueUI(QWidget):
                 # ★ 第52轮：隔了一会儿的独立开口 = 新一轮 → 把上一轮整块清掉。
                 #   必须放在上面那句 commit **之后**（否则刚清完又被追加回来）。
                 self._maybe_break_turn(_turn_gap)
+                # ★★★ 第192轮：旁白必须在 `_start_typing` **之前**落页。
+                #   反过来的话，台词那一页的下标比旁白更小 ⇒ 视觉顺序变成
+                #   "先说话、后做动作"，与"动作先于说话"相反。
+                for _n in _narr:
+                    self.add_narration(_n)
                 self._start_typing(message)   # 传原文，渲染时才转义（见 _refresh_display）
-            # ★★ 第190轮续：旁白追加在**历史区末尾**（前台是这句台词本身）⇒
-            #   视觉顺序就是"先动作、后说话"，且 `_maybe_break_turn` 已经把上一轮
-            #   清掉，所以它一定落在这一轮里面，不会被当成上一句的尾巴。
-            for _n in _narr:
-                self.add_narration(_n)
+            if _streamed:
+                # ★★ 第190轮续：流式这一支前台**没占页**（`_typing_page = -1`），
+                #   所以旁白照旧追加在后面，显示时叠加在台词上方（与改动前一致）。
+                for _n in _narr:
+                    self.add_narration(_n)
         else:
             # 用户说的话：先打断打字机，再把上一条Ralsei并入历史，然后追加用户消息
             self.stop_typing()
@@ -1329,7 +1508,8 @@ class DialogueUI(QWidget):
                 # （你这句 + 他下面回的那句）。这里不按间隔判断 ——
                 # 主人开口本身就是最强的"新一轮"信号。
                 self._history_html = ""
-            self._history_html += (
+                self._reset_pages()   # ★ 第192轮：页游标跟着清（游标不清会指到旧页）
+            self._push_page(
                 f'<div style="color:#9aa0aa;font-size:{self._html_pt(10)}pt;line-height:1.45;'
                 f'margin:2px 0 4px 0;">▸ YOU: {safe_message}</div>')
             self.typing_text = ""   # 前台清空：最新的一条是用户消息
@@ -1400,7 +1580,8 @@ class DialogueUI(QWidget):
         self._reset_front_stage()
         if self.SINGLE_TURN_MODE:
             self._history_html = ""
-        self._history_html += (
+            self._reset_pages()   # ★ 第192轮：页游标跟着清
+        self._push_page(
             f'<div style="color:#9aa0aa;font-size:{self._html_pt(10)}pt;line-height:1.45;'
             f'margin:2px 0 2px 0;">▸ 你对 {safe_label} 说: {safe_msg}</div>')
         self.typing_text = ""
@@ -1429,6 +1610,7 @@ class DialogueUI(QWidget):
           一个字没动（`dialog_turn52` 守着）。
         """
         self._history_html = ""
+        self._reset_pages()   # ★ 第192轮：一个框只装当前这一条 ⇒ 页游标也必须归零
 
     def add_npc_line(self, label, text, char_id=None):
         """「某人说：…」的显示出口（★ 第55轮）。**不进 Ralsei 的历史/话题锚/拟人记忆。**
@@ -1472,8 +1654,10 @@ class DialogueUI(QWidget):
         if char_id:
             self.set_face(_nface, char_id=char_id)
         # 旁白在本句台词**之前**：括号是动作，动作先于说话
-        self._history_html += ''.join(self._narration_html(n) for n in _narr)
-        self._history_html += (
+        # ★ 第192轮：每条旁白**各占一页**（不再 join 成一块）
+        for _n in _narr:
+            self._push_page(self._narration_html(_n))
+        self._push_page(
             f'<div style="color:#c9a86a;font-size:{self._html_pt(10)}pt;line-height:1.45;'
             f'margin:2px 0 2px 0;">▸ {safe_label}: {safe_msg}</div>')
         self.typing_text = ""
@@ -1595,6 +1779,7 @@ class DialogueUI(QWidget):
             return False
         if float(gap or 0.0) > self.TURN_GAP_SECONDS:
             self._history_html = ""
+            self._reset_pages()   # ★ 第192轮：跨轮让位 ⇒ 页游标一并归零
             return True
         return False
 
@@ -1608,24 +1793,47 @@ class DialogueUI(QWidget):
             if self.is_typing:
                 self.is_typing = False
                 self.typing_timer.stop()
-            self._history_html += (
-                f'<div style="color:#ffffff;line-height:1.45;">{full_text}</div>')
+            # ★★ 第192轮：前台这一句**已经占了一页**（`_typing_page >= 0`）⇒
+            #    这里把它同步进历史即可，**不许**再 push 一遍
+            #    （否则同一句话在历史里出现两次，`e2e_narr190` 的
+            #      "连说两句只剩最后一句"会看到两行）。
+            if int(getattr(self, '_typing_page', -1)) >= 0:
+                self._sync_typing_page_into_history()
+            else:
+                self._push_page(
+                    f'<div style="color:#ffffff;line-height:1.45;">{full_text}</div>')
             self.typing_text = ""
             self.typing_index = 0
+            self._typing_page = -1
 
     def _refresh_display(self):
-        """统一渲染：历史消息 + 前台当前消息（若存在）。
+        """统一渲染：**当前这一页**（§192 一框一条）+ 前台当前消息（若存在）。
         闪烁光标是独立覆盖层（见 _cursor_label），这里只负责正文本身。"""
         import html as _html
-        html = self._history_html
+        # ★★★ 第192轮：从"全部历史拼起来"改成"**只画当前这一页**"。
+        #   `current_page_html()` 在 `_pages` 为空时回落到 `_history_html`
+        #   （判据或老调用点直接塞 `_history_html` 的场景仍然画得出来）。
+        html = self.current_page_html()
         if self.typing_text:
             # 有前台 Ralsei 消息：当前显示到 index
             show_idx = (self.typing_index
                         if self.is_typing else len(self.typing_text))
             # 先按字符切片、再转义：保证逐字显示过程中不会出现 &amp; 这类实体残片
             current_shown = _html.escape(self.typing_text[:show_idx])
-            html += (f'<div style="color:#ffffff;line-height:1.45;">'
-                     f'{current_shown}</div>')
+            _typing_div = (f'<div style="color:#ffffff;line-height:1.45;">'
+                           f'{current_shown}</div>')
+            if self._typing_own_page():
+                # ★ 前台这一句排在后面（前面还有旁白没翻完）⇒ 这一帧**只画那一页**，
+                #   前台先不出现。等游标走到它（`advance_page`）才开打字机。
+                pass
+            elif self._typing_page >= 0:
+                # ★ 前台自己就是一页（且已经轮到它）⇒ **独占**。
+                #   不独占就会画出"上一句 + 正在打的这一句"两行 ——
+                #   那正是用户 `别一个对话框装n多条信息` 要消灭的东西。
+                html = _typing_div
+            else:
+                # 老路径（流式 / 前台没占页）：叠加在页下面，与第192轮之前**完全一致**
+                html = html + _typing_div
 
         # —— 滚动位置保护 ——
         # setHtml 会重建文档并把滚动条重置回顶部。先记住用户当前视图位置与"是否贴在
@@ -1838,6 +2046,7 @@ class DialogueUI(QWidget):
             _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
 
     def _start_typing(self, text):
+        import html as _html
         # 新消息：取消之前的自动隐藏
         self._auto_hide_timer.stop()
         self.typing_timer.stop()
@@ -1846,6 +2055,26 @@ class DialogueUI(QWidget):
         self.typing_text = text
         self.typing_index = 0
         self.is_typing = True
+        # ★★★ 第192轮：这一句**本身也是一页** —— 先落页，再决定什么时候开打。
+        #   落页而不是"只放前台"的原因：旁白排在它前面时，那一页要能被单独翻到；
+        #   不落页的话前台会把整段旁白顶掉（用户看不见"（叹了口气）"）。
+        try:
+            self._pages.append(
+                f'<div style="color:#ffffff;line-height:1.45;">'
+                f'{_html.escape(text)}</div>')
+            self._typing_page = len(self._pages) - 1
+            # ★ **不**写 `_history_html`：这一句还没"完成"，等 commit 再同步
+            #   （`_sync_typing_page_into_history`）。
+        except Exception as e:  # noqa: BLE001
+            _log.debug("dialogue_ui 前台落页失败（退回叠加显示）: %s", e)
+            self._typing_page = -1
+        if self._typing_page > int(self._page_idx):
+            # 前面还有没翻完的页（旁白）⇒ **先不打**，等游标走到它再开
+            self.is_typing = False
+            self.typing_timer.stop()
+            self._refresh_display()
+            self._arm_page_timer()
+            return
         # 速度：默认 35ms/字，长文本 22ms/字
         speed = 35 if len(text) <= 60 else 22
         self.typing_timer.start(speed)
@@ -2125,6 +2354,16 @@ class DialogueUI(QWidget):
                 return True
             # 输入框：回车发送 / Shift+Enter 换行
             if obj is self.input_field and self._should_send_on_enter(event):
+                # ★★★ 第192轮：输入框**为空**时回车 = 翻页（原作按 Z 推进的同义）。
+                #   原来空回车什么都不做（`send_message` 开头 `if not user_input: return`），
+                #   现在把它接到推进上：不产生任何副作用，只是"下一页"。
+                #   ★ 正在打字时先跳过打字（与单击同一口径），不直接翻页。
+                if not self.input_field.toPlainText().strip():
+                    if self.is_typing:
+                        self.stop_typing()
+                    else:
+                        self.advance_page()
+                    return True
                 self.send_message()
                 return True
         return super().eventFilter(obj, event)
@@ -2203,6 +2442,11 @@ class DialogueUI(QWidget):
 
     def hide_dialogue(self):
         self._auto_hide_timer.stop()
+        # ★ 第192轮：收起时停掉翻页计时（对话框都看不见了，不该再自己翻页）
+        try:
+            self._page_timer.stop()
+        except Exception as e:  # noqa: BLE001
+            _log.debug("dialogue_ui 防御性异常（已忽略）: %s", e)
         # 修复：隐藏时停打字机 + 断开旧动画（见 show_dialogue 注释）
         try:
             self.stop_typing()
@@ -2659,6 +2903,12 @@ class DialogueUI(QWidget):
             if self.is_typing:
                 # 打字中单击 = "跳过"（原作按键推进的同义），优先于聚焦输入框
                 self.stop_typing()
+            elif self.advance_page():
+                # ★★★ 第192轮：还有下一页 ⇒ 单击 = **翻页**（原作按 Z 推进的同义）。
+                #   放在"聚焦输入框"之前：翻页比把光标扔进输入框更符合那一刻的意图，
+                #   而且翻完之后再点一下仍然能落到输入框。
+                #   ★ 只有真的翻成功了才 return —— 没积压时行为与改动前**完全一致**。
+                pass
             elif self.ALWAYS_SHOW_INPUT_BAR:
                 # ★ 第52轮：输入栏常驻 → 不再需要"单击展开"，直接把光标送进去
                 self.input_field.setFocus()
