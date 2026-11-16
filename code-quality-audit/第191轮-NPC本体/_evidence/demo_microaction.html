@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>NPC 对话期微动作 · 三版示意</title>
+<style>
+  :root{
+    --bg:#1b1b1b; --fg:#f2f2f2; --muted:#a8a8a8; --line:#3a3a3a;
+    --card:#242424; --accent:#c9a86a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:28px 32px 40px;background:var(--bg);color:var(--fg);
+       font-family:"Microsoft YaHei UI","Microsoft YaHei",system-ui,sans-serif;}
+  h1{font-size:20px;font-weight:600;margin:0 0 6px}
+  .lead{font-size:13px;line-height:1.7;color:var(--muted);margin:0 0 22px;max-width:900px}
+  .lead b{color:var(--fg);font-weight:600}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(320px,1fr));gap:18px}
+  @media (max-width:1080px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px 18px}
+  .tag{display:inline-block;font-size:11px;letter-spacing:1px;color:#111;background:var(--accent);
+       border-radius:4px;padding:1px 6px;margin-bottom:8px;font-weight:700}
+  .ttl{font-size:15px;font-weight:600;margin:0 0 4px}
+  .cost{font-size:12px;line-height:1.6;color:var(--muted);margin:0 0 14px;min-height:38px}
+  .box{background:#000;border:3px solid #fff;padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+  .lcol{display:flex;flex-direction:column;gap:8px;align-items:center;flex:0 0 auto}
+  .facebox{width:84px;height:84px;background:#000;border:2px solid #fff;position:relative;
+           display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .facebox img{width:84px;height:84px;object-fit:contain;image-rendering:pixelated}
+  .frame{display:none;position:absolute;inset:0;align-items:center;justify-content:center;background:#000}
+  .frame img{width:56px;height:72px;object-fit:contain;image-rendering:pixelated}
+  .bodybox{width:56px;height:70px;display:none;align-items:flex-end;justify-content:center}
+  .bodybox img{width:50px;height:66px;object-fit:contain;image-rendering:pixelated}
+  .nm{font-size:13px;font-weight:700;letter-spacing:2px;color:#fff;margin-bottom:6px}
+  .tx{font-size:13px;line-height:1.65;color:#fff}
+  .st{font-size:12px;color:var(--muted);margin-top:10px;height:16px}
+  button{margin-top:8px;background:transparent;color:var(--fg);border:1px solid var(--line);
+         border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:inherit}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  .note{margin-top:26px;font-size:12px;line-height:1.8;color:var(--muted);max-width:900px;
+        border-top:1px solid var(--line);padding-top:14px}
+  code{font-family:Consolas,monospace;font-size:11.5px;color:var(--accent)}
+</style>
+</head>
+<body>
+<h1>NPC 说话时「动一下」的三种演法</h1>
+<p class="lead">
+  用的都是 <b>真实素材</b>：<code>hy_axis</code> 的表情头像 + 他自己的四帧走路图（<code>spr_axis_down_0..3.png</code>）。
+  三块同时自动循环，也可以点「播放」单独看一遍。差别只有两点：<b>本体占不占位置</b>、<b>表情会不会被顶掉</b>。
+</p>
+
+<div class="grid">
+
+  <div class="card">
+    <span class="tag">A</span>
+    <p class="ttl">头像下加小本体位</p>
+    <p class="cost">表情全程都在。代价：整个框会高一点（多出一行本体的高度）。</p>
+    <div class="box">
+      <div class="lcol">
+        <div class="facebox">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB6CAYAAAB9RzejAAADLUlEQVR4nO2d2bLbIBAFRUr//8ukXIkfwo2KbQZGnO5HW9bC0B42Sem6rnyBDL92nwCshYCLQcDFIOBiEHAxCLgYBFwMAi4GARfjHv1hzv8foEspzZwPOJc3houResfSn2rajx1jugnW5Y3hYjQb3lrTfhwA04fwKm8MF4OAi0HAxRjuh6uTKzk2atsFw8WY7od/a/LT56eR/15n7fpat2s9nlV5Y7gY3Tn8qYaV359OrhhcltNouViXN4aLMdxKt6rBbycvartYlTeGi0E/PMgYeOt+Z/9BMFwMDDduNZfbRQPDxZA1PDv1Lsr9RRuvwHAxusfSn4jeH/dai5eL6/ZaqUIrHYY4LofP9oNzZ86dNXv1PySGi3GM4V4jXDUDvY9rDYaLcYzh0UmT/wzMlsEQcoanxv6uF7tH3jBcDDnDv+xaZbt7pRCGixHO8Nmx6NnWr5eZ5e+YLYOzDbduDdfM+36fK7Nbtd8/Ha/1enbPKmK4GMsM333vWW22q0Ztu9HrWV0uGC7GMsPfPsu0uly8TMdwMe7V90vDv5DD4d05HLP7IIeDKQRcDAIuxv22fqQa2XiWDcPFMGulY/Y7VshguBjDAf/UOPrY+xgtfwwXozuHq1qdGnPn6vLpze0YLkaz4ZjdhtX94l6mY7gY4dalR8mdqXH16tP2u0yvgeFihDV8V+5MnWaX30c3HcPFCGd4tNyZO/cTfU4Bw8UIZ7hV7vQ+bo3R82LVKsR+q9Hs9qfmzrToXSg1MFyM+5TcFJ1s/JTl0X9ODBdjOoePjkzV9r+LbPz881XPTyeHg8+bCWvfz7a2vXsD0c+jdpxeMFyMsCNtteeTr3qiRO586lOUWbEnMFyMO/ozQp+M2bVmrGS30axahT39cPBltPwxXAy3fjj4Qj8c1vbDR3O7VT/21P1k47YShosRLuCfmmxRm0/dz3EBh5eNpUeoxSeRjMsTw8X4VB/XweDdY81vJfGsVXiF4V8wvQ3uPIF3Gl6C8X/g3aNwpuGwBwwXg4CLQcDFIOBiEHAxCLgYBFwMAi4GAReDgItBwMUg4GIQcDEIuBgEXAwCLgYBv7T4DVlTrmTWse8rAAAAAElFTkSuQmCC" alt="">
+        </div>
+        <div class="bodybox" id="b1">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAtCAYAAAAk09IpAAADH0lEQVRYw7VYO2vjQBAeGXXH1Sl0hQtVPgIirZvDTUhr/C/MYRAp0vnUpQgCEVzcfxBurkqTTm0whEulwo2L1ObqvcKZZTTat5wPhFfJauabx87ObvTjF5wNbZEK+p6u28jn+/h8VE6Yzhdy3BS18CHUI0Ot87UMAKDZ1sb/m+THfOLbcy7fJ7PSyzIAgGW+kuNNWfWImOSPfC13BRLheWSCMmcmsxKoBa5I1220KSrR81BRdTygkz/iwiazUn7gGiLXPLPJj1UftEXqlCtI4u05h8msFJwMzxmb/OClzZMRx0gK4BSqTVk5e9iZjCkRQ3PMmwySoMVMR2IyK2E6X0CzrWWIpvMFNEXdC6EKkWo7wJi2RSpUJELRbOthOWOrqOeElgwNTzZOBiva7Q/QbGtj7mkr8J+b3wAAZyFC5aBcJzLIPPn+L1jxpqzkw4FyVR7qkLElrE4Bn/NyW8pHN386X/QIaXPm8PeLFI7L9eX2VMqvHvLO3mMD5guVq0Jvb8KP0J3LfDU4b7JxIsmjXFzmRs9gHeAWLPMVXD3kcqwDnaeai3JVdSbS9cAYT59w2ID5o6vE2qUd0nK6wCTX2unt9oeeZSHvVI4Oke2oMrQS05UUtFGaSIXANeROZGze2e0P2r+7egXAIWdoVaYKd/tDpyLjmOYGzldVW28ylAj+onLaWqjGtLlyJeR8bkIlrnUH5/n0Q8bmKl23EbaMAN3cwP2Kg260GLKOIUcQT19/KvPH2unRxGuKWmQfFmfjBIAR4glO95/r4+OwnFEBrd2UFWTjpJMT2TiRueJS5Di86szHYa3nAb60cUmjVy5e7wQAwPvlvXF5G8N08Xon3i/vI0oE3d+wufw9ZG8zktFZQj3EoepTbB5B9MKEtYALpMdZPLSr6obNI9fHR6FrJTpkVAptRLEwqjyiI6LTEVMlOEGHoT3Oqb6kguqgBkbfou5tAidlIsBPEzbv0CsUlb4RfcFfl1sFGh58XPYfTH6qDzHiRNAyn5srV9CbK36LBQAQqxR+Vv/LZRtXky9ClrYJg65eueKhHv20e+AQ/AcfJjEGKxXjRQAAAABJRU5ErkJggg==" alt="">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAtCAYAAAAk09IpAAADTklEQVRYw7VYMYvbMBR+voYu5Uq3toRCBk8phXBDaclyZAldQ/5FOALmhm6ptw6HwYQMXdo/4GbpdEs2r0egNLd4CBweOofO7hCe+vz8JEt2+oGJFEtPn9779CTZu/wEJ0MW+gWt+4vMc+nfOR2VI4aTqSqnYVK4EKqQobNznRkAQLpOjO9N9ju84W4TqHp/FDnNDABgFsxVeRXFFSIm+2euM7cFEuE6MkHUTH8UAZ2BLfxF5q3CuKh4KIxLHtDZP+PG+qNIdbANka3O6ux3pA5Z6FtpBUnsNgH0R1HByXDN1NlvvLS5GLGMpACOoVpFsbWHrcmYhNhUY85kkARNZjoS/VEEw8kU0nWiQjScTCENk0oIJXjSdoAxzUK/kEg0RbpO2mmmLqOeEloyNDyDXrf1QNt9Duk6MWpPm4F/fPgCAHASItQO2rUig8y7r/80HngVxerhQLuSh0pk6gSrG4C3ubuO1KNrP5xMK4S0msl/PVHGcbneXR9T+cVNUNp76oB6oXYlVPYm7ITunAXz1roZ9LqKPNrFZW70DOYBPoNZMIeLm0CVdaDtpLZoV8oznu4MjPF0CUcdUD+6TKxd2k2OnDYw2a096W33eWVmTerUjg5e3VWlbSamK6nRRmki1QS2IbciU+ed7T7X/m/rFQALzdCsTAfc7vNSRsYy1Qa2l7KtMxlKBH9xcHq0kMr0cGVLyPrehIPY5h1s53IeetS7lF+MD8vi7ft38P3rN3i43wEAwOOXr+DFs6eqjP9TDCdT1Wa7z+HhfqeexqtpfFiWXHp7fuVloV9Qz1CBIhGqK5ebAYAhTLfnV55URoGuohgGvW5JE4NeV2lFl+TGh2XBJ1rrGQ68J+ENgK8sXpd2ZcnbtG51b6JEAI6iTFkbXm+yt4lkxodlwVlTUA9xSB6hnkDvSPaNYXr+82Px+81nj3oH4N+lXcobJo9QexIqZEyXfhycvsfEaPKIjR0A4UC+2wTaTOkvMq/NOYcKWBpHkcEXeH+22Uv4dmHqgzrki4H26VCPILChDRGe9HRfOFG8GcTSB4PCX2TeGWeKLuSsTwFMiHziGIkO9QQnZOMhV0h2sa79JAJQn7hcl3adbevtwIZQ2xvFf/sO3AR/ASfNXRAt6PieAAAAAElFTkSuQmCC" alt="" style="display:none">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAtCAYAAAAk09IpAAADK0lEQVRYw7VYPYvbQBCdNe7C1SmUwoUqhQNzrZugxqQ1/hfmMIgr0jnqrjgEwrjIfxBuUl3jTu1hCHGlwo2Lq01qpbBnM1rtx6ysPDCW7N2ZtzNvZz/El+/QG6o0rOl7uKqET/9hf1QumMzm8rlMi9qHUIsMHZ3vyAAAym1h/d9mf6g2POwS+R7FmdfIAAAWyVI+b7K8RcRmf+A7ci6QiKojG7SaieIM6Ai4CFeV2KR53YpQmjciYLI/UI1FcSY7cFPE1ZnL/lDXoUpDllaQxGGXQBRntUpG1YzLfueprYoRn5EUwCVVmyxnR5hNxibErhrzJoMkaDEzkYjiDCazOZTbQqZoMptDmRatFOogdMsB5rRKw1pHoivKbXGbZlwVtU8YydD0jEfBzY72xxOU28KqPWMF/vn1BwBAL0SoHbTLIoPMg89/OjveZLn8qEC7ugg1yLgEa3Kgtnl7yuTH1H4ym7cIGTVz+v1BGsfp+vZ0KeUPL0lj7XEB9ULt6tBam7AThnORLG/WzXgUSPJoF6e5NTJYB9QRLJIlPLwk8tkE2k7XFu3q6oww7YExnz7pcAH1Y6rExqndZcvJgc2uc6e3P55aI+vyTu2YIFxHlVsrMZ1JnRZKG6ku4KacRcYVnf3xZPydGxUAhmZoVaYO98dToyLjM9UGttdVW28ylAh+o3O6tdA9080VlxD73IROuHUH2/nsh6xkcHlAgzQFpgWV/o7t0YZr1+jc6VHhlWlRj68jHo8CgOsCSolQXdH15+Ovb900Mz2v6+l5re2Mo91kOYxHQUMT41EgtaIWuff7Z/F+/+xXZ1QSr3ePAuDfOQlPAOrMUt91q7IL1jTpiGD4S6Wt+t5lbWuRQQI20Aip4EZkel7Xqi/WifJ6YK/JEfYy066HM9+ImPTIrjN4g0BvD/AbI+STmte7R6GSMl6j6Qz3tce5zLiwhlUzTa3TwWGXwGGXsNYSdbng9jH5kFNbZ8gWCSSiFj2XgG1+hpQtRRRnwL004oJeLim+6nBViYFaQ1Ckfdy36IC+qD9Mmfgk2rfaNhFzQ+7qQ/0g2NtODqFbU/rf7oG74C88A0CbXX7wpQAAAABJRU5ErkJggg==" alt="" style="display:none">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAtCAYAAAAgJgIUAAADDUlEQVRYw7VYsWrjQBDdNe6O1C50hQtVPgIirZvgJlxr/BcmGEQKd466FEEggor7B+HmqjTu1AaDOVcq3LhIHa7WFcnsjUazq5FsPzBZOavZtzNvZ2atbx/VWVBEfomf/VWhpe/2z0PhE+PpzIzzKCulRCok8G7a7MQsvM7E3sL2+3jCfhOaF0aTWLwTwDxcmHEaJzUCNvu9truVAAhQndhQ08RoEivMWAp/Veg0SsqaR6Kk4lHOfg8bGU1iM1EaCqmOXPb7dGIR+SItwOL7TahGk7ikJKgmXPY7HVEqMhgDGQhJGicij4pIuATWVUNiErA4TkK2xUeTWI2nM5WvMxOK8XSm8iirhYpC07QNMSsiv+QW74p8nXXTRFMGPBdYEjgMwdA7eZHt4ajydWbVFpsxf//8pZRSZyGA7YBdJwlg6v3423nBNE7MhwLsUo8YEk1CtBmmc94eYvOxzR9PZxUirCaOf74Zo3Ds3h4+U+7Nc1ipDU0APWC7FJXaAZPBbfNwcbIugqFnSINdOK6sJ+AcU8bzcKFunkMztgHP4+aCXZonNNdjQrzauL0JoA8uc7JHtEtrJ4HNrrOz2h6OtZ10ecZ2OGhXy39q5sQno1UBc5HpAkloG0k0eWN7OFq/l3hBqQZN4CyKF9oejpUMCmMce5hPs2MrEpgA/IVFcYnnxripkRAR3TvAuDRvwDxpP8LWjsFuWQ6mVSM49lBPKHABhNBIdOHsrPCLeZSVwdcOg6GnFCFChUvrgwtsON6vn/T79VPNAOwujRMVDL1KzIOhZ7TAJafBblkOdktWF+I88XXJqe2YHlE4mtQLQIDbXI3E3cdL+Xp1rzkCUrStPTVNvF7da0oEA3uEoo0OWnkCe0Op/5dZ7tx3rb7s5YczyH0PCU3qAdyn4I3Wum3bvdJfFfocfcZ+E6o0TtTdx4vxZKXbbiNAmtab6gP8H+6wuN/Qt4/VUk1j7yJAk5UrLFRX2MN9VwguBfoDWg891FheAtw6+rvmY9kkwi5H1KYbUdqWGD3l5Fzkd8y2+AfqyytIISQQqAAAAABJRU5ErkJggg==" alt="" style="display:none">
+        </div>
+      </div>
+      <div>
+        <div class="nm">AXIS</div>
+        <div class="tx">系统状态正常。你要问的事，我这边有记录。</div>
+      </div>
+    </div>
+    <div class="st" id="s1">静息</div>
+    <button onclick="play(1)">播放</button>
+  </div>
+
+  <div class="card">
+    <span class="tag">B</span>
+    <p class="ttl">头像框临时换成本体</p>
+    <p class="cost">不改布局、框不变高。代价：那一瞬看不到表情，脸→小人→脸会闪。</p>
+    <div class="box">
+      <div class="lcol">
+        <div class="facebox">
+          <img id="pf2" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB6CAYAAAB9RzejAAADLUlEQVR4nO2d2bLbIBAFRUr//8ukXIkfwo2KbQZGnO5HW9bC0B42Sem6rnyBDL92nwCshYCLQcDFIOBiEHAxCLgYBFwMAi4GARfjHv1hzv8foEspzZwPOJc3houResfSn2rajx1jugnW5Y3hYjQb3lrTfhwA04fwKm8MF4OAi0HAxRjuh6uTKzk2atsFw8WY7od/a/LT56eR/15n7fpat2s9nlV5Y7gY3Tn8qYaV359OrhhcltNouViXN4aLMdxKt6rBbycvartYlTeGi0E/PMgYeOt+Z/9BMFwMDDduNZfbRQPDxZA1PDv1Lsr9RRuvwHAxusfSn4jeH/dai5eL6/ZaqUIrHYY4LofP9oNzZ86dNXv1PySGi3GM4V4jXDUDvY9rDYaLcYzh0UmT/wzMlsEQcoanxv6uF7tH3jBcDDnDv+xaZbt7pRCGixHO8Nmx6NnWr5eZ5e+YLYOzDbduDdfM+36fK7Nbtd8/Ha/1enbPKmK4GMsM333vWW22q0Ztu9HrWV0uGC7GMsPfPsu0uly8TMdwMe7V90vDv5DD4d05HLP7IIeDKQRcDAIuxv22fqQa2XiWDcPFMGulY/Y7VshguBjDAf/UOPrY+xgtfwwXozuHq1qdGnPn6vLpze0YLkaz4ZjdhtX94l6mY7gY4dalR8mdqXH16tP2u0yvgeFihDV8V+5MnWaX30c3HcPFCGd4tNyZO/cTfU4Bw8UIZ7hV7vQ+bo3R82LVKsR+q9Hs9qfmzrToXSg1MFyM+5TcFJ1s/JTl0X9ODBdjOoePjkzV9r+LbPz881XPTyeHg8+bCWvfz7a2vXsD0c+jdpxeMFyMsCNtteeTr3qiRO586lOUWbEnMFyMO/ozQp+M2bVmrGS30axahT39cPBltPwxXAy3fjj4Qj8c1vbDR3O7VT/21P1k47YShosRLuCfmmxRm0/dz3EBh5eNpUeoxSeRjMsTw8X4VB/XweDdY81vJfGsVXiF4V8wvQ3uPIF3Gl6C8X/g3aNwpuGwBwwXg4CLQcDFIOBiEHAxCLgYBFwMAi4GAReDgItBwMUg4GIQcDEIuBgEXAwCLgYBv7T4DVlTrmTWse8rAAAAAElFTkSuQmCC" alt="">
+          <div class="frame" id="bb2">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAtCAYAAAAk09IpAAADH0lEQVRYw7VYO2vjQBAeGXXH1Sl0hQtVPgIirZvDTUhr/C/MYRAp0vnUpQgCEVzcfxBurkqTTm0whEulwo2L1ObqvcKZZTTat5wPhFfJauabx87ObvTjF5wNbZEK+p6u28jn+/h8VE6Yzhdy3BS18CHUI0Ot87UMAKDZ1sb/m+THfOLbcy7fJ7PSyzIAgGW+kuNNWfWImOSPfC13BRLheWSCMmcmsxKoBa5I1220KSrR81BRdTygkz/iwiazUn7gGiLXPLPJj1UftEXqlCtI4u05h8msFJwMzxmb/OClzZMRx0gK4BSqTVk5e9iZjCkRQ3PMmwySoMVMR2IyK2E6X0CzrWWIpvMFNEXdC6EKkWo7wJi2RSpUJELRbOthOWOrqOeElgwNTzZOBiva7Q/QbGtj7mkr8J+b3wAAZyFC5aBcJzLIPPn+L1jxpqzkw4FyVR7qkLElrE4Bn/NyW8pHN386X/QIaXPm8PeLFI7L9eX2VMqvHvLO3mMD5guVq0Jvb8KP0J3LfDU4b7JxIsmjXFzmRs9gHeAWLPMVXD3kcqwDnaeai3JVdSbS9cAYT59w2ID5o6vE2qUd0nK6wCTX2unt9oeeZSHvVI4Oke2oMrQS05UUtFGaSIXANeROZGze2e0P2r+7egXAIWdoVaYKd/tDpyLjmOYGzldVW28ylAj+onLaWqjGtLlyJeR8bkIlrnUH5/n0Q8bmKl23EbaMAN3cwP2Kg260GLKOIUcQT19/KvPH2unRxGuKWmQfFmfjBIAR4glO95/r4+OwnFEBrd2UFWTjpJMT2TiRueJS5Di86szHYa3nAb60cUmjVy5e7wQAwPvlvXF5G8N08Xon3i/vI0oE3d+wufw9ZG8zktFZQj3EoepTbB5B9MKEtYALpMdZPLSr6obNI9fHR6FrJTpkVAptRLEwqjyiI6LTEVMlOEGHoT3Oqb6kguqgBkbfou5tAidlIsBPEzbv0CsUlb4RfcFfl1sFGh58XPYfTH6qDzHiRNAyn5srV9CbK36LBQAQqxR+Vv/LZRtXky9ClrYJg65eueKhHv20e+AQ/AcfJjEGKxXjRQAAAABJRU5ErkJggg==" alt="">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAtCAYAAAAk09IpAAADTklEQVRYw7VYMYvbMBR+voYu5Uq3toRCBk8phXBDaclyZAldQ/5FOALmhm6ptw6HwYQMXdo/4GbpdEs2r0egNLd4CBweOofO7hCe+vz8JEt2+oGJFEtPn9779CTZu/wEJ0MW+gWt+4vMc+nfOR2VI4aTqSqnYVK4EKqQobNznRkAQLpOjO9N9ju84W4TqHp/FDnNDABgFsxVeRXFFSIm+2euM7cFEuE6MkHUTH8UAZ2BLfxF5q3CuKh4KIxLHtDZP+PG+qNIdbANka3O6ux3pA5Z6FtpBUnsNgH0R1HByXDN1NlvvLS5GLGMpACOoVpFsbWHrcmYhNhUY85kkARNZjoS/VEEw8kU0nWiQjScTCENk0oIJXjSdoAxzUK/kEg0RbpO2mmmLqOeEloyNDyDXrf1QNt9Duk6MWpPm4F/fPgCAHASItQO2rUig8y7r/80HngVxerhQLuSh0pk6gSrG4C3ubuO1KNrP5xMK4S0msl/PVHGcbneXR9T+cVNUNp76oB6oXYlVPYm7ITunAXz1roZ9LqKPNrFZW70DOYBPoNZMIeLm0CVdaDtpLZoV8oznu4MjPF0CUcdUD+6TKxd2k2OnDYw2a096W33eWVmTerUjg5e3VWlbSamK6nRRmki1QS2IbciU+ed7T7X/m/rFQALzdCsTAfc7vNSRsYy1Qa2l7KtMxlKBH9xcHq0kMr0cGVLyPrehIPY5h1s53IeetS7lF+MD8vi7ft38P3rN3i43wEAwOOXr+DFs6eqjP9TDCdT1Wa7z+HhfqeexqtpfFiWXHp7fuVloV9Qz1CBIhGqK5ebAYAhTLfnV55URoGuohgGvW5JE4NeV2lFl+TGh2XBJ1rrGQ68J+ENgK8sXpd2ZcnbtG51b6JEAI6iTFkbXm+yt4lkxodlwVlTUA9xSB6hnkDvSPaNYXr+82Px+81nj3oH4N+lXcobJo9QexIqZEyXfhycvsfEaPKIjR0A4UC+2wTaTOkvMq/NOYcKWBpHkcEXeH+22Uv4dmHqgzrki4H26VCPILChDRGe9HRfOFG8GcTSB4PCX2TeGWeKLuSsTwFMiHziGIkO9QQnZOMhV0h2sa79JAJQn7hcl3adbevtwIZQ2xvFf/sO3AR/ASfNXRAt6PieAAAAAElFTkSuQmCC" alt="" style="display:none">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAtCAYAAAAk09IpAAADK0lEQVRYw7VYPYvbQBCdNe7C1SmUwoUqhQNzrZugxqQ1/hfmMIgr0jnqrjgEwrjIfxBuUl3jTu1hCHGlwo2Lq01qpbBnM1rtx6ysPDCW7N2ZtzNvZz/El+/QG6o0rOl7uKqET/9hf1QumMzm8rlMi9qHUIsMHZ3vyAAAym1h/d9mf6g2POwS+R7FmdfIAAAWyVI+b7K8RcRmf+A7ci6QiKojG7SaieIM6Ai4CFeV2KR53YpQmjciYLI/UI1FcSY7cFPE1ZnL/lDXoUpDllaQxGGXQBRntUpG1YzLfueprYoRn5EUwCVVmyxnR5hNxibErhrzJoMkaDEzkYjiDCazOZTbQqZoMptDmRatFOogdMsB5rRKw1pHoivKbXGbZlwVtU8YydD0jEfBzY72xxOU28KqPWMF/vn1BwBAL0SoHbTLIoPMg89/OjveZLn8qEC7ugg1yLgEa3Kgtnl7yuTH1H4ym7cIGTVz+v1BGsfp+vZ0KeUPL0lj7XEB9ULt6tBam7AThnORLG/WzXgUSPJoF6e5NTJYB9QRLJIlPLwk8tkE2k7XFu3q6oww7YExnz7pcAH1Y6rExqndZcvJgc2uc6e3P55aI+vyTu2YIFxHlVsrMZ1JnRZKG6ku4KacRcYVnf3xZPydGxUAhmZoVaYO98dToyLjM9UGttdVW28ylAh+o3O6tdA9080VlxD73IROuHUH2/nsh6xkcHlAgzQFpgWV/o7t0YZr1+jc6VHhlWlRj68jHo8CgOsCSolQXdH15+Ovb900Mz2v6+l5re2Mo91kOYxHQUMT41EgtaIWuff7Z/F+/+xXZ1QSr3ePAuDfOQlPAOrMUt91q7IL1jTpiGD4S6Wt+t5lbWuRQQI20Aip4EZkel7Xqi/WifJ6YK/JEfYy066HM9+ImPTIrjN4g0BvD/AbI+STmte7R6GSMl6j6Qz3tce5zLiwhlUzTa3TwWGXwGGXsNYSdbng9jH5kFNbZ8gWCSSiFj2XgG1+hpQtRRRnwL004oJeLim+6nBViYFaQ1Ckfdy36IC+qD9Mmfgk2rfaNhFzQ+7qQ/0g2NtODqFbU/rf7oG74C88A0CbXX7wpQAAAABJRU5ErkJggg==" alt="" style="display:none">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAtCAYAAAAgJgIUAAADDUlEQVRYw7VYsWrjQBDdNe6O1C50hQtVPgIirZvgJlxr/BcmGEQKd466FEEggor7B+HmqjTu1AaDOVcq3LhIHa7WFcnsjUazq5FsPzBZOavZtzNvZ2atbx/VWVBEfomf/VWhpe/2z0PhE+PpzIzzKCulRCok8G7a7MQsvM7E3sL2+3jCfhOaF0aTWLwTwDxcmHEaJzUCNvu9truVAAhQndhQ08RoEivMWAp/Veg0SsqaR6Kk4lHOfg8bGU1iM1EaCqmOXPb7dGIR+SItwOL7TahGk7ikJKgmXPY7HVEqMhgDGQhJGicij4pIuATWVUNiErA4TkK2xUeTWI2nM5WvMxOK8XSm8iirhYpC07QNMSsiv+QW74p8nXXTRFMGPBdYEjgMwdA7eZHt4ajydWbVFpsxf//8pZRSZyGA7YBdJwlg6v3423nBNE7MhwLsUo8YEk1CtBmmc94eYvOxzR9PZxUirCaOf74Zo3Ds3h4+U+7Nc1ipDU0APWC7FJXaAZPBbfNwcbIugqFnSINdOK6sJ+AcU8bzcKFunkMztgHP4+aCXZonNNdjQrzauL0JoA8uc7JHtEtrJ4HNrrOz2h6OtZ10ecZ2OGhXy39q5sQno1UBc5HpAkloG0k0eWN7OFq/l3hBqQZN4CyKF9oejpUMCmMce5hPs2MrEpgA/IVFcYnnxripkRAR3TvAuDRvwDxpP8LWjsFuWQ6mVSM49lBPKHABhNBIdOHsrPCLeZSVwdcOg6GnFCFChUvrgwtsON6vn/T79VPNAOwujRMVDL1KzIOhZ7TAJafBblkOdktWF+I88XXJqe2YHlE4mtQLQIDbXI3E3cdL+Xp1rzkCUrStPTVNvF7da0oEA3uEoo0OWnkCe0Op/5dZ7tx3rb7s5YczyH0PCU3qAdyn4I3Wum3bvdJfFfocfcZ+E6o0TtTdx4vxZKXbbiNAmtab6gP8H+6wuN/Qt4/VUk1j7yJAk5UrLFRX2MN9VwguBfoDWg891FheAtw6+rvmY9kkwi5H1KYbUdqWGD3l5Fzkd8y2+AfqyytIISQQqAAAAABJRU5ErkJggg==" alt="" style="display:none">
+          </div>
+        </div>
+        <div style="height:70px"></div>
+      </div>
+      <div>
+        <div class="nm">AXIS</div>
+        <div class="tx">系统状态正常。你要问的事，我这边有记录。</div>
+      </div>
+    </div>
+    <div class="st" id="s2">静息</div>
+    <button onclick="play(2)">播放</button>
+  </div>
+
+  <div class="card">
+    <span class="tag">C</span>
+    <p class="ttl">只让头像框轻轻一顿</p>
+    <p class="cost">最保守：不加位置、不用走路帧。代价：严格说这不算角色动画。</p>
+    <div class="box">
+      <div class="lcol">
+        <div class="facebox" id="fb3">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAB6CAYAAAB9RzejAAADLUlEQVR4nO2d2bLbIBAFRUr//8ukXIkfwo2KbQZGnO5HW9bC0B42Sem6rnyBDL92nwCshYCLQcDFIOBiEHAxCLgYBFwMAi4GARfjHv1hzv8foEspzZwPOJc3houResfSn2rajx1jugnW5Y3hYjQb3lrTfhwA04fwKm8MF4OAi0HAxRjuh6uTKzk2atsFw8WY7od/a/LT56eR/15n7fpat2s9nlV5Y7gY3Tn8qYaV359OrhhcltNouViXN4aLMdxKt6rBbycvartYlTeGi0E/PMgYeOt+Z/9BMFwMDDduNZfbRQPDxZA1PDv1Lsr9RRuvwHAxusfSn4jeH/dai5eL6/ZaqUIrHYY4LofP9oNzZ86dNXv1PySGi3GM4V4jXDUDvY9rDYaLcYzh0UmT/wzMlsEQcoanxv6uF7tH3jBcDDnDv+xaZbt7pRCGixHO8Nmx6NnWr5eZ5e+YLYOzDbduDdfM+36fK7Nbtd8/Ha/1enbPKmK4GMsM333vWW22q0Ztu9HrWV0uGC7GMsPfPsu0uly8TMdwMe7V90vDv5DD4d05HLP7IIeDKQRcDAIuxv22fqQa2XiWDcPFMGulY/Y7VshguBjDAf/UOPrY+xgtfwwXozuHq1qdGnPn6vLpze0YLkaz4ZjdhtX94l6mY7gY4dalR8mdqXH16tP2u0yvgeFihDV8V+5MnWaX30c3HcPFCGd4tNyZO/cTfU4Bw8UIZ7hV7vQ+bo3R82LVKsR+q9Hs9qfmzrToXSg1MFyM+5TcFJ1s/JTl0X9ODBdjOoePjkzV9r+LbPz881XPTyeHg8+bCWvfz7a2vXsD0c+jdpxeMFyMsCNtteeTr3qiRO586lOUWbEnMFyMO/ozQp+M2bVmrGS30axahT39cPBltPwxXAy3fjj4Qj8c1vbDR3O7VT/21P1k47YShosRLuCfmmxRm0/dz3EBh5eNpUeoxSeRjMsTw8X4VB/XweDdY81vJfGsVXiF4V8wvQ3uPIF3Gl6C8X/g3aNwpuGwBwwXg4CLQcDFIOBiEHAxCLgYBFwMAi4GAReDgItBwMUg4GIQcDEIuBgEXAwCLgYBv7T4DVlTrmTWse8rAAAAAElFTkSuQmCC" alt="">
+        </div>
+        <div style="height:70px"></div>
+      </div>
+      <div>
+        <div class="nm">AXIS</div>
+        <div class="tx">系统状态正常。你要问的事，我这边有记录。</div>
+      </div>
+    </div>
+    <div class="st" id="s3">静息</div>
+    <button onclick="play(3)">播放</button>
+  </div>
+
+</div>
+
+<p class="note">
+  查盘时看到的一个实情：素材命名<b>不统一</b> —— <code>hy/dalv_down_0.png</code>、<code>ut/spr_alphys_d_0.png</code>、
+  <code>ot/iocAsgoreDown_0.png</code> 三种写法都有，所以取帧不能拼一个格式，得按角色扫盘解析；
+  找不到帧就不演、不报错（静默降级）。
+</p>
+
+<script>
+function spin(box, done){
+  var imgs = [].slice.call(box.querySelectorAll('img'));
+  var i = 0;
+  imgs.forEach(function(m,k){ m.style.display = k ? 'none' : 'block'; });
+  var t = setInterval(function(){
+    imgs[i].style.display = 'none';
+    i = (i + 1) % imgs.length;
+    imgs[i].style.display = 'block';
+  }, 100);
+  setTimeout(function(){
+    clearInterval(t);
+    imgs.forEach(function(m,k){ m.style.display = k ? 'none' : 'block'; });
+    if (done) done();
+  }, 400);
+}
+function play(n){
+  if (n === 1){
+    var b = document.getElementById('b1'), s = document.getElementById('s1');
+    b.style.display = 'flex'; s.textContent = '说话中 · 本体原地走 400ms';
+    spin(b, function(){ b.style.display = 'none'; s.textContent = '静息'; });
+  } else if (n === 2){
+    var p = document.getElementById('pf2'), bb = document.getElementById('bb2'),
+        s2 = document.getElementById('s2');
+    p.style.display = 'none'; bb.style.display = 'flex'; s2.textContent = '说话中 · 表情被顶掉';
+    spin(bb, function(){ bb.style.display = 'none'; p.style.display = 'block'; s2.textContent = '静息'; });
+  } else {
+    var f = document.getElementById('fb3'), s3 = document.getElementById('s3');
+    s3.textContent = '说话中 · 上顿 2px';
+    var k = 0;
+    var t = setInterval(function(){
+      f.style.transform = (k % 2) ? 'translateY(0)' : 'translateY(-2px)';
+      k++;
+    }, 100);
+    setTimeout(function(){
+      clearInterval(t); f.style.transform = 'translateY(0)'; s3.textContent = '静息';
+    }, 400);
+  }
+}
+setInterval(function(){
+  play(1); setTimeout(function(){ play(2); }, 1500); setTimeout(function(){ play(3); }, 3000);
+}, 4600);
+</script>
+</body>
+</html>

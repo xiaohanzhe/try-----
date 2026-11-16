@@ -563,6 +563,13 @@ from modules.scene_controller import SceneController
 # 这是"渲染层"的最后一跳 —— 前面 scene_system/scene_camera/scene_render 都只出数据，
 # 没有消费者就是"函数写对了但产品用不上"（本项目最贵的坑，见记忆铁律 §4）。
 from modules.scene_canvas import SceneCanvas, BubbleOverlay
+# ---- NPC 本体渲染（第191轮）--------------------------------------------------
+# 用户口径（逐字）：「动画又不是只有ralsei有，其他也做」「我说的所有都适用于任意角色，
+#   不只是ralsei」⇒ 在场的人必须**真的看得见**，而不是只有坐标没有画面。
+# 分工：`npc_body_render.NpcFrameBook` 读清单取帧；`BodyWindow` 一个小窗画一个人；
+#   `NpcBodyLayer` 做窗口池与每帧同步。**层不认识相机与场景** —— 屏幕坐标由本文件算。
+# ⚠️ 本模块**不 import** 本文件任何东西（防环），z 序走注入的 `floor_manager` 那条路。
+from modules import npc_body_render as npc_body_render_mod
 # ---- 灵魂（SOUL，第55轮）----------------------------------------------------
 # 用户口径：「别换鼠标的样子了，改成可移动的那个灵魂图标…鼠标可拖拽灵魂，键盘可操控移动…
 #   原先和你说的鼠标附身换成就是这个灵魂的功能…灵魂也可自由出入各个场景，
@@ -4507,6 +4514,192 @@ class RalseiPet(QMainWindow):
                 _log.debug('NPC 结对推进异常（本帧跳过）: %s', e)
         self._npc_bodies_moved = sorted(set(moved))
         return self._npc_bodies_moved
+
+    # ==================================================================
+    #  NPC 本体渲染（第191轮）—— 让在场的人真的看得见
+    #  ------------------------------------------------------------------
+    #  用户口径（逐字）：「动画又不是只有ralsei有，其他也做」
+    #                  「我说的所有都适用于任意角色，不只是ralsei」
+    #
+    #  三条硬约束（都是用户裁定，不许在这里"优化"掉）：
+    #    ① **对话框一个字节不动**（用户：「不必要把动画赛到对话框里，也就是对话框不变」）
+    #       ⇒ 本节的产物只有"屏幕上的小人"，不碰 `DialogueUI`。
+    #    ② **一视同仁**：桌宠怎么被遮挡，NPC 就怎么被遮挡 —— z 序走
+    #       `floor_manager` 里**同一条** `pick_insert_after_by_foot_y` / `set_window_behind`，
+    #       不另写一套"NPC 专用遮挡"。
+    #    ③ **参考原作**：找不到立绘的人**不画**（不编假人）；`mode=stand` 的人
+    #       不播走路帧（原作里他就是不动的）。
+    #
+    #  ★ 数据源只有一个：`self.npc_bodies`（已过世界门控 + 站位表的在场者）。
+    #    不在这里重算"谁该在场" —— 那是本项目最贵的坑（同一份规则两处算）。
+    # ==================================================================
+
+    def _npc_body_layer_obj(self):
+        """惰性建渲染层。★ 没人可画时**不建**（零窗口、零开销、零回归）。"""
+        layer = self.__dict__.get('_npc_body_layer')
+        if layer is None:
+            try:
+                layer = npc_body_render_mod.NpcBodyLayer()
+            except Exception as e:
+                _log.warning('NPC 本体渲染层创建失败（本轮 NPC 不显示）: %s', e)
+                return None
+            self._npc_body_layer = layer
+        return layer
+
+    def _npc_body_scale(self):
+        """本体像素倍率 —— **与场景物件同一把尺**（`camera.scale`）。
+
+        ★ 为什么不是 `_cached_scale_factor`（= camera.scale × pet_scale）：
+          那个是"**桌宠**要多大"，`pet_scale` 是用户专门调**他一个**的旋钮。
+          拿它放大 NPC，会让"我把 Ralsei 调大"变成"整条街的人都变大了"。
+          `pet_scale = 1.0`（默认）时两者**数值相同**，所以默认观感一致；
+          用户真去调宠物大小时，NPC 保持与房间/门/物件同比例 —— 那才是原作。
+        拿不到相机 ⇒ 退回 `_cached_scale_factor`，再不行 2.0（与桌宠默认同值）。
+        """
+        cam = self.__dict__.get('_scene_camera')
+        try:
+            sc = float(getattr(cam, 'scale', 0.0)) if cam is not None else 0.0
+        except (TypeError, ValueError):
+            sc = 0.0
+        if sc > 0:
+            return sc
+        try:
+            v = float(self.__dict__.get('_cached_scale_factor', 0.0))
+        except (TypeError, ValueError):
+            v = 0.0
+        return v if v > 0 else 2.0
+
+    def _npc_body_items(self):
+        """在场的人 → **屏幕坐标的身体中心** `[{id,x,y,facing,moving}]`。
+
+        返回的是**中心**不是脚底：脚底 = 中心 y + 半个屏幕高度，而半高要等取到
+        帧（`png 高 × scale`）才知道 ⇒ 换算放在渲染层里做一次
+        （`sync(anchor='center')`），本方法不重复减一遍。
+
+        两套空间（**别混**，混了就是"人站在屏幕外/比房间大五倍"）：
+          · **桌面** —— `Body.x/y` 本来就是屏幕坐标（`_npc_build_desktop_bodies`
+            按桌宠窗口中心摆的）⇒ 直接用。
+          · **房间** —— `Body.x/y` 是房间**逻辑**坐标 ⇒ 走相机：
+            `屏幕 = 画布原点 + 画面居中偏移 + 逻辑视口坐标 × camera.scale`。
+            这条链路与 `scene_render.plan_frame` 出物件指令时**完全一致**
+            （它也是 `to_view_rect` → × scale），所以人和门/摆件不会错位。
+
+        `Body.x/y` 的语义按全项目既有口径 = **中心**（`_npc_interact_candidates`
+        用 `b.x/b.y ± ACTOR_HALF_W/H` 当命中框）；这里沿用，不另立一套。
+        """
+        bodies = getattr(self, 'npc_bodies', None)
+        if not bodies:
+            return []
+        moved = set(getattr(self, '_npc_bodies_moved', None) or ())
+        scene_id = (self.__dict__.get('_npc_bodies_scene')
+                    or self._npc_scene_id())
+        items = []
+        if scene_id == npc_system_mod.DESKTOP_SCENE:
+            for nid, b in bodies.items():
+                try:
+                    items.append({'id': nid, 'x': float(b.x), 'y': float(b.y),
+                                  'facing': getattr(b, 'facing', None) or 'down',
+                                  'moving': nid in moved})
+                except (TypeError, ValueError):
+                    continue
+            return items
+        # ---- 房间：逻辑 → 视口 → 屏幕像素 ----
+        cam = self.__dict__.get('_scene_camera')
+        canvas = getattr(self, 'scene_canvas', None)
+        if cam is None or canvas is None:
+            return []
+        try:
+            sc = float(getattr(cam, 'scale', 0.0)) or 1.0
+            off = self.__dict__.get('_scene_output_offset') or (0, 0)
+            ox = float(canvas.x()) + float(off[0])
+            oy = float(canvas.y()) + float(off[1])
+        except (TypeError, ValueError):
+            return []
+        for nid, b in bodies.items():
+            try:
+                v = cam.to_view((float(b.x), float(b.y)))
+            except Exception:
+                v = None
+            if not v:
+                continue                      # 相机还没跟随 ⇒ 本帧不摆他
+            items.append({'id': nid,
+                          'x': ox + float(v[0]) * sc,
+                          'y': oy + float(v[1]) * sc,
+                          'facing': getattr(b, 'facing', None) or 'down',
+                          'moving': nid in moved})
+        return items
+
+    def _npc_body_zorder(self, hwnd, foot_y):
+        """注入给渲染层的 z 序回调 —— **与桌宠同一条路径**（一视同仁）。
+
+        ★ 置顶态（全屏房间）下**直接返回**：置顶带内的前后关系没法用
+          "插到某人之后"表达（`SetWindowPos(HWND_TOPMOST)` 只是把窗口提到
+          最上面，相对顺序由**调用顺序**决定），所以那一态统一交给
+          `_scene_topmost_targets()` 成组按脚底 Y 依次提升。
+          这条与 `_apply_pet_z_order` 在置顶时早退是**同一个理由**。
+        """
+        if getattr(self, '_scene_topmost_on', False):
+            return False
+        fm = getattr(self, 'floor_manager', None)
+        if fm is None:
+            return False
+        try:
+            insert = fm.get_insert_after_hwnd(
+                getattr(self, 'current_floor', None), foot_y=foot_y)
+        except Exception as e:
+            _log.debug('NPC 取插入位置失败（本帧跳过）: %s', e)
+            return False
+        return FloorManager.set_window_behind(hwnd, insert)
+
+    def _resync_topmost_group(self):
+        """置顶态下**重排一次**整组（画布 → 人按脚底 Y → 灵魂/幽灵）。
+
+        ★ 为什么需要它：`_set_scene_topmost` 是**幂等**的（只在翻转时真动），
+          所以"置顶态里新出现了一个 NPC"不会触发它 ⇒ 那个小人会被画布盖住。
+          这里按同一张目标表重打一遍，成本 ~20 次 `SetWindowPos`，只在
+          **可见集合变化**时发生（`_npc_body_tick` 里判）。
+        """
+        if not getattr(self, '_scene_topmost_on', False):
+            return 0
+        done = 0
+        for _name, _hwnd in self._scene_topmost_targets_ordered():
+            if FloorManager.set_window_behind(
+                    _hwnd, floor_manager_mod.HWND_TOPMOST):
+                done += 1
+        return done
+
+    def _npc_body_tick(self):
+        """每帧推进 NPC 本体显示。**失败一律静默**（渲染不是关键路径）。"""
+        layer = self.__dict__.get('_npc_body_layer')
+        if not getattr(self, 'NPC_BODY_RENDER', True):
+            if layer is not None:
+                layer.hide_all()
+            return 0
+        try:
+            items = self._npc_body_items()
+            if not items:
+                if layer is not None:
+                    layer.hide_all()
+                self._npc_body_visible_sig = ()
+                return 0
+            layer = layer or self._npc_body_layer_obj()
+            if layer is None:
+                return 0
+            scale = self._npc_body_scale()
+            # ★ 脚底换算交给渲染层之前先算好"中心 → 脚底"需要的半高：
+            #   半高依赖帧尺寸，只有渲染层查得到 ⇒ 把**中心**和 `anchor` 一起交给它，
+            #   由 `sync(anchor='center')` 统一减 h/2（单一真源，不在两处各减一次）。
+            n = layer.sync(items, scale=scale, zorder=self._npc_body_zorder,
+                           anchor='center')
+            sig = tuple(layer.visible_ids())
+            if getattr(self, '_scene_topmost_on', False) \
+                    and sig != self.__dict__.get('_npc_body_visible_sig'):
+                self._resync_topmost_group()
+            self._npc_body_visible_sig = sig
+            return n
+        except Exception as e:
+            _log.debug('NPC 本体渲染推进异常（本帧跳过）: %s', e)
+            return 0
 
     # ==================================================================
     #  NPC 自由生活（第73轮）
@@ -9274,6 +9467,18 @@ class RalseiPet(QMainWindow):
     #  ⚠️ 保留这个开关本身：渲染出问题时可一刀关掉定位（不是死代码）。
     SCENE_LAYER_ENABLED = True
 
+    #: ------------------------------------------------------------------
+    #: ★★★ 第191轮：**NPC 本体渲染**总开关（与 `SCENE_LAYER_ENABLED` 同形）。
+    #: 关掉 ⇒ `_npc_body_tick` 立刻返回且**把已有窗口全部隐藏** ⇒ 与第190轮
+    #: 逐像素相同（"第191轮之前，NPC 在桌面上是不可见的"）。
+    #: ⚠️ 保留开关本身：渲染出问题时可一刀关掉定位，不是死代码。
+    #: ------------------------------------------------------------------
+    NPC_BODY_RENDER = True
+
+    #: 本体窗口的**同屏上限**（真源在 `npc_body_render.MAX_BODIES`，这里只是镜像
+    #: 给宿主做预排序；两处不一致时以模块为准，宿主只做"离相机最近"的截断）。
+    NPC_BODY_MAX = 24
+
     # ------------------------------------------------------------------
     #  ★★★ 第109轮：**原作式场景过渡**（淡出 → 换房 → 淡入）
     # ------------------------------------------------------------------
@@ -10221,6 +10426,41 @@ class RalseiPet(QMainWindow):
                 _log.debug("取场景层窗口句柄失败（跳过 %s）: %s", _name, e)
         return out
 
+    def _scene_topmost_targets_ordered(self):
+        """★★★ 第191轮：置顶提升用的**带人物排序**版本（返回 `[(名字, hwnd)]`）。
+
+        与 `_scene_topmost_targets` 的差别只有一件事：**桌宠和在场 NPC 一起按
+        脚底 Y 升序排**，而不是"桌宠永远在 NPC 上面"。
+
+        ★ 为什么必须排：置顶带内的前后关系由 `SetWindowPos(HWND_TOPMOST)` 的
+          **调用顺序**决定（后设的在上），没法用"插到某人之后"表达。若把 NPC
+          一股脑排在桌宠之后，站在 Ralsei 前面的人也会被他盖住 —— 与桌面模式
+          （按脚底 Y 插 z 序）给出**两个相反的答案**，那正是"同一份规则两处算"。
+        ★ 底层仍是同一个 `_scene_topmost_targets`：画布永远第一（最底），
+          灵魂/幽灵永远最后（最上），只有中间的"人"重新排序。
+        """
+        base = self._scene_topmost_targets()
+        canvas = [t for t in base if t[0] == 'scene_canvas']
+        top = [t for t in base if t[0] in ('soul', 'ghost')]
+        pet = [t for t in base if t[0] == 'self']
+        people = []
+        for name, hwnd in pet:
+            try:
+                fy = float(self.pos().y() + self.height())
+            except Exception:
+                fy = 0.0
+            people.append((fy, name, hwnd))
+        layer = self.__dict__.get('_npc_body_layer')
+        if layer is not None:
+            try:
+                for nid, hwnd, fy in layer.visible_windows():
+                    people.append((fy, 'npc:%s' % nid, hwnd))
+            except Exception as e:
+                _log.debug('取 NPC 本体窗口失败（置顶只排桌宠）: %s', e)
+        # 脚底更靠下的人在前（与 `pick_insert_after_by_foot_y` 同一条口径）
+        people.sort(key=lambda t: (t[0], t[1]))
+        return canvas + [(n, h) for _fy, n, h in people] + top
+
     def _set_scene_topmost(self, on):
         """把「画布 ＋ 宠物 ＋ 灵魂 ＋ 幽灵」**成组**置顶 / 还原。
 
@@ -10269,7 +10509,10 @@ class RalseiPet(QMainWindow):
             _cur = getattr(self, '_scene_topmost_on', None)
             if want == _cur:
                 return bool(_cur)
-            targets = self._scene_topmost_targets()
+            # ★★ 第191轮：置顶带里的"人"要**按脚底 Y** 排（桌宠与 NPC 混排），
+            #   否则站在 Ralsei 前面的人会被他盖住 —— 与桌面模式的 z 序给出相反答案。
+            #   排序与"画布最底 / 灵魂幽灵最上"的极性由那个方法自己保证。
+            targets = self._scene_topmost_targets_ordered()
             if not want:
                 # 还原时**反着摘**：从最上面那件开始，最后落到画布
                 targets = list(reversed(targets))
@@ -10554,6 +10797,14 @@ class RalseiPet(QMainWindow):
         # ⚠️ 由 `SCENE_LAYER_ENABLED`（默认 False）总控；关闭时本调用**立即返回**，
         #    P0「不切场景时零行为变化」的判据不受任何影响。
         self._update_scene_layer()
+
+        # ---- NPC 本体渲染（第191轮）：让在场的人**真的看得见** ----
+        # ★ 必须排在 `_update_scene_layer()` **之后**：房间里的本体位置要读这一帧
+        #   刚算好的相机与画布偏移（`to_view` + `_scene_output_offset`），
+        #   排在前面就会拿上一帧的相机，人比背景慢一拍（走起来看着"打滑"）。
+        # ★ 与场景层同一个 30ms 节拍：原作相机是 30fps 硬跟随，本体也该同频。
+        # ⚠️ 由 `NPC_BODY_RENDER`（默认 True）总控；关掉时立刻把窗口全隐藏。
+        self._npc_body_tick()
         
         # 低频检查附近的桌面元素（每5秒一次；修复：此前 check_nearby_desktop_elements
         # 从未被调用，Ralsei 对桌面文件夹/文件的"靠近反应"从未触发）
