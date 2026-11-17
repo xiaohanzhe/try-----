@@ -80,12 +80,18 @@ try:
     from event_speech import ACT_EMOTION_FALLBACK as _ACT_FALLBACK
     from event_speech import is_scene_act as _is_scene_act
     from event_speech import is_inner_act as _is_inner_act
+    # ★ 第193轮：内在活动 → 记忆四要素。动词表只在 `event_speech` 拆一次，
+    #   这里只拿"摘括号"和"取动词"两个出口，不重复词表（防两处漂移）。
+    from event_speech import iter_inner_acts as _iter_inner_acts
+    from event_speech import inner_verb as _inner_verb
 except ImportError:  # 允许被包外单独导入
     try:
         from modules.event_speech import act_to_emotion_ex as _act_ex
         from modules.event_speech import ACT_EMOTION_FALLBACK as _ACT_FALLBACK
         from modules.event_speech import is_scene_act as _is_scene_act
         from modules.event_speech import is_inner_act as _is_inner_act
+        from modules.event_speech import iter_inner_acts as _iter_inner_acts
+        from modules.event_speech import inner_verb as _inner_verb
     except ImportError:
         _act_ex = None
         _ACT_FALLBACK = 'neutral'
@@ -96,7 +102,30 @@ except ImportError:  # 允许被包外单独导入
         def _is_inner_act(act):
             return False
 
+        def _iter_inner_acts(text):
+            return ()
+
+        def _inner_verb(act):
+            return ''
+
 _log = logging.getLogger(_pet_logger_name(__name__))
+
+
+def _drop_paren_span(text, inner):
+    """从 `text` 里删掉**恰好这一个** `（inner）` / `(inner)`（只删第一次命中）。
+
+    ★ 第193轮：不用正则替换。`inner` 是刚从原文里摘出来的**字面量**，直接按字面
+      删最不容易误伤（正则还得转义一堆括号与标点）。两种括号各试一次，是因为
+      模型并不总用全角 —— 只认全角会把半角那批漏在片段里。
+    ★ 删不到就原样返回：宁可多留一句，也不能因为"没匹配上"把整句吞掉。
+    """
+    if not isinstance(text, str) or not inner:
+        return text
+    for l, r in ((u'（', u'）'), (u'(', u')')):
+        span = l + inner + r
+        if span in text:
+            return text.replace(span, u'', 1)
+    return text
 
 
 # ---------------------------------------------------------------------------
@@ -1712,15 +1741,54 @@ class DialogueUI(QWidget):
 
         只管登记，不管存储位置与遗忘 —— 那是 memory_system 的事。
         失败绝不影响对话。
+
+        ★★★ 第193轮（§201.4 用户口径）：
+          「心里想的东西存在记忆力，后期问起来能说出来就足够了」/「只需要关键词」
+          「时间，地点，人物，干啥」/「可以有一定偏差，但不能太离谱，就像真人一样」
+          ⇒ **内在活动**（`（盘算了一下）`）原句不落盘，只记四要素，
+             其余文本（含 `（手忙脚乱地翻口袋）` 这类**外在表现**）照旧整句入库。
+          ★ 刻意**不调** `strip_action_parentheticals()`：那是显示层护栏，会删掉
+            **所有**括号旁白；拿它拆记忆，会把外在表现一起吞掉（§201.4 明写
+            「动作/动画＝外在表现（→旁白）」，旁白是应该说出口的）。
         """
         try:
             ms = getattr(self.parent, 'memory_system', None)
             if ms is None or not callable(getattr(ms, 'add_fragment', None)):
                 return
-            ms.add_fragment(message, who=('ralsei' if speaker == 'ralsei' else 'user'),
-                            kind='dialogue')
+            who = 'ralsei' if speaker == 'ralsei' else 'user'
+            rest = message
+            note_inner = getattr(ms, 'note_inner', None)
+            for act in _iter_inner_acts(message):
+                # 先摘后判：不管这条记不记得成，它都不该留在片段正文里
+                rest = _drop_paren_span(rest, act)
+                verb = _inner_verb(act)
+                if verb and callable(note_inner):
+                    note_inner(verb, who=who, where=self._current_place_label())
+            rest = (rest or '').strip()
+            if not rest:
+                # 整句只有"想了想" ⇒ 不进片段，只活在四要素里（"不当场说"）
+                return
+            ms.add_fragment(rest, who=who, kind='dialogue')
         except Exception as e:
             _log.debug("dialogue_ui 记忆登记异常（已忽略）: %s", e)
+
+    def _current_place_label(self):
+        """当前场景的可读地名（`教室` / `城堡镇 · 商店`）；取不到 ⇒ `''`（**不猜**）。
+
+        ★ 第193轮：四要素里的「地点」，是内在活动**唯一**能召回的锚点
+          （`memory_system.recall` 的 keys 匹配对 inner 会并上这个值）。
+          取不到就返回空串 —— 宁可少一个维度，我也不写"你在某个地方"这种废话。
+        """
+        try:
+            sid = getattr(self.parent, 'current_scene', None)
+            if not sid:
+                return ''
+            fn = getattr(self.parent, '_scene_place_label', None)
+            if callable(fn):
+                return str(fn(sid, with_chapter=False) or '').strip()
+        except Exception:
+            pass
+        return ''
 
     def has_active_conversation(self, window=None):
         """此刻是否"正在聊天"：最近有对话活动，或模型正在思考，或正在打字。

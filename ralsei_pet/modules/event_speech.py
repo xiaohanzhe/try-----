@@ -844,6 +844,49 @@ def is_inner_act(act):
     return bool(_INNER_ACT_RE.match(s))
 
 
+# ---------------------------------------------------------------------------
+# 第193轮：内在活动 → 记忆关键词（用户口径「只需要关键词」）
+#   「心里想的东西存在记忆力，后期问起来能说出来就足够了」
+#   「时间，地点，人物，干啥」四要素 —— 本模块只负责其中「干啥」那一个词。
+#   ★ 动词表**只在这里拆一次**，别处一律调 `inner_verb()` / `iter_inner_acts()`，
+#     免得"想了想"在 A 处算一个词、在 B 处被拆成两个（第189轮口癖那类漂移）。
+# ---------------------------------------------------------------------------
+
+#: 按长度降序：`想了想` 必须先于 `想` 命中，否则只会取到最短的那个。
+_INNER_VERB_ORDER = tuple(
+    sorted((v for v in _INNER_ACT_VERBS.split(u'|') if v), key=len, reverse=True))
+
+
+def inner_verb(act):
+    """这段内在活动里"干啥"的那个词（`盘算` / `想了想`）；不是内在活动 ⇒ `''`。
+
+    先过 `is_inner_act()` 再取词 —— 两件事共用同一个正则，
+    否则会出现"判据说不是内在活动、却又能提出一个动词"的分裂。
+    """
+    s = (act or u'').strip() if isinstance(act, str) else u''
+    if not s or not is_inner_act(s):
+        return u''
+    for v in _INNER_VERB_ORDER:
+        if v in s:
+            return v
+    return u''
+
+
+def iter_inner_acts(text):
+    """从一段台词里摘出**内在活动**的括号内容（其余括号一律不返回）。
+
+    ★ 刻意**不**复用 `strip_action_parentheticals()`：那是显示层护栏，会删掉
+      **所有**括号旁白；而 §201.4 规定「动作/动画＝外在表现（→旁白）」要保留。
+      记忆层只需要摘掉内在活动这一小类。
+    """
+    if not isinstance(text, str) or not text:
+        return
+    for m in _ANY_PAREN_RE.finditer(text):
+        inner = (m.group(1) or u'').strip()
+        if inner and is_inner_act(inner):
+            yield inner
+
+
 # 任意括号对（用于叙述形态的清理）
 # ★★★ 113轮e：原 `{0,40}` 上限太窄，模型写的旁白常超 40 字 ⇒ 丙闸根本没机会判。
 #   `[^）)]` 已保证不跨括号对，放宽到 200 不会吞掉后续台词。

@@ -1,0 +1,16 @@
+2026-11-17 23:18:38 [INFO] ralsei_pet.memory_system — 新位置无记忆，已从旧版 memory.json 继承: C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\modules\..\memory.json
+VAULT          = C:\Users\23002\AppData\Local\Temp\probe194_7nega3jq
+INNER_KEYS_MAX = 80
+写 2+1 条后 inner = 2
+灌 85 条后 inner = 80
+含「教室」= 1   含「走廊」= 0
+keys 顺序前 3 = ['教室', '地点6', '地点7']
+keys 顺序后 3 = ['地点82', '地点83', '地点84']
+★ 初建 3 条里被裁掉的 = ['走廊']
+last_at 去重后档数 = 2（剩余 80 条）
+最早刻度档：共 75 条，其中 count=1 的 74 条
+机制：`_trim_inner` 按 (last_at, count) 升序取前 N 条删。
+  · 同刻度的条目里 count=1 的排在 count=2 的**前面** ⇒ 「教室」(count=2) 更安全；
+  · 但一旦 `autosave()` 把 `last_at` 拉开成逐条一档（机器慢 / 全量跑），
+    最早那一档里的 count=1 条目不够填满名额，就会轮到「教室」被裁。
+此时 recall(教室) 命中 inner = 1

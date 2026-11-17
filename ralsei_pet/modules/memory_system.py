@@ -54,6 +54,10 @@ class MemorySystem:
     SCHEMA = 2
     MAX_FRAGMENTS = 240            # 日常小片段上限：超了先忘最弱的
     MAX_KEYS = 300                 # 关键记忆上限（关键记忆几乎不会被忘，这里是兜底）
+    # ★★★ 第193轮：内在活动（`（盘算了一下）`）单独限额。
+    #   为什么不与 MAX_KEYS 共用：内在活动每天能攒十几条，而"升级/成就/重要日子"
+    #   是低频高价值 —— 混在一个池子里，先被挤掉的永远是后者（排序按 salience+last_at）。
+    INNER_KEYS_MAX = 80            # 内在活动条数上限，超了丢最久没想起的
     MAX_DIGEST_DAYS = 60           # 保留最近 60 天的"日摘要"
     MAX_ASSOC_KEYS = 400           # 联想图词条上限
     ASSOC_PER_KEY = 12             # 每个词最多保留多少个联想邻居
@@ -1226,6 +1230,76 @@ class MemorySystem:
             _log.debug("memory_system 关键记忆写入失败（已忽略）: %s", e)
             return None
 
+    # ------------------------------------------------------ 内在活动（第193轮）
+    def note_inner(self, verb, who='ralsei', where='', now=None):
+        """记一次**内在活动**：只留「时间 / 地点 / 人物 / 干啥」四要素，原句不落盘。
+
+        用户口径（§201.4 + 第193轮）：
+          「心里想的东西存在记忆力，后期问起来能说出来就足够了」
+          「只需要关键词」「时间，地点，人物，干啥」
+          「这些记忆可以有一定偏差，但不能太离谱，就像真人一样」
+
+        ★★★ 为什么 `where` 必须一起存：`recall()` 里 keys 只按 `text` 做包含匹配
+          （`_probe` 是**对话里出现过的词**），而没有人会在聊天时说出"盘算"两个字
+          ⇒ 只存动词的条目**永远想不起来**。地点才是真正的召回锚点。
+        ★ 原句**一个字都不落盘**：`text` 只放内在动词本身。
+        """
+        try:
+            v = str(verb or '').strip()
+            if not v:
+                return None
+            now = float(now if now is not None else time.time())
+            place = str(where or '').strip()
+            # 同（动词, 地点）在 DEDUP_WINDOW 内重复 ⇒ 只加次数，不新增条目
+            for k in reversed(self.keys):
+                if str(k.get('kind')) != 'inner':
+                    continue
+                m = k.get('meta') or {}
+                if (str(k.get('text') or ''), str(m.get('where') or '')) != (v, place):
+                    continue
+                try:
+                    if now - float(k.get('t', 0)) > self.DEDUP_WINDOW:
+                        continue
+                except Exception:
+                    pass
+                k['count'] = int(k.get('count', 1)) + 1
+                k['last_at'] = now
+                self.autosave()
+                return k
+            rec = {
+                'id': self._next_id, 't': now, 'kind': 'inner',
+                'text': v, 'count': 1, 'last_at': now,
+                'salience': 0.6,
+                'day': self._day_of(now), 'tod': self._tod_of(now),
+                'meta': {'where': place, 'who': str(who or '')},
+            }
+            self._next_id += 1
+            self.keys.append(rec)
+            self._trim_inner()
+            self.add_assoc([v])
+            self.autosave()
+            return rec
+        except Exception as e:
+            _log.debug("memory_system 内在活动写入失败（已忽略）: %s", e)
+            return None
+
+    def _trim_inner(self):
+        """内在活动超 `INNER_KEYS_MAX` ⇒ 只丢**内在活动**里最久没想起的那几条。
+
+        ★ 只动 `kind == 'inner'`：关键记忆（升级/成就/重要日子）一条都不许被它挤掉。
+          这也是 `INNER_KEYS_MAX` 不并入 `MAX_KEYS` 的原因。
+        """
+        try:
+            inner = [k for k in self.keys if str(k.get('kind')) == 'inner']
+            if len(inner) <= self.INNER_KEYS_MAX:
+                return
+            inner.sort(key=lambda k: (float(k.get('last_at', 0)),
+                                      float(k.get('count', 1))))
+            drop = set(k.get('id') for k in inner[:len(inner) - self.INNER_KEYS_MAX])
+            self.keys = [k for k in self.keys if k.get('id') not in drop]
+        except Exception as e:
+            _log.debug("memory_system 内在活动裁剪失败（已忽略）: %s", e)
+
     def add_assoc(self, kw, now=None):
         """更新关联图：同一句话里出现过的词互为邻居（人脑靠共现建立联想）。
 
@@ -1367,15 +1441,26 @@ class MemorySystem:
             _probe = list(cue_kw) + list(kw_assoc)
             for k in self.keys:
                 t = str(k.get('text') or '')
+                # ★★★ 第193轮：内在活动只有「动词 + 地点」两个词，而没有人会在聊天时
+                #   说出"盘算"这两个字 ⇒ 只拿 `text` 匹配，它**永远召不回来**。
+                #   所以只对 `kind == 'inner'` 把地点并进匹配面；其余关键记忆逐字不变
+                #   （`记忆别放 E 盘` 那条不许因为这次改动多匹配或少匹配）。
+                hay = t
+                if str(k.get('kind')) == 'inner':
+                    hay = t + ' ' + str((k.get('meta') or {}).get('where') or '')
                 for kw in _probe:
-                    if kw and kw in t:
+                    if kw and kw in hay:
                         key_hits.append(k)
                         break
             for k in sorted(key_hits, key=lambda k: -float(k.get('last_at', 0)))[:2]:
+                _km = k.get('meta') or {}
                 out.append({
                     'kind': k.get('kind'), 'who': 'key', 'text': k.get('text'),
                     'when': self._freshness(k.get('t'), now),
                     'day': self._day_of(k.get('t')), 'tod': self._tod_of(k.get('t')),
+                    # 第193轮：内在活动渲染要用（地点 / 是谁在想）；老记录取到空串。
+                    'where': str(_km.get('where') or ''),
+                    'who_meta': str(_km.get('who') or ''),
                     'score': 1.0, 'is_key': True,
                 })
 
@@ -1613,7 +1698,19 @@ class MemorySystem:
             # 实际价值：它知道这不是顺口胡说，而是"从 A 想到 B 想到 C"，可以说得更自然。
             via = [str(v) for v in (it.get('via') or []) if v]
             hint = ('（由%s联想到的）' % '、'.join(via[:self.MAX_VIA])) if via else ''
-            if it.get('is_digest'):
+            if it.get('kind') == 'inner':
+                # ★★★ 第193轮：内在活动**不是"说出口的话"**，绝不能渲染成「说过」。
+                #   用户口径「这些记忆可以有一定偏差」⇒ 用"好像 / 那阵子"这类模糊
+                #   说法，不假装复述原话、不精确到分钟。
+                #   ★ 这里**不拼 `tod`**：`when` 已经是"刚刚/昨天"这种尺度，
+                #     再拼就成"刚刚的晚上"（实测读着别扭）。`day`/`tod` 仍在记录里，
+                #     需要精确时随时可取。
+                _where = str(it.get('where') or '')
+                _place = (u'在' + _where) if _where else u''
+                _actor = u'你' if str(it.get('who_meta')) == 'user' else u'我'
+                _when = str(it.get('when') or '') or str(it.get('day') or '') or u'那阵子'
+                lines.append(u"· %s，%s%s好像%s过一阵" % (_when, _actor, _place, body))
+            elif it.get('is_digest'):
                 lines.append("· %s 的印象：%s" % (stamp or '那天', body))
             else:
                 lines.append("· %s，%s说过「%s」%s" % (stamp or '以前', who, body, hint))
