@@ -1693,7 +1693,63 @@ class DialogueUI(QWidget):
         self.typing_index = 0
         self.is_typing = False
         self._refresh_display()
+        # ★★★ 第195轮：NPC 也要记长期记忆（用户：「ralsei 和其他人一样，是同级的那种，
+        #   现有 ralsei 的功能需要在所有人身上都能看到」）。
+        #   ★ **只记有 `char_id` 的**：没有 id 就不知道是谁说的，宁可记不住也不记错人。
+        if char_id:
+            self._note_person_memory(char_id, text, _acts)
         return True
+
+    # ---------------------------------------------------- 每人一份的记忆（第195轮）
+
+    def _note_person_memory(self, npc_id, text, acts):
+        """给这个 NPC 记一笔：长期片段 + 内在活动关键词。
+
+        与 `_note_memory`（Ralsei 走的那条）是**同一套 memory_system**，
+        差别只有三处，每处都有理由：
+
+          ① 库来自 `parent.people_memory.of(npc_id)`，**不是**本体那一份 ——
+             `recall` 的关键记忆匹配面是 `text + 地点`、不含 `who`，
+             混库必然串味（Lancer 在教室盘算的事会被 Ralsei 想起来）。
+          ② `who` 传 npc_id，这样回忆时能说出"是 Lancer 在那儿盘算过"。
+          ③ 内在活动要从**两个地方**摘：正文里残留的括号，以及 `acts`
+             （`_clean_ai_reply` 阶段护栏已把括号删出正文、只留在 sink 里）。
+             只摘一处，NPC 的内在活动就会大量漏掉 —— 它的主路径恰恰是 sink 那条。
+        """
+        try:
+            bank = getattr(self.parent, 'people_memory', None)
+            of = getattr(bank, 'of', None)
+            if not callable(of):
+                return
+            ms = of(npc_id)
+            if ms is None or not callable(getattr(ms, 'add_fragment', None)):
+                return
+            who = str(npc_id)
+            place = self._current_place_label()
+            note_inner = getattr(ms, 'note_inner', None)
+            seen = set()      # 同一句里同一个动词只记一次（正文与 sink 会重复）
+
+            def _keep(verb):
+                v = _inner_verb(verb)
+                if not v or v in seen:
+                    return
+                seen.add(v)
+                if callable(note_inner):
+                    note_inner(v, who=who, where=place)
+
+            rest = text or ''
+            for act in _iter_inner_acts(rest):     # ① 正文里还留着的
+                rest = _drop_paren_span(rest, act)
+                _keep(act)
+            for a in (acts or []):                  # ② sink 收集到的
+                _keep(a)
+            rest = (rest or '').strip()
+            if not rest:
+                # 整句只有"想了想" ⇒ 不进片段，只活在四要素里（与 Ralsei 同口径）
+                return
+            ms.add_fragment(rest, who=who, kind='dialogue')
+        except Exception as e:
+            _log.debug("dialogue_ui NPC 记忆登记异常（已忽略）: %s", e)
 
     # -------------------------------------------------------- display helper
 

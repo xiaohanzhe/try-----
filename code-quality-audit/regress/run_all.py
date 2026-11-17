@@ -5966,6 +5966,39 @@ SUITES = [
                 '★ 进 `SUITES` 但**不进 `HERMETIC_IDS`**：不构造 `RalseiPet()`，'
                 '记忆库用 `tempfile` 隔离、退出即删。零网络、零外部盘。',
     },
+    {
+        'id': 'check195',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第195轮-NPC能力对齐', '_tools', 'check195.py'),
+        'offscreen': True,
+        'desc': '第一百九十五轮：**NPC 一人一库**（用户：「ralsei 和其他人一样，是同级的那种，'
+                '也就是现有 ralsei 的功能需要在所有人身上都能看到，但，也要根据具体情况来看」）。'
+                '★★★ 为什么不给 `MemorySystem` 加 `owner` 字段、所有人共用一个库：'
+                '`recall()` 对关键记忆的匹配面是 `text + " " + meta.where`，**不含 `who`** ⇒ '
+                'Lancer 在教室"盘算"过一次，问"教室"时 **Ralsei 也会想起来**。'
+                '`npc_persona.MiniMemory` 早就写过同一个结论（"分桶写法只要有一处忘了带过滤就会串"）。'
+                '所以走**物理分开**：`D:\\RalseiMemory\\npc_mem\\<id>\\memory.json`，'
+                '读谁的记忆在文件系统层面就只碰得到谁的数据。'
+                '★★ 另一个必钉的点：`MemorySystem` 有个 `_legacy_file` 指向仓库里的 '
+                '`ralsei_pet/memory.json`（升级不失忆用）—— NPC 的空库要是继承了它，'
+                '每个人一开口就自带 Ralsei 的记忆 ⇒ 串味。指定 `memory_dir` 时**必须**置 None。'
+                '★★★ 性能（用户：「要么来个 5090 都跑不动这程序的算力」）：96 个人不能一人一个'
+                '常驻实例。**懒加载**（`of()` 才建）＋ **LRU 上限**（默认 6：一屏不会同时有 6 个人'
+                '说话，进一个房间最多 3~4 个）。淘汰时先 `save_memory()` 再丢，重新取从盘上回来。'
+                '★ 判据 **23 条**：A 路径与 id 5（含"非法 id 不许洗成另一个名字照用"＋分母闸）· '
+                'B 隔离 5（B1 行为级不串味、B2 自写自问必命中的负控制、B3 `_legacy_file is None`、'
+                'B3b 本体那条路**必须仍有** legacy 的反向控制）· C 性能 5（C4 是"上限调大就不淘汰"的'
+                '负控制）· D 接线 5（AST：`add_npc_line` 真的调了、取的是 `people_memory.of` 而不是'
+                '本体的 `memory_system`、`if char_id:` 守卫真的在、main 里真的**赋值**了'
+                '`self.people_memory`）· E 兼容 4（`memory_dir` 必须是**可选**参数）。'
+                '★★ 变异 **4/4 全抓**（`_tools/mutate195.py`：去 legacy 防护 / 去 LRU / 断接线 / '
+                '改注释的无害变异必须红 0；每条断言"红数 >0 且 <23"，整文件还原并核 sha1）。'
+                '★ 变异当场抓出**我自己一条假变异**：第一版把 `_legacy_file = None` 换成 '
+                '`os.environ.get("RALSEI_LEGACY_MEMORY")`，而那个变量没设时本来就返回 None ⇒ '
+                '等于没改，B3 当然不红（夹具不保真）。换成硬编码字符串才真正破坏到被测性质。'
+                '★ 进 `SUITES` 但**不进 `HERMETIC_IDS`**：不 import `main`、不建 QApplication；'
+                '库根用 `tempfile.mkdtemp()` 隔离，退出即删。零网络、零外部盘。',
+    },
 ]
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')

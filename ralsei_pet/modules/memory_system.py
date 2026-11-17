@@ -87,7 +87,7 @@ class MemorySystem:
     RERANK_OVERLAP = 0.6           # 重排去重：关键词 Jaccard 重叠 ≥ 此值视为"说的是同一件事"
     RERANK_MAX_PER_DAY = 3         # 重排去重：同一天最多留几条（防一次性刷屏；默认不卡死 limit=3）
 
-    def __init__(self, parent):
+    def __init__(self, parent, memory_dir=None):
         self.parent = parent
 
         # ---- 记忆存储位置（第九轮）----
@@ -102,22 +102,36 @@ class MemorySystem:
             _sys.path.append(_os.path.dirname(_os.path.abspath(__file__)))
             import memory_store
         self._store = memory_store
-        self.memory_dir, self._on_device, self._device_dir = \
-            memory_store.default_memory_dir()
-        # 刚插上设备：先把桌面兜底目录里的记忆搬进来（搬完才加载）
-        if self._on_device:
-            try:
-                _mv = memory_store.migrate_from_fallback(self.memory_dir)
-                if _mv.get('moved'):
-                    _log.info("记忆已从桌面搬入设备目录: %s", _mv)
-            except Exception as e:
-                _log.warning("记忆搬运失败（继续使用当前目录）: %s", e)
+        if memory_dir:
+            # ★★★ 第195轮：**允许指定独立目录**（每个 NPC 一人一库，见 people_memory）。
+            #   默认 `None` ⇒ 走原来的设备探测，行为一字不变（老调用方零影响）。
+            #   指定目录时**不做**"从桌面兜底搬运"：那是 Ralsei 本体的迁移逻辑，
+            #   NPC 的库是新建的，把本体记忆搬进某个 NPC 的库就是串味。
+            self.memory_dir = str(memory_dir)
+            self._on_device = False
+            self._device_dir = None
+        else:
+            self.memory_dir, self._on_device, self._device_dir = \
+                memory_store.default_memory_dir()
+            # 刚插上设备：先把桌面兜底目录里的记忆搬进来（搬完才加载）
+            if self._on_device:
+                try:
+                    _mv = memory_store.migrate_from_fallback(self.memory_dir)
+                    if _mv.get('moved'):
+                        _log.info("记忆已从桌面搬入设备目录: %s", _mv)
+                except Exception as e:
+                    _log.warning("记忆搬运失败（继续使用当前目录）: %s", e)
         self.memory_file = memory_store.memory_file_in(self.memory_dir)
         # 旧版位置（本项目目录下的 memory.json）：新位置没有记忆时从这里继承，
         # 保证升级后"不失忆"。旧文件不删（它不在桌面，不会被"清理桌面记忆"波及）。
         # `RALSEI_LEGACY_MEMORY` 可指向别处（自检/迁移他机记忆时用）。
-        self._legacy_file = os.environ.get('RALSEI_LEGACY_MEMORY') or os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), '..', 'memory.json')
+        # ★★★ 第195轮：**指定了独立目录（NPC 一人一库）就绝不许继承** ——
+        #   否则每个 NPC 的空库第一次加载都会把 Ralsei 的旧记忆搬进来（串味）。
+        if memory_dir:
+            self._legacy_file = None
+        else:
+            self._legacy_file = os.environ.get('RALSEI_LEGACY_MEMORY') or os.path.join(
+                os.path.dirname(os.path.abspath(__file__)), '..', 'memory.json')
 
         # 短期记忆
         self.short_term_memory = []

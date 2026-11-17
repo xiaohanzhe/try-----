@@ -534,6 +534,9 @@ from modules import motion2d
 # 所以"没档案的人物"乘法恒等，现有行为逐值不变。详见 modules/motion_profile.py 抬头。
 from modules import motion_profile as motion_profile_mod
 from modules.memory_system import MemorySystem
+# ★ 第195轮：NPC 一人一库（用户：「ralsei 和其他人一样，是同级的那种」）。
+#   懒加载 + LRU 上限，不随总人数增长而膨胀。
+from modules.people_memory import PeopleMemoryBank, default_root as people_memory_root
 from modules.customization_system import CustomizationSystem
 from modules.social_growth_system import SocialGrowthSystem
 from modules.entertainment_system import EntertainmentSystem
@@ -1620,6 +1623,15 @@ class RalseiPet(QMainWindow):
         self.energy_hunger = EnergyHungerSystem(self)
         self.emotion_system = EmotionSystem(self)
         self.memory_system = MemorySystem(self)
+        # ★★★ 第195轮（用户：「现有 ralsei 的功能需要在所有人身上都能看到」）：
+        #   NPC 也有长期记忆，但**一人一库**（物理分开）—— 混在一个库里必然串味：
+        #   `recall` 的关键记忆匹配面是 `text + 地点`，不含 `who`。
+        #   失败不能拖垮启动：拿不到就当没有（NPC 只是记不住，不崩）。
+        try:
+            self.people_memory = PeopleMemoryBank(root=people_memory_root())
+        except Exception as e:
+            self.people_memory = None
+            _log.warning("NPC 记忆库初始化失败（已跳过，NPC 不记长期记忆）: %s", e)
         # 关系演进（第二十轮）：信任度 = **内部**评估量，绝不对用户显示。
         # 存盘走 data_store（唯一存储入口）→ E 盘优先，取不到退内存态，绝不抛。
         # 为什么由 App 持有而不是放进 persona：persona 是**静态**的（每次读出来一样），
