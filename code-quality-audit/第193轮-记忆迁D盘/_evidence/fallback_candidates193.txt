@@ -1,0 +1,28 @@
+=== memory.json 候选比对（只读）===
+
+[A 桌面兜底] C:\Users\23002\Desktop\memory\memory.json
+    bytes=10725 sha1=6e6c25146e87 head=7b0d0a20 usbc=False
+    JSON OK  schema=2 saved_at=1794019045.457786
+    fragments=3 keys=0 assoc=11  top=['assoc', 'digests', 'experience', 'fragments', 'graph', 'keys', 'learning_rate', 'level', 'long_term_memory', 'memory_strength', 'next_id', 'recall_stats', 'saved_at', 'schema']
+
+[B E盘旧档 ] E:\RalseiMemory\memory.old.json
+    bytes=9996 sha1=9827fe82ac58 head=7b0d0a20 usbc=False
+    JSON OK  schema=2 saved_at=1791197862.697136
+    fragments=3 keys=0 assoc=11  top=['assoc', 'digests', 'experience', 'fragments', 'graph', 'keys', 'learning_rate', 'level', 'long_term_memory', 'memory_strength', 'next_id', 'recall_stats', 'saved_at', 'schema']
+
+[C E盘旧档2] E:\RalseiMemory\memory.old.json.1791273965
+    bytes=9996 sha1=9827fe82ac58 head=7b0d0a20 usbc=False
+    JSON OK  schema=2 saved_at=1791197862.697136
+    fragments=3 keys=0 assoc=11  top=['assoc', 'digests', 'experience', 'fragments', 'graph', 'keys', 'learning_rate', 'level', 'long_term_memory', 'memory_strength', 'next_id', 'recall_stats', 'saved_at', 'schema']
+
+[D E盘主件 ] E:\RalseiMemory\memory.json
+    bytes=10725 sha1=ba4b03d848cd head=55534243 usbc=True
+    JSON 解析失败：JSONDecodeError('Expecting value: line 1 column 1 (char 0)')
+
+[E 项目legacy] C:\Users\23002\Desktop\项目文件夹\try - 副本\ralsei_pet\memory.json
+    bytes=537 sha1=88fa9746a2e4 head=7b0d0a20 usbc=False
+    JSON OK  schema=None saved_at=None
+    fragments=0 keys=0 assoc=0  top=['experience', 'level', 'long_term_memory']
+
+=== 结论提示 ===
+选「JSON OK + 未 USBC + saved_at 最新」的那份作为主记忆。

@@ -1,0 +1,16 @@
+[PASS] 用户级变量已落注册表  reg='D:\\RalseiMemory'
+[PASS] 正控制 变量=D 时返回 D  got='D:\\RalseiMemory'
+[PASS] D 盘目录确实存在  
+[PASS] 负控制A 指向 X 时返回 X  got='D:\\_tmp\\no_such_vault_193x'
+[PASS] 负控制A 指向 Y 时返回 Y  got='D:\\_tmp\\no_such_vault_193y'
+[PASS] 负控制A X≠Y 且都≠D（真有鉴别力）  X='D:\\_tmp\\no_such_vault_193x' Y='D:\\_tmp\\no_such_vault_193y'
+[PASS] 负控制A 两个路径都没被创建  
+[PASS] 负控制B DEVICE=off 时返回 None（走桌面兜底）  got=None
+[PASS] memory.json 不是 USBC 污染  head=7b0d0a20
+[PASS] memory.json 可解析  saved_at=1794019045.457786
+[PASS] fragments = 3（真数据不是空壳）  len=3
+[PASS] assoc = 11  len=11
+[INFO] MemorySystem.fragments 长度 = 3
+[PASS] 产品级加载到 3 条 fragment  n=3
+
+=== 汇总 PASS=13 FAIL=0 ===
