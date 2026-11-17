@@ -27,6 +27,7 @@
 · 层不认识相机、不认识场景：`sync()` 收到的是**已算好的屏幕坐标**，
   与 `SceneCanvas.set_plan` 同一条纪律（谁算坐标谁负责验证）。
 """
+import io
 import json
 import logging
 import os
@@ -62,6 +63,31 @@ except ImportError:  # 模块外独立导入时的降级
 
 MANIFEST_NAME = '_npc_frames.json'
 
+#: 表情动画清单（第196轮）。**刻意与 `_npc_frames.json` 分开**：
+#: `pick191.py --write` 会整份重写那个文件，表情帧写进去下次就被冲掉且不报错。
+ANIM_MANIFEST_NAME = '_npc_anims.json'
+
+#: 表情动画的帧间隔与"播完停在末帧"的时长（毫秒）。
+#: ★ 与走路同一条 120ms 口径（原作 30fps、4 帧一循环）；`HOLD` 是留一口气让人看清
+#:   最后那个表情，否则切回站姿会像"闪了一下"。
+ANIM_FRAME_MS = 120
+ANIM_HOLD_MS = 350
+
+#: 情绪键 → **五类动作之一**（第196轮，用户裁定 A 案）。
+#: ★ 键取自 `event_speech.ACT_EMOTION_RULES` 真正会产出的词 —— 不是我自己编的：
+#:   那张表产 `laugh` / `cry` / `sad` / `angry` / `surprised` / `hurt` / `smile` / …
+#:   **从不产 `happy`**（所以 Ralsei 那边 `'happy': 'laugh'` 一直是死键；第196轮补 `laugh`）。
+#: ★ `smile` 故意**不**映射：原作的"微笑"是换脸，不该放成一段大笑动作。
+EMOTION_CLASS = {
+    'laugh': 'happy',
+    'happy': 'happy',
+    'sad': 'sad',
+    'cry': 'sad',          # NPC 侧没有 cry 素材（见清单 `note_no_cry`）⇒ 退到 sad
+    'angry': 'angry',
+    'surprised': 'surprised',
+    'hurt': 'hurt',
+}
+
 #: 走路帧间隔（毫秒）。原作 30fps、overworld 走路 4 帧一循环 ⇒ 一圈 120ms 最接近
 #: 「一步一顿」的观感；再快会糊成人形风扇，再慢像卡带。
 FRAME_MS = 120
@@ -96,7 +122,6 @@ def load_manifest(root=None):
     """
     path = manifest_path(root)
     try:
-        import io
         with io.open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)
     except Exception as e:
@@ -108,23 +133,54 @@ def load_manifest(root=None):
     return data
 
 
+def anim_manifest_path(root=None):
+    base = root or _project_root()
+    return os.path.join(base, 'assets', 'sprites', 'dr', ANIM_MANIFEST_NAME)
+
+
+def load_anims(root=None):
+    """读表情动画清单。**失败一律返回 `{}`** —— 没有表情动画也该正常显示人。"""
+    path = anim_manifest_path(root)
+    if not os.path.isfile(path):
+        # 不是错：素材没构建过（或用户删了）⇒ 只是不演表情动画
+        return {}
+    try:
+        with io.open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except Exception as e:
+        _log.warning('NPC 表情动画清单读不出（本轮不演表情动画）：%s', e)
+        return {}
+    if not isinstance(data, dict) or not isinstance(data.get('characters'), dict):
+        _log.warning('NPC 表情动画清单格式不对（缺 characters）：%s', path)
+        return {}
+    return data
+
+
 class NpcFrameBook(object):
     """`(npc_id, 朝向, 帧号)` → `QPixmap`。清单驱动，零猜解。"""
 
-    def __init__(self, root=None, manifest=None):
+    def __init__(self, root=None, manifest=None, anim_manifest=None):
         self._root = root
         self._manifest = manifest if manifest is not None else load_manifest(root)
+        self._anims = (anim_manifest if anim_manifest is not None
+                       else load_anims(root))
         self._dir = os.path.join(root or _project_root(),
                                  'assets', 'sprites', 'dr')
         self._pm_cache = {}          # (npc_id, dir, idx) -> QPixmap（原始尺寸）
         self._scaled_cache = {}      # (npc_id, dir, idx, 千分比) -> QPixmap
+        self._anim_pm_cache = {}     # (npc_id, 情绪类, dir, idx) -> QPixmap
+        self._anim_scaled_cache = {}
         self._missing_warned = set()
 
     # -- 查询
-    def reload(self, manifest=None):
+    def reload(self, manifest=None, anim_manifest=None):
         self._manifest = manifest if manifest is not None else load_manifest(self._root)
+        self._anims = (anim_manifest if anim_manifest is not None
+                       else load_anims(self._root))
         self._pm_cache.clear()
         self._scaled_cache.clear()
+        self._anim_pm_cache.clear()
+        self._anim_scaled_cache.clear()
         return self
 
     def ids(self):
@@ -228,6 +284,100 @@ class NpcFrameBook(object):
         self._scaled_cache[ck] = out
         return out
 
+    # ==================================================================
+    # 表情动画取帧（第196轮）
+    #
+    # ★★★ 为什么是"每个人自己的帧"，而不是"Ralsei 那套动画换张脸"：
+    #   用户原话：`每个角色在原作可是都有自己的动画的，为啥要用 ralsei 的啊`。
+    #   我原来的判断（NPC 没有动画素材、只能顶 Ralsei 的身体）是错的 ——
+    #   原作 34,520 张 PNG 里逐角色都有，只是**能塞进小窗的**是"同尺寸族的
+    #   行走变体"（`walk_down_dw_unhappy` / `laugh_dw` 这类），不是 cutscene 整图。
+    # ==================================================================
+
+    def _anim_entry(self, npc_id, cls):
+        e = (self._anims.get('characters') or {}).get(npc_id) or {}
+        v = e.get(cls)
+        return v if isinstance(v, dict) else {}
+
+    def anim_classes(self, npc_id):
+        e = (self._anims.get('characters') or {}).get(npc_id) or {}
+        return sorted(k for k, v in e.items() if isinstance(v, dict) and v)
+
+    def anim_dirs(self, npc_id, cls):
+        return sorted(self._anim_entry(npc_id, cls).keys())
+
+    def anim_dir_of(self, npc_id, cls, facing):
+        """实际用哪个方向的表情帧。★ 同 `dir_of`：**不做左右互转**（左右脸不一样）。"""
+        have = self.anim_dirs(npc_id, cls)
+        if not have:
+            return None
+        if facing in have:
+            return facing
+        for d in DIR_FALLBACK:
+            if d in have:
+                return d
+        return have[0]
+
+    def anim_frame_count(self, npc_id, cls, facing):
+        d = self.anim_dir_of(npc_id, cls, facing)
+        if d is None:
+            return 0
+        rows = self._anim_entry(npc_id, cls).get(d) or []
+        return min(len(rows), _MAX_FRAMES)
+
+    def anim_frame_name(self, npc_id, cls, facing, index):
+        d = self.anim_dir_of(npc_id, cls, facing)
+        if d is None:
+            return None
+        rows = self._anim_entry(npc_id, cls).get(d) or []
+        if not rows:
+            return None
+        return rows[int(index) % len(rows)].get('f')
+
+    def anim_frame(self, npc_id, cls, facing, index=0):
+        """原始尺寸的 QPixmap；缺图 ⇒ None（不造假帧）。"""
+        name = self.anim_frame_name(npc_id, cls, facing, index)
+        if not name:
+            return None
+        key = (npc_id, cls, name)
+        pm = self._anim_pm_cache.get(key)
+        if pm is not None:
+            return pm
+        path = os.path.join(self._dir, npc_id, name.replace('/', os.sep))
+        pm = QPixmap(path)
+        if pm.isNull():
+            if key not in self._missing_warned:
+                self._missing_warned.add(key)
+                _log.warning('NPC 表情帧文件读不出（清单与磁盘不一致）：%s', path)
+            return None
+        self._anim_pm_cache[key] = pm
+        return pm
+
+    def anim_scaled(self, npc_id, cls, facing, index, scale):
+        pm = self.anim_frame(npc_id, cls, facing, index)
+        if pm is None:
+            return None
+        try:
+            s = float(scale)
+        except (TypeError, ValueError):
+            s = 1.0
+        if s <= 0:
+            s = 1.0
+        k = int(round(s * 1000))
+        name = self.anim_frame_name(npc_id, cls, facing, index)
+        ck = (npc_id, cls, name, k)
+        out = self._anim_scaled_cache.get(ck)
+        if out is not None:
+            return out
+        out = pm.scaled(max(1, int(round(pm.width() * s))),
+                        max(1, int(round(pm.height() * s))),
+                        Qt.KeepAspectRatio, Qt.FastTransformation)
+        # 上限：11 人 × 5 类 × 4 向 × 4 帧 ≈ 880，留一倍余量
+        if len(self._anim_scaled_cache) > 1200:
+            self._anim_scaled_cache.clear()
+        self._anim_scaled_cache[ck] = out
+        return out
+
 
 #: Win32 扩展样式（鼠标穿透 + 不抢焦点 + 工具窗不进 Alt-Tab）
 _GWL_EXSTYLE = -20
@@ -329,6 +479,8 @@ class NpcBodyLayer(object):
         self._wins = {}                 # npc_id -> BodyWindow
         self._z_last = {}               # npc_id -> (foot_y, wall_time)
         self._visible = set()
+        self._oneshot = {}              # npc_id -> {'emo','start','end'}（毫秒）
+        self._oneshot_last = None       # 最近一次 play_once 的结果（自省用）
 
     # -- 自省
     def count_windows(self):
@@ -339,6 +491,64 @@ class NpcBodyLayer(object):
 
     def window_of(self, npc_id):
         return self._wins.get(npc_id)
+
+    def oneshot_of(self, npc_id):
+        """当前正在演的一次性表情动画状态（没在演 ⇒ None）。"""
+        return self._oneshot.get(npc_id)
+
+    # -- 一次性表情动画
+    def play_once(self, npc_id, emotion, now_ms=None, hold_ms=None):
+        """让 `npc_id` 用自己的帧演一段表情动作。
+
+        ★ 情绪键 → 五类动作的映射在 `EMOTION_CLASS`（键取自
+          `event_speech.ACT_EMOTION_RULES` 真会产出的词）。传进来的已经是
+          类名（`happy` 等）也照样命中。
+        ★ 这个人没有对应素材 ⇒ **返回 False，什么都不做**。绝不"借 Ralsei 的身体"，
+          也绝不拿别的角色的帧顶上（画错人比不画更糟）。
+        :return: 真的开演了才 True
+        """
+        self._oneshot_last = False
+        if not npc_id:
+            return False
+        key = str(emotion or '').strip().lower()
+        cls = EMOTION_CLASS.get(key, key)
+        if not self.book.anim_classes(npc_id):
+            return False
+        dirs = self.book.anim_dirs(npc_id, cls)
+        if not dirs:
+            return False
+        n = 0
+        for d in dirs:
+            n = max(n, self.book.anim_frame_count(npc_id, cls, d))
+        if n <= 0:
+            return False
+        if now_ms is None:
+            now_ms = int(time.time() * 1000)
+        hold = ANIM_HOLD_MS if hold_ms is None else int(hold_ms)
+        self._oneshot[npc_id] = {
+            'emo': cls,
+            'start': int(now_ms),
+            'end': int(now_ms) + n * ANIM_FRAME_MS + hold,
+        }
+        self._oneshot_last = True
+        return True
+
+    def _oneshot_pixmap(self, npc_id, facing, scale, now_ms):
+        """本帧该不该用表情帧（用过完就清掉状态并返回 None）。"""
+        st = self._oneshot.get(npc_id)
+        if st is None:
+            return None
+        if now_ms >= st['end']:
+            self._oneshot.pop(npc_id, None)
+            return None
+        n = self.book.anim_frame_count(npc_id, st['emo'], facing)
+        if n <= 0:
+            self._oneshot.pop(npc_id, None)
+            return None
+        k = int((now_ms - st['start']) // ANIM_FRAME_MS)
+        if k >= n:
+            k = n - 1              # 末帧停住，撑到 `end`（HOLD）
+        return self.book.anim_scaled(npc_id, st['emo'], facing, k, scale)
 
     def visible_windows(self):
         """`[(npc_id, hwnd, foot_y)]`，按**脚底 Y 升序**（= 从后到前）。
@@ -417,6 +627,11 @@ class NpcBodyLayer(object):
             pm = self.book.scaled(nid, facing, idx, scale)
             if pm is None:
                 continue
+            # ★ 第196轮：一次性表情动画**优先**盖过走路/站姿帧。
+            #   拿不到（没素材 / 已演完）就落回原来的那一拍，行为与改动前一致。
+            _one = self._oneshot_pixmap(nid, facing, scale, now_ms)
+            if _one is not None:
+                pm = _one
             win = self._wins.get(nid)
             if win is None:
                 win = BodyWindow()
@@ -452,6 +667,9 @@ class NpcBodyLayer(object):
                 except Exception:
                     pass
                 self._z_last.pop(nid, None)
+                # ★ 人都不在场了，没演完的表情动画也别留着 —— 否则下次他回到视野
+                #   第一帧会突然从"半个表情"开始（时间戳还是旧的）。
+                self._oneshot.pop(nid, None)
         self._visible = set(w['id'] for w in want)
         return shown
 
@@ -473,3 +691,4 @@ class NpcBodyLayer(object):
         self._wins.clear()
         self._visible = set()
         self._z_last.clear()
+        self._oneshot.clear()

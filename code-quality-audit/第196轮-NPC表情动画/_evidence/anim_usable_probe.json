@@ -1,0 +1,990 @@
+{
+ "chars": {
+  "addison_tea": {
+   "base": {
+    "w": 42,
+    "h": 52,
+    "dir": "down",
+    "hs": [
+     52
+    ]
+   },
+   "raw": {},
+   "usable": {}
+  },
+  "asgore": {
+   "base": {
+    "w": 43,
+    "h": 61,
+    "dir": "down",
+    "hs": [
+     60,
+     61
+    ]
+   },
+   "raw": {
+    "surprised": 3
+   },
+   "usable": {
+    "surprised": [
+     {
+      "f": "spr_asgore_flower_surprise_0.png",
+      "size": "46x61"
+     },
+     {
+      "f": "spr_asgore_housekeeper_eating_shocked_0.png",
+      "size": "39x59"
+     }
+    ]
+   }
+  },
+  "berdly": {
+   "base": {
+    "w": 24,
+    "h": 41,
+    "dir": "down",
+    "hs": [
+     41
+    ]
+   },
+   "raw": {
+    "sad": 4,
+    "hurt": 4,
+    "angry": 5,
+    "surprised": 14,
+    "happy": 4
+   },
+   "usable": {
+    "sad": [
+     {
+      "f": "spr_berdly_depressed_dw_left.png",
+      "size": "24x40"
+     },
+     {
+      "f": "spr_berdly_depressed_dw_right.png",
+      "size": "24x40"
+     },
+     {
+      "f": "spr_cutscene_27_berdly_depressed.png",
+      "size": "24x40"
+     }
+    ],
+    "happy": [
+     {
+      "f": "spr_berdly_laugh_dw_0.png",
+      "size": "38x40"
+     },
+     {
+      "f": "spr_berdly_laugh_dw_1.png",
+      "size": "38x40"
+     },
+     {
+      "f": "spr_cutscene_27_berdly_laugh_0.png",
+      "size": "38x40"
+     },
+     {
+      "f": "spr_cutscene_27_berdly_laugh_1.png",
+      "size": "38x40"
+     }
+    ]
+   }
+  },
+  "gerson": {
+   "base": {
+    "w": 67,
+    "h": 35,
+    "dir": "down",
+    "hs": [
+     34,
+     35
+    ]
+   },
+   "raw": {
+    "hurt": 2,
+    "happy": 15,
+    "surprised": 1
+   },
+   "usable": {}
+  },
+  "hammerguy": {
+   "base": {
+    "w": 43,
+    "h": 52,
+    "dir": "down",
+    "hs": [
+     52
+    ]
+   },
+   "raw": {},
+   "usable": {}
+  },
+  "king": {
+   "base": {
+    "w": 68,
+    "h": 75,
+    "dir": "down",
+    "hs": [
+     75
+    ]
+   },
+   "raw": {
+    "happy": 2,
+    "surprised": 1
+   },
+   "usable": {
+    "happy": [
+     {
+      "f": "spr_king_laugh_ch1_0.png",
+      "size": "68x75"
+     },
+     {
+      "f": "spr_king_laugh_ch1_1.png",
+      "size": "68x75"
+     }
+    ],
+    "surprised": [
+     {
+      "f": "spr_king_shock_ch1.png",
+      "size": "68x75"
+     }
+    ]
+   }
+  },
+  "kris": {
+   "base": {
+    "w": 19,
+    "h": 37,
+    "dir": "down",
+    "hs": [
+     37
+    ]
+   },
+   "raw": {
+    "hurt": 17,
+    "happy": 5,
+    "surprised": 9
+   },
+   "usable": {
+    "happy": [
+     {
+      "f": "spr_kris_door_laugh_0.png",
+      "size": "19x36"
+     },
+     {
+      "f": "spr_kris_door_laugh_1.png",
+      "size": "19x35"
+     },
+     {
+      "f": "spr_kris_stifle_laugh_0.png",
+      "size": "18x37"
+     }
+    ],
+    "hurt": [
+     {
+      "f": "spr_kris_fall_dw_hurt_0.png",
+      "size": "24x35"
+     },
+     {
+      "f": "spr_kris_fall_dw_hurt_old_0.png",
+      "size": "27x36"
+     }
+    ]
+   }
+  },
+  "lancer": {
+   "base": {
+    "w": 30,
+    "h": 34,
+    "dir": "down",
+    "hs": [
+     34
+    ]
+   },
+   "raw": {
+    "happy": 20
+   },
+   "usable": {
+    "happy": [
+     {
+      "f": "spr_lancer_lt_laugh_0.png",
+      "size": "36x35"
+     },
+     {
+      "f": "spr_lancer_lt_laugh_1.png",
+      "size": "36x35"
+     },
+     {
+      "f": "spr_lancer_lt_laugh_mustache_0.png",
+      "size": "36x35"
+     },
+     {
+      "f": "spr_lancer_lt_laugh_mustache_1.png",
+      "size": "36x35"
+     },
+     {
+      "f": "spr_lancer_rt_laugh_0.png",
+      "size": "36x35"
+     },
+     {
+      "f": "spr_lancer_rt_laugh_1.png",
+      "size": "36x35"
+     },
+     {
+      "f": "spr_lancer_lt_laugh_0.png",
+      "size": "34x34"
+     },
+     {
+      "f": "spr_lancer_lt_laugh_1.png",
+      "size": "34x33"
+     },
+     {
+      "f": "spr_lancer_lt_laugh_mustache_0.png",
+      "size": "34x34"
+     },
+     {
+      "f": "spr_lancer_lt_laugh_mustache_1.png",
+      "size": "34x33"
+     },
+     {
+      "f": "spr_lancer_rt_laugh_0.png",
+      "size": "34x34"
+     },
+     {
+      "f": "spr_lancer_rt_laugh_1.png",
+      "size": "34x33"
+     }
+    ]
+   }
+  },
+  "mike": {
+   "base": {
+    "w": 44,
+    "h": 86,
+    "dir": "down",
+    "hs": [
+     86
+    ]
+   },
+   "raw": {
+    "sad": 8
+   },
+   "usable": {}
+  },
+  "noelle": {
+   "base": {
+    "w": 23,
+    "h": 48,
+    "dir": "down",
+    "hs": [
+     48
+    ]
+   },
+   "raw": {
+    "happy": 52,
+    "surprised": 58,
+    "sad": 23,
+    "angry": 5,
+    "hurt": 1
+   },
+   "usable": {
+    "happy": [
+     {
+      "f": "spr_noelle_church_side_smile_0.png",
+      "size": "18x46"
+     },
+     {
+      "f": "spr_noelle_sit_blush_laugh_1.png",
+      "size": "22x46"
+     },
+     {
+      "f": "spr_noelle_sit_laugh_goofy_1.png",
+      "size": "22x46"
+     },
+     {
+      "f": "spr_noelle_kneel_happy.png",
+      "size": "23x48"
+     },
+     {
+      "f": "spr_noelle_smile_forward_dw.png",
+      "size": "23x48"
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_kneel_laugh_0.png",
+      "size": "23x48"
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_kneel_laugh_1.png",
+      "size": "23x48"
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_kneel_laugh_eyes_open_0.png",
+      "size": "23x48"
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_kneel_laugh_eyes_open_1.png",
+      "size": "23x48"
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_0.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_1.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_2.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_3.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_noelle_laugh_dw_0.png",
+      "size": "23x48"
+     },
+     {
+      "f": "spr_noelle_laugh_dw_1.png",
+      "size": "23x48"
+     }
+    ],
+    "surprised": [
+     {
+      "f": "spr_noelle_juice_drink_surprised_0.png",
+      "size": "21x46"
+     },
+     {
+      "f": "spr_noelle_juice_surprised_0.png",
+      "size": "19x46"
+     },
+     {
+      "f": "spr_noelle_sit_surprise_down_0.png",
+      "size": "23x47"
+     },
+     {
+      "f": "spr_noelle_sit_surprise_down_1.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_noelle_surprise_blush_0.png",
+      "size": "20x46"
+     },
+     {
+      "f": "spr_noelle_surprise_blush_down_0.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_cutscene_city01_noelle_shocked.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_noelle_shocked_dw.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_noelle_kneel_shocked_0.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_noelle_kneel_shocked_1.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_noelle_shocked_lw.png",
+      "size": "23x46"
+     }
+    ],
+    "sad": [
+     {
+      "f": "spr_noelle_sit_sad_down_0.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_noelle_sit_sad_down_1.png",
+      "size": "23x46"
+     },
+     {
+      "f": "spr_noelle_walk_down_sad_dw_0.png",
+      "size": "23x48"
+     },
+     {
+      "f": "spr_noelle_walk_down_sad_dw_1.png",
+      "size": "23x48"
+     },
+     {
+      "f": "spr_noelle_walk_down_sad_dw_2.png",
+      "size": "23x48"
+     },
+     {
+      "f": "spr_noelle_walk_down_sad_dw_3.png",
+      "size": "23x48"
+     }
+    ],
+    "angry": [
+     {
+      "f": "spr_cutscene_15_noelle_mad.png",
+      "size": "25x48"
+     }
+    ],
+    "hurt": [
+     {
+      "f": "spr_noelle_hurt.png",
+      "size": "23x46"
+     }
+    ]
+   }
+  },
+  "queen": {
+   "base": {
+    "w": 34,
+    "h": 65,
+    "dir": "down",
+    "hs": [
+     65
+    ]
+   },
+   "raw": {
+    "surprised": 6,
+    "happy": 16,
+    "angry": 19,
+    "hurt": 4
+   },
+   "usable": {
+    "surprised": [
+     {
+      "f": "spr_cutscene_city01_queen_shocked.png",
+      "size": "35x65"
+     }
+    ]
+   }
+  },
+  "rabbits": {
+   "base": {
+    "w": 20,
+    "h": 35,
+    "dir": "down",
+    "hs": [
+     35
+    ]
+   },
+   "raw": {},
+   "usable": {}
+  },
+  "rouxls": {
+   "base": {
+    "w": 23,
+    "h": 57,
+    "dir": "down",
+    "hs": [
+     57
+    ]
+   },
+   "raw": {
+    "cry": 2
+   },
+   "usable": {}
+  },
+  "rudy": {
+   "base": {
+    "w": 23,
+    "h": 51,
+    "dir": "down",
+    "hs": [
+     50,
+     51
+    ]
+   },
+   "raw": {
+    "happy": 5
+   },
+   "usable": {
+    "happy": [
+     {
+      "f": "spr_rudy_juice_laugh_0.png",
+      "size": "18x51"
+     },
+     {
+      "f": "spr_rudy_juice_laugh_1.png",
+      "size": "18x50"
+     }
+    ]
+   }
+  },
+  "susie": {
+   "base": {
+    "w": 26,
+    "h": 43,
+    "dir": "down",
+    "hs": [
+     43
+    ]
+   },
+   "raw": {
+    "happy": 59,
+    "hurt": 23,
+    "surprised": 110,
+    "angry": 24,
+    "sad": 3
+   },
+   "usable": {
+    "sad": [
+     {
+      "f": "spr_susie_diagonal_away_sad_0.png",
+      "size": "25x44"
+     },
+     {
+      "f": "spr_susie_look_down_sad_0.png",
+      "size": "25x43"
+     },
+     {
+      "f": "spr_susie_look_down_sad_1.png",
+      "size": "23x43"
+     }
+    ],
+    "happy": [
+     {
+      "f": "spr_susie_grabsmile_0.png",
+      "size": "43x43"
+     },
+     {
+      "f": "spr_susie_grabsmile_1.png",
+      "size": "43x43"
+     },
+     {
+      "f": "spr_susie_grabsmile_2.png",
+      "size": "43x43"
+     },
+     {
+      "f": "spr_susie_grabsmile_3.png",
+      "size": "43x43"
+     },
+     {
+      "f": "spr_susie_grabsmile_4.png",
+      "size": "43x43"
+     },
+     {
+      "f": "spr_susie_laughlancer_0.png",
+      "size": "50x44"
+     },
+     {
+      "f": "spr_susie_laughlancer_1.png",
+      "size": "50x43"
+     },
+     {
+      "f": "spr_susie_laugh_dw_0.png",
+      "size": "28x41"
+     },
+     {
+      "f": "spr_susie_laugh_lw_0.png",
+      "size": "28x41"
+     },
+     {
+      "f": "spr_susie_point_laugh_0.png",
+      "size": "39x41"
+     },
+     {
+      "f": "spr_susie_laughlancer_0.png",
+      "size": "50x44"
+     },
+     {
+      "f": "spr_susie_laughlancer_1.png",
+      "size": "50x43"
+     },
+     {
+      "f": "spr_susie_laugh_dw_0.png",
+      "size": "28x41"
+     },
+     {
+      "f": "spr_susie_laugh_look_0.png",
+      "size": "26x42"
+     },
+     {
+      "f": "spr_susie_laugh_look_1.png",
+      "size": "26x42"
+     },
+     {
+      "f": "spr_susie_laugh_look_2.png",
+      "size": "26x42"
+     },
+     {
+      "f": "spr_susie_laugh_look_3.png",
+      "size": "25x41"
+     },
+     {
+      "f": "spr_susie_point_laugh_0.png",
+      "size": "39x41"
+     },
+     {
+      "f": "spr_tea_party_susie_laugh_0.png",
+      "size": "39x44"
+     },
+     {
+      "f": "spr_tea_party_susie_laugh_1.png",
+      "size": "39x45"
+     },
+     {
+      "f": "spr_susie_laugh_church_0.png",
+      "size": "28x41"
+     },
+     {
+      "f": "spr_susie_laugh_lw_0.png",
+      "size": "28x41"
+     },
+     {
+      "f": "spr_susie_laugh_dw_0.png",
+      "size": "28x41"
+     },
+     {
+      "f": "spr_susie_laugh_dw_1.png",
+      "size": "28x41"
+     },
+     {
+      "f": "spr_susie_point_laugh_0.png",
+      "size": "39x41"
+     },
+     {
+      "f": "spr_susie_point_laugh_1.png",
+      "size": "39x41"
+     },
+     {
+      "f": "spr_susie_laugh_lw_0.png",
+      "size": "28x41"
+     },
+     {
+      "f": "spr_susie_laugh_lw_1.png",
+      "size": "28x41"
+     }
+    ],
+    "hurt": [
+     {
+      "f": "spr_susie_hurt_0.png",
+      "size": "48x44"
+     },
+     {
+      "f": "spr_susie_hurt_0.png",
+      "size": "48x44"
+     },
+     {
+      "f": "spr_susie_hurt_green_0.png",
+      "size": "48x44"
+     },
+     {
+      "f": "spr_susie_hurt_ground_0.png",
+      "size": "35x41"
+     },
+     {
+      "f": "spr_susie_hurt_lookright_0.png",
+      "size": "48x44"
+     },
+     {
+      "f": "spr_susie_enemy_hurt_ch1.png",
+      "size": "54x45"
+     },
+     {
+      "f": "spr_susie_hurt.png",
+      "size": "54x45"
+     }
+    ],
+    "angry": [
+     {
+      "f": "spr_susie_racing_annoyed_0.png",
+      "size": "28x42"
+     },
+     {
+      "f": "spr_susie_racing_annoyed_1.png",
+      "size": "28x42"
+     }
+    ],
+    "surprised": [
+     {
+      "f": "spr_susie_shocked_lw_0.png",
+      "size": "29x45"
+     },
+     {
+      "f": "spr_susie_surprised_step_back_0.png",
+      "size": "25x43"
+     },
+     {
+      "f": "spr_susie_surprised_step_back_1.png",
+      "size": "25x43"
+     },
+     {
+      "f": "spr_susie_surprised_subtle_0.png",
+      "size": "25x43"
+     },
+     {
+      "f": "spr_susie_surprised_subtle_1.png",
+      "size": "25x42"
+     },
+     {
+      "f": "spr_susie_surprised_subtle_2.png",
+      "size": "25x43"
+     },
+     {
+      "f": "spr_susie_surprised_subtle_3.png",
+      "size": "25x42"
+     },
+     {
+      "f": "spr_susie_idle_surprise_0.png",
+      "size": "53x41"
+     },
+     {
+      "f": "spr_susie_surprised_step_back2_0.png",
+      "size": "25x43"
+     },
+     {
+      "f": "spr_susie_surprised_step_back_0.png",
+      "size": "25x43"
+     },
+     {
+      "f": "spr_susie_surprised_step_back_1.png",
+      "size": "25x43"
+     },
+     {
+      "f": "spr_tea_party_susie_cup_hold_surprised_0.png",
+      "size": "37x43"
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_2.png",
+      "size": "31x43"
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_3.png",
+      "size": "30x42"
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_4.png",
+      "size": "31x41"
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_9.png",
+      "size": "32x41"
+     },
+     {
+      "f": "spr_susie_guitar_surprised_0.png",
+      "size": "41x42"
+     },
+     {
+      "f": "spr_susie_guitar_surprised_blush_0.png",
+      "size": "41x42"
+     },
+     {
+      "f": "spr_susie_guitar_surprise_0.png",
+      "size": "41x41"
+     },
+     {
+      "f": "spr_susie_guitar_surprise_down_0.png",
+      "size": "41x41"
+     },
+     {
+      "f": "spr_susie_guitar_surprise_more_0.png",
+      "size": "41x42"
+     },
+     {
+      "f": "spr_susie_paper_surprise_0.png",
+      "size": "23x44"
+     },
+     {
+      "f": "spr_susie_shocked_lw_0.png",
+      "size": "29x45"
+     },
+     {
+      "f": "spr_susie_sit_arms_crossed_hold_hand_surprised_0.png",
+      "size": "29x45"
+     },
+     {
+      "f": "spr_susie_sit_arms_crossed_shocked_0.png",
+      "size": "29x45"
+     },
+     {
+      "f": "spr_susie_walk_down_shock_0.png",
+      "size": "24x44"
+     },
+     {
+      "f": "spr_susie_walk_down_shock_1.png",
+      "size": "24x43"
+     },
+     {
+      "f": "spr_susie_walk_down_shock_2.png",
+      "size": "24x44"
+     },
+     {
+      "f": "spr_susie_walk_down_shock_3.png",
+      "size": "24x43"
+     },
+     {
+      "f": "spr_cutscene_09_susie_shock.png",
+      "size": "36x43"
+     },
+     {
+      "f": "spr_cutscene_03b_susie_shock_lw.png",
+      "size": "29x45"
+     },
+     {
+      "f": "spr_susie_shocked_lw.png",
+      "size": "29x45"
+     }
+    ]
+   }
+  },
+  "susiedark": {
+   "base": {
+    "w": 26,
+    "h": 43,
+    "dir": "down",
+    "hs": [
+     43
+    ]
+   },
+   "raw": {},
+   "usable": {}
+  },
+  "tenna": {
+   "base": {
+    "w": 16,
+    "h": 32,
+    "dir": "down",
+    "hs": [
+     32
+    ]
+   },
+   "raw": {
+    "angry": 2,
+    "hurt": 2,
+    "happy": 15,
+    "sad": 3,
+    "surprised": 2
+   },
+   "usable": {}
+  },
+  "toriel": {
+   "base": {
+    "w": 25,
+    "h": 52,
+    "dir": "down",
+    "hs": [
+     52
+    ]
+   },
+   "raw": {
+    "happy": 60,
+    "angry": 2
+   },
+   "usable": {
+    "happy": [
+     {
+      "f": "spr_cutscene_01_toriel_laugh_pie_tin_0.png",
+      "size": "24x52"
+     },
+     {
+      "f": "spr_cutscene_01_toriel_laugh_pie_tin_1.png",
+      "size": "24x52"
+     },
+     {
+      "f": "spr_cutscene_30b_toriel_laugh_0.png",
+      "size": "24x52"
+     },
+     {
+      "f": "spr_cutscene_30b_toriel_laugh_1.png",
+      "size": "24x52"
+     },
+     {
+      "f": "spr_toriel_laughing_church_0.png",
+      "size": "24x52"
+     },
+     {
+      "f": "spr_toriel_laughing_church_1.png",
+      "size": "24x51"
+     },
+     {
+      "f": "spr_toriel_laugh_0.png",
+      "size": "24x52"
+     },
+     {
+      "f": "spr_toriel_laugh_1.png",
+      "size": "24x51"
+     },
+     {
+      "f": "spr_toriel_laugh_drunk_0.png",
+      "size": "24x52"
+     },
+     {
+      "f": "spr_toriel_laugh_drunk_1.png",
+      "size": "24x51"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_0.png",
+      "size": "27x50"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_10.png",
+      "size": "36x53"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_11.png",
+      "size": "43x52"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_3.png",
+      "size": "27x50"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_6.png",
+      "size": "27x50"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_9.png",
+      "size": "27x53"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_0.png",
+      "size": "27x50"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_10.png",
+      "size": "36x53"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_11.png",
+      "size": "43x52"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_12.png",
+      "size": "43x52"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_13.png",
+      "size": "43x52"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_3.png",
+      "size": "27x50"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_6.png",
+      "size": "27x50"
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_9.png",
+      "size": "27x53"
+     },
+     {
+      "f": "spr_toriel_laugh_loop_0.png",
+      "size": "27x50"
+     }
+    ],
+    "angry": [
+     {
+      "f": "spr_toriel_juice_talk_mad_0.png",
+      "size": "21x52"
+     },
+     {
+      "f": "spr_toriel_juice_talk_mad_1.png",
+      "size": "21x52"
+     }
+    ]
+   }
+  }
+ }
+}

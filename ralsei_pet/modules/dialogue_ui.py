@@ -937,11 +937,22 @@ class DialogueUI(QWidget):
     #: ★ 只列**确定存在**的组（`assets/animations.json` 里逐个核过），
     #:   缺了的话 `play_animation_once` 会静默 `note_animation_miss` —— 不能靠猜。
     #: ★ 只给 4 个"强情绪"配：`有些时候` 是被要求的，每个表情都抖反而吵。
+    #: ★★★ 第196轮补两条（都是为了"Ralsei 与 NPC 同级"）：
+    #:   ① `laugh` —— **这条以前是死键**：`EXPRESSION_ANIM` 里写的是 `happy`，
+    #:      但 `event_speech.ACT_EMOTION_RULES` **从不产出 `happy`**（大笑/狂笑/
+    #:      笑出声/哈哈哈 全部产出 `laugh`）⇒ Ralsei 的笑动画几乎从未触发过。
+    #:      `happy` 继续留着，兼容 `emotion_system` 与老调用方。
+    #:   ② `angry` → `fall_mad` —— 用户第196轮裁定 A 案（五类对齐）。
+    #:      原话：`表情动画也不能关啊，给每个npc都复制一套模版过去然后针对性的替换内容`。
+    #:      ⚠️ Ralsei 盘上**没有"站着生气"的循环**，只有 `spr_cutscene_24e_ralsei_splat_mad`
+    #:      单帧（原作就是这么画的），所以这里给的是那一帧，不自己编。
     EXPRESSION_ANIM = {
+        'laugh': 'laugh',
         'happy': 'laugh',
         'surprised': 'surprised',
         'cry': 'cry',
         'sad': 'sad',
+        'angry': 'fall_mad',
     }
     #: 同一个表情的动画冷却（秒）：连聊三句不该抖三次。
     EXPRESSION_ANIM_COOLDOWN = 2.5

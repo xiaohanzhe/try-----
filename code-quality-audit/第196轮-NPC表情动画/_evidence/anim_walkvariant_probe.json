@@ -1,0 +1,4827 @@
+{
+ "addison_tea": {
+  "base": "42x52",
+  "emo": {
+   "sad": {},
+   "angry": {},
+   "happy": {},
+   "surprised": {},
+   "hurt": {}
+  }
+ },
+ "asgore": {
+  "base": "43x61",
+  "emo": {
+   "sad": {
+    "down": [
+     {
+      "f": "spr_asgore_walk_down_housekeeper_unhappy_0.png",
+      "size": "43x60",
+      "walk": true
+     },
+     {
+      "f": "spr_asgore_walk_down_housekeeper_unhappy_1.png",
+      "size": "42x59",
+      "walk": true
+     },
+     {
+      "f": "spr_asgore_walk_down_housekeeper_unhappy_2.png",
+      "size": "43x60",
+      "walk": true
+     },
+     {
+      "f": "spr_asgore_walk_down_housekeeper_unhappy_3.png",
+      "size": "42x59",
+      "walk": true
+     }
+    ]
+   },
+   "angry": {},
+   "happy": {
+    "down": [
+     {
+      "f": "spr_asgore_walk_down_housekeeper_unhappy_0.png",
+      "size": "43x60",
+      "walk": true
+     },
+     {
+      "f": "spr_asgore_walk_down_housekeeper_unhappy_1.png",
+      "size": "42x59",
+      "walk": true
+     },
+     {
+      "f": "spr_asgore_walk_down_housekeeper_unhappy_2.png",
+      "size": "43x60",
+      "walk": true
+     },
+     {
+      "f": "spr_asgore_walk_down_housekeeper_unhappy_3.png",
+      "size": "42x59",
+      "walk": true
+     }
+    ]
+   },
+   "surprised": {
+    "?": [
+     {
+      "f": "spr_asgore_flower_surprise_0.png",
+      "size": "46x61",
+      "walk": false
+     },
+     {
+      "f": "spr_asgore_housekeeper_eating_shocked_0.png",
+      "size": "39x59",
+      "walk": false
+     }
+    ]
+   },
+   "hurt": {}
+  }
+ },
+ "berdly": {
+  "base": "24x41",
+  "emo": {
+   "sad": {
+    "down": [
+     {
+      "f": "spr_berdly_walk_down_dw_unhappy_0.png",
+      "size": "24x41",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_down_dw_unhappy_1.png",
+      "size": "24x41",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_down_dw_unhappy_2.png",
+      "size": "24x41",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_down_dw_unhappy_3.png",
+      "size": "24x41",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_0.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_1.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_2.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_3.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_burned_0.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_burned_1.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_burned_2.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_burned_3.png",
+      "size": "22x40",
+      "walk": true
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_berdly_walk_right_dw_unhappy_0.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_right_dw_unhappy_1.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_right_dw_unhappy_2.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_right_dw_unhappy_3.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_27_berdly_walk_right_unhappy_0.png",
+      "size": "22x41",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_27_berdly_walk_right_unhappy_1.png",
+      "size": "22x41",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_27_berdly_walk_right_unhappy_2.png",
+      "size": "22x41",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_27_berdly_walk_right_unhappy_3.png",
+      "size": "22x41",
+      "walk": true
+     }
+    ]
+   },
+   "angry": {},
+   "happy": {
+    "down": [
+     {
+      "f": "spr_berdly_laugh_dw_0.png",
+      "size": "38x40",
+      "walk": false
+     },
+     {
+      "f": "spr_berdly_laugh_dw_1.png",
+      "size": "38x40",
+      "walk": false
+     },
+     {
+      "f": "spr_berdly_walk_down_dw_unhappy_0.png",
+      "size": "24x41",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_down_dw_unhappy_1.png",
+      "size": "24x41",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_down_dw_unhappy_2.png",
+      "size": "24x41",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_down_dw_unhappy_3.png",
+      "size": "24x41",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_0.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_1.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_2.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_3.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_burned_0.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_burned_1.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_burned_2.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_unhappy_burned_3.png",
+      "size": "22x40",
+      "walk": true
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_berdly_walk_right_dw_unhappy_0.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_right_dw_unhappy_1.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_right_dw_unhappy_2.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_right_dw_unhappy_3.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_27_berdly_walk_right_unhappy_0.png",
+      "size": "22x41",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_27_berdly_walk_right_unhappy_1.png",
+      "size": "22x41",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_27_berdly_walk_right_unhappy_2.png",
+      "size": "22x41",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_27_berdly_walk_right_unhappy_3.png",
+      "size": "22x41",
+      "walk": true
+     }
+    ],
+    "?": [
+     {
+      "f": "spr_cutscene_27_berdly_laugh_0.png",
+      "size": "38x40",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_27_berdly_laugh_1.png",
+      "size": "38x40",
+      "walk": false
+     }
+    ]
+   },
+   "surprised": {
+    "left": [
+     {
+      "f": "spr_berdly_walk_left_dw_shocked_0.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_shocked_1.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_shocked_2.png",
+      "size": "22x40",
+      "walk": true
+     },
+     {
+      "f": "spr_berdly_walk_left_dw_shocked_3.png",
+      "size": "22x40",
+      "walk": true
+     }
+    ]
+   },
+   "hurt": {
+    "?": [
+     {
+      "f": "spr_berdly_hurt_kneel_battle.png",
+      "size": "54x43",
+      "walk": false
+     }
+    ]
+   }
+  }
+ },
+ "gerson": {
+  "base": "67x35",
+  "emo": {
+   "sad": {},
+   "angry": {},
+   "happy": {},
+   "surprised": {},
+   "hurt": {}
+  }
+ },
+ "hammerguy": {
+  "base": "43x52",
+  "emo": {
+   "sad": {},
+   "angry": {},
+   "happy": {},
+   "surprised": {},
+   "hurt": {}
+  }
+ },
+ "king": {
+  "base": "68x75",
+  "emo": {
+   "sad": {},
+   "angry": {},
+   "happy": {
+    "?": [
+     {
+      "f": "spr_king_laugh_ch1_0.png",
+      "size": "68x75",
+      "walk": false
+     },
+     {
+      "f": "spr_king_laugh_ch1_1.png",
+      "size": "68x75",
+      "walk": false
+     }
+    ]
+   },
+   "surprised": {
+    "?": [
+     {
+      "f": "spr_king_shock_ch1.png",
+      "size": "68x75",
+      "walk": false
+     }
+    ]
+   },
+   "hurt": {}
+  }
+ },
+ "kris": {
+  "base": "19x37",
+  "emo": {
+   "sad": {
+    "left": [
+     {
+      "f": "spr_susie_kris_run_left_unhappy_1.png",
+      "size": "62x38",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_kris_run_left_unhappy_3.png",
+      "size": "62x38",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_susie_kris_run_right_unhappy_0.png",
+      "size": "62x38",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_kris_run_right_unhappy_2.png",
+      "size": "62x38",
+      "walk": false
+     }
+    ]
+   },
+   "angry": {},
+   "happy": {
+    "?": [
+     {
+      "f": "spr_kris_door_laugh_0.png",
+      "size": "19x36",
+      "walk": false
+     },
+     {
+      "f": "spr_kris_door_laugh_1.png",
+      "size": "19x35",
+      "walk": false
+     },
+     {
+      "f": "spr_kris_stifle_laugh_0.png",
+      "size": "18x37",
+      "walk": false
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_susie_kris_run_left_unhappy_1.png",
+      "size": "62x38",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_kris_run_left_unhappy_3.png",
+      "size": "62x38",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_susie_kris_run_right_unhappy_0.png",
+      "size": "62x38",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_kris_run_right_unhappy_2.png",
+      "size": "62x38",
+      "walk": false
+     }
+    ]
+   },
+   "surprised": {
+    "right": [
+     {
+      "f": "spr_susie_kris_run_right_shocked_0.png",
+      "size": "62x38",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_kris_run_right_shocked_2.png",
+      "size": "62x38",
+      "walk": false
+     }
+    ],
+    "?": [
+     {
+      "f": "spr_susie_kris_run_shocked_1.png",
+      "size": "62x38",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_kris_run_shocked_3.png",
+      "size": "62x38",
+      "walk": false
+     }
+    ]
+   },
+   "hurt": {
+    "down": [
+     {
+      "f": "spr_kris_fall_dw_hurt_0.png",
+      "size": "24x35",
+      "walk": false
+     },
+     {
+      "f": "spr_kris_fall_dw_hurt_old_0.png",
+      "size": "27x36",
+      "walk": false
+     }
+    ]
+   }
+  }
+ },
+ "lancer": {
+  "base": "30x34",
+  "emo": {
+   "sad": {
+    "?": [
+     {
+      "f": "spr_lancer_dt_unhappy.png",
+      "size": "36x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_lt_unhappy.png",
+      "size": "36x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_l_unhappy_ch1.png",
+      "size": "34x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_rt_unhappy.png",
+      "size": "36x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_r_unhappy_ch1.png",
+      "size": "34x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_ut_unhappy.png",
+      "size": "36x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_dt_unhappy_0.png",
+      "size": "25x33",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_lt_unhappy_0.png",
+      "size": "34x33",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_rt_unhappy_0.png",
+      "size": "34x33",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_ut_unhappy_0.png",
+      "size": "26x34",
+      "walk": false
+     }
+    ]
+   },
+   "angry": {},
+   "happy": {
+    "?": [
+     {
+      "f": "spr_lancer_lt_laugh_0.png",
+      "size": "36x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_lt_laugh_1.png",
+      "size": "36x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_lt_laugh_mustache_0.png",
+      "size": "36x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_lt_laugh_mustache_1.png",
+      "size": "36x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_l_unhappy_ch1.png",
+      "size": "34x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_rt_laugh_0.png",
+      "size": "36x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_rt_laugh_1.png",
+      "size": "36x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_r_unhappy_ch1.png",
+      "size": "34x35",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_dt_unhappy_0.png",
+      "size": "25x33",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_lt_laugh_0.png",
+      "size": "34x34",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_lt_laugh_1.png",
+      "size": "34x33",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_lt_laugh_mustache_0.png",
+      "size": "34x34",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_lt_laugh_mustache_1.png",
+      "size": "34x33",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_lt_unhappy_0.png",
+      "size": "34x33",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_rt_laugh_0.png",
+      "size": "34x34",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_rt_laugh_1.png",
+      "size": "34x33",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_rt_unhappy_0.png",
+      "size": "34x33",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_ut_unhappy_0.png",
+      "size": "26x34",
+      "walk": false
+     }
+    ]
+   },
+   "surprised": {},
+   "hurt": {
+    "?": [
+     {
+      "f": "spr_lancer_battle_hurt.png",
+      "size": "29x33",
+      "walk": false
+     },
+     {
+      "f": "spr_lancer_battle_hurt_0.png",
+      "size": "28x33",
+      "walk": false
+     }
+    ]
+   }
+  }
+ },
+ "mike": {
+  "base": "44x86",
+  "emo": {
+   "sad": {},
+   "angry": {},
+   "happy": {},
+   "surprised": {},
+   "hurt": {}
+  }
+ },
+ "noelle": {
+  "base": "23x48",
+  "emo": {
+   "sad": {
+    "?": [
+     {
+      "f": "spr_noelle_church_side_unhappy_0.png",
+      "size": "18x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_church_unhappy_0.png",
+      "size": "23x46",
+      "walk": false
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_noelle_left_sad_shock_0.png",
+      "size": "18x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_left_sad_smile_0.png",
+      "size": "18x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_left_sad_smile_1.png",
+      "size": "18x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_walk_left_unhappy_0.png",
+      "size": "18x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_left_unhappy_2.png",
+      "size": "18x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_sad_left_dw.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_walk_left_sad_dw_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_left_sad_dw_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_left_sad_dw_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_left_sad_dw_3.png",
+      "size": "23x46",
+      "walk": true
+     }
+    ],
+    "down": [
+     {
+      "f": "spr_noelle_sit_sad_down_0.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_sit_sad_down_1.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_walk_down_unhappy_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_down_unhappy_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_down_unhappy_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_down_unhappy_3.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_down_sad_dw_0.png",
+      "size": "23x48",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_down_sad_dw_1.png",
+      "size": "23x48",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_down_sad_dw_2.png",
+      "size": "23x48",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_down_sad_dw_3.png",
+      "size": "23x48",
+      "walk": true
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_noelle_walk_right_unhappy_0.png",
+      "size": "18x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_unhappy_2.png",
+      "size": "18x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_dw_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_dw_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_dw_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_dw_3.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_shocked_dw_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_shocked_dw_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_shocked_dw_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_shocked_dw_3.png",
+      "size": "23x46",
+      "walk": true
+     }
+    ]
+   },
+   "angry": {
+    "?": [
+     {
+      "f": "spr_cutscene_15_noelle_mad.png",
+      "size": "25x48",
+      "walk": false
+     }
+    ]
+   },
+   "happy": {
+    "?": [
+     {
+      "f": "spr_noelle_church_side_smile_0.png",
+      "size": "18x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_church_side_unhappy_0.png",
+      "size": "18x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_church_unhappy_0.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_sit_blush_laugh_1.png",
+      "size": "22x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_sit_laugh_goofy_1.png",
+      "size": "22x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_kneel_happy.png",
+      "size": "23x48",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_kneel_laugh_0.png",
+      "size": "23x48",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_kneel_laugh_1.png",
+      "size": "23x48",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_kneel_laugh_eyes_open_0.png",
+      "size": "23x48",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_kneel_laugh_eyes_open_1.png",
+      "size": "23x48",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_3.png",
+      "size": "23x46",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_noelle_left_sad_smile_0.png",
+      "size": "18x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_left_sad_smile_1.png",
+      "size": "18x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_sit_laugh_goofy_left_0.png",
+      "size": "22x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_walk_left_unhappy_0.png",
+      "size": "18x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_left_unhappy_2.png",
+      "size": "18x46",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_up_left_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_up_left_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_up_left_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_up_left_3.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_smile_left_dw_0.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_smile_left_dw_1.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_walk_left_smile_dw_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_left_smile_dw_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_left_smile_dw_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_left_smile_dw_3.png",
+      "size": "23x46",
+      "walk": true
+     }
+    ],
+    "down": [
+     {
+      "f": "spr_noelle_walk_down_unhappy_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_down_unhappy_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_down_unhappy_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_down_unhappy_3.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_smile_forward_dw.png",
+      "size": "23x48",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_laugh_dw_0.png",
+      "size": "23x48",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_laugh_dw_1.png",
+      "size": "23x48",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_noelle_walk_right_lw_smile_0.png",
+      "size": "18x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_lw_smile_2.png",
+      "size": "18x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_unhappy_0.png",
+      "size": "18x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_unhappy_2.png",
+      "size": "18x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_face_right_smile_less.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_walk_right_smile_dw_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_smile_dw_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_smile_dw_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_smile_dw_3.png",
+      "size": "23x46",
+      "walk": true
+     }
+    ],
+    "up": [
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_up_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_up_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_up_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_23b_noelle_walk_happy_up_3.png",
+      "size": "23x46",
+      "walk": true
+     }
+    ]
+   },
+   "surprised": {
+    "?": [
+     {
+      "f": "spr_noelle_juice_drink_surprised_0.png",
+      "size": "21x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_juice_surprised_0.png",
+      "size": "19x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_surprise_blush_0.png",
+      "size": "20x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_0.png",
+      "size": "59x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_1.png",
+      "size": "60x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_11.png",
+      "size": "59x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_13.png",
+      "size": "59x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_15.png",
+      "size": "59x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_17.png",
+      "size": "59x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_19.png",
+      "size": "59x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_3.png",
+      "size": "61x50",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_5.png",
+      "size": "61x50",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_8.png",
+      "size": "61x47",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_9.png",
+      "size": "61x46",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_city01_noelle_shocked.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_kneel_shocked_0.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_kneel_shocked_1.png",
+      "size": "23x46",
+      "walk": false
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_noelle_left_sad_shock_0.png",
+      "size": "18x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_surprise_left_0.png",
+      "size": "20x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_surprise_left_dw.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_shocked_lw.png",
+      "size": "23x46",
+      "walk": false
+     }
+    ],
+    "down": [
+     {
+      "f": "spr_noelle_sit_surprise_down_0.png",
+      "size": "23x47",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_sit_surprise_down_1.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_surprise_blush_down_0.png",
+      "size": "23x46",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_shocked_dw.png",
+      "size": "23x46",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_noelle_walk_right_sad_shocked_dw_0.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_shocked_dw_1.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_shocked_dw_2.png",
+      "size": "23x46",
+      "walk": true
+     },
+     {
+      "f": "spr_noelle_walk_right_sad_shocked_dw_3.png",
+      "size": "23x46",
+      "walk": true
+     }
+    ]
+   },
+   "hurt": {
+    "?": [
+     {
+      "f": "spr_noelle_hurt.png",
+      "size": "23x46",
+      "walk": false
+     }
+    ]
+   }
+  }
+ },
+ "queen": {
+  "base": "34x65",
+  "emo": {
+   "sad": {
+    "left": [
+     {
+      "f": "spr_queen_walk_left_unhappy_0.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_left_unhappy_1.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_left_unhappy_2.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_left_unhappy_3.png",
+      "size": "33x63",
+      "walk": true
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_queen_walk_right_unhappy_0.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_right_unhappy_1.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_right_unhappy_2.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_right_unhappy_3.png",
+      "size": "33x63",
+      "walk": true
+     }
+    ]
+   },
+   "angry": {},
+   "happy": {
+    "left": [
+     {
+      "f": "spr_queen_walk_left_unhappy_0.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_left_unhappy_1.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_left_unhappy_2.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_left_unhappy_3.png",
+      "size": "33x63",
+      "walk": true
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_queen_walk_right_unhappy_0.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_right_unhappy_1.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_right_unhappy_2.png",
+      "size": "33x63",
+      "walk": true
+     },
+     {
+      "f": "spr_queen_walk_right_unhappy_3.png",
+      "size": "33x63",
+      "walk": true
+     }
+    ]
+   },
+   "surprised": {
+    "?": [
+     {
+      "f": "spr_cutscene_city01_queen_shocked.png",
+      "size": "35x65",
+      "walk": false
+     }
+    ]
+   },
+   "hurt": {}
+  }
+ },
+ "rabbits": {
+  "base": "20x35",
+  "emo": {
+   "sad": {},
+   "angry": {},
+   "happy": {},
+   "surprised": {},
+   "hurt": {}
+  }
+ },
+ "rouxls": {
+  "base": "23x57",
+  "emo": {
+   "sad": {},
+   "angry": {},
+   "happy": {},
+   "surprised": {},
+   "hurt": {}
+  }
+ },
+ "rudy": {
+  "base": "23x51",
+  "emo": {
+   "sad": {},
+   "angry": {},
+   "happy": {
+    "?": [
+     {
+      "f": "spr_rudy_juice_laugh_0.png",
+      "size": "18x51",
+      "walk": false
+     },
+     {
+      "f": "spr_rudy_juice_laugh_1.png",
+      "size": "18x50",
+      "walk": false
+     }
+    ]
+   },
+   "surprised": {},
+   "hurt": {}
+  }
+ },
+ "susie": {
+  "base": "26x43",
+  "emo": {
+   "sad": {
+    "?": [
+     {
+      "f": "spr_susie_attackready_unhappy_0.png",
+      "size": "63x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_diagonal_away_sad_0.png",
+      "size": "25x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_back_arm_unhappy_0.png",
+      "size": "21x45",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_attackready_unhappy_0.png",
+      "size": "63x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_sit_arms_crossed_unhappy_0.png",
+      "size": "29x45",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_susie_point_right_unhappy_0.png",
+      "size": "36x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     }
+    ],
+    "down": [
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_look_down_sad_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_look_down_sad_1.png",
+      "size": "23x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x44",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     }
+    ]
+   },
+   "angry": {
+    "?": [
+     {
+      "f": "spr_susie_racing_annoyed_0.png",
+      "size": "28x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_racing_annoyed_1.png",
+      "size": "28x42",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_susie_up_right_dw_angry_0.png",
+      "size": "23x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_right_angry_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_angry_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_angry_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_angry_3.png",
+      "size": "25x42",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_susie_walk_left_angry_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_angry_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_angry_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_angry_3.png",
+      "size": "25x42",
+      "walk": true
+     }
+    ],
+    "up": [
+     {
+      "f": "spr_susie_mad_face_up_0.png",
+      "size": "25x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_mad_face_up_1.png",
+      "size": "28x42",
+      "walk": false
+     }
+    ]
+   },
+   "happy": {
+    "?": [
+     {
+      "f": "spr_cutscene_20_susie_lancer_smile.png",
+      "size": "50x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_attackready_unhappy_0.png",
+      "size": "63x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_grabsmile_0.png",
+      "size": "43x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_grabsmile_1.png",
+      "size": "43x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_grabsmile_2.png",
+      "size": "43x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_grabsmile_3.png",
+      "size": "43x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_grabsmile_4.png",
+      "size": "43x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laughlancer_0.png",
+      "size": "50x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laughlancer_1.png",
+      "size": "50x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_point_laugh_0.png",
+      "size": "39x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_back_arm_unhappy_0.png",
+      "size": "21x45",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_attackready_unhappy_0.png",
+      "size": "63x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laughlancer_0.png",
+      "size": "50x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laughlancer_1.png",
+      "size": "50x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_look_0.png",
+      "size": "26x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_look_1.png",
+      "size": "26x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_look_2.png",
+      "size": "26x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_look_3.png",
+      "size": "25x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_point_laugh_0.png",
+      "size": "39x41",
+      "walk": false
+     },
+     {
+      "f": "spr_tea_party_susie_laugh_0.png",
+      "size": "39x44",
+      "walk": false
+     },
+     {
+      "f": "spr_tea_party_susie_laugh_1.png",
+      "size": "39x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_church_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_sit_arms_crossed_unhappy_0.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_20_susie_lancer_smile.png",
+      "size": "50x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_point_laugh_0.png",
+      "size": "39x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_point_laugh_1.png",
+      "size": "39x41",
+      "walk": false
+     }
+    ],
+    "down": [
+     {
+      "f": "spr_susie_laugh_dw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_look_down_right_smile_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_laugh_dw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_look_down_left_smile_0.png",
+      "size": "24x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_laugh_dw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_dw_1.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x44",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_susie_laugh_lw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_up_look_left_smile_0.png",
+      "size": "23x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_laugh_lw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_laugh_lw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_lw_1.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_susie_point_right_unhappy_0.png",
+      "size": "36x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_up_look_right_smile_0.png",
+      "size": "23x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     }
+    ],
+    "up": [
+     {
+      "f": "spr_susie_laugh_up_0.png",
+      "size": "26x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_up_1.png",
+      "size": "26x41",
+      "walk": false
+     }
+    ]
+   },
+   "surprised": {
+    "?": [
+     {
+      "f": "spr_noelle_susie_angel_shock_10.png",
+      "size": "59x44",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_12.png",
+      "size": "59x45",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_14.png",
+      "size": "59x45",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_16.png",
+      "size": "59x45",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_18.png",
+      "size": "59x45",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_2.png",
+      "size": "58x43",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_20.png",
+      "size": "59x45",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_6.png",
+      "size": "61x43",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_7.png",
+      "size": "61x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_1.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_1.png",
+      "size": "25x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_2.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_3.png",
+      "size": "25x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_idle_surprise_0.png",
+      "size": "53x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back2_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_1.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_battle2_0.png",
+      "size": "36x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_battle_0.png",
+      "size": "51x43",
+      "walk": false
+     },
+     {
+      "f": "spr_tea_party_susie_cup_hold_surprised_0.png",
+      "size": "37x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_2.png",
+      "size": "31x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_3.png",
+      "size": "30x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_4.png",
+      "size": "31x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_9.png",
+      "size": "32x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprised_0.png",
+      "size": "41x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprised_blush_0.png",
+      "size": "41x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprise_0.png",
+      "size": "41x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprise_more_0.png",
+      "size": "41x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_paper_surprise_0.png",
+      "size": "23x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_sit_arms_crossed_hold_hand_surprised_0.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_sit_arms_crossed_shocked_0.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_09_susie_shock.png",
+      "size": "36x43",
+      "walk": false
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_susie_shocked_lw_0.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_left_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_left_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_left_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_left_1.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprise_left_embarrassed_0.png",
+      "size": "41x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprise_left_embarrassed_1.png",
+      "size": "41x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_shocked_lw_0.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_left_lw_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_left_candy_cane_surprise_0.png",
+      "size": "33x45",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_candy_cane_surprise_1.png",
+      "size": "33x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_candy_cane_surprise_2.png",
+      "size": "33x45",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_candy_cane_surprise_3.png",
+      "size": "33x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_flashlight_surprise_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_03b_susie_shock_lw.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_shocked_lw.png",
+      "size": "29x45",
+      "walk": false
+     }
+    ],
+    "up": [
+     {
+      "f": "spr_susie_shock_up_0.png",
+      "size": "36x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_shock_up_0.png",
+      "size": "36x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_look_up_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_look_up_1.png",
+      "size": "26x43",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_susie_surprised_right_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_right_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_right_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_right_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_church_right_0.png",
+      "size": "23x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_right_lw_0.png",
+      "size": "25x43",
+      "walk": false
+     }
+    ],
+    "down": [
+     {
+      "f": "spr_susie_look_down_right_dw_surprise_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprise_down_0.png",
+      "size": "41x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_shock_0.png",
+      "size": "24x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_shock_1.png",
+      "size": "24x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_shock_2.png",
+      "size": "24x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_shock_3.png",
+      "size": "24x43",
+      "walk": true
+     }
+    ]
+   },
+   "hurt": {
+    "?": [
+     {
+      "f": "spr_susie_hurt_0.png",
+      "size": "48x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_hurt_0.png",
+      "size": "48x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_hurt_green_0.png",
+      "size": "48x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_hurt_ground_0.png",
+      "size": "35x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_hurt_lookright_0.png",
+      "size": "48x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_enemy_hurt_ch1.png",
+      "size": "54x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_hurt.png",
+      "size": "54x45",
+      "walk": false
+     }
+    ]
+   }
+  }
+ },
+ "susiedark": {
+  "base": "26x43",
+  "emo": {
+   "sad": {
+    "?": [
+     {
+      "f": "spr_susie_attackready_unhappy_0.png",
+      "size": "63x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_diagonal_away_sad_0.png",
+      "size": "25x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_back_arm_unhappy_0.png",
+      "size": "21x45",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_attackready_unhappy_0.png",
+      "size": "63x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_sit_arms_crossed_unhappy_0.png",
+      "size": "29x45",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_susie_point_right_unhappy_0.png",
+      "size": "36x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     }
+    ],
+    "down": [
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_look_down_sad_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_look_down_sad_1.png",
+      "size": "23x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x44",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     }
+    ]
+   },
+   "angry": {
+    "?": [
+     {
+      "f": "spr_susie_racing_annoyed_0.png",
+      "size": "28x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_racing_annoyed_1.png",
+      "size": "28x42",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_susie_up_right_dw_angry_0.png",
+      "size": "23x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_right_angry_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_angry_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_angry_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_angry_3.png",
+      "size": "25x42",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_susie_walk_left_angry_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_angry_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_angry_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_angry_3.png",
+      "size": "25x42",
+      "walk": true
+     }
+    ],
+    "up": [
+     {
+      "f": "spr_susie_mad_face_up_0.png",
+      "size": "25x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_mad_face_up_1.png",
+      "size": "28x42",
+      "walk": false
+     }
+    ]
+   },
+   "happy": {
+    "?": [
+     {
+      "f": "spr_cutscene_20_susie_lancer_smile.png",
+      "size": "50x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_attackready_unhappy_0.png",
+      "size": "63x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_grabsmile_0.png",
+      "size": "43x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_grabsmile_1.png",
+      "size": "43x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_grabsmile_2.png",
+      "size": "43x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_grabsmile_3.png",
+      "size": "43x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_grabsmile_4.png",
+      "size": "43x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laughlancer_0.png",
+      "size": "50x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laughlancer_1.png",
+      "size": "50x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_point_laugh_0.png",
+      "size": "39x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_back_arm_unhappy_0.png",
+      "size": "21x45",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_attackready_unhappy_0.png",
+      "size": "63x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laughlancer_0.png",
+      "size": "50x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laughlancer_1.png",
+      "size": "50x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_look_0.png",
+      "size": "26x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_look_1.png",
+      "size": "26x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_look_2.png",
+      "size": "26x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_look_3.png",
+      "size": "25x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_point_laugh_0.png",
+      "size": "39x41",
+      "walk": false
+     },
+     {
+      "f": "spr_tea_party_susie_laugh_0.png",
+      "size": "39x44",
+      "walk": false
+     },
+     {
+      "f": "spr_tea_party_susie_laugh_1.png",
+      "size": "39x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_church_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_sit_arms_crossed_unhappy_0.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_20_susie_lancer_smile.png",
+      "size": "50x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_point_laugh_0.png",
+      "size": "39x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_point_laugh_1.png",
+      "size": "39x41",
+      "walk": false
+     }
+    ],
+    "down": [
+     {
+      "f": "spr_susie_laugh_dw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_look_down_right_smile_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_laugh_dw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_look_down_left_smile_0.png",
+      "size": "24x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_laugh_dw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_dw_1.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_0.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_1.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_2.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_dw_unhappy_3.png",
+      "size": "26x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_0.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_1.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_2.png",
+      "size": "25x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_lw_unhappy_3.png",
+      "size": "25x44",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_susie_laugh_lw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_up_look_left_smile_0.png",
+      "size": "23x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_laugh_lw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_dw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_laugh_lw_0.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_lw_1.png",
+      "size": "28x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_susie_point_right_unhappy_0.png",
+      "size": "36x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_up_look_right_smile_0.png",
+      "size": "23x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x42",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_dw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_1.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_2.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_right_lw_unhappy_3.png",
+      "size": "25x43",
+      "walk": true
+     }
+    ],
+    "up": [
+     {
+      "f": "spr_susie_laugh_up_0.png",
+      "size": "26x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_laugh_up_1.png",
+      "size": "26x41",
+      "walk": false
+     }
+    ]
+   },
+   "surprised": {
+    "?": [
+     {
+      "f": "spr_noelle_susie_angel_shock_10.png",
+      "size": "59x44",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_12.png",
+      "size": "59x45",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_14.png",
+      "size": "59x45",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_16.png",
+      "size": "59x45",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_18.png",
+      "size": "59x45",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_2.png",
+      "size": "58x43",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_20.png",
+      "size": "59x45",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_6.png",
+      "size": "61x43",
+      "walk": false
+     },
+     {
+      "f": "spr_noelle_susie_angel_shock_7.png",
+      "size": "61x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_1.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_1.png",
+      "size": "25x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_2.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_3.png",
+      "size": "25x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_idle_surprise_0.png",
+      "size": "53x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back2_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_1.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_battle2_0.png",
+      "size": "36x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_battle_0.png",
+      "size": "51x43",
+      "walk": false
+     },
+     {
+      "f": "spr_tea_party_susie_cup_hold_surprised_0.png",
+      "size": "37x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_2.png",
+      "size": "31x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_3.png",
+      "size": "30x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_4.png",
+      "size": "31x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_flashlight_surprise_9.png",
+      "size": "32x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprised_0.png",
+      "size": "41x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprised_blush_0.png",
+      "size": "41x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprise_0.png",
+      "size": "41x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprise_more_0.png",
+      "size": "41x42",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_paper_surprise_0.png",
+      "size": "23x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_sit_arms_crossed_hold_hand_surprised_0.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_sit_arms_crossed_shocked_0.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_09_susie_shock.png",
+      "size": "36x43",
+      "walk": false
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_susie_shocked_lw_0.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_left_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_left_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_left_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_left_1.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprise_left_embarrassed_0.png",
+      "size": "41x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprise_left_embarrassed_1.png",
+      "size": "41x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_shocked_lw_0.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_left_lw_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_left_candy_cane_surprise_0.png",
+      "size": "33x45",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_candy_cane_surprise_1.png",
+      "size": "33x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_candy_cane_surprise_2.png",
+      "size": "33x45",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_candy_cane_surprise_3.png",
+      "size": "33x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_left_flashlight_surprise_0.png",
+      "size": "25x43",
+      "walk": true
+     },
+     {
+      "f": "spr_cutscene_03b_susie_shock_lw.png",
+      "size": "29x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_shocked_lw.png",
+      "size": "29x45",
+      "walk": false
+     }
+    ],
+    "up": [
+     {
+      "f": "spr_susie_shock_up_0.png",
+      "size": "36x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_shock_up_0.png",
+      "size": "36x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_look_up_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_step_back_look_up_1.png",
+      "size": "26x43",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_susie_surprised_right_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_right_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_right_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_subtle_right_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_church_right_0.png",
+      "size": "23x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_surprised_right_lw_0.png",
+      "size": "25x43",
+      "walk": false
+     }
+    ],
+    "down": [
+     {
+      "f": "spr_susie_look_down_right_dw_surprise_0.png",
+      "size": "25x43",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_guitar_surprise_down_0.png",
+      "size": "41x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_walk_down_shock_0.png",
+      "size": "24x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_shock_1.png",
+      "size": "24x43",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_shock_2.png",
+      "size": "24x44",
+      "walk": true
+     },
+     {
+      "f": "spr_susie_walk_down_shock_3.png",
+      "size": "24x43",
+      "walk": true
+     }
+    ]
+   },
+   "hurt": {
+    "?": [
+     {
+      "f": "spr_susie_hurt_0.png",
+      "size": "48x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_hurt_0.png",
+      "size": "48x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_hurt_green_0.png",
+      "size": "48x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_hurt_ground_0.png",
+      "size": "35x41",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_hurt_lookright_0.png",
+      "size": "48x44",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_enemy_hurt_ch1.png",
+      "size": "54x45",
+      "walk": false
+     },
+     {
+      "f": "spr_susie_hurt.png",
+      "size": "54x45",
+      "walk": false
+     }
+    ]
+   }
+  }
+ },
+ "tenna": {
+  "base": "16x32",
+  "emo": {
+   "sad": {},
+   "angry": {},
+   "happy": {},
+   "surprised": {},
+   "hurt": {}
+  }
+ },
+ "toriel": {
+  "base": "25x52",
+  "emo": {
+   "sad": {
+    "?": [
+     {
+      "f": "spr_toriel_l_unhappy_0.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_1.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_2.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_3.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_0.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_1.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_2.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_3.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_0.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_1.png",
+      "size": "25x51",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_2.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_3.png",
+      "size": "25x51",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_0.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_1.png",
+      "size": "25x51",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_2.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_3.png",
+      "size": "25x51",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_toriel_juice_talk_right_unhappy_0.png",
+      "size": "21x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_juice_talk_right_unhappy_1.png",
+      "size": "21x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_talk_right_church_unhappy_0.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_talk_right_church_unhappy_1.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_walk_right_church_unhappy_0.png",
+      "size": "20x52",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_right_church_unhappy_1.png",
+      "size": "25x51",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_right_church_unhappy_2.png",
+      "size": "20x52",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_right_church_unhappy_3.png",
+      "size": "25x51",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_toriel_talk_left_church_unhappy_0.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_talk_left_church_unhappy_1.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_walk_left_church_unhappy_0.png",
+      "size": "20x52",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_left_church_unhappy_1.png",
+      "size": "25x51",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_left_church_unhappy_2.png",
+      "size": "20x52",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_left_church_unhappy_3.png",
+      "size": "25x51",
+      "walk": true
+     }
+    ]
+   },
+   "angry": {
+    "?": [
+     {
+      "f": "spr_toriel_juice_talk_mad_0.png",
+      "size": "21x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_juice_talk_mad_1.png",
+      "size": "21x52",
+      "walk": false
+     }
+    ]
+   },
+   "happy": {
+    "?": [
+     {
+      "f": "spr_cutscene_01_toriel_laugh_pie_tin_0.png",
+      "size": "24x52",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_01_toriel_laugh_pie_tin_1.png",
+      "size": "24x52",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_30b_toriel_laugh_0.png",
+      "size": "24x52",
+      "walk": false
+     },
+     {
+      "f": "spr_cutscene_30b_toriel_laugh_1.png",
+      "size": "24x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_0.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_1.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_2.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_3.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_0.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_1.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_2.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_3.png",
+      "size": "25x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laughing_church_0.png",
+      "size": "24x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laughing_church_1.png",
+      "size": "24x51",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_0.png",
+      "size": "24x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_1.png",
+      "size": "24x51",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_drunk_0.png",
+      "size": "24x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_drunk_1.png",
+      "size": "24x51",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_0.png",
+      "size": "27x50",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_10.png",
+      "size": "36x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_11.png",
+      "size": "43x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_3.png",
+      "size": "27x50",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_6.png",
+      "size": "27x50",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_9.png",
+      "size": "27x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_0.png",
+      "size": "27x50",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_10.png",
+      "size": "36x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_11.png",
+      "size": "43x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_12.png",
+      "size": "43x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_13.png",
+      "size": "43x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_3.png",
+      "size": "27x50",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_6.png",
+      "size": "27x50",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_fall_timing_9.png",
+      "size": "27x53",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_laugh_loop_0.png",
+      "size": "27x50",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_0.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_1.png",
+      "size": "25x51",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_2.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_l_unhappy_3.png",
+      "size": "25x51",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_0.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_1.png",
+      "size": "25x51",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_2.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_r_unhappy_3.png",
+      "size": "25x51",
+      "walk": false
+     }
+    ],
+    "right": [
+     {
+      "f": "spr_toriel_juice_talk_right_unhappy_0.png",
+      "size": "21x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_juice_talk_right_unhappy_1.png",
+      "size": "21x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_talk_right_church_unhappy_0.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_talk_right_church_unhappy_1.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_walk_right_church_unhappy_0.png",
+      "size": "20x52",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_right_church_unhappy_1.png",
+      "size": "25x51",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_right_church_unhappy_2.png",
+      "size": "20x52",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_right_church_unhappy_3.png",
+      "size": "25x51",
+      "walk": true
+     }
+    ],
+    "left": [
+     {
+      "f": "spr_toriel_talk_left_church_unhappy_0.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_talk_left_church_unhappy_1.png",
+      "size": "20x52",
+      "walk": false
+     },
+     {
+      "f": "spr_toriel_walk_left_church_unhappy_0.png",
+      "size": "20x52",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_left_church_unhappy_1.png",
+      "size": "25x51",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_left_church_unhappy_2.png",
+      "size": "20x52",
+      "walk": true
+     },
+     {
+      "f": "spr_toriel_walk_left_church_unhappy_3.png",
+      "size": "25x51",
+      "walk": true
+     }
+    ]
+   },
+   "surprised": {},
+   "hurt": {}
+  }
+ }
+}

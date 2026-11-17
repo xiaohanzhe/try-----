@@ -1,0 +1,562 @@
+{
+ "game_root": "C:\\Users\\23002\\Desktop\\项目文件夹\\deltarune",
+ "game_png_total": 34520,
+ "ralsei_anim_groups": 115,
+ "rows": [
+  {
+   "id": "addison_tea",
+   "n": 2,
+   "kind": "stand",
+   "hits": {
+    "laugh": 0,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 0,
+    "angry": 0,
+    "happy": 0,
+    "hurt": 0,
+    "sleep": 0
+   },
+   "sample": {}
+  },
+  {
+   "id": "asgore",
+   "n": 12,
+   "kind": "walk",
+   "hits": {
+    "laugh": 0,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 3,
+    "angry": 0,
+    "happy": 4,
+    "hurt": 0,
+    "sleep": 0
+   },
+   "sample": {
+    "surprised": [
+     "lighter\\asgore34\\spr_asgore_flower_surprise_0.png",
+     "lighter\\asgore34\\spr_asgore_housekeeper_eating_shocked_0.png"
+    ],
+    "happy": [
+     "lighter\\asgore34\\spr_asgore_walk_down_housekeeper_unhappy_0.png",
+     "lighter\\asgore34\\spr_asgore_walk_down_housekeeper_unhappy_1.png"
+    ]
+   }
+  },
+  {
+   "id": "berdly",
+   "n": 16,
+   "kind": "walk",
+   "hits": {
+    "laugh": 4,
+    "cry": 0,
+    "sad": 4,
+    "surprised": 17,
+    "angry": 5,
+    "happy": 21,
+    "hurt": 4,
+    "sleep": 2
+   },
+   "sample": {
+    "laugh": [
+     "berdly\\dark\\spr_berdly_laugh_dw\\spr_berdly_laugh_dw_0.png",
+     "berdly\\dark\\spr_berdly_laugh_dw\\spr_berdly_laugh_dw_1.png"
+    ],
+    "sad": [
+     "berdly\\dark\\spr_berdly_depressed_dw.png",
+     "berdly\\dark\\spr_berdly_depressed_dw_left.png"
+    ],
+    "surprised": [
+     "berdly\\dark\\spr_berdlyb_shocked.png",
+     "berdly\\dark\\spr_berdly_shocked_left.png"
+    ],
+    "angry": [
+     "berdly\\dark\\spr_berdly_mad_dw.png",
+     "berdly\\dark\\spr_berdly_mad_right_dw.png"
+    ],
+    "happy": [
+     "berdly\\dark\\spr_cutscene_25_berdly_kneel_left_unhappy.png",
+     "berdly\\dark\\spr_berdly_walk_down_dw_unhappy\\spr_berdly_walk_down_dw_unhappy_0.png"
+    ],
+    "hurt": [
+     "berdly\\dark\\spr_berdly_hurt_kneel.png",
+     "berdly\\dark\\spr_berdly_hurt_kneel_burnt.png"
+    ],
+    "sleep": [
+     "berdly\\light\\spr_berdly_desk_sleep.png",
+     "berdly\\light\\spr_cutscene_28b_berdly_desk_sleep.png"
+    ]
+   }
+  },
+  {
+   "id": "gerson",
+   "n": 4,
+   "kind": "stand",
+   "hits": {
+    "laugh": 15,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 1,
+    "angry": 0,
+    "happy": 0,
+    "hurt": 2,
+    "sleep": 0
+   },
+   "sample": {
+    "laugh": [
+     "boss\\gerson\\spr_gerson_laugh_0.png",
+     "boss\\gerson\\spr_gerson_laugh_1.png"
+    ],
+    "surprised": [
+     "boss\\gerson\\spr_gerson_shocked_0.png"
+    ],
+    "hurt": [
+     "boss\\gerson\\spr_gerson_hurt2_0.png",
+     "boss\\gerson\\spr_gerson_hurt_0.png"
+    ]
+   }
+  },
+  {
+   "id": "hammerguy",
+   "n": 4,
+   "kind": "stand",
+   "hits": {
+    "laugh": 0,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 0,
+    "angry": 0,
+    "happy": 0,
+    "hurt": 0,
+    "sleep": 0
+   },
+   "sample": {}
+  },
+  {
+   "id": "king",
+   "n": 2,
+   "kind": "stand",
+   "hits": {
+    "laugh": 2,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 1,
+    "angry": 0,
+    "happy": 0,
+    "hurt": 1,
+    "sleep": 5
+   },
+   "sample": {
+    "laugh": [
+     "boss\\king\\spr_king_laugh_ch1_0.png",
+     "boss\\king\\spr_king_laugh_ch1_1.png"
+    ],
+    "surprised": [
+     "boss\\king\\spr_king_shock_ch1.png"
+    ],
+    "hurt": [
+     "boss\\king\\spr_chainking_hurt_ch1.png"
+    ],
+    "sleep": [
+     "boss\\king\\spr_kingr_asleep_ch1_0.png",
+     "boss\\king\\spr_kingr_asleep_ch1_1.png"
+    ]
+   }
+  },
+  {
+   "id": "kris",
+   "n": 12,
+   "kind": "walk",
+   "hits": {
+    "laugh": 3,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 9,
+    "angry": 0,
+    "happy": 10,
+    "hurt": 22,
+    "sleep": 45
+   },
+   "sample": {
+    "laugh": [
+     "kris\\ch3\\spr_kris_door_laugh_0.png",
+     "kris\\ch3\\spr_kris_door_laugh_1.png"
+    ],
+    "surprised": [
+     "kris\\ch3\\spr_susie_kris_run_right_shocked_0.png",
+     "kris\\ch3\\spr_susie_kris_run_right_shocked_1.png"
+    ],
+    "happy": [
+     "kris\\ch3\\spr_susie_kris_run_left_unhappy_0.png",
+     "kris\\ch3\\spr_susie_kris_run_left_unhappy_1.png"
+    ],
+    "hurt": [
+     "ch4\\spr_kris_climb_new_damagearea_0.png",
+     "kris\\ch3\\spr_board_kris_hurt_0.png"
+    ],
+    "sleep": [
+     "ch4\\spr_kris_chair_sleep_blanket_fly_0.png",
+     "kris\\ch3\\spr_board_kris_sleep_0.png"
+    ]
+   }
+  },
+  {
+   "id": "lancer",
+   "n": 4,
+   "kind": "stand",
+   "hits": {
+    "laugh": 24,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 0,
+    "angry": 0,
+    "happy": 12,
+    "hurt": 6,
+    "sleep": 4
+   },
+   "sample": {
+    "laugh": [
+     "boss\\lancer\\spr_lancer_lt_laugh_0.png",
+     "boss\\lancer\\spr_lancer_lt_laugh_1.png"
+    ],
+    "happy": [
+     "boss\\lancer\\spr_cutscene_20_susie_lancer_smile.png",
+     "boss\\lancer\\spr_lancer_dt_unhappy.png"
+    ],
+    "hurt": [
+     "boss\\lancer\\spr_lancerbike_hurt_0.png",
+     "boss\\lancer\\spr_lancerbike_hurt_1.png"
+    ],
+    "sleep": [
+     "boss\\lancer\\spr_lancer_sleep_0.png",
+     "boss\\lancer\\spr_lancer_sleep_1.png"
+    ]
+   }
+  },
+  {
+   "id": "mike",
+   "n": 1,
+   "kind": "stand",
+   "hits": {
+    "laugh": 0,
+    "cry": 0,
+    "sad": 8,
+    "surprised": 0,
+    "angry": 0,
+    "happy": 0,
+    "hurt": 0,
+    "sleep": 0
+   },
+   "sample": {
+    "sad": [
+     "boss\\mike\\spr_mike_med_sad_0.png",
+     "boss\\mike\\spr_mike_med_sad_1.png"
+    ]
+   }
+  },
+  {
+   "id": "noelle",
+   "n": 16,
+   "kind": "walk",
+   "hits": {
+    "laugh": 18,
+    "cry": 0,
+    "sad": 23,
+    "surprised": 58,
+    "angry": 5,
+    "happy": 58,
+    "hurt": 3,
+    "sleep": 10
+   },
+   "sample": {
+    "laugh": [
+     "noelle\\ch4\\spr_noelle_sit_blush_laugh_0.png",
+     "noelle\\ch4\\spr_noelle_sit_blush_laugh_1.png"
+    ],
+    "sad": [
+     "noelle\\ch4\\spr_noelle_left_sad_shock_0.png",
+     "noelle\\ch4\\spr_noelle_left_sad_smile_0.png"
+    ],
+    "surprised": [
+     "noelle\\ch4\\spr_kris_noelle_sit_shock_side_b_0.png",
+     "noelle\\ch4\\spr_noelle_church_shocked_0.png"
+    ],
+    "angry": [
+     "noelle\\dark\\spr_cutscene_15_noelle_mad.png",
+     "noelle\\dark\\spr_noelle_walk_left_mad_dw\\spr_noelle_walk_left_mad_dw_0.png"
+    ],
+    "happy": [
+     "noelle\\ch4\\spr_kris_noelle_hair_trysmile_side_b_0.png",
+     "noelle\\ch4\\spr_kris_noelle_sit_hand_on_hand_side_b_smile_0.png"
+    ],
+    "hurt": [
+     "noelle\\dark\\spr_noelleb_hurt.png",
+     "noelle\\dark\\spr_noelleb_hurt_sideb.png"
+    ],
+    "sleep": [
+     "kris\\ch4light\\spr_noellehouse_kitchen_kris_sleep_0.png",
+     "kris\\ch4light\\spr_noellehouse_kitchen_kris_sleep_1.png"
+    ]
+   }
+  },
+  {
+   "id": "queen",
+   "n": 16,
+   "kind": "walk",
+   "hits": {
+    "laugh": 21,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 6,
+    "angry": 19,
+    "happy": 10,
+    "hurt": 41,
+    "sleep": 0
+   },
+   "sample": {
+    "laugh": [
+     "boss\\gigaqueen\\spr_bqueen_laugh\\spr_bqueen_laugh_0.png",
+     "boss\\gigaqueen\\spr_bqueen_laugh\\spr_bqueen_laugh_1.png"
+    ],
+    "surprised": [
+     "boss\\gigaqueen\\spr_cutscene_27_queen_giga_surprise.png",
+     "boss\\gigaqueen\\spr_cutscene_27_queen_hand_surprise_all.png"
+    ],
+    "angry": [
+     "boss\\queen\\spr_cutscene_city01_queen_stealth_mad.png",
+     "弹幕\\queen\\spr_queen_pfps_mad_0.png"
+    ],
+    "happy": [
+     "boss\\gigaqueen\\spr_cutscene_27_queen_damaged_unhappy.png",
+     "boss\\queen\\spr_cutscene_26_queen_pilot_unhappy.png"
+    ],
+    "hurt": [
+     "boss\\gigaqueen\\spr_bqueen_dizzy_hurt.png",
+     "boss\\gigaqueen\\spr_bqueen_hurt.png"
+    ]
+   }
+  },
+  {
+   "id": "rabbits",
+   "n": 2,
+   "kind": "stand",
+   "hits": {
+    "laugh": 0,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 0,
+    "angry": 0,
+    "happy": 0,
+    "hurt": 0,
+    "sleep": 0
+   },
+   "sample": {}
+  },
+  {
+   "id": "rouxls",
+   "n": 1,
+   "kind": "stand",
+   "hits": {
+    "laugh": 0,
+    "cry": 2,
+    "sad": 0,
+    "surprised": 0,
+    "angry": 0,
+    "happy": 0,
+    "hurt": 0,
+    "sleep": 0
+   },
+   "sample": {
+    "cry": [
+     "boss\\rouxls34\\spr_npc_rouxls_cry_0.png",
+     "boss\\rouxls34\\spr_npc_rouxls_cry_1.png"
+    ]
+   }
+  },
+  {
+   "id": "rudy",
+   "n": 16,
+   "kind": "walk",
+   "hits": {
+    "laugh": 4,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 0,
+    "angry": 0,
+    "happy": 1,
+    "hurt": 0,
+    "sleep": 0
+   },
+   "sample": {
+    "laugh": [
+     "lighter\\rudy\\spr_rudy_juice_laugh_0.png",
+     "lighter\\rudy\\spr_rudy_juice_laugh_1.png"
+    ],
+    "happy": [
+     "lighter\\rudy\\spr_rudy_look_smile_0.png"
+    ]
+   }
+  },
+  {
+   "id": "susie",
+   "n": 16,
+   "kind": "walk",
+   "hits": {
+    "laugh": 53,
+    "cry": 0,
+    "sad": 3,
+    "surprised": 110,
+    "angry": 25,
+    "happy": 178,
+    "hurt": 28,
+    "sleep": 17
+   },
+   "sample": {
+    "laugh": [
+     "boss\\lancer\\spr_susie_lancer_carry_laugh_0.png",
+     "boss\\lancer\\spr_susie_lancer_carry_laugh_1.png"
+    ],
+    "sad": [
+     "susie\\ch3\\spr_susie_diagonal_away_sad_0.png",
+     "susie\\ch4dark\\spr_susie_look_down_sad_0.png"
+    ],
+    "surprised": [
+     "kris\\ch3\\spr_susie_kris_run_right_shocked_0.png",
+     "kris\\ch3\\spr_susie_kris_run_right_shocked_1.png"
+    ],
+    "angry": [
+     "ch3\\spr_susiezilla_moveit_angry_0.png",
+     "susie\\ch3\\spr_susiezilla_susie_annoyed_0.png"
+    ],
+    "happy": [
+     "boss\\lancer\\spr_cutscene_20_susie_lancer_smile.png",
+     "kris\\ch3\\spr_susie_kris_run_left_unhappy_0.png"
+    ],
+    "hurt": [
+     "ch3\\spr_susiezilla_bomb_hurtbox_0.png",
+     "ch3\\spr_susiezilla_hurt_0.png"
+    ],
+    "sleep": [
+     "ch3\\spr_susiezilla_dogdozer_shield_0.png",
+     "ch3\\spr_susiezilla_dozer_pieces_0.png"
+    ]
+   }
+  },
+  {
+   "id": "susiedark",
+   "n": 4,
+   "kind": "stand",
+   "hits": {
+    "laugh": 53,
+    "cry": 0,
+    "sad": 3,
+    "surprised": 110,
+    "angry": 25,
+    "happy": 178,
+    "hurt": 28,
+    "sleep": 17
+   },
+   "sample": {
+    "laugh": [
+     "boss\\lancer\\spr_susie_lancer_carry_laugh_0.png",
+     "boss\\lancer\\spr_susie_lancer_carry_laugh_1.png"
+    ],
+    "sad": [
+     "susie\\ch3\\spr_susie_diagonal_away_sad_0.png",
+     "susie\\ch4dark\\spr_susie_look_down_sad_0.png"
+    ],
+    "surprised": [
+     "kris\\ch3\\spr_susie_kris_run_right_shocked_0.png",
+     "kris\\ch3\\spr_susie_kris_run_right_shocked_1.png"
+    ],
+    "angry": [
+     "ch3\\spr_susiezilla_moveit_angry_0.png",
+     "susie\\ch3\\spr_susiezilla_susie_annoyed_0.png"
+    ],
+    "happy": [
+     "boss\\lancer\\spr_cutscene_20_susie_lancer_smile.png",
+     "kris\\ch3\\spr_susie_kris_run_left_unhappy_0.png"
+    ],
+    "hurt": [
+     "ch3\\spr_susiezilla_bomb_hurtbox_0.png",
+     "ch3\\spr_susiezilla_hurt_0.png"
+    ],
+    "sleep": [
+     "ch3\\spr_susiezilla_dogdozer_shield_0.png",
+     "ch3\\spr_susiezilla_dozer_pieces_0.png"
+    ]
+   }
+  },
+  {
+   "id": "tenna",
+   "n": 2,
+   "kind": "stand",
+   "hits": {
+    "laugh": 15,
+    "cry": 0,
+    "sad": 3,
+    "surprised": 2,
+    "angry": 2,
+    "happy": 0,
+    "hurt": 2,
+    "sleep": 0
+   },
+   "sample": {
+    "laugh": [
+     "boss\\tenna\\spr_tenna_laugh_0.png",
+     "boss\\tenna\\spr_tenna_laugh_1.png"
+    ],
+    "sad": [
+     "boss\\tenna\\spr_tenna_sad_0.png",
+     "boss\\tenna\\spr_tenna_sad_turned_a_0.png"
+    ],
+    "surprised": [
+     "boss\\tenna\\spr_tenna_shocked_0.png",
+     "boss\\tenna\\spr_tenna_shocked_alt_0.png"
+    ],
+    "angry": [
+     "boss\\tenna\\spr_tenna_armsup_annoyed_0.png",
+     "boss\\tenna\\spr_tenna_armsup_annoyed_1.png"
+    ],
+    "hurt": [
+     "boss\\tenna\\spr_tenna_hurt_0.png",
+     "boss\\tenna\\spr_tenna_hurt_big_0.png"
+    ]
+   }
+  },
+  {
+   "id": "toriel",
+   "n": 16,
+   "kind": "walk",
+   "hits": {
+    "laugh": 60,
+    "cry": 0,
+    "sad": 0,
+    "surprised": 0,
+    "angry": 2,
+    "happy": 30,
+    "hurt": 0,
+    "sleep": 2
+   },
+   "sample": {
+    "laugh": [
+     "lighter\\toriel\\spr_cutscene_01_toriel_laugh_pie_tin_0.png",
+     "lighter\\toriel\\spr_cutscene_01_toriel_laugh_pie_tin_1.png"
+    ],
+    "angry": [
+     "lighter\\torielch34\\spr_toriel_juice_talk_mad_0.png",
+     "lighter\\torielch34\\spr_toriel_juice_talk_mad_1.png"
+    ],
+    "happy": [
+     "lighter\\toriel\\spr_toriel_l_unhappy_0.png",
+     "lighter\\toriel\\spr_toriel_l_unhappy_1.png"
+    ],
+    "sleep": [
+     "lighter\\toriel\\spr_cutscene_32_toriel_pj_chair_sleep.png",
+     "lighter\\torielch34\\spr_toriel_sleep_throne_0.png"
+    ]
+   }
+  }
+ ]
+}

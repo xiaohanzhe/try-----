@@ -15597,16 +15597,24 @@ class RalseiPet(QMainWindow):
         """表情配一段外部动画（用户：`角色做出表情的时候原作有些时候也会
         配合一些外部动画来加强表示`）。
 
-        ★ 只给**宠物本体**演：NPC 说话时换的是 NPC 的脸，让 Ralsei 的身体替
-          别人做动作是错的（`char_id` 非空直接跳过）。
+        ★★★ 第196轮改口径（用户纠正：`每个角色在原作可是都有自己的动画的，
+          为啥要用 ralsei 的啊`）：以前这里第一行是 `if char_id: return False`，
+          理由是"让 Ralsei 的身体替别人做动作是错的"。**那个理由本身成立，
+          但结论错了** —— 正确的做法不是"别人不演"，而是"别人用**自己的**身体
+          和**自己的**帧演"。所以：
+            · `char_id` 为空 → 走 Ralsei 老路径（下面这段**逐字未改**）
+            · `char_id` 非空 → 交给 `npc_body_render.NpcBodyLayer.play_once`，
+              在**他自己那个小窗**里播**他自己**的帧
         ★ 三重节制，缺一条都会变成"每句话都在抖"：
-            ① 只有 `dialogue_ui.DialogueUI.EXPRESSION_ANIM` 里那 4 个强情绪有动画
+            ① 只有 `dialogue_ui.DialogueUI.EXPRESSION_ANIM` 里那几个强情绪有动画
             ② 同一个表情 `EXPRESSION_ANIM_COOLDOWN` 秒内不重复
             ③ 表情没变就不演（缩放重贴、连续同情绪都不该触发）
+          NPC 分支的 ②③ 是**按人分开记**的（`_expr_anim_at_by`），
+          否则 A 说一句、B 立刻接着说，B 就会被 A 的冷却挡掉。
         """
+        if char_id:
+            return self._play_npc_expression_anim(emotion, char_id)
         try:
-            if char_id:
-                return False
             key = str(emotion or '').lower()
             table = getattr(getattr(self, 'dialogue_ui', None),
                             'EXPRESSION_ANIM', None) or {}
@@ -15625,6 +15633,39 @@ class RalseiPet(QMainWindow):
             return bool(self.play_animation_once(name, restore_to='idle'))
         except Exception as e:  # noqa: BLE001
             _log.debug("[表情动画] 跳过: %s", e)
+            return False
+
+    def _play_npc_expression_anim(self, emotion, char_id):
+        """NPC 用自己的帧、在自己的窗口里演一段表情动作（第196轮）。
+
+        ★ 拿不到能力/素材就**安静返回 False**：不借 Ralsei 的身体，
+          也不拿别人的帧顶——画错人比不画更糟。
+        ★ 渲染层还没建（没人可画）⇒ 直接 False，**不为了演一格动画去建整个池**。
+        """
+        try:
+            layer = self.__dict__.get('_npc_body_layer')
+            if layer is None or not callable(getattr(layer, 'play_once', None)):
+                return False
+            dui = getattr(self, 'dialogue_ui', None)
+            cd = float(getattr(dui, 'EXPRESSION_ANIM_COOLDOWN', 2.5))
+            key = str(emotion or '').strip().lower()
+            now = time.time()
+            by = self.__dict__.get('_expr_anim_at_by')
+            if not isinstance(by, dict):
+                by = {}
+                self._expr_anim_at_by = by
+            last = by.get(char_id)
+            if last is not None:
+                if (now - float(last[0])) < cd:
+                    return False        # ② 同一个人的冷却
+                if last[1] == key:
+                    return False        # ③ 表情没变不演
+            if not layer.play_once(char_id, key):
+                return False
+            by[char_id] = (now, key)
+            return True
+        except Exception as e:  # noqa: BLE001
+            _log.debug("[表情动画/NPC] 跳过: %s", e)
             return False
 
     def _event_ai_ready(self, kind, instant=False):

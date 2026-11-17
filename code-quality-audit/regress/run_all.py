@@ -5999,6 +5999,62 @@ SUITES = [
                 '★ 进 `SUITES` 但**不进 `HERMETIC_IDS`**：不 import `main`、不建 QApplication；'
                 '库根用 `tempfile.mkdtemp()` 隔离，退出即删。零网络、零外部盘。',
     },
+    {
+        'id': 'check196',
+        'script': os.path.join(ROOT, 'code-quality-audit',
+                               '第196轮-NPC表情动画', '_tools', 'check196.py'),
+        'offscreen': True,
+        'desc': '第一百九十六轮：**NPC 表情动画**（每个人用**自己的**帧、在自己的窗口里演）。'
+                '★★★ 本轮起点是我的一个错误判断，被用户当场纠正：'
+                '`每个角色在原作可是都有自己的动画的，为啥要用 ralsei 的啊`。'
+                '第195轮我把这条记成"NPC 没素材、只能顶 Ralsei 的身体、所以有意关掉"——'
+                '**前提是假的**：原作解包目录 34,520 张 PNG，逐角色分章节（Susie 一人 3,314 张）。'
+                '★★ 但"有动画"≠"能当表情动画用"，逐层盘下来的实况：'
+                '① cutscene 整图（`spr_susie_kris_run_right_shocked_0` 62×38 **一张画两个人**）；'
+                '② 另一种画布（`spr_gerson_laugh_0` 73×61 vs 走路 67×35 ⇒ 塞进小窗必跳）；'
+                '③ **能用的**＝与走路帧**同尺寸族**的那一套 —— 而原作在 overworld 里表现情绪'
+                '本来就是**换一套行走图**（`walk_down_dw_unhappy` / `laugh_dw`），'
+                'Ralsei 自己的 `animations.json` 里也写着同一套（`walk_down_unhappy`）。'
+                '★★★ 四道几何闸 + 一道配色闸，**每一道都是踩出来的**（阈值全部按实测分布定，'
+                '`_tools/probe_alpha196.py` / `probe_palette196.py`）：'
+                '① 整块不透明底（`spr_susie_shocked_lw_0` 那种绿方块，`ratio` ≥0.85）；'
+                '② 并排两个主体（bbox 内部整列全透明的连续段）；'
+                '③ 夹带道具（实心像素 >1.8× 走路帧）；'
+                '④ **bbox 宽度**（不是画布宽度：`berdly_laugh_dw` 画布 38 但实心区只有 27，'
+                '是张开翅膀；`susie_grabsmile` 实心区顶到 43，是**抓着东西**）+ '
+                '**bbox 高度**（`noelle_kneel_shocked` 只要 38，跪着）；'
+                '⑤ **配色一致性**（0.55）：抓到 `spr_susie_mad_face_up`（share 0.000，'
+                '画的是 **Kris 的背面**）、`susie_walk_down_shock`（0.012，深紫发牛仔裤，'
+                '**不是 Susie**）、`noelle_surprise_left`（0.319，金发黑裙红领结，**别的角色**）、'
+                '`king_laugh_ch1`（0.414，**举着大斧**）—— 全部逐帧放大核对过（`_tools/zoom196.py`）。'
+                '★ 另外一张"姿势词"黑名单（摔/跪/坐/躺/骑/倒地）：`toriel_laugh_fall`、'
+                '`kris_fall_dw_hurt`、`susie_hurt_ground` 几何上全合格，只有词能判。'
+                '★★ 落点：素材 11 人 / 159 帧 / `assets/sprites/dr/<id>/anim/`＋独立清单 '
+                '`_npc_anims.json`（**刻意不并进 `_npc_frames.json`**：`pick191.py --write` 会整份'
+                '重写那个文件，表情帧写进去下次就被冲掉且不报错）。渲染层加 `play_once` ＋ '
+                '`sync()` 里一次性动画优先；`main.play_expression_anim` 的 '
+                '`if char_id: return False` 换成"走 NPC 自己的分支"，**Ralsei 老路径逐字未改**。'
+                '★ 冷却与"表情没变不演"按**人**分开记（`_expr_anim_at_by`），'
+                '否则 A 说完 B 接着说会被 A 的冷却挡掉。'
+                '★★★ 顺手抓到 Ralsei 那边一条**死键**：`EXPRESSION_ANIM` 写的是 `happy`，'
+                '但 `event_speech.ACT_EMOTION_RULES` **从不产出 `happy`**（大笑/狂笑/哈哈哈 全产 '
+                '`laugh`）⇒ 笑动画几乎从未触发。补 `laugh`；按用户裁定 A 案补 `angry`→`fall_mad`'
+                '（Ralsei 盘上**没有站着生气的循环**，只有原作那一帧 `splat_mad`，不自己编）。'
+                '★ 判据 **38 条**：A 清单↔磁盘对账 5（尺寸走 IHDR 直读、反向查孤儿）· '
+                'B 情绪口径 5 · C 行为 12（真窗口，**比像素不比返回值**：开演后那一格真换图、'
+                '四帧四个不同画面、到点回站姿、拒绝路径不留状态）· D 接线 AST 9 · '
+                'E 素材质量契约 4（在**产物**上重算那四道闸）· F 自检 3。'
+                '★★★ 变异 **8/8 全抓**（`_tools/mutate196.py`，双跑一致 + "红数 >0 且 <38" + '
+                '改注释的无害变异红 0 + 整字节还原并核 sha1）。'
+                '★ 变异第一版 M1/M2/M7 **"锚点出现 0 次"** ⇒ 不是变异没意义，是锚点写成 `\\n` '
+                '而源码是 CRLF（**假红**）；改成按文件自己的换行符组装锚点才对上。'
+                '★ 判据也抓出我自己两处错：① E1 拿走路帧的**画布**高度去比候选帧的**实心区**高度'
+                '（单位不一致 ⇒ 把 king/queen 两张合格帧判成越界，**假问题**）；'
+                '② F3 第一版把 `[PASS]`/`[FAIL]` 字面量写进了**判据名**，于是那行本身就往 stdout '
+                '多打两个标记 ⇒ `run_all` 计数当场被污染（本轮第 187 轮那条规矩的现场版）。'
+                '★ 进 `SUITES` 但**不进 `HERMETIC_IDS`**：建 `QApplication`（offscreen）但**不构造** '
+                '`RalseiPet()`、不 import `main`（只 AST 读源码）。零网络、零外部盘。',
+    },
 ]
 # ---------------------------------------------------------------- 归一化
 _TS = re.compile(r'\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}(?:[,.]\d+)?')
