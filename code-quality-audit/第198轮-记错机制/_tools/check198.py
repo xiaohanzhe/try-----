@@ -31,6 +31,7 @@ import re
 import shutil
 import sys
 import tempfile
+import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..'))
@@ -73,6 +74,31 @@ TEXTS = [
 ]
 KEY_TEXT = u'升到5级了，这是第3次升级'
 KEY_TEXT2 = u'我把钥匙放在玄关的第二个抽屉'
+
+#: E 段夹具的固定时刻（2026-01-01 20:00 本地时间）。
+#: 取"晚上"这一档，让 `tod` 拼出「的晚上」这种真实会出现的样子；关键是**固定**。
+FIXED_TS = time.mktime((2026, 1, 1, 20, 0, 0, 0, 0, -1))
+
+#: ★★★ 第199轮补：**样例里不许回显墙钟值**。
+#:   `add_fragment` 记账时 `tod` 取自 `_tod_of(now)`，而 `recall_text` 把
+#:   `when + "的" + tod` 拼进「· 刚刚的晚上，你说过…」。于是同一份用例
+#:   **19 点跑是"晚上"、23 点跑是"深夜"** ⇒ 判据样例随钟点漂，DIFF 看不出是
+#:   真回归还是换了个钟点（实测：第199轮跑全量时 E1/E3 因此报 DIFF）。
+#:   只去掉"的<时段>"这段**显示**内容，判据本身的断言一个都没动。
+#: 时段词表 —— `_tod_of()` 的七档（这里只作说明用，判据不再按词逐一替换：
+#: 那样只能去掉「的晚上」，「10 个月前」照样漂）。改成一刀砍掉整段时相。
+#: (u'清晨', u'上午', u'中午', u'下午', u'傍晚', u'晚上', u'深夜')
+
+
+def _disp(line):
+    """显示用：砍掉开头那段"什么时候"（`10 个月前，` / `刚刚，` / `刚刚的晚上，`）。
+
+    ★ 只砍**显示**，断言一个都没动。
+    ★ 为什么要连「N 个月前」一起砍：`_freshness` 是相对**现在**算的，钉死 `now` 之后
+      「刚刚」会变成「10 个月前」，下个月又变「11 个月前」—— 换汤不换药。
+      砍掉整段时相后，样例只剩「谁 + 原话 + 联想」，与钟点、日历都无关。
+    """
+    return re.sub(u'^· [^，]*，', u'· ', line)
 
 
 def plain(i=0):
@@ -232,7 +258,13 @@ def _run(mem):
     print('E. 端到端 recall_text（真正落进提示词的那一段）')
     print('=' * 78)
     for t in TEXTS:
-        mem.add_fragment(t, who='user')
+        # ★★★ 第199轮补：夹具的 `now` 必须**钉死**。
+        #   `misfire_mode` 的哈希是 `sha1(盐|id|**day**|text)`，而 `day` 来自记账时的
+        #   当天日期 ⇒ 同一条记忆**今天走 soften、明天可能走 timeshift**，
+        #   E2 的样例就会隔天换一个样子（第199轮连跑两次全量抓到：一次「几个面包」、
+        #   一次「3个面包」）。这不是产品缺陷，是**夹具让判据跟着日历漂**。
+        #   钉成固定时刻后，day/tod 都固定，样例永久可复现。
+        mem.add_fragment(t, who='user', now=FIXED_TS)
     mem.remember_key('level_up', KEY_TEXT)
     # ★ 第二条 key 故意用**不在** PROTECTED_KINDS 里的 kind：
     #   第一条（level_up）同时有 is_key 与 PROTECTED_KINDS 两道门，
@@ -247,7 +279,7 @@ def _run(mem):
         clean = bool(line0) and all(u'好像' not in ln for ln in line0) \
             and all(u'说过「' in ln for ln in line0)
         check('E1 RATE=0 ⇒ 逐字回到旧格式（无"好像"、仍是「说过」句）', clean,
-              '样例=%s' % (line0[:1],))
+              '样例=%s' % ([_disp(x) for x in sorted(line0)],))
     finally:
         mem.MISFIRE_RATE = old_rate
 
@@ -257,7 +289,7 @@ def _run(mem):
         line1 = [ln for ln in out1.splitlines() if ln.startswith(u'·')]
         check('E2 RATE=1 ⇒ 普通片段必定带"好像"（走样真的落到了输出上）',
               bool(line1) and any(u'好像' in ln for ln in line1),
-              '样例=%s' % (line1[:1],))
+              '样例=%s' % ([_disp(x) for x in sorted(line1)],))
 
         seen = []
         for cue in (u'升级', u'钥匙'):
@@ -268,7 +300,8 @@ def _run(mem):
         ok_verbatim = bool(seen) and all(u'好像' not in ln for ln in seen)
         check('E3 ★★★ RATE=1 下关键记忆仍逐字不变（"重要的事不会记偏"的落点）',
               ok_verbatim and len(got) == 2,
-              '行数=%d 逐字命中=%d 样例=%s' % (len(seen), len(got), seen[:1]))
+              '行数=%d 逐字命中=%d 样例=%s' % (len(seen), len(got),
+                                              [_disp(x) for x in sorted(seen)]))
     finally:
         mem.MISFIRE_RATE = old_rate
 
