@@ -28,6 +28,8 @@ def _pet_logger_name(_name):
 import time
 import json
 import os
+import re
+import hashlib
 import threading
 
 try:
@@ -68,6 +70,33 @@ class MemorySystem:
     RECALL_REINFORCE = 0.25        # 被想起一次，可回忆度提升的比例
     DEDUP_WINDOW = 2 * 3600.0      # 2 小时内重复出现的话 → 记"又说了一次"而不是新片段
     SAVE_THROTTLE = 2.0            # 自动落盘节流（秒），避免高频磁盘写
+
+    # ---- 第198轮：记错机制（用户口径「真的会记偏，但重要的事不会」）----
+    #   ★★★ 用**稳定哈希**而不是 random：同一件事每次都错成同一个样子（人也这样），
+    #     而且回归**可重放**——随机数会让判据没法复现，这是硬伤。
+    #   ★ 只作用于「非关键」的普通片段；`is_key` / `is_digest` / `PROTECTED_KINDS`
+    #     / `inner` 一律零扰动（"重要的事不会记偏"）。
+    MISFIRE_RATE = 0.30            # 约三成回忆会走样
+    MISFIRE_SALT = 'ralsei-misfire-1'
+    # 细节降级：只**删/改数量词**，绝不新增数字（否则就成了编造）
+    MISFIRE_NUM_RULES = (
+        (r'(\d{1,2})\s*[:：]\s*(\d{2})', ''),          # 15:30 → 去掉
+        (r'(\d{1,3}|[一二两三四五六七八九十]{1,3})\s*次', '好几次'),
+        (r'(\d{1,3}|[一二两三四五六七八九十]{1,3})\s*个', '几个'),
+        (r'(\d{1,3}|[一二两三四五六七八九十]{1,3})\s*天', '好几天'),
+    )
+    # 时间漂移：往后推一档，只是"记不准"，不是编事实
+    #   第三位 = 换完之后还保不保留"的<早上/晚上>"——
+    #   "前几天晚上"通顺，"早些时候的晚上"不通顺（实测抓到的）。
+    MISFIRE_TIME_RULES = (
+        (u'今天', u'昨天', True),
+        (u'昨天', u'前几天', True),
+        (u'前天', u'前几天', True),
+        (u'刚才', u'早些时候', False),
+        (u'刚刚', u'早些时候', False),
+        (u'今晚', u'前几天晚上', False),
+        (u'今早', u'前几天早上', False),
+    )
 
     # ---- 第十轮：关联图 / 检索管线 / 反馈与指标的参数 ----
     RECALL_BUDGET = dict(max_hops=3, max_nodes=64, max_edges_per_node=8,
@@ -1684,6 +1713,60 @@ class MemorySystem:
             it['match_kw'] = match_kw
         return it
 
+    # ------------------------------------------------------------ 记错（第198轮）
+    def misfire_mode(self, it):
+        """这条回忆要不要走样、怎么走样。返回 ``''`` / ``'soften'`` / ``'timeshift'``。
+
+        ★★★ 四类**永不**走样（用户口径「重要的事不会」）：
+          `is_key`（关键记忆）、`is_digest`（日摘要）、`PROTECTED_KINDS`、`inner`（内在活动，
+          它已经有自己的"好像"口径，再叠一层就假了）。
+        ★ 确定性来自 `sha1(salt|id|day|text)`：同一条记忆每次都得到同一个结果 ——
+          人也是这样（同一件事稳定地记错成同一个样子），且判据可重放。
+        """
+        try:
+            if not it:
+                return ''
+            if it.get('is_key') or it.get('is_digest'):
+                return ''
+            kind = str(it.get('kind') or '')
+            if kind == 'inner' or kind in self.PROTECTED_KINDS:
+                return ''
+            rate = float(getattr(self, 'MISFIRE_RATE', 0.0) or 0.0)
+            if rate <= 0.0:
+                return ''
+            seed = '%s|%s|%s|%s' % (getattr(self, 'MISFIRE_SALT', ''),
+                                    it.get('id'), it.get('day'), it.get('text'))
+            h = hashlib.sha1(seed.encode('utf-8', 'ignore')).hexdigest()
+            if (int(h[:8], 16) / 4294967296.0) >= rate:
+                return ''
+            return ('soften', 'timeshift')[int(h[8:12], 16) % 2]
+        except Exception:
+            return ''
+
+    def _misfire_soften(self, body):
+        """细节降级：抹掉时刻、数量词变模糊。**只减不增**（新增数字就是编造）。"""
+        out = str(body or '')
+        for pat, rep in self.MISFIRE_NUM_RULES:
+            try:
+                out = re.sub(pat, rep, out)
+            except Exception:
+                continue
+        return out.strip()
+
+    def _misfire_shift(self, when, tod):
+        """时间漂移：把"今天/昨天/刚才"往后推一档。只动时间词，不动内容。
+
+        ★ 是否保留"的<早上/晚上>"由规则表第三位决定 —— 否则会拼出
+          "早些时候的晚上"这种不通顺的话（实测抓到）。
+        """
+        w = str(when or '')
+        t = str(tod or '')
+        for a, b, keep_tod in self.MISFIRE_TIME_RULES:
+            if a in w:
+                w2 = w.replace(a, b)
+                return (w2 + (u'的' + t if (keep_tod and t) else '')).strip()
+        return (w + (u'的' + t if t else '')).strip()
+
     def recall_text(self, cue, limit=3):
         """给模型看的"想起片段"中文块（本模块影响对话的出口之一）。
 
@@ -1727,7 +1810,17 @@ class MemorySystem:
             elif it.get('is_digest'):
                 lines.append("· %s 的印象：%s" % (stamp or '那天', body))
             else:
-                lines.append("· %s，%s说过「%s」%s" % (stamp or '以前', who, body, hint))
+                # ★★★ 第198轮：普通片段允许"记偏"（用户口径「真的会记偏」）。
+                #   走样时加"好像"，并且**只用两类变换**：细节降级 / 时间漂移。
+                #   ★ 不做"把两件事混成一件"——那会改归属，容易变成编造。
+                mode = self.misfire_mode(it)
+                if mode:
+                    _stamp = self._misfire_shift(when, tod) if mode == 'timeshift' else stamp
+                    _body = self._misfire_soften(body) if mode == 'soften' else body
+                    lines.append(u"· %s，%s好像说过「%s」%s"
+                                 % (_stamp or '以前', who, _body, hint))
+                else:
+                    lines.append("· %s，%s说过「%s」%s" % (stamp or '以前', who, body, hint))
         return "\n".join(lines)
 
     def reconstruct_scene(self, cue, limit=6):
