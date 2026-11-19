@@ -155,9 +155,12 @@ CHARS = MAN.get('characters') or {}
 NO_ART = list(MAN.get('no_art') or [])
 NOT_A_PERSON = list(MAN.get('not_a_person') or [])
 
-check(u'A1 清单是第191轮的产物（schema/round 对得上）',
-      MAN.get('schema_version') == 1 and MAN.get('round') == 191,
+check(u'A1 清单是本工具链的产物（schema 对得上，round 不低于 191）',
+      MAN.get('schema_version') == 1 and int(MAN.get('round') or 0) >= 191,
       u'schema=%r round=%r' % (MAN.get('schema_version'), MAN.get('round')))
+# ★ 第200轮把 `round` 从 191 改成 200：**schema 没动**（v1 原样），只是同一个清单
+#   又加了 54 个外来角色。原判据写死 `== 191`，会把"合法的扩充"判成红。
+#   ⇒ 换成"不低于 191"：既保留"必须是这条链的产物"，又不再把版本号当契约。
 
 check(u'A2 角色数只增不减（历史段冻结口径，不写死随轮次增长的数）',
       len(CHARS) >= 18, u'%d 人' % len(CHARS))
