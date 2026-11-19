@@ -115,7 +115,7 @@ SCENE_ASPECT = 4.0 / 3.0
 #:    减半 ⇒ `main.py` 的 `_cached_scale_factor = camera.scale × pet_scale` 跟着
 #:    减半 ⇒ **宠物同步变小**；`ui_scale()` 由 `pet_scale` 派生（与 scale 无关）
 #:    ⇒ UI 不受影响（第108轮口径：UI 倍率只跟 pet_scale 挂钩）。
-SCENE_FIT_FRACTION = 0.5
+SCENE_FIT_FRACTION = 1.0 / 3.0   # ★★★ 第200轮（2026-11-19 用户）：「你这个大小过于大了，缩到现在的 2/3 才合适些，场景大小也是要符合人物缩放比例的」⇒ 0.5 × 2/3 = 1/3。改这一个常量，场景与人物**同倍率**缩（scale = out_w/320 ⇒ _cached_scale_factor 跟着缩，见 fit_camera_to_screen）
 
 
 def fit_fraction(view_w, view_h, ratio=SCENE_ASPECT, fraction=SCENE_FIT_FRACTION):
