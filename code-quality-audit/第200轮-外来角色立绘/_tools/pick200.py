@@ -188,7 +188,14 @@ NO_ART = {
     'ut_frisk': '仓库只有 `spr_f_mainchar*`（女性版主角），无中性版；用哪个是替角色定性别',
     'ut_monster_kid': '仓库没有 UT 的怪物小孩；`deltarune/ch4/spr_mkid_*` 是 DT 版，不是同一作品',
     'hy_bowll': '只有 `spr_bowll_body_normal_0`（一个没有眼睛的碗身），画出来是个碗',
-    'knight': '原始库有 `spr_roaringknight_*`（咆哮骑士），是否即此 `knight` 需人眼确认，本轮不收',
+    # ★★★ 用户 2026-11-19 裁定：「三角符文里**不用出现 knight**，他是目前没有定性的
+    #   反派（至少目前给的设定是这样）」。⇒ 这条不是"缺素材"，是**刻意不出现**：
+    #   `_placement.json` 里 scene=None / pos=[0,0]（第44轮起就没给他编站位）、
+    #   不在 `desktop.allowed`（只有主角团 + Lancer）、本轮也不登记立绘。
+    #   **不要**因为盘上翻到 `spr_roaringknight_*` 就"顺手补上" —— 那是替原作定性。
+    'knight': '设定层面**刻意不出现**（用户 2026-11-19：目前没有定性的反派）。'
+              '三重不出现：无站位（`_placement.json` 的 unplaced）、不在桌面名单、无立绘。'
+              '盘上那些 `spr_roaringknight_*` 是**战斗形态**，不该拿来当常驻立绘',
     'os_the_world_machine': '素材库里搜不到（可能原作就以场景/文字形态出现）',
     'os_the_author': '素材库里搜不到',
 }

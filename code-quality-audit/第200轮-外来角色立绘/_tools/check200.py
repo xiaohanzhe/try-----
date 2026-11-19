@@ -207,6 +207,27 @@ check('D4 负控制：它**不是** `spr_f_maincharad_0.png`（黄发紫条纹�
       os.path.isfile(_src_fem) and sha_file(_chara_p) != sha_file(_src_fem),
       '与女性版不同=%s' % (sha_file(_chara_p) != sha_file(_src_fem)))
 
+# ---- D5/D6：`knight` 是**设定层面**不该出现，不是"缺素材" ----
+# ★★★ 用户 2026-11-19：「三角符文里**不用出现 knight**，他是目前没有定性的反派」。
+#    这两条钉的是"以后别顺手补上"：盘上真有 `spr_roaringknight_*`，
+#    下一个人（或下一轮的我）翻到就很容易觉得"这不是有素材吗"。
+_kn_reason = REASON.get('knight') or u''
+check('D5 ★ `knight` 不登记立绘，且理由是"设定上不出现"（不是"缺素材"）',
+      'knight' not in CHARS and 'knight' in NO_ART
+      and (u'不出现' in _kn_reason or u'未定性' in _kn_reason),
+      'in_chars=%s in_no_art=%s 理由命中=%s'
+      % ('knight' in CHARS, 'knight' in NO_ART,
+         (u'不出现' in _kn_reason or u'未定性' in _kn_reason)))
+
+_pl_path = os.path.join(ROOT, 'ralsei_pet', 'assets', 'npc', '_placement.json')
+_pl = json.loads(rd(_pl_path).decode('utf-8'))
+_kn_scene = [p for p in (_pl.get('placement') or [])
+             if p.get('id') == 'knight' and p.get('scene')]
+_kn_desk = 'knight' in ((_pl.get('desktop') or {}).get('allowed') or [])
+check('D6 ★ `knight` 也没有任何场景站位、不在桌面名单（三重不出现）',
+      not _kn_scene and not _kn_desk,
+      '有场景=%d 在桌面名单=%s' % (len(_kn_scene), _kn_desk))
+
 # ================================================================ E OneShot 行序
 def _cell(fn, cw, ch, r, c):
     from PIL import Image
@@ -282,7 +303,7 @@ _trivial = [c for c in _calls
 check('G2 无恒真判据（第二实参不许是字面量 True）',
       not _trivial, 'check()=%d 恒真=%d' % (len(_calls), len(_trivial)))
 
-check('G3 判据条数经 check() 记账（加判据时同步改这里）', len(_calls) == 29,
+check('G3 判据条数经 check() 记账（加判据时同步改这里）', len(_calls) == 31,
       'check()=%d' % len(_calls))
 
 print('\n' + '=' * 70)
