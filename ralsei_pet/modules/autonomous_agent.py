@@ -123,6 +123,13 @@ class AutonomousTask:
 
 
 # 默认各阶段时长（秒）
+
+#: ★★★ 第200轮（2026-11-19 用户）：「别让他开文件，开文件这条被废除了」+「ok，全封」
+#: ⇒ 自主桌面代理**整体停用**：不选目标、不走过去、不开文件/文件夹、
+#:   不挪文件、不删文件、不关窗口，也不再说 `ACTION_DIALOGUES` 里那些
+#:   `{name}` 模板（那正是"念真实桌面文件名"的来源）。
+#: 想恢复：把这里改回 True（能力层 `desktop_interaction` 还有第二道闸）。
+DESKTOP_FILE_OPS_ENABLED = False
 DEFAULT_FACING_DURATION = 0.6
 DEFAULT_ACTING_DURATION = 1.5
 DEFAULT_REACTING_DURATION = 1.2
@@ -356,6 +363,9 @@ class AutonomousAgent:
         return any(flags.values())
 
     def _maybe_decide(self, now: float):
+        # ★★★ 第200轮：全封（见模块顶部 DESKTOP_FILE_OPS_ENABLED）
+        if not DESKTOP_FILE_OPS_ENABLED:
+            return
         if self._has_conflict():
             return
         if now - self._last_decision_time < self._decision_interval:

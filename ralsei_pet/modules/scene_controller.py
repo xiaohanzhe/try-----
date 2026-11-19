@@ -405,7 +405,7 @@ class SceneController(object):
     #         "房间没变大、只是能看更多房间"；只抬 scale 不抬 size，画布不铺开。
     # -----------------------------------------------------------------
 
-    def fit_camera_to_screen(self, screen_size, pet_scale=None):
+    def fit_camera_to_screen(self, screen_size, pet_scale=None, desktop=False):
         """把相机输出设为屏幕内**4:3 内接矩形 × `SCENE_FIT_FRACTION`**（场景全屏化核心）。
 
         ★★★ 第110轮：**不再是"最大"内接矩形**了。用户看过第107轮的成品后说
@@ -469,9 +469,17 @@ class SceneController(object):
             if not fit:
                 return None
             out_w, out_h, ox, oy = fit
+            # ★★★ 第200轮 B′（用户「门不在屏幕边缘」+「ok，全封」）：
+            #   `scale` 仍取"2/3 口径"算出来的值（**人物像素大小不变**），
+            #   但桌面场景的**视口铺满整屏** ⇒ 可见逻辑范围 = 屏/scale
+            #   （2560/2.222=1152 × 1600/2.222=720）=「整张桌面＝地面」，
+            #   于是"房间四边"与"屏幕四边"重合，门钉在房间四边就落在屏幕上。
+            #   ⚠️ 顺序不能倒：必须先由小视口算出 scale，再放大视口。
+            new_scale = out_w / scoped_w
+            if desktop:
+                out_w, out_h, ox, oy = int(sw), int(sh), 0, 0
             cam.set_size((out_w, out_h))
             # ★ 必须同帧写 scale：它决定"每逻辑单位占多少输出像素"（= 放大）。
-            new_scale = out_w / scoped_w
             cam.set_scale(new_scale)
             pet.scene_scale = cam.scale       # 回写宿主（自省/日志用；单一真源仍是相机）
             # ★ 偏移也回写宿主：画布每帧要读它（`_update_scene_layer`）。

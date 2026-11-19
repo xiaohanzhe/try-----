@@ -1914,7 +1914,8 @@ class RalseiPet(QMainWindow):
         # ⚠️ 幂等 + 永不抛：失败就保持 640×480（第44轮口径），桌宠照常跑。
         try:
             self.scene.fit_camera_to_screen(self._primary_screen_size(),
-                                            pet_scale=self.pet_scale)
+                                            pet_scale=self.pet_scale,
+                                            desktop=self._scene_is_desktop_scene())
         except Exception as _e:
             _log.warning('全屏化接线失败（保持 640×480）: %s', _e)
         # ★★ 第107轮：相机就位后**才**能算宠物渲染倍率（= 场景 scale × 相对倍率）
@@ -9779,6 +9780,11 @@ class RalseiPet(QMainWindow):
                 # 房间未知 → 退化为"一屏一房间"（相机不动，画面照常出）
                 sz = cam.scoped_size()
                 room_rect = (0.0, 0.0, float(sz[0]), float(sz[1]))
+            # ★★★ 第200轮 B′：桌面场景的四扇门钉在**屏幕四边**。
+            #   放在 `camera_follow` 之前：门的矩形与相机是同一套坐标，
+            #   先钉位再跟随，这一帧就是对的（下一帧重复算，结果相同 ⇒ 幂等）。
+            if self._scene_is_desktop_scene():
+                self._pin_desktop_doors(state, room_rect, canvas)
             scene.camera_follow(room_rect, self._camera_target_rect(room_rect))
 
             # 2) 出指令（sprite_size 让剔除用真实素材尺寸 —— 见 SceneAssetCache）
@@ -10040,6 +10046,75 @@ class RalseiPet(QMainWindow):
             except Exception:
                 _log.exception('场景过渡回调抛异常（已忽略）')
 
+    #: ★★★ 第200轮 B′：桌面四扇门**钉在屏幕哪条边**（表驱动，改这里即可）。
+    #: 值为 `(边, 边距比例)`；边距按**房间**尺寸取比例，避免不同分辨率下贴太死。
+    #: 四扇门本来就是手工加的入口（`authored: true`），不是原作门数据。
+    _DESKTOP_DOOR_EDGE = {
+        'desk_door_oneshot': ('top', 0.055),
+        'desk_door_niko_home': ('bottom', 0.055),
+        'desk_door_ut': ('left', 0.045),
+        'desk_door_deltarune': ('right', 0.045),
+    }
+
+    def _pin_desktop_doors(self, state, room_rect, canvas):
+        """把桌面四扇门的 `pos` 重算到房间（= 屏幕）四边。
+
+        ★ 为什么改 `pos` 而不是另建一层"屏幕空间绘制"：`pos` 是渲染/遮挡/交互
+          共用的**唯一**坐标源；另建一层就会出现两套坐标，是本项目最贵的坑
+          （"两处各写一份真源"）。改 `pos` 后，渐显、遮挡、点门进入全都自动跟上。
+
+        ★ 幂等：结果只由 `(room_rect, 精灵尺寸, 表)` 决定，与上一帧无关。
+        ★ 永不抛：显示效果的小改动**绝不允许**让整帧渲染失败。
+        """
+        try:
+            objs = getattr(state, 'objects', None) or []
+            if not objs:
+                return
+            cam = self.__dict__.get('_scene_camera')
+            s = float(getattr(cam, 'scale', 1.0) or 1.0)
+            if s <= 0:
+                s = 1.0
+            rw = float(room_rect[2])
+            rh = float(room_rect[3])
+            for o in objs:
+                spec = self._DESKTOP_DOOR_EDGE.get(o.get('id'))
+                if not spec:
+                    continue
+                edge, frac = spec
+                nm = o.get('sprite') or o.get('image')
+                sz = None
+                try:
+                    if isinstance(nm, str):
+                        sz = canvas.assets.sprite_size(nm)
+                except Exception:
+                    sz = None
+                w = (float(sz[0]) / s) if sz else 32.0
+                h = (float(sz[1]) / s) if sz else 56.0
+                mx = frac * rw
+                my = frac * rh
+                if edge == 'top':
+                    x, y = (rw - w) / 2.0, my
+                elif edge == 'bottom':
+                    x, y = (rw - w) / 2.0, rh - h - my
+                elif edge == 'left':
+                    x, y = mx, (rh - h) / 2.0
+                else:
+                    x, y = rw - w - mx, (rh - h) / 2.0
+                # ★ 越界钳制：精灵尺寸若被读成异常大（素材表/切格参数不同），
+                #   `x`/`y` 会算成负数 ⇒ 门凭空消失、看起来像"门没了"。
+                #   宁可就近吸附，也不要让它跑到房间外。
+                x = min(max(0.0, x), max(0.0, rw - w))
+                y = min(max(0.0, y), max(0.0, rh - h))
+                o['pos'] = [round(x, 2), round(y, 2)]
+                if not self.__dict__.get('_door_pin_logged'):
+                    self._door_pin_logged = True
+                    _log.info('桌面门钉位：房间 %.0fx%.0f scale=%.3f ｜ %s -> pos=(%.1f,%.1f) '
+                              '尺寸=%.1fx%.1f 屏幕=%d,%d',
+                              rw, rh, s, edge, x, y, w, h,
+                              int(round(x * s)), int(round(y * s)))
+        except Exception as e:
+            _log.debug("桌面门钉位失败（已忽略）: %s", e)
+
     def _scene_is_desktop_scene(self):
         """★ 第112轮 #47：当前场景是不是**桌面**（门渐显只在桌面适用）。
 
@@ -10250,7 +10325,8 @@ class RalseiPet(QMainWindow):
         try:
             fit = getattr(self.scene, 'fit_camera_to_screen', None)
             if callable(fit):
-                fit(self._primary_screen_size(), pet_scale=self.pet_scale)
+                fit(self._primary_screen_size(), pet_scale=self.pet_scale,
+                    desktop=self._scene_is_desktop_scene())
         except Exception as e:
             _log.debug("main 防御性异常（已忽略）: %s", e)
         self._refresh_pet_render_scale()

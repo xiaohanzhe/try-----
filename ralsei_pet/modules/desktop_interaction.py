@@ -26,6 +26,14 @@ def _pet_logger_name(_name):
     return 'ralsei_pet.' + _name
 
 import os
+#: ★★★ 第200轮（2026-11-19 用户）：「别让他开文件，开文件这条被废除了」
+#: +「ok，全封」⇒ 开文件 / 开文件夹 / 双击文件 / 挪文件 / 删文件 / 关窗口
+#:   **一律拒绝**。
+#: 为什么放在能力层而不是调用方：调用方至少 4 处（`main.open_file`、
+#:   `autonomous_agent._execute_action`、`spell_controller` 的包装、
+#:   `pet_ai` 的观察）—— 逐个改必漏，这里是唯一汇合点。
+#: ⚠️ 本模块的 `open_browser` **不在此列**（那是开网址，不是开文件）。
+DESKTOP_FILE_OPS_ENABLED = False
 import ctypes
 import platform
 import shutil
@@ -1108,6 +1116,10 @@ class DesktopInteraction:
         return files
         
     def open_file(self, file_path):
+        # ★★★ 第200轮：用户废除「开文件」后全封（见模块顶部 DESKTOP_FILE_OPS_ENABLED）
+        if not DESKTOP_FILE_OPS_ENABLED:
+            log.info("「打开文件」已废除（第200轮），拒绝执行")
+            return False
         # 打开文件，模拟真实用户操作
         try:
             log.debug("正在打开文件: %s", file_path)
@@ -1122,6 +1134,10 @@ class DesktopInteraction:
             return False
 
     def open_folder(self, folder_path):
+        # ★★★ 第200轮：用户废除「开文件」后全封（见模块顶部 DESKTOP_FILE_OPS_ENABLED）
+        if not DESKTOP_FILE_OPS_ENABLED:
+            log.info("「打开文件夹」已废除（第200轮），拒绝执行")
+            return False
         # 打开文件夹，模拟真实用户操作
         try:
             log.debug("正在打开文件夹: %s", folder_path)
@@ -1136,6 +1152,10 @@ class DesktopInteraction:
             return False
 
     def close_window(self, window_title):
+        # ★★★ 第200轮：用户废除「开文件」后全封（见模块顶部 DESKTOP_FILE_OPS_ENABLED）
+        if not DESKTOP_FILE_OPS_ENABLED:
+            log.info("「关闭窗口」已废除（第200轮），拒绝执行")
+            return False
         # 关闭窗口，模拟真实用户操作
         try:
             log.debug("正在关闭窗口: %s", window_title)
@@ -1498,6 +1518,10 @@ class DesktopInteraction:
         return self.user_opened_privacy_apps.copy()
         
     def drag_file(self, file_path, target_pos):
+        # ★★★ 第200轮：用户废除「开文件」后全封（见模块顶部 DESKTOP_FILE_OPS_ENABLED）
+        if not DESKTOP_FILE_OPS_ENABLED:
+            log.info("「拖动文件」已废除（第200轮），拒绝执行")
+            return False
         # 拖拽文件到指定位置，模拟真实拖拽操作
         try:
             log.debug(f"正在拖拽文件: {file_path} 到位置: {target_pos}")
@@ -1602,6 +1626,10 @@ class DesktopInteraction:
         return True
     
     def delete_file(self, file_path, confirm=True, send_to_recycle=True, show_animation=True):
+        # ★★★ 第200轮：用户废除「开文件」后全封（见模块顶部 DESKTOP_FILE_OPS_ENABLED）
+        if not DESKTOP_FILE_OPS_ENABLED:
+            log.info("「删除文件」已废除（第200轮），拒绝执行")
+            return False
         # 删除文件，模拟真实用户操作，支持回收站和动画效果
         try:
             log.debug("正在删除文件: %s", file_path)
@@ -1667,6 +1695,10 @@ class DesktopInteraction:
     # ------------------------------------------------------------------
 
     def close_window_by_hwnd(self, hwnd):
+        # ★★★ 第200轮：用户废除「开文件」后全封（见模块顶部 DESKTOP_FILE_OPS_ENABLED）
+        if not DESKTOP_FILE_OPS_ENABLED:
+            log.info("「关闭窗口(按句柄)」已废除（第200轮），拒绝执行")
+            return False
         """按窗口句柄关闭窗口。"""
         try:
             win32gui.PostMessage(hwnd, win32con.WM_CLOSE, 0, 0)
@@ -1721,6 +1753,10 @@ class DesktopInteraction:
         return (0, 0)
 
     def drag_file_background(self, file_path, target_pos):
+        # ★★★ 第200轮：用户废除「开文件」后全封（见模块顶部 DESKTOP_FILE_OPS_ENABLED）
+        if not DESKTOP_FILE_OPS_ENABLED:
+            log.info("「后台拖动文件」已废除（第200轮），拒绝执行")
+            return False
         """后台"拖拽"文件。安全实现：不真实移动用户文件（移到屏幕坐标没有
         目录语义，真实移动会打乱用户文件布局），返回 False 表示未执行。"""
         log.debug("跳过真实拖拽文件（安全限制）: %s", file_path)
@@ -1969,6 +2005,10 @@ class DesktopInteraction:
             return False
     
     def double_click_file(self, file_path):
+        # ★★★ 第200轮：用户废除「开文件」后全封（见模块顶部 DESKTOP_FILE_OPS_ENABLED）
+        if not DESKTOP_FILE_OPS_ENABLED:
+            log.info("「双击文件」已废除（第200轮），拒绝执行")
+            return False
         # 双击打开文件，模拟真实用户双击操作
         try:
             log.debug("正在双击打开文件: %s", file_path)
