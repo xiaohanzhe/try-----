@@ -145,7 +145,9 @@ MAP = {
         'green_npc_cedric.png', 24, 32, R4, 4)),
     'os_george': dict(work='os', kind='walk', grid=(
         'red_npc_george1.png', 24, 32, R4, 4)),
-    # ★ kelvin 的 112x80 格里只有第 0 行有内容
+    # ★ kelvin 的 112x80 格里只有第 0 行有内容。
+    # ★★ 尺寸是别人的 3 倍多，**但原作就是那么大** —— 用户 2026-11-19 确认：
+    #    「那个的确是那么大」。⇒ **不要**按"跟别人一样大"去缩它，那是改原作。
     'os_kelvin': dict(work='os', kind='stand', grid=(
         'contacts_kelvin.png', 112, 80, {'down': 0}, 4)),
     'os_kip': dict(work='os', kind='walk', grid=('red_kip.png', 30, 50, R4, 4)),
