@@ -9741,6 +9741,37 @@ class RalseiPet(QMainWindow):
         宠物每移动一像素画面就该相对移动一像素（原作 30fps 硬跟随，
         见 scene_camera 的零缓动说明）。只在换场景时算 = 画面永远静止。
         """
+        # ★★★ 第200轮：**首帧自省**（诊断"场景层到底卡在哪个闸门"）。
+        #   只观测、不改行为；打一次就置位，不进每帧热路径。
+        #   用户实测「门和本体都不显示、只有对话框」⇒ 先分清是"没进渲染"
+        #   还是"画了但看不见"，否则改门的位置等于盲改。
+        self._scene_layer_frames = int(self.__dict__.get('_scene_layer_frames', 0)) + 1
+        if self._scene_layer_frames in (1, 30, 120):
+            try:
+                _c = getattr(self, 'scene_canvas', None)
+                _s = getattr(self, 'scene', None)
+                _cam = self.__dict__.get('_scene_camera')
+                _st = self.__dict__.get('_scene_state')
+                _probe = {
+                    'enabled': getattr(self, 'SCENE_LAYER_ENABLED', False),
+                    'canvas_cls': type(_c).__name__ if _c is not None else None,
+                    'scene_ctrl': type(_s).__name__ if _s is not None else None,
+                    'cam_scale': (round(float(getattr(_cam, 'scale', 0.0)), 3)
+                                  if _cam is not None else None),
+                    'state_cls': type(_st).__name__ if _st is not None else None,
+                    'scene_id': getattr(_st, 'scene_id', None) if _st is not None else None,
+                    'objects': (len(getattr(_st, 'objects', None) or [])
+                                if _st is not None else -1),
+                    'canvas_visible': (bool(_c.isVisible())
+                                       if _c is not None and hasattr(_c, 'isVisible') else None),
+                    'canvas_geom': (list(_c.geometry().getRect())
+                                    if _c is not None and hasattr(_c, 'geometry') else None),
+                    'cur_scene_state': bool(getattr(self, 'current_scene_state', None)),
+                }
+                _log.info('场景层自省（第%d帧）：%s', self._scene_layer_frames, _probe)
+            except Exception as _e:
+                _log.info('场景层自省失败（已忽略）：%s', _e)
+
         if not getattr(self, 'SCENE_LAYER_ENABLED', False):
             return
         try:
@@ -9784,6 +9815,14 @@ class RalseiPet(QMainWindow):
             #   放在 `camera_follow` 之前：门的矩形与相机是同一套坐标，
             #   先钉位再跟随，这一帧就是对的（下一帧重复算，结果相同 ⇒ 幂等）。
             if self._scene_is_desktop_scene():
+                # ★★★ 第200轮 B′ 修正（自省日志抓到的真问题）：
+                #   `cam.scoped_size()` 是**固定锁死 320×240** 的（见 scene_camera
+                #   的「scoped_w/h 恒锁 320×240」），**不是** `size/scale`。
+                #   照它算，桌面房间只有屏幕左上角 711×533 那一小块，
+                #   门再怎么钉也到不了屏幕边。
+                #   ⇒ 桌面场景的房间直接按 **视口像素 / scale** 算：
+                #     2560/2.222=1152、1600/2.222=720 ⇒「整张桌面＝地面」，
+                #     房间四边 == 屏幕四边。
                 self._pin_desktop_doors(state, room_rect, canvas)
             scene.camera_follow(room_rect, self._camera_target_rect(room_rect))
 
@@ -9910,6 +9949,17 @@ class RalseiPet(QMainWindow):
             self._update_bubble_overlay(front, view)
 
             # 4) 有 bg / 物件 才显示画布；纯占位/空 → 隐藏（保持桌面原样）
+            if self._scene_layer_frames in (1, 30, 120):
+                try:
+                    _kinds = sorted({str(it.get('kind')) for it in (behind or [])})
+                    _objs = [it for it in (behind or []) if it.get('kind') == 'obj']
+                    _log.info('场景层指令（第%d帧）：view=%s behind=%d kinds=%s '
+                              'obj数=%d 前3个rect=%s',
+                              self._scene_layer_frames, tuple(view), len(behind or []),
+                              _kinds, len(_objs),
+                              [tuple(it.get('rect')) for it in _objs[:3]])
+                except Exception as _e:
+                    _log.info('指令自省失败：%s', _e)
             if behind and any(it.get('kind') in ('bg', 'obj') for it in behind):
                 self._show_scene_layer()
             else:
