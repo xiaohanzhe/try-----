@@ -9879,21 +9879,30 @@ class RalseiPet(QMainWindow):
             plan = scene.plan_frame(sprite_size=canvas.assets.sprite_size,
                                     tick=int(time.time() * 1000),
                                     bubbles=self._active_bubbles(room_rect))
+            sw, sh = self._primary_screen_size()
+            if self._scene_is_desktop_scene():
+                self._rewrite_desktop_door_rects(plan, sw, sh, state)
             # 3) 交给画布（画布自己 resize + update）。
             #    ★★ 第107轮：画布 = **整屏固定**（用户口径「不是跟随移动的窗口，
             #       是像原作全屏后的效果」）。画面（4:3 内接矩形）由
             #       `fit_camera_to_screen` 算好，`view` 仍是**画面**尺寸
             #       （绘制指令的坐标空间），画布则铺满整屏、把画面**居中偏移**。
             view = scene.plan_viewport()
+            if self._scene_is_desktop_scene():
+                # ★ 第201轮：桌面场景画布坐标空间 = 整块主屏（不是相机画面尺寸），
+                #   偏移 (0,0) —— 这样改写成屏幕坐标的门才能落在屏幕四边。
+                view = (int(sw), int(sh))
             # ★ 画布尺寸 = 主屏物理尺寸（不随相机走）。
             #   ⚠️ 第110轮：这一次 resize 会被后面的 `set_plan` 覆盖（它按 `view`
             #     重设尺寸）⇒ **真正的整屏尺寸在 `set_plan` 之后**再铺一次
             #     （见下方"顺序修正"）。这里保留是为了"本帧若中途异常、
             #     至少画布尺寸是对的"，不是最终赋值点。
-            sw, sh = self._primary_screen_size()
             canvas.resize(int(sw), int(sh))
             # ★ 画面在画布内的居中偏移（`fit_camera_to_screen` 写进宿主）。
-            _off = self.__dict__.get('_scene_output_offset') or (0, 0)
+            if self._scene_is_desktop_scene():
+                _off = (0, 0)
+            else:
+                _off = self.__dict__.get('_scene_output_offset') or (0, 0)
             canvas.set_output_offset(_off[0], _off[1])
             # ★★ 桌面场景**不**铺黑（它的背景就是壁纸）；其余场景一律不透明
             #   ⇒ 完全盖住桌面壁纸 / 图标 / 任务栏（用户第107轮口径）。
@@ -10100,70 +10109,85 @@ class RalseiPet(QMainWindow):
     #: 值为 `(边, 边距比例)`；边距按**房间**尺寸取比例，避免不同分辨率下贴太死。
     #: 四扇门本来就是手工加的入口（`authored: true`），不是原作门数据。
     _DESKTOP_DOOR_EDGE = {
-        'desk_door_oneshot': ('top', 0.055),
-        'desk_door_niko_home': ('bottom', 0.055),
-        'desk_door_ut': ('left', 0.045),
-        'desk_door_deltarune': ('right', 0.045),
+        'desk_door_oneshot': 'top',
+        'desk_door_niko_home': 'bottom',
+        'desk_door_ut': 'left',
+        'desk_door_deltarune': 'right',
     }
 
     def _pin_desktop_doors(self, state, room_rect, canvas):
-        """把桌面四扇门的 `pos` 重算到房间（= 屏幕）四边。
+        """登记桌面四扇门属于屏幕哪条边（★ 第201轮：不再参与房间坐标换算）。
 
-        ★ 为什么改 `pos` 而不是另建一层"屏幕空间绘制"：`pos` 是渲染/遮挡/交互
-          共用的**唯一**坐标源；另建一层就会出现两套坐标，是本项目最贵的坑
-          （"两处各写一份真源"）。改 `pos` 后，渐显、遮挡、点门进入全都自动跟上。
+        ★ 为什么不再换算 `pos`：第200轮旧实现把门 `pos` 重算到房间四边，但桌面房间
+          是 320×240 逻辑、取景框 711×533，门只能到「框边」到不了「屏幕边」。
+          第201轮改法：`pos` 保持 JSON 原始值不动，真正贴屏幕边的动作放在
+          `_update_scene_layer` 里 —— 拿到 `plan` 后把 4 扇门的 `rect` 就地改写成
+          屏幕坐标（见 `_rewrite_desktop_door_rects`）。
 
-        ★ 幂等：结果只由 `(room_rect, 精灵尺寸, 表)` 决定，与上一帧无关。
-        ★ 永不抛：显示效果的小改动**绝不允许**让整帧渲染失败。
+        ★ 本函数现在只登记「哪扇门属于哪条边」（表驱动，改 `_DESKTOP_DOOR_EDGE`
+          即可），结果存 `self._desktop_door_edges` 供同帧改写用。
+        ★ `room_rect` / `canvas` 参数现在不再使用（保留签名，调用点 L9826 不动）。
+        ★ 幂等：结果只由 `_DESKTOP_DOOR_EDGE` 决定，与上一帧无关。★ 永不抛。
         """
         try:
+            edges = {}
             objs = getattr(state, 'objects', None) or []
-            if not objs:
-                return
-            cam = self.__dict__.get('_scene_camera')
-            s = float(getattr(cam, 'scale', 1.0) or 1.0)
-            if s <= 0:
-                s = 1.0
-            rw = float(room_rect[2])
-            rh = float(room_rect[3])
             for o in objs:
-                spec = self._DESKTOP_DOOR_EDGE.get(o.get('id'))
-                if not spec:
+                if not isinstance(o, dict):
                     continue
-                edge, frac = spec
-                nm = o.get('sprite') or o.get('image')
-                sz = None
-                try:
-                    if isinstance(nm, str):
-                        sz = canvas.assets.sprite_size(nm)
-                except Exception:
-                    sz = None
-                w = (float(sz[0]) / s) if sz else 32.0
-                h = (float(sz[1]) / s) if sz else 56.0
-                mx = frac * rw
-                my = frac * rh
-                if edge == 'top':
-                    x, y = (rw - w) / 2.0, my
-                elif edge == 'bottom':
-                    x, y = (rw - w) / 2.0, rh - h - my
-                elif edge == 'left':
-                    x, y = mx, (rh - h) / 2.0
-                else:
-                    x, y = rw - w - mx, (rh - h) / 2.0
-                # ★ 越界钳制：精灵尺寸若被读成异常大（素材表/切格参数不同），
-                #   `x`/`y` 会算成负数 ⇒ 门凭空消失、看起来像"门没了"。
-                #   宁可就近吸附，也不要让它跑到房间外。
-                x = min(max(0.0, x), max(0.0, rw - w))
-                y = min(max(0.0, y), max(0.0, rh - h))
-                o['pos'] = [round(x, 2), round(y, 2)]
-                if not self.__dict__.get('_door_pin_logged'):
-                    self._door_pin_logged = True
-                    _log.info('桌面门钉位：房间 %.0fx%.0f scale=%.3f ｜ %s -> pos=(%.1f,%.1f) '
-                              '尺寸=%.1fx%.1f 屏幕=%d,%d',
-                              rw, rh, s, edge, x, y, w, h,
-                              int(round(x * s)), int(round(y * s)))
+                oid = o.get('id')
+                if oid in self._DESKTOP_DOOR_EDGE:
+                    edges[oid] = self._DESKTOP_DOOR_EDGE[oid]
+            self._desktop_door_edges = edges
+            if edges and not self.__dict__.get('_door_pin_logged'):
+                self._door_pin_logged = True
+                _log.info('桌面门登记边：%s', edges)
         except Exception as e:
-            _log.debug("桌面门钉位失败（已忽略）: %s", e)
+            _log.debug("桌面门登记边失败（已忽略）: %s", e)
+
+    def _rewrite_desktop_door_rects(self, plan, sw, sh, state):
+        """★ 第201轮：桌面四扇门 `rect` 就地改成屏幕坐标（贴屏幕四边）。
+
+        为什么必须在 `plan_frame` **之后**改：`plan_frame` 内部用 `viewport_size`
+        （房间像素 711×533）做 `visible_in_view` 剔除，门只有先按房间坐标进 `plan`
+        才不会被删。所以「贴屏幕边」只能在拿到 `plan` 之后对 4 条门指令就地改写
+        `rect`（w/h 不变）。
+
+        ★ 匹配：桌面场景只有 4 个物件（= 4 扇门），`plan_frame` 按 `state.objects`
+          顺序产出 `kind=='obj'` 条目 ⇒ 两者同序 zip。
+        ★ 位置（任务书 §三.3）：上/下门水平居中、左/右门垂直居中，四边零边距。
+          w/h 保持 `sprite_size × scale` 不变（不缩放门）。
+        ★ 永不抛。
+        """
+        try:
+            edges = self.__dict__.get('_desktop_door_edges') or self._DESKTOP_DOOR_EDGE
+            objs = getattr(state, 'objects', None) or []
+            doors = [(o, edges.get(o.get('id'))) for o in objs
+                     if isinstance(o, dict) and o.get('id') in edges]
+            plan_objs = [it for it in (plan or [])
+                         if isinstance(it, dict) and it.get('kind') == 'obj']
+            if not doors or len(plan_objs) != len(doors):
+                _log.debug('桌面门改写跳过：doors=%d plan_obj=%d',
+                           len(doors), len(plan_objs))
+                return
+            for (_o, edge), it in zip(doors, plan_objs):
+                rect = it.get('rect')
+                if not (isinstance(rect, (list, tuple)) and len(rect) == 4):
+                    continue
+                w = float(rect[2])
+                h = float(rect[3])
+                if edge == 'top':
+                    x, y = (sw - w) / 2.0, 0.0
+                elif edge == 'bottom':
+                    x, y = (sw - w) / 2.0, sh - h
+                elif edge == 'left':
+                    x, y = 0.0, (sh - h) / 2.0
+                else:  # right
+                    x, y = sw - w, (sh - h) / 2.0
+                it['rect'] = (int(round(x)), int(round(y)),
+                              int(round(w)), int(round(h)))
+        except Exception as e:
+            _log.debug("桌面门改写失败（已忽略）: %s", e)
 
     def _scene_is_desktop_scene(self):
         """★ 第112轮 #47：当前场景是不是**桌面**（门渐显只在桌面适用）。

@@ -915,11 +915,12 @@ if _objs_rect and _px_bad_e3:
     print('        rects=%r' % (_objs_rect,))
 
 # E4 ★★ 全部门的 rect **全在视口内**
+#   ★ 第201轮：判据从「完全包含」改为与 visible_in_view 同口径的「不完全在外」——产品剔除只看左上角，门右下角贴边/超 1px 不会被剔除。
 #   ★★★ 第106轮改判据：视口尺寸**不再写死 640×480**（全屏化后是 680×510，
 #     且随屏幕而变）—— 从 `plan_viewport()` 的真实返回值取，只断言
 #     "门的 rect 全落在 [0, viewport] 内"（语义），不断言具体数字（事实）。
 _vw, _vh = (_res.get('viewport') or (0, 0))[:2]
-_in_ok = all(0 <= r[0] and 0 <= r[1] and r[0] + r[2] <= _vw and r[1] + r[3] <= _vh
+_in_ok = all(r[0] < _vw and r[1] < _vh and r[0] + r[2] > 0 and r[1] + r[3] > 0
              for _n, r in _objs_rect if len(r) == 4)
 check('E4 ★★ 真机：%d 扇门 rect **全在视口内**（%d×%d，不会被裁掉）'
       % (_N_DOORS, _vw, _vh),
