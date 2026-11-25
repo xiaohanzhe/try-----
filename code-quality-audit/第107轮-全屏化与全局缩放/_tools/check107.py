@@ -246,22 +246,22 @@ except Exception as _e:
 # =====================================================================
 sec(u'A11+ 第110轮：画面比例砍半（`SCENE_FIT_FRACTION`）')
 
-# A11 常量存在且 = 0.5（用户「到刚才的一半才好一些」）
+# A11 常量存在且 = 1/3（第200轮「缩到现在的 2/3 才合适」⇒ 0.5 × 2/3）
 _ff_frac = getattr(_SC, 'SCENE_FIT_FRACTION', None)
-ok(u'A11 ★★★ `scene_camera.SCENE_FIT_FRACTION` 存在且 == 0.5'
-   u'（用户逐字「别这么大啊」+「到刚才的一半才好一些」的单点真源）',
-   isinstance(_ff_frac, float) and abs(_ff_frac - 0.5) < 1e-9, star=True,
+ok(u'A11 ★★★ `scene_camera.SCENE_FIT_FRACTION` 存在且 == 1/3'
+   u'（第200轮用户「你这个大小过于大了，缩到现在的 2/3 才合适些」的单点真源）',
+   isinstance(_ff_frac, float) and abs(_ff_frac - 1.0 / 3.0) < 1e-9, star=True,
    detail=u'值=%r' % (_ff_frac,))
 
-# A12 ★★★ 正控制：砍半后 scale 恰好减半（2560×1600：6.666 → 3.331）
+# A12 ★★★ 正控制：缩到 1/3 后 scale 恰好变 1/3（2560×1600：6.666 → 2.222）
 try:
     _full = _SC.fit_fullscreen(2560, 1600)
     _half = _SC.fit_fraction(2560, 1600)
     _s_full = _full[0] / 320.0
     _s_half = _half[0] / 320.0
-    ok(u'A12 ★★★ 正控制：2560×1600 下 `scale` 由 6.666 **减半**到 3.331'
+    ok(u'A12 ★★★ 正控制：2560×1600 下 `scale` 由 6.666 **缩到 1/3** 到 2.222'
        u'（宠物渲染倍率 = camera.scale × pet_scale ⇒ 宠物同步变小）',
-       abs(_s_full - 6.666) < 0.01 and abs(_s_half - 3.331) < 0.01, star=True,
+       abs(_s_full - 6.666) < 0.01 and abs(_s_half - 2.222) < 0.01, star=True,
        detail=u'%.3f -> %.3f' % (_s_full, _s_half))
 except Exception as _e:
     ok(u'A12 ★★★ 正控制', False, u'异常 %s' % _e)

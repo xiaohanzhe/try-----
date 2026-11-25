@@ -9746,7 +9746,7 @@ class RalseiPet(QMainWindow):
         #   用户实测「门和本体都不显示、只有对话框」⇒ 先分清是"没进渲染"
         #   还是"画了但看不见"，否则改门的位置等于盲改。
         self._scene_layer_frames = int(self.__dict__.get('_scene_layer_frames', 0)) + 1
-        if self._scene_layer_frames in (1, 30, 120):
+        if self._scene_layer_frames in (1,):
             try:
                 _c = getattr(self, 'scene_canvas', None)
                 _s = getattr(self, 'scene', None)
@@ -9958,7 +9958,7 @@ class RalseiPet(QMainWindow):
             self._update_bubble_overlay(front, view)
 
             # 4) 有 bg / 物件 才显示画布；纯占位/空 → 隐藏（保持桌面原样）
-            if self._scene_layer_frames in (1, 30, 120):
+            if self._scene_layer_frames in (1,):
                 try:
                     _kinds = sorted({str(it.get('kind')) for it in (behind or [])})
                     _objs = [it for it in (behind or []) if it.get('kind') == 'obj']
