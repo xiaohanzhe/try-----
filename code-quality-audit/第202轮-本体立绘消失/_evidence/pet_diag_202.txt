@@ -1,0 +1,74 @@
+Building prefix dict from the default dictionary ...
+2026-11-28 17:26:23 [INFO] ralsei_pet.text_segmenter — 已启用 jieba 分词（用户词表: 无）
+Loading model from cache D:\RalseiMemory\cache\jieba.cache
+2026-11-28 17:26:23 [INFO] ralsei_pet.__main__ — 分词引擎：jieba（调用 0 次，回落 0 次，用户词表：无）
+2026-11-28 17:26:23 [INFO] ralsei_pet.modules.sprite_loader — [anim-config] 已从 animations.json 加载 115 组动画（legacy 28 组，schema=1）
+Loading model cost 1.150 seconds.
+Prefix dict has been built successfully.
+2026-11-28 17:26:25 [INFO] ralsei_pet.__main__ — 保温看门狗已启动：keep_alive=30m（只在模型"新载入"时设一次）
+2026-11-28 17:26:25 [INFO] ralsei_pet.__main__ — 读回宠物缩放设定：1.00
+2026-11-28 17:26:25 [INFO] ralsei_pet.modules.scene_controller — 场景全屏化：画面 711x533（占屏 28%×33%，比例 0.33，偏移 924,534），scale=2.222
+2026-11-28 17:26:25 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：状态（nodata）—— 本产品尚无队伍数值（LV/HP/AT/DF/金币），未接线
+2026-11-28 17:26:25 [INFO] ralsei_pet.modules.item_menu — 菜单页面未启用：手机（nodata）—— 本产品尚无手机数据
+2026-11-28 17:26:25 [INFO] ralsei_pet.modules.item_interact — 可读物正文已载入：164 个场景 / 335 条（同组合候选另有 613 条未采用；无 base 守卫的组合 34 个）
+2026-11-28 17:26:25 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+S（id=0x1000）
+2026-11-28 17:26:25 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+E（id=0x1001）
+2026-11-28 17:26:25 [INFO] ralsei_pet.modules.global_hotkey — 全局热键已注册：ctrl+alt+H（id=0x1002）
+2026-11-28 17:26:25 [INFO] ralsei_pet.__main__ — 道具系统就绪：域=desktop/light 暗袋 0/12 光袋 0/8 垃圾团 0 件；可交互物 4 个；热键=('ctrl+alt+S', 'ctrl+alt+E', 'ctrl+alt+H')
+2026-11-28 17:26:25 [INFO] ralsei_pet.__main__ — 灵魂就绪：灵魂 (2475, 1488) 24x24 速度上限 180px/s；灵魂场景位置 0 个：
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC 自主移动：**开**（驻留层已启用；他们会有自己的位置）
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC 差事看板：开（可派任意角色去别世界办事；没派过就恒空）
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC 生活档案：D:\RalseiMemory\npc_life.json（规划 34 人 / 驻留 33 人）
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC 系统就绪：登记 96 个（主线 78 / 纯 NPC 18）；人设 76 份；点名别名 196 条；记忆落盘=D:\RalseiMemory\npc_memory
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC 站位：PlacementBook 84 人（站位 34：{'original': 17, 'derived': 8, 'authored': 9}｜家 50：{'authored': 23, 'original': 16, 'derived': 11}）；未安置 62；编队 1；结对 9；桌面白名单 ralsei/kris/susie/lancer
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — 幽灵：接触时长已读回 接触=595s 决心=0.055 档位=dim
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — 幽灵定点在 模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=595s 决心=0.055 档位=dim
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — 幽灵就绪：模式=follow x=2556.0 y=1422.0 alpha=0.000 档=dim 走=N | 接触=595s 决心=0.055 档位=dim
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — 附身就绪：可附身目标 3 个（kris、os_niko、ut_frisk）；附身[free] 目标=无 
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — 带路就绪：可请求带路目标 3 个（kris、os_niko、ut_frisk）；同意表复用 R5
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — 剧情标记就绪：已记录 0 条（无）
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC ralsei 自己挪到了 outertale.wastelands.w_start
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC kris 自己挪到了 ut.rooms.room_start
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC susie 自己挪到了 ch5.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC toriel 自己挪到了 ch3.dark_world.dark_world
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC asgore 自己挪到了 oneshot.barrens.Blue
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC king 自己挪到了 oneshot.barrens.Blue
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC lancer 自己挪到了 oneshot.barrens.Blue
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC queen 自己挪到了 oneshot.barrens.Blue
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC spamton 自己挪到了 ut.rooms.room_start
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC berdly 自己挪到了 uty.rooms.rm_intro
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC noelle 自己挪到了 outertale.wastelands.w_start
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC tenna 自己挪到了 ch3.dark_world.dark_world
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC rouxls 自己挪到了 ch4.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC gerson 自己挪到了 ch1.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC mike 自己挪到了 outertale.wastelands.w_start
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC flowery 自己挪到了 ch2.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC hammerguy 自己挪到了 uty.rooms.rm_intro
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC puzzlemaster1 自己挪到了 uty.rooms.rm_intro
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC puzzlemaster2 自己挪到了 ch2.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC sign 自己挪到了 outertale.wastelands.w_start
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC npc_room 自己挪到了 ch1.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC mansion_room 自己挪到了 ch3.dark_world.dark_world
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC conbini 自己挪到了 ch2.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC police 自己挪到了 uty.rooms.rm_intro
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC catti 自己挪到了 ch1.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC rudy 自己挪到了 ch4.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC dumpster 自己挪到了 ch5.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC addison_tea 自己挪到了 ut.rooms.room_start
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC castle_cafe 自己挪到了 ch5.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC rabbits 自己挪到了 ut.rooms.room_start
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC wrapper 自己挪到了 ch1.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC doubter 自己挪到了 ch5.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC zapper 自己挪到了 outertale.wastelands.w_start
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — NPC susiedark 自己挪到了 ch5.kris_room.kris_s_room
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — 场景层自省（第1帧）：{'enabled': True, 'canvas_cls': 'SceneCanvas', 'scene_ctrl': 'SceneController', 'cam_scale': 2.222, 'state_cls': 'SceneState', 'scene_id': 'desktop', 'objects': 4, 'canvas_visible': False, 'canvas_geom': [0, 0, 640, 480], 'cur_scene_state': False, 'pet_geom': [2410, 1378, 100, 100], 'pet_visible': True, 'pet_render_scale': 2.221875, 'pet_scale': 1.0, 'topmost_on': None, 'is_desktop': True}
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — 桌面门登记边：{'desk_door_oneshot': 'top', 'desk_door_niko_home': 'bottom', 'desk_door_ut': 'left', 'desk_door_deltarune': 'right'}
+2026-11-28 17:26:26 [INFO] ralsei_pet.__main__ — 场景层指令（第1帧）：view=(2560, 1600) behind=4 kinds=['obj'] obj数=4 前3个rect=[(1231, 0, 98, 124), (1231, 1476, 98, 124), (0, 690, 98, 220)]
+2026-11-28 17:26:29 [INFO] ralsei_pet.__main__ — 场景层自省（第60帧）：{'enabled': True, 'canvas_cls': 'SceneCanvas', 'scene_ctrl': 'SceneController', 'cam_scale': 2.222, 'state_cls': 'SceneState', 'scene_id': 'desktop', 'objects': 4, 'canvas_visible': True, 'canvas_geom': [0, 0, 2560, 1600], 'cur_scene_state': False, 'pet_geom': [2215, 1402, 42, 88], 'pet_visible': True, 'pet_render_scale': 2.221875, 'pet_scale': 1.0, 'topmost_on': False, 'is_desktop': True}
+2026-11-28 17:26:56 [INFO] ralsei_pet.__main__ — NPC queen 自己挪到了 ut.rooms.room_start
+2026-11-28 17:26:57 [INFO] ralsei_pet.LocalAI — 本地 AI http://localhost:11434/v1/chat/completions 请求失败（重试 1/4）: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /v1/chat/completions (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002C09DB06A10>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2026-11-28 17:27:02 [INFO] ralsei_pet.LocalAI — 本地 AI http://localhost:11434/v1/chat/completions 请求失败（重试 2/4）: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /v1/chat/completions (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002C09E03C490>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2026-11-28 17:27:07 [INFO] ralsei_pet.LocalAI — 本地 AI http://localhost:11434/v1/chat/completions 请求失败（重试 3/4）: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /v1/chat/completions (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002C095ACD090>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2026-11-28 17:27:12 [INFO] ralsei_pet.LocalAI — 本地 AI http://localhost:11434/v1/chat/completions 请求失败（重试 4/4）: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /v1/chat/completions (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002C09DB1E050>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2026-11-28 17:27:26 [INFO] ralsei_pet.__main__ — NPC asgore 自己挪到了 ch5.kris_room.kris_s_room
+2026-11-28 17:27:26 [INFO] ralsei_pet.__main__ — NPC lancer 自己挪到了 ch2.kris_room.kris_s_room
